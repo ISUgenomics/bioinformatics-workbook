@@ -4,32 +4,32 @@ To understand the dependency feature take a look at the `-d, --dependency` secti
 
 
 Once you submit a job, using that job ID, you can submit dependency jobs. For eg.
-<pre>
+```
 sbatch first_job.slurm
-</pre>
+```
 You will get the job id
-<pre>
+```
 854.condo
-</pre>
+```
 Next, you can submit a job that only runs after successful completion of the first job as follows:
-<pre>
+```
 sbatch --dependency=afterok:854 second_job.slurm
-</pre>
+```
 
 The format here is 
-<pre>
+```
 sbatch --dependency=type:job_id jobfile
-</pre>
+```
 
 If the job requires more than one job to be completed before it is executed, you can supply all the jobids using `,` separator
-<pre>
+```
 sbatch --dependency=type:job_id,job_id,job_id jobfile
-</pre>
+```
 
 You can also set the job to run if any one of the job ids compltes successfully using a `?` separator
-<pre>
+```
 sbatch --dependency=type:job_id?job_id?job_id jobfile
-</pre>
+```
 
 The other dependencies that can be used for<blockcode><type:job_id></blockcode> are as follows:
 
