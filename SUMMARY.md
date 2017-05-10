@@ -1,9 +1,9 @@
 # Summary
 
+* [Introduction](README.md)
 * [RNA-Seq](RNA-Seq.md)
-    * subsection
+  * subsection
 * [How can I do X?](second-question.md)
-* [Slurm](slurm.md)
-
-
+* SLURM
+  * [Submitting dependency jobs using SLURM](slurm.md)
 
