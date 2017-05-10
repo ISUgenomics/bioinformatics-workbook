@@ -1,10 +1,9 @@
 This is the answer to "What is XYZ?".
 
-# \#HI
+# Hi
 
 
 
-\#\#\#HI there
-
+### Hi
 
 
