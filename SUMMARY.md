@@ -1,7 +1,7 @@
 # Summary
 
-* [RNA-Seq](first-question.md)
-* \([What is XYZ?](first-question.md)\)
+* [RNA-Seq](RNA-Seq.md)
+    * subsection
 * [How can I do X?](second-question.md)
 
 
