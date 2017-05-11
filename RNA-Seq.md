@@ -1,9 +1,2 @@
-This is the answer to "What is XYZ?".
-
-# Hi
-
-
-
-### Hi
-
+#RNA-Seq data Analysis
 
