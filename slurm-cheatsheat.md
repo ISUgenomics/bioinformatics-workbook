@@ -24,7 +24,7 @@
 
 A typical job script will look like this:
 
-<pre>
+```
 #!/bin/bash
 #SBATCH --nodes=1 
 #SBATCH --cpus-per-task=8 
@@ -41,7 +41,7 @@ cd $SLURM_SUBMIT_DIR
 module load modulename
 
 your_commands_goes_here
-</pre>
+```
 
 Lines starting with `#SBATCH` are for `SLURM` resource manager to request resources for HPC. Some important options are as follows:
 
@@ -72,10 +72,10 @@ srun -N 1 -t 4:00:00 --pty /bin/bash
 ###Aliases that provide useful information parsed from the Slurm commands
 
 Bash
-<bash>
+```
 alias si="sinfo -o \"%20P %5D %14F %8z %10m %10d %11l %16f %N\""
 alias sq="squeue -o \"%8i %12j %4t %10u %20q %20a %10g %20P %10Q %5D %11l %11L %R\""
-</bash>
+```
 More information about Slurm can be found here:
 
 - [Slurm Cheat Sheat](https://www.chpc.utah.edu/presentations/SlurmCheatsheet.pdf)
