@@ -1,4 +1,4 @@
  
 {
-    "plugins": ["page-treeview", "collapsible-menu"]
+    "plugins": ["page-treeview", "toggle-chapters"]
 }
