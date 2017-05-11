@@ -69,7 +69,7 @@ srun -N 1 -t 4:00:00 --pty /bin/bash
 
 ###Aliases that provide useful information parsed from the SLURM commands
 
-Bash
+Place these alias' into your .bashrc
 ```
 alias si="sinfo -o \"%20P %5D %14F %8z %10m %10d %11l %16f %N\""
 alias sq="squeue -o \"%8i %12j %4t %10u %20q %20a %10g %20P %10Q %5D %11l %11L %R\""
