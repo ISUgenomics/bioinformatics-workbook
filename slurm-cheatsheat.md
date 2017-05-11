@@ -67,7 +67,7 @@ srun -N 1 -t 4:00:00 --pty /bin/bash
 ```
 
 
-###Aliases that provide useful information parsed from the Slurm commands
+###Aliases that provide useful information parsed from the SLURM commands
 
 Bash
 ```
