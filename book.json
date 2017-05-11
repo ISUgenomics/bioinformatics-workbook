@@ -1,10 +1,12 @@
 {
-    "plugins": [ 
+    "book": [ 
+    
         {
-            "page-treeview",
+            "plugins":"page-treeview",
         },
+        
         {
-            "toggle-chapters",
+            "plugins":"toggle-chapters",
         }
     ]
 }
