@@ -1,4 +1,10 @@
-This file serves as an introduction to your Knowledge Base, it is displayed on the homepage of your website. Use it to provide more context to your visitors.
+#Welcome
+
+We are just starting to migrate our tutorials to a gitbook and will be creating a comprehensive bioinformatics workbook with examples that can be run on any machine.  
+
+
+ 
+This is Day 2. Please revisit in the near future and check out our progress. 
 
 
 
