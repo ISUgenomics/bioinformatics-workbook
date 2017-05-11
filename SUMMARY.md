@@ -2,7 +2,7 @@
 
 * [Introduction](README.md)
 * Basics
-  * [SLURM](slurm.md)
+  * SLURM
     * [SLURM command cheat sheat](slurm-cheatsheat.md)
     * [Submitting dependency jobs using SLURM](slurm-dependency.md)
 * [RNA-Seq](RNA-Seq.md)
