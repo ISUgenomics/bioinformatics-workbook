@@ -3,8 +3,8 @@
 * [Introduction](README.md)
 * Basics
   * SLURM
-    * [SLURM command cheat sheat](slurm-cheatsheat.md)
-    * [Submitting dependency jobs using SLURM](slurm-dependency.md)
+    * [SLURM command cheat sheat](Basic/slurm-cheatsheat.md)
+    * [Submitting dependency jobs using SLURM](Basic/slurm-dependency.md)
 * [RNA-Seq](RNA-Seq.md)
   * DGE without a genome
     * Denovo Assembly
