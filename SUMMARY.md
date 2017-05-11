@@ -1,6 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
+* [XSEDE](xsede.md)
 * [Basics](Basics/basics.md)
   * [SLURM](Basics/slurm.md)
     * [SLURM command cheat sheat](Basics/slurm-cheatsheat.md)
