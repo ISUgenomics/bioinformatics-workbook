@@ -1,4 +1,4 @@
 {
     "plugins": [ "page-treeview" ],
-        "plugins": [ "collapsible-menu" ],
+    "plugins": [ "collapsible-menu" ],
 }
