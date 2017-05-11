@@ -1,8 +1,25 @@
 # Summary
 
 * [Introduction](README.md)
+* Basics
+  * [SLURM](slurm.md)
+          * [SLURM command cheat sheat](slurm-cheatsheat.md)
+          * [Submitting dependency jobs using SLURM](slurm-dependency.md)
 * [RNA-Seq](RNA-Seq.md)
-* [SLURM](slurm.md)
-  * [SLURM command cheat sheat](slurm-cheatsheat.md)
-  * [Submitting dependency jobs using SLURM](slurm-dependency.md)
+  * DGE without a genome
+    * Denovo Assembly
+    * Counting reads
+    * DGE
+  * DGE using a genome
+    * Alignment
+    * Counting reads
+    * DGE
+* Genome Assembly
+    * PacBio or MinION only
+    * Illumina only
+    * Hybrid of short and long reads
+* 16S Metagenomics
+    * Qiime
+    * Mothur
+
 
