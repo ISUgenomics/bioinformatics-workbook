@@ -2,11 +2,11 @@
     "gitbook": [ 
     
         {
-            "plugins": "page-treeview",
+            "plugins": ["page-treeview"],
         },
         
         {
-            "plugins": "toggle-chapters",
+            "plugins": ["toggle-chapters"],
         }
     ]
 }
