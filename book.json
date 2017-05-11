@@ -2,7 +2,7 @@
     "plugins": [ 
         {
             "page-treeview" 
-        }
+        },
         {
             "toggle-chapters"
         }
