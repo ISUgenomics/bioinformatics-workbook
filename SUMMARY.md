@@ -23,4 +23,6 @@
   * [16S](16SIntro.md)
     * Qiime
     * Mothur
+* [Singularity and Containers](singularity-and-containers.md)
+  * [Singularity](singularity.md)
 
