@@ -1,10 +1,10 @@
 {
     "plugins": [ 
         {
-            "page-treeview" 
+            "page-treeview",
         },
         {
-            "toggle-chapters"
+            "toggle-chapters",
         }
     ]
 }
