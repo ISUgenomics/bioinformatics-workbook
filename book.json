@@ -1,5 +1,5 @@
 {
-    "gitbook":, [ 
+    "gitbook": [ 
     
         {
             "plugins": "page-treeview",
