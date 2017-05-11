@@ -1,6 +1,6 @@
-<h2>Quick reference sheet for SLURM resource manager </h2>
+##Quick reference sheet for SLURM resource manager 
 
-<h3> Job scheduling commands </h3>
+###Job scheduling commands 
 <table>
 <thead><tr><th>Commands</th><th>Function</th><th>Basic Usage</th><th>Example</th></tr></thead><tbody>
  <tr><td><blockcode>sbatch</blockcode></td><td>submit a slurm job</td><td>sbatch [script]</td><td>$ sbatch job.sub</td></tr>
@@ -9,7 +9,7 @@
  <tr><td><blockcode>scontrol release </blockcode></td><td>release hold on slurm batch jobs</td><td>scontrol release  [job_id]</td><td>$ scontrol release  123456</td></tr>
 </tbody></table>
 
-<h3> Job management commands </h3>
+### Job management commands 
 
 <table>
 <thead><tr><th>Job Status</th><th>Commands</th></tr></thead><tbody>
@@ -20,7 +20,7 @@
  <tr><td><blockcode>smap</blockcode></td><td> show jobs, partitions and nodes in a graphical network topology</td></tr>
 </tbody></table>
 
-<h3> Job script basics </h3>
+### Job script basics 
 
 A typical job script will look like this:
 
@@ -56,17 +56,15 @@ Lines starting with `#SBATCH` are for `SLURM` resource manager to request resour
  <tr><td><blockcode>--mail-user </blockcode></td><td><blockcode>#SBATCH --mail-user user@domain.edu</blockcode></td><td>Email address to send notifications</td></tr>
 </tbody></table>
 
-<h3>Interactive session </h3>
+###Interactive session
 
 To start a interactive session execute the following:
 
-<pre>
+```
 #this command will give 1 Node for a time of 4 hours
 
 srun -N 1 -t 4:00:00 --pty /bin/bash 
-
-
-</pre>
+```
 
 
 ###Aliases that provide useful information parsed from the Slurm commands
