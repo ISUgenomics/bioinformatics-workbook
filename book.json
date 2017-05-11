@@ -1,3 +1,6 @@
 {
     "plugins": [ "page-treeview" ]
 }
+{
+    "plugins": ["toggle-chapters"]
+}
