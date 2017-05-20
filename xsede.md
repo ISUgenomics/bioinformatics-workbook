@@ -10,7 +10,6 @@ The Extreme Science and Engineering Discovery Environment (XSEDE) is a National 
 
 Researchers or educators at a U.S.-based institution, including federal research labs or commercial organizations are eligible to apply to be a PI for an allocation of compute time and storage.  This includes postdoctoral researchers. PIs can give students accounts to use the allocation.
 
-
 ## How do I get an account?
 
 ## How do I get an Allocation?
