@@ -1,13 +1,18 @@
-#Introduction to XSEDE
+# Introduction to XSEDE
 
-##what is XSEDE?
+## what is XSEDE?
 
-##How do I get an account?
 
-##How do I get an Allocation?
+
+## How do I get an account?
+
+## How do I get an Allocation?
 
 ### Startup Allocation
 
-###Research Allocation
+### Research Allocation
 
-###Education Allocation
+### Education Allocation
+
+
+
