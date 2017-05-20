@@ -1,8 +1,8 @@
 # Introduction to XSEDE
 
-## what is XSEDE?
+## What is XSEDE?
 
-The Extreme Science and Engineering Discovery Environment (XSEDE) is a National Science Foundation (NSF) funded collection of supercomputers and high-end visualization and data analysis resources. XSEDE resources can be an order of magnatude greater that an R1 Universty's local super computer. 
+The Extreme Science and Engineering Discovery Environment (XSEDE) is a National Science Foundation (NSF) funded collection of supercomputers and high-end visualization and data analysis resources. XSEDE resources are an order of magnatude greater than most Universty's local super computer. 
 
 [XSEDE Pamphlet](https://www.xsede.org/documents/10157/169907/what-is-XSEDE.pdf)
 
