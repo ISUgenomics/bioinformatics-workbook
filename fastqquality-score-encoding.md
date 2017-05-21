@@ -21,3 +21,5 @@
      (Note: See discussion above).</span>
  <span style="color: brown">L - Illumina 1.8+ Phred+33,  raw reads typically (0, 41)</span>
 </pre>
+
+[Taken from Wikipedia entry](https://en.wikipedia.org/wiki/FASTQ_format)
