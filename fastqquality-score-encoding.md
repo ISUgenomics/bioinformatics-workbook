@@ -25,6 +25,8 @@
 
 [For more information see Wikipedia entry](https://en.wikipedia.org/wiki/FASTQ_format)
 
+To determine if they score is <blockcode>Phred+33</blockcode>, <blockcode>Phred+64</blockcode> or <blockcode>Solexa+64</blockcode>, use this one-liner (you can use <blockcode>zcat</blockcode>  if the <blockcode>fastq</blockcode> file is gzipped):
+
 ```
 head -n 10000 input.fastq |\
   awk '{if(NR%4==0) printf("%s",$0);}' |  od -A n -t u1 | \
