@@ -1,5 +1,5 @@
 
-
+```
   <span style="color: purple">SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS</span>.....................................................
   ..........................<span style="color: green">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>......................
   ...............................<span style="color: blue">IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</span>......................
@@ -21,4 +21,5 @@
      with 0=unused, 1=unused, 2=Read Segment Quality Control Indicator (bold) 
      (Note: See discussion above).</span>
  <span style="color: brown">L - Illumina 1.8+ Phred+33,  raw reads typically (0, 41)</span>
+ ```
 
