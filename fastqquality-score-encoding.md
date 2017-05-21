@@ -1,4 +1,4 @@
-```
+
 {{ style("color: purple") "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS}}.....................................................
 ..........................{{ style("color: green") "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}}......................
 ...............................{{ style("color: blue") "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII}}......................
@@ -20,6 +20,6 @@
 with 0=unused, 1=unused, 2=Read Segment Quality Control Indicator (bold)
 (Note: See discussion above).” | style("color: orange") }}
 {{ "L - Illumina 1.8+ Phred+33, raw reads typically (0, 41)” | style("color: brown") }}
-```
+
 
 [For more information see Wikipedia entry](https://en.wikipedia.org/wiki/FASTQ_format)
