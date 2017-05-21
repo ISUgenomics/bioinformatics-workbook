@@ -24,5 +24,6 @@
     * Qiime
     * Mothur
 * [Singularity and Containers](singularity-and-containers.md)
+  * Introduction
   * [Singularity](singularity.md)
 
