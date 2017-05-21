@@ -29,4 +29,5 @@
 * [Unplaced Tutorials](unplaced-tutorials.md)
   * Intro
   * [SRA](sra.md)
+  * [FASTQ\_quality\_score\_encoding](fastqquality-score-encoding.md)
 
