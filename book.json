@@ -1,4 +1,4 @@
  
 {
-    "plugins": ["page-treeview", "toggle-chapters","highlight","gitbook-plugin-style"]
+    "plugins": ["page-treeview", "toggle-chapters","highlight","style"]
 }
