@@ -26,4 +26,7 @@
 * [Singularity and Containers](singularity-and-containers.md)
   * Introduction
   * [Singularity](singularity.md)
+* [Unplaced Tutorials](unplaced-tutorials.md)
+  * Intro
+  * [SRA](sra.md)
 
