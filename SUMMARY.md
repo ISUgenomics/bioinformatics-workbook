@@ -27,7 +27,7 @@
   * Introduction
   * [Singularity](singularity.md)
 * [Unplaced Tutorials](unplaced-tutorials.md)
-  * Intro
+  * [Intro](intro.md)
   * [SRA](sra.md)
   * [FASTQ\_quality\_score\_encoding](fastqquality-score-encoding.md)
 
