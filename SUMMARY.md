@@ -11,10 +11,10 @@
     * Denovo Assembly
     * Counting reads
     * DGE
-  * DGE using a genome
-    * Alignment
-    * Counting reads
-    * DGE
+  * [DGE using a genome](RNA-Seq/RNA-SeqIntro/dge-using-a-genome.md)
+    * [Alignment](RNA-Seq/RNA-SeqIntro/alignment.md)
+    * [Counting reads](RNA-Seq/RNA-SeqIntro/counting-reads.md)
+    * [DGE](RNA-Seq/RNA-SeqIntro/dge.md)
 * [Genome Assembly](GenomeAssembly/GenomeAssemblyIntro.md)
   * PacBio or MinION only
   * Illumina only
