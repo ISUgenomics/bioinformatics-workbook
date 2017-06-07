@@ -7,8 +7,8 @@
     * [SLURM command cheat sheat](Basics/slurm-cheatsheat.md)
     * [Submitting dependency jobs using SLURM](Basics/slurm-dependency.md)
 * [RNA-Seq](RNA-Seq/RNA-SeqIntro.md)
-  * DGE without a genome
-    * Denovo Assembly
+  * [DGE without a genome](RNA-Seq/RNA-SeqIntro/dge-without-a-genome.md)
+    * [Denovo Assembly](RNA-Seq/RNA-SeqIntro/denovo-assembly.md)
     * Counting reads
     * DGE
   * [DGE using a genome](RNA-Seq/RNA-SeqIntro/dge-using-a-genome.md)
