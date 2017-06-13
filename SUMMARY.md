@@ -34,4 +34,5 @@
   * [Reconstructing Species Phylogenetic tree with BUSCO genes using Maximum Likelihood method](reconstructing-species-phylogenetic-tree-with-busco-genes-using-maximum-likelihood-method.md)
   * [Downloading SRA files from NCBI](downloading-sra-files-from-ncbi.md)
   * [Downloading files via wget](downloading-files-via-wget.md)
+  * [Running BLAST jobs in parallel](running-blast-jobs-in-parallel.md)
 
