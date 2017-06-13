@@ -20,5 +20,5 @@ parallel --jobs 3 "fastq-dump --split-files --origfmt --gzip {}" ::: SRR.numbers
 </pre>
 Make sure you do this on Condoddtn node or as a PBS job
 
-Testing
+
 
