@@ -35,4 +35,5 @@
   * [Downloading SRA files from NCBI](downloading-sra-files-from-ncbi.md)
   * [Downloading files via wget](downloading-files-via-wget.md)
   * [Running BLAST jobs in parallel](running-blast-jobs-in-parallel.md)
+  * [Getting data from iPlant via iRODS](getting-data-from-iplant-via-irods.md)
 
