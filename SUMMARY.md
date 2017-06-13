@@ -30,5 +30,7 @@
   * [Intro](intro.md)
   * [Import multiple text files as separate worksheets in Excel](import-multiple-text-files-as-separate-worksheets-in-excel.md)
   * [SRA](sra.md)
+    * Reconstructing Species Phylogenetic tree with BUSCO genes using Maximum Liklihood method
   * [FASTQ\_quality\_score\_encoding](fastqquality-score-encoding.md)
+  * [Reconstructing Species Phylogenetic tree with BUSCO genes using Maximum Likelihood method](reconstructing-species-phylogenetic-tree-with-busco-genes-using-maximum-likelihood-method.md)
 
