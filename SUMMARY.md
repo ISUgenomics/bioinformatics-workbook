@@ -10,7 +10,7 @@
   * [DGE without a genome](RNA-Seq/RNA-SeqIntro/dge-without-a-genome.md)
     * [Denovo Assembly](RNA-Seq/RNA-SeqIntro/denovo-assembly.md)
     * [Counting reads](RNA-Seq/RNA-SeqIntro/counting-reads.md)
-    * DGE
+    * [DGE](RNA-Seq/RNA-SeqIntro/dge.md)
   * [DGE using a genome](RNA-Seq/RNA-SeqIntro/dge-using-a-genome.md)
     * [Alignment](RNA-Seq/RNA-SeqIntro/alignment.md)
     * [Counting reads](RNA-Seq/RNA-SeqIntro/counting-reads.md)
