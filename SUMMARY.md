@@ -36,4 +36,7 @@
   * [Downloading files via wget](downloading-files-via-wget.md)
   * [Running BLAST jobs in parallel](running-blast-jobs-in-parallel.md)
   * [Getting data from iPlant via iRODS](getting-data-from-iplant-via-irods.md)
+  * [Password-less SSH login](password-less-ssh-login.md)
+  * [Calculate sequence lengths in a fasta file](calculate-sequence-lengths-in-a-fasta-file.md)
+  * [Converting FASTQ to FASTA](converting-fastq-to-fasta.md)
 
