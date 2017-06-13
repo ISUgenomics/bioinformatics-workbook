@@ -28,6 +28,7 @@
   * [Singularity](singularity.md)
 * [Unplaced Tutorials](unplaced-tutorials.md)
   * [Intro](intro.md)
+  * [Import multiple text files as separate worksheets in Excel](import-multiple-text-files-as-separate-worksheets-in-excel.md)
   * [SRA](sra.md)
   * [FASTQ\_quality\_score\_encoding](fastqquality-score-encoding.md)
 
