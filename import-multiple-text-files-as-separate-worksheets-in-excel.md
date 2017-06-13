@@ -1,4 +1,5 @@
-**Import multiple text files as separate worksheets in Excel**
+
+#Import multiple text files as separate worksheets in Excel
 
 If there are large number of text files that you need to import as a separate worksheet, follow these guidelines. Note that the file name of the text file will be used to label the worksheet \(tab\), without the \`.txt\` extension.
 

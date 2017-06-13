@@ -16,9 +16,9 @@
     * [Counting reads](RNA-Seq/RNA-SeqIntro/counting-reads.md)
     * [DGE](RNA-Seq/RNA-SeqIntro/dge.md)
 * [Genome Assembly](GenomeAssembly/GenomeAssemblyIntro.md)
-  * PacBio or MinION only
-  * Illumina only
-  * Hybrid of short and long reads
+  * [PacBio or MinION only](GenomeAssembly/GenomeAssemblyIntro/pacbio-or-minion-only.md)
+  * [Illumina only](GenomeAssembly/GenomeAssemblyIntro/illumina-only.md)
+  * [Hybrid of short and long reads](GenomeAssembly/GenomeAssemblyIntro/hybrid-of-short-and-long-reads.md)
 * [Metagenomics](Metagenomics/MetaGenomicsIntro.md)
   * [16S](16SIntro.md)
     * Qiime
