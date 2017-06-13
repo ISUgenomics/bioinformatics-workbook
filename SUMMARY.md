@@ -39,4 +39,5 @@
   * [Password-less SSH login](password-less-ssh-login.md)
   * [Calculate sequence lengths in a fasta file](calculate-sequence-lengths-in-a-fasta-file.md)
   * [Converting FASTQ to FASTA](converting-fastq-to-fasta.md)
+  * [Viewing files in remote machine without downloading locally](viewing-files-in-remote-machine-without-downloading-locally.md)
 
