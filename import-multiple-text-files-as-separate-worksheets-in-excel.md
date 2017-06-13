@@ -1,13 +1,15 @@
+
 #Import multiple text files as separate worksheets in Excel
 
 If there are large number of text files that you need to import as a separate worksheet, follow these guidelines. Note that the file name of the text file will be used to label the worksheet \(tab\), without the \`.txt\` extension.
 
-Before proceeding, check if you have enabled the macros, i.e., if you don't see \`DEVELOPER\` tab in you empty spreadsheet, click on \`FILE\`, \`OPTIONS\` and \`Customize Ribbon\`. You should see a check box on the right hand side, for the \`DEVELOPER\` tab, check it and click \`OK\`.
+Before proceeding, check if you have enabled the macros, i.e., if you don't see \`DEVELOPER\` tab in you empty spreadsheet,  click on \`FILE\`, \`OPTIONS\` and \`Customize Ribbon\`. You should see a check box on the right hand side, for the \`DEVELOPER\` tab, check it and click \`OK\`.
 
 Click on \`DEVELOPER\` and then \`Macros\`, type in some name \(eg. \`import\_text\`\), click \`create\`.
 
 Paste the below code on the popped window:
 
+&lt;code&gt;
 
 Sub CombineTextFiles\(\)
 
@@ -36,17 +38,17 @@ sDelimiter = "\|"
 
 FilesToOpen = Application.GetOpenFilename \_
 
-\(FileFilter:="Text Files \(\*.txt\), \*.txt", \_
+  \(FileFilter:="Text Files \(\*.txt\), \*.txt", \_
 
-MultiSelect:=True, Title:="Text Files to Open"\)
+  MultiSelect:=True, Title:="Text Files to Open"\)
 
 
 
 If TypeName\(FilesToOpen\) = "Boolean" Then
 
-MsgBox "No Files were selected"
+    MsgBox "No Files were selected"
 
-GoTo ExitHandler
+    GoTo ExitHandler
 
 End If
 
@@ -64,17 +66,17 @@ wkbTemp.Close \(False\)
 
 wkbAll.Worksheets\(x\).Columns\("A:A"\).TextToColumns \_
 
-Destination:=Range\("A1"\), DataType:=xlDelimited, \_
+  Destination:=Range\("A1"\), DataType:=xlDelimited, \_
 
-TextQualifier:=xlDoubleQuote, \_
+  TextQualifier:=xlDoubleQuote, \_
 
-ConsecutiveDelimiter:=False, \_
+  ConsecutiveDelimiter:=False, \_
 
-Tab:=False, Semicolon:=False, \_
+  Tab:=False, Semicolon:=False, \_
 
-Comma:=False, Space:=False, \_
+  Comma:=False, Space:=False, \_
 
-Other:=True, OtherChar:="\|"
+  Other:=True, OtherChar:="\|"
 
 x = x + 1
 
@@ -82,29 +84,29 @@ x = x + 1
 
 While x &lt;= UBound\(FilesToOpen\)
 
-Set wkbTemp = Workbooks.Open\(FileName:=FilesToOpen\(x\)\)
+    Set wkbTemp = Workbooks.Open\(FileName:=FilesToOpen\(x\)\)
 
-With wkbAll
+    With wkbAll
 
-wkbTemp.Sheets\(1\).Move After:=.Sheets\(.Sheets.Count\)
+        wkbTemp.Sheets\(1\).Move After:=.Sheets\(.Sheets.Count\)
 
-.Worksheets\(x\).Columns\("A:A"\).TextToColumns \_
+        .Worksheets\(x\).Columns\("A:A"\).TextToColumns \_
 
-Destination:=Range\("A1"\), DataType:=xlDelimited, \_
+          Destination:=Range\("A1"\), DataType:=xlDelimited, \_
 
-TextQualifier:=xlDoubleQuote, \_
+          TextQualifier:=xlDoubleQuote, \_
 
-ConsecutiveDelimiter:=False, \_
+          ConsecutiveDelimiter:=False, \_
 
-Tab:=False, Semicolon:=False, \_
+          Tab:=False, Semicolon:=False, \_
 
-Comma:=False, Space:=False, \_
+          Comma:=False, Space:=False, \_
 
-Other:=True, OtherChar:=sDelimiter
+          Other:=True, OtherChar:=sDelimiter
 
-End With
+    End With
 
-x = x + 1
+    x = x + 1
 
 Wend
 ```
@@ -131,5 +133,7 @@ Resume ExitHandler
 
 End Sub
 
+&lt;/code&gt;
 
 Now you are all set to import files. Click on \`Macros\` again, and then \`Run\`. A window should pop up asking location of the text files. Navigate to the files location and select all text files. Click \`OK\`. All text files will be imported to a new spreadsheet. It might take a while to complete, if there are large number of files, so be patient.
+
