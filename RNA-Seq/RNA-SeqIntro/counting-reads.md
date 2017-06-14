@@ -25,11 +25,6 @@ ls WBC-mg* | paste - - | tr '_' ' ' | awk '{print $1"_"$2"_"$3"_"$4"_"$5,$6"_"$7
 
 
 
-
-
-
-
-
 ```
 #!/bin/bash
 #SBATCH --nodes=1 
