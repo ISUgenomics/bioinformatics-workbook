@@ -8,6 +8,9 @@ awk '{print $1,$26, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, 
 ```
 
 
+
+
+```
 filein <-'B1_family'  ##Input file 
 dataIn <- as.matrix(read.table(filein)) ##Read the data in file
 dim(dataIn) ##Check if the number of columns is as expected
@@ -49,4 +52,4 @@ fit <- glmFit(y,design)
 lrt <- glmLRT(fit,coef=2)
 tablrt <- topTags(lrt, n=Inf)
 write.table(tablrt, file = "B1_resvssus_LRT.txt")
-</sxh>
+```
