@@ -4,8 +4,12 @@ Trinity package provides align_and_estimate_abundance.pl program to generate abu
 
 This program takes the reads file and the transcriptome to generate counts. So, we have to generate such commands for every sample. (Some samples have SE data and some have PE data). To make it easier, I have separate commands to SE and PE datasets.
 
+**Files required:**
+Transcripts fasta file
+Sequencing data files
 
-
+When there are multiple input files, here is one way to generate the align_and_estimate commands for all of them at once. For better understanding, here is a sample file name
+WBC-B1-22_ACTTGA_L002_R1_001.fastq.gz
 ```
 
 ## Paired end 
