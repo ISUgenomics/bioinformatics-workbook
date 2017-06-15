@@ -1,102 +1,104 @@
-This program uses k-mer frequencies generated from raw read data to estimate the genome size, abundance of repetitive elements and  rate of heterozygosity.
+T
+his program uses k-mer frequencies generated from raw read data to estimate the genome size, abundance of repetitive elements and rate of heterozygosity.
 
 ##Background
 
-A **K-mer** is a substring of length K in a string of DNA bases.  
+A **K-mer** is a substring of length K in a string of DNA bases.
 
 For example:
 
-<code>All 2-mers of the sequence "AATTGGCCG" are AA, AT, TT, TG, GG,GC, CC, CG</code>
+`All 2-mers of the sequence "AATTGGCCG" are AA, AT, TT, TG, GG,GC, CC, CG`
 
-<code>All 3-mers of the sequence "AATTGGCCG" are AAT, ATT, TTG, TGG, GGC, GCC, CCG.</code>
+```All 3-mers of the sequence "AATTGGCCG" are AAT, ATT, TTG, TGG, GGC, GCC, CCG.```
 
 ###There are an exponentially increasing number of possible K-mers for increasing numbers of K.
 
 There are 16 possible 2-mers for DNA if we assume there are only 4 types of bases (A,T,G,C).
 
 <table>
- <tr><td>AA</td><td>AC</td><td>AG</td><td>AT</td></tr>
- <tr><td>CA</td><td>CC</td><td>CG</td><td>CT</td></tr>
- <tr><td>GA</td><td>GC</td><td>GG</td><td>GT</td></tr>
- <tr><td>TA</td><td>TC</td><td>TG</td><td>TT</td></tr>
+<tr><td>AA</td><td>AC</td><td>AG</td><td>AT</td></tr>
+<tr><td>CA</td><td>CC</td><td>CG</td><td>CT</td></tr>
+<tr><td>GA</td><td>GC</td><td>GG</td><td>GT</td></tr>
+<tr><td>TA</td><td>TC</td><td>TG</td><td>TT</td></tr>
 </table>
 
-Similarly, there are 64 possible 3-mers for DNA if we assume there are only 4 types of bases (A,T,G,C). 
+Similarly, there are 64 possible 3-mers for DNA if we assume there are only 4 types of bases (A,T,G,C).
 
-<table>
- <tr><td>AAA</td><td>AAC</td><td>AAG</td><td>AAT</td></tr>
- <tr><td>ACA</td><td>ACC</td><td>ACG</td><td>ACT</td></tr>
- <tr><td>AGA</td><td>AGC</td><td>AGG</td><td>AGT</td></tr>
- <tr><td>ATA</td><td>ATC</td><td>ATG</td><td>ATT</td></tr>
- <tr><td>CAA</td><td>CAC</td><td>CAG</td><td>AAT</td></tr>
- <tr><td>CCA</td><td>CCC</td><td>CCG</td><td>ACT</td></tr>
- <tr><td>CGA</td><td>CGC</td><td>CGG</td><td>AGT</td></tr>
- <tr><td>CTA</td><td>CTC</td><td>CTG</td><td>ATT</td></tr>
- <tr><td>GAA</td><td>GAC</td><td>GAG</td><td>GAT</td></tr>
- <tr><td>GCA</td><td>GCC</td><td>GCG</td><td>GCT</td></tr>
- <tr><td>GGA</td><td>GGC</td><td>GGG</td><td>GGT</td></tr>
- <tr><td>GTA</td><td>GTC</td><td>GTG</td><td>GTT</td></tr>
- <tr><td>TAA</td><td>TAC</td><td>TAG</td><td>TAT</td></tr>
- <tr><td>TCA</td><td>TCC</td><td>TCG</td><td>TCT</td></tr>
- <tr><td>TGA</td><td>TGC</td><td>TGG</td><td>TGT</td></tr>
- <tr><td>TTA</td><td>TTC</td><td>TTG</td><td>TTT</td></tr>
-  </table>
+| | | | |
+|---|---|---|---|
+|AAA|AAC|AAG|AAT|
+|ACA|ACC|ACG|ACT|
+|AGA|AGC|AGG|AGT|
+|ATA|ATC|ATG|ATT|
+|CAA|CAC|CAG|AAT|
+|CCA|CCC|CCG|ACT|
+|CGA|CGC|CGG|AGT|
+|CTA|CTC|CTG|ATT|
+|GAA|GAC|GAG|GAT|
+|GCA|GCC|GCG|GCT|
+|GGA|GGC|GGG|GGT|
+|GTA|GTC|GTG|GTT|
+|TAA|TAC|TAG|TAT|
+|TCA|TCC|TCG|TCT|
+|TGA|TGC|TGG|TGT|
+|TTA|TTC|TTG|TTT|
 
-<code>
- AAA AAC AAG AAT ACA ACC ACG ACT AGA AGC AGG AGT ATA ATC ATG ATT CAA CAC CAG CAT CCA CCC CCG CCT CGA CGC CGG CGT CTA CTC CTG CTT GAA GAC GAG GAT GCA GCC GCG GCT GGA GGC GGG GTT GTA GTC GTG GTT TAA TAC TAG TAT TCA TCC TCG TCT TGA TGC TGG TGT TTA TTC TTG TTT
-</code>
+```
+AAA AAC AAG AAT ACA ACC ACG ACT AGA AGC AGG AGT ATA ATC ATG ATT CAA CAC CAG CAT CCA CCC CCG CCT CGA CGC CGG CGT CTA CTC CTG CTT GAA GAC GAG GAT GCA GCC GCG GCT GGA GGC GGG GTT GTA GTC GTG GTT TAA TAC TAG TAT TCA TCC TCG TCT TGA TGC TGG TGT TTA TTC TTG TTT
+```
 
 The general rule for the number of possible K-mers given a sequence with 4 possible bases is the following.
 
 The number of bases (B) raised to the power of the size (length) of the k-mer (K).
 
-<code>B^K</code>
-<table>
-<hd><td>Bases</td><td>K-mer size</td><td>Total possible kmers</td></hd>
- <tr><td>4</td><td>1</td><td>4</td></tr>
- <tr><td>4</td><td>2</td><td>16</td></tr>
- <tr><td>4</td><td>3</td><td>64</td></tr>
- <tr><td>4</td><td>4</td><td>256</td></tr>
- <tr><td>4</td><td>5</td><td>1,024</td></tr>
- <tr><td>4</td><td>6</td><td>4,096</td></tr>
- <tr><td>4</td><td>7</td><td>16,384</td></tr>
- <tr><td>4</td><td>8</td><td>65,536</td></tr>
- <tr><td>4</td><td>9</td><td>262,144</td></tr>
- <tr><td>4</td><td>10</td><td>1,048,576</td></tr>
- <tr><td>4</td><td>...</td><td>...</td>...</tr>
- <tr><td>4</td><td>20</td><td>1,099,511,627,776</td></tr>
-</table>
+`B^K`
+
+
+
+| Bases | K-mer size | Total possible kmers |
+| ------------- |:-------------:| -----:|
+| 4 | 1 | 4 |
+|4|2|16|
+|4|3|64|
+|4|4|256|
+|4|5|1,024|
+|4|6|4,096|
+|4|7|16,384|
+|4|8|65,536|
+|4|9|262,144|
+|4|10|1,048,576|
+|4|...|...|
+|4|20|1,099,511,627,776|
 
 As you can see, there are 64 possibilities for a 3-mer and over a Trillion possibilities for a 20-mer!
 
 ###K-mer graph: estimating coverage depth of raw DNA reads for a genome using number of times a K-mer is observed (**coverage**) by number of K-mers with that coverage (**frequency**).
 
-<img src="/files/tutorial/images/coveragexfrequency_0.png" width="652" height="310" alt=""  />
+<img src="/files/tutorial/images/coveragexfrequency_0.png" width="652" height="310" alt="" />
 
-The peak around 25 in the plot above is the coverage with the highest number of different 21-mers.  Another way to put it is that there were 5e^7 unique 21-mers (frequency) that were observed 25 times (coverage).   The normal-like distribution is due to the fact that we don't get perfect coverage of the genome.  There are some regions with a little less coverage and some regions with a little more coverage but the average coverage depth is around 25.
+The peak around 25 in the plot above is the coverage with the highest number of different 21-mers. Another way to put it is that there were 5e^7 unique 21-mers (frequency) that were observed 25 times (coverage). The normal-like distribution is due to the fact that we don't get perfect coverage of the genome. There are some regions with a little less coverage and some regions with a little more coverage but the average coverage depth is around 25.
 
 The large number of unique K-mers that have a frequency of 1 right on the left side of the graph is due to PCR errors and works like this.
 
 Recall from above
 
-<code>All 3-mers of the sequence "AATTGGCCG" are AAT, ATT, TTG, TGG, GGC, GCC, CCG.</code>
+```All 3-mers of the sequence "AATTGGCCG" are AAT, ATT, TTG, TGG, GGC, GCC, CCG.```
 
 Now consider the following sequence where I have replaced the 4th letter (T) with a C to simulate a PCR error.
 
-All 3-Mers of this sequence "AAT**C**GGCCG" are AAT **ATC, TCG, CGG,** GGC, GCC, CCG.  The ones in bold are the incorrect 3-mers that are now unique and end up at the beginning of the graph we plotted above.
+All 3-Mers of this sequence "AAT**C**GGCCG" are AAT **ATC, TCG, CGG,** GGC, GCC, CCG. The ones in bold are the incorrect 3-mers that are now unique and end up at the beginning of the graph we plotted above.
 
 **General Rule:** For a given sequence, a single PCR error will result in K unique and incorrect K-mers
 
- 
 ###How GenomeScope works
 
-GenomeScope extended this idea by exploring how the K-mer graph changes with increasing heterozygosity, PCR errors and PCR duplicates.  They determined that the idealized K-mer graph that you understand above is the extreme case where there is low heterozygosity, low PCR errors and low rates of PCR duplicates. 
+GenomeScope extended this idea by exploring how the K-mer graph changes with increasing heterozygosity, PCR errors and PCR duplicates. They determined that the idealized K-mer graph that you understand above is the extreme case where there is low heterozygosity, low PCR errors and low rates of PCR duplicates.
 
-<img src="/files/tutorial/images/screen_shot_2017-02-16_at_7.31.20_am.png" width="326" height="310"  alt="" title="White" />
+<img src="/files/tutorial/images/screen_shot_2017-02-16_at_7.31.20_am.png" width="326" height="310" alt="" title="White" />
 
-The big peak at 25 in the graph above is in fact the homozygous portions of the genome that account for the identical 21-mers from both strands of the DNA.  The dotted line corresponds to the predicted center of that peak.  The small shoulder to the left of the peak corresponds to the heterozygous portions of the genome that accounts for different 21-mers from each strand of the DNA.  The two dotted lines to the right of the main peak (at coverage = 25) are the duplicated heterozygous regions and duplicated homozygous regions and correspond to two smaller peaks. The **shape** of these peaks are affected by the **PCR errors** and **PCR duplicates**. The authors were able to come up with an equation (see below) that accurately models the shape and size of the K-mer graph using four negative binomial peaks which shape and size are determined by % heterozygosity, % PCR duplication, % PCR Error.   All very useful pieces of information to learn about your genome from your raw data.
+The big peak at 25 in the graph above is in fact the homozygous portions of the genome that account for the identical 21-mers from both strands of the DNA. The dotted line corresponds to the predicted center of that peak. The small shoulder to the left of the peak corresponds to the heterozygous portions of the genome that accounts for different 21-mers from each strand of the DNA. The two dotted lines to the right of the main peak (at coverage = 25) are the duplicated heterozygous regions and duplicated homozygous regions and correspond to two smaller peaks. The **shape** of these peaks are affected by the **PCR errors** and **PCR duplicates**. The authors were able to come up with an equation (see below) that accurately models the shape and size of the K-mer graph using four negative binomial peaks which shape and size are determined by % heterozygosity, % PCR duplication, % PCR Error. All very useful pieces of information to learn about your genome from your raw data.
 
-<img src="/files/tutorial/images/screen_shot_2017-02-26_at_5.34.01_am.png" width="2174" height="148" alt="GenomeScope equation"  />
+<img src="/files/tutorial/images/screen_shot_2017-02-26_at_5.34.01_am.png" width="2174" height="148" alt="GenomeScope equation" />
 
 Understanding all the elements of the equation is less important than knowing that it represents the summation of four negative binomials (peaks) whose shape are affected by **heterozygosity**, **PCR duplication** and **PCR Errors**.
 
@@ -104,18 +106,18 @@ Understanding all the elements of the equation is less important than knowing th
 
 Install or load Jellyfish onto your machine
 
-<code> module load jellyfish </code>
+``` module load jellyfish ```
 
 Obtain the k-mer frequencies of your raw data (fastq) using JellyFish
 
 
-<code>jellyfish count -C -m 21 -s 1000000000 -t 10 *.fastq  -o reads.jf  </code>
+```jellyfish count -C -m 21 -s 1000000000 -t 10 *.fastq -o reads.jf ```
 
 Then export the kmer count histogram
 
-<code>jellyfish histo -t 10 reads.jf > reads.histo </code>
+```jellyfish histo -t 10 reads.jf > reads.histo ```
 
-**Note:** "By default jellyfish caps the max kmer frequency at 10,000x but there can be real kmer sequence beyond that" and "Although those super high frequency kmers are also enriched for artifacts so requires a little investigation. " -- Michael Schatz  [See supplementary Figure 5](http://biorxiv.org/content/biorxiv/suppl/2017/02/28/075978.DC2/075978-1.pdf)
+**Note:** "By default jellyfish caps the max kmer frequency at 10,000x but there can be real kmer sequence beyond that" and "Although those super high frequency kmers are also enriched for artifacts so requires a little investigation. " -- Michael Schatz [See supplementary Figure 5](http://biorxiv.org/content/biorxiv/suppl/2017/02/28/075978.DC2/075978-1.pdf)
 
 That file can be processed by running GenomeScope online to generate the figures described above.
 
@@ -127,24 +129,24 @@ That file can be processed by running GenomeScope online to generate the figures
 
 White
 
-<img src="/files/tutorial/images/screen_shot_2017-02-16_at_7.31.20_am.png" width="326" height="310"  alt="" title="White" />
+<img src="/files/tutorial/images/screen_shot_2017-02-16_at_7.31.20_am.png" width="326" height="310" alt="" title="White" />
 
 Black
 
 <img src="/files/tutorial/images/screen_shot_2017-02-16_at_7.30.50_am.png" width="326" height="310" alt="" title="Black" />
 
 
-First, I notice is that the genome size for these two are being predicted to be around 1GB which is a lower than I was expecting since pink, green and red have expected genome sizes of closer to 1.8 GB [GenomeSizeDB](http://www.genomesize.com/results.php?page=1)  
+First, I notice is that the genome size for these two are being predicted to be around 1GB which is a lower than I was expecting since pink, green and red have expected genome sizes of closer to 1.8 GB [GenomeSizeDB](http://www.genomesize.com/results.php?page=1)
 
-Second, I notice that there are around 65-70% unique 21-mers suggesting this genome has around 30-35% repetitive content.  This means the genome could be challenging to assemble with short reads. This fits with our preliminary assembly of Paired-End only data resulting in over 10 million contigs.
+Second, I notice that there are around 65-70% unique 21-mers suggesting this genome has around 30-35% repetitive content. This means the genome could be challenging to assemble with short reads. This fits with our preliminary assembly of Paired-End only data resulting in over 10 million contigs.
 
-Third, the heterozygosity of the white abalone is much lower than that of black abalone.  This also makes sense.  The white abalone samples were acquired from a white abalone farm, where as the black abalone were obtained from the wild.
+Third, the heterozygosity of the white abalone is much lower than that of black abalone. This also makes sense. The white abalone samples were acquired from a white abalone farm, where as the black abalone were obtained from the wild.
 
 Of these two individuals, the white abalone would be easier for an assembly program to assembly due to its lower heterozygosity.
 
 
 For more information on how GenomeScope works, check out this poster and supplementary methods file
 
- - [GenomeScope Poster](http://schatzlab.cshl.edu/publications/posters/2016/2016.AGBT.GenomeScope.pdf)
- - [GenomeScope Github Page](https://github.com/schatzlab/genomescope)
- - [GenomeScope supplementary file and deeper explanation of equations](http://biorxiv.org/content/biorxiv/suppl/2017/02/28/075978.DC2/075978-1.pdf)
+- [GenomeScope Poster](http://schatzlab.cshl.edu/publications/posters/2016/2016.AGBT.GenomeScope.pdf)
+- [GenomeScope Github Page](https://github.com/schatzlab/genomescope)
+- [GenomeScope supplementary file and deeper explanation of equations](http://biorxiv.org/content/biorxiv/suppl/2017/02/28/075978.DC2/075978-1.pdf)
