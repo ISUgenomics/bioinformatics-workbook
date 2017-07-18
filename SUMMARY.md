@@ -24,7 +24,7 @@
     * Qiime
     * Mothur
 * [Singularity and Containers](singularity-and-containers.md)
-  * [Introduction](introduction.md)
+  * Introduction
   * [Singularity](singularity.md)
 * [Unplaced Tutorials](unplaced-tutorials.md)
   * [Intro](intro.md)
