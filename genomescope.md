@@ -1,57 +1,32 @@
-T
-his program uses k-mer frequencies generated from raw read data to estimate the genome size, abundance of repetitive elements and rate of heterozygosity.
+# Genomescope: genome properties using just raw sequence data
 
-##Background
+Genomescope uses k-mer frequencies generated from raw read data to estimate the genome size, abundance of repetitive elements and rate of heterozygosity.
 
-A **K-mer** is a substring of length K in a string of DNA bases.
+## Background
 
-For example:
+A **K-mer** is a substring of length K in a string of DNA bases. For example: All 2-mers of the sequence `AATTGGCCG` are `AA`, `AT`, `TT`, `TG`, `GG`, `GC`, `CC`, `CG`. Similarly, all 3-mers of the sequence `AATTGGCCG` are `AAT`, `ATT`, `TTG`, `TGG`, `GGC`, `GCC`, `CCG`. There are an exponentially increasing number of possible K-mers for increasing numbers of K. There are 16 possible 2-mers for DNA if we assume there are only 4 types of bases (A,T,G,C).
 
-`All 2-mers of the sequence "AATTGGCCG" are AA, AT, TT, TG, GG,GC, CC, CG`
+|       | A    | T    | G    | C    |
+|-------|------|------|------|------|
+| **A** | `AA` | `TA` | `GA` | `CA` |
+| **T** | `AT` | `TT` | `GT` | `CT` |
+| **G** | `AG` | `TG` | `GG` | `CG` |
+| **C** | `AC` | `TC` | `GC` | `CC` |
 
-```All 3-mers of the sequence "AATTGGCCG" are AAT, ATT, TTG, TGG, GGC, GCC, CCG.```
-
-###There are an exponentially increasing number of possible K-mers for increasing numbers of K.
-
-There are 16 possible 2-mers for DNA if we assume there are only 4 types of bases (A,T,G,C).
-
-<table>
-<tr><td>AA</td><td>AC</td><td>AG</td><td>AT</td></tr>
-<tr><td>CA</td><td>CC</td><td>CG</td><td>CT</td></tr>
-<tr><td>GA</td><td>GC</td><td>GG</td><td>GT</td></tr>
-<tr><td>TA</td><td>TC</td><td>TG</td><td>TT</td></tr>
-</table>
 
 Similarly, there are 64 possible 3-mers for DNA if we assume there are only 4 types of bases (A,T,G,C).
 
-| | | | |
-|---|---|---|---|
-|AAA|AAC|AAG|AAT|
-|ACA|ACC|ACG|ACT|
-|AGA|AGC|AGG|AGT|
-|ATA|ATC|ATG|ATT|
-|CAA|CAC|CAG|AAT|
-|CCA|CCC|CCG|ACT|
-|CGA|CGC|CGG|AGT|
-|CTA|CTC|CTG|ATT|
-|GAA|GAC|GAG|GAT|
-|GCA|GCC|GCG|GCT|
-|GGA|GGC|GGG|GGT|
-|GTA|GTC|GTG|GTT|
-|TAA|TAC|TAG|TAT|
-|TCA|TCC|TCG|TCT|
-|TGA|TGC|TGG|TGT|
-|TTA|TTC|TTG|TTT|
+|       |            A                   |                 T                |                G                 |                 C                |
+|-------|------                          |------                            |------                            |------                            |
+| **A** |`AAA`<br>`AAT`<br>`AAG`<br>`AAC`| `TAA`<br>`TAT`<br>`TAG`<br>`TAC` | `GAA`<br>`GAT`<br>`GAG`<br>`GAC` | `CAA`<br>`CAT`<br>`CAG`<br>`CAC` |
+| **T** |`ATA`<br>`ATT`<br>`ATG`<br>`ATC`| `TTA`<br>`TTT`<br>`TTG`<br>`TTC` | `GTA`<br>`GTT`<br>`GTG`<br>`GTC` | `CTA`<br>`CTT`<br>`CTG`<br>`CTC` |
+| **G** |`AGA`<br>`AGT`<br>`AGG`<br>`AGC`| `TGA`<br>`TGT`<br>`TGG`<br>`TGC` | `GGA`<br>`GGT`<br>`GGG`<br>`GGC` | `CGA`<br>`CGT`<br>`CGG`<br>`CGC` |
+| **C** |`ACA`<br>`ACT`<br>`ACG`<br>`ACC`| `TCA`<br>`TCT`<br>`TCG`<br>`TCC` | `GCA`<br>`GCT`<br>`GCG`<br>`GCC` | `CCA`<br>`CCT`<br>`CCG`<br>`CCC` |
 
-```
-AAA AAC AAG AAT ACA ACC ACG ACT AGA AGC AGG AGT ATA ATC ATG ATT CAA CAC CAG CAT CCA CCC CCG CCT CGA CGC CGG CGT CTA CTC CTG CTT GAA GAC GAG GAT GCA GCC GCG GCT GGA GGC GGG GTT GTA GTC GTG GTT TAA TAC TAG TAT TCA TCC TCG TCT TGA TGC TGG TGT TTA TTC TTG TTT
-```
 
-The general rule for the number of possible K-mers given a sequence with 4 possible bases is the following.
+The general rule for the number of possible K-mers given a sequence with 4 possible bases is the following. The number of bases (B) raised to the power of the size (length) of the k-mer (*k*).
 
-The number of bases (B) raised to the power of the size (length) of the k-mer (K).
-
-`B^K`
+`B^`*k*
 
 
 
@@ -72,7 +47,7 @@ The number of bases (B) raised to the power of the size (length) of the k-mer (K
 
 As you can see, there are 64 possibilities for a 3-mer and over a Trillion possibilities for a 20-mer!
 
-###K-mer graph: estimating coverage depth of raw DNA reads for a genome using number of times a K-mer is observed (**coverage**) by number of K-mers with that coverage (**frequency**).
+### K-mer graph: estimating coverage depth of raw DNA reads for a genome using number of times a K-mer is observed (**coverage**) by number of K-mers with that coverage (**frequency**).
 
 <img src="/files/tutorial/images/coveragexfrequency_0.png" width="652" height="310" alt="" />
 
@@ -90,7 +65,7 @@ All 3-Mers of this sequence "AAT**C**GGCCG" are AAT **ATC, TCG, CGG,** GGC, GCC,
 
 **General Rule:** For a given sequence, a single PCR error will result in K unique and incorrect K-mers
 
-###How GenomeScope works
+### How GenomeScope works
 
 GenomeScope extended this idea by exploring how the K-mer graph changes with increasing heterozygosity, PCR errors and PCR duplicates. They determined that the idealized K-mer graph that you understand above is the extreme case where there is low heterozygosity, low PCR errors and low rates of PCR duplicates.
 
@@ -102,7 +77,7 @@ The big peak at 25 in the graph above is in fact the homozygous portions of the 
 
 Understanding all the elements of the equation is less important than knowing that it represents the summation of four negative binomials (peaks) whose shape are affected by **heterozygosity**, **PCR duplication** and **PCR Errors**.
 
-##Creating your own GenomeScope Graph
+## Creating your own GenomeScope Graph
 
 Install or load Jellyfish onto your machine
 
@@ -125,7 +100,7 @@ That file can be processed by running GenomeScope online to generate the figures
 
 
 
-###Example output interpretation White vs Black Abalone.
+### Example output interpretation White vs Black Abalone.
 
 White
 
