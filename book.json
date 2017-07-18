@@ -1,4 +1,4 @@
  
 {
-    "plugins": ["page-treeview", "toggle-chapters","highlight","style","wide-page", "terminal"]
+    "plugins": ["page-treeview","toggle-chapters","highlight","style","wide-page","terminal"]
 }
