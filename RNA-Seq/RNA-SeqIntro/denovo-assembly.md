@@ -1,5 +1,5 @@
 #Transcriptome Assembly
-In this tutorial, we will learn about how to assemble the transcriptome from RNA-Seq reads.
+In this tutorial, we will learn about how to assemble the transcriptome from RNA-Seq reads..
 
 **Software required:** Trinity https://github.com/trinityrnaseq/trinityrnaseq/wiki
 
