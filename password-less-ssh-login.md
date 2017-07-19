@@ -1,3 +1,5 @@
+Setup 
+
 To login automatically from your machine to the remote host, you can save the private/public key pair in both machines. This way, you don't have to enter password each time you login.
 
 <h3> Step 1: Create public and private keys (local computer) </h3>
