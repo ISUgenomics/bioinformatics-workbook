@@ -49,7 +49,7 @@ Finally run these scripts in PBS/SLURM job script. For the first script:
 * Run `runQuiver_prepare.sh` for every `bas.h5` file to create aligned reads to the genome.
 * Run `runQuiver_polish.sh` to merge all aligned files, sort, and use it to polish indexed reference genome.
 
-For running the `runQuiver_prepare.sh`, you need to find all `bas.h5` files in the path, and prepare slurm script for each one of them. For preparing Slurm script, you can use [makeSLURMs.py](https://github.com/ISUgenomics/common_scripts/blob/master/makeSLURMs.py)
+For running the `runQuiver_prepare.sh`, you need to find all `bas.h5` files in the path, and prepare slurm script for each one of them. For preparing Slurm script, you can use [makeSLURM_ceres.py](https://github.com/ISUgenomics/common_scripts/blob/master/makeSLURM_ceres.py)
 
 ```
 cd directories_with_smrtcell_data
