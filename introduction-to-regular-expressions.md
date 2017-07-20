@@ -20,14 +20,14 @@ perl –ne 'if (/regular_expression/) { print $_.”\n”;}’ input_file_name
 - `$_` variable in perl that represents the entire line that was fed to the perl program
 
 
-##Regular Expression Syntax
+## Regular Expression Syntax
 
 Like a program language regular expressions have syntax that can represent more than just letters and numbers but specific patterns of letters and numbers.
 This syntax will allow you to build a pattern that will match multiple strings or words or sentences.
 
-###Example Text
+### Example Text
 This file has 12 lines of text containig data about an individuals Name, phone number, address and SS#.
-Copy this text into a file named **address.txt**
+Copy this text into a file named `address.txt`
 ```
 ZEnderX 1-515-999-4321ZZIX
 1000 ZBattlesXchool driveZZplayX
@@ -44,7 +44,7 @@ SS# 11-02-33-04-50
 SS# 11-02-33-04-50
 ```
 
-###Simple Example that requires no syntax
+### Simple Example that requires no syntax
 Recall from above
 ```
 perl -ne 'if (/regular_expression/) { print $_.”\n”;}’ input_file_name
@@ -66,9 +66,9 @@ perl -ne 'if (/Battleschool/) {print $_."\n";}' address.txt
 perl -ne 'if (/Science/) {print $_."\n";}' address.txt
 ```
 
-###Example with Simple Syntax ```.```, ```*```, ```?```
+### Example with Simple Syntax `.` , `*`, `?`
 
-the ```.``` symbol in the regex pattern can represent any character
+the `.` symbol in the regex pattern can represent any character
 
 To find all addresses that have the pattern 10X0 Where X represents any number or character
 ```
@@ -107,8 +107,8 @@ in
 ScienceX IZZ.
 ```
 
-Using ```.*``` will find the pattern with the longest match even if a shorter match is present.  This is called ```Greedy Matching```
-Using ```.*?``` will find the pattern with the shortest match. This is called ```Lazy Matching```
+Using `.*` will find the pattern with the longest match even if a shorter match is present.  This is called ```Greedy Matching```
+Using `.*?` will find the pattern with the shortest match. This is called `Lazy Matching`
 
 ```
 perl -ne 'if(/Z(.*?)X/) {print $1."\n"}' address.txt
@@ -135,7 +135,7 @@ house
 ```
 
 
-##Special RegExp Characters
+## Special RegExp Characters
 
 You may want to include these characters in the regular expression you are trying to match.  However, since these characters also have other meanings in perl and programs in general we have to tell the program that this is to be interpreted as a character in the pattern and not part of the syntax of the program.  This is done by "escaping" the special character by preceding it with a back slash (\).  
 
