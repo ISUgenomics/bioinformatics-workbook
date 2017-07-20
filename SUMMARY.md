@@ -42,6 +42,7 @@
   * [Calculate sequence lengths in a fasta file](calculate-sequence-lengths-in-a-fasta-file.md)
   * [Converting FASTQ to FASTA](converting-fastq-to-fasta.md)
   * [Viewing files in remote machine without downloading locally](viewing-files-in-remote-machine-without-downloading-locally.md)
+  * [Converting FASTQ format to FASTA](converting-fastq-format-to-fasta.md)
   * [Retrieve FASTA sequences using sequence IDs](retrieve-fasta-sequences-using-sequence-ids.md)
   * [Genomescope](genomescope.md)
 
