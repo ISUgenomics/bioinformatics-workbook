@@ -64,14 +64,39 @@ while read line; do
 wget http://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=dload&run_list=${line}&format=fastq;
 done<list_of_ids
 ```
-The datasets can also be downloaded from DDBJ or EMBL using the FTP links:
-```
-ftp://ftp.ddbj.nig.ac.jp/ddbj_database/dra/fastq/DRA004/DRA004006/DRX041728/
+The datasets can also be downloaded from DDBJ or EMBL using the FTP links, but the transfer speeds might be affected if you're not near their servers.
   
-## Using 
+## Using Aspera Connect (ascp)
 
+Aspera uses high-speed file transfer to rapidly transfer large files and data sets over an existing WAN infrastructure.
 
+To get the `sra` files:
 
+```
+prefetch --max-size 100G --transport ascp --ascp-path "/path/to/aspera/3.6.2/bin/ascp|/path/to/aspera/3.6.2/etc/asperaweb_id_dsa.openssh" SRRNNNNNN
+```
+This usually prefetches the SRA file to your home directory in folder named ncbi. If your home directory does not contain enough space to store all data, you may want to create another directory and softlink to the home. To do this:
+```
+cd ~
+mkdir -p /project/storage/your_dir/ncbi
+ln -s /project/storage/your_dir/ncbi
+```
+when you run this, you will have a directory named `ncbi` in your home, but the data is actually stored in `/project/storage/your_dir/ncbi`
+
+```
+ncbi
+└── public
+    └── sra
+        ├── SRR006189.sra
+        └── SRR006190.sra
+```
+Then you can convert the SRA files back to fastq format using `fastq-dump` command.
+
+```
+for sra file in ~/ncbi/public/sra/*; do 
+fastq-dump --split-files --origfmt --gzip ${sra}; 
+done
+```
 
 ##Downloading all SRA files related to a BioProject/study
 
