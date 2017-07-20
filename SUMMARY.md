@@ -31,6 +31,7 @@
   * [Using PSC Supercell \(storage for Bridges and Greenfield\)](using-psc-supercell-storage-for-bridges-and-greenfield.md)
   * [Import multiple text files as separate worksheets in Excel](import-multiple-text-files-as-separate-worksheets-in-excel.md)
   * [SRA](sra.md)
+  * [Bioawk Basics](bioawk-basics.md)
   * [FASTQ\_quality\_score\_encoding](fastqquality-score-encoding.md)
   * [Reconstructing Species Phylogenetic tree with BUSCO genes using Maximum Likelihood method](reconstructing-species-phylogenetic-tree-with-busco-genes-using-maximum-likelihood-method.md)
   * [Downloading SRA files from NCBI](downloading-sra-files-from-ncbi.md)
