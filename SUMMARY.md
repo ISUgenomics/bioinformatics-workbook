@@ -45,4 +45,5 @@
   * [Converting FASTQ format to FASTA](converting-fastq-format-to-fasta.md)
   * [Retrieve FASTA sequences using sequence IDs](retrieve-fasta-sequences-using-sequence-ids.md)
   * [Genomescope](genomescope.md)
+* [Introduction to Regular Expressions](introduction-to-regular-expressions.md)
 
