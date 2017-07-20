@@ -174,5 +174,5 @@ Below is a table of some of the most common character classes that are used in r
 
 A more comprehensive list of character classes can be found here.
 
-[http://perldoc.perl.org/perlrecharclass.html](http://perldoc.perl.org/perlrecharclass.html)
+* [Perl Programming Documentation](http://perldoc.perl.org/perlrecharclass.html)
 
