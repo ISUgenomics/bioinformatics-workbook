@@ -59,7 +59,6 @@ To start a interactive session execute the following:
 ```
 #this command will give 1 Node for a time of 4 hours
 srun -N 1 -t 4:00:00 --pty /bin/bash 
-
 ```
 
 
