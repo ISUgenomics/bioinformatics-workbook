@@ -2,7 +2,7 @@
 
 Our research allocation gives us about 40Tb of long term storage that we can use for backingup. This guide will help you getting started and using the Supercell. If you haven't already gotten a username/password for PSC systems (eg., Blacklight), you need to do it now. Use the [password reset link](http://psc.edu/index.php/resources-for-users/allocations "password reset link"). 
 
-### Accessing Supercell </h3>
+### Accessing Supercell ###
 
 SFTP is the best method to browse the files and create the directory structure you want. 
 ```
@@ -16,7 +16,7 @@ sftp> cd TIL11_FULL/
 sftp> exit
 ```
 
-### Transferring files </h3>
+### Transferring files ###
 
 Use  `rsync` to sync the directories that you need to keep in sync
 
