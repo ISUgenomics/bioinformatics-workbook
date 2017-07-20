@@ -38,6 +38,7 @@ fastq-dump --split-files --origfmt --gzip SRR1234567
 The `fastq-dump` is also capable of doing:
  * *Additional filtering or clipping of the downloaded reads*: to remove reads with poor quality or to trim adapters. Although, this will work for the single end reads, for paired-end reads it may cause differential treatment for each pairs and might not be usable for mapping programs that needs strict pairs. 
  * *Compressed format:* either as gzipped or bzipped files using `--gzip` or `--bzip2` options.
+ * *fasta format*: by using the `--fasta` option
   
 ## Using Linux commands:
 
@@ -63,7 +64,10 @@ while read line; do
 wget http://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=dload&run_list=${line}&format=fastq;
 done<list_of_ids
 ```
-
+The datasets can also be downloaded from DDBJ or EMBL using the FTP links:
+```
+ftp://ftp.ddbj.nig.ac.jp/ddbj_database/dra/fastq/DRA004/DRA004006/DRX041728/
+  
 ## Using 
 
 
