@@ -46,6 +46,8 @@ wget --mirror -p --convert-links -P ./LOCAL-DIR WEBSITE-URL
 | `-password=` | Use Password | wget will use this password with your username to authenticate. |
 | `-ftp-user=` or `-ftp-password=` | FTP Credentials | Just like the previous settings, wget can login to an FTP server to retrieve files. |
 
+
+
 ##Citations  ##
 
 - [Stack-exchange thread](http://unix.stackexchange.com/questions/117988/wget-with-wildcards-in-http-downloads)
