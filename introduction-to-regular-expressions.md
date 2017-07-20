@@ -157,7 +157,7 @@ You may want to include these characters in the regular expression you are tryin
 | `}` | (closed brace) |
 
 
-##Character Classes
+## Character Classes
 Below is a table of some of the most common character classes that are used in regular expression.  
 
 | Class | Description |
