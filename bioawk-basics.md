@@ -45,28 +45,28 @@ If `-c header` is specified, the field names (first line) will be used as variab
 ###  1. For `FASTA` files  ### 
 Once the input file is read, the defline for the `FASTA` will be $name variable and the sequence will be $seq variable. you can use any of the standard awk functions on these as well as the bioawk functions. Some<i>eg.,</i>
 
-####Get length for sequences ####
+#### Get length for sequences ####
 ```
 bioawk -c fastx '{ print $name, length($seq) }' input.fasta
 ```
-####Get %GC for sequences ####
+#### Get %GC for sequences ####
 ```
 bioawk -c fastx '{ print $name, gc($seq) }' input.fasta
 ```
-####Get reverse complement for all sequences ####
+#### Get reverse complement for all sequences ####
 ```
 bioawk -c fastx '{ print ">"$name;print revcomp($seq) }' input.fasta
 ```
-####Print sequences with length greater than 100 bases #### 
+#### Print sequences with length greater than 100 bases #### 
 ```
 bioawk -c fastx 'length($seq) > 100{ print ">"$name; print $seq }'  input.fasta
 ```
-####Add a prefix/suffix to the sequence defline ####
+#### Add a prefix/suffix to the sequence defline ####
 ```
 bioawk -c fastx '{ print ">PREFIX"$name; $seq }' input.fasta
 bioawk -c fastx '{ print ">"$name"|SUFFIX"; $seq }' input.fasta
 ```
-####Convert `FASTA` to tabular format ####
+#### Convert `FASTA` to tabular format ####
 ```
 bioawk -t -c fastx '{ print $name, $seq }' input.fasta
 ```
@@ -81,25 +81,25 @@ These are just some examples, we can do many more with other standard `awk` func
 
 Here, the `-c fastx` option remains same but `bioawk` will automatically recognize the fastq format and build the required variables, such as `$name`  `$seq`  `$qual` and `$comment`
 
-####Count the number of records (reads) ####
+#### Count the number of records (reads) ####
 ```
 bioawk -t -c fastx 'END {print NR}' input.fastq
 # note that when fastq is specified, each record is 4 lines
 ```
-####Convert fastq to `FASTA` ####
+#### Convert fastq to `FASTA` ####
 ```
 bioawk -c fastx '{print ">"$name; print $seq}' input.fastq
 ```
-####Get the mean Phred quality score from fastq ####
+#### Get the mean Phred quality score from fastq ####
 ```
 bioawk -c fastx '{print ">"$name; print meanqual($qual)}' input.fastq
 ```
 
-####Filter reads shorter than 10 bp (or any bp) ####
+#### Filter reads shorter than 10 bp (or any bp) ####
 ```
 bioawk -cfastx 'length($seq) > 10 {print "@"$name"\n"$seq"\n+\n"$qual}' input.fastq
 ```
-####Trim fastq files based on quality ####
+#### Trim fastq files based on quality ####
 ```
 bioawk -c fastx ' trimq(30, 0, 5){print $0}' input.fastq
 # trims fastq bases 0 to 5 (beginning to end), scores less than 30.
@@ -109,24 +109,24 @@ bioawk -c fastx ' trimq(30, 0, 5){print $0}' input.fastq
 
 ###  3. For BED files  ### 
 
-####Print the feature length ####
+#### Print the feature length ####
 ```
 bioawk -c bed '{ print $end - $start }' test.bed
 ```
 
 ###  4. For SAM files  ### 
 
-####Extract unmapped reads ####
+#### Extract unmapped reads ####
 ```
 bioawk -c sam 'and($flag,4)' input.sam
 ```
 
-####Extract mapped reads ####
+#### Extract mapped reads ####
 ```
 bioawk -c sam -H '!and($flag,4)' input.sam
 ```
 
-####Create FASTA from SAM ####
+#### Create FASTA from SAM ####
 ```
 bioawk -c sam '{ s=$seq; if(and($flag, 16)) {s=revcomp($seq) } print ">"$qname"\n"s}' input.sam > output.fasta
 ```
@@ -149,7 +149,7 @@ Say, if your input file is as follows:
 | Joe | 6407 | a@g.com | 24 |
 | Doe | 4506 | b@g.com | 26 |
 
-####List records less than 25 years age ####
+#### List records less than 25 years age ####
 ```
 bioawk -t -c header '$age < "25" {print $0}' input.txt
 ```
