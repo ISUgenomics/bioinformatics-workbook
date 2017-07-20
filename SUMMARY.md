@@ -46,4 +46,5 @@
   * [Retrieve FASTA sequences using sequence IDs](retrieve-fasta-sequences-using-sequence-ids.md)
   * [Genomescope](genomescope.md)
 * [Introduction to Regular Expressions](introduction-to-regular-expressions.md)
+* [SLURM job management cheat sheet](slurm-job-management-cheat-sheet.md)
 
