@@ -15,7 +15,7 @@ perl –ne 'if (/regular_expression/) { print $_.”\n”;}’ input_file_name
  - `-n`  feeds the perl program each line of the file
  - `-p`  feeds the perl program each line and prints every line.
  - `-e`  stands for execute what is between the { }
-- `if (/regex here/ __)__` is the portion of the perl command where you put a the string you are trying to find.
+- `if (/regular_expression/)` is the portion of the perl command where you put a the string you are trying to find.
 - `{execute me}`     is the portion of the perl command where you tell perl what to do.  In the example above, each line of the file is printed to the screen.
 - `$_` variable in perl that represents the entire line that was fed to the perl program
 
@@ -47,7 +47,7 @@ SS# 11-02-33-04-50
 ### Simple Example that requires no syntax
 Recall from above
 ```
-perl -ne 'if (/regular_expression/) { print $_.”\n”;}’ input_file_name
+perl -ne 'if (/regular_expression/) { print $_."\n";}' input_file_name
 ```
 To find the line that contains Bean you would type
 ```
