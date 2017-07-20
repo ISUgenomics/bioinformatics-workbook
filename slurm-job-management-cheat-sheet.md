@@ -35,11 +35,8 @@ A typical job script will look like this:
 #SBATCH --mail-type=end
 #SBATCH --error=JobName.%J.err
 #SBATCH --output=JobName.%J.out
-
 cd $SLURM_SUBMIT_DIR
-
 module load modulename
-
 your_commands_goes_here
 ```
 
@@ -61,9 +58,7 @@ To start a interactive session execute the following:
 
 ```
 #this command will give 1 Node for a time of 4 hours
-
 srun -N 1 -t 4:00:00 --pty /bin/bash 
-
 
 ```
 
