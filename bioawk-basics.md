@@ -22,7 +22,7 @@ Bioawk is developed by [Heng Li](http://lh3lh3.users.sourceforge.net). You can d
 For the `-c` you can either specify `bed`, `sam`, `vcf`, `gff`,  `fastx` or `header`. Bioawk will parse these variables for the respective format
 
 
-| `bed` | `sam` | `vcf` | `gff` | `fastx` |
+|`bed` |`sam` |`vcf` |`gff` |`fastx` |
 | --- | --- | --- | --- | --- |
 | chrom | qname | chrom | seqname | name |
 | start | flag | pos | source | seq |
