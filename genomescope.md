@@ -1,4 +1,6 @@
-This program uses k-mer frequencies generated from raw read data to estimate the genome size, abundance of repetitive elements and rate of heterozygosity.
+# Genomescope: genome properties using just raw sequence data
+
+Genomescope uses k-mer frequencies generated from raw read data to estimate the genome size, abundance of repetitive elements and rate of heterozygosity.
 
 ## Background
 
@@ -22,9 +24,9 @@ Similarly, there are 64 possible 3-mers for DNA if we assume there are only 4 ty
 | **C** |`ACA`<br>`ACT`<br>`ACG`<br>`ACC`| `TCA`<br>`TCT`<br>`TCG`<br>`TCC` | `GCA`<br>`GCT`<br>`GCG`<br>`GCC` | `CCA`<br>`CCT`<br>`CCG`<br>`CCC` |
 
 
-The general rule for the number of possible K-mers given a sequence with 4 possible bases is the following. The number of bases (B) raised to the power of the size (length) of the k-mer (K).
+The general rule for the number of possible K-mers given a sequence with 4 possible bases is the following. The number of bases (B) raised to the power of the size (length) of the k-mer (*k*).
 
-`B^K`
+`B^`*k*
 
 
 
