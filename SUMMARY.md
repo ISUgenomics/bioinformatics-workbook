@@ -46,9 +46,9 @@
   * [Retrieve FASTA sequences using sequence IDs](retrieve-fasta-sequences-using-sequence-ids.md)
   * [Introduction to Regular Expressions](introduction-to-regular-expressions.md)
   * [SLURM job management cheat sheet](slurm-job-management-cheat-sheet.md)
+  * [Submitting dependency jobs using PBS-Torque](submitting-dependency-jobs-using-pbs-torque.md)
   * [Genomescope](genomescope.md)
-* [Submitting dependency jobs using PBS-Torque](submitting-dependency-jobs-using-pbs-torque.md)
-* [Export multiple worksheets as separate text files in Excel](export-multiple-worksheets-as-separate-text-files-in-excel.md)
-* [Guide for installing various types of programs in Linux](guide-for-installing-various-types-of-programs-in-linux.md)
-* [Creating SLURM job submission scripts for Condo](creating-slurm-job-submission-scripts-for-condo.md)
+  * [Export multiple worksheets as separate text files in Excel](export-multiple-worksheets-as-separate-text-files-in-excel.md)
+  * [Creating SLURM job submission scripts for Condo](creating-slurm-job-submission-scripts-for-condo.md)
+  * [Guide for installing various types of programs in Linux](guide-for-installing-various-types-of-programs-in-linux.md)
 
