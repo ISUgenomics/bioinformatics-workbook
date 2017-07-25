@@ -49,4 +49,5 @@
   * [Genomescope](genomescope.md)
 * [Submitting dependency jobs using PBS-Torque](submitting-dependency-jobs-using-pbs-torque.md)
 * [Export multiple worksheets as separate text files in Excel](export-multiple-worksheets-as-separate-text-files-in-excel.md)
+* [Guide for installing various types of programs in Linux](guide-for-installing-various-types-of-programs-in-linux.md)
 
