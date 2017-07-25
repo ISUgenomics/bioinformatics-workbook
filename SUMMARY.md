@@ -47,4 +47,5 @@
   * [Introduction to Regular Expressions](introduction-to-regular-expressions.md)
   * [SLURM job management cheat sheet](slurm-job-management-cheat-sheet.md)
   * [Genomescope](genomescope.md)
+* [Submitting dependency jobs using PBS-Torque](submitting-dependency-jobs-using-pbs-torque.md)
 
