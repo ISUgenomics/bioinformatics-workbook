@@ -43,7 +43,7 @@ Once the `makeSLURMs.py` command is run, you should see 5 `.slurm` files, each i
 cd $SLURM_SUBMIT_DIR
 ulimit -s unlimited
 module use /work/GIF/software/modules
-./unBLASTn.sh file1.fsa
+./runBLASTn.sh file1.fsa
 scontrol show job $SLURM_JOB_ID
 ```
 ## 3. Submit the jobs ##
