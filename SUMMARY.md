@@ -50,6 +50,7 @@
   * [Genomescope](genomescope.md)
   * [Export multiple worksheets as separate text files in Excel](export-multiple-worksheets-as-separate-text-files-in-excel.md)
   * [Creating SLURM job submission scripts for Condo](creating-slurm-job-submission-scripts-for-condo.md)
+  * [Generate index sheet linking all spreadsheets in Excel](generate-index-sheet-linking-all-spreadsheets-in-excel.md)
   * [Guide for installing various types of programs in Linux](guide-for-installing-various-types-of-programs-in-linux.md)
-* [Generate index sheet linking all spreadsheets in Excel](generate-index-sheet-linking-all-spreadsheets-in-excel.md)
+* [File Transfer Using Globus Connect Personal \(GCP\)](file-transfer-using-globus-connect-personal-gcp.md)
 
