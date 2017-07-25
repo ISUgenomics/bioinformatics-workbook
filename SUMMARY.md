@@ -48,4 +48,5 @@
   * [SLURM job management cheat sheet](slurm-job-management-cheat-sheet.md)
   * [Genomescope](genomescope.md)
 * [Submitting dependency jobs using PBS-Torque](submitting-dependency-jobs-using-pbs-torque.md)
+* [Export multiple worksheets as separate text files in Excel](export-multiple-worksheets-as-separate-text-files-in-excel.md)
 
