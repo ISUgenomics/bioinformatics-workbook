@@ -7,18 +7,17 @@ This wiki will guide you through the RNAseq analysis, starting from the quiality
 ![**Figure 1.**: Overview of the RNAseq workflow
 ](/assets/RNAseq_1.png)
 
-
  
 ### Experimental design ###
 
-This experiment consists of 3 conditions. The first condition is "control" which is mock-infected soybean plants. The second and third conditions includes infection with 2 different pathogens. All 3 conditions have three replicates each (total we have 9 pairs of fastq files, 3 pairs belonging to control, 3 pairs bleonging to condition1- infected with pathogen 1 and 3 pairs belonging to condition 2 -infected with pathogen 2). Pairs because the data is paired-end.
+This experiment consists of 2 conditions. The first condition is "control" which is mock-infected soybean plants. The second condition is the infected plants with the actual pathogen. Both conditions have four replicates each (total we have 8 pairs of fastq files, 4 pairs belonging to control, and 4 pairs bleonging to pathogen infected soybean). The reads were generated as paired-end data, hence we have 2 files per replicate.
 
 
-| Condition | Replicate 1 | Replicate 2 | Replicate 3 |
-| --- | --- | --- | --- |
-| Control | Control.A_R1.fastq.gz <br> Control.A_R2.fastq.gz | Control.B_R1.fastq.gz <br> Control.B_R2.fastq.gz | Control.C_R1.fastq.gz <br> Control.C_R2.fastq.gz |
-| Infected 1 | Infected1.A_R1.fastq.gz <br> Infected1.A_R2.fastq.gz| Infected1.B_R1.fastq.gz <br> Infected1.B_R2.fastq.gz| Infected1.C_R1.fastq.gz <br> Infected1.C_R2.fastq.gz|
-| Infected 2 | Infected2.A_R1.fastq.gz <br> Infected2.A_R2.fastq.gz | Infected2.B_R1.fastq.gz <br> Infected2.B_R2.fastq.gz| Infected2.C_R1.fastq.gz <br> Infected2.C_R2.fastq.gz |
+| Condition | Replicate 1 | Replicate 2 | Replicate 3 |  Replicate 4 |
+| --- | --- | --- | --- | --- |
+| Control | Control.A_R1.fastq.gz <br> Control.A_R2.fastq.gz | Control.B_R1.fastq.gz <br> Control.B_R2.fastq.gz | Control.C_R1.fastq.gz <br> Control.C_R2.fastq.gz |  Control.D_R1.fastq.gz <br> Control.D_R2.fastq.gz  |
+| Infected | Infected.A_R1.fastq.gz <br> Infected.A_R2.fastq.gz| Infected.B_R1.fastq.gz <br> Infected.B_R2.fastq.gz| Infected.C_R1.fastq.gz <br> Infected.C_R2.fastq.gz | Infected.D_R1.fastq.gz <br> Infected.D_R2.fastq.gz |
+
 ### 1. Download the data ###
 
 For downloading the data, you can use `wget` or `curl` commands, if the data is hosted somewhere. If not, you might have to upload the data to the HPC either using `scp` command or using `rsync` (if data is located locally on your computer), or use `globusURL` to get the data from other computer. Here we will assume that you have the data in our DNA facility (at Iowa State University) and you have access to those files. We will use `wget` command to download them.
@@ -32,7 +31,6 @@ wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_5_HCC22_956.tar
 wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_6_HCC22_956.tar
 wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_7_HCC22_956.tar
 wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_8_HCC22_956.tar
-wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_9_HCC22_956.tar
 ```
 
 Note that these weblinks are inactive, so if you actually run these commands it will fail as they don't point to any files. Once downloaded, you can untar the archive and you will find the fastq files. To untar:
@@ -99,7 +97,7 @@ For mapping, each set of reads (forward and reverse or R1 and R2), we will set u
 ```
 #!/bin/bash
 module load hisat2
-module load_gsnap.samtools
+module load samtools
 DBDIR="/path/containing/HiSat2_index_files"
 GENOME="Gmax_275_v2.0_hisat2"
 # number of processors to use
@@ -114,13 +112,13 @@ hisat2 \
   -x ${DBDIR}/${GENOME} \
   -1 ${R1_FQ} \
   -2 ${R2_FQ} | \
-  -S  ${OUTPUT}_gsnap.sam &> ${OUTPUT}.log
+  -S  ${OUTPUT}.sam &> ${OUTPUT}.log
 # convert_gsnap.same file to bam file format
 samtools view \
   --threads 16 \
   -b \
   -o ${OUTPUT}.bam \
-     ${OUTPUT}_gsnap.sam
+     ${OUTPUT}.sam
 # sort the bam file based on co-ordinates
 samtools sort \
   -m 7G \
@@ -143,7 +141,7 @@ For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLUR
 ```
 makeSLURMs.py 1 hisat2.cmds
 for sub in hisat2_*.sub; do
-qsub $sub; 
+sbatch $sub; 
 done
 ```
 
@@ -152,12 +150,11 @@ This should create, following files as output:
 Control.A_sorted.bam
 Control.B_sorted.bam
 Control.C_sorted.bam
-Infected1.A_sorted.bam
-Infected1.B_sorted.bam
-Infected1.C_sorted.bam
-Infected2.A_sorted.bam
-Infected2.B_sorted.bam
-Infected2.C_sorted.bam
+Control.D_sorted.bam
+Infected.A_sorted.bam
+Infected.B_sorted.bam
+Infected.C_sorted.bam
+Infected.D_sorted.bam
 ```
 
 #### Option B: Use STAR for mapping #### 
@@ -211,7 +208,7 @@ For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLUR
 ```
 makeSLURMs.py 1 star.cmds
 for sub in star_*.sub; do
-qsub $sub; 
+sbatch $sub; 
 done
 ```
 
@@ -220,12 +217,11 @@ This should create, following files as output:
 Control.A_star.sam
 Control.B_star.sam
 Control.C_star.sam
-Infected1_star.A.sam
-Infected1_star.B.sam
-Infected1_star.C.sam
-Infected2_star.A.sam
-Infected2_star.B.sam
-Infected2_star.C.sam
+Control.D_star.sam
+Infected_star.A.sam
+Infected_star.B.sam
+Infected_star.C.sam
+Infected_star.D.sam
 ```
 
 #### Option C: Use GSNAP for mapping #### 
@@ -272,7 +268,7 @@ For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLUR
 ```
 makeSLURMs.py 1 gsnap.cmds
 for sub in gsnap_*.sub; do
-qsub $sub; 
+sbatch $sub; 
 done
 ```
 
@@ -281,12 +277,12 @@ This should create, following files as output:
 Control.A_gsnap.sam
 Control.B_gsnap.sam
 Control.C_gsnap.sam
-Infected1.A_gsnap.sam
-Infected1.B_gsnap.sam
-Infected1.C_gsnap.sam
-Infected2.A_gsnap.sam
-Infected2.B_gsnap.sam
-Infected2.C_gsnap.sam
+Control.D_gsnap.sam
+Infected.A_gsnap.sam
+Infected.B_gsnap.sam
+Infected.C_gsnap.sam
+Infected.D_gsnap.sam
+
 ```
 
 Once we have the SAM or BAM files generated (from any of the 3 methods above), we can proceed with the abundence estimation.
@@ -322,13 +318,14 @@ For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLUR
 ```
 makeSLURMs.py 9 htseq.cmds
 # as these commands run quickly, we will put them all in one `sub` file
-qsub htseq_0.sub; 
+sbatch htseq_0.sub; 
 done
 ```
 
 You will have a text file with counts for every SAM/BAM file you provide. Next, we need to merge individual files to make a single file. We can do this using `awk` as follows:
 ```
 awk '{arr[$1]=arr[$1]"\t"$2}END{for(i in arr)print i,arr[i]}' *_counts.txt >> merged_htseq_counts.tsv
+mv merged_htseq_counts.tsv counts.txt
 ```
 
 
@@ -356,20 +353,22 @@ featureCounts \
 The ouput will look something like this (__headers might be different, only first 10 lines displayed here__)
 
 ```
-#Geneid	Chr	Start	End	Strand	Length	Control.A	Control.B	Control.C	Infected1.A	Infected1.B	Infected1.C	Infected2.A	Infected2.B	Infected2.C
-Glyma.01G000100.Wm82.a2.v1	Chr01	27355	28320	-	966	24	0	51	93	126	91	121	32	52
-Glyma.01G000200.Wm82.a2.v1	Chr01	58975	67527	-	8553	91	1	122	193	214	239	102	111	148
-Glyma.01G000300.Wm82.a2.v1	Chr01	67770	69968	+	2199	9	0	12	22	18	21	3	11	18
-Glyma.01G000400.Wm82.a2.v1	Chr01	90152	95947	-	5796	169	0	407	480	402	518	502	443	379
-Glyma.01G000500.Wm82.a2.v1	Chr01	90289	91197	+	909	0	0	0	0	0	0	0	0	0
-Glyma.01G000600.Wm82.a2.v1	Chr01	116094	127845	+	11752	149	4	310	374	402	529	304	352	300
-Glyma.01G000700.Wm82.a2.v1	Chr01	143467	155573	+	12107	39	2	78	119	113	129	34	100	107
-Glyma.01G000800.Wm82.a2.v1	Chr01	157030	157772	+	743	0	0	0	1	1	0	0	0	0
-Glyma.01G000900.Wm82.a2.v1	Chr01	170534	193342	+	22809	240	1	517	759	760	859	462	658	494
+#
+Geneid	Chr	Start	End	Strand	Length	Control.A	Control.B	Control.C	Control.D	Infected.A	Infected.B	Infected.C	Infected.D
+Glyma.01G000100.Wm82.a2.v1	Chr01	27355	28320	-	966	24	0	51	93	126	91	121	32
+Glyma.01G000200.Wm82.a2.v1	Chr01	58975	67527	-	8553	91	1	122	193	214	239	102	111
+Glyma.01G000300.Wm82.a2.v1	Chr01	67770	69968	+	2199	9	0	12	22	18	21	3	11
+Glyma.01G000400.Wm82.a2.v1	Chr01	90152	95947	-	5796	169	0	407	480	402	518	502
+Glyma.01G000500.Wm82.a2.v1	Chr01	90289	91197	+	909	0	0	0	0	0	0	0	0
+Glyma.01G000600.Wm82.a2.v1	Chr01	116094	127845	+	11752	149	4	310	374	402	529	304	352
+Glyma.01G000700.Wm82.a2.v1	Chr01	143467	155573	+	12107	39	2	78	119	113	129	34	100
+Glyma.01G000800.Wm82.a2.v1	Chr01	157030	157772	+	743	0	0	0	1	1	0	0	0
+Glyma.01G000900.Wm82.a2.v1	Chr01	170534	193342	+	22809	240	1	517	759	760	859	462	658
 ```
 Since we only need the counts (without the feature information), we will trim this table using `cut` command.
 ```
 cut -f 1,7-15 featureCounts_counts.txt > featureCounts_counts_clean.txt
+mv featureCounts_counts_clean.txt counts.txt
 ```
 Now we are ready for performing DGE analysis!
 
@@ -380,9 +379,289 @@ Again, there are few options here. You can use `edgeR`, `DESeq2`, or `QuasiSeq` 
 **Note: you don't have to run all three methods, use any one**
 
 #### Option A: edgeR #### 
+Run the following code on RStudio or R terminal
+```
+# import data
+datain <- read.delim("counts.txt",row.names="Geneid")
+
+# experimental design
+DataGroups <- c("CTL", "CTL","CTL","CTL", "TRT", "TRT", "TRT", "TRT")
+
+# load edgeR
+library(edgeR)
+
+# create DGE object of edgeR
+dgList <- DGEList(counts=datain,group=factor(DataGroups))
+
+# filter data to retain genes that are represented at least 1 counts per million (cpm) in at least 2 samples
+countsPerMillion <- cpm(dgList)
+countCheck <- countsPerMillion > 1
+keep <- which(rowSums(countCheck) >= 2)
+dgList <- dgList[keep,]
+dgList$samples$lib.size <- colSums(d$counts)
+
+# normalization using TMM method
+dgList <- calcNormFactors(dgList, method="TMM")
+
+## data exploration
+# MDS plot
+png("plotmds.png")
+plotMDS(dgList, method="bcv", col=as.numeric(d$samples$group))
+dev.off()
+
+# Dispersion estimates
+design.mat <- model.matrix(~ 0 + dgList$samples$group)
+colnames(design.mat) <- levels(dgList$samples$group)
+dgList <- estimateGLMCommonDisp(dgList,design.mat)
+dgList <- estimateGLMTrendedDisp(dgList,design.mat, method="power")
+dgList <- estimateGLMTagwiseDisp(dgList,design.mat)
+png("plotbcv.png")
+plotBCV(dgList)
+dev.off()
+
+# Differentail expression analysis
+fit <- glmFit(dgList, design.mat)
+lrt <- glmLRT(fit, contrast=c(1,-1))
+edgeR_results <- topTags(lrt, n=Inf)
+
+# plot log2FC of genes and highlight the DE genes
+deGenes <- decideTestsDGE(lrt, p=0.05)
+deGenes <- rownames(lrt)[as.logical(deGenes)]
+png("plotsmear.png")
+plotSmear(lrt, de.tags=deGenes)
+abline(h=c(-1, 1), col=2)
+dev.off()
+
+# save the results as a table
+write.table(edgeR_results, file="Results_edgeR.txt")
+```
 
 #### Option B: DESeq2 ####
+Again, this should be done either on RStudio or in R terminal. Following are the steps
 
+```
+## RNA-seq analysis with DESeq2
+## Largely based on Stephen Turner, @genetics_blog
+## https://gist.github.com/stephenturner/f60c1934405c127f09a6
+
+# Import the data
+countdata <- read.table("counts.txt", header=TRUE, row.names=1)
+
+# Remove .bam or .sam from filenames
+colnames(countdata) <- gsub("\\.[sb]am$", "", colnames(countdata))
+
+# Convert to matrix
+countdata <- as.matrix(countdata)
+head(countdata)
+
+# Assign condition (first four are controls, second four and third four contain two different experiments)
+(condition <- factor(c(rep("ctl", 4), rep("inf1", 4), rep("inf2", 4))))
+
+# Analysis with DESeq2 
+
+library(DESeq2)
+
+# Create a coldata frame and instantiate the DESeqDataSet. See ?DESeqDataSetFromMatrix
+(coldata <- data.frame(row.names=colnames(countdata), condition))
+dds <- DESeqDataSetFromMatrix(countData=countdata, colData=coldata, design=~condition)
+dds
+
+# Run the DESeq pipeline
+dds <- DESeq(dds)
+
+# Plot dispersions
+png("qc-dispersions.png", 1000, 1000, pointsize=20)
+plotDispEsts(dds, main="Dispersion plot")
+dev.off()
+
+# Regularized log transformation for clustering/heatmaps, etc
+rld <- rlogTransformation(dds)
+head(assay(rld))
+hist(assay(rld))
+
+# Colors for plots below
+## Ugly:
+## (mycols <- 1:length(unique(condition)))
+## Use RColorBrewer, better
+library(RColorBrewer)
+(mycols <- brewer.pal(8, "Dark2")[1:length(unique(condition))])
+
+# Sample distance heatmap
+sampleDists <- as.matrix(dist(t(assay(rld))))
+library(gplots)
+png("qc-heatmap-samples.png", w=1000, h=1000, pointsize=20)
+heatmap.2(as.matrix(sampleDists), key=F, trace="none",
+          col=colorpanel(100, "black", "white"),
+          ColSideColors=mycols[condition], RowSideColors=mycols[condition],
+          margin=c(10, 10), main="Sample Distance Matrix")
+dev.off()
+
+# Principal components analysis
+## Could do with built-in DESeq2 function:
+## DESeq2::plotPCA(rld, intgroup="condition")
+## I (Stephen Turner) like mine better:
+rld_pca <- function (rld, intgroup = "condition", ntop = 500, colors=NULL, legendpos="bottomleft", main="PCA Biplot", textcx=1, ...) {
+  require(genefilter)
+  require(calibrate)
+  require(RColorBrewer)
+  rv = rowVars(assay(rld))
+  select = order(rv, decreasing = TRUE)[seq_len(min(ntop, length(rv)))]
+  pca = prcomp(t(assay(rld)[select, ]))
+  fac = factor(apply(as.data.frame(colData(rld)[, intgroup, drop = FALSE]), 1, paste, collapse = " : "))
+  if (is.null(colors)) {
+    if (nlevels(fac) >= 3) {
+      colors = brewer.pal(nlevels(fac), "Paired")
+    }   else {
+      colors = c("black", "red")
+    }
+  }
+  pc1var <- round(summary(pca)$importance[2,1]*100, digits=1)
+  pc2var <- round(summary(pca)$importance[2,2]*100, digits=1)
+  pc1lab <- paste0("PC1 (",as.character(pc1var),"%)")
+  pc2lab <- paste0("PC1 (",as.character(pc2var),"%)")
+  plot(PC2~PC1, data=as.data.frame(pca$x), bg=colors[fac], pch=21, xlab=pc1lab, ylab=pc2lab, main=main, ...)
+  with(as.data.frame(pca$x), textxy(PC1, PC2, labs=rownames(as.data.frame(pca$x)), cex=textcx))
+  legend(legendpos, legend=levels(fac), col=colors, pch=20)
+  #     rldyplot(PC2 ~ PC1, groups = fac, data = as.data.frame(pca$rld),
+  #            pch = 16, cerld = 2, aspect = "iso", col = colours, main = draw.key(key = list(rect = list(col = colours),
+  #                                                                                         terldt = list(levels(fac)), rep = FALSE)))
+}
+png("qc-pca.png", 1000, 1000, pointsize=20)
+rld_pca(rld, colors=mycols, intgroup="condition", xlim=c(-75, 35))
+dev.off()
+
+
+# Get differential expression results
+res <- results(dds)
+table(res$padj<0.05)
+## Order by adjusted p-value
+res <- res[order(res$padj), ]
+## Merge with normalized count data
+resdata <- merge(as.data.frame(res), as.data.frame(counts(dds, normalized=TRUE)), by="row.names", sort=FALSE)
+names(resdata)[1] <- "Gene"
+head(resdata)
+## Write results
+write.csv(resdata, file="diffexpr-results.csv")
+
+## Examine plot of p-values
+hist(res$pvalue, breaks=50, col="grey")
+
+## Examine independent filtering
+attr(res, "filterThreshold")
+plot(attr(res,"filterNumRej"), type="b", xlab="quantiles of baseMean", ylab="number of rejections")
+
+## MA plot
+## Could do with built-in DESeq2 function:
+## DESeq2::plotMA(dds, ylim=c(-1,1), cex=1)
+## I like mine better:
+maplot <- function (res, thresh=0.05, labelsig=TRUE, textcx=1, ...) {
+  with(res, plot(baseMean, log2FoldChange, pch=20, cex=.5, log="x", ...))
+  with(subset(res, padj<thresh), points(baseMean, log2FoldChange, col="red", pch=20, cex=1.5))
+  if (labelsig) {
+    require(calibrate)
+    with(subset(res, padj<thresh), textxy(baseMean, log2FoldChange, labs=Gene, cex=textcx, col=2))
+  }
+}
+png("diffexpr-maplot.png", 1500, 1000, pointsize=20)
+maplot(resdata, main="MA Plot")
+dev.off()
+
+## Volcano plot with "significant" genes labeled
+volcanoplot <- function (res, lfcthresh=2, sigthresh=0.05, main="Volcano Plot", legendpos="bottomright", labelsig=TRUE, textcx=1, ...) {
+  with(res, plot(log2FoldChange, -log10(pvalue), pch=20, main=main, ...))
+  with(subset(res, padj<sigthresh ), points(log2FoldChange, -log10(pvalue), pch=20, col="red", ...))
+  with(subset(res, abs(log2FoldChange)>lfcthresh), points(log2FoldChange, -log10(pvalue), pch=20, col="orange", ...))
+  with(subset(res, padj<sigthresh & abs(log2FoldChange)>lfcthresh), points(log2FoldChange, -log10(pvalue), pch=20, col="green", ...))
+  if (labelsig) {
+    require(calibrate)
+    with(subset(res, padj<sigthresh & abs(log2FoldChange)>lfcthresh), textxy(log2FoldChange, -log10(pvalue), labs=Gene, cex=textcx, ...))
+  }
+  legend(legendpos, xjust=1, yjust=1, legend=c(paste("FDR<",sigthresh,sep=""), paste("|LogFC|>",lfcthresh,sep=""), "both"), pch=20, col=c("red","orange","green"))
+}
+png("diffexpr-volcanoplot.png", 1200, 1000, pointsize=20)
+volcanoplot(resdata, lfcthresh=1, sigthresh=0.05, textcx=.8, xlim=c(-2.3, 2))
+dev.off()
+```
 #### Option C: QuasiSeq ####
+Also in RStudio or R terminal. As a first step, save the following code as a file named `QLresultsPvaluePlot.R` using any text editor and place it in the same directory as the count data is in.
+```
+QLresultsPvaluePlot<-function(QLfit,Strname){
+filename=Strname
+results<-QL.results(QLfit,Plot=F)
+designNum<-dim(results$P.values$QLSpline)[2]
+designNames<-colnames(results$P.values$QLSpline)
+for (i in 1:designNum){
+   print(i)
+   if (min(results$P.values$QLSpline[,i])<1 && min(results$P.values$QLSpline[,i])!="NaN"){
+       Rnames<-rownames(dataIn)
+       if (min(results$Q.values$QLSpline[,i])<10 && min(results$Q.values$QLSpline[,i])!="NaN"){
+          if (length(which(results$Q.values$QLSpline[,i]<10))>1){
+            meanTrt<-apply(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==2)],1,mean)
+            meanWt<-apply(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==1)],1,mean)
+            FoldTrtoverWt <- meanTrt/meanWt
+            logTwoFC <-log2(FoldTrtoverWt)
+            outData<-cbind(as.matrix(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),]),meanTrt,meanWt,as.matrix(results$P.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),as.matrix(results$Q.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),FoldTrtoverWt,logTwoFC)
+            colnames(outData)<-c(colnames(dataIn),"mean_treat","mean_control","Pvalues","Qvalues","fold_change","Log2FC")
+            write.table(outData,file=paste(filename,".FulldesignVS.",i,".txt",sep=""))
+            }
+          if (length(which(results$Q.values$QLSpline[,i]<10))==1){
+            outData<-cbind(matrix(dataIn[which(results$Q.values$QLSpline[,i]<10),],1,dim(dataIn)[2]),as.matrix(results$P.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),as.matrix(results$Q.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),(sign(mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==2)])-mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==1)])))*mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==2)])/mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==1)]))
+            colnames(outData)<-c(colnames(dataIn),"Pvalues","Qvalues","fold_change")
+            write.table(outData,file=paste(filename,".FullvsDesignVS.",i,".txt",sep=""))
+            }
+        }
+        pdf(file=paste(filename,".",i,".pdf",sep=""),width=5,height=5)
+           a<-hist(results$P.values$QLSpline[,i],breaks=seq(0,1,.01),main=paste(Strname,designNames[i]),cex.main=.5)
+           b<-a$counts[1]*.75
+           bb<-a$counts[1]*.65
+           bbb<-a$counts[1]*.55
+           text(.5,b,paste("Number of genes qvalue below 0.5 = ",as.character( dim(as.matrix(dataIn[which(results$Q.values$QLSpline[,i]<0.5),i]))[1])),cex=.8)
+           text(.5,bb,paste("Number of genes qvalue below 0.3 = ",as.character( dim(as.matrix(dataIn[which(results$Q.values$QLSpline[,i]<0.3),i]))[1])),cex=.8)
+           text(.5,bbb,paste("Number of genes qvalue below 0.1 = ",as.character( dim(as.matrix(dataIn[which(results$Q.values$QLSpline[,i]<.1),i]))[1])),cex=.8)
+        dev.off()
+    }
+}
+}
+```
+
+Next, run these steps on RStudio by setting the work directory to the counts data directory.
+```
+# set the work directory
+setwd("C:/Users/arunk/Google Drive/PostDoc/projects/20170707_RSmith_MosquitoRNAseq/QuassiSeq")
+# source the code you just created
+source("QLresultsPvaluePlot.R")
+# Import the data
+uniq<-as.matrix(read.table("counts.txt", header=TRUE,  row.names = 1))
+
+# Check dimensions
+cols<-dim(uniq)[2]
+# remove the rows with all zero counts
+colsm1<-cols
+dataIn2<-(uniq[which(rowSums(uniq[,1:cols])>colsm1),])
+dataIn3<-dataIn2[which(rowSums(sign(dataIn2[,1:cols]))>1),]
+dataIn<-as.matrix(dataIn3)
+# normalize data using upperquartile of 0.75
+log.offset<-log(apply(dataIn, 2, quantile,.75))
+upper.quartiles<-apply(dataIn,2,function(x) quantile(x,0.75))
+# calculate scaling factors
+scalingFactors<-mean(upper.quartiles)/upper.quartiles
+dataIn.norm<-round((sweep(dataIn,2,scalingFactors,FUN="*")))
+# standard deviation
+sd(dataIn[1,])
+sd(dataIn.norm[1,])
+# experimental design
+trt<-as.factor(c(1,1,1,1,2,2,2,2))
+mn<-as.numeric(rep(1,cols))
+# QuasiSeq analysis
+library(QuasiSeq)
+design.list<-vector('list',2)
+design.list[[1]]<-model.matrix(~trt)
+design.list[[2]]<-mn
+log.offset<-log(apply(dataIn, 2, quantile,.75))
+fit2<-QL.fit(round(dataIn), design.list,log.offset=log.offset, Model='NegBin')
+QLresultsPvaluePlot(fit2,paste("results_",1,2,sep=""))
+QLresultsPvaluePlot(fit2,paste("results_",1,2,sep=""))
+```
+
 
 
