@@ -404,7 +404,7 @@ head(countdata)
 # Assign condition (first four are controls, second four and third four contain two different experiments)
 (condition <- factor(c(rep("ctl", 4), rep("inf1", 4), rep("inf2", 4))))
 
-# Analysis with DESeq2 ----------------------------------------------------
+# Analysis with DESeq2 
 
 library(DESeq2)
 
@@ -530,5 +530,85 @@ volcanoplot(resdata, lfcthresh=1, sigthresh=0.05, textcx=.8, xlim=c(-2.3, 2))
 dev.off()
 ```
 #### Option C: QuasiSeq ####
+Also in RStudio or R terminal. As a first step, save the following code as a file named `QLresultsPvaluePlot.R` using any text editor and place it in the same directory as the count data is in.
+```
+QLresultsPvaluePlot<-function(QLfit,Strname){
+filename=Strname
+results<-QL.results(QLfit,Plot=F)
+designNum<-dim(results$P.values$QLSpline)[2]
+designNames<-colnames(results$P.values$QLSpline)
+for (i in 1:designNum){
+   print(i)
+   if (min(results$P.values$QLSpline[,i])<1 && min(results$P.values$QLSpline[,i])!="NaN"){
+       Rnames<-rownames(dataIn)
+       if (min(results$Q.values$QLSpline[,i])<10 && min(results$Q.values$QLSpline[,i])!="NaN"){
+          if (length(which(results$Q.values$QLSpline[,i]<10))>1){
+            meanTrt<-apply(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==2)],1,mean)
+            meanWt<-apply(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==1)],1,mean)
+            FoldTrtoverWt <- meanTrt/meanWt
+            logTwoFC <-log2(FoldTrtoverWt)
+            outData<-cbind(as.matrix(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),]),meanTrt,meanWt,as.matrix(results$P.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),as.matrix(results$Q.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),FoldTrtoverWt,logTwoFC)
+            colnames(outData)<-c(colnames(dataIn),"mean_treat","mean_control","Pvalues","Qvalues","fold_change","Log2FC")
+            write.table(outData,file=paste(filename,".FulldesignVS.",i,".txt",sep=""))
+            }
+          if (length(which(results$Q.values$QLSpline[,i]<10))==1){
+            outData<-cbind(matrix(dataIn[which(results$Q.values$QLSpline[,i]<10),],1,dim(dataIn)[2]),as.matrix(results$P.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),as.matrix(results$Q.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),(sign(mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==2)])-mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==1)])))*mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==2)])/mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==1)]))
+            colnames(outData)<-c(colnames(dataIn),"Pvalues","Qvalues","fold_change")
+            write.table(outData,file=paste(filename,".FullvsDesignVS.",i,".txt",sep=""))
+            }
+        }
+        pdf(file=paste(filename,".",i,".pdf",sep=""),width=5,height=5)
+           a<-hist(results$P.values$QLSpline[,i],breaks=seq(0,1,.01),main=paste(Strname,designNames[i]),cex.main=.5)
+           b<-a$counts[1]*.75
+           bb<-a$counts[1]*.65
+           bbb<-a$counts[1]*.55
+           text(.5,b,paste("Number of genes qvalue below 0.5 = ",as.character( dim(as.matrix(dataIn[which(results$Q.values$QLSpline[,i]<0.5),i]))[1])),cex=.8)
+           text(.5,bb,paste("Number of genes qvalue below 0.3 = ",as.character( dim(as.matrix(dataIn[which(results$Q.values$QLSpline[,i]<0.3),i]))[1])),cex=.8)
+           text(.5,bbb,paste("Number of genes qvalue below 0.1 = ",as.character( dim(as.matrix(dataIn[which(results$Q.values$QLSpline[,i]<.1),i]))[1])),cex=.8)
+        dev.off()
+    }
+}
+}
+```
+
+Next, run these steps on RStudio by setting the work directory to the counts data directory.
+```
+# set the work directory
+setwd("C:/Users/arunk/Google Drive/PostDoc/projects/20170707_RSmith_MosquitoRNAseq/QuassiSeq")
+# source the code you just created
+source("QLresultsPvaluePlot.R")
+# Import the data
+uniq<-as.matrix(read.table("counts.txt", header=TRUE,  row.names = 1))
+
+# Check dimensions
+cols<-dim(uniq)[2]
+# remove the rows with all zero counts
+colsm1<-cols
+dataIn2<-(uniq[which(rowSums(uniq[,1:cols])>colsm1),])
+dataIn3<-dataIn2[which(rowSums(sign(dataIn2[,1:cols]))>1),]
+dataIn<-as.matrix(dataIn3)
+# normalize data using upperquartile of 0.75
+log.offset<-log(apply(dataIn, 2, quantile,.75))
+upper.quartiles<-apply(dataIn,2,function(x) quantile(x,0.75))
+# calculate scaling factors
+scalingFactors<-mean(upper.quartiles)/upper.quartiles
+dataIn.norm<-round((sweep(dataIn,2,scalingFactors,FUN="*")))
+# standard deviation
+sd(dataIn[1,])
+sd(dataIn.norm[1,])
+# experimental design
+trt<-as.factor(c(1,1,1,1,2,2,2,2))
+mn<-as.numeric(rep(1,cols))
+# QuasiSeq analysis
+library(QuasiSeq)
+design.list<-vector('list',2)
+design.list[[1]]<-model.matrix(~trt)
+design.list[[2]]<-mn
+log.offset<-log(apply(dataIn, 2, quantile,.75))
+fit2<-QL.fit(round(dataIn), design.list,log.offset=log.offset, Model='NegBin')
+QLresultsPvaluePlot(fit2,paste("results_",1,2,sep=""))
+QLresultsPvaluePlot(fit2,paste("results_",1,2,sep=""))
+```
+
 
 
