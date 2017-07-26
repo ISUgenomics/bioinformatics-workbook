@@ -382,6 +382,62 @@ Again, there are few options here. You can use `edgeR`, `DESeq2`, or `QuasiSeq` 
 **Note: you don't have to run all three methods, use any one**
 
 #### Option A: edgeR #### 
+Run the following code on RStudio or R terminal
+```
+# import data
+datain <- read.delim("counts.txt",row.names="Geneid")
+
+# experimental design
+DataGroups <- c("CTL", "CTL","CTL","CTL", "TRT", "TRT", "TRT", "TRT")
+
+# load edgeR
+library(edgeR)
+
+# create DGE object of edgeR
+dgList <- DGEList(counts=datain,group=factor(DataGroups))
+
+# filter data to retain genes that are represented at least 1 counts per million (cpm) in at least 2 samples
+countsPerMillion <- cpm(dgList)
+countCheck <- countsPerMillion > 1
+keep <- which(rowSums(countCheck) >= 2)
+dgList <- dgList[keep,]
+dgList$samples$lib.size <- colSums(d$counts)
+
+# normalization using TMM method
+dgList <- calcNormFactors(dgList, method="TMM")
+
+## data exploration
+# MDS plot
+png("plotmds.png")
+plotMDS(dgList, method="bcv", col=as.numeric(d$samples$group))
+dev.off()
+
+# Dispersion estimates
+design.mat <- model.matrix(~ 0 + dgList$samples$group)
+colnames(design.mat) <- levels(dgList$samples$group)
+dgList <- estimateGLMCommonDisp(dgList,design.mat)
+dgList <- estimateGLMTrendedDisp(dgList,design.mat, method="power")
+dgList <- estimateGLMTagwiseDisp(dgList,design.mat)
+png("plotbcv.png")
+plotBCV(dgList)
+dev.off()
+
+# Differentail expression analysis
+fit <- glmFit(dgList, design.mat)
+lrt <- glmLRT(fit, contrast=c(1,-1))
+edgeR_results <- topTags(lrt, n=Inf)
+
+# plot log2FC of genes and highlight the DE genes
+deGenes <- decideTestsDGE(lrt, p=0.05)
+deGenes <- rownames(lrt)[as.logical(deGenes)]
+png("plotsmear.png")
+plotSmear(lrt, de.tags=deGenes)
+abline(h=c(-1, 1), col=2)
+dev.off()
+
+# save the results as a table
+write.table(edgeR_results, file="Results_edgeR.txt")
+```
 
 #### Option B: DESeq2 ####
 Again, this should be done either on RStudio or in R terminal. Following are the steps
