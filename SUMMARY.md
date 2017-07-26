@@ -2,13 +2,18 @@
 
 * [Introduction](README.md)
 * [XSEDE](xsede.md)
-  * test1
-  * test2
+  * [test1](xsede/test1.md)
+  * [Using PSC Supercell \(storage for Bridges and Greenfield\)](using-psc-supercell-storage-for-bridges-and-greenfield.md)
 * [Basics](Basics/basics.md)
   * [SLURM](Basics/slurm.md)
     * [SLURM: Submitting dependency jobs](submitting-dependency-jobs-using-slurm.md)
     * [SLURM: Job management cheat sheet](slurm-job-management-cheat-sheet.md)
     * [SLURM: generating job submission scripts for Condo](creating-slurm-job-submission-scripts-for-condo.md)
+  * [Setting up BASH](Basics/setting-up-bash-environment.md)
+    * [Viewing files in remote machine without downloading locally](viewing-files-in-remote-machine-without-downloading-locally.md)
+    * [Guide for installing various types of programs in Linux](guide-for-installing-various-types-of-programs-in-linux.md)
+    * [Introduction to Regular Expressions](introduction-to-regular-expressions.md)
+    * [Password-less SSH login](password-less-ssh-login.md)
   * [PBS/Torque](Basics/pbstorque.md)
     * [PBS-Torque: Submitting dependency jobs](submitting-dependency-jobs-using-pbs-torque.md)
   * Microsoft Excel related
@@ -20,15 +25,16 @@
     * [Downloading SRA files from NCBI](downloading-sra-files-from-ncbi.md)
     * [File Transfer Using Globus Connect Personal \(GCP\)](file-transfer-using-globus-connect-personal-gcp.md)
     * [Getting data from iPlant via iRODS](getting-data-from-iplant-via-irods.md)
+  * NCBI tools
+    * [Running BLAST jobs in parallel](running-blast-jobs-in-parallel.md)
+    * [SRA](sra.md)
   * [FASTA/Q manipulations](fastaq-manipulations.md)
     * [Converting FASTQ format to FASTA](converting-fastq-format-to-fasta.md)
+    * [Bioawk Basics](bioawk-basics.md)
     * [FASTQ\_quality\_score\_encoding](fastqquality-score-encoding.md)
     * [Retrieve FASTA sequences using sequence IDs](retrieve-fasta-sequences-using-sequence-ids.md)
     * [Calculate sequence lengths in a fasta file](calculate-sequence-lengths-in-a-fasta-file.md)
     * [Converting FASTQ to FASTA](converting-fastq-to-fasta.md)
-* NCBI tools
-  * [Running BLAST jobs in parallel](running-blast-jobs-in-parallel.md)
-  * [SRA](sra.md)
 * [RNA-Seq](RNA-Seq/RNA-SeqIntro.md)
   * [DGE without a genome](RNA-Seq/RNA-SeqIntro/dge-without-a-genome.md)
     * [Denovo Assembly](RNA-Seq/RNA-SeqIntro/denovo-assembly.md)
@@ -51,12 +57,6 @@
   * [Singularity](singularity.md)
 * [Unplaced Tutorials](unplaced-tutorials.md)
   * [Intro](intro.md)
-  * [Using PSC Supercell \(storage for Bridges and Greenfield\)](using-psc-supercell-storage-for-bridges-and-greenfield.md)
-  * [Bioawk Basics](bioawk-basics.md)
   * [Reconstructing Species Phylogenetic tree with BUSCO genes using Maximum Likelihood method](reconstructing-species-phylogenetic-tree-with-busco-genes-using-maximum-likelihood-method.md)
-  * [Password-less SSH login](password-less-ssh-login.md)
-  * [Viewing files in remote machine without downloading locally](viewing-files-in-remote-machine-without-downloading-locally.md)
-  * [Introduction to Regular Expressions](introduction-to-regular-expressions.md)
   * [Genomescope](genomescope.md)
-  * [Guide for installing various types of programs in Linux](guide-for-installing-various-types-of-programs-in-linux.md)
 
