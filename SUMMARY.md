@@ -53,7 +53,7 @@
   * [Hybrid of short and long reads](GenomeAssembly/GenomeAssemblyIntro/hybrid-of-short-and-long-reads.md)
 * [Metagenomics](Metagenomics/MetaGenomicsIntro.md)
   * [16S](16SIntro.md)
-    * Qiime
+    * [Qiime](16SIntro/qiime.md)
     * Mothur
 * [Singularity and Containers](singularity-and-containers.md)
   * Introduction
