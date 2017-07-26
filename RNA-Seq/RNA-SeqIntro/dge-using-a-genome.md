@@ -401,8 +401,8 @@ colnames(countdata) <- gsub("\\.[sb]am$", "", colnames(countdata))
 countdata <- as.matrix(countdata)
 head(countdata)
 
-# Assign condition (first four are controls, second four contain the expansion)
-(condition <- factor(c(rep("ctl", 4), rep("exp", 4))))
+# Assign condition (first four are controls, second four and third four contain two different experiments)
+(condition <- factor(c(rep("ctl", 4), rep("inf1", 4), rep("inf2", 4))))
 
 # Analysis with DESeq2 ----------------------------------------------------
 
@@ -446,7 +446,7 @@ dev.off()
 # Principal components analysis
 ## Could do with built-in DESeq2 function:
 ## DESeq2::plotPCA(rld, intgroup="condition")
-## I like mine better:
+## I (Stephen Turner) like mine better:
 rld_pca <- function (rld, intgroup = "condition", ntop = 500, colors=NULL, legendpos="bottomleft", main="PCA Biplot", textcx=1, ...) {
   require(genefilter)
   require(calibrate)
