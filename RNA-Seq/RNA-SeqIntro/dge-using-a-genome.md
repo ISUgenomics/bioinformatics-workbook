@@ -72,7 +72,7 @@ You will find `.html` files once the job is complete. You can open them using th
  * Adapter content
  * Per base N content
  
-Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming (see [here](/fastq-quality-trimming.md)
+Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming (see [here](/fastq-quality-trimming.md))
 
 ### 3. Mapping reads to the genome ###
 
