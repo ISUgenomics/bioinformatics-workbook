@@ -1,6 +1,8 @@
 # Summary
 
 * [Introduction](README.md)
+* [Comparative Genomics](comparative-genomics.md)
+  * [Reconstructing Species Phylogenetic tree with BUSCO genes using Maximum Likelihood method](reconstructing-species-phylogenetic-tree-with-busco-genes-using-maximum-likelihood-method.md)
 * [XSEDE](xsede.md)
   * [test1](xsede/test1.md)
   * [Using PSC Supercell \(storage for Bridges and Greenfield\)](using-psc-supercell-storage-for-bridges-and-greenfield.md)
@@ -58,5 +60,4 @@
   * [Singularity](singularity.md)
 * [Unplaced Tutorials](unplaced-tutorials.md)
   * [Intro](intro.md)
-  * [Reconstructing Species Phylogenetic tree with BUSCO genes using Maximum Likelihood method](reconstructing-species-phylogenetic-tree-with-busco-genes-using-maximum-likelihood-method.md)
 
