@@ -7,18 +7,17 @@ This wiki will guide you through the RNAseq analysis, starting from the quiality
 ![**Figure 1.**: Overview of the RNAseq workflow
 ](/assets/RNAseq_1.png)
 
-
  
 ### Experimental design ###
 
-This experiment consists of 3 conditions. The first condition is "control" which is mock-infected soybean plants. The second and third conditions includes infection with 2 different pathogens. All 3 conditions have three replicates each (total we have 9 pairs of fastq files, 3 pairs belonging to control, 3 pairs bleonging to condition1- infected with pathogen 1 and 3 pairs belonging to condition 2 -infected with pathogen 2). Pairs because the data is paired-end.
+This experiment consists of 2 conditions. The first condition is "control" which is mock-infected soybean plants. The second condition is the infected plants with the actual pathogen. Both conditions have four replicates each (total we have 8 pairs of fastq files, 4 pairs belonging to control, and 4 pairs bleonging to pathogen infected soybean). The reads were generated as paired-end data, hence we have 2 files per replicate.
 
 
-| Condition | Replicate 1 | Replicate 2 | Replicate 3 |
-| --- | --- | --- | --- |
-| Control | Control.A_R1.fastq.gz <br> Control.A_R2.fastq.gz | Control.B_R1.fastq.gz <br> Control.B_R2.fastq.gz | Control.C_R1.fastq.gz <br> Control.C_R2.fastq.gz |
-| Infected 1 | Infected1.A_R1.fastq.gz <br> Infected1.A_R2.fastq.gz| Infected1.B_R1.fastq.gz <br> Infected1.B_R2.fastq.gz| Infected1.C_R1.fastq.gz <br> Infected1.C_R2.fastq.gz|
-| Infected 2 | Infected2.A_R1.fastq.gz <br> Infected2.A_R2.fastq.gz | Infected2.B_R1.fastq.gz <br> Infected2.B_R2.fastq.gz| Infected2.C_R1.fastq.gz <br> Infected2.C_R2.fastq.gz |
+| Condition | Replicate 1 | Replicate 2 | Replicate 3 |  Replicate 4 |
+| --- | --- | --- | --- | --- |
+| Control | Control.A_R1.fastq.gz <br> Control.A_R2.fastq.gz | Control.B_R1.fastq.gz <br> Control.B_R2.fastq.gz | Control.C_R1.fastq.gz <br> Control.C_R2.fastq.gz |  Control.D_R1.fastq.gz <br> Control.D_R2.fastq.gz  |
+| Infected | Infected.A_R1.fastq.gz <br> Infected.A_R2.fastq.gz| Infected.B_R1.fastq.gz <br> Infected.B_R2.fastq.gz| Infected.C_R1.fastq.gz <br> Infected.C_R2.fastq.gz | Infected.D_R1.fastq.gz <br> Infected.D_R2.fastq.gz |
+
 ### 1. Download the data ###
 
 For downloading the data, you can use `wget` or `curl` commands, if the data is hosted somewhere. If not, you might have to upload the data to the HPC either using `scp` command or using `rsync` (if data is located locally on your computer), or use `globusURL` to get the data from other computer. Here we will assume that you have the data in our DNA facility (at Iowa State University) and you have access to those files. We will use `wget` command to download them.
@@ -32,7 +31,6 @@ wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_5_HCC22_956.tar
 wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_6_HCC22_956.tar
 wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_7_HCC22_956.tar
 wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_8_HCC22_956.tar
-wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_9_HCC22_956.tar
 ```
 
 Note that these weblinks are inactive, so if you actually run these commands it will fail as they don't point to any files. Once downloaded, you can untar the archive and you will find the fastq files. To untar:
@@ -99,7 +97,7 @@ For mapping, each set of reads (forward and reverse or R1 and R2), we will set u
 ```
 #!/bin/bash
 module load hisat2
-module load_gsnap.samtools
+module load samtools
 DBDIR="/path/containing/HiSat2_index_files"
 GENOME="Gmax_275_v2.0_hisat2"
 # number of processors to use
@@ -114,13 +112,13 @@ hisat2 \
   -x ${DBDIR}/${GENOME} \
   -1 ${R1_FQ} \
   -2 ${R2_FQ} | \
-  -S  ${OUTPUT}_gsnap.sam &> ${OUTPUT}.log
+  -S  ${OUTPUT}.sam &> ${OUTPUT}.log
 # convert_gsnap.same file to bam file format
 samtools view \
   --threads 16 \
   -b \
   -o ${OUTPUT}.bam \
-     ${OUTPUT}_gsnap.sam
+     ${OUTPUT}.sam
 # sort the bam file based on co-ordinates
 samtools sort \
   -m 7G \
@@ -143,7 +141,7 @@ For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLUR
 ```
 makeSLURMs.py 1 hisat2.cmds
 for sub in hisat2_*.sub; do
-qsub $sub; 
+sbathc $sub; 
 done
 ```
 
@@ -152,12 +150,11 @@ This should create, following files as output:
 Control.A_sorted.bam
 Control.B_sorted.bam
 Control.C_sorted.bam
-Infected1.A_sorted.bam
-Infected1.B_sorted.bam
-Infected1.C_sorted.bam
-Infected2.A_sorted.bam
-Infected2.B_sorted.bam
-Infected2.C_sorted.bam
+Control.D_sorted.bam
+Infected.A_sorted.bam
+Infected.B_sorted.bam
+Infected.C_sorted.bam
+Infected.D_sorted.bam
 ```
 
 #### Option B: Use STAR for mapping #### 
