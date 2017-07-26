@@ -141,7 +141,7 @@ For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLUR
 ```
 makeSLURMs.py 1 hisat2.cmds
 for sub in hisat2_*.sub; do
-sbathc $sub; 
+sbatch $sub; 
 done
 ```
 
@@ -208,7 +208,7 @@ For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLUR
 ```
 makeSLURMs.py 1 star.cmds
 for sub in star_*.sub; do
-qsub $sub; 
+sbatch $sub; 
 done
 ```
 
@@ -217,12 +217,11 @@ This should create, following files as output:
 Control.A_star.sam
 Control.B_star.sam
 Control.C_star.sam
-Infected1_star.A.sam
-Infected1_star.B.sam
-Infected1_star.C.sam
-Infected2_star.A.sam
-Infected2_star.B.sam
-Infected2_star.C.sam
+Control.D_star.sam
+Infected_star.A.sam
+Infected_star.B.sam
+Infected_star.C.sam
+Infected_star.D.sam
 ```
 
 #### Option C: Use GSNAP for mapping #### 
@@ -269,7 +268,7 @@ For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLUR
 ```
 makeSLURMs.py 1 gsnap.cmds
 for sub in gsnap_*.sub; do
-qsub $sub; 
+sbatch $sub; 
 done
 ```
 
@@ -278,12 +277,12 @@ This should create, following files as output:
 Control.A_gsnap.sam
 Control.B_gsnap.sam
 Control.C_gsnap.sam
-Infected1.A_gsnap.sam
-Infected1.B_gsnap.sam
-Infected1.C_gsnap.sam
-Infected2.A_gsnap.sam
-Infected2.B_gsnap.sam
-Infected2.C_gsnap.sam
+Control.D_gsnap.sam
+Infected.A_gsnap.sam
+Infected.B_gsnap.sam
+Infected.C_gsnap.sam
+Infected.D_gsnap.sam
+
 ```
 
 Once we have the SAM or BAM files generated (from any of the 3 methods above), we can proceed with the abundence estimation.
@@ -319,7 +318,7 @@ For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLUR
 ```
 makeSLURMs.py 9 htseq.cmds
 # as these commands run quickly, we will put them all in one `sub` file
-qsub htseq_0.sub; 
+sbatch htseq_0.sub; 
 done
 ```
 
@@ -354,16 +353,17 @@ featureCounts \
 The ouput will look something like this (__headers might be different, only first 10 lines displayed here__)
 
 ```
-#Geneid	Chr	Start	End	Strand	Length	Control.A	Control.B	Control.C	Infected1.A	Infected1.B	Infected1.C	Infected2.A	Infected2.B	Infected2.C
-Glyma.01G000100.Wm82.a2.v1	Chr01	27355	28320	-	966	24	0	51	93	126	91	121	32	52
-Glyma.01G000200.Wm82.a2.v1	Chr01	58975	67527	-	8553	91	1	122	193	214	239	102	111	148
-Glyma.01G000300.Wm82.a2.v1	Chr01	67770	69968	+	2199	9	0	12	22	18	21	3	11	18
-Glyma.01G000400.Wm82.a2.v1	Chr01	90152	95947	-	5796	169	0	407	480	402	518	502	443	379
-Glyma.01G000500.Wm82.a2.v1	Chr01	90289	91197	+	909	0	0	0	0	0	0	0	0	0
-Glyma.01G000600.Wm82.a2.v1	Chr01	116094	127845	+	11752	149	4	310	374	402	529	304	352	300
-Glyma.01G000700.Wm82.a2.v1	Chr01	143467	155573	+	12107	39	2	78	119	113	129	34	100	107
-Glyma.01G000800.Wm82.a2.v1	Chr01	157030	157772	+	743	0	0	0	1	1	0	0	0	0
-Glyma.01G000900.Wm82.a2.v1	Chr01	170534	193342	+	22809	240	1	517	759	760	859	462	658	494
+#
+Geneid	Chr	Start	End	Strand	Length	Control.A	Control.B	Control.C	Control.D	Infected.A	Infected.B	Infected.C	Infected.D
+Glyma.01G000100.Wm82.a2.v1	Chr01	27355	28320	-	966	24	0	51	93	126	91	121	32
+Glyma.01G000200.Wm82.a2.v1	Chr01	58975	67527	-	8553	91	1	122	193	214	239	102	111
+Glyma.01G000300.Wm82.a2.v1	Chr01	67770	69968	+	2199	9	0	12	22	18	21	3	11
+Glyma.01G000400.Wm82.a2.v1	Chr01	90152	95947	-	5796	169	0	407	480	402	518	502
+Glyma.01G000500.Wm82.a2.v1	Chr01	90289	91197	+	909	0	0	0	0	0	0	0	0
+Glyma.01G000600.Wm82.a2.v1	Chr01	116094	127845	+	11752	149	4	310	374	402	529	304	352
+Glyma.01G000700.Wm82.a2.v1	Chr01	143467	155573	+	12107	39	2	78	119	113	129	34	100
+Glyma.01G000800.Wm82.a2.v1	Chr01	157030	157772	+	743	0	0	0	1	1	0	0	0
+Glyma.01G000900.Wm82.a2.v1	Chr01	170534	193342	+	22809	240	1	517	759	760	859	462	658
 ```
 Since we only need the counts (without the feature information), we will trim this table using `cut` command.
 ```
