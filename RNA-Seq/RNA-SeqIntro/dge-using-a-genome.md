@@ -13,10 +13,9 @@ This wiki will guide you through the RNAseq analysis, starting from the quiality
 
 This experiment consists of 3 conditions. The first condition is "control" which is mock-infected soybean plants. The second and third conditions includes infection with 2 different pathogens. All 3 conditions have three replicates each (total we have 9 pairs of fastq files, 3 pairs belonging to control, 3 pairs bleonging to condition1- infected with pathogen 1 and 3 pairs belonging to condition 2 -infected with pathogen 2). Pairs because the data is paired-end.
 
-<th_gsnap.sample< th=""></th_gsnap.sample<>
 
 | Condition | Replicate 1 | Replicate 2 | Replicate 3 |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | Control | Control.A_R1.fastq.gz <br> Control.A_R2.fastq.gz | Control.B_R1.fastq.gz <br> Control.B_R2.fastq.gz | Control.C_R1.fastq.gz <br> Control.C_R2.fastq.gz |
 | Infected 1 | Infected1.A_R1.fastq.gz <br> Infected1.A_R2.fastq.gz| Infected1.B_R1.fastq.gz <br> Infected1.B_R2.fastq.gz| Infected1.C_R1.fastq.gz <br> Infected1.C_R2.fastq.gz|
 | Infected 2 | Infected2.A_R1.fastq.gz <br> Infected2.A_R2.fastq.gz | Infected2.B_R1.fastq.gz <br> Infected2.B_R2.fastq.gz| Infected2.C_R1.fastq.gz <br> Infected2.C_R2.fastq.gz |
