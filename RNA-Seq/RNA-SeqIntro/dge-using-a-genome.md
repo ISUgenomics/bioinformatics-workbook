@@ -1,7 +1,7 @@
 # RNA-Seq data Analysis
 
 
-This wiki will guide you through the RNAseq analysis, starting from the quiality checking till getting the differntial gene expression results. The next part of the wiki series will guide you through some of the down stream analysis that you can do to the results obatined here. Here is the overview of the RNAseq analysis covered in this tutorial.
+This wiki will guide you through the RNAseq analysis, starting from the quiality checking till getting the differential gene expression results. The next part of the wiki series will guide you through some of the down stream analysis that you can do to the results obatined here. Here is the overview of the RNAseq analysis covered in this tutorial.
 
 ### Overview ###
 ![**Figure 1.**: Overview of the RNAseq workflow
