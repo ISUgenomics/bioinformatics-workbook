@@ -11,8 +11,8 @@ Enrichment analysis is a test to see a small subset of genes when sampled from l
 
 ## GO enrichment using Ontologizer
 Before you begin, you need to have 2 important files. 
-  1. GO ontology file, where you describe every possible GO term numbers with what they are. You can easily get this from here: http://purl.obolibrary.org/obo/go.obo 
-  2. Mapping file, this will describe the association of genes of the organism with GO terms (this can be generated using Blast2Go- by loading swissprot blast xml files and interproscan and exporting it in .anno file). 
+  1. **GO ontology file:** where you describe every possible GO term numbers with what they are. You can easily get this from here: http://purl.obolibrary.org/obo/go.obo 
+  2. **Mapping file:** this will describe the association of genes of the organism with GO terms (this can be generated using Blast2Go- by loading swissprot blast xml files and interproscan and exporting it in .anno file). 
 
 Once you have these 2 files, you can run Ontologizer. Ontologizer is a command line tool which very effecient when you have large number of list to analyze. You need to download the `jar` file to run this
 The command:
@@ -36,3 +36,8 @@ You will see a `dot` file after the run is complete. You can convert this to `pn
 ```
 dot -Tpng input.dot -o output.png
 ```
+
+## GO enrichment using BiNGO
+
+
+
