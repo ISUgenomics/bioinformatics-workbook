@@ -34,6 +34,7 @@
     * [FASTQ\_quality\_score\_encoding](fastqquality-score-encoding.md)
     * [Retrieve FASTA sequences using sequence IDs](retrieve-fasta-sequences-using-sequence-ids.md)
     * [Calculate sequence lengths in a fasta file](calculate-sequence-lengths-in-a-fasta-file.md)
+    * [Fastq quality trimming](fastq-quality-trimming.md)
     * [Converting FASTQ to FASTA](converting-fastq-to-fasta.md)
 * [RNA-Seq](RNA-Seq/RNA-SeqIntro.md)
   * [DGE without a genome](RNA-Seq/RNA-SeqIntro/dge-without-a-genome.md)
@@ -58,6 +59,6 @@
 * [Singularity and Containers](singularity-and-containers.md)
   * Introduction
   * [Singularity](singularity.md)
-* [Unplaced Tutorials](unplaced-tutorials.md)
-  * [Intro](intro.md)
+* [Fastq quality trimming](fastq-quality-trimming.md)
+* [GO enrichment analysis](go-enrichment-analysis.md)
 
