@@ -60,4 +60,5 @@
   * Introduction
   * [Singularity](singularity.md)
 * [Fastq quality trimming](fastq-quality-trimming.md)
+* [GO enrichment analysis](go-enrichment-analysis.md)
 
