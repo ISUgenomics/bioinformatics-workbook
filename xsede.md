@@ -8,9 +8,11 @@ For more information about XSEDE this [XSEDE Pamphlet](https://www.xsede.org/doc
 
 ## Who is Eligible.
 
-Researchers or educators at a U.S.-based institution, including federal research labs or commercial organizations are eligible to apply to be a PI for an allocation of compute time and storage.  This includes postdoctoral researchers. PIs can give students accounts to use the allocation.Â
+Researchers or educators at a U.S.-based institution, including federal research labs or commercial organizations are eligible to apply to be a PI for an allocation of compute time and storage.  This includes postdoctoral researchers. PIs can give students accounts to use the allocation.
 
 ## How do I get an account?
+
+Go to this website. 
 
 ## How do I get an Allocation?
 
