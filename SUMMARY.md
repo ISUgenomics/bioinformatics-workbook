@@ -15,7 +15,7 @@
     * [Guide for installing various types of programs in Linux](guide-for-installing-various-types-of-programs-in-linux.md)
     * [Introduction to Regular Expressions](introduction-to-regular-expressions.md)
     * [Password-less SSH login](password-less-ssh-login.md)
-  * [PBS/Torque](Basics/pbstorque.md)
+  * [PBS/Torque](Basics/pbstorque/pbstorque.md)
     * [PBS-Torque: Submitting dependency jobs](submitting-dependency-jobs-using-pbs-torque.md)
   * Microsoft Excel related
     * [Export multiple worksheets as separate text files in Excel](export-multiple-worksheets-as-separate-text-files-in-excel.md)

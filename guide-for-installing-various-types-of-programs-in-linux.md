@@ -2,7 +2,7 @@
 
 This handy guide is for installing programs in `UNIX` environment. Most of these steps assume that you are installing package in a group accessible location, without root access and utilizing the environment module systems for package management. However, you can easily modify these steps for other cases as well.
 
-### Unpacking ###
+### Unpacking
 
 Packages are usually compressed in many different ways for easy handling. Before proceeding to installation, it must be unpacked. Depending on the compression (looking at the extension) use any of the following commands to unpack.
 Although `tar` can auto detect the compression type and decompress the archive with the `-xf` options, you can also specify what type compressed files you're providing. For most cases `tar -xf` will do the trick:
@@ -39,13 +39,13 @@ uncompress package.Z
 ```
 Once de-compressed, proceed with installation, depending on what type of package you are installing.
 
-### Regular Linux packages ###
+### Regular Linux packages
 
-#### Standard approach ####
+#### Standard approach
 
 Many `Linux/UNIX` programs comes with a standard set of files that lets you install programs with ease. After unpacking, if you see `configure` file in unpacked directory, use this approach.
 ```
-./configure --prefix=/group/accessible/location/packagename 
+./configure --prefix=/group/accessible/location/packagename
 # once complete you'll see 'Makefile' in that directory
 make # reads instructions from 'Makefile' and builds executable programs
 make check # not needed, but helps in troubleshooting
@@ -54,7 +54,7 @@ make install # installs program using 'Makefile' directions
 In case if something goes wrong or you get an error saying that you need `package x` before installing, then you can undo these steps before attempting installation again.
 ```
 make clean
-``` 
+```
 If the program doesn't work as intended or something goes wrong after installation, many programs can be safely uninstalled
 ```
 make uninstall
@@ -62,7 +62,7 @@ make uninstall
 Note that all of these options are not supported by all makefiles so your mileage may vary. It is also good idea to run all the above command in a `build` directroy inside the package directroy, so that if something doesn't work you can easily delete the `build` directory to start over.
 
 
-#### Special cases ####
+#### Special cases
 
 *1. No configure file*
 
@@ -102,10 +102,10 @@ make
 # that will have the executables
 ```
 
-##Group installation##
+## Group installation
 Rather than trying to install to root, it is useful to be able to install programs that are common for your group/lab.  To attain this type of installation it is necessary to download and load your own version of `python` (not the `python` installed in root, by admin). Global installations are not possible when you are not the administrator, and personal directory installations are only available to one person.  When it is desirable to install to group.  Start with Python installation in your groups directory (example: /work/GIF on condo).
 
-### Python packages ###
+### Python packages
 Using our own `python` will allow writing/installing modules to it as needed. After unpacking, `cd` to the package, and install it as follows:
 ```
 module load python
@@ -129,7 +129,7 @@ pip uninstall SomePackage # uninstalls a package
 pip freeze # lists all the packages that are currently installed and their version
 ```
 
-### Perl modules ###
+### Perl modules
 Once the module is loaded, use the following set of commands to install any `perl` modules.
 ```
 module load perl
@@ -149,7 +149,7 @@ perl Buil.PL
 ```
 The module will be installed in the group's perl folder (not in the package directory). So, like you did in `Python` you need to set up a dummy module file that load `Perl`
 
-### R or Bioconductor packages ###
+### R or Bioconductor packages
 
 Installing `R` libraries for the group is really easy since you don't have to do anything different from the way you install packages to your home directory. GIF has its own `R` version installed as module and it is configured such that it will automatically install the package in the correct location, when you are using this module.
 ```
@@ -159,7 +159,7 @@ R
 >
 ```
 
-#### Installing CRAN R Packages #### 
+#### Installing CRAN R Packages
 CRAN packages are by far the easiest. From within R prompt, type:
 ```
 module load R
@@ -173,7 +173,7 @@ Once installed, you will be back at `R` prompt, load the installed package to se
 library(some_package)
 # this should load the package and return without any error message
 ```
-#### Install manually downloaded R Package #### 
+#### Install manually downloaded R Package
 Some packages that aren't in CRAN but are available from the author directly, can be installed for group as well. Download the the `package.tar.gz` from the author's website.
 ```
 module load R
@@ -186,7 +186,7 @@ R
 # this should load the package and return without any error message
 ```
 
-#### Installing Bioconductor Modules ####
+#### Installing Bioconductor Modules
 For Bioconductor packages, follow these steps:
 ```
 module load R
@@ -199,9 +199,9 @@ R
 # this should load the package and return without any error message
 ```
 
-#### Managing packages ###
+#### Managing packages
 
-*List available packages* 
+*List available packages*
 
 To get a complete list of packages that are already installed, load the `R` module and enter the R prompt. From there, type the following command:
 ```
@@ -212,7 +212,7 @@ To get all packages installed along with their version number, type
 > installed.packages()[,c("Package","Version")]
 ```
 
-#### Upgrade packages ####
+#### Upgrade packages
 For the R packages that you installed from `CRAN` can all be upgrades in single command
 ```
 update.packages() # upgrades all packages
@@ -223,14 +223,14 @@ Other useful option to check the status of all packages currently installed is:
 > inst <- packageStatus()$inst
 > inst[inst$Status != "ok", c("Package", "Version", "Status")]
 ```
-#### Uninstall package ####
+#### Uninstall package
 
 Packages can be uninstalled easily using `remove.packages` command
 ```
 > remove.packages("package_name")
 ```
 
-### Java programs ###
+### Java programs 
 Precompiled java programs that come as `.jar` files, can be placed in any directory and can be called from there. For using it with environment modulefile, you need to do these steps. First, create directory (program name) and sub-directory (version number). Place the `.jar` file in this sub-directory. Within this create another directory and call it as bin. For all `.jar` files in `/programname/version/` create a text file in `/programname/version/bin`. This text file will just have a single line, something like:
 ```
 java program_name.jar
@@ -244,4 +244,3 @@ In your module file, you need to add this line:
 prepend-path PATH /programname/version/bin
 ```
 Now the `.jar` files can be simply called as `'programname` (once module is loaded). No need to add `java` in front.
-
