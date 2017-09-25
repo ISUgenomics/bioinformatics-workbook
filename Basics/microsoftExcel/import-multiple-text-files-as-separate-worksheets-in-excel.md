@@ -1,5 +1,5 @@
 # Import multiple text files as separate worksheets in Excel #
-If there are large number of text files that you need to import as a separate worksheet, follow these guidelines. Note that the file name of the text file will be used to label the worksheet (tab), without the `.txt` extension. 
+If there are large number of text files that you need to import as a separate worksheet, follow these guidelines. Note that the file name of the text file will be used to label the worksheet (tab), without the `.txt` extension.
 Before proceeding, check if you have enabled the macros, i.e., if you don't see `DEVELOPER` tab in you empty spreadsheet,  click on `FILE`, `OPTIONS` and `Customize Ribbon`. You should see a check box on the right hand side, for the `DEVELOPER` tab, check it and click `OK`.
 Click on `DEVELOPER` and then `Macros`, type in some name (eg. `import_text`), click `create`.
 Paste the below code on the popped window:
@@ -64,7 +64,7 @@ ExitHandler:
 ErrHandler:
     MsgBox Err.Description
     Resume ExitHandler
-End Sub 
+End Sub
 ```
 
 Now you are all set to import files. Click on `Macros` again, and then `Run`. A window should pop up asking location of the text files. Navigate to the files location and select all text files. Click `OK`. All text files will be imported to a new spreadsheet. It might take a while to complete, if there are large number of files, so be patient.
