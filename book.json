@@ -1,4 +1,4 @@
- 
+
 {
-    "plugins": ["page-treeview","toggle-chapters","highlight","style","wide-page","terminal","include-codeblock"]
+    "plugins": ["toggle-chapters","highlight","style","wide-page","terminal","include-codeblock"]
 }
