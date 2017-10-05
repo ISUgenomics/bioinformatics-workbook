@@ -35,7 +35,7 @@ blastp \
  -max_target_seqs 50 \
  -outfmt 5
 ```
-Split the input sequences into desired number of pieces (recommended is ~10000 sequences per file, so that it run finish in <24hr wih 8 procs, but you can adjust it as per your needs). Here we do 10 splits as follows
+Split the input sequences into desired number of pieces (recommended is ~10000 sequences per file, so that the run finishes in less than 24hrs wih 8 processors, but you can adjust it as per your needs). Here we do 10 splits as follows
 ```
 fasta-splitter.pl --n-parts 10--measure count input_seq.fasta
 ```
