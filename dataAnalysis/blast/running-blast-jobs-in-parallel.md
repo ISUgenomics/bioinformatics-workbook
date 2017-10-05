@@ -18,7 +18,7 @@ parallel -S :,server1,server2 \
 Here, the large file is divided into blocks of 100kb, making sure that each 'piece' starts with the symbol `>`. The total number of pieces is dependent on total number of processors (from all nodes combined) eg., (standard `fasta` format). If there are 64 processors and 2 nodes, there will be a total of 128 sequence file pieces. On each of these pieces, `blastp` program is called with options. Note that you need to follow your `query` with a dash `-` indicating that the input is coming from the stdout, rather than the file. The results are written to the final file `combined_results.txt`. The order of the results will vary depending on what sequence went through the `BLAST`pipe and doesn't match the input order.
 ## 2. Splitting input query in to smaller pieces 
 
-For this you have to use an external script (for splitting the input file). One such script can be found [here](https://github.com/ISUgenomics/common_scripts/blob/master/fasta-splitter.pl) on GitHub. The steps to run this are as follows. First set up a blast script (whichever the flavor you want with the choice of your database, in this case `blastp` against `swissprot-db`). Name this file as ` runBLASTp.sh` 
+For this you have to use an external script (for splitting the input file). One such script can be found [here](https://github.com/ISUgenomics/common_scripts/blob/master/fasta-splitter.pl) on GitHub. The steps to run this are as follows. First set up a blast script (your favorite flavor against your chosen database. In this case `blastp` against `swissprot-db`). Name this file as ` runBLASTp.sh` 
 ```
 #!/bin/bash
 # perfomrs NR blast (blastx)
