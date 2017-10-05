@@ -21,7 +21,7 @@ Here, the large file is divided into blocks of 100kb, making sure that each 'pie
 For this you have to use an external script (for splitting the input file). One such script can be found [here](https://github.com/ISUgenomics/common_scripts/blob/master/fasta-splitter.pl) on GitHub. The steps to run this are as follows. First set up a blast script (your favorite flavor against your chosen database. In this case `blastp` against `swissprot-db`). Name this file as ` runBLASTp.sh` 
 ```
 #!/bin/bash
-# perfomrs NR blast (blastx)
+# perfoms NR blast (blastx)
 infile="$1"
 outfile="$(basename "${infile%.*}").xml"
 database="/data021/GIF/arnstrm/Baum/GenePrediction_Hg_20160115/05_databases/swissprot/uniprot_sprot"
