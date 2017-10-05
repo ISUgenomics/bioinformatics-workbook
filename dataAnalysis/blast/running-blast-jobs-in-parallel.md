@@ -1,5 +1,5 @@
 # Running NCBI-BLAST jobs in parallel
-If there is a large file of sequences, then the traditional way for doing a BLAST search is to start with the first sequence and run them sequentially for all the sequences. This is very time consuming and waste of the processing power HPC's can offer. There are several ways to speed up this process. Most of them split the input sequence file into multiple pieces (usually equal to the number of processors) and run the BLAST search simultaneously on each of the split file. So larger the number of processors, more faster the whole process. 
+If there is a large file of sequences, then the traditional way for doing a BLAST search is to start with the first sequence and run them sequentially for all the sequences. This is very time consuming and waste of the processing power HPCs offer. There are several ways to speed up this process. Most of them split the input sequence file into multiple pieces (usually equal to the number of processors) and run the BLAST search simultaneously on each of the split file. So larger the number of processors, more faster the whole process. 
 ## 1. Using GNU Parallel to split the large job to smaller chunks
 One easy way is to use the ''parallel'' command from the [GNU Parallel](http://www.gnu.org/software/parallel).
 To do this:
@@ -12,10 +12,10 @@ parallel -S :,server1,server2 \
 -evalue 0.01 \
 -outfmt 6 \
 -db db.fa
--query - > combined_reuslts.txt
+-query - > combined_results.txt
 ```
 
-Here, the large file is divided into blocks of 100kb, making sure that that each 'piece' start with `>`. The total number of pieces is dependent on total number of processors (from all nodes combined) eg., (standard `fasta` format). if there are 64 processors and 2 nodes, there will be a total of 128 sequence file pieces. On each of these pieces, `blastp` program is called with options. Note that you need to put `-` for `query` to indicate that the input is coming from the stdout, rather than the file. The results are written to the final file `combined_reuslts.txt`. The order of the results will vary depending on what sequence went through the `BLAST`pipe and doesn't match the input order.
+Here, the large file is divided into blocks of 100kb, making sure that each 'piece' starts with the symbol `>`. The total number of pieces is dependent on total number of processors (from all nodes combined) eg., (standard `fasta` format). If there are 64 processors and 2 nodes, there will be a total of 128 sequence file pieces. On each of these pieces, `blastp` program is called with options. Note that you need to follow your `query` with a dash `-` indicating that the input is coming from the stdout, rather than the file. The results are written to the final file `combined_results.txt`. The order of the results will vary depending on what sequence went through the `BLAST`pipe and doesn't match the input order.
 ## 2. Splitting input query in to smaller pieces 
 
 For this you have to use an external script (for splitting the input file). One such script can be found [here](https://github.com/ISUgenomics/common_scripts/blob/master/fasta-splitter.pl) on GitHub. The steps to run this are as follows. First set up a blast script (whichever the flavor you want with the choice of your database, in this case `blastp` against `swissprot-db`). Name this file as ` runBLASTp.sh` 
