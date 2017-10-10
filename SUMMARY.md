@@ -15,13 +15,13 @@
      * [Converting FASTQ to FASTA](dataWrangling/fastaq-manipulations/converting-fastq-to-fasta.md)
      * [Extract sequences based on sequence ID]((dataWrangling/fastaq-manipulations/retrieve-fasta-sequences-using-sequence-ids.md)
   * ###### Microsoft Excel Tips and Tricks
-  
+
      * [Create workbook from multiple text files](dataWrangling/microsoftExcel/export-multiple-worksheets-as-separate-text-files-in-excel.md)
      * [Create text files from workbook with multiple worksheets](dataWrangling/microsoftExcel/export-multiple-worksheets-as-separate-text-files-in-excel.md)
      * [Create Index for all worksheets](dataWrangling/microsoftExcel/generate-index-sheet-linking-all-spreadsheets-in-excel.md)
 *  #### [Data Analysis]
   * [RNA-Seq](dataAnalysis/RNA-Seq/dA_RNASeq_introduction.md)
-     *
+
 *  #### [Data Visualization]
 
 *  #### [Appendix]
