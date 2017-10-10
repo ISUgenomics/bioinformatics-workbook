@@ -7,13 +7,15 @@ SRA toolkit has been configured to connect to NCBI SRA and download via FTP. The
 module load sratoolkit
 fastq-dump SRR1234567
 ```
-This will download the SRA file (in `sra` format) and then convert them to `fastq` file for you. 
+This will download the SRA file (in `sra` format) and then convert them to `fastq` file for you.
 If your SRA file is paired, you will still end up with a single `fastq` file, since, `fastq-dump`, by default writes them as interleaved file. To change this, you can provide `--split-files` argument.
+
 ```
 module load sratoolkit
 fastq-dump --split-files SRR1234567
 ```
 The downloaded fastq files will have `sra` number suffixed on all header lines of `fastq` file
+
 ```
 head -n 12 SRR447882_1.fastq
 @SRR447882.1.1 HWI-EAS313_0001:7:1:6:844 length=84
@@ -36,10 +38,10 @@ module load sratoolkit
 fastq-dump --split-files --origfmt --gzip SRR1234567
 ```
 The `fastq-dump` is also capable of doing:
- * *Additional filtering or clipping of the downloaded reads*: to remove reads with poor quality or to trim adapters. Although, this will work for the single end reads, for paired-end reads it may cause differential treatment for each pairs and might not be usable for mapping programs that needs strict pairs. 
+ * *Additional filtering or clipping of the downloaded reads*: to remove reads with poor quality or to trim adapters. Although, this will work for the single end reads, for paired-end reads it may cause differential treatment for each pairs and might not be usable for mapping programs that needs strict pairs.
  * *Compressed format:* either as gzipped or bzipped files using `--gzip` or `--bzip2` options.
  * *fasta format*: by using the `--fasta` option
-  
+
 ## Using Linux commands:
 
 In cases were you cannot run the SRA toolkit or any other programs to download the file, you can still use the inbuilt commands of Linux such as `wget` and `curl`. The standard web link for downloading the SRA files is:
@@ -47,7 +49,7 @@ In cases were you cannot run the SRA toolkit or any other programs to download t
 ```
 http://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=dload&run_list=SRRNNNNNN&format=fastq
 ```
-You need to replace the `SRRNNNNNN` with the actual SRR number for it to work. 
+You need to replace the `SRRNNNNNN` with the actual SRR number for it to work.
 
 You can either use `wget`
 ```
@@ -65,7 +67,7 @@ wget http://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=dload&run_list=${line}
 done<list_of_ids
 ```
 The datasets can also be downloaded from DDBJ or EMBL using the FTP links, but the transfer speeds might be affected if you're not near their servers.
-  
+
 ## Using Aspera Connect (ascp)
 
 Aspera uses high-speed file transfer to rapidly transfer large files and data sets over an existing WAN infrastructure.
@@ -93,8 +95,8 @@ ncbi
 Then you can convert the SRA files back to fastq format using `fastq-dump` command.
 
 ```
-for sra file in ~/ncbi/public/sra/*; do 
-fastq-dump --split-files --origfmt --gzip ${sra}; 
+for sra file in ~/ncbi/public/sra/*; do
+fastq-dump --split-files --origfmt --gzip ${sra};
 done
 ```
 
@@ -119,6 +121,3 @@ To download them all in parallel (limit the number to 3 concurrent downloads)
 parallel --jobs 3 "fastq-dump --split-files --origfmt --gzip {}" ::: SRR.numbers
 ```
 Make sure you do this on Condoddtn node or as a PBS job
-
-
-
