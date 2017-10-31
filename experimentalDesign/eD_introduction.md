@@ -1,6 +1,8 @@
 # Introduction to Experimental Design
 
-Bioinformatics and data analysis starts with a good experimental design.  In this section we will explore the aspects of experimental design that are important to a successful bioinformatic data analysis.
+Bioinformatics and data analysis starts with a good experimental design.  In this section we will explore the aspects of experimental design that are important to a successful bioinformatic data analysis.  
+
+---
 
 ## What is your biological question?
 
@@ -10,6 +12,8 @@ First and foremost you should ask yourself what is it that I am trying to answer
 Common feedback given by grant review panelists that feel a researcher is sequencing samples without a clear direction or hypothesis.```
 
 There are four main aspects that should be considered to answer your biological question during experimental design: biological system, sequencing technology and cost.
+
+---
 
 ## Biological System
 
@@ -22,6 +26,8 @@ There are four main aspects that should be considered to answer your biological 
 - **Repeat Content**   ```The amount of highly repetitive sequences contained in the genome.```
 
 - **GC Content** ```The percent GC or AT in your genome can affect the quality of the sequencing data that you acquire.  Some sequencing technologies and assembly programs have trouble with AT rich genomes.```
+
+---
 
 ## Sequencing Technology
 There are now three main sequencing technologies that are available and commonly used: Illumina, PacBio and MinIon.  Understanding the assumptions and limitations of each of these technologies can aid in planning the experimental design.
@@ -49,6 +55,8 @@ MinIon raw data are long (3,000-70,000bp) with max read lengths as high as 250,0
  - **Base Quality:** ```85% Medium```
  - This paper provides a nice overview of MinIon sequencing technologies and uses [Paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-1103-0)
 
+---
+
 ## Funding and Cost
 Most research has a strict allowance for how much sequencing and bioinformatics can be performed to answer the biological question of interest.
 
@@ -62,6 +70,8 @@ Most research has a strict allowance for how much sequencing and bioinformatics 
 
 
  - **Biological Replicates**  ```It is extremely important to have at least 3 replicates and preferably 5 to 10 replicates for RNA-Seq experiments to determine differential expression```
+
+---
 
 ## Examples
 
