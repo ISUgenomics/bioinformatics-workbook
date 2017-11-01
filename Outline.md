@@ -4,7 +4,7 @@
 - Introduction
  - Preface
  - what is bioinformatics
-- What is a read
+- Data Terminology
 - Sequencing Technologies
 - File Formats
 
@@ -87,7 +87,7 @@ This section could be skipped if they want to start working right away
 
 ## Appendix
 - Introduction to Unix and Terminals
-- Comprehensive File format descriptions (review of formats as introduced in text.)
+
 
 
 
