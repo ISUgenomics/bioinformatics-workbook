@@ -2,11 +2,20 @@
 
 Bioinformatics and data analysis starts with a good experimental design.  In this section we will explore the aspects of experimental design that are important to a successful bioinformatic data analysis.  
 
+
+## Learning Objective
+Upon completion of this section on experimental design students will be able to:
+
+* assess the assumptions and limitations of the biological domain and the sequencing technology as it relates to a biology question of interest
+* evaluate which sequencing technology will provide the best results for a given project
+* determine the limitations that result from reducing the amount of data collected in order to fit within a given budget.
+
+
 ---
 
 ## What is your biological question?
 
-First and foremost you should ask yourself what is it that I am trying to answer with high throughput sequencing data.  A hypothesis driven experiment will always be more insightful and easier to design than an experiment without direction.  
+First and foremost you should ask yourself what is it that you are trying to answer with high throughput sequencing data.  A hypothesis driven experiment will always be more insightful and easier to design than an experiment without direction.  
 
 **Fishing Expedition:**  ```
 Common feedback given by grant review panelists that feel a researcher is sequencing samples without a clear direction or hypothesis.```
@@ -76,3 +85,5 @@ Most research has a strict allowance for how much sequencing and bioinformatics 
 ## Examples
 
 In the next sections we will go over several example experimental design problems from real world examples.
+
+[Table of contents](README.md)
