@@ -10,11 +10,11 @@ This wiki will guide you through the RNAseq analysis, starting from the quality 
 
 ### Experimental design ###
 
-This experiment compares WT and atrx-1 mutant to analyze how ATRX chaperone loss of function results in changes in gene expression. RNA was isolated from three WT replicates and three mutant replicates using Trizol. Transcriptome was enriched/isolated using the plant RiboMinus kit for obtaining total RNA. RNA-seq was carried out in Illumina Hiseq 2500. The sequenceing reads were generated as paired-end data, hence we have 2 files per replicate.
+This experiment compares WT and atrx-1 mutant to analyze how ATRX chaperone loss of function results in changes in gene expression. RNA was isolated from three WT replicates and three mutant replicates using Trizol. Transcriptome was enriched/isolated using the plant RiboMinus kit for obtaining total RNA. RNA-seq was carried out in Illumina Hiseq 2500. The sequencing reads were generated as paired-end data, hence we have 2 files per replicate.
 
 
 | Condition | replicate 1 | replicate 2 | replicate 3 |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | WT | SRR4420293_1.fastq.gz <br> SRR4420293_2.fastq.gz | SRR4420294_1.fastq.gz <br> SRR4420294_2.fastq.gz | SRR4420295_1.fastq.gz <br> SRR4420295_2.fastq.gz |
 | atrx-1 | SRR4420296_1.fastq.gz <br> SRR4420296_2.fastq.gz| SRR4420297_1.fastq.gz <br> SRR4420297_2.fastq.gz| SRR4420298_1.fastq.gz <br> SRR4420298_2.fastq.gz |
 
