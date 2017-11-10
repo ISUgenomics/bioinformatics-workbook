@@ -5,8 +5,7 @@ This wiki will guide you through the RNAseq analysis, starting from the quality 
 
 
 ### Overview ###
-![**Figure 1.**: Overview of the RNAseq workflow
-<!-- ](/assets/RNAseq_1.png) -->
+![**Figure 1.**: Overview of the RNAseq workflow](/assets/RNAseq_1.png)
 
 
 ### Experimental design ###
