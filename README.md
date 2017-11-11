@@ -21,7 +21,7 @@
   * FASTA(Q) manipulations
     * [What is a Quality Score?](dataWrangling/fastqquality-score-encoding.md)
     * [Determine Sequence Lengths](dataWrangling/fastaq-manipulations/calculate-sequence-lengths-in-a-fasta-file.md)
-    * [Converting FASTQ to FASTA](dataWrangling/fastaq-manipulations/converting-fastq-to-fasta.md)
+    * [Converting FASTQ to FASTA](dataWrangling/fastaq-manipulations/converting-fastq-format-to-fasta.md)
     * [Extract sequences based on sequence ID](dataWrangling/fastaq-manipulations/retrieve-fasta-sequences-using-sequence-ids.md)
 
 * Microsoft Excel Tips and Tricks
