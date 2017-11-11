@@ -42,12 +42,14 @@ wget <link/to/fastq.gz>
 ```
 
 
-We also need the genome file and associated GTF/GFF file for for Arabidopsis. We will download them directly from the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (needs logging in and selecting the files) or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html). Specifically, you will need;
+We also need the genome file and associated GTF/GFF file for for Arabidopsis. We will download them directly from the [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch), or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html) or the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (phytozome needs logging in and selecting the files) .
+
+We downloaded the following files from NCBI.
 ```
-Gmax_275_Wm82.a2.v1.gene.gff3.gz
-Gmax_275_v2.0.fa.gz
+Genome Fasta File: GCF_000001735.3_TAIR10_genomic.fna
+Annotation file: GCF_000001735.3_TAIR10_genomic.gff
+
 ```
-jvggggg
 
 ![](/assets/RNAseq_2.png)
 **Figure 2:** Files needed for the RNAseq tutoial, genome assembly (unmasked) from the "assembly" directory and gff3 from the "annotation" directory
