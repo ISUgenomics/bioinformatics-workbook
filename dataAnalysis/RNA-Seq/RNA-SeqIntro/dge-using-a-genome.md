@@ -20,7 +20,18 @@ This experiment compares WT and atrx-1 mutant to analyze how ATRX chaperone loss
 
 ### 1. Download the data from NCBI ###
 
-For downloading the data, you can use `wget` or `curl` commands, if the data is hosted somewhere. If not, you might have to upload the data to the HPC either using `scp` command or using `rsync` (if data is located locally on your computer), or use `globusURL` to get the data from other computer. Here we will assume that you have the data in our DNA facility (at Iowa State University) and you have access to those files. We will use `wget` command to download them.
+Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer.
+
+```
+module load <path/to/sra-toolkit>
+module load <path/to/edirect>
+module load <path/to/parallel>
+esearch -db sra -query PRJNA276699 | efetch --format runinfo |cut -d "," -f 1 | awk 'NF>0' | grep -v "Run" > srr_numbers.txt
+while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/shared/software/GIF/old_programs/aspera/3.6.2/bin/ascp|/shared/software/GIF/old_programs/aspera/3.6.2/etc/asperaweb_id_dsa.openssh\" $line"; done<srr_numbers.txt > prefetch.cmds
+parallel --dryrun <prefetch.cmds
+
+fastq-dump --split-files --origfmt --gzip ~/arnstrm/ncbi/public/sra/${line}.sra
+```
 
 ```
 wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_1_HCC22_956.tar
