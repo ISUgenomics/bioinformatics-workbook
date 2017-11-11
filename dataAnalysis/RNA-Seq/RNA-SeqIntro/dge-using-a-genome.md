@@ -44,7 +44,7 @@ wget <link/to/fastq.gz>
 
 We also need the genome file and associated GTF/GFF file for for Arabidopsis. We will download them directly from the [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch), or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html) or the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (phytozome needs logging in and selecting the files) .
 
-We downloaded the following files from NCBI.
+We downloaded the following files from [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch).
 ```
 Genome Fasta File: GCF_000001735.3_TAIR10_genomic.fna
 Annotation file: GCF_000001735.3_TAIR10_genomic.gff
@@ -262,7 +262,7 @@ Now we are ready for performing DGE analysis!
 
 ### 5. Differential Gene Expression analysis ###
 
-Again, there are few options here. You can use `edgeR`, `DESeq2`, or `QuasiSeq` (and many more!). Here we will discribe how to do this with reference to the data we have. You can easily modify it to suit your needs (eg., different number of samples/repliates/conditions)
+Again, there are few options here. You can use `DESeq2`,`edgeR`, or `QuasiSeq` (and many more!). Here we will describe how to do this with reference using DESeq2.
 
 **Note: you don't have to run all three methods, use any one**
 
