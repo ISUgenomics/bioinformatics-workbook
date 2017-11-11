@@ -51,15 +51,6 @@ Annotation file: GCF_000001735.3_TAIR10_genomic.gff
 
 ```
 
-![](/assets/RNAseq_2.png)
-**Figure 2:** Files needed for the RNAseq tutoial, genome assembly (unmasked) from the "assembly" directory and gff3 from the "annotation" directory
-
-```
-# decompress files
-gunzip Gmax_275_Wm82.a2.v1.gene.gff3.gz
-gunzip Gmax_275_v2.0.fa.gz
-```
-
 ### 2. Quality Check ###
 
 For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high qulaity illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 9 set of files (18 files total), and we need to run `fastqc` on each one of them, you can either do a `for` loop or use `parallel` command. We need to submit it as a job to the cluster, but the command should have:
