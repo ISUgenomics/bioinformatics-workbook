@@ -145,13 +145,28 @@ Error, cmd: /usr/local/bin/trinityrnaseq/util/..//trinity-plugins/jellyfish/bin/
 a died with ret 9 at /usr/local/bin/trinityrnaseq/util/insilico_read_normalization.pl line 758.
 Error, cmd: /usr/local/bin/trinityrnaseq/util/insilico_read_normalization.pl --seqType fq --JM 120G  --max_cov 50 --CPU 16 --output /mnt/Trinit
 yOut/norm_for_read_set_1   --max_pct_stdev 10000  --left correct_left_1.PwU.qtrim.fq --right correct_left_1.PwU.qtrim.fq --pairs_together --PAR
-ALLEL_STATS   died with ret 512 at /usr/local/bin/trinityrnaseq/Trinity line 2544.
-        main::process_cmd("/usr/local/bin/trinityrnaseq/util/insilico_read_normalization"...) called at /usr/local/bin/trinityrnaseq/Trinity li
-ne 3090
-        main::normalize("/mnt/TrinityOut/norm_for_read_set_1", 50, ARRAY(0x2145438), ARRAY(0x20fbc58)) called at /usr/local/bin/trinityrnaseq/T
-rinity line 3014
-        main::run_normalization(50, ARRAY(0x1db83f0), ARRAY(0x1db8438)) called at /usr/local/bin/trinityrnaseq/Trinity line 1297
-gzip: correct_left_1.P.qtrim: No such file or directory
-gzip: correct_left_1.U.qtrim: No such file or directory
+ALLEL_STATS   died with ret 512 at ......
+...........................
+```
+However reducing max memory to 64G seems to have solved the problem.
+but it died at a slightly later stage.
+
+tried it again with Ceres installed trinityrnaseq, version 2.1.1. That went through fastools, fq to fa conversion but was killed in the Jellyfish step right upfront.
+
+```
+more Trinity.timing
+Statistics:
+===========
+Trinity Version:      v2.1.1
+Compiler:             GCC
+Trinity Parameters:   --seqType fq --CPU 16 --max_memory 120G --normalize_by_read_set --output TrinityOut --left correct_left_1 --right correct_left_1 --trimmomatic --min_kmer_cov 2
+```
+Error at Jellyfish
+```
+* Running CMD: /software/apps/trinityrnaseq/gcc/64/2.1.1/trinityrnaseq-2.1.1/trinity-plugins/jellyfish/bin/jellyfish count -t 16 -m 25 -s 12947
+414142  --canonical  both.fa
+sh: line 1: 20163 Killed                  /software/apps/trinityrnaseq/gcc/64/2.1.1/trinityrnaseq-2.1.1/trinity-plugins/jellyfish/bin/jellyfish
+ count -t 16 -m 25 -s 12947414142 --canonical both.fa 2> tmp.19951.stderr
+Trinity run failed. Must investigate error above.
 
 ```
