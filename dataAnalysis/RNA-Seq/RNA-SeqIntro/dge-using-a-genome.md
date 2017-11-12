@@ -1,7 +1,7 @@
 # RNA-Seq data Analysis
 
 
-This document will guide you through the RNAseq analysis, starting from the quality checking through  getting the differential gene expression results. The next part of the wiki series will guide you through some of the down stream analysis that you can do to the results obtained here. Here is the overview of the RNAseq analysis covered in this tutorial. We have downloaded an Arabidopsis dataset from NCBI for this purpose. Check the [BioProject](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA348194) page for more information:
+This document will guide you through RNAseq analysis, beginning at quality checking through to getting the differential gene expression results. We have downloaded an Arabidopsis dataset from NCBI for this purpose. Check the [BioProject](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA348194) page for more information. The overview of RNA-seq analysis is summarized in Fig1.
 
 
 ### Overview ###
@@ -20,7 +20,7 @@ This experiment compares WT and atrx-1 mutant to analyze how ATRX chaperone loss
 
 # 1. Download the data from NCBI #
 
-Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer.
+Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer. The following code expects that you have sra-toolkit, GNU parallel and aspera installed on your computing cluster.
 
 ```
 module load <path/to/sra-toolkit>
@@ -30,19 +30,19 @@ esearch -db sra -query PRJNA276699 | efetch --format runinfo |cut -d "," -f 1 | 
 while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/<version>/etc/asperaweb_id_dsa.openssh\" $line"; done<srr_numbers.txt > prefetch.cmds
 parallel <prefetch.cmds
 ```
-After downloading the SRA files, we have to convert it to fastq format. We can use the fast-dump command as follows: (this step is slow and if possible run these commands using gnu parallel). He re we assume that all SRA files are in a specific folder.
+After downloading the SRA files, we convert it to fastq format. We can use the fast-dump command as follows: (this step is slow and if possible run these commands using gnu parallel). We assume that all SRA files are in a specific folder.
 ```
 module load parallel
 parallel "fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
 ```
-On the other hand if fastq files are available on any public repository we can download them directly using wget
+On the other hand if fastq files are available on any public repository we can download them directly using wget.
 
 ```
 wget <link/to/fastq.gz>
 ```
 
 
-We also need the genome file and associated GTF/GFF file for for Arabidopsis. We will download them directly from the [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch), or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html) or the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (phytozome needs logging in and selecting the files) .
+We also need the genome file and associated GTF/GFF file for for Arabidopsis. We download these files directly from the [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch), or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html) or the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (phytozome needs logging in and selecting the files) .
 
 We downloaded the following files from [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch).
 ```
@@ -53,7 +53,7 @@ Annotation file: GCF_000001735.3_TAIR10_genomic.gff
 
 # 2. Quality Check #
 
-For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high qulaity illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 9 set of files (18 files total), and we need to run `fastqc` on each one of them, you can either do a `for` loop or use `parallel` command. We need to submit it as a job to the cluster, but the command should have:
+For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high qulaity illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them, you can either do a `for` loop or use `parallel` command. We need to submit it as a job to the cluster, but the command should have:
 
 ```
 module load fastqc
@@ -61,7 +61,7 @@ module load parallel
 parallel "fastqc {}" ::: *.fastq.gz
 ```
 
-You will find `.html` files once the job is complete. You can open them using the firefox browser on the HPC (see guide [here](https://gif.biotech.iastate.edu/how-view-files-remote-machine-without-downloading-locally) or download it locally to view them in your local browser. The main metrics to check are:
+You will find `.html` files once the job is complete. You can open them using the chrome or firefox browser on the HPC (see guide [here](https://gif.biotech.iastate.edu/how-view-files-remote-machine-without-downloading-locally) or download it locally to view them in your local browser. The main metrics to check are:
  * Per base sequence quality
  * Adapter content
  * Per base N content
@@ -70,14 +70,14 @@ Once you are happy with the results, proceed with the mapping part. If not, then
 
 # 3. Mapping reads to the genome #
 
-There are several mapping programs available for aligning RNAseq reads back to the genome. Generic aligners such as BWA, BowTie2, BBMap etc., are not suitable for mapping RNAseq reads because they are not splice aware. RNAseq reads are mRNA reads that only contain exoninc regions, hence mapping them back to the genome requires splitting the individual read, only done by splice aware mappers. Here for this tutorial, we will use `HiSat2` (derivative of BowTie2 and a successor of Tophat2).
+There are several mapping programs available for aligning RNAseq reads to the genome. Generic aligners such as BWA, BowTie2, BBMap etc., are not suitable for mapping RNAseq reads because they are not splice aware. RNAseq reads are mRNA reads that only contain exonic regions, hence mapping them back to the genome requires splitting the individual read, only done by splice aware mappers. Here for this tutorial, we will use `HiSat2` (derivative of BowTie2 and a successor of Tophat2).
 
 
 ### HiSat2 for mapping ###
 
 #### Hisat2 Index ####
 
-For HiSat2 mapping, you need to first index the genome and then use the read pairs to map the indexed genome (one set at a time). For indexing the genome, `HiSat2` as is packaged with the `hisat2-build` script. Building index is as follows:
+For HiSat2 mapping, you need to first index the genome and then use the read pairs to map the indexed genome (one set at a time). For indexing the genome, `HiSat2` we use the `hisat2-build` command as follows in a slurm script:
 
 ```
 #!/bin/bash
@@ -102,14 +102,12 @@ hisat2-build $GENOME ${GENOME%.*}
 
 ```
 
-Once complete, you should see number of files with `.ht2` extension. These are
-the index files. At the mapping step we simply refer to the index.
+Once complete, you should see a number of files with `.ht2` extension. These are the index files. At the mapping step we simply refer to the index.
 
 
 #### Hisat2 Mapping ####
 
-For mapping, each set of reads (forward and reverse or R1 and R2), we set up a
-run script.
+For mapping, each set of reads (forward and reverse or R1 and R2), we first set up a run_hisast.sh script.
 ```
 #!/bin/bash
 set -o xtrace
@@ -145,8 +143,7 @@ rm $ODIR\/${OUTPUT}.sam
 
 ```
 
-For setting it up to run with each set of file, we can set a SLURM script that
-loops over each fastq file:
+For setting it up to run with each set of file, we can set a SLURM script that loops over each fastq file. Note that this script calls the run_hista2.sh script for each pair of fastq file supplied as its argument.
 ```
 #!/bin/bash
 set -o xtrace
@@ -183,10 +180,10 @@ SRR4420293.bam
 ```
 # 2. Abundance estimation #
 
-For quantifying transcript abundance from RNA-seq data, there are many programs we can use. Two most popular tools include, `featureCounts` and `HTSeq` and many other tools. We will need a file with aligned sequencing reads (SAM/BAM files generated in previous step) and a list of genomic features (from the GFF file). `featureCounts` is a highly efficient general-purpose read summarization program that counts mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations. It also outputs stat info for the overall summarization results, including number of successfully assigned reads and number of reads that failed to be assigne due to various reasons. We can run featureCounts on all SAM/BAM files at the same time or individually.
+For quantifying transcript abundance from RNA-seq data, there are many programs available. Two most popular tools include, `featureCounts` and `HTSeq` and many other tools. We will need a file with aligned sequencing reads (SAM/BAM files generated in previous step) and a list of genomic features (from the GFF file). `featureCounts` is a highly efficient general-purpose read summarization program that counts mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations. It also outputs stat info for the overall summarization results, including number of successfully assigned reads and number of reads that failed to be assigned due to various reasons. We can run featureCounts on all SAM/BAM files at the same time or individually.
 
 #### featureCounts ####
-
+You will need `subread` and `parallel` modules loaded.
 ```
 ANNOT="/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic.gff"
 mkdir -p /project/isu_gif_vrsc/Siva/HS_out/counts
@@ -228,9 +225,7 @@ gene6   NC_003070.9     28500   28706   +       207     0
 gene7   NC_003070.9     31170   33171   -       2002    45
 
 ```
-We can
-
-Summary Files: These give the summary of reads that were either ambiguous, multimapped, mapped to no features or unmapped among other statistics. We can refer to these to further tweak our analyses etc.
+Additionally Summary Files are produced. These give the summary of reads that were either ambiguous, multimapped, mapped to no features or unmapped among other statistics. We can refer to these to further tweak our analyses etc.
 
 ```
 SRR4420298.gene.txt.summary
@@ -246,6 +241,7 @@ Using the following command (a combination of paste and awk), we can produce a s
 ```
 paste <(awk 'BEGIN {OFS="\t"} {print $1,$7}' SRR4420293.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420294.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420295.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420296.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420297.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420298.gene.txt) | grep -v '^\#' > At_count.txt
 ```
+You could also edit out the names of the samples to something succinct, for example, S293 instead of SRR4420293.bam.
 
 head At_count.txt
 ```
@@ -319,7 +315,7 @@ png("qc-dispersions.png", 1000, 1000, pointsize=20)
 plotDispEsts(dds, main="Dispersion plot")
 dev.off()
 ```
-![qcdispersions.png](/assets/qcdispersions.png)
+![qc-dispersions.png](/assets/qc-dispersions.png)
 ```
 # Regularized log transformation for clustering/heatmaps, etc
 rld <- rlogTransformation(dds)
