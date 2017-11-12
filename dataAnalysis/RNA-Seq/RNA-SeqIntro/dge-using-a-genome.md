@@ -8,7 +8,7 @@ This document will guide you through the RNAseq analysis, starting from the qual
 ![**Figure 1.**: Overview of the RNAseq workflow](/assets/RNAseq_1.png)
 
 
-### Experimental design ###
+#Experimental design #
 
 This experiment compares WT and atrx-1 mutant to analyze how ATRX chaperone loss of function results in changes in gene expression. RNA was isolated from three WT replicates and three mutant replicates using Trizol. Transcriptome was enriched/isolated using the plant RiboMinus kit for obtaining total RNA. RNA-seq was carried out in Illumina Hiseq 2500. The sequencing reads were generated as paired-end data, hence we have 2 files per replicate.
 
@@ -18,7 +18,7 @@ This experiment compares WT and atrx-1 mutant to analyze how ATRX chaperone loss
 | WT | SRR4420293_1.fastq.gz <br> SRR4420293_2.fastq.gz | SRR4420294_1.fastq.gz <br> SRR4420294_2.fastq.gz | SRR4420295_1.fastq.gz <br> SRR4420295_2.fastq.gz |
 | atrx-1 | SRR4420296_1.fastq.gz <br> SRR4420296_2.fastq.gz| SRR4420297_1.fastq.gz <br> SRR4420297_2.fastq.gz| SRR4420298_1.fastq.gz <br> SRR4420298_2.fastq.gz |
 
-### 1. Download the data from NCBI ###
+# 1. Download the data from NCBI #
 
 Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer.
 
@@ -51,7 +51,7 @@ Annotation file: GCF_000001735.3_TAIR10_genomic.gff
 
 ```
 
-### 2. Quality Check ###
+# 2. Quality Check #
 
 For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high qulaity illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 9 set of files (18 files total), and we need to run `fastqc` on each one of them, you can either do a `for` loop or use `parallel` command. We need to submit it as a job to the cluster, but the command should have:
 
@@ -68,13 +68,14 @@ You will find `.html` files once the job is complete. You can open them using th
 
 Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming (see [here](/fastq-quality-trimming.md))
 
-### 3. Mapping reads to the genome ###
+# 3. Mapping reads to the genome #
 
 There are several mapping programs available for aligning RNAseq reads back to the genome. Generic aligners such as BWA, BowTie2, BBMap etc., are not suitable for mapping RNAseq reads because they are not splice aware. RNAseq reads are mRNA reads that only contain exoninc regions, hence mapping them back to the genome requires splitting the individual read, only done by splice aware mappers. Here for this tutorial, we will use `HiSat2` (derivative of BowTie2 and a successor of Tophat2).
 
-**Note: you don't have to run all three mapping programs, use any one of the below methods**
 
-#### Using HiSat2 for mapping ####
+### HiSat2 for mapping ###
+
+#### Hisat2 Index ####
 
 For HiSat2 mapping, you need to first index the genome and then use the read pairs to map the indexed genome (one set at a time). For indexing the genome, `HiSat2` as is packaged with the `hisat2-build` script. Building index is as follows:
 
@@ -99,15 +100,16 @@ module load hisat2
 GENOME="/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic.fna"
 hisat2-build $GENOME ${GENOME%.*}
 
-
-
 ```
+
 Once complete, you should see number of files with `.ht2` extension. These are
-the index files.
+the index files. At the mapping step we simply refer to the index.
+
+
+#### Hisat2 Mapping ####
 
 For mapping, each set of reads (forward and reverse or R1 and R2), we set up a
-run script. This script can also be found on our [GitHub page](https://github.com/ISUgenomics/common_analyses/blob/master/runHISAT2.sh).
-
+run script.
 ```
 #!/bin/bash
 set -o xtrace
@@ -179,10 +181,11 @@ SRR4420295.bam
 SRR4420294.bam
 SRR4420293.bam
 ```
-### 2. Abundance estimation ###
+# 2. Abundance estimation #
 
-For quantifying transcript abundance from RNA-seq data, there are many programs we can use. Two most popular tools inlcude, `featureCounts` and `HTSeq` and . We will need a file with aligned sequencing reads (SAM/BAM files generated in previous step) and a list of genomic features (from the GFF file). `featureCounts` is a highly efficient general-purpose read summarization program that counts mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations. It also outputs stat info for the overall summarization results, including number of successfully assigned reads and number of reads that failed to be assigne due to various reasons. We can run featureCounts on all SAM/BAM files at the same time or individually.
+For quantifying transcript abundance from RNA-seq data, there are many programs we can use. Two most popular tools include, `featureCounts` and `HTSeq` and many other tools. We will need a file with aligned sequencing reads (SAM/BAM files generated in previous step) and a list of genomic features (from the GFF file). `featureCounts` is a highly efficient general-purpose read summarization program that counts mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations. It also outputs stat info for the overall summarization results, including number of successfully assigned reads and number of reads that failed to be assigne due to various reasons. We can run featureCounts on all SAM/BAM files at the same time or individually.
 
+#### featureCounts ####
 
 ```
 ANNOT="/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic.gff"
@@ -225,9 +228,9 @@ gene6   NC_003070.9     28500   28706   +       207     0
 gene7   NC_003070.9     31170   33171   -       2002    45
 
 ```
+We can
 
-
-Summary Files: These give the summary of reads that were either ambiguous, multimapped, mapped to no features or unammped among other things
+Summary Files: These give the summary of reads that were either ambiguous, multimapped, mapped to no features or unmapped among other statistics. We can refer to these to further tweak our analyses etc.
 
 ```
 SRR4420298.gene.txt.summary
@@ -238,7 +241,7 @@ SRR4420294.gene.txt.summary
 SRR4420297.gene.txt.summary
 
 ```
-Using the following command, a combination of paste and awk, we can produce a single count table taht can be used to load this data into R for differential expresion
+Using the following command (a combination of paste and awk), we can produce a single count table. This count table could be loaded into R for differential expression analysis.
 
 ```
 paste <(awk 'BEGIN {OFS="\t"} {print $1,$7}' SRR4420293.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420294.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420295.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420296.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420297.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420298.gene.txt) | grep -v '^\#' > At_count.txt
@@ -260,50 +263,62 @@ gene8   0       0       0       0       0       0
 
 Now we are ready for performing DGE analysis!
 
-### 5. Differential Gene Expression analysis ###
+# 3. Differential Gene Expression analysis #
 
 Again, there are few options here. You can use `DESeq2`,`edgeR`, or `QuasiSeq` (and many more!). Here we will describe how to do this with reference using DESeq2.
 
-**Note: you don't have to run all three methods, use any one**
 
-#### Differential Expression Using DESeq2 ####
-Again, this should be done either on RStudio or in R terminal. Following are the
-steps
+### Differential Expression with DESeq2 ###
+These steps should be done either on RStudio or in R terminal:
 
 ```
 ## RNA-seq analysis with DESeq2
 ## Largely based on Stephen Turner, @genetics_blog
 ## https://gist.github.com/stephenturner/f60c1934405c127f09a6
 
-# Import the data
-countdata <- read.table("counts.txt", header=TRUE, row.names=1)
+source("http://bioconductor.org/biocLite.R")
+biocLite("DESeq2")
+library("DESeq2")
 
-# Remove .bam or .sam from filenames
-colnames(countdata) <- gsub("\\.[sb]am$", "", colnames(countdata))
+
+setwd("~/Atrx/")
+dat<-read.table("At_count.txt",header = T,quote = "",row.names = 1)
 
 # Convert to matrix
-countdata <- as.matrix(countdata)
-head(countdata)
+dat <- as.matrix(dat)
+head(dat)
 
-# Assign condition (first four are controls, second four and third four contain two different experiments)
-(condition <- factor(c(rep("ctl", 4), rep("inf1", 4), rep("inf2", 4))))
+# Assign condition (first three are WT, next three are mutants)
 
-# Analysis with DESeq2
+condition <- factor(c(rep("WT",3),rep("Mut",3)))
+condition=relevel(condition,ref = "WT")
 
-library(DESeq2)
 
-# Create a coldata frame and instantiate the DESeqDataSet. See ?DESeqDataSetFromMatrix
-(coldata <- data.frame(row.names=colnames(countdata), condition))
-dds <- DESeqDataSetFromMatrix(countData=countdata, colData=coldata, design=~condition)
-dds
+# Create a coldata frame: its rows correspond to columns of dat (i.e., matrix representing the countData)
+coldata <- data.frame(row.names=colnames(dat), condition)
 
-# Run the DESeq pipeline
+head(coldata)
+
+#            condition
+# S293        WT
+# S294        WT
+# S295        WT
+# S296       Mut
+# S297       Mut
+# S298       Mut
+
+
+##### DESEq pipeline, first the design and the next step, normalizing to model fitting
+dds <- DESeqDataSetFromMatrix(countData = dat, colData = coldata,design=~ condition)
+
+
 dds <- DESeq(dds)
 
-# Plot dispersions
+# Plot Dispersions:
 png("qc-dispersions.png", 1000, 1000, pointsize=20)
 plotDispEsts(dds, main="Dispersion plot")
 dev.off()
+
 
 # Regularized log transformation for clustering/heatmaps, etc
 rld <- rlogTransformation(dds)
@@ -325,40 +340,6 @@ heatmap.2(as.matrix(sampleDists), key=F, trace="none",
           col=colorpanel(100, "black", "white"),
           ColSideColors=mycols[condition], RowSideColors=mycols[condition],
           margin=c(10, 10), main="Sample Distance Matrix")
-dev.off()
-
-# Principal components analysis
-## Could do with built-in DESeq2 function:
-## DESeq2::plotPCA(rld, intgroup="condition")
-## I (Stephen Turner) like mine better:
-rld_pca <- function (rld, intgroup = "condition", ntop = 500, colors=NULL, legendpos="bottomleft", main="PCA Biplot", textcx=1, ...) {
-  require(genefilter)
-  require(calibrate)
-  require(RColorBrewer)
-  rv = rowVars(assay(rld))
-  select = order(rv, decreasing = TRUE)[seq_len(min(ntop, length(rv)))]
-  pca = prcomp(t(assay(rld)[select, ]))
-  fac = factor(apply(as.data.frame(colData(rld)[, intgroup, drop = FALSE]), 1, paste, collapse = " : "))
-  if (is.null(colors)) {
-    if (nlevels(fac) >= 3) {
-      colors = brewer.pal(nlevels(fac), "Paired")
-    }   else {
-      colors = c("black", "red")
-    }
-  }
-  pc1var <- round(summary(pca)$importance[2,1]*100, digits=1)
-  pc2var <- round(summary(pca)$importance[2,2]*100, digits=1)
-  pc1lab <- paste0("PC1 (",as.character(pc1var),"%)")
-  pc2lab <- paste0("PC1 (",as.character(pc2var),"%)")
-  plot(PC2~PC1, data=as.data.frame(pca$x), bg=colors[fac], pch=21, xlab=pc1lab, ylab=pc2lab, main=main, ...)
-  with(as.data.frame(pca$x), textxy(PC1, PC2, labs=rownames(as.data.frame(pca$x)), cex=textcx))
-  legend(legendpos, legend=levels(fac), col=colors, pch=20)
-  #     rldyplot(PC2 ~ PC1, groups = fac, data = as.data.frame(pca$rld),
-  #            pch = 16, cerld = 2, aspect = "iso", col = colours, main = draw.key(key = list(rect = list(col = colours),
-  #                                                                                         terldt = list(levels(fac)), rep = FALSE)))
-}
-png("qc-pca.png", 1000, 1000, pointsize=20)
-rld_pca(rld, colors=mycols, intgroup="condition", xlim=c(-75, 35))
 dev.off()
 
 
@@ -396,6 +377,8 @@ maplot <- function (res, thresh=0.05, labelsig=TRUE, textcx=1, ...) {
 png("diffexpr-maplot.png", 1500, 1000, pointsize=20)
 maplot(resdata, main="MA Plot")
 dev.off()
+
+## Plots to Examine Results:
 
 ## Volcano plot with "significant" genes labeled
 volcanoplot <- function (res, lfcthresh=2, sigthresh=0.05, main="Volcano Plot", legendpos="bottomright", labelsig=TRUE, textcx=1, ...) {
