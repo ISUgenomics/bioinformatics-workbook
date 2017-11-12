@@ -318,8 +318,9 @@ dds <- DESeq(dds)
 png("qc-dispersions.png", 1000, 1000, pointsize=20)
 plotDispEsts(dds, main="Dispersion plot")
 dev.off()
-
-
+```
+![qcdispersions.png](/assets/qcdispersions.png)
+```
 # Regularized log transformation for clustering/heatmaps, etc
 rld <- rlogTransformation(dds)
 head(assay(rld))
