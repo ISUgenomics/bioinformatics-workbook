@@ -80,8 +80,6 @@ ls
 .............
 ..........
 ```
-![file](/assets/Atrx_multiqc_report.html)
-
 If you change to multiqc_data directory you see these files.
 ```
 cd multiqc_data
@@ -91,11 +89,9 @@ multiqc_general_stats.txt
 multiqc_sources.txt
 
 ```
-
- The main metrics to check are:
- * Per base sequence quality
- * Adapter content
- * Per base N content
+You can peruse the complete report or download the plots and view them for example: ![adapter_content](assets/fastqc_adapter_content_plot.png)
+![per_base_n_content](assets/fastqc_per_base_n_content_plot.png)
+![per_base_sequence_quality](assets/fastqc_per_base_sequence_quality_plot.png)
 
 Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming (see [here](/fastq-quality-trimming.md))
 
