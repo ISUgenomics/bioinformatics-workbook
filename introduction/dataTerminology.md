@@ -41,4 +41,4 @@ In the line above
 ## What is a chromosome?
 Chromosomes are the largest DNA molecules in the cell. Scaffolds can be ordered and oriented using a genetic map or HiC data into linkage groups or chromosomes.
 
-[Table of contents](index.md)
+[Table of contents](/index.md)

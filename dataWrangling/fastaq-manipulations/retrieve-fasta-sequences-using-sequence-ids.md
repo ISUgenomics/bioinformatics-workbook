@@ -89,4 +89,4 @@ This method can be applied directly to FASTA or a FASTQ file, compressed or unco
 #Extract sequences with names in file name.list, one sequence name per line:
 seqtk subseq input.fasta name.list > output.fasta
 ```
-[Table of contents](index.md)
+[Table of contents](/index.md)

@@ -46,4 +46,4 @@ head -n 10000 input.fastq |\
                      print "Solexa+64"; else print "Unknown score encoding!";}'
  ```
 
- [Table of contents](index.md)
+ [Table of contents](/index.md)

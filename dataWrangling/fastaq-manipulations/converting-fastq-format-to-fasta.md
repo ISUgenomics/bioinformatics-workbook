@@ -60,4 +60,4 @@ seqtk seq -a input.fastq > output.fasta
 ```
 Note that you can use either compressed or uncompressed files for this tool
 
-[Table of contents](index.md)
+[Table of contents](/index.md)

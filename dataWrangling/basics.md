@@ -1,3 +1,3 @@
 #Basics of Bioinformatics
 
-[Table of contents](index.md)
+[Table of contents](/index.md)

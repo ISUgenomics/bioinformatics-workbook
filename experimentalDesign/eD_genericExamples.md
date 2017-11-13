@@ -44,4 +44,4 @@ An average estimate for the size of the genic space in a genome  assumes a genom
 # Genome Assembly Generic Example
 
 
-[Table of contents](index.md)
+[Table of contents](/index.md)
