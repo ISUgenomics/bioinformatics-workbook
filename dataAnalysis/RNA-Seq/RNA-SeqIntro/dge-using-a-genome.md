@@ -21,7 +21,7 @@ This experiment compares WT and atrx-1 mutant to analyze how loss of function  o
 
 # 1. Download the data from public databases #
 
-##NCBI
+## NCBI
 Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer. The following code expects that you have sra-toolkit, GNU parallel and aspera installed on your computing cluster. On Ceres, in order to use an installed software, we load the relevant module.
 
 ```
@@ -37,7 +37,7 @@ After downloading the SRA files, we convert it to fastq format. We can use the f
 module load parallel
 parallel "fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
 ```
-#EBI
+## EBI
 On the other hand if fastq files are available on a public repository (e.g. [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using wget after copying the links to those files.
 
 ```
@@ -74,7 +74,7 @@ multiqc .
 
 
 ```
-This will give you a combined html file folder with containing three files descbing the various statistics:
+This will give you a combined html file folder with containing three files describing the various statistics:
 ```
 ls  
 ........... multiqc_data (Directory)
@@ -94,7 +94,6 @@ multiqc_sources.txt
 You can peruse the complete report or download the plots and view them for example: ![adapter_content](dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_adapter_content_plot.png)
 
 ![per_base_n_content](dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_per_base_n_content_plot.png)
-/Users/siva/GitHub/bioinformatics-workbook/dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_adapter_content_plot.png
 ![per_base_sequence_quality](dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_per_base_sequence_quality_plot.png)
 
 Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming (see [here](/fastq-quality-trimming.md))
@@ -113,7 +112,6 @@ For HiSat2 mapping, you need to first index the genome and then use the read pai
 ```
 #!/bin/bash
 #set -o xtrace
-#SBATCH -p debug74 # optional: to specify the queue
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=16
 #SBATCH -t 24:00:00
@@ -352,7 +350,11 @@ dev.off()
 rld <- rlogTransformation(dds)
 head(assay(rld))
 hist(assay(rld))
-
+# PCA
+plotpca(rld)
+```
+![PCA.png](dataAnalysis/RNA-Seq/RNA-SeqIntro/PCA.png)
+```
 # Colors for plots below
 ## Ugly:
 ## (mycols <- 1:length(unique(condition)))
