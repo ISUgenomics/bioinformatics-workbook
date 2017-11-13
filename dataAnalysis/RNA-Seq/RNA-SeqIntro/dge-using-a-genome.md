@@ -256,7 +256,7 @@ Each file has a commented line staring with a # which gives the command used to 
 
 `head SRR4420298.gene.txt`
 ```
-# Program:featureCounts v1.5.2; Command:"featureCounts" "-T" "4" "-s" "2" "-p" "-t" "gene" "-g" "ID" "-a" "/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic.gff" "-o" "/project/isu_gif_vrsc/Siva/HS_out/counts/SRR4420298.gene.txt" "SRR4420298.bam"
+# Program:featureCounts v1.5.2; Command:"featureCounts" "-T" "4" "-s" "2" "-p" "-t" "gene" "-g" "ID" "-a" "/path/to/GCF_000001735.3_TAIR10_genomic.gff" "-o" "/path/to/counts/SRR4420298.gene.txt" "SRR4420298.bam"
 
 Geneid  Chr     Start   End     Strand  Length  SRR4420298.bam
 gene0   NC_003070.9     3631    5899    +       2269    13
@@ -305,7 +305,7 @@ Now we are ready for performing DGE analysis!
 
 # 3. Differential Gene Expression analysis #
 
-Again, there are few options here. You can use `DESeq2`,`edgeR`, or `QuasiSeq` (and many more!). Here we will describe how to do this with reference using DESeq2.
+There are many programs that you can use to perform differential expression Some of the popular ones for RNA-seq are [`DESeq2`](https://bioconductor.org/packages/release/bioc/html/DESeq2.html),[`edgeR`](http://bioconductor.org/packages/release/bioc/html/edgeR.html), or [`QuasiSeq`](https://cran.r-project.org/web/packages/QuasiSeq/index.html). Here we will demonstrate differential expression using DESeq2.
 
 
 ### Differential Expression with DESeq2 ###
@@ -365,11 +365,13 @@ dev.off()
 rld <- rlogTransformation(dds)
 head(assay(rld))
 hist(assay(rld))
-# PCA
+
+# Principal Components Analysis
 plotpca(rld)
 ```
 ![PCA.png](Assets/PCA.png)
 ```
+
 # Colors for plots below
 ## Ugly:
 ## (mycols <- 1:length(unique(condition)))
@@ -386,8 +388,9 @@ heatmap.2(as.matrix(sampleDists), key=F, trace="none",
           ColSideColors=mycols[condition], RowSideColors=mycols[condition],
           margin=c(10, 10), main="Sample Distance Matrix")
 dev.off()
-
-
+```
+![Heatmap-Samples](Assets/qc-heatmap-samples.png)
+```
 # Get differential expression results
 res <- results(dds)
 table(res$padj<0.05)
@@ -398,7 +401,21 @@ resdata <- merge(as.data.frame(res), as.data.frame(counts(dds, normalized=TRUE))
 names(resdata)[1] <- "Gene"
 head(resdata)
 ## Write results
-write.csv(resdata, file="diffexpr-results.csv")
+write.csv(resdata, file="diffexpr-results.csv",quote = FALSE,row.names = F)
+
+```
+head -4 diffexpr-results.csv
+```
+Gene,baseMean,log2FoldChange,lfcSE,stat,pvalue,padj,S293,S294,S295,S296,S297,S298
+gene32459,4529.272154082,-2.06484914507321,0.288731491703117,-7.15145110390785,8.58653066559819e-13,5.93844460832771e-09,11073.6705141816,5726.45128024,5128.92211910988,1482.46794888894,1473.13299530101,2290.98806677055
+gene38073,36575.3870282423,-1.38271999532283,0.199996648356586,-6.91371583816493,4.7212044436934e-12,1.63259249662918e-08,60993.4651420719,43969.9190693109,53655.982748808,21424.5919655829,22323.7590351868,17084.604208493
+gene1446,62.2619789946306,-2.86730516347734,0.43036495871904,-6.66249680738816,2.69214169069523e-11,6.20628397761607e-08,186.819432107996,65.9054495168287,73.2220377206551,12.4735356867937,10.8379903446028,24.3134285909079
+
+```
+
+
+
+```
 
 ## Examine plot of p-values
 hist(res$pvalue, breaks=50, col="grey")
