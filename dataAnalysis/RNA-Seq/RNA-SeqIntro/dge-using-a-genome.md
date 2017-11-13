@@ -47,7 +47,7 @@ wget <link/to/fastq.gz>
 
 We also need the genome file and associated GTF/GFF file for for Arabidopsis. We download these files directly from the [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch), or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html) or the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (phytozome needs logging in and selecting the files) .
 
-We downloaded the following files from [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch).
+For this tutorial, we downloaded the following files from [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch).
 ```
 Genome Fasta File: GCF_000001735.3_TAIR10_genomic.fna
 Annotation file: GCF_000001735.3_TAIR10_genomic.gff
@@ -56,7 +56,7 @@ Annotation file: GCF_000001735.3_TAIR10_genomic.gff
 
 # 2. Quality Check #
 
-For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high quality illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them, you can either do a `for` loop or use `parallel` command. We need to submit it as a job to the cluster, but the command should have:
+For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high quality illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them, we run it in `parallel`.
 
 ```
 module load fastqc
@@ -69,45 +69,49 @@ Because we have a total of 6 quality outputs, we will have 6 html files and 6 zi
 cd fq_out_directory
 module load python_3
 multiqc .
-....
-....
+[INFO   ]         multiqc : This is MultiQC v0.8
+[INFO   ]         multiqc : Template    : default
+[INFO   ]         multiqc : Searching '.'
+[INFO   ]          fastqc : Found 6 reports
+[INFO   ]         multiqc : Report      : multiqc_report.html
+[INFO   ]         multiqc : Data        : multiqc_data
+[INFO   ]         multiqc : MultiQC complete
 
 
 ```
-This will give you a combined html file folder with containing three files describing the various statistics:
+This will give you a combined html file and a folder named multiqc_data with containing three files describing the various statistics:
 ```
 ls  
-........... multiqc_data (Directory)
-............. multiqc_report.html
-.............
-..........
-```
-If you change to multiqc_data directory you see these files.
-```
+multiqc_data (Folder)
+multiqc_report.html
+
 cd multiqc_data
 ls
+
 multiqc_fastqc.txt  
 multiqc_general_stats.txt  
 multiqc_sources.txt
-
+..........
 ```
+
+
 You can peruse the complete report or download the plots and view them for example: ![adapter_content](Assets/fastqc_adapter_content_plot.png)
 
 ![per_base_n_content](Assets/fastqc_per_base_n_content_plot.png)
 ![per_base_sequence_quality](Assets/fastqc_per_base_sequence_quality_plot.png)
 
-Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming (see [here](/fastq-quality-trimming.md))
+Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming. E.g. see [here](http://hannonlab.cshl.edu/fastx_toolkit/). If the quality is very bad it might make more sense to exclude that sample from the analysis.
 
 # 3. Mapping reads to the genome #
 
-There are several mapping programs available for aligning RNAseq reads to the genome. Generic aligners such as BWA, BowTie2, BBMap etc., are not suitable for mapping RNAseq reads because they are not splice aware. RNAseq reads are mRNA reads that only contain exonic regions, hence mapping them back to the genome requires splitting the individual read, only done by splice aware mappers. Here for this tutorial, we will use `HiSat2` (derivative of BowTie2 and a successor of Tophat2).
+There are several mapping programs available for aligning RNAseq reads to the genome. Generic aligners such as BWA, BowTie2, BBMap etc., are not suitable for mapping RNAseq reads because they are not splice aware. RNAseq reads are mRNA reads that only contain exonic regions, hence mapping them back to the genome requires splitting the individual reads that span an intron. This is only done by splice aware mappers. Here for this tutorial, we will use [`HISAT2`](https://ccb.jhu.edu/software/hisat2/index.shtml). HISAT2 is a successor of Tophat2.
 
 
 ### HiSat2 for mapping ###
 
 #### Hisat2 Index ####
 
-For HiSat2 mapping, you need to first index the genome and then use the read pairs to map the indexed genome (one set at a time). For indexing the genome, `HiSat2` we use the `hisat2-build` command as follows in a slurm script:
+For HiSat2 mapping, you need to first index the genome and then use the read pairs to map the indexed genome (one set at a time). For indexing the genome, we use the `hisat2-build` command as follows in a slurm script:
 
 ```
 #!/bin/bash
@@ -126,26 +130,37 @@ scontrol show job $SLURM_JOB_ID
 ulimit -s unlimited
 module use /software/modulefiles/
 module load hisat2
-GENOME="/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic.fna"
+GENOME="/path/to/refrence/GCF_000001735.3_TAIR10_genomic.fna"
 hisat2-build $GENOME ${GENOME%.*}
 
 ```
 
-Once complete, you should see a number of files with `.ht2` extension. These are the index files. At the mapping step we simply refer to the index.
+Once complete, you should see a number of files with `.ht2` extension.  These are the index files.
+```
+ GCF_000001735.3_TAIR10_genomic.1.ht2
+ GCF_000001735.3_TAIR10_genomic.2.ht2
+ GCF_000001735.3_TAIR10_genomic.3.ht2
+ GCF_000001735.3_TAIR10_genomic.4.ht2
+ GCF_000001735.3_TAIR10_genomic.5.ht2
+ GCF_000001735.3_TAIR10_genomic.6.ht2
+ GCF_000001735.3_TAIR10_genomic.7.ht2
+ GCF_000001735.3_TAIR10_genomic.8.ht2
+```
+ At the mapping step we simply refer to the index using `GCF_000001735.3_TAIR10_genomic` as described in the next step.
 
 
 #### Hisat2 Mapping ####
 
-For mapping, each set of reads (forward and reverse or R1 and R2), we first set up a run_hisast.sh script.
+For mapping, each set of reads (forward and reverse or R1 and R2), we first set up a run_hisat2.sh script.
 ```
 #!/bin/bash
 set -o xtrace
 # set the rerefernce index:
-GENOME="/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic"
+GENOME="/path/to/refrence/GCF_000001735.3_TAIR10_genomic"
 # make an output directory to store the output aligned files
-mkdir -p /project/isu_gif_vrsc/Siva/HS_out
+mkdir -p /path/to/out_dir
 # set that as the output directory
-ODIR="/project/isu_gif_vrsc/Siva/HS_out"
+ODIR="/path/to/out_dir"
 
 
 p=8 # use 8 threads
@@ -172,7 +187,7 @@ rm $ODIR\/${OUTPUT}.sam
 
 ```
 
-For setting it up to run with each set of file, we can set a SLURM script that loops over each fastq file. Note that this script calls the run_hista2.sh script for each pair of fastq file supplied as its argument.
+For setting it up to run with each set of file, we can set a SLURM script that loops over each fastq file. Note that this script calls the run_hisat2.sh script for each pair of fastq file supplied as its argument.
 ```
 #!/bin/bash
 set -o xtrace
@@ -192,7 +207,7 @@ scontrol show job $SLURM_JOB_ID
 for fq1 in *1.*gz;
 do
 fq2=$(echo $fq1 | sed 's/1/2/g');
-/project/isu_gif_vrsc/Siva/run_hisat.sh ${fq1} ${fq2};
+/path/to/run_hisat.sh ${fq1} ${fq2};
 done >& hisat2_1.log
 
 ```
@@ -209,14 +224,14 @@ SRR4420293.bam
 ```
 # 2. Abundance estimation #
 
-For quantifying transcript abundance from RNA-seq data, there are many programs available. Two most popular tools include, `featureCounts` and `HTSeq` and many other tools. We will need a file with aligned sequencing reads (SAM/BAM files generated in previous step) and a list of genomic features (from the GFF file). `featureCounts` is a highly efficient general-purpose read summarization program that counts mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations. It also outputs stat info for the overall summarization results, including number of successfully assigned reads and number of reads that failed to be assigned due to various reasons. We can run featureCounts on all SAM/BAM files at the same time or individually.
+For quantifying transcript abundance from RNA-seq data, there are many programs available. Two most popular tools include, `featureCounts` and `HTSeq`. We will need a file with aligned sequencing reads (SAM/BAM files generated in previous step) and a list of genomic features (from the GFF file). `featureCounts` is a highly efficient general-purpose read summarization program that counts mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations. It also outputs stat info for the overall summarization results, including number of successfully assigned reads and number of reads that failed to be assigned due to various reasons. We can run featureCounts on all SAM/BAM files at the same time or individually.
 
 #### featureCounts ####
-You will need `subread` and `parallel` modules loaded.
+You will need [`subread`](http://subread.sourceforge.net/) and `parallel` modules loaded.
 ```
-ANNOT="/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic.gff"
-mkdir -p /project/isu_gif_vrsc/Siva/HS_out/counts
-ODIR="/project/isu_gif_vrsc/Siva/HS_out/counts"
+ANNOT="/path/to/GCF_000001735.3_TAIR10_genomic.gff"
+mkdir -p path/to/counts
+ODIR="path/to/counts"
 
 
 module purge
