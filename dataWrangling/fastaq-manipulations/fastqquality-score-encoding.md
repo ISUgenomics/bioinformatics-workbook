@@ -19,7 +19,7 @@
  <span style="color: green">X - Solexa        Solexa+64, raw reads typically (-5, 40)</span>
  <span style="color: blue">I - Illumina 1.3+ Phred+64,  raw reads typically (0, 40)</span>
  <span style="color: orange">J - Illumina 1.5+ Phred+64,  raw reads typically (3, 40)
-     with 0=unused, 1=unused, 2=Read Segment Quality Control Indicator (bold) 
+     with 0=unused, 1=unused, 2=Read Segment Quality Control Indicator (bold)
      (Note: See discussion above).</span>
  <span style="color: brown">L - Illumina 1.8+ Phred+33,  raw reads typically (0, 41)</span>
 </pre>
@@ -37,7 +37,7 @@ head -n 10000 input.fastq |\
           {if($i>max) max=$i; \
                if($i<min) min=$i;}}END \
           {if(max<=74 && min<59) \
-                     print "Phred+33"; \ 
+                     print "Phred+33"; \
            else \
            if(max>73 && min>=64) \
                      print "Phred+64"; \
@@ -45,3 +45,5 @@ head -n 10000 input.fastq |\
            if(min>=59 && min<64 && max>73) \
                      print "Solexa+64"; else print "Unknown score encoding!";}'
  ```
+
+ [Table of contents](index.md)

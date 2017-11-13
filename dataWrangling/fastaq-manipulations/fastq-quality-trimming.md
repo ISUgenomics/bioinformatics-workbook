@@ -4,3 +4,6 @@ Many programs are available for trimming reads. Popular packages include:
 
 * Trimmomatic
 * FASTX toolkit
+
+
+[Table of contents](index.md)

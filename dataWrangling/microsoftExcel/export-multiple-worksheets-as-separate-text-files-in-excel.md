@@ -1,6 +1,6 @@
 # Export multiple worksheets as separate text files in Excel
 
-If there are large number of worksheets (tabs) in your excel file that you need to export as a separate text file, follow these guidelines. Note that the worksheet label will be used as file name for the text file with the `.txt` extension. 
+If there are large number of worksheets (tabs) in your excel file that you need to export as a separate text file, follow these guidelines. Note that the worksheet label will be used as file name for the text file with the `.txt` extension.
 
 Before proceeding, check if you have enabled the macros, i.e., if you don't see `DEVELOPER` tab in you empty spreadsheet,  click on `FILE`, `OPTIONS` and `Customize Ribbon`. You should see a check box on the right hand side, for the `DEVELOPER` tab, check it and click `OK`.
 
@@ -136,3 +136,5 @@ Application.ScreenUpdating = True
 End Sub
 ```
 Run the macro, but clicking on `Developer` tab, and `Run Macro`
+
+[Table of contents](index.md)

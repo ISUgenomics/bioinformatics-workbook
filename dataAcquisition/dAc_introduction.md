@@ -10,3 +10,6 @@
   - #### Why Arabidopsis?
 
   - #### How to download the Arabidopsis dataset?
+
+
+  [Table of contents](index.md)

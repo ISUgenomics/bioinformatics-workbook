@@ -15,5 +15,5 @@ The [human genome was sequenced in 2001](http://science.sciencemag.org/content/2
 Cost to sequence a human genome using a logarithmic scale on the y-axis and year on the x-axis.
 For more information about this figure see [www.genome.gov](https://www.genome.gov/27565109/the-cost-of-sequencing-a-human-genome/)
 
-## What is a read?
-[Table of contents](README.md)
+
+[Table of contents](index.md)

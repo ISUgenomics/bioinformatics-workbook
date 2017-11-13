@@ -42,3 +42,6 @@ An average estimate for the size of the genic space in a genome  assumes a genom
 * ```Cost and technology as of```:  2017
 
 # Genome Assembly Generic Example
+
+
+[Table of contents](index.md)

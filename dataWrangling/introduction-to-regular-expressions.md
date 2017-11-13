@@ -85,7 +85,7 @@ To match multiple characters we can use the ```*``` symbol. In the example below
 ```
 perl -ne 'if(/Z.*X/) {print $_}' address.txt
 ```
-Result prints all lines that contain this pattern 
+Result prints all lines that contain this pattern
 ```
 ZEnderX 1-515-999-4321ZIX
 1000 ZBattlesXchool driveZZplayX
@@ -176,3 +176,5 @@ A more comprehensive list of character classes can be found here.
 
 * [Perl Programming Documentation](http://perldoc.perl.org/perlrecharclass.html)
 
+
+[Table of contents](index.md)
