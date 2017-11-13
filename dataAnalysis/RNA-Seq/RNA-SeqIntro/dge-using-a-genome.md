@@ -80,6 +80,8 @@ ls
 .............
 ..........
 ```
+![file](/assets/Atrx_multiqc_report.html)
+
 If you change to multiqc_data directory you see these files.
 ```
 cd multiqc_data
