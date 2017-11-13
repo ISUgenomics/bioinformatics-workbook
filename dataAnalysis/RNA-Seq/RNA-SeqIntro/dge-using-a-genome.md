@@ -89,9 +89,9 @@ multiqc_general_stats.txt
 multiqc_sources.txt
 
 ```
-You can peruse the complete report or download the plots and view them for example: ![adapter_content](assets/fastqc_adapter_content_plot.png)
-![per_base_n_content](assets/fastqc_per_base_n_content_plot.png)
-![per_base_sequence_quality](assets/fastqc_per_base_sequence_quality_plot.png)
+You can peruse the complete report or download the plots and view them for example: ![adapter_content](/Users/siva/GitHub/bioinformatics-workbook/assets/fastqc_adapter_content_plot.png)
+![per_base_n_content](/Users/siva/GitHub/bioinformatics-workbook/assets/fastqc_per_base_n_content_plot.png)
+![per_base_sequence_quality](/Users/siva/GitHub/bioinformatics-workbook/assets/fastqc_per_base_sequence_quality_plot.png)
 
 Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming (see [here](/fastq-quality-trimming.md))
 
