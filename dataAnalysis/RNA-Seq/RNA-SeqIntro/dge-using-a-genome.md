@@ -1,479 +1,351 @@
 # RNA-Seq data Analysis
 
+RNA-seq experiments are performed with an aim to comprehend transcriptomic changes in organisms in response to a certain treatment. They are also designed to understand the cause and/or effect of a mutation by measuring the resulting gene expression changes. Thanks to some robust algorithms specifically designed to map short stretches of nucleotide sequences to a genome while being aware of the process of RNA splicing has led to many advances in RNAseq analysis. The overview of RNA-seq analysis is summarized in Fig1.
 
-This wiki will guide you through the RNAseq analysis, starting from the quiality checking till getting the differential gene expression results. The next part of the wiki series will guide you through some of the down stream analysis that you can do to the results obatined here. Here is the overview of the RNAseq analysis covered in this tutorial.
 
 ### Overview ###
-![**Figure 1.**: Overview of the RNAseq workflow
-](/assets/RNAseq_1.png)
+![**Figure 1.**: Overview of the RNAseq workflow](/assets/RNAseq_1.png)
 
- 
-### Experimental design ###
-
-This experiment consists of 2 conditions. The first condition is "control" which is mock-infected soybean plants. The second condition is the infected plants with the actual pathogen. Both conditions have four replicates each (total we have 8 pairs of fastq files, 4 pairs belonging to control, and 4 pairs bleonging to pathogen infected soybean). The reads were generated as paired-end data, hence we have 2 files per replicate.
+This document will guide you through basic RNAseq analysis, beginning at quality checking of the RNAseq `reads` through to getting the differential gene expression results. We have downloaded an *Arabidopsis* dataset from NCBI for this purpose. Check the [BioProject](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA348194) page for more information.
 
 
-| Condition | Replicate 1 | Replicate 2 | Replicate 3 |  Replicate 4 |
-| --- | --- | --- | --- | --- |
-| Control | Control.A_R1.fastq.gz <br> Control.A_R2.fastq.gz | Control.B_R1.fastq.gz <br> Control.B_R2.fastq.gz | Control.C_R1.fastq.gz <br> Control.C_R2.fastq.gz |  Control.D_R1.fastq.gz <br> Control.D_R2.fastq.gz  |
-| Infected | Infected.A_R1.fastq.gz <br> Infected.A_R2.fastq.gz| Infected.B_R1.fastq.gz <br> Infected.B_R2.fastq.gz| Infected.C_R1.fastq.gz <br> Infected.C_R2.fastq.gz | Infected.D_R1.fastq.gz <br> Infected.D_R2.fastq.gz |
+#Experimental design #
 
-### 1. Download the data ###
+This experiment compares WT and atrx-1 mutant to analyze how loss of function  of ATRX chaperone results in changes in gene expression. RNA was isolated from three WT replicates and three mutant replicates using Trizol. Transcriptome was enriched/isolated using the plant RiboMinus kit for obtaining total RNA. RNA-seq was carried out in Illumina Hiseq 2500. The sequencing reads were generated as paired-end data, hence we have 2 files per replicate.
 
-For downloading the data, you can use `wget` or `curl` commands, if the data is hosted somewhere. If not, you might have to upload the data to the HPC either using `scp` command or using `rsync` (if data is located locally on your computer), or use `globusURL` to get the data from other computer. Here we will assume that you have the data in our DNA facility (at Iowa State University) and you have access to those files. We will use `wget` command to download them.
+
+| Condition | replicate 1 | replicate 2 | replicate 3 |
+| --- | --- | --- | --- |
+| WT | SRR4420293_1.fastq.gz <br> SRR4420293_2.fastq.gz | SRR4420294_1.fastq.gz <br> SRR4420294_2.fastq.gz | SRR4420295_1.fastq.gz <br> SRR4420295_2.fastq.gz |
+| atrx-1 | SRR4420296_1.fastq.gz <br> SRR4420296_2.fastq.gz| SRR4420297_1.fastq.gz <br> SRR4420297_2.fastq.gz| SRR4420298_1.fastq.gz <br> SRR4420298_2.fastq.gz |
+
+# 1. Download the data from NCBI #
+
+Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer. The following code expects that you have sra-toolkit, GNU parallel and aspera installed on your computing cluster. On Ceres, in order to use an installed software, we load the relevant module.
 
 ```
-wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_1_HCC22_956.tar
-wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_2_HCC22_956.tar
-wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_3_HCC22_956.tar
-wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_4_HCC22_956.tar
-wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_5_HCC22_956.tar
-wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_6_HCC22_956.tar
-wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_7_HCC22_956.tar
-wget http://upart.biotech.iastate.edu/pub/5_NNNN_01_8_HCC22_956.tar
+module load <path/to/sra-toolkit>
+module load <path/to/edirect>
+module load <path/to/parallel>
+esearch -db sra -query PRJNA276699 | efetch --format runinfo |cut -d "," -f 1 | awk 'NF>0' | grep -v "Run" > srr_numbers.txt
+while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/<version>/etc/asperaweb_id_dsa.openssh\" $line"; done<srr_numbers.txt > prefetch.cmds
+parallel <prefetch.cmds
 ```
-
-Note that these weblinks are inactive, so if you actually run these commands it will fail as they don't point to any files. Once downloaded, you can untar the archive and you will find the fastq files. To untar:
-
+After downloading the SRA files, we convert it to fastq format. We can use the fast-dump command as follows: (this step is slow and if possible run these commands using gnu parallel). We assume that all SRA files are in a specific folder.
 ```
 module load parallel
-parallel "tar xf {}" ::: *.tar
+parallel "fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
 ```
-
-Here we load the `parallel` and then run it effeciently and in parallel on all the tar files. The other option is to run it in a `for` loop, which will take considerable amount of time as it untars one file at a time. After this step, you will have gzipped fastq files. 
-
-We will also need the genome file and associated GTF/GFF file for this wiki. Since the data is for Soybean, we will donwload them directly from the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (needs logging in and selecting the files). Specifically, you will need;
-```
-Gmax_275_Wm82.a2.v1.gene.gff3.gz 
-Gmax_275_v2.0.fa.gz
-```
-
-![](/assets/RNAseq_2.png)
-**Figure 2:** Files needed for the RNAseq tutoial, genome assembly (unmasked) from the "assembly" directory and gff3 from the "annotation" directory
+On the other hand if fastq files are available on a public repository (e.g. [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using wget after copying the links to those files.
 
 ```
-# decompress files
-gunzip Gmax_275_Wm82.a2.v1.gene.gff3.gz 
-gunzip Gmax_275_v2.0.fa.gz
+wget <link/to/fastq.gz>
 ```
 
-### 2. Quality Check ###
 
-For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high qulaity illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 9 set of files (18 files total), and we need to run `fastqc` on each one of them, you can either do a `for` loop or use `parallel` command. We need to submit it as a job to the cluster, but the command should have:
+We also need the genome file and associated GTF/GFF file for for Arabidopsis. We download these files directly from the [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch), or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html) or the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (phytozome needs logging in and selecting the files) .
+
+We downloaded the following files from [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch).
+```
+Genome Fasta File: GCF_000001735.3_TAIR10_genomic.fna
+Annotation file: GCF_000001735.3_TAIR10_genomic.gff
+
+```
+
+# 2. Quality Check #
+
+For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high quality illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them, you can either do a `for` loop or use `parallel` command. We need to submit it as a job to the cluster, but the command should have:
 
 ```
 module load fastqc
 module load parallel
-parallel "fastqc {}" ::: *.fastq.gz
+parallel "fastqc {} - <fq_out_directory>" ::: *.fastq.gz
 ```
+Because we have a total of 6 quality outputs, we will have 6 html files and 6 zip files. We can use `multiqc` to aggregate the outputs and get a single html file to scan the quality of all the libraries.
 
-You will find `.html` files once the job is complete. You can open them using the firefox browser on the HPC (see guide [here](https://gif.biotech.iastate.edu/how-view-files-remote-machine-without-downloading-locally) or download it locally to view them in your local browser. The main metrics to check are:
- * Per base sequence quality
- * Adapter content
- * Per base N content
- 
+```
+cd fq_out_directory
+module load python_3
+multiqc .
+....
+....
+
+
+```
+This will give you a combined html file folder with containing three files descbing the various statistics:
+```
+ls  
+........... multiqc_data (Directory)
+............. multiqc_report.html
+.............
+..........
+```
+If you change to multiqc_data directory you see these files.
+```
+cd multiqc_data
+ls
+multiqc_fastqc.txt  
+multiqc_general_stats.txt  
+multiqc_sources.txt
+
+```
+You can peruse the complete report or download the plots and view them for example: ![adapter_content](/Users/siva/GitHub/bioinformatics-workbook/assets/fastqc_adapter_content_plot.png)
+
+![per_base_n_content](/Users/siva/GitHub/bioinformatics-workbook/assets/fastqc_per_base_n_content_plot.png)
+
+![per_base_sequence_quality](/Users/siva/GitHub/bioinformatics-workbook/assets/fastqc_per_base_sequence_quality_plot.png)
+
 Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming (see [here](/fastq-quality-trimming.md))
 
-### 3. Mapping reads to the genome ###
+# 3. Mapping reads to the genome #
 
-There are several mapping programs available for aligning RNAseq reads back to the genome. Generic aligners such as BWA, BowTie2, BBMap etc., are not suitable for mapping RNAseq reads because they are not splice aware. RNAseq reads are mRNA reads that only contain exoninc regions, hence mapping them back to the genome requires splitting the individual read, only done by splice aware mappers. Here for this tutorial, we will use `HiSat2` (derivative of BowTie2), `STAR` aligner and `GSNAP`.
+There are several mapping programs available for aligning RNAseq reads to the genome. Generic aligners such as BWA, BowTie2, BBMap etc., are not suitable for mapping RNAseq reads because they are not splice aware. RNAseq reads are mRNA reads that only contain exonic regions, hence mapping them back to the genome requires splitting the individual read, only done by splice aware mappers. Here for this tutorial, we will use `HiSat2` (derivative of BowTie2 and a successor of Tophat2).
 
-**Note: you don't have to run all three mapping programs, use any one of the below methods**
 
-#### Option A: Use HiSat2 for mapping #### 
+### HiSat2 for mapping ###
 
-For HiSat2 mapping, you need to first index the genome and then use the read pairs to map the indexed genome (one set at a time). For indexing the genome, `HiSat2` as is packaged with the `hisat2-build` script. Building index is as follows:
+#### Hisat2 Index ####
 
-```
-hisat2-build -p 16 Gmax_275_v2.0.fa Gmax_275_v2.0_hisat2
-# -p for number of processors
-# first argument is the fasta file
-# second argument is the base name for indexed files
-```
-Once complete, you should see number of files with `.ht2l` extension. These are our index files.
-
-For mapping, each set of reads (forward and reverse or R1 and R2), we will set up a run script. This script can also be found on our [GitHub page](https://github.com/ISUgenomics/common_analyses/blob/master/runHISAT2.sh).
+For HiSat2 mapping, you need to first index the genome and then use the read pairs to map the indexed genome (one set at a time). For indexing the genome, `HiSat2` we use the `hisat2-build` command as follows in a slurm script:
 
 ```
 #!/bin/bash
+#set -o xtrace
+#SBATCH -p debug74 # optional: to specify the queue
+#SBATCH -N 1
+#SBATCH --ntasks-per-node=16
+#SBATCH -t 24:00:00
+#SBATCH -J HI_build
+#SBATCH -o HI_build.o%j
+#SBATCH -e HI_build.e%j
+#SBATCH --mail-user=<user_email_address>
+#SBATCH --mail-type=begin
+#SBATCH --mail-type=end
+cd $SLURM_SUBMIT_DIR
+scontrol show job $SLURM_JOB_ID
+ulimit -s unlimited
+module use /software/modulefiles/
 module load hisat2
-module load samtools
-DBDIR="/path/containing/HiSat2_index_files"
-GENOME="Gmax_275_v2.0_hisat2"
-# number of processors to use
-p=16
-R1_FQ="$1"
-R2_FQ="$2"
-# output file prefix (uses a portion of the fastq filename, but can be changed if these are not unique)
+GENOME="/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic.fna"
+hisat2-build $GENOME ${GENOME%.*}
+
+```
+
+Once complete, you should see a number of files with `.ht2` extension. These are the index files. At the mapping step we simply refer to the index.
+
+
+#### Hisat2 Mapping ####
+
+For mapping, each set of reads (forward and reverse or R1 and R2), we first set up a run_hisast.sh script.
+```
+#!/bin/bash
+set -o xtrace
+# set the rerefernce index:
+GENOME="/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic"
+# make an output directory to store the output aligned files
+mkdir -p /project/isu_gif_vrsc/Siva/HS_out
+# set that as the output directory
+ODIR="/project/isu_gif_vrsc/Siva/HS_out"
+
+
+p=8 # use 8 threads
+R1_FQ="$1" # first argument
+R2_FQ="$2" # second argument
+
+# purge and load relevant modules.
+module purge
+module use /software/modulefiles/
+module load hisat2
+
+
 OUTPUT=$(basename ${R1_FQ} |cut -f 1 -d "_");
-# run the HiSat2 aligner
+
 hisat2 \
   -p ${p} \
-  -x ${DBDIR}/${GENOME} \
+  -x ${GENOME} \
   -1 ${R1_FQ} \
-  -2 ${R2_FQ} | \
-  -S  ${OUTPUT}.sam &> ${OUTPUT}.log
-# convert_gsnap.same file to bam file format
-samtools view \
-  --threads 16 \
-  -b \
-  -o ${OUTPUT}.bam \
-     ${OUTPUT}.sam
-# sort the bam file based on co-ordinates
-samtools sort \
-  -m 7G \
-  -o ${OUTPUT}_sorted.bam \
-  -T ${OUTPUT}_temp \
-  --threads 16 \
-  ${OUTPUT}.bam
-```
+  -2 ${R2_FQ} \
+  -S $ODIR\/${OUTPUT}.sam &> ${OUTPUT}.log
+samtools view --threads 8 -bS -o $ODIR\/${OUTPUT}.bam $ODIR\/${OUTPUT}.sam
 
-For setting it up to run with each set of file, we will use this loop:
-```
-for fastq in *R1.fastq.gz; do
-fastq2=$(echo $fastq | sed 's/R1.fastq.gz/R2.fastq.gz/g'); 
-echo "./runHISAT2.sh ${fastq} ${fastq2}"; 
-done > hisat2.cmds
-```
-
-For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLURMs.py` from the `common_scripts` directory on [GitHub](https://github.com/ISUgenomics/common_scripts). Submit jobs using the for loop.
+rm $ODIR\/${OUTPUT}.sam
 
 ```
-makeSLURMs.py 1 hisat2.cmds
-for sub in hisat2_*.sub; do
-sbatch $sub; 
-done
+
+For setting it up to run with each set of file, we can set a SLURM script that loops over each fastq file. Note that this script calls the run_hista2.sh script for each pair of fastq file supplied as its argument.
 ```
+#!/bin/bash
+set -o xtrace
+#SBATCH -N 1
+#SBATCH --ntasks-per-node=16
+#SBATCH -t 24:00:00
+#SBATCH -J Hisat2
+#SBATCH -o Hisat2.o%j
+#SBATCH -e Hisat2.e%j
+#SBATCH --mail-user=csiva@iastate.edu
+#SBATCH --mail-type=begin
+#SBATCH --mail-type=end
+cd $SLURM_SUBMIT_DIR
+ulimit -s unlimited
+scontrol show job $SLURM_JOB_ID
+
+for fq1 in *1.*gz;
+do
+fq2=$(echo $fq1 | sed 's/1/2/g');
+/project/isu_gif_vrsc/Siva/run_hisat.sh ${fq1} ${fq2};
+done >& hisat2_1.log
+
+```
+
 
 This should create, following files as output:
 ```
-Control.A_sorted.bam
-Control.B_sorted.bam
-Control.C_sorted.bam
-Control.D_sorted.bam
-Infected.A_sorted.bam
-Infected.B_sorted.bam
-Infected.C_sorted.bam
-Infected.D_sorted.bam
+SRR4420298.bam
+SRR4420297.bam
+SRR4420296.bam
+SRR4420295.bam
+SRR4420294.bam
+SRR4420293.bam
 ```
+# 2. Abundance estimation #
 
-#### Option B: Use STAR for mapping #### 
+For quantifying transcript abundance from RNA-seq data, there are many programs available. Two most popular tools include, `featureCounts` and `HTSeq` and many other tools. We will need a file with aligned sequencing reads (SAM/BAM files generated in previous step) and a list of genomic features (from the GFF file). `featureCounts` is a highly efficient general-purpose read summarization program that counts mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations. It also outputs stat info for the overall summarization results, including number of successfully assigned reads and number of reads that failed to be assigned due to various reasons. We can run featureCounts on all SAM/BAM files at the same time or individually.
 
-Again, we need to index the genome first:
-
+#### featureCounts ####
+You will need `subread` and `parallel` modules loaded.
 ```
-#!/bin/bash
-module load star
-FASTA="Gmax_275_v2.0.fa"
-GFF="Gmax_275_Wm82.a2.v1.gene.gff3"
-DB=$(pwd)
-mkdir -p ${DB}/${FASTA%.*}_star
-STAR \
-  --runMode genomeGenerate \
-  --runThreadN 16 \
-  --genomeDir ${DB}/${FASTA%.*}_star
-  --genomeFastaFiles ${FASTA}
-  --sjdbGTFfile ${GFF}
-  --sjdbOverhang 99
-```
-Once this completes, you should see a folder named `Gmax_275_v2.0_star` with lots of files in it. This is our indexed genome.
-
-For running mapping, we will set up a run script, like we did for HiSat2. You can also find the run script on our [GitHub](https://github.com/ISUgenomics/common_analyses/blob/master/runSTAR.sh)
-
-```
-#!/bin/bash
-R1="$1"
-R2="$2"
-OUT=$(basename ${R1} |cut -f 1 -d "_");
-GFF="/home/arnstrm/arnstrm/GMAPDB/Gmax_275_Wm82.a2.v1.gene.gff3"
-DB="/home/arnstrm/arnstrm/GMAPDB/Gmax_275_v2.0_star"
-STAR \
- --runMode alignReads \
- --runThreadN 16 \
- --genomeDir ${DB} \
- --readFilesCommand zcat \
- --outFileNamePrefix ${OUT}_star \
---readFilesIn ${R1} ${R2}
-```
-For setting it up to run with each set of file, we will use this loop:
-```
-for fastq in *R1.fastq.gz; do
-fastq2=$(echo $fastq | sed 's/R1.fastq.gz/R2.fastq.gz/g'); 
-echo "./runSTAR.sh ${fastq} ${fastq2}"; 
-done > star.cmds
-```
-
-For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLURMs.py` from the `common_scripts` directory on [GitHub](https://github.com/ISUgenomics/common_scripts). Submit jobs using the for loop.
-
-```
-makeSLURMs.py 1 star.cmds
-for sub in star_*.sub; do
-sbatch $sub; 
-done
-```
-
-This should create, following files as output:
-```
-Control.A_star.sam
-Control.B_star.sam
-Control.C_star.sam
-Control.D_star.sam
-Infected_star.A.sam
-Infected_star.B.sam
-Infected_star.C.sam
-Infected_star.D.sam
-```
-
-#### Option C: Use GSNAP for mapping #### 
-
-Final alternative is to use GSNAP aligner. For indexing, use the script below:
-```
-#!/bin/bash
-FASTA="Gmax_275_v2.0.fa"
-DB="/work/GIF/arnstrm/GENOMEDB"
-module load gmap-gsnap
-gmap_build -d ${FASTA%.*}_gsnap -D ${DB} ${FASTA}
-```
-A directory, named `Gmax_275_v2.0_gsnap` will be created with lots of files in it once the indexing is complete. Next, we will setup a run script for `GSNAP` (as found [here](00))
-```
-#!/bin/bash
-GMAPDB="/work/GIF/arnstrm/GENOMEDB"
-DB_NAME="Gmax_275_v2.0_gsnap"
-R1="$1"
-R2="$2"
-OUTFILE=$(basename ${R1} |cut -f 1 -d "_")
-gsnap \
-   -d ${DB_NAME} \
-   -D ${GMAPDB}
-   -t 16 \
-   -B 5 \
-   -N 1
-   -m 5 \
-   --gunzip \
-   --fails-as-input \
-   --input-buffer-size=10000000 \
-   --output-buffer-size=10000000 \
-   -A_gsnap.sam  ${R1} ${R2} > ${OUTFILE}_gsnap_gsnap.sam
-```
-For setting it up to run with each set of file, we will use this loop:
-```
-for fastq in *R1.fastq.gz; do
-fastq2=$(echo $fastq | sed 's/R1.fastq.gz/R2.fastq.gz/g'); 
-echo "./runGSNAP.sh ${fastq} ${fastq2}"; 
-done > gsnap.cmds
-```
-
-For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLURMs.py` from the `common_scripts` directory on [GitHub](https://github.com/ISUgenomics/common_scripts). Submit jobs using the for loop.
-
-```
-makeSLURMs.py 1 gsnap.cmds
-for sub in gsnap_*.sub; do
-sbatch $sub; 
-done
-```
-
-This should create, following files as output:
-```
-Control.A_gsnap.sam
-Control.B_gsnap.sam
-Control.C_gsnap.sam
-Control.D_gsnap.sam
-Infected.A_gsnap.sam
-Infected.B_gsnap.sam
-Infected.C_gsnap.sam
-Infected.D_gsnap.sam
-
-```
-
-Once we have the SAM or BAM files generated (from any of the 3 methods above), we can proceed with the abundence estimation.
-
-### 4. Abundence estimation ###
-
-For quantifying transcript abundance from RNA-seq data, there are many programs we can use. Two most popular tools inlcude, `HTSeq` and `featureCounts`. We will need a file with aligned sequencing reads (SAM/BAM files generated in previous step) and a list of genomic features (donwloaded GFF file).
-
-**Note: you don't have to run both these abundence estimation methods, use any one**
-
-#### Option A: HTSeq #### 
-
-As we need to process one SAM/BAM file at a time, we will set up a run script as follows:
-```
-#!/bin/bash
-GFF="Gmax_275_Wm82.a2.v1.gene.gff3"
-INFILE="$1"
-OUTFILE=$(echo $INFILE | cut -f 1 -d "_")_counts.txt
-htseq-count \
-   -m intersection-nonempty \
-   -t gene \
-   -i ID \
-      $INFILE $GFF > $OUTFILE
-```
-```
-for sam in *.sam; do
-echo "./runHTSEQ.sh ${sam}"; 
-done > htseq.cmds
-```
-
-For creating PBS/Slurm submission scripts, use either `makePBSs.py` or `makeSLURMs.py` from the `common_scripts` directory on [GitHub](https://github.com/ISUgenomics/common_scripts). Submit jobs using the for loop.
-
-```
-makeSLURMs.py 9 htseq.cmds
-# as these commands run quickly, we will put them all in one `sub` file
-sbatch htseq_0.sub; 
-done
-```
-
-You will have a text file with counts for every SAM/BAM file you provide. Next, we need to merge individual files to make a single file. We can do this using `awk` as follows:
-```
-awk '{arr[$1]=arr[$1]"\t"$2}END{for(i in arr)print i,arr[i]}' *_counts.txt >> merged_htseq_counts.tsv
-mv merged_htseq_counts.tsv counts.txt
-```
+ANNOT="/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic.gff"
+mkdir -p /project/isu_gif_vrsc/Siva/HS_out/counts
+ODIR="/project/isu_gif_vrsc/Siva/HS_out/counts"
 
 
-
-
-#### Option B: featureCounts #### 
-
-`featureCounts` is a highly efficient general-purpose read summarization program that counts mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations. `featureCounts` takes as input SAM/BAM files and an annotation file including chromosomal coordinates of features. It outputs numbers of reads assigned to features (or meta-features). It also outputs stat info for the overall summrization results, including number of successfully assigned reads and number of reads that failed to be assigned due to various reasons (these reasons are included in the stat info). 
-We can run this on all SAM/BAM files at the same time.
-
-```
-#!/bin/bash
-GFF="Gmax_275_Wm82.a2.v1.gene.gff3"
-OUTFILE="featureCounts"
+module purge
+module use /software/modulefiles/
 module load subread
-# package containing featureCounts script
-featureCounts \
-   -T 16 \
-   -p \
-   -t gene \
-   -a  \
-   -o ${OUTFILE}_counts.txt *.bam
-```
+module load parallel
 
-The ouput will look something like this (__headers might be different, only first 10 lines displayed here__)
+parallel -j 4 "featureCounts -T 4 -s 2 -p -t gene -g ID -a $ANNOT -o $ODIR/{.}.gene.txt {}" ::: *.bam
 
 ```
-#
-Geneid	Chr	Start	End	Strand	Length	Control.A	Control.B	Control.C	Control.D	Infected.A	Infected.B	Infected.C	Infected.D
-Glyma.01G000100.Wm82.a2.v1	Chr01	27355	28320	-	966	24	0	51	93	126	91	121	32
-Glyma.01G000200.Wm82.a2.v1	Chr01	58975	67527	-	8553	91	1	122	193	214	239	102	111
-Glyma.01G000300.Wm82.a2.v1	Chr01	67770	69968	+	2199	9	0	12	22	18	21	3	11
-Glyma.01G000400.Wm82.a2.v1	Chr01	90152	95947	-	5796	169	0	407	480	402	518	502
-Glyma.01G000500.Wm82.a2.v1	Chr01	90289	91197	+	909	0	0	0	0	0	0	0	0
-Glyma.01G000600.Wm82.a2.v1	Chr01	116094	127845	+	11752	149	4	310	374	402	529	304	352
-Glyma.01G000700.Wm82.a2.v1	Chr01	143467	155573	+	12107	39	2	78	119	113	129	34	100
-Glyma.01G000800.Wm82.a2.v1	Chr01	157030	157772	+	743	0	0	0	1	1	0	0	0
-Glyma.01G000900.Wm82.a2.v1	Chr01	170534	193342	+	22809	240	1	517	759	760	859	462	658
+This creates the following set of files in the specified output folder:
+Count Files:
 ```
-Since we only need the counts (without the feature information), we will trim this table using `cut` command.
+SRR4420298.gene.txt
+SRR4420293.gene.txt
+SRR4420297.gene.txt
+SRR4420296.gene.txt
+SRR4420295.gene.txt
+SRR4420294.gene.txt
 ```
-cut -f 1,7-15 featureCounts_counts.txt > featureCounts_counts_clean.txt
-mv featureCounts_counts_clean.txt counts.txt
+Each file has a commented line staring with a # which gives the command used to create the count table and the relevant seven columns as follows, for example:
+
+`head SRR4420298.gene.txt`
 ```
+# Program:featureCounts v1.5.2; Command:"featureCounts" "-T" "4" "-s" "2" "-p" "-t" "gene" "-g" "ID" "-a" "/project/isu_gif_vrsc/Siva/reference_genomes/GCF_000001735.3_TAIR10_genomic.gff" "-o" "/project/isu_gif_vrsc/Siva/HS_out/counts/SRR4420298.gene.txt" "SRR4420298.bam"
+
+Geneid  Chr     Start   End     Strand  Length  SRR4420298.bam
+gene0   NC_003070.9     3631    5899    +       2269    13
+gene1   NC_003070.9     6788    9130    -       2343    17
+gene2   NC_003070.9     11101   11372   +       272     0
+gene3   NC_003070.9     11649   13714   -       2066    13
+gene4   NC_003070.9     23121   31227   +       8107    32
+gene5   NC_003070.9     23312   24099   -       788     0
+gene6   NC_003070.9     28500   28706   +       207     0
+gene7   NC_003070.9     31170   33171   -       2002    45
+
+```
+Additionally Summary Files are produced. These give the summary of reads that were either ambiguous, multimapped, mapped to no features or unmapped among other statistics. We can refer to these to further tweak our analyses etc.
+
+```
+SRR4420298.gene.txt.summary
+SRR4420293.gene.txt.summary
+SRR4420295.gene.txt.summary
+SRR4420296.gene.txt.summary
+SRR4420294.gene.txt.summary
+SRR4420297.gene.txt.summary
+
+```
+Using the following command (a combination of paste and awk), we can produce a single count table. This count table could be loaded into R for differential expression analysis.
+
+```
+paste <(awk 'BEGIN {OFS="\t"} {print $1,$7}' SRR4420293.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420294.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420295.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420296.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420297.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420298.gene.txt) | grep -v '^\#' > At_count.txt
+```
+You could also edit out the names of the samples to something succinct, for example, S293 instead of SRR4420293.bam.
+
+head At_count.txt
+```
+Geneid  S293    S294    S295    S296    S297    S298
+gene0   11      1       10      28      11      13
+gene1   37      3       26      88      22      17
+gene2   0       0       0       0       0       0
+gene3   6       2       12      40      13      13
+gene4   35      6       22      170     53      32
+gene5   0       0       0       0       0       0
+gene6   0       0       0       0       0       0
+gene7   49      15      67      258     83      45
+gene8   0       0       0       0       0       0
+```
+
 Now we are ready for performing DGE analysis!
 
-### 5. Differential Gene Expression analysis ###
+# 3. Differential Gene Expression analysis #
 
-Again, there are few options here. You can use `edgeR`, `DESeq2`, or `QuasiSeq` (and many more!). Here we will discribe how to do this with reference to the data we have. You can easily modify it to suit your needs (eg., different number of samples/repliates/conditions)
+Again, there are few options here. You can use `DESeq2`,`edgeR`, or `QuasiSeq` (and many more!). Here we will describe how to do this with reference using DESeq2.
 
-**Note: you don't have to run all three methods, use any one**
 
-#### Option A: edgeR #### 
-Run the following code on RStudio or R terminal
-```
-# import data
-datain <- read.delim("counts.txt",row.names="Geneid")
-
-# experimental design
-DataGroups <- c("CTL", "CTL","CTL","CTL", "TRT", "TRT", "TRT", "TRT")
-
-# load edgeR
-library(edgeR)
-
-# create DGE object of edgeR
-dgList <- DGEList(counts=datain,group=factor(DataGroups))
-
-# filter data to retain genes that are represented at least 1 counts per million (cpm) in at least 2 samples
-countsPerMillion <- cpm(dgList)
-countCheck <- countsPerMillion > 1
-keep <- which(rowSums(countCheck) >= 2)
-dgList <- dgList[keep,]
-dgList$samples$lib.size <- colSums(d$counts)
-
-# normalization using TMM method
-dgList <- calcNormFactors(dgList, method="TMM")
-
-## data exploration
-# MDS plot
-png("plotmds.png")
-plotMDS(dgList, method="bcv", col=as.numeric(d$samples$group))
-dev.off()
-
-# Dispersion estimates
-design.mat <- model.matrix(~ 0 + dgList$samples$group)
-colnames(design.mat) <- levels(dgList$samples$group)
-dgList <- estimateGLMCommonDisp(dgList,design.mat)
-dgList <- estimateGLMTrendedDisp(dgList,design.mat, method="power")
-dgList <- estimateGLMTagwiseDisp(dgList,design.mat)
-png("plotbcv.png")
-plotBCV(dgList)
-dev.off()
-
-# Differentail expression analysis
-fit <- glmFit(dgList, design.mat)
-lrt <- glmLRT(fit, contrast=c(1,-1))
-edgeR_results <- topTags(lrt, n=Inf)
-
-# plot log2FC of genes and highlight the DE genes
-deGenes <- decideTestsDGE(lrt, p=0.05)
-deGenes <- rownames(lrt)[as.logical(deGenes)]
-png("plotsmear.png")
-plotSmear(lrt, de.tags=deGenes)
-abline(h=c(-1, 1), col=2)
-dev.off()
-
-# save the results as a table
-write.table(edgeR_results, file="Results_edgeR.txt")
-```
-
-#### Option B: DESeq2 ####
-Again, this should be done either on RStudio or in R terminal. Following are the steps
+### Differential Expression with DESeq2 ###
+These steps should be done either on RStudio or in R terminal:
 
 ```
 ## RNA-seq analysis with DESeq2
 ## Largely based on Stephen Turner, @genetics_blog
 ## https://gist.github.com/stephenturner/f60c1934405c127f09a6
 
-# Import the data
-countdata <- read.table("counts.txt", header=TRUE, row.names=1)
+source("http://bioconductor.org/biocLite.R")
+biocLite("DESeq2")
+library("DESeq2")
 
-# Remove .bam or .sam from filenames
-colnames(countdata) <- gsub("\\.[sb]am$", "", colnames(countdata))
+
+setwd("~/Atrx/")
+dat<-read.table("At_count.txt",header = T,quote = "",row.names = 1)
 
 # Convert to matrix
-countdata <- as.matrix(countdata)
-head(countdata)
+dat <- as.matrix(dat)
+head(dat)
 
-# Assign condition (first four are controls, second four and third four contain two different experiments)
-(condition <- factor(c(rep("ctl", 4), rep("inf1", 4), rep("inf2", 4))))
+# Assign condition (first three are WT, next three are mutants)
 
-# Analysis with DESeq2 
+condition <- factor(c(rep("WT",3),rep("Mut",3)))
+condition=relevel(condition,ref = "WT")
 
-library(DESeq2)
 
-# Create a coldata frame and instantiate the DESeqDataSet. See ?DESeqDataSetFromMatrix
-(coldata <- data.frame(row.names=colnames(countdata), condition))
-dds <- DESeqDataSetFromMatrix(countData=countdata, colData=coldata, design=~condition)
-dds
+# Create a coldata frame: its rows correspond to columns of dat (i.e., matrix representing the countData)
+coldata <- data.frame(row.names=colnames(dat), condition)
 
-# Run the DESeq pipeline
+head(coldata)
+
+#            condition
+# S293        WT
+# S294        WT
+# S295        WT
+# S296       Mut
+# S297       Mut
+# S298       Mut
+
+
+##### DESEq pipeline, first the design and the next step, normalizing to model fitting
+dds <- DESeqDataSetFromMatrix(countData = dat, colData = coldata,design=~ condition)
+
+
 dds <- DESeq(dds)
 
-# Plot dispersions
+# Plot Dispersions:
 png("qc-dispersions.png", 1000, 1000, pointsize=20)
 plotDispEsts(dds, main="Dispersion plot")
 dev.off()
-
+```
+![qc-dispersions.png](/assets/qc-dispersions.png)
+```
 # Regularized log transformation for clustering/heatmaps, etc
 rld <- rlogTransformation(dds)
 head(assay(rld))
@@ -494,40 +366,6 @@ heatmap.2(as.matrix(sampleDists), key=F, trace="none",
           col=colorpanel(100, "black", "white"),
           ColSideColors=mycols[condition], RowSideColors=mycols[condition],
           margin=c(10, 10), main="Sample Distance Matrix")
-dev.off()
-
-# Principal components analysis
-## Could do with built-in DESeq2 function:
-## DESeq2::plotPCA(rld, intgroup="condition")
-## I (Stephen Turner) like mine better:
-rld_pca <- function (rld, intgroup = "condition", ntop = 500, colors=NULL, legendpos="bottomleft", main="PCA Biplot", textcx=1, ...) {
-  require(genefilter)
-  require(calibrate)
-  require(RColorBrewer)
-  rv = rowVars(assay(rld))
-  select = order(rv, decreasing = TRUE)[seq_len(min(ntop, length(rv)))]
-  pca = prcomp(t(assay(rld)[select, ]))
-  fac = factor(apply(as.data.frame(colData(rld)[, intgroup, drop = FALSE]), 1, paste, collapse = " : "))
-  if (is.null(colors)) {
-    if (nlevels(fac) >= 3) {
-      colors = brewer.pal(nlevels(fac), "Paired")
-    }   else {
-      colors = c("black", "red")
-    }
-  }
-  pc1var <- round(summary(pca)$importance[2,1]*100, digits=1)
-  pc2var <- round(summary(pca)$importance[2,2]*100, digits=1)
-  pc1lab <- paste0("PC1 (",as.character(pc1var),"%)")
-  pc2lab <- paste0("PC1 (",as.character(pc2var),"%)")
-  plot(PC2~PC1, data=as.data.frame(pca$x), bg=colors[fac], pch=21, xlab=pc1lab, ylab=pc2lab, main=main, ...)
-  with(as.data.frame(pca$x), textxy(PC1, PC2, labs=rownames(as.data.frame(pca$x)), cex=textcx))
-  legend(legendpos, legend=levels(fac), col=colors, pch=20)
-  #     rldyplot(PC2 ~ PC1, groups = fac, data = as.data.frame(pca$rld),
-  #            pch = 16, cerld = 2, aspect = "iso", col = colours, main = draw.key(key = list(rect = list(col = colours),
-  #                                                                                         terldt = list(levels(fac)), rep = FALSE)))
-}
-png("qc-pca.png", 1000, 1000, pointsize=20)
-rld_pca(rld, colors=mycols, intgroup="condition", xlim=c(-75, 35))
 dev.off()
 
 
@@ -566,6 +404,8 @@ png("diffexpr-maplot.png", 1500, 1000, pointsize=20)
 maplot(resdata, main="MA Plot")
 dev.off()
 
+## Plots to Examine Results:
+
 ## Volcano plot with "significant" genes labeled
 volcanoplot <- function (res, lfcthresh=2, sigthresh=0.05, main="Volcano Plot", legendpos="bottomright", labelsig=TRUE, textcx=1, ...) {
   with(res, plot(log2FoldChange, -log10(pvalue), pch=20, main=main, ...))
@@ -582,86 +422,3 @@ png("diffexpr-volcanoplot.png", 1200, 1000, pointsize=20)
 volcanoplot(resdata, lfcthresh=1, sigthresh=0.05, textcx=.8, xlim=c(-2.3, 2))
 dev.off()
 ```
-#### Option C: QuasiSeq ####
-Also in RStudio or R terminal. As a first step, save the following code as a file named `QLresultsPvaluePlot.R` using any text editor and place it in the same directory as the count data is in.
-```
-QLresultsPvaluePlot<-function(QLfit,Strname){
-filename=Strname
-results<-QL.results(QLfit,Plot=F)
-designNum<-dim(results$P.values$QLSpline)[2]
-designNames<-colnames(results$P.values$QLSpline)
-for (i in 1:designNum){
-   print(i)
-   if (min(results$P.values$QLSpline[,i])<1 && min(results$P.values$QLSpline[,i])!="NaN"){
-       Rnames<-rownames(dataIn)
-       if (min(results$Q.values$QLSpline[,i])<10 && min(results$Q.values$QLSpline[,i])!="NaN"){
-          if (length(which(results$Q.values$QLSpline[,i]<10))>1){
-            meanTrt<-apply(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==2)],1,mean)
-            meanWt<-apply(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==1)],1,mean)
-            FoldTrtoverWt <- meanTrt/meanWt
-            logTwoFC <-log2(FoldTrtoverWt)
-            outData<-cbind(as.matrix(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),]),meanTrt,meanWt,as.matrix(results$P.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),as.matrix(results$Q.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),FoldTrtoverWt,logTwoFC)
-            colnames(outData)<-c(colnames(dataIn),"mean_treat","mean_control","Pvalues","Qvalues","fold_change","Log2FC")
-            write.table(outData,file=paste(filename,".FulldesignVS.",i,".txt",sep=""))
-            }
-          if (length(which(results$Q.values$QLSpline[,i]<10))==1){
-            outData<-cbind(matrix(dataIn[which(results$Q.values$QLSpline[,i]<10),],1,dim(dataIn)[2]),as.matrix(results$P.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),as.matrix(results$Q.values$QLSpline[which(results$Q.values$QLSpline[,i]<10),i]),(sign(mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==2)])-mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==1)])))*mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==2)])/mean(dataIn.norm[which(results$Q.values$QLSpline[,i]<10),which(trt==1)]))
-            colnames(outData)<-c(colnames(dataIn),"Pvalues","Qvalues","fold_change")
-            write.table(outData,file=paste(filename,".FullvsDesignVS.",i,".txt",sep=""))
-            }
-        }
-        pdf(file=paste(filename,".",i,".pdf",sep=""),width=5,height=5)
-           a<-hist(results$P.values$QLSpline[,i],breaks=seq(0,1,.01),main=paste(Strname,designNames[i]),cex.main=.5)
-           b<-a$counts[1]*.75
-           bb<-a$counts[1]*.65
-           bbb<-a$counts[1]*.55
-           text(.5,b,paste("Number of genes qvalue below 0.5 = ",as.character( dim(as.matrix(dataIn[which(results$Q.values$QLSpline[,i]<0.5),i]))[1])),cex=.8)
-           text(.5,bb,paste("Number of genes qvalue below 0.3 = ",as.character( dim(as.matrix(dataIn[which(results$Q.values$QLSpline[,i]<0.3),i]))[1])),cex=.8)
-           text(.5,bbb,paste("Number of genes qvalue below 0.1 = ",as.character( dim(as.matrix(dataIn[which(results$Q.values$QLSpline[,i]<.1),i]))[1])),cex=.8)
-        dev.off()
-    }
-}
-}
-```
-
-Next, run these steps on RStudio by setting the work directory to the counts data directory.
-```
-# set the work directory
-setwd("C:/Users/arunk/Google Drive/PostDoc/projects/20170707_RSmith_MosquitoRNAseq/QuassiSeq")
-# source the code you just created
-source("QLresultsPvaluePlot.R")
-# Import the data
-uniq<-as.matrix(read.table("counts.txt", header=TRUE,  row.names = 1))
-
-# Check dimensions
-cols<-dim(uniq)[2]
-# remove the rows with all zero counts
-colsm1<-cols
-dataIn2<-(uniq[which(rowSums(uniq[,1:cols])>colsm1),])
-dataIn3<-dataIn2[which(rowSums(sign(dataIn2[,1:cols]))>1),]
-dataIn<-as.matrix(dataIn3)
-# normalize data using upperquartile of 0.75
-log.offset<-log(apply(dataIn, 2, quantile,.75))
-upper.quartiles<-apply(dataIn,2,function(x) quantile(x,0.75))
-# calculate scaling factors
-scalingFactors<-mean(upper.quartiles)/upper.quartiles
-dataIn.norm<-round((sweep(dataIn,2,scalingFactors,FUN="*")))
-# standard deviation
-sd(dataIn[1,])
-sd(dataIn.norm[1,])
-# experimental design
-trt<-as.factor(c(1,1,1,1,2,2,2,2))
-mn<-as.numeric(rep(1,cols))
-# QuasiSeq analysis
-library(QuasiSeq)
-design.list<-vector('list',2)
-design.list[[1]]<-model.matrix(~trt)
-design.list[[2]]<-mn
-log.offset<-log(apply(dataIn, 2, quantile,.75))
-fit2<-QL.fit(round(dataIn), design.list,log.offset=log.offset, Model='NegBin')
-QLresultsPvaluePlot(fit2,paste("results_",1,2,sep=""))
-QLresultsPvaluePlot(fit2,paste("results_",1,2,sep=""))
-```
-
-
-
