@@ -1,16 +1,17 @@
 # RNA-Seq data Analysis
 
-
-This document will guide you through RNAseq analysis, beginning at quality checking through to getting the differential gene expression results. We have downloaded an Arabidopsis dataset from NCBI for this purpose. Check the [BioProject](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA348194) page for more information. The overview of RNA-seq analysis is summarized in Fig1.
+RNA-seq experiments are performed with an aim to comprehend transcriptomic changes in organisms in response to a certain treatment. They are also designed to understand the cause and/or effect of a mutation by measuring the resulting gene expression changes. Thanks to some robust algorithms specifically designed to map short stretches of nucleotide sequences to a genome while being aware of the process of RNA splicing has led to many advances in RNAseq analysis. The overview of RNA-seq analysis is summarized in Fig1.
 
 
 ### Overview ###
 ![**Figure 1.**: Overview of the RNAseq workflow](/assets/RNAseq_1.png)
 
+This document will guide you through basic RNAseq analysis, beginning at quality checking of the RNAseq `reads` through to getting the differential gene expression results. We have downloaded an *Arabidopsis* dataset from NCBI for this purpose. Check the [BioProject](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA348194) page for more information.
+
 
 #Experimental design #
 
-This experiment compares WT and atrx-1 mutant to analyze how ATRX chaperone loss of function results in changes in gene expression. RNA was isolated from three WT replicates and three mutant replicates using Trizol. Transcriptome was enriched/isolated using the plant RiboMinus kit for obtaining total RNA. RNA-seq was carried out in Illumina Hiseq 2500. The sequencing reads were generated as paired-end data, hence we have 2 files per replicate.
+This experiment compares WT and atrx-1 mutant to analyze how loss of function  of ATRX chaperone results in changes in gene expression. RNA was isolated from three WT replicates and three mutant replicates using Trizol. Transcriptome was enriched/isolated using the plant RiboMinus kit for obtaining total RNA. RNA-seq was carried out in Illumina Hiseq 2500. The sequencing reads were generated as paired-end data, hence we have 2 files per replicate.
 
 
 | Condition | replicate 1 | replicate 2 | replicate 3 |
@@ -20,7 +21,7 @@ This experiment compares WT and atrx-1 mutant to analyze how ATRX chaperone loss
 
 # 1. Download the data from NCBI #
 
-Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer. The following code expects that you have sra-toolkit, GNU parallel and aspera installed on your computing cluster.
+Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer. The following code expects that you have sra-toolkit, GNU parallel and aspera installed on your computing cluster. On Ceres, in order to use an installed software, we load the relevant module.
 
 ```
 module load <path/to/sra-toolkit>
@@ -35,7 +36,7 @@ After downloading the SRA files, we convert it to fastq format. We can use the f
 module load parallel
 parallel "fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
 ```
-On the other hand if fastq files are available on any public repository we can download them directly using wget.
+On the other hand if fastq files are available on a public repository (e.g. [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using wget after copying the links to those files.
 
 ```
 wget <link/to/fastq.gz>
@@ -53,15 +54,43 @@ Annotation file: GCF_000001735.3_TAIR10_genomic.gff
 
 # 2. Quality Check #
 
-For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high qulaity illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them, you can either do a `for` loop or use `parallel` command. We need to submit it as a job to the cluster, but the command should have:
+For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high quality illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them, you can either do a `for` loop or use `parallel` command. We need to submit it as a job to the cluster, but the command should have:
 
 ```
 module load fastqc
 module load parallel
-parallel "fastqc {}" ::: *.fastq.gz
+parallel "fastqc {} - <fq_out_directory>" ::: *.fastq.gz
+```
+Because we have a total of 6 quality outputs, we will have 6 html files and 6 zip files. We can use `multiqc` to aggregate the outputs and get a single html file to scan the quality of all the libraries.
+
+```
+cd fq_out_directory
+module load python_3
+multiqc .
+....
+....
+
+
+```
+This will give you a combined html file folder with containing three files descbing the various statistics:
+```
+ls  
+........... multiqc_data (Directory)
+............. multiqc_report.html
+.............
+..........
+```
+If you change to multiqc_data directory you see these files.
+```
+cd multiqc_data
+ls
+multiqc_fastqc.txt  
+multiqc_general_stats.txt  
+multiqc_sources.txt
+
 ```
 
-You will find `.html` files once the job is complete. You can open them using the chrome or firefox browser on the HPC (see guide [here](https://gif.biotech.iastate.edu/how-view-files-remote-machine-without-downloading-locally) or download it locally to view them in your local browser. The main metrics to check are:
+ The main metrics to check are:
  * Per base sequence quality
  * Adapter content
  * Per base N content
