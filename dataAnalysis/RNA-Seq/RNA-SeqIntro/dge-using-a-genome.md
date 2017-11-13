@@ -19,8 +19,9 @@ This experiment compares WT and atrx-1 mutant to analyze how loss of function  o
 | WT | SRR4420293_1.fastq.gz <br> SRR4420293_2.fastq.gz | SRR4420294_1.fastq.gz <br> SRR4420294_2.fastq.gz | SRR4420295_1.fastq.gz <br> SRR4420295_2.fastq.gz |
 | atrx-1 | SRR4420296_1.fastq.gz <br> SRR4420296_2.fastq.gz| SRR4420297_1.fastq.gz <br> SRR4420297_2.fastq.gz| SRR4420298_1.fastq.gz <br> SRR4420298_2.fastq.gz |
 
-# 1. Download the data from NCBI #
+# 1. Download the data from public databases #
 
+##NCBI
 Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer. The following code expects that you have sra-toolkit, GNU parallel and aspera installed on your computing cluster. On Ceres, in order to use an installed software, we load the relevant module.
 
 ```
@@ -36,6 +37,7 @@ After downloading the SRA files, we convert it to fastq format. We can use the f
 module load parallel
 parallel "fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
 ```
+#EBI
 On the other hand if fastq files are available on a public repository (e.g. [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using wget after copying the links to those files.
 
 ```
@@ -89,11 +91,11 @@ multiqc_general_stats.txt
 multiqc_sources.txt
 
 ```
-You can peruse the complete report or download the plots and view them for example: ![adapter_content](/fastqc_adapter_content_plot.png)
+You can peruse the complete report or download the plots and view them for example: ![adapter_content](dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_adapter_content_plot.png)
 
-![per_base_n_content](/fastqc_per_base_n_content_plot.png)
+![per_base_n_content](dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_per_base_n_content_plot.png)
 /Users/siva/GitHub/bioinformatics-workbook/dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_adapter_content_plot.png
-![per_base_sequence_quality](/fastqc_per_base_sequence_quality_plot.png)
+![per_base_sequence_quality](dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_per_base_sequence_quality_plot.png)
 
 Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming (see [here](/fastq-quality-trimming.md))
 
