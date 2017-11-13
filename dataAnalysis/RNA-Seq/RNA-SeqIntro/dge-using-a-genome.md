@@ -9,7 +9,7 @@ RNA-seq experiments are performed with an aim to comprehend transcriptomic chang
 This document will guide you through basic RNAseq analysis, beginning at quality checking of the RNAseq `reads` through to getting the differential gene expression results. We have downloaded an *Arabidopsis* dataset from NCBI for this purpose. Check the [BioProject](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA348194) page for more information.
 
 
-#Experimental design #
+# Experimental design #
 
 This experiment compares WT and atrx-1 mutant to analyze how loss of function  of ATRX chaperone results in changes in gene expression. RNA was isolated from three WT replicates and three mutant replicates using Trizol. Transcriptome was enriched/isolated using the plant RiboMinus kit for obtaining total RNA. RNA-seq was carried out in Illumina Hiseq 2500. The sequencing reads were generated as paired-end data, hence we have 2 files per replicate.
 
@@ -89,11 +89,11 @@ multiqc_general_stats.txt
 multiqc_sources.txt
 
 ```
-You can peruse the complete report or download the plots and view them for example: ![adapter_content](/Users/siva/GitHub/bioinformatics-workbook/assets/fastqc_adapter_content_plot.png)
+You can peruse the complete report or download the plots and view them for example: ![adapter_content](dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_adapter_content_plot.png)
 
-![per_base_n_content](/Users/siva/GitHub/bioinformatics-workbook/assets/fastqc_per_base_n_content_plot.png)
+![per_base_n_content](dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_per_base_n_content_plot.png)
 
-![per_base_sequence_quality](/Users/siva/GitHub/bioinformatics-workbook/assets/fastqc_per_base_sequence_quality_plot.png)
+![per_base_sequence_quality](dataAnalysis/RNA-Seq/RNA-SeqIntro/fastqc_per_base_sequence_quality_plot.png)
 
 Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming (see [here](/fastq-quality-trimming.md))
 
