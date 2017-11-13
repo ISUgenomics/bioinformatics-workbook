@@ -353,7 +353,7 @@ hist(assay(rld))
 # PCA
 plotpca(rld)
 ```
-![PCA.png](dataAnalysis/RNA-Seq/RNA-SeqIntro/PCA.png)
+![PCA.png](PCA.png)
 ```
 # Colors for plots below
 ## Ugly:
