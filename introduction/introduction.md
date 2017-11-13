@@ -16,4 +16,4 @@ Cost to sequence a human genome using a logarithmic scale on the y-axis and year
 For more information about this figure see [www.genome.gov](https://www.genome.gov/27565109/the-cost-of-sequencing-a-human-genome/)
 
 
-[Table of contents](index.md)
+[Table of contents](/index.md)
