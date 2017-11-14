@@ -4,11 +4,11 @@ Bioinformatics and data analysis starts with a good experimental design.  In thi
 
 
 ## Learning Objective
-Upon completion of this section on experimental design students will be able to:
+Upon completion of this section on experimental design the learner will be able to:
 
-* assess the assumptions and limitations of the biological domain and the sequencing technology as it relates to a biology question of interest
-* evaluate which sequencing technology will provide the best results for a given project
-* determine the limitations that result from reducing the amount of data collected in order to fit within a given budget.
+* Assess the assumptions and limitations of the biological domain and the sequencing technology as it relates to a biology question of interest
+* Evaluate which sequencing technology will provide the best results for a given project
+* Determine the limitations that result from reducing the amount of data collected in order to fit within a given budget.
 
 
 ---
@@ -67,7 +67,7 @@ MinIon raw data are long (3,000-70,000bp) with max read lengths as high as 250,0
 ---
 
 ## Funding and Cost
-Most research has a strict allowance for how much sequencing and bioinformatics can be performed to answer the biological question of interest.
+Most research has a strict allowance for how much sequencing and bioinformatics can be performed to answer the biological question of interest. An understanding of the following terminology can aid in determining the type and amount of sequencing that is best suited for your biological purpose.
 
  - **Read length:**```Short reads (50bp) are difficult to align to unique locations in a genome, so unless the experiment is for smRNA it is uncommon to use very short reads.```
 
@@ -86,4 +86,5 @@ Most research has a strict allowance for how much sequencing and bioinformatics 
 
 In the next sections we will go over several example experimental design problems from real world examples.
 
+[Generic Examples](experimentalDesign/eD_genericExamples.md)  
 [Table of contents](/index.md)

@@ -1,4 +1,9 @@
 
+## Learning Objective
+Upon completion of this section on fastq quality scores the learner will understand the following:
+* Assci character encoding are used to represent numbers
+* These numbers are converted to values between 0 and 41 to represent quality score
+
 
 <pre>
   <span style="color: purple">SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS</span>.....................................................
@@ -25,7 +30,7 @@
 </pre>
 
 
-[For more information see Wikipedia entry](https://en.wikipedia.org/wiki/FASTQ_format)
+[This table was taken from ](https://en.wikipedia.org/wiki/FASTQ_format)where more information can be found on this topic.
 
 To determine if they score is <blockcode>Phred+33</blockcode>, <blockcode>Phred+64</blockcode> or <blockcode>Solexa+64</blockcode>, use this one-liner (you can use <blockcode>zcat</blockcode>  if the <blockcode>fastq</blockcode> file is gzipped):
 

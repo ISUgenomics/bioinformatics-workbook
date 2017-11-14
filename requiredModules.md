@@ -5,3 +5,6 @@
 - star
 - gsnap
 - trinity
+- cdbfasta
+- subread
+- imagemagick
