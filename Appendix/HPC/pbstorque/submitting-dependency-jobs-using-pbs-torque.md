@@ -11,7 +11,7 @@ qsub first_job.sub
 You will get the output (jobid#)
 
 ```
-1234567.hpc5
+1234567.computername
 ```
 
 Second submit the second job following way,
@@ -46,4 +46,3 @@ SECOND=`qsub -W depend=afterok:$FIRST second_job.sub`
 THIRD=`qsub -W depend=afterok:$SECOND third_job.sub`
 FOURTH=`qsub -W depend=afterok:$THIRD fourth_job.sub`
 ```
-

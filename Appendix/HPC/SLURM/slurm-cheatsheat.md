@@ -1,6 +1,6 @@
-##Quick reference sheet for SLURM resource manager 
+# Quick reference sheet for SLURM resource manager
 
-###Job scheduling commands 
+### Job scheduling commands 
 <table>
 <thead><tr><th>Commands</th><th>Function</th><th>Basic Usage</th><th>Example</th></tr></thead><tbody>
  <tr><td><blockcode>sbatch</blockcode></td><td>submit a slurm job</td><td>sbatch [script]</td><td>$ sbatch job.sub</td></tr>
@@ -9,7 +9,7 @@
  <tr><td><blockcode>scontrol release </blockcode></td><td>release hold on slurm batch jobs</td><td>scontrol release  [job_id]</td><td>$ scontrol release  123456</td></tr>
 </tbody></table>
 
-### Job management commands 
+### Job management commands
 
 <table>
 <thead><tr><th>Job Status</th><th>Commands</th></tr></thead><tbody>
@@ -20,14 +20,14 @@
  <tr><td><blockcode>smap</blockcode></td><td> show jobs, partitions and nodes in a graphical network topology</td></tr>
 </tbody></table>
 
-### Job script basics 
+### Job script basics
 
 A typical job script will look like this:
 
 ```
 #!/bin/bash
-#SBATCH --nodes=1 
-#SBATCH --cpus-per-task=8 
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=8
 #SBATCH --time=02:00:00
 #SBATCH --mem=128G
 #SBATCH --mail-user=netid@gmail.com
@@ -45,7 +45,7 @@ your_commands_goes_here
 
 Lines starting with `#SBATCH` are for `SLURM` resource manager to request resources for HPC. Some important options are as follows:
 
- 
+
 <table >
 <thead><tr><th>Option</th><th>Examples</th><th>Description</th></tr></thead><tbody>
  <tr><td><blockcode>--nodes</blockcode></td><td><blockcode>#SBATCH --nodes=1</blockcode></td><td>Number of nodes</td></tr>
@@ -56,18 +56,18 @@ Lines starting with `#SBATCH` are for `SLURM` resource manager to request resour
  <tr><td><blockcode>--mail-user </blockcode></td><td><blockcode>#SBATCH --mail-user user@domain.edu</blockcode></td><td>Email address to send notifications</td></tr>
 </tbody></table>
 
-###Interactive session
+### Interactive session
 
 To start a interactive session execute the following:
 
 ```
 #this command will give 1 Node for a time of 4 hours
 
-srun -N 1 -t 4:00:00 --pty /bin/bash 
+srun -N 1 -t 4:00:00 --pty /bin/bash
 ```
 
 
-###Aliases that provide useful information parsed from the SLURM commands
+### Aliases that provide useful information parsed from the SLURM commands
 
 Place these alias' into your .bashrc
 ```

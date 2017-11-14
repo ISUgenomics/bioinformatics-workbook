@@ -11,7 +11,7 @@ sbatch first_job.slurm
 ```
 You will get the job id
 ```
-854.condo
+854.computername
 ```
 Next, you can submit a job that only runs after successful completion of the first job as follows:
 ```

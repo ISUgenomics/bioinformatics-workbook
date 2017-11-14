@@ -230,7 +230,7 @@ Packages can be uninstalled easily using `remove.packages` command
 > remove.packages("package_name")
 ```
 
-### Java programs 
+### Java programs
 Precompiled java programs that come as `.jar` files, can be placed in any directory and can be called from there. For using it with environment modulefile, you need to do these steps. First, create directory (program name) and sub-directory (version number). Place the `.jar` file in this sub-directory. Within this create another directory and call it as bin. For all `.jar` files in `/programname/version/` create a text file in `/programname/version/bin`. This text file will just have a single line, something like:
 ```
 java program_name.jar

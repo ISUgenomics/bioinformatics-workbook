@@ -6,3 +6,5 @@
 - gsnap
 - trinity
 - cdbfasta
+- subread
+- imagemagick
