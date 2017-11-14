@@ -447,8 +447,9 @@ maplot <- function (res, thresh=0.05, labelsig=TRUE, textcx=1, ...) {
 png("diffexpr-maplot.png", 1500, 1000, pointsize=20)
 maplot(resdata, main="MA Plot")
 dev.off()
+```
 ![MA plot](Assets/diffexpr-maplot.png)
-
+```
 ## Plots to Examine Results:
 
 ## Volcano plot with "significant" genes labeled
