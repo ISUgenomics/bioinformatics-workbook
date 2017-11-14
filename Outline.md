@@ -58,6 +58,9 @@ This section could be skipped if they want to start working right away
 
 ## Data Analysis
 - Introduction to Data analysis
+* [RNA-Seq Analysis](dataAnalysis/RNA-Seq/RNA-SeqIntro.md)
+
+  * [Introduction to Data Analysis](dataAnalysis/dAn_introduction.md)
 - RNA-Seq Analysis (intro)
  - Arabidopsis with a genome
    - Which genes are significant?

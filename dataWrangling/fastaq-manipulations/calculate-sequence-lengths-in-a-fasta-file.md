@@ -20,14 +20,16 @@ seq_length.py input_file.fasta
 This will print length for all the sequences in that file.
 
 
-##  2. Using bioawk ##
+##  2. Using bioawk
 
 Bioawk is an extension of the <blockcode>awk</blockcode> written by [Heng Li](https://github.com/lh3).  It is available to donwload from this [link](https://github.com/lh3/bioawk/releases). Installation is easy too. To get sequence length, run it as:
 
 ```
 bioawk -c fastx '{print $name length($seq)}' input.fasta
 ```
-
 Output will be similar to the above script and can be redicrected to any file if you want.
+
+# More information
+*  [Introduction to Bioawk](Appendix/bioawk-basics.md)
 
 [Table of contents](/index.md)
