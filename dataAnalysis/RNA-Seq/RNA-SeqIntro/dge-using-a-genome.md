@@ -11,7 +11,7 @@ This document will guide you through basic RNAseq analysis, beginning at quality
 
 # Experimental design #
 
-This experiment compares WT and atrx-1 mutant to analyze how loss of function  of ATRX chaperone results in changes in gene expression. RNA was isolated from three WT replicates and three mutant replicates using Trizol. Transcriptome was enriched/isolated using the plant RiboMinus kit for obtaining total RNA. RNA-seq was carried out in Illumina Hiseq 2500. The sequencing reads were generated as paired-end data, hence we have 2 files per replicate.
+This experiment compares WT and *atrx-1* mutant to analyze how loss of function  of ATRX chaperone results in changes in gene expression. The ATRX chaperone is a histone chaperone known to be an important player in regulation of gene expression. RNA was isolated from three WT replicates and three mutant replicates using Trizol. Transcriptome was enriched/isolated using the plant RiboMinus kit for obtaining total RNA. RNA-seq was carried out in Illumina Hiseq 2500. The sequencing reads were generated as paired-end data, hence we have 2 files per replicate.
 
 
 | Condition | replicate 1 | replicate 2 | replicate 3 |
@@ -32,20 +32,20 @@ esearch -db sra -query PRJNA276699 | efetch --format runinfo |cut -d "," -f 1 | 
 while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/<version>/etc/asperaweb_id_dsa.openssh\" $line"; done<srr_numbers.txt > prefetch.cmds
 parallel <prefetch.cmds
 ```
-After downloading the SRA files, we convert it to fastq format. We can use the fast-dump command as follows: (this step is slow and if possible run these commands using gnu parallel). We assume that all SRA files are in a specific folder.
+After downloading the SRA files, we convert it to fastq format. We can use the fast-dump command as follows: (this step is slow and if possible run these commands using [gnu parallel](https://www.gnu.org/software/parallel/)). We assume that all SRA files are in a specific folder.
 ```
 module load parallel
 parallel "fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
 ```
 ## EBI
-On the other hand if fastq files are available on a public repository (e.g. [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using wget after copying the links to those files.
+EBI directly hosts the fastq files are available on their server (e.g. check [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using `wget` by supplying the links to each file.
 
 ```
-wget <link/to/fastq.gz>
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/003/SRR4420293/SRR4420293_1.fastq.gz
 ```
 
 
-We also need the genome file and associated GTF/GFF file for for Arabidopsis. We download these files directly from the [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch), or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html) or the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (phytozome needs logging in and selecting the files) .
+We also need the genome file and associated GTF/GFF file for for *Arabidopsis*. These are downloaded directly from [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch), or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html) or the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (phytozome needs logging in and selecting the files) .
 
 For this tutorial, we downloaded the following files from [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch).
 ```
@@ -56,14 +56,14 @@ Annotation file: GCF_000001735.3_TAIR10_genomic.gff
 
 # 2. Quality Check #
 
-For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high quality illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them, we run it in `parallel`.
+For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high quality illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them. It is convenient to run it in `parallel`.
 
 ```
 module load fastqc
 module load parallel
-parallel "fastqc {} - <fq_out_directory>" ::: *.fastq.gz
+parallel "fastqc {} -o <fq_out_directory>" ::: *.fastq.gz
 ```
-Because we have a total of 6 quality outputs, we will have 6 html files and 6 zip files. We can use `multiqc` to aggregate the outputs and get a single html file to scan the quality of all the libraries.
+Because we have a total of 6 quality outputs, we will have 6 html files and 6 zip files. We can use [`multiqc`](http://multiqc.info/) to aggregate the outputs and get a single html file to scan the quality of all the libraries.
 
 ```
 cd fq_out_directory
@@ -100,7 +100,7 @@ You can peruse the complete report or download the plots and view them for examp
 ![per_base_n_content](Assets/fastqc_per_base_n_content_plot.png)
 ![per_base_sequence_quality](Assets/fastqc_per_base_sequence_quality_plot.png)
 
-Once you are happy with the results, proceed with the mapping part. If not, then perform quality trimming. E.g. see [here](http://hannonlab.cshl.edu/fastx_toolkit/). If the quality is very bad it might make more sense to exclude that sample from the analysis.
+If satistied with the results, proceed with the mapping. If not, then perform quality trimming. E.g. see [here](http://hannonlab.cshl.edu/fastx_toolkit/). If the quality is very bad it might make more sense to exclude that sample from the analysis.
 
 # 3. Mapping reads to the genome #
 
