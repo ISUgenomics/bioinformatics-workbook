@@ -394,6 +394,14 @@ dev.off()
 # Get differential expression results
 res <- results(dds)
 table(res$padj<0.05)
+
+```
+We observe 204 differentially expressed genes with adjusted p value <= 0.05
+|FALSE|TRUE|
+|---|---|
+|6712|204|
+
+```
 ## Order by adjusted p-value
 res <- res[order(res$padj), ]
 ## Merge with normalized count data
@@ -404,7 +412,9 @@ head(resdata)
 write.csv(resdata, file="diffexpr-results.csv",quote = FALSE,row.names = F)
 
 ```
-head -4 diffexpr-results.csv
+To get the first few rows do  
+`head -4 diffexpr-results.csv`
+
 ```
 Gene,baseMean,log2FoldChange,lfcSE,stat,pvalue,padj,S293,S294,S295,S296,S297,S298
 gene32459,4529.272154082,-2.06484914507321,0.288731491703117,-7.15145110390785,8.58653066559819e-13,5.93844460832771e-09,11073.6705141816,5726.45128024,5128.92211910988,1482.46794888894,1473.13299530101,2290.98806677055
@@ -420,25 +430,24 @@ gene1446,62.2619789946306,-2.86730516347734,0.43036495871904,-6.66249680738816,2
 ## Examine plot of p-values
 hist(res$pvalue, breaks=50, col="grey")
 
-## Examine independent filtering
-attr(res, "filterThreshold")
-plot(attr(res,"filterNumRej"), type="b", xlab="quantiles of baseMean", ylab="number of rejections")
+
 
 ## MA plot
 ## Could do with built-in DESeq2 function:
 ## DESeq2::plotMA(dds, ylim=c(-1,1), cex=1)
-## I like mine better:
+## This is Stephen Turner's code:
 maplot <- function (res, thresh=0.05, labelsig=TRUE, textcx=1, ...) {
   with(res, plot(baseMean, log2FoldChange, pch=20, cex=.5, log="x", ...))
   with(subset(res, padj<thresh), points(baseMean, log2FoldChange, col="red", pch=20, cex=1.5))
   if (labelsig) {
     require(calibrate)
-    with(subset(res, padj<thresh), textxy(baseMean, log2FoldChange, labs=Gene, cex=textcx, col=2))
+    with(subset(res, padj<thresh), points(baseMean, log2FoldChange, labs=Gene, cex=textcx, col=2))
   }
 }
 png("diffexpr-maplot.png", 1500, 1000, pointsize=20)
 maplot(resdata, main="MA Plot")
 dev.off()
+![MA plot](Assets/diffexpr-maplot.png)
 
 ## Plots to Examine Results:
 
@@ -450,7 +459,7 @@ volcanoplot <- function (res, lfcthresh=2, sigthresh=0.05, main="Volcano Plot", 
   with(subset(res, padj<sigthresh & abs(log2FoldChange)>lfcthresh), points(log2FoldChange, -log10(pvalue), pch=20, col="green", ...))
   if (labelsig) {
     require(calibrate)
-    with(subset(res, padj<sigthresh & abs(log2FoldChange)>lfcthresh), textxy(log2FoldChange, -log10(pvalue), labs=Gene, cex=textcx, ...))
+    with(subset(res, padj<sigthresh & abs(log2FoldChange)>lfcthresh), points(log2FoldChange, -log10(pvalue), labs=Gene, cex=textcx, ...))
   }
   legend(legendpos, xjust=1, yjust=1, legend=c(paste("FDR<",sigthresh,sep=""), paste("|LogFC|>",lfcthresh,sep=""), "both"), pch=20, col=c("red","orange","green"))
 }
@@ -458,3 +467,4 @@ png("diffexpr-volcanoplot.png", 1200, 1000, pointsize=20)
 volcanoplot(resdata, lfcthresh=1, sigthresh=0.05, textcx=.8, xlim=c(-2.3, 2))
 dev.off()
 ```
+![Volcano Plot](Assets/diffexpr-volcanoplot.png)
