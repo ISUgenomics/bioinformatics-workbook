@@ -5,3 +5,4 @@
 - star
 - gsnap
 - trinity
+- cdbfasta

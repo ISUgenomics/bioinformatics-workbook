@@ -1,10 +1,19 @@
 # Data Terminology
 
+## Learning Objective
+Upon completion of this section the learner will know the definitions for the following terms.
+
+* base/nucleotide
+* read
+* contig
+* scaffold
+* chromosome
+
 ## What is a base?
 There are four common bases in DNA sequence, ```A```denine, ```G```uanine, ```C```ytosine and ```T```hymine. ```U```racil is found in RNA inplace of Thyamine
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Nucleotides_1.svg/1320px-Nucleotides_1.svg.png)
-More information about nucleotides can be found on [wikipedia](https://en.wikipedia.org/wiki/Nucleotide).
+Image taken from [wikipedia](https://en.wikipedia.org/wiki/Nucleotide) where more information about nucleotides can be found also be found.
 
 ## What is a read?
 A read is a string of bases represented by their one letter codes. Here is an example of a read that is 50 bases long.
@@ -33,6 +42,6 @@ In the line above
 * ```gitnoc``` is the reverse complement of a contig  
 
 ## What is a chromosome?
-Chromosomes are the largest DNA molecules in the cell. Scaffolds can be ordered and oriented using a genetic map or HiC data into linkage groups or chromosomes.
+Chromosomes are the largest DNA molecules in the cell. Scaffolds can be ordered and oriented using a genetic map or HiC data into linkage groups or chromosomes.  The ultimate goal of a genome assembly project is to assemble reads into chromosomes.
 
 [Table of contents](/index.md)
