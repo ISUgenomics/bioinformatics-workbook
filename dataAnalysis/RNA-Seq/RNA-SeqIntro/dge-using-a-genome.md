@@ -222,7 +222,7 @@ SRR4420295.bam
 SRR4420294.bam
 SRR4420293.bam
 ```
-# 2. Abundance estimation #
+# 4. Abundance estimation #
 
 For quantifying transcript abundance from RNA-seq data, there are many programs available. Two most popular tools include, `featureCounts` and `HTSeq`. We will need a file with aligned sequencing reads (SAM/BAM files generated in previous step) and a list of genomic features (from the GFF file). `featureCounts` is a highly efficient general-purpose read summarization program that counts mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations. It also outputs stat info for the overall summarization results, including number of successfully assigned reads and number of reads that failed to be assigned due to various reasons. We can run featureCounts on all SAM/BAM files at the same time or individually.
 
@@ -303,7 +303,7 @@ gene8   0       0       0       0       0       0
 
 Now we are ready for performing DGE analysis!
 
-# 3. Differential Gene Expression analysis #
+# 5. Differential Gene Expression analysis #
 
 There are many programs that you can use to perform differential expression Some of the popular ones for RNA-seq are [`DESeq2`](https://bioconductor.org/packages/release/bioc/html/DESeq2.html),[`edgeR`](http://bioconductor.org/packages/release/bioc/html/edgeR.html), or [`QuasiSeq`](https://cran.r-project.org/web/packages/QuasiSeq/index.html). Here we will demonstrate differential expression using DESeq2.
 
