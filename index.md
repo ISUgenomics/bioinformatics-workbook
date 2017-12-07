@@ -39,6 +39,8 @@
 ### Data visualization
 
 ### Appendix
+  * Useful programs
+    * [Introduction to GitHub](Appendix/github.md)
   * Scripting and command line
     * [Bioawk Basics](Appendix/bioawk-basics.md)
   * Installation
