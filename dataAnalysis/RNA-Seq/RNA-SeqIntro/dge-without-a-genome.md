@@ -1,19 +1,63 @@
 
-Lets now assume that Arabidopsis doesnt have a sequenced genome. Then we will start with the reads and assemble them into transcripts. One such denovo assembler, that we will showcase here is ##Trinity
+Lets now assume that *Arabidopsis* doesn't have a sequenced genome. We then start with the RNAseq reads and assemble them *denovo* into transcripts. One such denovo assembler, that we will showcase here is [__Trinity__](https://github.com/trinityrnaseq/trinityrnaseq/wiki). It incorporates three software modules, Inchworm, Chrysalis and Butterfly in sequence. It divides the data to many smaller de bruijn graphs, each representing the transcriptional complexity at a locus.
 
 
-From Nathan Weeks: import the official Trinity Docker Image into a singularity image and run Trinity in a Singularity container:
+There are many ways to run Trinity. The official download page is [here](https://github.com/trinityrnaseq/trinityrnaseq/releases).
+Alternatively, you can import the official [Trinity Docker Image](https://hub.docker.com/r/trinityrnaseq/trinityrnaseq/) into a singularity image and run Trinity in a Singularity container. On Ceres singularity 2.4 is installed on nodes running linux Cent OS 7.4. This could be done from you project folder as follows.
+*Note: The `pull`or import of the docker image could have also been done in the Trinity SBATCH script, but we demonstrate it separately just to show the process of building a singularity image. The pull command first saves a series of tar.gz files in the cache folder and then sequentillay builds a squah image that we can use after mounting out working directory in the container, as shown in the SBATCH script.*
 
 ```
 salloc -p debug74
-SINGULARITY_TMPDIR=$TMPDIR SINGULARITY_CACHEDIR=$TMPDIR singularity pull docker://trinityrnaseq/trinityrnaseq
-....
-....
-....
+singularity pull docker://trinityrnaseq/trinityrnaseq
+WARNING: pull for Docker Hub is not guaranteed to produce the
+WARNING: same image on repeated pull. Use Singularity Registry
+WARNING: (shub://) to pull exactly equivalent images.
+Docker image path: index.docker.io/trinityrnaseq/trinityrnaseq:latest
+Cache folder set to /home/sivanandan.chudalayandi/.singularity/docker
+Importing: base Singularity environment
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:ce640ed7800c29984dfd6c4cda9e5b6c759f630356e972c851125713628cdfd9.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:486cb8339a27635fa93dc47aa0c689326a0a7cce388966d16daf8d265436cf7f.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:dc6f0d824617ad8a5d1163a5b2084814665dd83156317ad06ccf14deb517a053.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:4f7a5649a30e3f318ce5d7e4dbcbbeb6c0938c4cbae4d4a641fe910562ff4978.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:672363445ad2c734e29221a6b47f4e614b5adc8a3cdca3364f62db2ed2bdff0c.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:fa5e03a7cea7fda9a438856574913bd4895091aa6db87feccabe56bab35de10d.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:60af5100289ac8a096793b2050c0dbb5040958661bd76bce44fe655d7800747b.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:71afd2414e9ba47b9b913096a234df60ec70cdff8e0d9dc136d849ade83ee1de.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:cfbe046dbb7a2d00a21e47136f0f65371cb44d471975a4010bec6503fce1fdde.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:ad7309631e7f9d0fde782912642154010ee230dcec0b31bda6262a6200860aaa.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:aa1d8e07c016851c7389bcefdeca671613fd5549cc8cb3716ec762bd7ecd6fb3.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:310877e7e48932846dd5fd88b594f1e7a0fa31a61401e10b31f71a09ee3841d5.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:229d926bd456b21601dcbb0b0148d092849fca1e589a149b141a13cb71f89667.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:dc3bf8f1f122e7c99d765a93aaec3db3011328e30d48f60c80f1e12d0794e223.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:4fe0a71b4fba93a388f18e50329f22dd078b4023640d5c0cddc17d873022870b.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:dd4a7aeb28caa9da4be497de7f7b65b61d790ae5ef4498b3fe7dd39768663beb.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:5aedeb9210d7db405b9e99bbefa2c64d9d05824ab067b831fdb95310193debe5.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:351c35ee3e8dcb6de90d3d2b81192e981660deee900baf94a41a144528222128.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:ae9af67d4f2aebce65b1ab4693adb4aee2e815146683052ee098f736b8c84b15.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:813e007a02f1d3b6d14180e90fd1de398cd453723474b566c6fc39d27e5e7182.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:38a8a24f9344eb0ded75c1005b17bd7163c88d1c61ef793122854bf9d6f5eae8.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:614634ba4025c2e0b2bf903367e353e4e75c68f60a5580513dcbe860c2ae73c9.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:245e88eb46fba5920fba64b8bc380e80ad844762ec8de67a408ac883cc79f2b4.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:56450ceb44fb47ca94a76e764eeb9c934712e0b15f8da1f54dd11c6e70be8941.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:923481697283cf0cb7b2bf4129428cd92ad6be9fb485701ef51d53c59d1352eb.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:68537cb83e308b416841a65c9061ef49615d005a800a7d647375de1cb65d191e.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:c9b6f189c784e7aa69ffd5f961d2f984210ccc160d3e8746b00ec0546bafeab4.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:19675e3d081b3482fcb1d982253203008212efeb32892edd8b1e79110d47c6e8.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:24549bf1ae8912a9d30c8efe69ffbc8979e67639a70bbfd7f5cba3f8b338f55b.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:16c5b4d662c99b94d81cf5902853bdbf98204bbb713d3df8254178151698defb.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:f2121024d426ab5040d03fa93fab380b1c296349f794767fc92a9d991143b4e7.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:d17c033ab3431aed136729f91794647c0d306c73991b9452f393ae1b1ee3f55d.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:717c8003e47e39f79d049eff0e82e25c106d959a4a9ebf7203932c9ca1a84456.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:6494a085bd622288605daaeab68ad49f1f00441358897520387fe1e2e81b724c.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:76390ecbff1f342992c0b76eeab5bc68d90299cdf580ccff67fa9db4590d21c5.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/metadata/sha256:caf5a16c57d3307da698a52ea556c652d0fd6a7f8fc292a52cbd7418e63c5aac.tar.gz
+WARNING: Building container as an unprivileged user. If you run this container as root
+WARNING: it may be missing some functionality.
+Building Singularity image...
+        Singularity container built: ./trinityrnaseq.img
+Cleaning up...
 
-Singularity container built: /scratch/sivanandan.chudalayandi/149863/trinityrnaseq.img
-
-mv /scratch/sivanandan.chudalayandi/149863/trinityrnaseq.img .
+exit
 ```
 
 ## Script for Trinity assembly:
@@ -21,152 +65,25 @@ mv /scratch/sivanandan.chudalayandi/149863/trinityrnaseq.img .
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -p debug74
-#SBATCH --ntasks-per-node=16
+#SBATCH --ntasks-per-node=40 # For Trinity always reserve the whole node
 #SBATCH -t 96:00:00
 #SBATCH -J tri
 #SBATCH -o tri.o%j
 #SBATCH -e tri.e%j
-#SBATCH --mail-user=csiva@iastate.edu
+#SBATCH --mail-user=<user_email_address>
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 cd $SLURM_SUBMIT_DIR
 ulimit -s unlimited
 scontrol show job $SLURM_JOB_ID
+
+# Trinity requires that the each set of reads are concatenated into a file each. make combined left and right reads.
+
 cat ../*1.*gz > left_1.gz
 cat ../*2.*gz > right_2.gz
 
-singularity exec --bind $PWD:/mnt --pwd /mnt /project/isu_gif_vrsc/Siva/transcriptomic_fastq/RNAseq/paired-end/trinity/trinityrnaseq.img Tri$
---seqType fq --max_memory 120G --CPU 16 --normalize_by_read_set --output TrinityOut --left left_1.gz --right right_2.gz --trimmomatic
+# running Trinity after mounting our working directory inside the container using $PWD.
 
-
+singularity exec --bind $PWD trinityrnaseq.img Trinity --seqType fq --max_memory 120G --CPU 16 --normalize_by_read_set --output TrinityOut --left left_1.gz --right right_2.gz --trimmomatic
 ```
-Error: Unable to recognize read name formatting
-```
-Friday, November 10, 2017: 20:21:38     CMD: /usr/local/bin/trinityrnaseq/util/insilico_read_normalization.pl --seqType fq --JM 120G  --max_c
-ov 50 --CPU 16 --output /mnt/TrinityOut/norm_for_read_set_1   --max_pct_stdev 10000  --left left_1.gz.PwU.qtrim.fq --right right_2.gz.PwU.qtr
-im.fq --pairs_together --PARALLEL_STATS  
-Converting input files. (both directions in parallel)CMD: seqtk-trinity seq -A /mnt/TrinityOut/left_1.gz.PwU.qtrim.fq >> left.fa
-CMD: seqtk-trinity seq -A /mnt/TrinityOut/right_2.gz.PwU.qtrim.fq >> right.fa
-Error, not recognizing read name formatting: [SRR4420293.1]
-
-If your data come from SRA, be sure to dump the fastq file like so:
-
-        SRA_TOOLKIT/fastq-dump --defline-seq '@$sn[_$rn]/$ri' --split-files file.sra
-
-Error, not recognizing read name formatting: [SRR4420293.1]
-
-##If your data come from SRA, be sure to dump the fastq file like so:
-
-        SRA_TOOLKIT/fastq-dump --defline-seq '@$sn[_$rn]/$ri' --split-files file.sra
-
-Thread 2 terminated abnormally: Error, cmd: seqtk-trinity seq -A /mnt/TrinityOut/right_2.gz.PwU.qtrim.fq >> right.fa died with ret 512 at /us
-r/local/bin/trinityrnaseq/util/insilico_read_normalization.pl line 758.
-Thread 1 terminated abnormally: Error, cmd: seqtk-trinity seq -A /mnt/TrinityOut/left_1.gz.PwU.qtrim.fq >> left.fa died with ret 512 at /usr/
-local/bin/trinityrnaseq/util/insilico_read_normalization.pl line 758.
-Error, conversion thread failed at /usr/local/bin/trinityrnaseq/util/insilico_read_normalization.pl line 329.
-Error, cmd: /usr/local/bin/trinityrnaseq/util/insilico_read_normalization.pl --seqType fq --JM 120G  --max_cov 50 --CPU 16 --output /mnt/Trin
-ityOut/norm_for_read_set_1   --max_pct_stdev 10000  --left left_1.gz.PwU.qtrim.fq --right right_2.gz.PwU.qtrim.fq --pairs_together --PARALLEL
-_STATS   died with ret 6400 at /usr/local/bin/trinityrnaseq/Trinity line 2544.
-        main::process_cmd("/usr/local/bin/trinityrnaseq/util/insilico_read_normalization"...) called at /usr/local/bin/trinityrnaseq/Trinity
-line 3090
-        main::normalize("/mnt/TrinityOut/norm_for_read_set_1", 50, ARRAY(0x22cc9b0), ARRAY(0x23139e8)) called at /usr/local/bin/trinityrnaseq
-/Trinity line 3014
-        main::run_normalization(50, ARRAY(0x1f89350), ARRAY(0x1f89398)) called at /usr/local/bin/trinityrnaseq/Trinity line 1297
-```
-
-So I decided to to use the -F option but still get the same error.
-
-The error because Trinity expects left and right read names to be explicitly identified.
-The following reads will result in error (note corresponding left and right reads have same names)
-
-```
-
-$zcat left_1.gz | head
-@HWI-ST1136:361:HS250:1:1101:1130:2234
-GCAACTTCTACAAGCAACTGGGTCGCTCTCTTCCATGACGACTCATCAGAACTGTCATACACGAAGACAGCTATGTCACATGCAGCTAAGGATTCCTTGG
-+HWI-ST1136:361:HS250:1:1101:1130:2234
-CCCFFFFFHHHHHJJJJJJJHIIJJJJJIJJJJIJJJJJJJJJJJJIJJJJJJJIIJJIJJJHHHFFFFEDEEEEEEEDDDDDDDDDDDDDDDDDEDDDD
-@HWI-ST1136:361:HS250:1:1101:1409:2108
-GGCTTTTCCTGCGCAGCTTAGGTGGAAGGCGAAGAAGGCCCCCTTCCGGGGGGCCCGAGCCATCAGTGAGATACTACTCTGGAAGAGCTAGAATTCTAAC
-+HWI-ST1136:361:HS250:1:1101:1409:2108
-CCCFFFFFHHHHHJJJJJJJJJFHJJJJJJJJJJJJJJJJJJJJJJJHHFDDDDDDDDDDDDDDDDEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDEEED
-
-zcat right_2.gz | head
-@HWI-ST1136:361:HS250:1:1101:1130:2234
-AAGCGAGCTCCTGATCAGAGCTTTGAGTTGACAAATGCAGCAATCGATTTCCTGAAAGGAATGTATATGTTGTTTGATGACGACCAGGATAACAATCTGA
-+HWI-ST1136:361:HS250:1:1101:1130:2234
-CCCFFFFFHHHHHIJJJJJJIJJJJJJGIIJJJJIJJJIJJJJJJJJJJJJIJJJIJJJGJIIHJIIIJIGFFHHFFFFFFCCDDDDDDDDDDDDDDDED
-@HWI-ST1136:361:HS250:1:1101:1409:2108
-CGAGGAAACCTTTGCNNNNNTCCGTTACCTTTTGGGAGGCCTACGCCCCATAGAAACCGTCTACCTGAGACTGTCCCTTGGCCCGTAGGTCCTGACACAA
-+HWI-ST1136:361:HS250:1:1101:1409:2108
-<<<@@@@@@?@@@@@#####32@@@@@@???????????????????????????????==?????????=========<===<:::<<=========<<
-```
-
-We need to explicitly add /1 and /2 at the end of the left and right read names:
-
-```
-zcat left_1.gz | sed '/@HWI/ s_$_/1_' > correct_left_1.fq
-zcat right_2.gz | sed '/@HWI/ s_$_/2_' > correct_right_2.fq
-```
-
-```
-head correct_left_1.fq
-@HWI-ST1136:361:HS250:1:1101:1130:2234/1
-GCAACTTCTACAAGCAACTGGGTCGCTCTCTTCCATGACGACTCATCAGAACTGTCATACACGAAGACAGCTATGTCACATGCAGCTAAGGATTCCTTGG
-+HWI-ST1136:361:HS250:1:1101:1130:2234
-CCCFFFFFHHHHHJJJJJJJHIIJJJJJIJJJJIJJJJJJJJJJJJIJJJJJJJIIJJIJJJHHHFFFFEDEEEEEEEDDDDDDDDDDDDDDDDDEDDDD
-@HWI-ST1136:361:HS250:1:1101:1409:2108/1
-GGCTTTTCCTGCGCAGCTTAGGTGGAAGGCGAAGAAGGCCCCCTTCCGGGGGGCCCGAGCCATCAGTGAGATACTACTCTGGAAGAGCTAGAATTCTAAC
-+HWI-ST1136:361:HS250:1:1101:1409:2108
-CCCFFFFFHHHHHJJJJJJJJJFHJJJJJJJJJJJJJJJJJJJJJJJHHFDDDDDDDDDDDDDDDDEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDEEED
-
--$ head correct_right_2
-@HWI-ST1136:361:HS250:1:1101:1130:2234/2
-AAGCGAGCTCCTGATCAGAGCTTTGAGTTGACAAATGCAGCAATCGATTTCCTGAAAGGAATGTATATGTTGTTTGATGACGACCAGGATAACAATCTGA
-+HWI-ST1136:361:HS250:1:1101:1130:2234
-CCCFFFFFHHHHHIJJJJJJIJJJJJJGIIJJJJIJJJIJJJJJJJJJJJJIJJJIJJJGJIIHJIIIJIGFFHHFFFFFFCCDDDDDDDDDDDDDDDED
-@HWI-ST1136:361:HS250:1:1101:1409:2108/2
-CGAGGAAACCTTTGCNNNNNTCCGTTACCTTTTGGGAGGCCTACGCCCCATAGAAACCGTCTACCTGAGACTGTCCCTTGGCCCGTAGGTCCTGACACAA
-+HWI-ST1136:361:HS250:1:1101:1409:2108
-<<<@@@@@@?@@@@@#####32@@@@@@???????????????????????????????==?????????=========<===<:::<<=========<<
-@HWI-ST1136:361:HS250:1:1101:1417:2131/2
-CAAGGATACTGATATCTTGGCAGCATTCCGAGTAACTCCTCAACCTGGAGTTCCACCTGAAGAAGCAGGGGCTGCGGTAGCTGCTGAATCTTCTACTGGT
-```
-This solved the seqtk error, but raised a jellyfish error:
-```
--------------------------------------------
------------ Jellyfish  --------------------
--- (building a k-mer catalog from reads) --
--------------------------------------------
-
-CMD finished (0 seconds)
-CMD: /usr/local/bin/trinityrnaseq/util/..//trinity-plugins/jellyfish/bin/jellyfish count -t 16 -m 25 -s 12947414142  --canonical  both.fa
-Error, cmd: /usr/local/bin/trinityrnaseq/util/..//trinity-plugins/jellyfish/bin/jellyfish count -t 16 -m 25 -s 12947414142  --canonical  both.f
-a died with ret 9 at /usr/local/bin/trinityrnaseq/util/insilico_read_normalization.pl line 758.
-Error, cmd: /usr/local/bin/trinityrnaseq/util/insilico_read_normalization.pl --seqType fq --JM 120G  --max_cov 50 --CPU 16 --output /mnt/Trinit
-yOut/norm_for_read_set_1   --max_pct_stdev 10000  --left correct_left_1.PwU.qtrim.fq --right correct_left_1.PwU.qtrim.fq --pairs_together --PAR
-ALLEL_STATS   died with ret 512 at ......
-...........................
-```
-However reducing max memory to 64G seems to have solved the problem.
-but it died at a slightly later stage.
-
-tried it again with Ceres installed trinityrnaseq, version 2.1.1. That went through fastools, fq to fa conversion but was killed in the Jellyfish step right upfront.
-
-```
-more Trinity.timing
-Statistics:
-===========
-Trinity Version:      v2.1.1
-Compiler:             GCC
-Trinity Parameters:   --seqType fq --CPU 16 --max_memory 120G --normalize_by_read_set --output TrinityOut --left correct_left_1 --right correct_left_1 --trimmomatic --min_kmer_cov 2
-```
-Error at Jellyfish
-```
-* Running CMD: /software/apps/trinityrnaseq/gcc/64/2.1.1/trinityrnaseq-2.1.1/trinity-plugins/jellyfish/bin/jellyfish count -t 16 -m 25 -s 12947
-414142  --canonical  both.fa
-sh: line 1: 20163 Killed                  /software/apps/trinityrnaseq/gcc/64/2.1.1/trinityrnaseq-2.1.1/trinity-plugins/jellyfish/bin/jellyfish
- count -t 16 -m 25 -s 12947414142 --canonical both.fa 2> tmp.19951.stderr
-Trinity run failed. Must investigate error above.
-
-```
+After the complete run. We see the complete *de novo* assembly (trinity.fa) in the output directory, TrinityOut. We can perform a variety of downstream analyzes with this transcriptome assembly. For the purposes of this tutorial, we will demonstrate mapping the RNAseq reads back to the assembly using bowtie2, calculating transcript abundance, using FeatureCounts and then performing differential expression using DESeq2.
