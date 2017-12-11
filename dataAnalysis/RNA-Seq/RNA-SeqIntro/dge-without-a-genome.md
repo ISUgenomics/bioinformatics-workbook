@@ -57,7 +57,7 @@ Building Singularity image...
         Singularity container built: ./trinityrnaseq.img
 Cleaning up...
 
-exit
+exit # exit from the relevant node
 ```
 
 ## Script for Trinity assembly:
@@ -87,3 +87,38 @@ cat ../*2.*gz > right_2.gz
 singularity exec --bind $PWD trinityrnaseq.img Trinity --seqType fq --max_memory 120G --CPU 16 --normalize_by_read_set --output TrinityOut --left left_1.gz --right right_2.gz --trimmomatic
 ```
 After the complete run. We see the complete *de novo* assembly (trinity.fa) in the output directory, TrinityOut. We can perform a variety of downstream analyzes with this transcriptome assembly. For the purposes of this tutorial, we will demonstrate mapping the RNAseq reads back to the assembly using bowtie2, calculating transcript abundance, using FeatureCounts and then performing differential expression using DESeq2.
+
+```
+bash-4.2$ singularity pull docker://biocontainers/bowtie2
+WARNING: pull for Docker Hub is not guaranteed to produce the
+WARNING: same image on repeated pull. Use Singularity Registry
+WARNING: (shub://) to pull exactly equivalent images.
+Docker image path: index.docker.io/biocontainers/bowtie2:latest
+Cache folder set to /home/sivanandan.chudalayandi/.singularity/docker
+[17/17] |===================================| 100.0%
+Importing: base Singularity environment
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:ae79f251470513c2a0ec750117a81f2d58a50727901ca416efecf297b8a03913.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:c59d01a7e4caf1aba785eb33192fec3f96e4ab01975962bcec10f4989a6edcc6.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:41ba73a9054d231e1f555c40a74762276900cc6487f5c6cf13b89c7606635c67.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:f1bbfd495cc1112b503350686641ee4fa2cea8ccd13fb8a8a302c81dae61d418.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:0c346f7223e24b517358f52c4a3f5f9af1c86e5ddeaee5659c8889846e46d1e2.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:dd5a572f23667f10d84dc003856e97e327c0d68f6280476604b3b8449f9faf55.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:cd0c1a9f13b12b35187a4bde2b44ac69c5c81b44412c414e6baed4e01d70b0b2.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:a3c465f116787d138bd7ec289600ce80dced807fde91c15df724d37c2bcbbf21.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:58c7b36192392e599225e33824fa456e3ad1060f26bb2fe09f44fbe6f827f24e.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:674422f0e3ac42325e33c513cf0253a3c46e8f714eb5b8dc36390ef30731b4fa.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:19da0d920b6c179d5358e89faae466778bf2f0a540920409c1ceae94d326d4e8.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:274b372e577a662777e23e03920d5443cfa510b31d0804524257cb4877e91e39.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:1dca12baf5427e082accad820b46b9e4e60b10cf5c7ea9bb8a9bcf6231b1352b.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:09d2dfd780ba8883a2cc00675bd78bb40699bb7386f1526c08866825a4397e29.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:eba1fbb2456abb6317f1246b631265e432a60bca5eeccaf744e7479969e2817d.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:fdb83d025651f43eb94724f51a0b3aa0c9185597bc42e6098ca3433052c9a9e7.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/docker/sha256:5b3842a8cf8c8f7cb480027cdce6ef2d1bcc2b69bfadcc12cad1672f60d06099.tar.gz
+Importing: /home/sivanandan.chudalayandi/.singularity/metadata/sha256:524d6e0a4b6f5063a00b70c37daff002ff18d9de3e4dff11822f93e5a9727c45.tar.gz
+WARNING: Building container as an unprivileged user. If you run this container as root
+WARNING: it may be missing some functionality.
+Building Singularity image...
+Singularity container built: ./bowtie2.img
+Cleaning up...
+
+```
