@@ -26,11 +26,6 @@ Aquaculture production has become increasingly important to satisfy seafood and 
 * ```Year of Sequencing```: 2015
 
 
-
-
-
-
-
 # Questions  
 
 ##### How is Coverage Depth Determined?
