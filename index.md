@@ -40,7 +40,8 @@
 
 ### Appendix
   * Useful programs
-    * [Introduction to GitHub](Appendix/github.md)
+    * [Introduction to GitHub](Appendix/github/github.md)
+    * [Introduction to Slack](Appendix/slack.md)
   * Scripting and command line
     * [Bioawk Basics](Appendix/bioawk-basics.md)
   * Installation
