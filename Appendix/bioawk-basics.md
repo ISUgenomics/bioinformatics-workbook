@@ -154,4 +154,4 @@ Say, if your input file is as follows:
 bioawk -t -c header '$age < "25" {print $0}' input.txt
 ```
 
-[Table of contents](/index.md)
+[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)

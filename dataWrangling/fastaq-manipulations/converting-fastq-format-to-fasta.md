@@ -62,4 +62,4 @@ Note that you can use either compressed or uncompressed files for this tool
 # More information
 *  [Introduction to Bioawk](/Appendix/bioawk-basics.md)
 
-[Table of contents](/index.md)
+[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)

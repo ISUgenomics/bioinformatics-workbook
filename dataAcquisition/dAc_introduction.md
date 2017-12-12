@@ -32,4 +32,4 @@ Arabidopsis is one of several model organisms where significant amounts of data 
 
 
 
-  [Table of contents](/index.md)
+  [Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)

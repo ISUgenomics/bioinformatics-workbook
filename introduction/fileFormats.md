@@ -12,7 +12,7 @@ Upon completion of this section you will have a better understanding of the foll
 * BAM – alignments in binary
 
 
-[Table of contents](/index.md)
+[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)
 
 ## FASTA
 
