@@ -12,7 +12,7 @@ The slack application can be downloaded [here: application](https://slack.com/do
 ---
 ## Understanding the GUI interface
 
-![](assets/SlackOverview.png)
+![](https://raw.githubusercontent.com/ISUgenomics/bioinformatics-workbook/Andrew6/Appendix/assets/SlackOverview.png)
 
 The thin left panel has the teams that you have joined.  The thick left panel contains the channels that you can select and chat in.  The central panel contains your messages, allows you to upload files and make posts.  The right panel contains highlights, pinned items, members in the channel, and shared files.  It will also display search results if you search using the search box at the top of the right panel.
 
@@ -36,4 +36,4 @@ The thin left panel has the teams that you have joined.  The thick left panel co
 
 ## More Slack Resources
 
-*
+* [Why Slack?](https://slack.com/features)
