@@ -87,4 +87,4 @@ Most research has a strict allowance for how much sequencing and bioinformatics 
 In the next sections we will go over several example experimental design problems from real world examples.
 
 [Generic Examples](experimentalDesign/eD_genericExamples.md)  
-[Table of contents](/index.md)
+[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)

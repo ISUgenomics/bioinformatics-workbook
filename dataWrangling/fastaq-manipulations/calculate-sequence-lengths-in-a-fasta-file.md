@@ -32,4 +32,4 @@ Output will be similar to the above script and can be redicrected to any file if
 # More information
 *  [Introduction to Bioawk](/Appendix/bioawk-basics.md)
 
-[Table of contents](/index.md)
+[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)

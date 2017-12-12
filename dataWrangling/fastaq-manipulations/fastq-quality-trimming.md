@@ -6,4 +6,4 @@ Many programs are available for trimming reads. Popular packages include:
 * FASTX toolkit
 
 
-[Table of contents](/index.md)
+[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)

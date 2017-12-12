@@ -45,4 +45,4 @@ An average estimate for the size of the genic space in a genome  assumes a genom
 
 comming soon...
 
-[Table of contents](/index.md)
+[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)
