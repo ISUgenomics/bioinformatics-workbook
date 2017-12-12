@@ -8,8 +8,8 @@
   * [Introduction to Bioinformatics](introduction/introduction.md)
   * Introduction to bioinformatics Terminalogy
     * [Reads, contigs and scaffolds](/introduction/dataTerminology.md)
-  * File Formats
-    * [What is a Quality Score?](introduction/fastqquality-score-encoding.md)
+  * [Introduction to File Formats](introduction/fileFormats.md)
+      * [What is a Quality Score?](introduction/fastqquality-score-encoding.md)
 
 ### Experimental Design
   * [Introduction to Experimental Design](experimentalDesign/eD_introduction.md)
@@ -18,6 +18,8 @@
 
 ### Data Acquisition
   * [Introduction to Data Acquisition](dataAcquisition/dAc_introduction.md)
+  * Transferring data
+    * [Downloading with wget](dataAcquisition/fileTransfer/downloading-files-via-wget.md)
 
 ### Data Wrangling
   * FASTA(Q) manipulations
@@ -37,6 +39,8 @@
 ### Data visualization
 
 ### Appendix
+  * Useful programs
+    * [Introduction to GitHub](Appendix/github.md)
   * Scripting and command line
     * [Bioawk Basics](Appendix/bioawk-basics.md)
   * Installation
