@@ -47,7 +47,7 @@
     * [How do I install a program?](Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
   * HPC
     * SLURM
-        * [cheatsheat SlURM](/Appendix/HPC/SLURM/slurm-cheatsheat.md)
+        * [cheatsheat SLURM](/Appendix/HPC/SLURM/slurm-cheatsheat.md)
         * [SLURM job submission dependencies](/Appendix/HPC/SLURM/submitting-dependency-jobs-using-slurm.md)
     * PBS-Torque
         * [cheatsheat Torque](Appendix/HPC/pbstorque/submitting-dependency-jobs-using-pbs-torque.md)
