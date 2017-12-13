@@ -21,6 +21,8 @@
   * Transferring data
     * [Downloading with wget](dataAcquisition/fileTransfer/downloading-files-via-wget.md)
 
+
+
 ### Data Wrangling
   * FASTA(Q) manipulations
     * [Determine Sequence Lengths](dataWrangling/fastaq-manipulations/calculate-sequence-lengths-in-a-fasta-file.md)
