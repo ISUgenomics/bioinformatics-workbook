@@ -19,7 +19,7 @@
 ### Data Acquisition
   * [Introduction to Data Acquisition](dataAcquisition/dAc_introduction.md)
   * Transferring data
-    * [Downloading with wget](dataAcquisition/fileTransfer/downloading-files-via-wget.md)
+    * [Downloading with wget](dataAcquisition/FileTransfer/downloading-files-via-wget.md)
 
 
 
