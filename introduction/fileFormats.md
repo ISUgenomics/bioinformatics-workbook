@@ -5,10 +5,8 @@ Upon completion of this section you will have a better understanding of the foll
 
 * FASTA – plain sequences
 * FASTQ – sequencing reads
---
 * GFF – gene models
 * GTF - variation of GFF
---
 * VCF – sequence variants
 * SAM – sequence alignments
 * BAM – alignments in binary
@@ -44,7 +42,7 @@ ESGSATLKDSLSVQLSNLGIVRSMKKNRQTQPQNKSVYIALESDSSEERVNAPDGCSVRDQELFQIAPGG
 AGDEGKLNSAKKAACDFSEGIRNIEHHQCSDKDLNPTENHATERHPEKCPRISVANVHVEPCGTDARASS
 ```
 ---
-##### Common Errors that occur with this file type
+# Common Errors that occur with this file type
 
 * Program requires the sequences to all be on a single but the fasta file is on multiple lines
 * Program requies the sequences to be on multiple lines with a string length per line less than 80 characters but the sequences are written on a single lines
@@ -55,7 +53,8 @@ AGDEGKLNSAKKAACDFSEGIRNIEHHQCSDKDLNPTENHATERHPEKCPRISVANVHVEPCGTDARASS
 
 FASTQ files are similar to FASTA but contain the quality score of the sequence data (only nucleotide sequences). The format contains two additional lines beyond FASTA format.
 
-```Line 1: starts with “@” followed by ID  
+```
+Line 1: starts with “@” followed by ID  
 Line 2: Sequence data  
 Line 3: Starts with “+”       rest of the description is optional  
 Line 4:Quality score for each base in the sequence
