@@ -5,7 +5,7 @@ Upon completion of this section you will have a better understanding of the foll
 
 * FASTA – plain sequences
 * FASTQ – sequencing reads
-* GFF – gene models
+* GFF – gene models 
 * GTF - variation of GFF
 * VCF – sequence variants
 * SAM – sequence alignments
