@@ -8,8 +8,8 @@
   * [Introduction to Bioinformatics](introduction/introduction.md)
   * Introduction to bioinformatics Terminalogy
     * [Reads, contigs and scaffolds](/introduction/dataTerminology.md)
-  * File Formats
-    * [What is a Quality Score?](introduction/fastqquality-score-encoding.md)
+  * [Introduction to File Formats](introduction/fileFormats.md)
+      * [What is a Quality Score?](introduction/fastqquality-score-encoding.md)
 
 ### Experimental Design
   * [Introduction to Experimental Design](experimentalDesign/eD_introduction.md)
@@ -18,6 +18,10 @@
 
 ### Data Acquisition
   * [Introduction to Data Acquisition](dataAcquisition/dAc_introduction.md)
+  * Transferring data
+    * [Downloading with wget](dataAcquisition/FileTransfer/downloading-files-via-wget.md)
+
+
 
 ### Data Wrangling
   * FASTA(Q) manipulations
@@ -37,13 +41,16 @@
 ### Data visualization
 
 ### Appendix
+  * Useful programs
+    * [Introduction to GitHub](Appendix/github/github.md)
+    * [Introduction to Slack](Appendix/slack.md)
   * Scripting and command line
     * [Bioawk Basics](Appendix/bioawk-basics.md)
   * Installation
     * [How do I install a program?](Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
   * HPC
     * SLURM
-        * [cheatsheat SlURM](/Appendix/HPC/SLURM/slurm-cheatsheat.md)
+        * [cheatsheat SLURM](/Appendix/HPC/SLURM/slurm-cheatsheat.md)
         * [SLURM job submission dependencies](/Appendix/HPC/SLURM/submitting-dependency-jobs-using-slurm.md)
     * PBS-Torque
         * [cheatsheat Torque](Appendix/HPC/pbstorque/submitting-dependency-jobs-using-pbs-torque.md)

@@ -177,4 +177,4 @@ A more comprehensive list of character classes can be found here.
 * [Perl Programming Documentation](http://perldoc.perl.org/perlrecharclass.html)
 
 
-[Table of contents](/index.md)
+[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)

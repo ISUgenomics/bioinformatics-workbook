@@ -44,4 +44,4 @@ In the line above
 ## What is a chromosome?
 Chromosomes are the largest DNA molecules in the cell. Scaffolds can be ordered and oriented using a genetic map or HiC data into linkage groups or chromosomes.  The ultimate goal of a genome assembly project is to assemble reads into chromosomes.
 
-[Table of contents](/index.md)
+[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)

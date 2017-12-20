@@ -1,4 +1,4 @@
 #Sequencing technology
 
 
-[Table of contents](/index.md)
+[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)
