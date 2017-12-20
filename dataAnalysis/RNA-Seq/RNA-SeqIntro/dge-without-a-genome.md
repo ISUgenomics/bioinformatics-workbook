@@ -3,8 +3,8 @@ Lets now assume that *Arabidopsis* doesn't have a sequenced genome. We then star
 
 
 There are many ways to run Trinity. The official download page is [here](https://github.com/trinityrnaseq/trinityrnaseq/releases).
-Alternatively, you can import the official [Trinity Docker Image](https://hub.docker.com/r/trinityrnaseq/trinityrnaseq/) into a singularity image and run Trinity in a Singularity container. On Ceres singularity 2.4 is installed on nodes running linux Cent OS 7.4. This could be done from you project folder as follows.
-*Note: The `pull`or import of the docker image could have also been done in the Trinity SBATCH script, but we demonstrate it separately just to show the process of building a singularity image. The pull command first saves a series of tar.gz files in the cache folder and then sequentillay builds a squah image that we can use after mounting out working directory in the container, as shown in the SBATCH script.*
+Alternatively, you can import the official [Trinity Docker Image](https://hub.docker.com/r/trinityrnaseq/trinityrnaseq/) into a singularity image and run Trinity in a Singularity container. On Ceres singularity 2.4 is installed on nodes running linux Cent OS 7.4. This could be done from your project folder as follows.
+*Note: The `pull` or import of the docker image could have also been done in the Trinity SBATCH script, but we demonstrate it separately just to show the process of building a singularity image. The pull command first saves a series of tar.gz files in the cache folder and then sequentially builds a squash image that we can use after mounting out working directory in the container, as shown in the SBATCH script.*
 
 ```
 salloc -p debug74
@@ -57,7 +57,7 @@ Building Singularity image...
         Singularity container built: ./trinityrnaseq.img
 Cleaning up...
 
-exit
+exit # exit from the relevant node
 ```
 
 ## Script for Trinity assembly:
@@ -86,4 +86,62 @@ cat ../*2.*gz > right_2.gz
 
 singularity exec --bind $PWD trinityrnaseq.img Trinity --seqType fq --max_memory 120G --CPU 16 --normalize_by_read_set --output TrinityOut --left left_1.gz --right right_2.gz --trimmomatic
 ```
-After the complete run. We see the complete *de novo* assembly (trinity.fa) in the output directory, TrinityOut. We can perform a variety of downstream analyzes with this transcriptome assembly. For the purposes of this tutorial, we will demonstrate mapping the RNAseq reads back to the assembly using bowtie2, calculating transcript abundance, using FeatureCounts and then performing differential expression using DESeq2.
+After the complete run. We see the complete *de novo* assembly (trinity.fa) in the output directory, TrinityOut. We can perform a variety of downstream analyzes with this transcriptome assembly. For the purposes of this tutorial, we will demonstrate mapping the RNAseq reads back to the assembly using bowtie2, calculating transcript abundance, using FeatureCounts and then performing differential expression using DESeq2. We will use scripts that come packaged with Trinity.
+
+
+
+We will now build a transcriptome index and align the RNAseq back to transcriptome and estimate the abundance of the transcripts. When using the singularity image, the absolute path to the folder containing the relevant scripts must be given as follows:
+
+
+```
+singularity exec --bind $PWD trinityrnaseq-2.5.0.img /usr/local/bin/trinityrnaseq/util/align_and_estimate_abundance.pl --transcripts path_to_assembly/TrinityOut/Trinity.fasta --seqType fq --left path_reads/93_1.gz --right transcriptomic_fastq/RNAseq/paired-end/Arabidopsis/93_2.gz --est_method RSEM --aln_method bowtie2 --trinity_mode --prep_reference --output_dir <RSEM_dir1> >& 93_AE_bt2.log &
+```
+The transcriptome index will be built in the folder containing the transcriptome. Also because we specify __--trinity_mode__, a gene to transcript map file is also prepared, which can be used to produce gene level counts in addition to transcript counts.
+
+```
+./Trinity.fasta.gene_trans_map
+./Trinity.fasta.bowtie2.ok
+./Trinity.fasta.bowtie2.4.bt2
+./Trinity.fasta.bowtie2.3.bt2
+./Trinity.fasta.bowtie2.1.bt2
+./Trinity.fasta.bowtie2.rev.1.bt2
+./Trinity.fasta.bowtie2.rev.2.bt2
+./Trinity.fasta.bowtie2.2.bt2
+```
+
+We can run align_and_estimate_abundance.pl script for each set of reads. We store the bowtie2 alignment file and abundance estimates in separate directories for each set of reads.
+
+
+Now we build a transcript expression matrix for all samples using the *abundance_estimates_to_matrix.pl* script. We will prefix all the output files with "all" and use the base name of the directory as sample names.
+```
+singularity exec --bind $PWD trinityrnaseq-2.5.0.img /usr/local/bin/trinityrnaseq/util/abundance_estimates_to_matrix.pl --est_method RSEM --name_sample_by_basedir --gene_trans_map transcriptomic_fastq/RNAseq/paired-end/trinity/TrinityOut/Trinity.fasta.gene_trans_map --out_prefix all RSEM_9*/*isoforms.results >& matrix1.log&
+```
+The matrix files generated are prefixed with "all" as under:
+```
+ls all*
+
+all.gene.TMM.EXPR.matrix
+all.gene.TPM.not_cross_norm.TMM_info.txt
+all.isoform.TMM.EXPR.matrix
+all.isoform.TPM.not_cross_norm.TMM_info.txt
+all.gene.counts.matrix
+all.gene.TPM.not_cross_norm
+all.isoform.counts.matrix
+all.isoform.TPM.not_cross_norm
+```
+
+
+```
+head all.gene.counts.matrix
+                       RSEM_93 RSEM_94 RSEM_95 RSEM_96 RSEM_97 RSEM_98
+TRINITY_DN0_c0_g1       18.13   0.00    9.66    62.63   25.29   19.41
+TRINITY_DN0_c0_g2       0.00    8.85    4.62    21.24   0.00    0.00
+TRINITY_DN0_c0_g3       0.00    0.00    34.33   83.32   39.72   0.00
+TRINITY_DN10000_c0_g1   37.74   3.54    13.85   88.67   31.02   32.56
+TRINITY_DN10001_c0_g1   286.46  192.12  178.70  538.88  491.25  341.86
+TRINITY_DN10001_c0_g2   505.17  151.43  275.19  743.57  380.79  553.27
+TRINITY_DN10002_c0_g1   0.00    0.00    0.00    54.31   0.00    0.00
+TRINITY_DN10003_c0_g1   0.00    43.16   0.00    22.91   0.00    0.00
+TRINITY_DN10005_c0_g1   0.00    0.00    0.00    8.13    13.44   0.00
+```
+This matrix can be imported into R and differential expression analyses performed using DESeq2 as explained [here](https://github.com/ISUgenomics/bioinformatics-workbook/blob/master/dataAnalysis/RNA-Seq/RNA-SeqIntro/dge-using-a-genome.md).
