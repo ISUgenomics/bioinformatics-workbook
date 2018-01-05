@@ -2,3 +2,6 @@ theme: jekyll-theme-cayman
 name: Bioinformatics Workbook
 
 url: https://isugenomics.github.io/bioinformatics-workbook/
+
+# Google Analytics
+google_analytics: UA-112020868-1
