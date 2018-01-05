@@ -30,7 +30,7 @@ Upon completion of this section on fastq quality scores the learner will underst
 </pre>
 
 
-[This table was taken from ](https://en.wikipedia.org/wiki/FASTQ_format)where more information can be found on this topic.
+[This table was taken from wikipedia](https://en.wikipedia.org/wiki/FASTQ_format)where more information can be found on this topic.
 
 To determine if they score is <blockcode>Phred+33</blockcode>, <blockcode>Phred+64</blockcode> or <blockcode>Solexa+64</blockcode>, use this one-liner (you can use <blockcode>zcat</blockcode>  if the <blockcode>fastq</blockcode> file is gzipped):
 
