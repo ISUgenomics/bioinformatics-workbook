@@ -1,145 +1,28 @@
-# Introduction to Version Control using Git
+
+# Basic GitHub commands
 
 
 ---
+# Github collaboration and branching
 
-This markdown document was modified from [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03X Fall 2017)
-# Accessing Remote Machines
 
-## Streamline remote access: Authentication with a SSH key
+---
+# GitHub config files
 
-Passwords are not always secure and can be annoying to type.
 
---
+Contibutions for this markdown document came from Matt Hufford and was modified with permission from his [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03X Fall 2017) course.
 
-* SSH keys are much more secure and allow you to log in without typing your password
-(or just a different, simpler passphrase).
 
---
 
-* When you generate a key, you create two things: a public key and a private key.
-
---
-
-* You place the public key on any server and then unlock it by connecting to it with a client that already has the private key.
-
---
-
-* When the two match up, the system unlocks without the need for a password.
-
---
-
-* SSH keys are also very important for using Git with remote hosts (e.g., GitHub)
-
+---
+---
+---
 ---
 
 
-# Authentication with a SSH key
 
-Log in to `Remotemachine`
 
-```
-ssh <yourID>@remoteMachine
-```
 
---
-
-Create the key pair in your home directory:
-
-```
-$ ssh-keygen -t rsa
-```
---
-
-Once the `ssh-keygen` command has been issued, you will be asked a few questions:
-
---
-
-```
-Enter file in which to save the key (/home/yourID/.ssh/id_rsa):
-```
-
-You can just hit _enter_ here and it should save it to the file path given.
-
---
-
-```
-Enter passphrase (empty for no passphrase):
-```
-
-Here is where you decide if you want to password-protect your key. The downside,
-to having a passphrase, is then having to type it in each time you use the Key Pair.
-
----
-
-# Authentication with a SSH key
-
-```
-$ ssh-keygen -t rsa
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/phylo/.ssh/id_rsa):
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /home/phylo/.ssh/id_rsa.
-Your public key has been saved in /home/phylo/.ssh/id_rsa.pub.
-The key fingerprint is:
-4a:dd:0a:c6:35:4e:3f:ed:27:38:8c:74:44:4d:93:67 phylo@Arrow
-The key's randomart image is:
-+--[ RSA 2048]----+
-|          .oo.   |
-|         .  o.E  |
-|        + .  o   |
-|     . = = .     |
-|      = S = .    |
-|     o + = +     |
-|      . o + o .  |
-|           . o   |
-|                 |
-+-----------------+
-```
-
----
-
-# Authentication with a SSH key
-
-You now have a file called `id_rsa.pub` in your `.ssh` folder.
-
-```
-cat id_rsa.pub
-```
-
-```
-[phylo@hpc-class ~]$ cat .ssh/id_rsa.pub
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8QgicqcpFPeyYZhJFW5lBTAdAjHBaYzLwH3l7+lrdmpEKMMMhXMZV5ucxN5WzWU/ERYviYQvQ8NBzkSuHo+SgNJkufF92UqeHIfI/KqgVEGbQn6NGfa5WFBgWZAJAjMzUUrAhJ2qsBez4M1f70os1S2SNcNfoFAJRdWEGE8SX2lpww8+VdCOY6ONw3AYbZbrZtn/ua2hJg+XjYb3T04ggV6TNyV4nnN5r2pRIjJA5OBX1TWcB9HOE4ZIGZoZlk5OYuUJ5rOfuzVLqanWayB3ujuPxW3IUmI6XJt7uDc1N5iVNs2FusjSZmuggWtzCw/pb7EExvNxYMYOxCsewjE0L phylo@hpc-class.its.iastate.edu
-```
-
-Copy the entire contents of this file and add it to your GitHub account.
-
----
-
-# Authentication with a SSH key
-
-Add your new ssh key to your GitHub account by going to [_SSH and GPG keys_](https://github.com/settings/profile/keys) in your profile Settings.
-
-<div style="text-align:center"><img src="https://codenvy.com/docs-version/5.0.1/docs/assets/imgs/Clipboard6.jpg" style="width: 740px;" /></div>
-
-(image source: [https://codenvy.com/docs/user-guide/git-svn/index.html](https://codenvy.com/docs/user-guide/git-svn/index.html))
----
-
-# Tracking Your Science
-
-## Saving revisions is very important.
-
-## What kind of versioning do most of you use?
-
-```
-¯\_(ツ)_/¯
-```
----
-
-# Tracking Your Science
-
-### Many biologists use the "multiple-file" system with cloud-based file sharing (e.g., Dropbox, Google Drive, Box)
 
 --
 
@@ -247,89 +130,8 @@ A snapshot of [RevBayes](https://github.com/revbayes/revbayes): 28 contributors;
 
 ---
 
-# Version Control Systems
-
-## What options are there for versioning projects?
-
---
-
-* The most common in biology are Git and SVN (and historically CVS).
-
-* There are [many others](https://en.wikipedia.org/wiki/Comparison_of_version_control_software)
-
----
-
-# Version Control Systems
-
-## What do they allow you to do?
-
---
-
-* Track changes made to each file
-
---
-
-* Revert the entire project or a single file to a previous version
-
---
-
-* Review changes made over time
-
---
-
-* View who modified the file (and `blame` them for something if necessary)
-
---
-
-* Collaborate with others without overwriting their work or risk file corruption, etc.
-
---
-
-* Have multiple independent **_branches_** of the same repository and make changes without
-effecting others' work.
-
---
-
-* And more...
-
----
-
-# &#x2665; Git &#x2665;
-
-## Git manages a filesystem as a set of snapshots
-
-Snapshots are called _commits_
-
-<div style="text-align:center"><img src="https://git-scm.com/book/en/v2/book/01-introduction/images/snapshots.png" alt="gource" width="700" /></div>
-
-(image source [https://git-scm.com](https://git-scm.com/book/en/v2/Getting-Started-Git-Basics))
-
----
-
-# &#x2665; Git &#x2665;
-
-## Almost every interaction with Git happens locally
-
-<div style="text-align:center"><img src="https://git-scm.com/book/en/v2/book/01-introduction/images/areas.png" alt="gource" width="650" /></div>
-
-(image source [https://git-scm.com](https://git-scm.com/book/en/v2/Getting-Started-Git-Basics))
 
 
----
-
-# &#x2665; Git &#x2665;
-
-### A remote host adds an additional level to a Git repository
-
-Also, allows for collaboration and back-up.
-
---
-
-<div style="text-align:center"><img src="https://2.bp.blogspot.com/-w2Z0FGVzygM/WBoAt2kuuCI/AAAAAAAABtU/voWHlUobfl8jB5-5NuSZD0BlN3A9jdMtgCLcB/s1600/basic-remote-workflow.png" alt="Drawing" width="425" /></div>
-
-(image source [https://www.git-tower.com](https://www.git-tower.com/learn/git/ebook/en/command-line/remote-repositories/introduction))
-
----
 
 # &#x2665; Git &#x2665;
 

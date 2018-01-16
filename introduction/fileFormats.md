@@ -24,7 +24,7 @@ Line 2: Sequence data
 ```
 ---
 # Examples
-```
+```bash
 >gi|296581|emb|Z22600.1| D.tigrina homeodomain mRNA
 ttcgcggttcataactacctgacgaggttgagacggtacgagctggcggtggccctcaatcttaacgaaa
 gacagataaaagtttgg
