@@ -18,13 +18,22 @@ Upon completion of this section you will have a better understanding of the foll
 Text file format for storing sequences
 for nucleotide & amino acid data.  For a given sequence, a single line description and ID is supplied followed by one or more lines of sequence.  Multiple sequences can be placed in a single file and empty lines are typically ignored by programs.  The recommended number of sequence characters per line is 60 – 80.
 
+<<<<<<< HEAD
 ```
 Line 1: starts with “>” followed by ID  
 Line 2: Sequence data
 ```
 ---
 ##### Examples
+=======
+>>>>>>> Andrew6
 ```
+Line 1: starts with “>” followed by ID  
+Line 2: Sequence data
+```
+---
+# Examples
+```bash
 >gi|296581|emb|Z22600.1| D.tigrina homeodomain mRNA
 ttcgcggttcataactacctgacgaggttgagacggtacgagctggcggtggccctcaatcttaacgaaa
 gacagataaaagtttgg
@@ -211,7 +220,11 @@ AB000381 Twinscan  start_codon  380   382   .   +   0  gene_id "001"; transcript
 AB000381 Twinscan  stop_codon   708   710   .   +   0  gene_id "001"; transcript_id "001.1";
 ```
 
+<<<<<<< HEAD
 ### GFF format for comparison
+=======
+## GFF format for comparison
+>>>>>>> Andrew6
 ```
 ctg123 . mRNA            1050  9000  .  +  .  ID=mRNA00001;Parent=gene00001;Name=EDEN.1
 ctg123 . mRNA            1050  9000  .  +  .  ID=mRNA00002;Parent=gene00001;Name=EDEN.2
@@ -328,7 +341,11 @@ Chr1    27768651        .       A       ATG     1909.73 .       AC=2;AF=1.00;AN=
 
 SAM is a tab limited text file that stores sequence alignments.  Header lines start with @.  There are 11 mandatory columns
 
+<<<<<<< HEAD
 ### Examples
+=======
+## Examples
+>>>>>>> Andrew6
 ```
 @HD     VN:1.0  SO:unsorted
 @PG     ID:GSNAP        PN:gsnap        VN:2014-06-10   CL:gsnap -d TAIR10 --dir=./GSNAPdb//TAIR10 --failed-input=./GSNAPout//1ab-1_failed_alignments -t 4 -N 1 -B 5 -m 5 --part=0/8 --input-buffer-size=1000000 --output-buffer-size=1000000 -A sam --split-output=./GSNAPout//OUT.gsnap.1ab-1_CGATGT_L008_R1_001.fastq.0.8 .//1ab-1_CGATGT_L008_R1_001.fastq .//1ab-1_CGATGT_L008_R2_001.fastq
@@ -358,7 +375,11 @@ HISEQ:496:C4KY7ACXX:8:1101:1606:2994    133     *       0       0       *       
     XO:Z:HU
 ```
 ---
+<<<<<<< HEAD
 ##### FLAG definitions
+=======
+## FLAG definitions
+>>>>>>> Andrew6
 
 ![flags](assets/SAMflags.png)
 
@@ -371,7 +392,7 @@ HISEQ:496:C4KY7ACXX:8:1101:1606:2994    133     *       0       0       *       
 |128| Last segment|
 
 
-##### CIGAR string definition
+## CIGAR string definition
 ![cigar](assets/SAMcigar.png)
 
 
@@ -382,7 +403,11 @@ HISEQ:496:C4KY7ACXX:8:1101:1606:2994    133     *       0       0       *       
 ```
 
 ---
+<<<<<<< HEAD
 ##### More information
+=======
+## More information
+>>>>>>> Andrew6
 
 [SAM specifications PDF](https://samtools.github.io/hts-specs/SAMv1.pdf)
 ## BAM
