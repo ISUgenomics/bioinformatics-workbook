@@ -31,3 +31,19 @@ You should see the output something like `/home/username` This means, you are no
 `~` or `~username` 	same as	`/home/username`
 
 Present directory is represented as `.` (dot) and parent directory is represented as `..` (dot dot).
+
+
+### Changing directories
+To jump from one directory to another we use the cd (change directory) command.
+```
+cd ..
+```
+Changes your present location to the parent directory
+```
+cd DIRECTORY
+```
+This changes your location back to your DIRECTORY.
+
+***Task 1.1: Change your directory to the WORKSHOP_FILES directory present in your home directory.***
+
+**TIP**: You can type in first few letters of the directory name and then press `Tab` to auto complete rest of the name (especially useful when the file/directory name is long). This only works when there are unique matches for the starting letters you have typed. If there is more than one matching files/directories, pressing `Tab` twice will list all the matching names. You can also recall your previous commands by pressing &#8593; or &#8595; arrow keys or browse all your previously used commands by typing `history` on your terminal (typically, last 500 commands will be saved in this file).
