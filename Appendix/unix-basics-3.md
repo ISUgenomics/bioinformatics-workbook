@@ -89,21 +89,26 @@ grep -i "TFIIIA" AT_cDNA.fa
 You can also use this feature to see if your sequence of interest has a specific feature (restriction site, motif etc.,) or not. This can be performed better using `--color` option of the `grep`.
 
 Go to the sequences directory, search for `EcoR1` (`GAATTC`) site in the `NT21.fa` file, and use the color option. Also, try looking for a `C2H2` zinc finger motif in `RefSeq.faa` file (for simplicity let's assume zinc finger motif to be `CXXXCXXXXXXXXXXHXXXH`. Either you can use dots to represent any amino acids or use complex regular expressions to come up with a more representative pattern. Try these:
-````
+
+```
 grep --color "GAATTC" ./Sequences/NT21.fa
 grep --color "C..C............H...H" RefSeq.faa
 ```
 
 You can also use `grep` command to exclude the results containing your search term. Say if you want to look at genes that are not located in chromosome 1, you can exclude it form your search by specifying `-v` option.
+
 ```
 grep -i "transcription factor" AT_cDNA.fa| grep -v "chr1"
 grep -i "transcription factor" AT_cDNA.fa| grep "chr1"
 ```
+
 Notice the difference in output from the above two commands.
 Try to understand the following command lines (and record your results, where applicable):
+
 ```
 grep -c -w "ATP" RefSeq.faa
 grep -c CGT[CA]GTG AT_cDNA.fa
 grep -l "ATG" ./sequences/*.fa
 ```
+
 You can also try some regular expressions related to nucleotide/protein sequences provided earlier to see how it works.
