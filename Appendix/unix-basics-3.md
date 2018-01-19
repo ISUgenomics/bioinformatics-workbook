@@ -37,7 +37,7 @@ Some typical scenarios to use grep:
 
 Now let's use `grep` command to do some simple jobs with the sequences:
 
-1. *Counting sequences*: By `FASTA` format definition, we know that number of sequences in a file should be equal to the number of description lines. So by counting `>` in file, you can count the number of sequences. This can be done using counting option of the `grep` with its count option `-c`.
+*Counting sequences*: By `FASTA` format definition, we know that number of sequences in a file should be equal to the number of description lines. So by counting `>` in file, you can count the number of sequences. This can be done using counting option of the `grep` with its count option `-c`.
 ```
 grep -c ">" FILENAME
 ```
@@ -51,7 +51,7 @@ grep -c ">" AT_cDNA.fa
 grep -c ">" RefSeq.faa
 ```
 
-2. *Looking for information*: If you are looking for information about the sequences, you can list all the headers (description lines) for the sequences using grep. Simply search for `>` and grep will list all the description lines.
+*Looking for information*: If you are looking for information about the sequences, you can list all the headers (description lines) for the sequences using grep. Simply search for `>` and grep will list all the description lines.
 ```
 grep ">" FILENAME
 grep ">" AT_cDNA.fa
@@ -64,7 +64,7 @@ grep ">" AT_cDNA.fa | less
 ```
 Use  &#8593; or &#8595; arrow keys to move up and down, press `q` to exit
 
-3. *Subtracting two list of gene ids:* If there is a small list of genes that you want to remove from a larger list, you can use the grep function with these options:
+*Subtracting two list of gene ids:* If there is a small list of genes that you want to remove from a larger list, you can use the grep function with these options:
 ```
 grep -Fvw -f sub_list.txt full_list.txt
 ```
