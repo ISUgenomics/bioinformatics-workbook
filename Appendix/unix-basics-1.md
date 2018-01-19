@@ -284,10 +284,11 @@ rm sample.txt
 cd ..
 rmdir delete_me
 ```
-##Compressing files
+##Compressing/Decompression
+
 There are several options for archiving and compressing groups of files or directories. Compressed files are not only easier to handle (copy/move) but also occupy less size on the disk (less than 1/3 of the original size). In Linux systems you can use `zip`, `tar` or `gz` for archiving and compressing files/directories.
 
-### ZIP compression/extraction
+### ZIP
 ```
 zip OUTFILE.zip INFILE.txt
 ```
@@ -310,6 +311,7 @@ zip AT_genes.gff.zip AT_genes.gff
 ```
 *Is there any size difference before and after compressing?*
 
+### Tar
 
 `tar` (`t`ape `ar`chive) utility saves many files together into a single archive file, and restores individual files from the archive. It also includes automatic archive compression/decompression options and special features for incremental and full backups.
 ```
@@ -352,6 +354,7 @@ archive and compress all ".txt" files in current directory into one archive file
 ```
 tar -czvf backup.tar.gz BACKUP_WORKSHOP
 ```
+### gzip
 
 `gzip` (`g`nu `zip`) compression utility designed as a replacement for `zip`, with much better compression and no patented algorithms. The standard compression system for all GNU software.
 ```
