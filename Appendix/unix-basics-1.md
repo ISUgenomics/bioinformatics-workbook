@@ -88,3 +88,199 @@ This opens the manual for the `cp` command. Take a look at the manual of `cp` co
 ```
 cp -r WORKSHOP_FILES BACKUP_WORKSHOP
 ```
+### Moving directories
+To move a file or a directory, `mv` (`m`o`v`e) command is used. Again, like the `cp` command you need to provide both source file and destination file.
+```
+mv SOURCE DESTINATION
+```
+Absolute path also works fine. Some of the options used by `cp` command also work with `mv` command. `mv` can also be used to rename files and directories
+```
+mv OLDNAME NEWNAME
+```
+***Task 1.4: Rename WORKSHOP_FILES as tutorials.***
+```
+mv WORKSHOP_FILES tutorials
+```
+
+### Viewing the contents of the directory
+
+The contents of a directory can be viewed using `ls` (`l`i`s`t) command.
+```
+ls DIRECTORY
+```
+
+If no directory name is provided then `ls` will list all the contents of the present directory. Like any other command, you can use absolute path or abbreviated path. There are also various options available for `ls` command.
+Some very useful options include:
+```
+ls –l #Lists all the files in lengthy or detailed view
+ls –t #Lists all the files, sorted based on creation time
+ls –S #Lists all the files, sorted based on size
+```
+You can also combine these options together for getting more focused results.
+
+Looking at the manual for `ls`, what option can you use to view hidden files in a directory (files starting with dot)?
+
+Can you sort the files based on its extension? How?
+
+***Task 1.5: Examine the contents of the tutorials directory. Try options such as `-l`, `-t`, `-a` and `-X`. Also check if you can combine many options together (like `-la` or `-lh` etc). Try these:***
+```
+ls -l tutorials
+ls -a
+ls -1 tutorials
+ls -lh tutorials
+ls -t tutorials
+```
+
+### Creating and editing files
+```
+touch FILENAME
+```
+
+Creates a new file in the present location
+```
+nano FILENAME
+```
+Like notepad/textedit, this text editor lets you edit a file.
+
+***Task 1.6: Create a new file named firstfile inside the tutorials directory. You can create using touch or using nano. Then add some contents (Your name and email address) to the firstfile (using nano). After editing, press Ctrl + X to exit, then enter y to save changes and confirm the file name.***
+```
+touch firstfile
+nano firstfile
+```
+
+### Viewing contents of the files
+### Moving directories
+To move a file or a directory, `mv` (`m`o`v`e) command is used. Again, like the `cp` command you need to provide both source file and destination file.
+```
+mv SOURCE DESTINATION
+```
+Absolute path also works fine. Some of the options used by `cp` command also work with `mv` command. `mv` can also be used to rename files and directories
+```
+mv OLDNAME NEWNAME
+```
+***Task 1.4: Rename WORKSHOP_FILES as tutorials.***
+```
+mv WORKSHOP_FILES tutorials
+```
+
+### Viewing the contents of the directory
+
+The contents of a directory can be viewed using `ls` (`l`i`s`t) command.
+```
+ls DIRECTORY
+```
+
+If no directory name is provided then `ls` will list all the contents of the present directory. Like any other command, you can use absolute path or abbreviated path. There are also various options available for `ls` command.
+Some very useful options include:
+```
+ls –l #Lists all the files in lengthy or detailed view
+ls –t #Lists all the files, sorted based on creation time
+ls –S #Lists all the files, sorted based on size
+```
+You can also combine these options together for getting more focused results.
+
+Looking at the manual for `ls`, what option can you use to view hidden files in a directory (files starting with dot)?
+
+Can you sort the files based on its extension? How?
+
+***Task 1.5: Examine the contents of the tutorials directory. Try options such as `-l`, `-t`, `-a` and `-X`. Also check if you can combine many options together (like `-la` or `-lh` etc). Try these:***
+```
+ls -l tutorials
+ls -a
+ls -1 tutorials
+ls -lh tutorials
+ls -t tutorials
+```
+
+### Creating and editing files
+```
+touch FILENAME
+```
+
+Creates a new file in the present location
+```
+nano FILENAME
+```
+Like notepad/textedit, this text editor lets you edit a file.
+
+***Task 1.6: Create a new file named firstfile inside the tutorials directory. You can create using touch or using nano. Then add some contents (Your name and email address) to the firstfile (using nano). After editing, press Ctrl + X to exit, then enter y to save changes and confirm the file name.***
+```
+touch firstfile
+nano firstfile
+```
+
+### Viewing contents of the files
+There are various commands to print the contents of the file in bash. Most of these commands are often used in specific contexts. All these commands when executed with filenames displays the contents on the screen. Most common ones are `less`, `more`, `cat`, `head` and `tail`
+```
+less FILENAME
+#try this:
+less AT_cDNA.fa
+```
+Displays file contents on the screen with line scrolling (to scroll you can use arrow keys, `PgUp`/`PgDn` keys, `space bar` or `Enter` key).
+
+When you are done press `q` to exit.
+
+```
+more FILENAME
+# try this:
+more AT_cDNA.fa
+```
+
+Like `less` command, `more` also displays file contents on the screen with line scrolling, but uses only `space bar` or `Enter key` to scroll.
+
+When you are done press q to exit.
+
+```
+cat FILENAME
+try this:
+cat AT_cDNA.fa
+```
+Simplest form of displaying contents. It `cat`alogs the contents of the file on the screen. In case of large files, entire file will scroll on the screen without pausing
+
+
+```
+head FILENAME
+# try this:
+head AT_cDNA.fa
+```
+
+Displays only the starting lines of a file. The default is first ten lines. But any number of lines can be displayed using `–n` option (followed by required number of lines).
+```
+tail FILENAME
+try this:
+tail AT_cDNA.fa
+```
+
+Similar to head, but displays the last 10 lines. Again `–n` option can be used to change this.
+
+More information about any of these commands can be found in man pages (man command)
+
+***Task 1.7: Try using all these commands on the RefSeq.faa. You are also welcome to try these commands on various other files that are present in the tutorials directory. These commands don’t change the contents of the file; they just display them on the screen.***
+
+
+### Deleting files and directories
+
+To delete directories from the system, you can use `rmdir` (`r`e`m`ove `dir`ectory) command. You can also use `rm` command to delete file(s).
+
+```
+rmdir DIRECTORY
+```
+The directory should be empty before you use the rmdir command.
+```
+rm FILE
+```
+To delete a file `rm` command can be used
+Some useful options include : `–r` recursively delete files, `-f` delete forcefully
+```
+rm –rf DIRECTORY  [DO NOT USE THIS NOW!]
+```
+
+When you want to delete a folder, with all its content
+
+***Task 1.8: Delete the directory named delete_me inside the tutorials directory (to do this you may first want to delete the sample.txt file inside this directory).***
+```
+cd delete_me
+rm sample.txt
+cd ..
+rmdir delete_me
+```
