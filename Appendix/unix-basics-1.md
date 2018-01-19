@@ -47,3 +47,44 @@ This changes your location back to your DIRECTORY.
 ***Task 1.1: Change your directory to the WORKSHOP_FILES directory present in your home directory.***
 
 **TIP**: You can type in first few letters of the directory name and then press `Tab` to auto complete rest of the name (especially useful when the file/directory name is long). This only works when there are unique matches for the starting letters you have typed. If there is more than one matching files/directories, pressing `Tab` twice will list all the matching names. You can also recall your previous commands by pressing &#8593; or &#8595; arrow keys or browse all your previously used commands by typing `history` on your terminal (typically, last 500 commands will be saved in this file).
+
+## Directories and files
+
+### Making directories
+
+To create a directory, `mkdir` (`m`a`k`e `dir`ectory) can be used.
+
+```
+mkdir DIRECTORY
+```
+Unlike PC/Mac folders, here you can’t have space in your directory name (but some special characters are okay). You can also specify the path where you want to create your new folder.
+
+***Task 1.2: Make a new directory named `FirstDirectory` within the `WORKSHOP_FILES` directory. Then change your directory to the `FirstDirectory`.***
+
+```
+mkdir FirstDirectory
+```
+
+### Copying directories
+
+To copy a file, `cp` (`c`o`p`y) command is used. When using this command you have to provide both source file and destination file.
+```
+cp SOURCE DESTINATION
+```
+
+You can also specify the absolute path of the source and/or destination file. To know more about any command you can use man command, which opens the manual of the command you ask (referred as `man page`).
+
+```
+man cp
+```
+This opens the manual for the `cp` command. Take a look at the manual of `cp` command (use arrow keys to move top or bottom of the page). `OPTIONS` are arguments that can be used to accomplish more from the same command (and are not required for regular operation). Eg., by using option `–i` with the regular `cp` command, you can always make sure that you are not overwriting the existing file while copying (if the target already contains the same file). The syntax for using the options will also be provided in the manual. **To `exit`, press `q`***.
+
+*Looking at the man page for `cp` command, what options can be used to copy a directory (including all files within it)?*
+
+*How else you can get help on cp command (other than ‘man’)?*
+
+
+***Task 1.3: Now change your directory back to the home directory. Create a copy of `WORKSHOP_FILES` and name it as `BACKUP_WORKSHOP`). This will serve as a backup copy of all files that are required for the workshop (in case you accidentally modify the contents while working).***
+```
+cp -r WORKSHOP_FILES BACKUP_WORKSHOP
+```
