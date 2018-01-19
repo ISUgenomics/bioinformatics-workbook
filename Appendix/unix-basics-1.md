@@ -284,3 +284,91 @@ rm sample.txt
 cd ..
 rmdir delete_me
 ```
+##Compressing files
+There are several options for archiving and compressing groups of files or directories. Compressed files are not only easier to handle (copy/move) but also occupy less size on the disk (less than 1/3 of the original size). In Linux systems you can use `zip`, `tar` or `gz` for archiving and compressing files/directories.
+
+### ZIP compression/extraction
+```
+zip OUTFILE.zip INFILE.txt
+```
+Compress `INFILE.txt`
+```
+zip -r OUTDIR.zip DIRECTORY
+```
+Compress all files in a `DIRECTORY` into one archive file (`OUTDIR.zip`)
+```
+zip -r OUTFILE.zip . -i *.txt
+```
+Compress all txt files in a `DIRECTORY` into one archive file (`OUTFILE.zip`)
+```
+unzip SOMEFILE.zip
+```
+Decompress a file
+***Task 1.9: Zip AT_genes.gff file located in the tutorials directory. Check the file size before and after zip compression (Hint: use `ls` command with special options to check file sizes).***
+```
+zip AT_genes.gff.zip AT_genes.gff
+```
+*Is there any size difference before and after compressing?*
+
+
+`tar` (`t`ape `ar`chive) utility saves many files together into a single archive file, and restores individual files from the archive. It also includes automatic archive compression/decompression options and special features for incremental and full backups.
+```
+tar -cvf OUTFILE.tar INFILE
+```
+archive `INFILE`
+
+```
+tar -czvf OUTFILE.tar.gz INFILE
+```
+archive and compress file `INFILE`
+
+```
+tar -tvf SOMEFILE.tar
+```
+list contents of archive `SOMEFILE.tar`
+
+```
+tar -xvf SOMEFILE.tar
+```
+extract contents of `SOMEFILE.tar`
+
+```
+tar -xzvf SOMEFILE.tar.gz
+```
+extract contents of gzipped archive `SOMEFILE.tar.gz`
+
+```
+tar -czvf OUTFILE.tar.gz DIRECTORY
+```
+archive and compress all files in a directory into one archive file
+
+```
+tar -czvf OUTFILE.tar.gz *.txt
+```
+archive and compress all ".txt" files in current directory into one archive file
+
+***Task 1.10: Archive and compress the `BACKUP_WORKSHOP` directory you created in Task 1.3 (you can name it as `backup.tar.gz` or anything you want)***
+
+```
+tar -czvf backup.tar.gz BACKUP_WORKSHOP
+```
+
+`gzip` (`g`nu `zip`) compression utility designed as a replacement for `zip`, with much better compression and no patented algorithms. The standard compression system for all GNU software.
+```
+gzip SOMEFILE
+```
+compress `SOMEFILE` (also removes uncompressed file)
+
+```
+gunzip SOMEFILE.gz
+```
+uncompress `SOMEFILE.gz` (also removes compressed file)
+
+***Task 1.11: gzip the file AT_genes.gff and examine the size. gunzip it back so that you can use this file for the later exercises.***
+
+```
+gzip AT_genes.gff
+ls -lh
+gunzip AT_genes.gff.gz
+ls –lh
+```
