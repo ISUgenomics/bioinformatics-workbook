@@ -210,9 +210,25 @@ cat /proc/cpuinfo
 ```
 for the CPU information
 
-### 8. Other inforation:
+### 8. Other information:
+
+For getting more information about the environment, you can type `env`, which lists all the variables currently set. If you want to know specifically about a variable, you can do:
 
 ```
-echo $SHELL
+echo $VARIABLE
 ```
+Some variables that are useful are:
+
+| Variable   | Information                        |
+|:-----------|:-----------------------------------|
+| `HOSTNAME` | hostname for the system            |
+| `TERM`     | terminal                           |
+| `SHELL`    | Shell type (bash, csh, ksh etc)    |
+| `USER`     | Username                           |
+| `PATH`     | paths where executables are stored |
+| `PWD`      | present working directory          |
+| `EDITOR`   | default text editor                |
+| `HOME`     | path for home                      |
+| `DISPLAY`  | where to route the display         |
+| `HISTFILE` | file where the history is saved    |
 
