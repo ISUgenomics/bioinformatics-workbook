@@ -73,7 +73,7 @@ removes all permissions for others
 chmod a-x FILENAME
 ```
 removes execution permissions for others
-```
+
 OPTIONS include `-R` recursively (the permissions are applied to all the files, directories present inside the directory)
 
 
