@@ -1,6 +1,7 @@
 # Unix Basics 2
-This exercise will provide you details about some administrative commands with examples. Here, you can learn how to change permissions for files and folders to modify its accessibility.
-### Changing permissions
+This exercise will provide you details about some administrative commands with examples. Here, you can learn how to change permissions for files and folders to modify its accessibility and commands to obtain information about the system you are using.
+
+## Changing permissions
 
 All files in the UNIX system will have a set of permissions which define what can be done with that file and by whom. Here, what refers to read (view contents), write (modify) and execute (run as a script) and whom refers to user (owner), group (collection of users that the user belongs to) and others (everyone else). 
 
@@ -28,7 +29,7 @@ To set/modify a file's permissions you need to use the `chmod` command (`ch`ange
 ```
 chmod [OPTIONS] RELATIONS[+ or -]PERMISSIONS FILE
 ```
-#### 1. Adding permissions
+### 1. Adding permissions
 
 ```
 chmod RELATIONS+PERMISSIONS FILENAME
@@ -50,7 +51,7 @@ chmod a+rwx FILENAME
 makes the file public (don’t do this to any file/directory unless you want to share)
 
 
-#### 2. Removing permissions:
+### 2. Removing permissions:
 
 ```
 chmod RELATIONS-PERMISSIONS FILENAME
@@ -83,11 +84,11 @@ ls -l
 ```
 *What permissions does the group have on these files? Which group does your account belong to?*
 
-### Check system properties
+## Check system properties
 
 In this section, you will learn how to check system resources (space, memory, disk usage, storage properties), system properties (operating system, Linux version, kernel version) and commands to access other information (CPU type, memory type, variables available etc ) about the environment
 
-#### 1. Directory size
+### 1. Directory size
 
 To get the size of the directory, you can use the `du` command (`d`isk `u`sage)
 ```
@@ -95,7 +96,7 @@ du -sh DIRECTORY
 ```
 The options are to summarize (`s`) and human readable format (`h`). While the summarize will avoid printing size for every file in the directory, the human readable format will give the folder size in kilo/mega/giga bytes  (instead of bytes).
 
-#### 2. File size
+### 2. File size
 
 If you are interested in knowing the size of a particular file, you can use the `ls` command with `l` and `h` options 
 
@@ -104,7 +105,7 @@ ls -lh FILENAME
 ```
 Check unix-basics-1 for more details about list command. The option `l` list in a long format and `h` in human readable file sizes.
 
-#### 3. Available storage and mounts
+### 3. Available storage and mounts
 
 To display free disk space and mounted devices, you can use the `df` command. If no file name is given, the space available on all currently mounted file systems is shown
 
@@ -114,7 +115,7 @@ df -h
 again, using the option `-h` will give you results in human readable format.
 
 
-#### 4. Available memory
+### 4. Available memory
 
 If you want to see how much memory is available on your machine, you can use the `free` command.
 ```
@@ -129,12 +130,14 @@ Swap:     61438900     873856   60565044
 ```
 As you can see the numbers are in bytes and very difficult to understand. You can modify this default behavior using some options. some options to modify this are:
 
-```
-# -g (in gigabytes)
-# -m (megabytes)
-# -k (kilobytes)
-# -b (in bytes, default).
-```
+
+| Options | What it does                         |
+|--------:|:-------------------------------------|
+| `-g`    | display numbers in gigabytes         |
+| `-m`    | display numbers in megabytes         |
+| `-k`    | display numbers in kilobytes         |
+| `-b`    | display numbers in bytes, (default). |
+
 Example:
 ```
 free -g
@@ -148,7 +151,7 @@ Swap:           58          0         57
 ```
 This is much easier to understand.
 
-#### 5. System properties
+### 5. System properties
 
 
 Just to get the Operating system name:
@@ -194,7 +197,7 @@ uname -p # processor type
 uname -o # OS type
 ```
 
-#### 7. Processor and Memory information:
+### 7. Processor and Memory information:
 
 These information will be in the file. Just by cataloging the file, you can find read these information:
 ```
@@ -206,4 +209,10 @@ for the memory information, and
 cat /proc/cpuinfo
 ```
 for the CPU information
+
+### 8. Other inforation:
+
+```
+echo $SHELL
+```
 
