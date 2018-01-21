@@ -82,3 +82,128 @@ OPTIONS include `-R` recursively (the permissions are applied to all the files, 
 ls -l
 ```
 *What permissions does the group have on these files? Which group does your account belong to?*
+
+### Check system properties
+
+In this section, you will learn how to check system resources (space, memory, disk usage, storage properties), system properties (operating system, Linux version, kernel version) and commands to access other information (CPU type, memory type, variables available etc ) about the environment
+
+#### 1. Directory size
+
+To get the size of the directory, you can use the `du` command (`d`isk `u`sage)
+```
+du -sh DIRECTORY
+```
+The options are to summarize (`s`) and human readable format (`h`). While the summarize will avoid printing size for every file in the directory, the human readable format will give the folder size in kilo/mega/giga bytes  (instead of bytes).
+
+#### 2. File size
+
+If you are interested in knowing the size of a particular file, you can use the `ls` command with `l` and `h` options 
+
+```
+ls -lh FILENAME
+```
+Check unix-basics-1 for more details about list command. The option `l` list in a long format and `h` in human readable file sizes.
+
+#### 3. Available storage and mounts
+
+To display free disk space and mounted devices, you can use the `df` command. If no file name is given, the space available on all currently mounted file systems is shown
+
+```
+df -h
+```
+again, using the option `-h` will give you results in human readable format.
+
+
+#### 4. Available memory
+
+If you want to see how much memory is available on your machine, you can use the `free` command.
+```
+free
+```
+Output would be:
+```
+             total       used       free     shared    buffers     cached
+Mem:      32874744   32607664     267080          0      77600   31013192
+-/+ buffers/cache:    1516872   31357872
+Swap:     61438900     873856   60565044
+```
+As you can see the numbers are in bytes and very difficult to understand. You can modify this default behavior using some options. some options to modify this are:
+
+```
+# -g (in gigabytes)
+# -m (megabytes)
+# -k (kilobytes)
+# -b (in bytes, default).
+```
+Example:
+```
+free -g
+```
+output would be:
+```
+             total       used       free     shared    buffers     cached
+Mem:            31         31          0          0          0         29
+-/+ buffers/cache:          1         29
+Swap:           58          0         57
+```
+This is much easier to understand.
+
+#### 5. System properties
+
+
+Just to get the Operating system name:
+```
+cat /etc/system-release
+```
+Output would be:
+```
+Red Hat Enterprise Linux Server release 6.4 (Santiago)
+```
+
+If no such file, they try:
+```
+cat /etc/*release*
+```
+you might get:
+```
+Red Hat Enterprise Linux Server release 6.4 (Santiago)
+Red Hat Enterprise Linux Server release 6.4 (Santiago)
+cpe:/o:redhat:enterprise_linux:6server:ga:server
+```
+
+The other command is the `uname`
+```
+uname -a 
+```
+output would be:
+```
+Linux hpc5 2.6.32-358.11.1.el6.x86_64 #1 SMP Wed May 15 10:48:38 EDT 2013 x86_64 x86_64 x86_64 GNU/Linux
+```
+which is Kernel, node, kernel version, kernel release date, machine type, processor type, platform and OS type, respectively.
+
+You can also ask for a specific thing by using these options:
+
+```
+uname -s # kernel name
+uname -n # node
+uname -v # version
+uname -r # release version date
+uname -i # platform
+uname -m # machine type
+uname -p # processor type
+uname -o # OS type
+```
+
+#### 7. Processor and Memory information:
+
+These information will be in the file. Just by cataloging the file, you can find read these information:
+```
+cat /proc/meminfo
+```
+for the memory information, and
+
+```
+cat /proc/cpuinfo
+```
+for the CPU information
+
