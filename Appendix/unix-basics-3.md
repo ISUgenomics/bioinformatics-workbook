@@ -67,7 +67,7 @@ grep ">" AT_cDNA.fa | less
 ```
 Use  &#8593; or &#8595; arrow keys to move up and down, press `q` to exit
 
-### 3. Subtracting two list of gene ids:
+### 3. Subtracting one list from another:
 
 If there is a small list of genes that you want to remove from a larger list, you can use the grep function with these options:
 ```
@@ -75,7 +75,7 @@ grep -Fvw -f sub_list.txt full_list.txt
 ```
 here `-F` and `-w` will make sure that the full word is used as literal string, `-v` will NOT print the matching patterns and `-f filename.txt` is to say that the input patterns are in the file.
 
-#### Count a word:
+### 4. Count a word:
 
 Unlike previous example, if the word your are searching occurs more than once in a line, it will only be counted once. To avoid this, you need to use a special option
 ```
@@ -95,7 +95,7 @@ grep -i "TFIIIA" AT_cDNA.fa
 ```
 You can also use this feature to see if your sequence of interest has a specific feature (restriction site, motif etc.,) or not. This can be performed better using `--color` option of the `grep`.
 
-### 4. Search a motif:
+### 5. Search a motif:
 
 Go to the sequences directory, search for `EcoR1` (`GAATTC`) site in the `NT21.fa` file, and use the color option. Also, try looking for a `C2H2` zinc finger motif in `RefSeq.faa` file (for simplicity let's assume zinc finger motif to be `CXXXCXXXXXXXXXXHXXXH`. Either you can use dots to represent any amino acids or use complex regular expressions to come up with a more representative pattern. Try these:
 
@@ -104,7 +104,7 @@ grep --color "GAATTC" ./Sequences/NT21.fa
 grep --color "C..C............H...H" RefSeq.faa
 ```
 
-### 5. Finding patterns that DOES NOT match:
+### 6. Finding patterns that DOES NOT match:
 
 You can also use `grep` command to exclude the results containing your search term. Say if you want to look at genes that are not located in chromosome 1, you can exclude it form your search by specifying `-v` option.
 
@@ -115,7 +115,7 @@ grep -i "transcription factor" AT_cDNA.fa| grep "chr1"
 
 Notice the difference in output from the above two commands.
 
-### 6. Searching for more than one pattern:
+### 7. Searching for more than one pattern:
 
 You can also use `grep` to find as set of patterns in the same command. `grep` will print the line containing any one of those patterns you specify. For this, run it as follows:
 
