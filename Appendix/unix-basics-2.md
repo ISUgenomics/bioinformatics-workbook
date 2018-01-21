@@ -210,7 +210,33 @@ cat /proc/cpuinfo
 ```
 for the CPU information
 
-### 8. Other information:
+### 8. IP address:
+
+To get the IP address for the machine you can use the `ifconfig` command.
+
+```
+ifconfig
+```
+it will lists all properties as follows:
+
+```eth2      Link encap:Ethernet  HWaddr 00:0N:00:00:N0:NN
+          inet addr:00.00.000.000  Bcast:00.00.000.000  Mask:000.000.000.0
+          inet6 addr: 0000:000:000:000:00n:00nn:nn00:n000/00 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:9000  Metric:1
+          RX packets:1693260659 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:600815878 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:10000
+          RX bytes:14812199265240 (13.4 TiB)  TX bytes:52487439229 (48.8 GiB)
+<clipped rest of the output>
+```
+you can use the combination of commands to just display the IP address as follows:
+
+```
+ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'
+```
+
+
+### 9. Other information:
 
 For getting more information about the environment, you can type `env`, which lists all the variables currently set. If you want to know specifically about a variable, you can do:
 
