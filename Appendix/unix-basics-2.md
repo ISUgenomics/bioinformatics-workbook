@@ -5,14 +5,14 @@ This exercise will provide you details about some administrative commands with e
 
 All files in the UNIX system will have a set of permissions which define what can be done with that file and by whom. Here, what refers to read (view contents), write (modify) and execute (run as a script) and whom refers to user (owner), group (collection of users that the user belongs to) and others (everyone else). 
 
-| Permissions | Letter    |
+| Permissions | Symbol    |
 |:-------------|----------:|
 | read         | `r`       |
 | write        | `w`       |
 | execute      | `x`       |
 | all users    | `a`       |
 
-| Relations | Letter |
+| Relations | Symbol |
 |:----------|-------:|
 | owner     | `u`    |
 | group     | `g`    |
@@ -219,7 +219,8 @@ ifconfig
 ```
 it will lists all properties as follows:
 
-```eth2      Link encap:Ethernet  HWaddr 00:0N:00:00:N0:NN
+```
+eth2      Link encap:Ethernet  HWaddr 00:0N:00:00:N0:NN
           inet addr:00.00.000.000  Bcast:00.00.000.000  Mask:000.000.000.0
           inet6 addr: 0000:000:000:000:00n:00nn:nn00:n000/00 Scope:Link
           UP BROADCAST RUNNING MULTICAST  MTU:9000  Metric:1
@@ -227,6 +228,7 @@ it will lists all properties as follows:
           TX packets:600815878 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:10000
           RX bytes:14812199265240 (13.4 TiB)  TX bytes:52487439229 (48.8 GiB)
+...
 <clipped rest of the output>
 ```
 you can use the combination of commands to just display the IP address as follows:
