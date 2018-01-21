@@ -50,7 +50,7 @@ chmod a+rwx FILENAME
 makes the file public (don’t do this to any file/directory unless you want to share)
 
 
-#### Removing permissions:
+#### 2. Removing permissions:
 
 ```
 chmod RELATIONS-PERMISSIONS FILENAME
