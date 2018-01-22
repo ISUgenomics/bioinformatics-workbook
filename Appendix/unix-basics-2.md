@@ -21,10 +21,35 @@ All files in the UNIX system will have a set of permissions which define what ca
 To look at the permissions for any file, you can list the files with `l` option (`ls –l`).
 Permissions	User	Group	Size	Date modified	Name
 
-![](assets/homedir.png)
+It looks something like this:
+```
+total 200
+-rw-r--r--. 1 arnstrm domain users             174 Jan 15 23:36 1
+drwxr-xr-x. 3 arnstrm domain users              38 Nov 15 10:31 Desktop
+drwx------. 2 arnstrm domain users              10 Nov 15 10:38 Downloads
+drwxr-xr-x. 3 arnstrm domain users              49 Jan  4 12:38 R
+lrwxrwxrwx. 1 arnstrm domain users              17 Feb  3  2017 arnstrm -> /work/GIF/arnstrm
+drwxr-xr-x. 3 arnstrm domain users             252 Mar 11  2017 bash_config
+drwxr-xr-x. 2 arnstrm domain users              48 Aug 11 14:07 bin
+drwxr-xr-x. 2 arnstrm domain users              10 Oct 25 12:15 ccp4_tmp
+-rw-r--r--. 1 arnstrm domain users            4796 Jan 15 23:34 compnode
+-rw-r--r--. 1 arnstrm domain users            3213 Jan 15 23:33 headnonde
+-rwxr-xr-x. 1 arnstrm domain users          159656 Jan 15 23:47 ld-linux.so.2
+-rw-r--r--. 1 arnstrm domain users             699 Oct 31 09:10 md5sum_severin
+lrwxrwxrwx. 1 arnstrm domain users              12 Mar 20  2017 ncbi -> arnstrm/ncbi
+-rw-r-----+ 1 arnstrm its-hpc-condo-severin    884 Oct 25 10:37 ncbi-sra_aspera_key.priv
+-rw-r--r--. 1 arnstrm domain users            9968 Dec 31 14:35 ncbi_error_report.xml
+-rw-------. 1 arnstrm domain users             522 Oct 30 14:45 nohup.out
+-rw-r-----. 1 arnstrm domain users             287 Feb  7  2017 template.slurm
+```
+1. First letter of the first column specifies the type. It can be either `d`=directory, `l`=link or `-`=regular file. Remaining 9 letters of the first column, each 3 specifies permissions set for `user`, `group` and `others`, respectively. Here `r`=read, `w`=write, `x`=execute and `-`=blank or unset.
+2. Second column, specifies number of sub directories housed inside. It can also be number of links that points to it.
+3. The owner of the file/directory: `user`
+4. The fourth column `domain users` is the group, `user` belongs to.
+5. Next, the number you see is the size of the listed entry. For a file, it will show the actualy size of the file in bytes, but for folder, it will not display them correctly as it wont consider the file sizes that are inside the directory.
+6. The sixth column (`Jan 15 23:36`) is the month, day, and time on which the entry was last modified.
+7. The last field, is the name of the listed entry.
 
-First column displays the file permissions, here:
-`d`=directory, `l`=link, `r`=read, `w`=write, `x`=execute, `-`=blank, `u`=user, `g`=group, `o`=others)
 
 To set/modify a file's permissions you need to use the `chmod` command (`ch`ange `mod`e). Only the owner of a file can alter a file's permissions. The syntax:
 ```
