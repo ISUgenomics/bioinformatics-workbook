@@ -37,7 +37,6 @@ drwxr-xr-x. 2 arnstrm domain users              10 Oct 25 12:15 ccp4_tmp
 -rwxr-xr-x. 1 arnstrm domain users          159656 Jan 15 23:47 ld-linux.so.2
 -rw-r--r--. 1 arnstrm domain users             699 Oct 31 09:10 md5sum_severin
 lrwxrwxrwx. 1 arnstrm domain users              12 Mar 20  2017 ncbi -> arnstrm/ncbi
--rw-r-----+ 1 arnstrm its-hpc-condo-severin    884 Oct 25 10:37 ncbi-sra_aspera_key.priv
 -rw-r--r--. 1 arnstrm domain users            9968 Dec 31 14:35 ncbi_error_report.xml
 -rw-------. 1 arnstrm domain users             522 Oct 30 14:45 nohup.out
 -rw-r-----. 1 arnstrm domain users             287 Feb  7  2017 template.slurm
