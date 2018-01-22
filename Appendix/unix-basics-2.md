@@ -3,7 +3,7 @@ This exercise will provide you details about some administrative commands with e
 
 ## Changing permissions
 
-All files in the UNIX system will have a set of permissions which define what can be done with that file and by whom. Here, what refers to read (view contents), write (modify) and execute (run as a script) and whom refers to user (owner), group (collection of users that the user belongs to) and others (everyone else). 
+All files in the UNIX system will have a set of permissions which define what can be done with that file and by whom. Here, what refers to read (view contents), write (modify) and execute (run as a script) and whom refers to user (owner), group (collection of users that the user belongs to) and others (everyone else).
 
 | Permissions | Symbol    |
 |:-------------|----------:|
@@ -18,14 +18,15 @@ All files in the UNIX system will have a set of permissions which define what ca
 | group     | `g`    |
 | others    | `o`    |
 
-To look at the permissions for any file, you can list the files with `l` option (`ls –l`). 
+To look at the permissions for any file, you can list the files with `l` option (`ls –l`).
 Permissions	User	Group	Size	Date modified	Name
- 
-assets/homedir.png 
+
+![](https://raw.githubusercontent.com/ISUgenomics/bioinformatics-workbook/Andrew6/Appendix/assets/homedir.png)
+
 
 (d=directory, l=link, r=read, w=write, x=execute, -=blank, u=user, g=group, o=others)
 
-To set/modify a file's permissions you need to use the `chmod` command (`ch`ange `mod`e). Only the owner of a file can alter a file's permissions. The syntax: 
+To set/modify a file's permissions you need to use the `chmod` command (`ch`ange `mod`e). Only the owner of a file can alter a file's permissions. The syntax:
 ```
 chmod [OPTIONS] RELATIONS[+ or -]PERMISSIONS FILE
 ```
@@ -98,7 +99,7 @@ The options are to summarize (`s`) and human readable format (`h`). While the su
 
 ### 2. File size
 
-If you are interested in knowing the size of a particular file, you can use the `ls` command with `l` and `h` options 
+If you are interested in knowing the size of a particular file, you can use the `ls` command with `l` and `h` options
 
 ```
 ls -lh FILENAME
@@ -176,7 +177,7 @@ cpe:/o:redhat:enterprise_linux:6server:ga:server
 
 The other command is the `uname`
 ```
-uname -a 
+uname -a
 ```
 output would be:
 ```
@@ -259,4 +260,3 @@ Some variables that are useful are:
 | `HOME`     | path for home                      |
 | `DISPLAY`  | where to route the display         |
 | `HISTFILE` | file where the history is saved    |
-
