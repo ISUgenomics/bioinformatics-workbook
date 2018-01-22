@@ -41,7 +41,7 @@ lrwxrwxrwx. 1 arnstrm domain users              12 Mar 20  2017 ncbi -> arnstrm/
 -rw-------. 1 arnstrm domain users             522 Oct 30 14:45 nohup.out
 -rw-r-----. 1 arnstrm domain users             287 Feb  7  2017 template.slurm
 ```
-1. First letter of the first column specifies the type. It can be either `d`=directory, `l`=link or `-`=regular file. Remaining 9 letters of the first column, each 3 specifies permissions set for `user`, `group` and `others`, respectively. Here `r`=read, `w`=write, `x`=execute and `-`=blank or unset.
+1. First letter of the first column specifies the type. It can be either `d` is directory, `l` is link or `-` is regular file. Remaining 9 letters of the first column, each 3 specifies permissions set for `user`, `group` and `others`, respectively. Here `r` is read, `w` is write, `x` is execute and `-` is blank or unset. The last `.` sign specifies attributes for this item (to see complete list go the official manual [here](https://www.gnu.org/software/coreutils/manual/html_node/What-information-is-listed.html))
 2. Second column, specifies number of sub directories housed inside. It can also be number of links that points to it.
 3. The owner of the file/directory: `user`
 4. The fourth column `domain users` is the group, `user` belongs to.
