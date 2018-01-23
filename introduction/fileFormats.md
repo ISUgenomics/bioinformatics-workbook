@@ -23,6 +23,12 @@ Line 1: starts with “>” followed by ID
 Line 2: Sequence data
 ```
 ---
+##### Examples
+```
+Line 1: starts with “>” followed by ID  
+Line 2: Sequence data
+```
+---
 # Examples
 ```bash
 >gi|296581|emb|Z22600.1| D.tigrina homeodomain mRNA
