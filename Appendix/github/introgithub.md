@@ -31,6 +31,7 @@ Passwords are not always secure and can be annoying to type.
 * When the two match up, the system unlocks without the need for a password.
 * SSH keys are also very important for using Git with remote hosts (e.g., GitHub)
 ---
+
 ## Setup Authentication with a SSH key
 
 Log in to the `Remotemachine`
