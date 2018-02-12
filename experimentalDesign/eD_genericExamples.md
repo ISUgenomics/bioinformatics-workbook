@@ -41,8 +41,36 @@ An average estimate for the size of the genic space in a genome  assumes a genom
 * ```Number of Replicates```: 8
 * ```Cost and technology as of```:  2017
 
-# Genome Assembly Generic Example
+#### 1GB - 2GB Genome Assembly Generic Example
+* ```Genome Assembled``` No
+* ```Cost for Illumina Sequencing Lanes```: $5,680  (2 lanes * $2,840)
+* ```Cost for Illumina Library Prep```: $775 (2 libraries PE $105 + MP $670)
+* ```Cost of PacBio Sequencing```: $17,280 (48 SMRT cells * $360)
+* ```Cost of PacBio Library Prep```: $1050 (3 library preps)
+* ```Hi-C data```: $15,000
+* ```Total Sequencing Cost```: $39,785
+* ```Cost for Bioinformatics```: $59,678 (1.5 x sequencing cost)
+* ```Total Project Cost```: $99,463
+* ```Sequencing Technology```: Illumina HiSeq 3000 + Pacbio RSII + HiC
+* ```Assumed sequencing output```: 300 million fragments/lane + 500Mb/SMRT cell
+* ```Number of Illumina lanes```: 2
+* ```Number of SMRT cells```: 48
+* ```Length of Illumina read```: 150bp
+* ```Length of Pacbio read```: average around 12kb
 
-comming soon...
+#### less than 1 Gb Genome Assembly Generic Example (chromosomal level assembly)
+* ```Assumed Genome size``` 1Gb
+* ```Cost of PacBio Sequencing```: $17,280 (48 SMRT cells * $360)
+* ```Cost of PacBio Library Prep```: $1050 (3 library preps)
+* ```Hi-C data```: $15,000
+* ```Total Sequencing Cost```: $33,330
+* ```Cost for Bioinformatics```: $49,995 (1.5 x sequencing cost)
+* ```Total Project Cost```: $83,325
+* ```Sequencing Technology```: Pacbio RSII
+* ```Assumed sequencing output```: 500Mb/SMRT cell
+* ```Number of SMRT cells```: 48
+* ```Length of Pacbio read```: average around 12kb
+* ```Coverage depth```: At least 24x coverage but more likely approaching 50x depending on size of genome and Pacbio Output
+
 
 [Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)
