@@ -1,6 +1,8 @@
 # List of Biology exceptions and irregularities
 
 ## Organism related
+1. **Egg laying mammal:** Mammals nurture their young ones with their specialized glands that produce milk. But, Platypus is one of the exception that lays eggs. They belong to the order `monotremata` and there are 5 living sppecies that are all indegenious to Australia and New Guinea. 
+2. 
 
 ## Cell related
 
