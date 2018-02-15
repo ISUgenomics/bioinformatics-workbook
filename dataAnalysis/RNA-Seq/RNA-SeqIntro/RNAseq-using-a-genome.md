@@ -4,7 +4,7 @@ RNA-seq experiments are performed with an aim to comprehend transcriptomic chang
 
 
 ### Overview ###
-![**Figure 1.**: Overview of the RNAseq workflow](/assets/RNAseq_1.png)
+![**Figure 1.**: Overview of the RNAseq workflow](/Assets/RNAseq_1.png)
 
 This document will guide you through basic RNAseq analysis, beginning at quality checking of the RNAseq `reads` through to getting the differential gene expression results. We have downloaded an *Arabidopsis* dataset from NCBI for this purpose. Check the [BioProject](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA348194) page for more information.
 
