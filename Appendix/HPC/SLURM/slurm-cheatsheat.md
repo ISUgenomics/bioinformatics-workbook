@@ -1,6 +1,6 @@
 # Quick reference sheet for SLURM resource manager
 
-### Job scheduling commands 
+### Job scheduling commands
 <table>
 <thead><tr><th>Commands</th><th>Function</th><th>Basic Usage</th><th>Example</th></tr></thead><tbody>
  <tr><td><blockcode>sbatch</blockcode></td><td>submit a slurm job</td><td>sbatch [script]</td><td>$ sbatch job.sub</td></tr>
@@ -65,7 +65,14 @@ To start a interactive session execute the following:
 
 srun -N 1 -t 4:00:00 --pty /bin/bash
 ```
+### Getting information on past jobs
 
+You can use slurm database to see how much memory your previous jobs used, e.g. the following command will report requested memory and used residential and virtual memory for job <JOBID>
+
+```
+sacct -j <JOBID> --format JobID,Partition,Submit,Start,End,NodeList%40,ReqMem,MaxRSS,MaxRSSNode,MaxRSSTask,MaxVMSize,ExitCode
+
+```
 
 ### Aliases that provide useful information parsed from the SLURM commands
 
