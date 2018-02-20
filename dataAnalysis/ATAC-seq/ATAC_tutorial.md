@@ -1,5 +1,5 @@
 ### ATAC-seq tutorial:
-The data for this tutorial is based on this [paper; Jégu et al., 2017](http://europepmc.org/backend/ptpmcrender.fcgi?accid=PMC5471679&blobtype=pdf). The authors describe the role of a chromatin remodeling protein in controlling _Arabidopsis_ seedling morphogenesis by modulating chromatin accessibility. They have based their conclusions on a combination of CHIPseq, ATAC-seq, MNAseseq and FAIREseq. In this tutorial, we will work through the ATAC-seq dataset. Check the methods section in the paper for more about how the ATAC-seq
+The data for this tutorial is based on this [paper; Jégu et al., 2017](http://europepmc.org/backend/ptpmcrender.fcgi?accid=PMC5471679&blobtype=pdf). The authors describe the role of a chromatin remodeling protein in controlling _Arabidopsis_ seedling morphogenesis by modulating chromatin accessibility. They have based their conclusions on a combination of CHIPseq, ATAC-seq, MNAseseq and FAIREseq. In this tutorial, we will work through the ATAC-seq dataset. Check the methods section in the paper for more details on the ATAC-seq library preparation, following the [standard procedure](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4374986/).  
 
 
 #### Download fastq files directly from ENA website
