@@ -1,16 +1,16 @@
 ### ATAC-seq tutorial:
-The data for this tutorial is based on this [paper; Jégu et al., 2017](http://europepmc.org/backend/ptpmcrender.fcgi?accid=PMC5471679&blobtype=pdf). The authors describe the role of a chromatin remodeling protein in controlling _Arabidopsis_ seedling morphogenesis by modulating chromatin accessibility. They have based their conclusions on a combination of CHIPseq, ATAC-seq, MNAseseq and FAIREseq. In this tutorial, we will work through the ATAC-seq dataset. Check the methods section in the paper for more details on the ATAC-seq library preparation, following the [standard procedure](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4374986/).  
+The data for this tutorial is based on this [paper; Jégu et al., 2017](http://europepmc.org/backend/ptpmcrender.fcgi?accid=PMC5471679&blobtype=pdf). The authors describe the role of a chromatin remodeling protein in controlling _Arabidopsis_ seedling morphogenesis by modulating chromatin accessibility. They base their conclusions on a combination of CHIPseq, ATAC-seq, MNAseseq and FAIREseq among other things. In this tutorial, we will work through the ATAC-seq dataset. Check the methods section in the paper for more details on the ATAC-seq library preparation, following the [standard procedure](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4374986/).  
 
 
-#### Download fastq files directly from ENA website
+#### 1. Download fastq files directly from ENA website
 The fastq files for all the experiments described are available at the ENA website under the bioproject [PRJNA351855](https://www.ebi.ac.uk/ena/data/view/PRJNA351855)
- libraries were prepared. The ATAC-seq data is the only paired end libraries in the list. We can download it directly using wget.
+ The ATAC-seq data is the only paired end libraries in the list. We will visit the other files when talking about CHIPseq. We can download the reads directly using wget.
  ```
  wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR473/002/SRR4733912/SRR4733912_1.fastq.gz
  wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR473/002/SRR4733912/SRR4733912_2.fastq.gz
  ```
 
-#### Quality Check
+#### 2. Quality Check
  ```
  mkdir Quality_ATAC
  module load fastqc
@@ -21,7 +21,7 @@ The fastq files for all the experiments described are available at the ENA websi
 
   However, if transposase adapters were present in large amounts the raw reads, we can remove them using one of many adapter trimming programs, for example [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html).
 
-#### Download Arabidopsis Genome
+#### 3. Download Arabidopsis Genome
 Before starting the alignment, we need the _Arabidopsis_ genome, which one can download from either [Araport](https://www.araport.org/data/araport11) or [EnsemblPlants](http://plants.ensembl.org/index.html).
 
 We already have the _Arabidopsis_ genome downloaded, so we  make a `symbolic link or shortcut ` to it and then refer to the link for the making the index.
@@ -33,23 +33,23 @@ The shortcut we have made is __At_Genome__
 
 We will use [bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) to align and the following sections describe the making of the index and the alignment.
 
-#### Building the bowtie2 Genome Index
+#### 4. Building the bowtie2 Genome Index
 We use environment modules in our cluster, so load the appropriate module and get going.
 ```
 module load bowtie2
 mkdir bwt_index
 bowtie2-build At_Genome bwt_index/At.TAIR10
 ```
-Because transposase adapters are used in ATAC-seq it is important to check for these adapter sequences and generally perform other quality checks. I
 
-#### Alignment using bowtie2
+
+#### 5. Alignment using bowtie2
 
 
 ```
 bowtie2 --threads 8 -x bwt_index/At.TAIR10 -q -1 ATAC_paired/SRR4733912_1.fastq.gz -2 ATAC_paired/SRR4733912_2.fastq.gz -S bwt_out/SRR4733912.sam
 ```
 
-__Convert SAM to bam and sort__
+__a) Convert SAM to BAM and sort__
 ```
  samtools view --threads 7 -bS SRR4733912.sam | samtools sort --threads 7 - > SRR4733912.sorted.bam
  ```
@@ -68,7 +68,7 @@ samtools view -H SRR4733912.sorted.bam
  @PG     ID:bowtie2      PN:bowtie2      VN:2.2.6        CL:"/opt/rit/app/bowtie2/2.2.6/bin/bowtie2-align-s --wrapper basic-0 --threads 8 -x bwt_index/At.TAIR10 -q -S bwt_out/SRR4733912.sam -1 /tmp/26409.inpipe1 -2 /tmp/26409.inpipe2"
  ```
 
-__Index the BAM file__
+__b) Index the BAM file__
  ```
  samtools index SRR4733912.sorted.bam
 ```
@@ -103,8 +103,8 @@ We call the BAM file without chloroplastic and mitochondrial alignments as `SRR4
  Pt      154478  44476436        524929
  *       0       0       3016596
 ```
-#### PEAK Calling
- We can now call the peaks/pileups of reads in our sample. We use [macs2](https://github.com/taoliu/MACS) for that. However there are other peak callering algorithm as well, check [this](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5429005/) for a good review. __macs2__ was designed originally for CHIPseq but works just as well for ATAC-seq.
+#### 6) PEAK Calling
+ We can now call the peaks/pileups of reads in our sample. We use [macs2](https://github.com/taoliu/MACS) for that. However there are other peak calleing algorithm as well, check [this](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5429005/) for a good review. __macs2__ was designed originally for CHIPseq but works just as well for ATAC-seq.
 
 ```
   macs2 callpeak -t /path/to/SRR4733912.sorted.noorg.bam -q 0.05 --broad -f BAMPE -n SRR4733912 -B --trackline --outdir . &>SRR4733912.peak.log&
@@ -137,28 +137,28 @@ SRR4733912_peaks.gappedPeak
 SRR4733912_peaks.xls
 SRR4733912_treat_pileup.bdg
 ```
-We have the treatment pileup bedgraph file `SRR4733912_treat_pileup.bdg`, which we can convert to a bigwig format to view in a browser, e.g., IGV. We can download a few program available from UCSC(https://genome.ucsc.edu/); `bedClip` and `bedGraphToBigWig`. We will also make use of [bedtools](http://bedtools.readthedocs.io/en/latest/).
+We have the treatment pileup bedgraph file `SRR4733912_treat_pileup.bdg`, which we can convert to a bigwig format to view in a browser, e.g., IGV. We download a few program available from UCSC(https://genome.ucsc.edu/); `bedClip` and `bedGraphToBigWig`. We will also make use of [bedtools](http://bedtools.readthedocs.io/en/latest/).
 
-__Make a chromsome sizes file__
+__a) Make a chromsome sizes file__
 ```
 bioawk -c fastx '{print $name, length($seq)}' /path/At_Genome > At_chr.sizes
 ```
 
-__Clip the bed graph files to correct coordinates__
+__b) Clip the bed graph files to correct coordinates__
  ```
  bedtools slop -i SRR4733912_treat_pileup.bdg -g At_chr.sizes -b 0 | /path/to/bedClip stdin At_chr.sizes SRR4733912_treat_pileup.clipped.bdg
 ```
 
-__Sort the clipped files__
+__c) Sort the clipped files__
  ```
  sort -k1,1 -k2,2n SRR4733912_treat_pileup.clipped.bdg > SRR4733912_treat_pileup.clipped.sorted.bdg
 ```
 
-__Convert to bigwig__
+__d) Convert to bigwig__
 ```
  /path/to/bedGraphToBigWig SRR4733912_treat_pileup.clipped.sorted.bdg At_chr.sizes SRR4733912_treat_pileup.clipped.sorted.bw
  ```
 
- We can directly view the bigwig file in the IGV Genome browser or calculate peak scores over a genomic region/interval using UCSCs's [bigwigaverageoverbed](https://bioconda.github.io/recipes/ucsc-bigwigaverageoverbed/README.html).
+ We can now directly view the bigwig file in the IGV Genome browser or calculate peak scores over a genomic region/interval using UCSC's [bigwigaverageoverbed](https://bioconda.github.io/recipes/ucsc-bigwigaverageoverbed/README.html).
 
  ![IGV snapshot](Assets/igv_snapshot_ATAC.png)
