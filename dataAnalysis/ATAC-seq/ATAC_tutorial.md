@@ -104,7 +104,7 @@ We call the BAM file without chloroplastic and mitochondrial alignments as `SRR4
  *       0       0       3016596
 ```
 #### PEAK Calling
- We can now call the peaks/pileups of reads in our sample. We use [macs2](https://github.com/taoliu/MACS) for that. However there are other peak callers as well. macs2 was designed originally for CHIPseq but works just as well for ATAC-seq.
+ We can now call the peaks/pileups of reads in our sample. We use [macs2](https://github.com/taoliu/MACS) for that. However there are other peak callering algorithm as well, check [this](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5429005/) for a good review. __macs2__ was designed originally for CHIPseq but works just as well for ATAC-seq.
 
 ```
   macs2 callpeak -t /path/to/SRR4733912.sorted.noorg.bam -q 0.05 --broad -f BAMPE -n SRR4733912 -B --trackline --outdir . &>SRR4733912.peak.log&
