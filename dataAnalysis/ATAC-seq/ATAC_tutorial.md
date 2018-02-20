@@ -37,7 +37,7 @@ module load fastqc
 fastqc -o Quality_ATAC /path/to/atac_data/public/sra/*.gz
 ```
 We found that the nextera adapters have already been removed before depositing the sequences. We also confirmed this with the authors.
-![Adapter_Content](ATAC-seq/Assets/fastqc_adapter_content_plot.png)
+![Adapter_Content](Assets/fastqc_adapter_content_plot.png)
 
  However, it was found that transposase adapters were present in large amounts the raw reads, we can remove them using one of many apter trimming programs, for example [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html).
 
