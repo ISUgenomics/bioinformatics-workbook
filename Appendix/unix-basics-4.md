@@ -75,11 +75,24 @@ More combinations:
 sed -n '1,10~10p'  FILENAME
 ```
 
-sed "1d" FILENAME	Delete 1st line
-sed "1,3d" FILENAME	Delelte line 1, 2 and 3
-sed 's/^$//g' FILENAME	Delete balnk lines
-sed '2 i line to insert' FILENAME;	insert "line to insert" on second line
+### 3. Delete specific lines of the file
 
-Task 2.5: Try using replace function on AT_genes.gff file (to change Chr to Chromosome). View both files to see the difference.
+All the above address types (specific line, range, multiples), also works with other types of operation, such as deletion and insertion. For deletion, you need to swap `p` with `d`
+```
+# delete first line
+sed "1d" FILENAME
+# delete lines 1 thru 3
+sed "1,3d" FILENAME
+# delete blank lines
+sed 's/^$//g' FILENAME
+```
 
-sed 's/^Chr/Chromosome_/g' AT_genes.gff > AT_genes_converted.gff
+### 4. Insert specific lines to a file
+Here, you use `i` for inserting text anywhere in the file
+```
+# put "line to insert" in the second line
+sed '2 i line to insert' FILENAME
+```
+
+### 5. Extract portions of the lines
+still to come!
