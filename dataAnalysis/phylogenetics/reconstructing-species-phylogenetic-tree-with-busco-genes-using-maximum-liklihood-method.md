@@ -1,4 +1,4 @@
-# Building maximum liklihood phylogenetic tree using BUSCO genes
+# Building maximum likelihood phylogenetic tree using BUSCO genes
 
 In this guide, we will explain how to get the species phylogenetic tree using just the draft genomes (genomes that still don't have the annotations yet). For data, we will use the sequenced legume genomes. You will need the following programs installed and access to a large cluster (we use Condo in this exercise).
 
@@ -6,98 +6,64 @@ In this guide, we will explain how to get the species phylogenetic tree using ju
 
 ## Data
 
-Like mentioned before, we will use the sequenced legume genomes for this purpose. Not all genomes had gene predictions hence we will predict the BUSCO genes before we construct phylogenetic tree. Following are the genomes used:
+Like mentioned before, we will use the sequenced legume genomes that are available on NCBI (both RefSeq and GenBank). Since it is most likely that the new genome you're working won't have good gene predictions, we will use the BUSCO genes to construct phylogenetic tree. [BUSCO](https://doi.org/10.1093/bioinformatics/btv351) (Benchmarking Universal Single-Copy Orthologs) are ideal for this because, these genes are found in a genome in single-copy are evolutionarily sound. There are 1,440 BUSCO's for `embryophyta` profile, which will be a good sample size for building phylogenetic tree in reasonable amount of time.
 
-| Common Name  | Scientific Name                             | Genomes | Source (website)                                                           |
-|--------------|---------------------------------------------|---------|----------------------------------------------------------------------------|
-| Chickpea     | _Cicer arietinum_                           | 2       | [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_000331145.1)              |
-| Wild peanut  | _Arachis duranensis_ and _Arachis ipaensis_ | 2       | [PeanutBase](https://peanutbase.org/peanut_genome)                         |
-| peanut       | _Arachis hypogaea_ cv. Tifrunner            | 1       | [PeanutBase](https://peanutbase.org/peanut_genome)                         |
-| Soybean      | _Glycine max_                               | 1       | [SoyBase](https://soybase.org)                                             |
-| Wild soybean | _Glycine soja_                              | 1       | [NCBI](https://www.ncbi.nlm.nih.gov/genome/13239)                          |
-| White Clover | _Trifolium pratense_                        | 2       | [CloverGARDEN](http://clovergarden.jp/)                                    |
-| Red Clover   | _Trifolium repens_                          | 2       | [CloverGARDEN](http://clovergarden.jp/)                                    |
-| Alfa-alfa    | _Medicago truncatula_                       | 1       | [EnsemblPlants](https://plants.ensembl.org/Medicago_truncatula/Info/Index) |
-| Adzuki bean  | _Vigna angularis_                           | 1       | [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_001190045.1)              |
-| Mung bean    | _Vigna radiata_                             | 1       | [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_000741045.1)              |
-| Lotus        | _Lotus japonicus_                           | 1       | [kazusa](http://www.kazusa.or.jp/lotus/)                                   |
-| Lupin        | _Lupinus angustifolius_                     | 1       | [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_001865875.1)              |
-| Cowpea       | _Cajanus cajan_                             | 1       | [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCA_001687525.1)              |
-| Broad bean   | _Vicia faba_                                | 1       | [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCA_001375635.1)              |
-| Common bean  | _Phaseolus vulgaris_                        | 1       | [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_000499845.1)              |
-| Pigeon bean  | _Cajanus cajan_                             | 1       | [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCA_000230855.2)              |
-| Tale cress (outgrp)   | _Arabidopsis thaliana_                      | 1       | [araport11](https://www.araport.org/data/araport11)                        |
+**Dataset** : At the time of writing this tutorial, there were 38 genomes in NCBI belonging to Legumes group ([Fabaceae](https://www.ncbi.nlm.nih.gov/assembly/?term=Fabaceae)). Out of these 38, 17 genomes have chromosome level assemblies, 11 genomes as scaffolds, and 10 genomes as contigs. See table 1 for more information on these genomes.
 
+**Table 1:** Legume genomes used in this study.
+
+| Organism                                            | SpeciesTaxid | RefSeq_category       | Genbank         | ScaffoldN50 |
+|-----------------------------------------------------|--------------|-----------------------|-----------------|-------------|
+| _Arachis duranensis_ (eudicots)                     | 130453       | representative genome | GCA_000817695.2 | 1,068,268   |
+| _Arachis duranensis_ (eudicots)                     | 130453       | na                    | GCA_001687015.1 | 149,039     |
+| _Arachis ipaensis_ (eudicots)                       | 130454       | representative genome | GCA_000816755.2 | 6,169,993   |
+| _Cajanus cajan_ (pigeon pea)                        | 3821         | representative genome | GCA_000340665.1 | 555,764     |
+| _Cajanus cajan_ (pigeon pea)                        | 3821         | na                    | GCA_000230855.2 | 5,341       |
+| _Cicer arietinum_ (chickpea)                        | 3827         | representative genome | GCA_000331145.1 | 697,963     |
+| _Cicer arietinum_ (chickpea)                        | 3827         | na                    | GCA_000347275.3 | 74,024      |
+| _Cicer arietinum_ (chickpea)                        | 3827         | na                    | GCA_002896005.1 | 232,601     |
+| _Cicer echinospermum_ (eudicots)                    | 90897        | representative genome | GCA_002896215.1 | 206,896     |
+| _Cicer reticulatum_ (eudicots)                      | 90898        | representative genome | GCA_002896235.1 | 109,263     |
+| _Glycine max_ (soybean)                             | 3847         | representative genome | GCA_000004515.3 | 48,577,505  |
+| _Glycine max_ (soybean)                             | 3847         | na                    | GCA_002905335.1 | 15,020,773  |
+| _Glycine max_ (soybean)                             | 3847         | na                    | GCA_001269945.2 | 42,937      |
+| _Glycine soja_ (wild soybean)                       | 3848         | representative genome | GCA_002907465.1 | 4,430,511   |
+| _Glycine soja_ (wild soybean)                       | 3848         | na                    | GCA_000722935.2 | 404,776     |
+| _Lotus japonicus_ (eudicots)                        | 34305        | representative genome | GCA_000181115.2 | 25,054      |
+| _Lupinus angustifolius_ (narrow-leaved blue lupine) | 3871         | representative genome | GCA_001865875.1 | 702,610     |
+| _Lupinus angustifolius_ (narrow-leaved blue lupine) | 3871         | na                    | GCA_002285895.2 | 30,409,451  |
+| _Lupinus angustifolius_ (narrow-leaved blue lupine) | 3871         | na                    | GCA_000338175.1 | 15,485      |
+| _Medicago truncatula_ (barrel medic)                | 3880         | representative genome | GCA_000219495.2 | 49,172,423  |
+| _Medicago truncatula_ (barrel medic)                | 3880         | na                    | GCA_002024945.1 | 12,848,239  |
+| _Medicago truncatula_ (barrel medic)                | 3880         | na                    | GCA_002251925.1 | 575,111     |
+| _Medicago truncatula_ (barrel medic)                | 3880         | na                    | GCA_002251935.1 | 859,387     |
+| _Medicago truncatula_ (barrel medic)                | 3880         | na                    | GCA_002251955.1 | 503,143     |
+| _Phaseolus vulgaris_ (eudicots)                     | 3885         | representative genome | GCA_000499845.1 | 50,367,376  |
+| _Phaseolus vulgaris_ (eudicots)                     | 3885         | na                    | GCA_001517995.1 | 433,759     |
+| _Trifolium pratense_ (eudicots)                     | 57577        | representative genome | GCA_900079335.1 | 22,682,783  |
+| _Trifolium pratense_ (eudicots)                     | 57577        | na                    | GCA_000583005.2 | 2,432       |
+| _Trifolium subterraneum_ (eudicots)                 | 3900         | representative genome | GCA_001742945.1 | 287,605     |
+| _Trifolium subterraneum_ (eudicots)                 | 3900         | na                    | GCA_002003065.1 | 1,510       |
+| _Vicia faba_ (fava bean)                            | 3906         | representative genome | GCA_001375635.1 | 1,723       |
+| _Vigna angularis_ (adzuki bean)                     | 3914         | representative genome | GCA_001190045.1 | 1,292,063   |
+| _Vigna angularis var. angularis_ (adzuki bean)      | 3914         | na                    | GCA_001723775.1 | 8,174,047   |
+| _Vigna angularis var. angularis_ (adzuki bean)      | 3914         | na                    | GCA_000465365.1 | 21,697      |
+| _Vigna radiata var. radiata_ (mung bean)            | 157791       | representative genome | GCA_000741045.2 | 25,360,630  |
+| _Vigna radiata var. radiata_ (mung bean)            | 157791       | na                    | GCA_001584445.1 | 683,756     |
+| _Vigna radiata_ (mung bean)                         | 157791       | na                    | GCA_000180895.1 | 228         |
+| _Vigna unguiculata_ subsp. unguiculata (cowpea)     | 3917         | representative genome | GCA_001687525.1 | 7,412       |
 
 The data can be downloaded from using the commands:
 
 
+### Download the Data
 
+For downloading, you can do it directly from the NCBI website. To do so, go to [NCBI genomes](https://www.ncbi.nlm.nih.gov/assembly/?term=Fabaceae) page for Fabaceae, click on `Download Assemblies`, select the `GenBank` as source database and `Genomic FASTA` as the file type, followed by `Download`
 
-```
-# chickpea
-wget ftp://ftp.bioinfo.wsu.edu/species/Cicer_arietinum/C.arietinum_CDCFrontier_v1.0/assembly/Cicer_arietinum_GA_v1.0_kabuli.chr_scf.fa
-wget https://www.coolseasonfoodlegume.org/sites/default/files/files/C_arietinum_ICC4958_v2_0.fasta
-# wild peanut
-wget http://peanutbase.org/files/genomes/Arachis_ipaensis/assembly/Araip_v1.0_20140908.fa.gz
-wget http://peanutbase.org/files/genomes/Arachis_duranensis/assembly/Aradu_v1.0_20140908.fa.gz
-# soybean
-wget https://soybase.org/GlycineBlastPages/archives/Gmax_275_v2.0.softmasked.20140305.fasta.zip
-# wild soybean
-wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/722/935/GCA_000722935.2_W05v1.0/GCA_000722935.2_W05v1.0_genomic.fna.gz
-# clover
-wget ftp://ftp.ensemblgenomes.org/pub/plants/release-34/fasta/trifolium_pratense/dna/Trifolium_pratense.Trpr.dna.toplevel.fa.gz
-wget http://legumeinfo.org/data/public/Trifolium_pratense/MilvusB.gnm2.1/tripr.MilvusB.gnm2.1.gNmT.pchr_plus_unanchored.fna.gz
-# red clover
-wget ftp://ftp.kazusa.or.jp/pub/clover/Woogenellup/TSUw_r1.0.fasta.gz
-wget ftp://ftp.kazusa.or.jp/pub/clover/Daliak/TSUd_r1.1.fasta.gz
-# alfa-alfa
-wget ftp://ftp.ensemblgenomes.org/pub/plants/release-34/fasta/medicago_truncatula/dna/Medicago_truncatula.MedtrA17_4.0.dna.toplevel.fa.gz
-# Adzuki bean
-wget http://legumeinfo.org/data/public/Vigna_angularis/Gyeongwon.gnm3/vigan.Gyeongwon.gnm3.JyYC.pchr_plus_unanchored.fna.gz
-# Mung bean
-wget http://legumeinfo.org/data/public/Vigna_radiata/VC1973A.gnm6/vigra.VC1973A.gnm6.3nL8.pchr_plus_unassigned.fna.gz
-# lotus
-wget ftp://ftp.kazusa.or.jp/pub/lotus/lotus_r3.0/Lj3.0_pseudomol.fna.gz
-# lupin
-wget http://legumeinfo.org/data/public/Lupinus_angustifolius/Tanjil.gnm1/lupan.Tanjil.gnm1.Qq0N.scaf.fna.gz
-# cowpea
-wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/001/687/525/GCA_001687525.1_Cowpea_0.03/GCA_001687525.1_Cowpea_0.03_genomic.fna.gz
-# Broad bean
-wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/001/375/635/GCA_001375635.1_VfEP_Reference-Unigene/GCA_001375635.1_VfEP_Reference-Unigene_genomic.fna.gz
-# Common Bean
-wget http://legumeinfo.org/data/public/Phaseolus_vulgaris/G19833.gnm1/phavu.G19833.gnm1.zBnF.fa.gz
-# Pigeon pea
-wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/340/665/GCA_000340665.1_C.cajan_V1.0/GCA_000340665.1_C.cajan_V1.0_genomic.fna.gz
-# outgroup, tale cress
-wget https://www.arabidopsis.org/download_files/Genes/TAIR10_genome_release/TAIR10_chromosome_files/TAIR10_chr_all.fas
-```
+![](assets\fig1.png)
 
-Next we will rename them to identify them easily.
+To easily indetify these files, we will rename them.
 
-```
-mv GCA_000340665.1_C.cajan_V1.0_genomic.fna Cajanus_cajan.fasta
-mv GCA_000722935.2_W05v1.0_genomic.fna Glycine_soja.fasta
-mv Lj3.0_pseudomol.fna Lotus_japonicus.fasta
-mv lupan.Tanjil.gnm1.Qq0N.scaf.fna Lupinus_angustifolius.fasta
-mv tripr.MilvusB.gnm2.1.gNmT.pchr_plus_unanchored.fna Trifolium_pratense.fasta
-mv GCA_001687525.1_Cowpea_0.03_genomic.fna Vicia_faba.fasta
-mv vigan.Gyeongwon.gnm3.JyYC.pchr_plus_unanchored.fna Vigna_angularis.fasta
-mv vigra.VC1973A.gnm6.3nL8.pchr_plus_unassigned.fna Vigna_radiata.fasta
-mv GCA_001375635.1_VfEP_Reference-Unigene_genomic.fna Vigna_unguiculata.fasta
-mv Arabidopsis_thaliana_TAIR10.fa Arabidopsis_thaliana.fasta
-mv Aradu_v1.0_20140908.fa Arachis_duranensis.fasta
-mv Araip_v1.0_20140908.fa Arachis_ipaensis.fasta
-mv Cicer_arietinum_GA_v1.0_kabuli.chr_scf.fa Cicer_arietinum_kabuli.fasta
-mv Medicago_truncatula.MedtrA17_4.0.dna.toplevel.fa Medicago_truncatula.fasta
-mv Pvulgaris_442_v2.0.fa Phaseolus_vulgaris_jgi.fasta
-mv phavu.G19833.gnm1.zBnF.fa Phaseolus_vulgaris.fasta
-mv Trifolium_pratense.Trpr.dna.toplevel.fa Trifolium_pratense_ensembl.fasta
-mv C_arietinum_ICC4958_v2_0.fasta Cicer_arietinum_ICC4958.fasta
-mv Gmax_275_v2.0.softmasked.20140305.fasta Glycine_max.fasta
-mv TSUd_r1.1.fasta Trifolium_subterraneum_r1.1.fasta
-mv TSUw_r1.0.fasta Trifolium_subterraneum_r1.0.fasta
-```
 
 Now we are all set to begin the analysis!
 
