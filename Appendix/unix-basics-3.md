@@ -171,6 +171,12 @@ gerp -rl "PATTERN" .
 ```
 here `-r` recursively searches all files in sub-folders and `-l`, rather than printing the matching line, prints the filename after the first occurrence. Note the `.` at the end, it tells `grep` to use all the files that are in the directory. The result is that you will have a subset of files that are of interest to you.
 
+If you want files that do not you the term, you can replace `-l` with `-L` (like the option `-v` for negative match). This will list only files that **DO NOT** have any match.
+
+```
+gerp -rL "PATTERN" .
+```
+
 ### 10. Print lines before or after the matching term
 
 With the regular `grep` search, you get the line containing the matching term. Sometimes, in order to know the context of this term, it is useful to print either lines before or after the term occurrence. With `-B` (for before) and `-A` (for after), you can specify the number of lines that you want to see.
