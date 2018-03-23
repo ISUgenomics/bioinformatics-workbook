@@ -22,8 +22,8 @@ A are a couple of specific Examples
 *  Photo of Arabidopsis
 
 ```
-wget https://en.wikipedia.org/wiki/File:Kitten_in_Rizal_Park,_Manila.jpg
-wget https://en.wikipedia.org/wiki/File:Arabidopsis_thaliana.jpg
+wget https://upload.wikimedia.org/wikipedia/commons/0/06/Kitten_in_Rizal_Park%2C_Manila.jpg
+wget https://upload.wikimedia.org/wikipedia/commons/6/6f/Arabidopsis_thaliana.jpg
 ```
 
 Sometimes you may find a need to download an entire directory of files and downloading directory using wget is not straightforward.
