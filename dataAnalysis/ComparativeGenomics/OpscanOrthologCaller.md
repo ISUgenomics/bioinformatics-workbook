@@ -1,5 +1,5 @@
 # Opscan Ortholog Calling Tutorial
-Opscan is a software that will call orthologs between two sets of genes that is suitable for constructing synteny between species. Opscan is part of a synteny software, that is published here (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3961402/).
+Opscan is a software that will call orthologs between two sets of genes that is suitable for constructing synteny between species. Opscan is part of a synteny software, that is published [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3961402/).
 
 ##### Synopsis from Opscan manual
 "Fastp then NWS (without end gap penalties) operon search in genome
@@ -432,7 +432,7 @@ CO      gene g23796 (score  27.60 dlen ratio  1.29)
 ```
  less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1) {print $2} else {print "#"$0}}'|tr "\n" "\t" |tr "#" "\n" |sed '/^$/d' |less
 ```
-#the above code can also be modified to make familes of orthologs 
+#the above code can also be modified to make familes of orthologs
 
 #sample of the output from the code above
 ```
