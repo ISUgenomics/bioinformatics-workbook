@@ -18,5 +18,5 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub userid@lightning3.its.iastate.edu
 
 ```
 ssh userid@lightning3.its.iastate.edu
-# Ensure file permissions for ~/.ssh/.id_rsa (local) and ~/.ssh/authorized_keys (remote) are such that it is only readable by you! 
+# Ensure file permissions for ~/.ssh/.id_rsa (local) and ~/.ssh/authorized_keys (remote) are such that it is only readable by you!
 ```

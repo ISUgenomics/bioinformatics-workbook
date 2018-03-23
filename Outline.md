@@ -99,3 +99,9 @@ This section could be skipped if they want to start working right away
 
 - Choose your own adventure series.  Create a storyline that requires the users to solve problems (real world) using sequencing data.  Hospital outbreak, Ebola virus spread, etc.  
  - Would need them to somehow make choices that would lead them down different paths.
+
+
+
+## Collection of links to explore
+
+* http://www.tengfei.name/ggbio/docs/man/layout_circle-method.html

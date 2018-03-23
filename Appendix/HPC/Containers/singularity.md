@@ -20,6 +20,9 @@ The first time you use singularity it will by default put a .singularity folder 
 ## How to create a singularity image from a docker image
 
 
+
+## How to use a Singularity Image
+
 ```
 singularity pull docker://sjackman/maker
 singularity exec --bind $PWD ./maker.img maker --help
