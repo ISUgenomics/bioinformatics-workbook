@@ -622,10 +622,159 @@ If synteny exists between the species you've analyzed and the formatting and fil
   less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>50 && $7>.8 && $7<1.2) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.list
 #this gave me 61 multiplicons with a mean size of 9 (min 3, max 27)
    less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>60 && $7>.8 && $7<1.2) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.list
+   less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>60 && $7>.8 && $7<1.2) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.list
 
-#this gave me 38 multiplicons
- less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>70 && $7>.7 && $7<1.3) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.listwith a mean size of 17 (min 4, max 49)
+
+#this gave me 39 multiplicons
+ less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>70 && $7>.7 && $7<1.3) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.listwith a mean size of 8 (min 4, max 49)
 less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>70 && $7>.7 && $7<1.3) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.list
 ```
+While a visualization of the synteny is available from the output of iadhore, it is in a scaffold by scaffold context. Here is the longest multiplicon from the above work.
 
+![Multiplicon2](../../assets/SyntenyMultiplicon2.svg)
+With each box representing a gene, colored boxes indicate orthologues, and black boxes are genes without homology
 # Visualization of synteny with circos
+Circos is a genomic visualization tool that can display many types of data, but it is one of the most appealing and useful ways to visualize synteny. A plethora of tutorials, examples, and documentation can be found on their website, http://circos.ca/.
+There are a number of files that are needed to make a circos figure in addition to the multiplicons.txt file generated above. Because circos is essentially its own code, it is easier to use templates of existing files to create them from the beginning.  
+There are 5 essential files.
+
+ticks.conf
+```
+show_ticks          = yes
+show_tick_labels    = yes
+<ticks>
+    radius           = 1r
+    color            = black
+    thickness        = 10p
+    multiplier       = 1e-4
+    format           = %d
+ <tick>
+    spacing        = 1u
+    size           = 30p
+    show_label     = yes
+    label_size     = 80p
+    label_offset   = 10p
+    format         = %d
+  </tick>
+ <tick>
+    spacing        = .5u
+    size           = 20p
+    show_label     = yes
+    label_size     = 60p
+    label_offset   = 7p
+    format         = %d
+  </tick>
+
+</ticks>
+```
+bands.conf
+```
+<bands>
+   show_bands = yes
+   fill_bands = yes
+   band_transparency = 4
+</bands>
+```
+
+ideogram.conf
+```
+<ideogram>
+  <spacing>
+    default = 0.006r
+    break   = 30u
+    axis_break_at_edge = yes
+    axis_break         = yes
+    axis_break_style   = 2
+    <break_style 1>
+          stroke_color     = black
+          thickness        = 0.45r
+          stroke_thickness = 2p
+    </break>
+    <break_style 2>
+          stroke_color     = black
+          stroke_thickness = 5p
+          thickness        = 4r
+    </break>
+  </spacing>
+  radius           = 0.89r
+  thickness        = 80p
+  fill             = yes
+  stroke_color     = white
+  stroke_thickness = 4p
+  fill_color       = black
+  show_label       = yes
+  label_font       = bold
+  label_size       = 120
+  label_parallel   = yes
+  label_radius = dims(ideogram,radius_outer) + 0.06r
+</ideogram>
+```
+
+circos.conf
+```
+karyotype = ./karyotype.conf
+chromosomes_units = 100000
+  <<include ideogram.conf>>
+  <<include ticks.conf>>
+  <<include bands.conf>>
+
+  <links>
+  <link>
+    file=SyntenicRibbons.conf
+    radius = 0.98r
+    bezier_radius = 0.1r
+    thickness = 1
+    ribbon = yes
+  </link>
+  </links>
+
+
+
+<image>
+  <<include /shared/software/GIF/programs/circos/0.69.2/etc/image.conf>>
+angle_offset* = -46
+</image>
+<<include /shared/software/GIF/programs/circos/0.69.2/etc/colors_fonts_patterns.conf>>
+```
+karyotype.conf
+```
+chr - scaffold_5 scaffold_5 0 1042978 green
+chr - scaffold_16 scaffold_16 0 874394 green
+chr - scaffold_14 scaffold_14 0 891198 green
+chr - scaffold_33 scaffold_33 0 628838 green
+chr - scaffold_41 scaffold_41 0 566278 green
+chr - scaffold_12 scaffold_12 0 911565 green
+chr - scaffold_36 scaffold_36 0 602358 green
+chr - scaffold_25 scaffold_25 0 714661 green
+chr - scaffold_60 scaffold_60 0 465007 green
+chr - scaffold_53 scaffold_53 0 491105 green
+chr - scaffold_59 scaffold_59 0 466286 green
+chr - scaffold_58 scaffold_58 0 469186 green
+chr - scaffold_52 scaffold_52 0 499914 green
+chr - scaffold_66 scaffold_66 0 430898 green
+chr - scaffold_29 scaffold_29 0 657481 green
+chr - scaffold_82 scaffold_82 0 381180 green
+chr - scaffold_84 scaffold_84 0 375857 green
+chr - scaffold_79 scaffold_79 0 384640 green
+chr - scaffold_81 scaffold_81 0 383483 green
+chr - scaffold_88 scaffold_88 0 354636 green
+```
+
+SyntenicRibbons.conf
+```
+scaffold_5 50289 684931 GROS_00001 101602 670579
+scaffold_4 317862 853647 GROS_00006 13870 518353
+scaffold_136 440 239144 GROS_00024 8814 253904
+scaffold_21 304744 586182 GROS_00036 14764 258573
+scaffold_25 19661 306908 GROS_00007 1170 321133
+scaffold_135 21825 256659 GROS_00002 54087 253472
+scaffold_50 224787 450632 GROS_00055 6598 202004
+scaffold_60 1 144600 GROS_00002 482676 618553
+scaffold_4 866976 1060019 GROS_00009 277835 435300
+scaffold_4 76680 204693 GROS_00114 33456 146904
+scaffold_21 151135 294293 GROS_00057 42302 200293
+scaffold_36 413983 601440 GROS_00059 6915 166011
+scaffold_11 287129 437353 GROS_00014 171413 352760
+
+```
+less segments.txt |awk 'NR>1' |awk '{if(NR%2) {print "#"$3,$4,$5,$6}else {print $3,$4,$5,$6}}' |tr "\n" "\t" |tr "#" "\n" |awk '{if($5=="G.pallida") {print $5,$6,$7,$8,$1,$2,$3,$4} else {print $1,$2,$3,$4,$5,$6,$7,$8}}' |
