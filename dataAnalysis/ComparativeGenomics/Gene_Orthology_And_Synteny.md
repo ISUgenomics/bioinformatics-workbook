@@ -608,3 +608,24 @@ cluster_gap=20
 level_2_only=true
 q_value=.05
 ```
+# Filtering of orthologs for improved synteny and ortholog calling.
+If synteny exists between the species you've analyzed and the formatting and filtering is correct for iadhore, you should have multiplicons (syntenic regions) in your output/multiplicons.txt file. However, the accuracy of the orthologs and synteny will improve when if various filtering parameters are tested on the NWS score and the relative protein length.
+```
+#remember this command form earlier? You can modify the parameters for which the orthologs were selected to improve synteny and ortholog calls. Be sure to check the length of your mulitiplicons also. More is not always
+
+#this gave me 96 multiplicons with a mean size of 9 (min 3, max 29)
+ less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>40 && $7>.8 && $7<1.2) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.list
+
+
+#this gave me 80 multiplicons with a mean size of 10 (min 3, max 29)
+#this is the one that I went forward with.
+  less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>50 && $7>.8 && $7<1.2) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.list
+#this gave me 61 multiplicons with a mean size of 9 (min 3, max 27)
+   less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>60 && $7>.8 && $7<1.2) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.list
+
+#this gave me 38 multiplicons
+ less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>70 && $7>.7 && $7<1.3) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.listwith a mean size of 17 (min 4, max 49)
+less iadhorePlazaTable |cut -f 2- |sed 's/CO  List of similar genes with operon //g' |sed 's/://g' |grep -A 1 "GPLIN" |sed 's/--//g' |sed '/^$/d' |awk '{if(NF>1 && $4>70 && $7>.7 && $7<1.3) {print $2} else if (NF==1){print "#"$0}}' |grep "g" -B 1 |sed 's/--//g' |sed '/^$/d' |tr "\n" " " |tr "#" "\n" |sed '/^$/d' |sed 's/@/\t/g' |awk '{print $1"\t"$4}' >OrthologousGenes.list
+```
+
+# Visualization of synteny with circos
