@@ -330,7 +330,7 @@ paste <( awk '$3=="gene" {print $1,$4,$5,$7,$9}' globodera_pallida.PRJEB123.WBPS
 #Code to convert sample 2 to genome.db
 ```
 #This uses the same approach, but the protein file includes proteins predicted from alternatively spliced transcripts.  Since primary transcripts are of the most importance and we want to prevent artificial duplication, we will grep "t1" when the fasta file is single lines.
-paste <(awk '$3=="gene" {print $1,$4,$5,$7,$9}' 738.polished.mitofixed.repmod.gff3 |sed 's/ID=//g' |sed 's/;/\t/g' |sed 's/pathogens_Gpal_scaffold_//g' |awk '{print $5,NR,$3,$2,$4,$1}' ) <(awk '{print $1}'  738.polished.mitofixed.repmod.aa |tr "\n" "\t" |tr ">" "\n" |sed 's/\t/#/1' |sed 's/\t//g' |sed 's/#/\t/g' |grep "t1" |sort -k1,1V ) |awk '{print ">"$1"@H.glycines@"$6,$2,$3,$4,$5"\n"$8}' |sed '/^$/d' |sed 's/\.t1//g'  |sed 's/-/C/g' |sed 's/+/D/g' >genome.db
+paste <(awk '$3=="gene" {print $1,$4,$5,$7,$9}' 738.polished.mitofixed.repmod.gff3 |sed 's/ID=//g' |sed 's/;/\t/g' |awk '{print $5,NR,$3,$2,$4,$1}' ) <(awk '{print $1}'  738.polished.mitofixed.repmod.aa |tr "\n" "\t" |tr ">" "\n" |sed 's/\t/#/1' |sed 's/\t//g' |sed 's/#/\t/g' |grep "t1" |sort -k1,1V ) |awk '{print ">"$1"@H.glycines@"$6,$2,$3,$4,$5"\n"$8}' |sed '/^$/d' |sed 's/\.t1//g'  |sed 's/-/C/g' |sed 's/+/D/g' >genome.db
 ```
 Beware, the code above assumes that the genes are sorted correctly, yours may be different.
 
@@ -519,7 +519,7 @@ mkdir subject
 mkdir query
 cd query/
 #this creates a file for each scaffold containing gene and strand information
-tr "\n" "\t" <../operon.db |sed 's/>/\n>/g'|awk '{print $1$5,$6}'|sed 's/>//g' |awk '{print >> $2 ".lst"; close($2)}'
+tr "\n" "\t" <../operon.db |sed 's/>/\n>/g'|sed 's/@/\t/g' |awk '{if ($7=="C") { print $1"+",$8}else  {print $1"-",$8}}'|sed 's/>//g' |awk '{print >> $2 ".lst"; close($2)}'
 #gets rid of the extra column
 sed -i 's/ .*//g' *.lst
 #puts all files in this directory listed in input.txt
@@ -529,7 +529,7 @@ ls *lst >input.txt
 
 #repeat the same procedure for the subject
 cd ../subject/
-tr "\n" "\t" <../genome.db |sed 's/>/\n>/g'|awk '{print $1$5,$6}'|sed 's/>//g' |awk '{print >> $2 ".lst"; close($2)}'
+tr "\n" "\t" <../genome.db |sed 's/>/\n>/g'|sed 's/@/\t/g' |awk '{if ($7=="C") { print $1"+",$8}else  {print $1"-",$8}}'|sed 's/>//g' |awk '{print >> $2 ".lst"; close($2)}'
 sed -i 's/ .*//g' *.lst
 ls *lst >input.txt
 paste <(cut -f 1 -d "." input.txt) <(awk '{print "subject/"$1}' input.txt)>subject.ini
@@ -604,7 +604,6 @@ output_path= output
 alignment_method=gg2
 gap_size=15
 cluster_gap=20
-#note level 2 is more easily parsable, but loses some information
 level_2_only=true
 q_value=.05
 ```
@@ -646,26 +645,19 @@ show_tick_labels    = yes
     radius           = 1r
     color            = black
     thickness        = 10p
-    multiplier       = 1e-4
+    multiplier       = 1e-5
     format           = %d
  <tick>
-    spacing        = 1u
-    size           = 30p
+    spacing        = 5u
+    size           = 25p
     show_label     = yes
-    label_size     = 80p
+    label_size     = 25p
     label_offset   = 10p
-    format         = %d
-  </tick>
- <tick>
-    spacing        = .5u
-    size           = 20p
-    show_label     = yes
-    label_size     = 60p
-    label_offset   = 7p
     format         = %d
   </tick>
 
 </ticks>
+
 ```
 bands.conf
 ```
@@ -704,8 +696,9 @@ ideogram.conf
   fill_color       = black
   show_label       = yes
   label_font       = bold
-  label_size       = 120
-  label_parallel   = yes
+  label_size       = 20
+  label_parallel   = no
+
   label_radius = dims(ideogram,radius_outer) + 0.06r
 </ideogram>
 ```
@@ -736,6 +729,110 @@ angle_offset* = -46
 </image>
 <<include /shared/software/GIF/programs/circos/0.69.2/etc/colors_fonts_patterns.conf>>
 ```
+
+# Two files to make, karyotype.conf and syntenicribbons.conf
+
+```
+We are going to extract the genomic positions of the first and last gene in each syntenic fragment.
+To do this we need to modify the gff files to allow for perfect matches full word matches with grep -w
+awk '$3=="gene"' 738.polished.mitofixed.repmod.gff3 |sed 's/;//g' |sed 's/ID=//g' >SCNMod.gff
+awk '$3=="gene"' globodera_pallida.PRJEB123.WBPS7.annotations.gff3 |sed 's/;/\t/g' |sed 's/ID=gene://g' >GpalMod.gff
+```
+Now we are going to use our segments.txt file that iadhore created to create the syntenic ribbons for circos.
+It should look something like this.
+```
+id      multiplicon     genome  list    first   last    order
+1       1       H.glycines      6syntmer        g10101  g10117  0
+2       1       G.pallida       11      GPLIN_000069900 GPLIN_000071600 1
+3       2       H.glycines      000292  g19603  g19628  0
+4       2       G.pallida       54      GPLIN_000273400 GPLIN_000275600 1
+5       3       G.pallida       127     GPLIN_000497100 GPLIN_000499800 0
+6       3       H.glycines      53syntmer       g14365  g14385  1
+7       4       H.glycines      000227  g7191   g7214   0
+8       4       G.pallida       29      GPLIN_000162900 GPLIN_000164500 1
+9       5       G.pallida       507     GPLIN_001087900 GPLIN_001088600 0
+10      5       H.glycines      000265  g7523   g7530   1
+11      6       G.pallida       160     GPLIN_000577800 GPLIN_000579000 0
+12      6       H.glycines      000181  g6403   g6415   1
+13      7       G.pallida       49      GPLIN_000254000 GPLIN_000254600 0
+14      7       H.glycines      000414K g14871  g14877  1
+15      8       H.glycines      000670K g16610  g16619  0
+16      8       G.pallida       40      GPLIN_000213800 GPLIN_000214600 1
+17      9       G.pallida       147     GPLIN_000547400 GPLIN_000548300 0
+18      9       H.glycines      000101  g9167   g9179   1
+```
+
+Essentially the first part of these four scripts are swapping the above columns so that G. pallida genes are always in columns 1, 2, 3, and 4 and H. glycines are in 5, 6, 7, 8, while ditching some irrelevant information.
+```
+less segments.txt |awk 'NR>1' |awk '{if(NR%2) {print "#"$3,$4,$5,$6}else {print $3,$4,$5,$6}}' |tr "\n" "\t" |tr "#" "\n" |awk '{if($5=="G.pallida") {print $5,$6,$7,$8,$1,$2,$3,$4} else {print $1,$2,$3,$4,$5,$6,$7,$8}}' |less
+```
+The above script is part of the four scripts below that extract the the four gene positions.
+```
+less segments.txt |awk 'NR>1' |awk '{if(NR%2) {print "#"$3,$4,$5,$6}else {print $3,$4,$5,$6}}' |tr "\n" " " |tr "#" "\n" |awk '{if($5=="G.pallida") {print $5,$6,$7,$8,$1,$2,$3,$4} else {print $1,$2,$3,$4,$5,$6,$7,$8}}' |awk '{print $3}' |sed '/^$/d' |while read line; do grep -w $line GpalMod.gff; done |awk '{if($7=="+") {print $5} else {print $4}}' >Col3
+less segments.txt |awk 'NR>1' |awk '{if(NR%2) {print "#"$3,$4,$5,$6}else {print $3,$4,$5,$6}}' |tr "\n" " " |tr "#" "\n" |awk '{if($5=="G.pallida") {print $5,$6,$7,$8,$1,$2,$3,$4} else {print $1,$2,$3,$4,$5,$6,$7,$8}}' |awk '{print $4}' |sed '/^$/d' |while read line; do grep -w $line GpalMod.gff; done |awk '{if($7=="+") {print $4} else {print $5}}' >Col4
+less segments.txt |awk 'NR>1' |awk '{if(NR%2) {print "#"$3,$4,$5,$6}else {print $3,$4,$5,$6}}' |tr "\n" " " |tr "#" "\n" |awk '{if($5=="G.pallida") {print $5,$6,$7,$8,$1,$2,$3,$4} else {print $1,$2,$3,$4,$5,$6,$7,$8}}' |awk '{print $7}' |sed '/^$/d' |while read line; do grep -w $line SCNMod.gff; done |awk '{if($7=="+") {print $5} else {print $4}}' >Col7
+less segments.txt |awk 'NR>1' |awk '{if(NR%2) {print "#"$3,$4,$5,$6}else {print $3,$4,$5,$6}}' |tr "\n" " " |tr "#" "\n" |awk '{if($5=="G.pallida") {print $5,$6,$7,$8,$1,$2,$3,$4} else {print $1,$2,$3,$4,$5,$6,$7,$8}}' |awk '{print $8}' |sed '/^$/d' |while read line; do grep -w $line SCNMod.gff; done |awk '{if($7=="+") {print $4} else {print $5}}' >Col8
+
+#This code uses the list from the first step to paste the scaffold names and scaffold positions in the proper orientation as in the example output below (space separated)
+less segments.txt |awk 'NR>1' |awk '{if(NR%2) {print "#"$3,$4,$5,$6}else {print $3,$4,$5,$6}}' |tr "\n" "\t" |tr "#" "\n" |awk '{if($5=="G.pallida") {print $5,$6,$7,$8,$1,$2,$3,$4} else {print $1,$2,$3,$4,$5,$6,$7,$8}}' |awk '{print $2,$6}' |awk 'NR>1' |paste - Col3 Col4 Col7 Col8 |awk '{print $1,$3,$4,$2,$5,$6}' >SyntenicRibbons.conf
+```  
+
+Your end file should be space separated and look  like this.
+<scaffold#> <start position> <end position> <scaffold#> <start position> <end position>
+SyntenicRibbons.conf
+```
+11 75168 141884 6syntmer 8293 67069
+54 20891 142511 000292 141506 243297
+127 6950 165341 53syntmer 166571 252128
+29 18344 100822 000227 40581 121935
+507 27596 67643 000265 1098749 1117756
+160 49531 159235 000181 636286 673554
+49 183367 228811 000414K 142821 163767
+40 154422 211237 000670K 54347 90354
+147 87553 130708 000101 171712 207932
+2 181497 230277 000534K 311054 365249
+8 196946 262443 000431K 40428 110016
+29 146506 295697 000421K 274687 337420
+112 29325 102680 000167 308612 391812
+63 82492 98132 000334 80396 115724
+3 360072 381682 000673K 32550 61735
+64 149917 186398 000327K 375677 403197
+2 108037 151858 000538K 212320 276634
+73 25222 55157 52syntmer 215368 264136
+1 248579 304406 000324 36127 102477
+21 307238 353867 35syntmer 26751 95044
+412 62951 71632 001622K 607692 619348
+438 40971 85597 000244 427997 443265
+25 324014 336805 000380 217592 231019
+423 15708 62803 000167 175861 202193
+etc.
+```
+
+The last file that we need to make is that which describes the scaffolds we want to display.  This subset of scaffolds can be taken from your SyntenicRibbons.conf file.  To get scaffold lengths we can use bioawk, grep and the genome fastas.  Make sure that the scaffold names in this file and the SyntenicRibbons.conf file match.
+```
+ module load bioawk
+ #G.pallidaKaryotype
+ bioawk -c fastx '{print $name,length($seq)}' globodera_pallida.PRJEB123.WBPS7.genomic_softmasked.fa |awk '{print "chr","-",$1,$1,"0",$2,"blue"}' |sed 's/pathogens_Gpal_scaffold_//g' >G.pallidaKaryotype.conf
+
+#H.glycinesKaryotype
+bioawk -c fastx '{print $name,length($seq)}' genome738sl.polished.mitoFixed.fa |awk '{print "chr","-",$1,$1,"0",$2,"green"}' >H.glycinesKaryotype.conf
+
+
+#this just grabs the correct scaffold from the karyotype.conf files above that have a syntenic ribbon in SyntenicRibbons.conf
+  ##Because this prints to a temp file, if you make a mistake, you need to delete the tempKaryotype.conf1 and tempKaryotype.conf2 files before rerunning the sh scripts again.
+awk '{print $1}' SyntenicRibbons.conf|while read line; do echo "awk '\$3==\""$line"\"' G.pallidaKaryotype.conf >>tmpKaryotype.conf1";done >G.pallidaKaryotype.sh
+sh G.pallidaKaryotype.sh
+awk '{print $4}' SyntenicRibbons.conf|while read line; do echo "awk '\$3==\""$line"\"' H.glycinesKaryotype.conf >>tmpKaryotype.conf2";done >H.glycinesKaryotype.sh
+sh H.glycinesKaryotype.sh
+
+
+cat <(sort tmpKaryotype.conf1 |uniq) <(sort tmpKaryotype.conf2 |uniq) >karyotype.conf
+
+```
+
+
+
+
 karyotype.conf
 ```
 chr - scaffold_5 scaffold_5 0 1042978 green
@@ -760,21 +857,49 @@ chr - scaffold_81 scaffold_81 0 383483 green
 chr - scaffold_88 scaffold_88 0 354636 green
 ```
 
-SyntenicRibbons.conf
+# Want to make the circos figure even more pretty?  How about reducing syntenic band overlap so they can be seen more clearly.  Circos comes with an optional utilities suite that makes life easier.
 ```
-scaffold_5 50289 684931 GROS_00001 101602 670579
-scaffold_4 317862 853647 GROS_00006 13870 518353
-scaffold_136 440 239144 GROS_00024 8814 253904
-scaffold_21 304744 586182 GROS_00036 14764 258573
-scaffold_25 19661 306908 GROS_00007 1170 321133
-scaffold_135 21825 256659 GROS_00002 54087 253472
-scaffold_50 224787 450632 GROS_00055 6598 202004
-scaffold_60 1 144600 GROS_00002 482676 618553
-scaffold_4 866976 1060019 GROS_00009 277835 435300
-scaffold_4 76680 204693 GROS_00114 33456 146904
-scaffold_21 151135 294293 GROS_00057 42302 200293
-scaffold_36 413983 601440 GROS_00059 6915 166011
-scaffold_11 287129 437353 GROS_00014 171413 352760
+ wget http://circos.ca/distribution/circos-tools-0.22.tgz
+ tar -zxvf circos-tools-0.22.tgz
+
+ #We will use the G.pallida tmpKaryotype.conf1 file to get the scaffold names that we want grouped together.
+ sort tmpKaryotype.conf1 |uniq|awk '{print $3}' |tr "\n" "," |sed 's/.$//' |awk '{print "circos-tools-0.22/tools/orderchr/bin/orderchr -links SyntenicRibbons.conf -karyotype karyotype.conf - "$0" -static_rx "$0 }' |less
+
+#Then run the command that it generates.
+circos-tools-0.22/tools/orderchr/bin/orderchr -links SyntenicRibbons.conf -karyotype karyotype.conf - 103,1,11,112,117,118,12,127,129,136,140,14,147,160,16,17,18,19,196,20,207,209,211,21,212,2,22,227,228,229,23,236,25,27,289,29,296,297,316,325,327,3,34,35,36,370,37,384,40,408,412,423,42,4,443,44,455,456,46,49,507,529,536,544,54,550,569,58,63,64,65,6,696,72,73,74,75,81,85,8,934,9 -static_rx 103,1,11,112,117,118,12,127,129,136,140,14,147,160,16,17,18,19,196,20,207,209,211,21,212,2,22,227,228,229,23,236,25,27,289,29,296,297,316,325,327,3,34,35,36,370,37,384,40,408,412,423,42,4,443,44,455,456,46,49,507,529,536,544,54,550,569,58,63,64,65,6,696,72,73,74,75,81,85,8,934,9
+```
+#this program then outputs a command that will go in your circos.conf file
+#circos.conf now.
+```
+karyotype = ./karyotype.conf
+chromosomes_units = 100000
+  <<include ideogram.conf>>
+  <<include ticks.conf>>
+  <<include bands.conf>>
+
+  <links>
+  <link>
+    file=SyntenicRibbons.conf
+    radius = 0.98r
+    bezier_radius = 0.1r
+    thickness = 1
+    ribbon = yes
+  </link>
+  </links>
+
+
+
+<image>
+  <<include /shared/software/GIF/programs/circos/0.69.2/etc/image.conf>>
+angle_offset* = -46
+chromosomes_order = 000001,160,75,117,423,112,529,2,30syntmer,001124,000286,000177,000088,000058,16,536,25,412,4,000502,325,370,22,327,296,000168,46,58,72,129,000171,37,696,14,196,000300,211,207,34,934,1,000117,000404,7syntmer,118,36syntmer,55syntmer,22syntmer,23,000614K,000161,000159,3,000037,000066,000151,000592K,000028,000029,85,64,140,000217,227,9,544,002293,40,569,443,507,34syntmer,42,36,147,000073,45syntmer,000032,18,000049,000540,000212,000712,000190,000118,44,54syntmer,000396,000380,73,000220,000227,316,000041,212,384,27,408,209,002368,455,127,103,35,11,000434K,12,000014,136,000083,17,000263,19,000015,20,000047,21,000119,228,000221,229,000688,236,000138,289,35syntmer,29,20syntmer,297,000011,456,000292,49,000019,54,000021,550,000042,63,000139,65,000131,6,000681,74,000194,81,2syntmer,8,000371
+
+
+</image>
+<<include /shared/software/GIF/programs/circos/0.69.2/etc/colors_fonts_patterns.conf>>
+<<include /shared/software/GIF/programs/circos/0.69.2/etc/housekeeping.conf>>
 
 ```
-less segments.txt |awk 'NR>1' |awk '{if(NR%2) {print "#"$3,$4,$5,$6}else {print $3,$4,$5,$6}}' |tr "\n" "\t" |tr "#" "\n" |awk '{if($5=="G.pallida") {print $5,$6,$7,$8,$1,$2,$3,$4} else {print $1,$2,$3,$4,$5,$6,$7,$8}}' |
+This gives us a nice visualization of synteny, as well as an estimate to which the extent of synteny exists between your two species.
+
+![Circos](../../assets/GpallidaSyntenyH.glycinescircos.png)
