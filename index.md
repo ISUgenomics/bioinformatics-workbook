@@ -40,6 +40,7 @@
   * [RNA-Seq example with a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md): Arabidopsis with a genome
   * [RNA-Seq example without a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-without-a-genome.md): Arabidopsis without a genome
   * [Differential Expression Analysis](dataAnalysis/RNA-Seq/RNA-SeqIntro/Differential-Expression-Analysis.md): DESeq2
+  * [ATAC-seq](https://github.com/ISUgenomics/bioinformatics-workbook/blob/master/dataAnalysis/ATAC-seq/ATAC_tutorial.md) in Arabidopsis
 
 ### Data visualization
 

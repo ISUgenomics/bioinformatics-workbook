@@ -17,7 +17,7 @@ Like any other command there are various options available for this command. Mos
 | `-l`      | lists the file names containing the pattern (instead of match).   |
 | `-n`      | prints the line number containing the pattern (instead of match). |
 | `-c`      | counts the number of matches for a pattern                        |
-| `-o`      | only print the mattching pattern 			                        |
+| `-o`      | only print the matching pattern 			                            |
 | `-w`      | forces the pattern to match an entire word.                       |
 | `-x`      | forces patterns to match the whole line.                          |
 
@@ -82,6 +82,13 @@ Unlike previous example, if the word your are searching occurs more than once in
 grep -o "PATTERN" FILENAME
 ```
 
+Now, all sorts of useful information can be obtained by just printing the pattern, instead of entire line. For example, how many times do you see a word in every line:
+
+```
+grep -on "PATTERN" FILENAME | cut -f 1 -d ":" | sort | uniq -c
+```
+This will print line number followed by number of times you see the `PATTERN` in that line.
+
 Now, let us have some fun with `grep`! See what kind of sequences are in `AT_cDNA.fa` file. Do they all seem to belong to same organism? Which organism?
 
 Using `grep` you can also locate all the lines that contain a specific term you are looking for. This is very useful, especially to look for a specific gene among a large number of annotated sequences.
@@ -140,3 +147,53 @@ grep -l "ATG" ./sequences/*.fa
 ```
 
 You can also try some regular expressions related to nucleotide/protein sequences provided earlier to see how it works.
+
+### 8. Finding blank lines
+
+`grep` can also be used to find blank lines. From the `regex` above, you have seen that `^` marks the beginning of a line, while `$` marks the end. So, by searching for `^$` you are looking for lines that have no content (blank).
+
+```
+grep "^$" FILENAME
+```
+
+Similarly, if you want to remove blank lines, you can try:
+
+```
+grep -v "^$" FILENAME
+```
+
+### 9. Finding all the files that contain a term
+
+When dealing with multiple files, you will end up in situations where you want to process subset of files that are of interest. To quickly find those file, knowing a unique term that occurs in them, you can use `grep`
+
+```
+gerp -rl "PATTERN" .
+```
+here `-r` recursively searches all files in sub-folders and `-l`, rather than printing the matching line, prints the filename after the first occurrence. Note the `.` at the end, it tells `grep` to use all the files that are in the directory. The result is that you will have a subset of files that are of interest to you.
+
+If you want files that do not you the term, you can replace `-l` with `-L` (like the option `-v` for negative match). This will list only files that **DO NOT** have any match.
+
+```
+gerp -rL "PATTERN" .
+```
+
+### 10. Print lines before or after the matching term
+
+With the regular `grep` search, you get the line containing the matching term. Sometimes, in order to know the context of this term, it is useful to print either lines before or after the term occurrence. With `-B` (for before) and `-A` (for after), you can specify the number of lines that you want to see.
+
+```
+grep -B 10 "PATTERN" FILENAME
+```
+This will print 10 lines (including the line that has the `PATTERN`) before the match
+
+Similarly, to print lines after the match:
+
+```
+grep -A 10 "PATTERN" FILENAME
+```
+
+You can also combine to get both before and after lines
+
+```
+grep -B 10 -A 10 "PATTERN" FILENAME
+```
