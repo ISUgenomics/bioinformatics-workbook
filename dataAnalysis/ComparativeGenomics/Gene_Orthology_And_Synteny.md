@@ -728,6 +728,7 @@ chromosomes_units = 100000
 angle_offset* = -46
 </image>
 <<include /shared/software/GIF/programs/circos/0.69.2/etc/colors_fonts_patterns.conf>>
+ <<include etc/housekeeping.conf>>
 ```
 
 # Two files to make, karyotype.conf and syntenicribbons.conf
