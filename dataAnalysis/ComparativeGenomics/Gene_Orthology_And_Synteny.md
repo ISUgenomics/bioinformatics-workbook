@@ -330,7 +330,7 @@ paste <( awk '$3=="gene" {print $1,$4,$5,$7,$9}' globodera_pallida.PRJEB123.WBPS
 #Code to convert sample 2 to genome.db
 ```
 #This uses the same approach, but the protein file includes proteins predicted from alternatively spliced transcripts.  Since primary transcripts are of the most importance and we want to prevent artificial duplication, we will grep "t1" when the fasta file is single lines.
-paste <(awk '$3=="gene" {print $1,$4,$5,$7,$9}' 738.polished.mitofixed.repmod.gff3 |sed 's/ID=//g' |sed 's/;/\t/g' |awk '{print $5,NR,$3,$2,$4,$1}' ) <(awk '{print $1}'  738.polished.mitofixed.repmod.aa |tr "\n" "\t" |tr ">" "\n" |sed 's/\t/#/1' |sed 's/\t//g' |sed 's/#/\t/g' |grep "t1" |sort -k1,1V ) |awk '{print ">"$1"@H.glycines@"$6,$2,$3,$4,$5"\n"$8}' |sed '/^$/d' |sed 's/\.t1//g'  |sed 's/-/C/g' |sed 's/+/D/g' >genome.db
+paste <(awk '$3=="gene" {print $1,$4,$5,$7,$9}' 738.polished.mitofixed.repmod.gff3 |sed 's/ID=//g' |sed 's/;/\t/g' |awk '{print $5,NR,$3,$2,$4,$1}' ) <(awk '{print $1}'  738.polished.mitofixed.repmod.aa |tr "\n" "\t" |tr ">" "\n" |sed 's/\t/#/1' |sed 's/\t//g' |sed 's/#/\t/g' |grep "t1" |sort -k1,1V ) |awk '{print ">"$1"@H.glycines@"$6,$2,$3,$4,$5,$6"\n"$8}' |sed '/^$/d' |sed 's/\.t1//g'  |sed 's/-/C/g' |sed 's/+/D/g' >genome.db
 ```
 Beware, the code above assumes that the genes are sorted correctly, yours may be different.
 
