@@ -53,6 +53,10 @@
   * Installation
     * [How do I install a program?](Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
   * HPC
+    * Containers
+        * [Introduction to Containers](Appendix/HPC/Containers/Intro_Singularity.md)
+        * [Creating Containers using Singularity](Appendix/HPC/Containers/creatingContainers.md)
+        * [Modifying exiting containers](Appendix/HPC/Containers/modifyingExistingContainers.md)
     * SLURM
         * [cheatsheat SLURM](/Appendix/HPC/SLURM/slurm-cheatsheat.md)
         * [SLURM job submission dependencies](/Appendix/HPC/SLURM/submitting-dependency-jobs-using-slurm.md)
