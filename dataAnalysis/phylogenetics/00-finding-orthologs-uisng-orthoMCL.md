@@ -138,13 +138,21 @@ $ head -n 1 *.fasta |grep "^>"
 
 ### Running OrthoMCL program
 
-![The overview of running OrthoMCL](assets/Fig4.png)
-
-
-Since we don't want to setup/configure a MySQL server we will use a `docker` container (using the `singularity` program) for running.
+Since we don't want to setup/configure a MySQL server we will use a `docker` container (using the `singularity` program) for running. We will also use another container with all the OrthoMCL programs installed in it.
 
 ```
 module load singularity
-singularity pull docker://docker pull granek/orthomcl
+singularity pull docker://granek/orthomcl
+singularity pull docker://mysql:5.7.20
 ```
- Now this should create a `docker.img` file.  You can rename it if you want, but for this tutorial, we will simply use `docker.img` for simplicity.
+
+This will create 2 `img` files (containers) for the mysql and orthoMCL
+```
+mysql-5.7.20.img
+orthomcl.img
+```
+![The overview of running OrthoMCL](assets/Fig4.png)
+
+
+
+**Fig 2:**  Overview of OrthoMCL pipeline. Here, all orange boxes will per performed using the `orthomcl.img` singularity container and pink boxes in `mysql-5.7.20.img`. The BLAST analysis will be done outside the container to speed up the process.
