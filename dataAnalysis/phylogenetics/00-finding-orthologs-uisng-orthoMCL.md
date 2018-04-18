@@ -4,7 +4,7 @@ This is the first section of Phylogenomics chapter, where we predict orthologs f
 
 Following is the outline for this chapter:
 
-1. Obtaining the gene predictions
+1. Obtaining the data
 2. Cleaning and formating sequences
 3. Running orthoMCL program
 4. Formatting and processing results (for downstream analysis)
@@ -12,7 +12,7 @@ Following is the outline for this chapter:
 
 ### Downloading data
 
-At the time of writing this tutorial, there were 13 RefSeq assemblies available on [NCBI](https://www.ncbi.nlm.nih.gov/assembly/?term=txid5820%5BOrganism%3Aexp%5D), with chromosomal level assembly. We will use them all for finding orthologs. Although we will only need the protein sequences for this section, we will also download the CDS sequences that is necessary for other sections following this chapter.
+At the time of writing this tutorial, there were 13 RefSeq assemblies available on [NCBI](https://www.ncbi.nlm.nih.gov/assembly/?term=txid5820%5BOrganism%3Aexp%5D), with chromosomal level assembly. We will use them all for finding orthologs. Although we will only need the protein sequences for this section, we will also download the CDS sequences that is necessary for other sections following this chapter. This step may vary if you want to use another dataset or custom dataset.
 
 ![Downloading Proteins](assets/Fig2.png)
 
@@ -135,3 +135,16 @@ $ head -n 1 *.fasta |grep "^>"
 >XP_008621913.1
 >XP_001608309.1
 ```
+
+### Running OrthoMCL program
+
+![The overview of running OrthoMCL](assets/Fig4.png)
+
+
+Since we don't want to setup/configure a MySQL server we will use a `docker` container (using the `singularity` program) for running.
+
+```
+module load singularity
+singularity pull docker://docker pull granek/orthomcl
+```
+ Now this should create a `docker.img` file.  You can rename it if you want, but for this tutorial, we will simply use `docker.img` for simplicity.
