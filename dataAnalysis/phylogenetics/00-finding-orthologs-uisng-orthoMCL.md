@@ -155,4 +155,75 @@ orthomcl.img
 
 
 
-**Fig 2:**  Overview of OrthoMCL pipeline. Here, all orange boxes will per performed using the `orthomcl.img` singularity container and pink boxes in `mysql-5.7.20.img`. The BLAST analysis will be done outside the container to speed up the process.
+**Fig 2:**  Overview of OrthoMCL pipeline. Here, all orange boxes will per performed using the `orthomcl.img` singularity container and pink boxes in `mysql-5.7.20.img`. The BLAST analysis (yellow box) will be done outside the container to speed up the process.
+
+#### 1. Clean and filter sequences
+
+For this, we will create a directory where we store the formatted and filtered sequences. We will use `orthomclAdjustFasta` and `orthomclFilterFasta` for these steps.
+
+```
+mkdir -p original complaintFasta
+mv *.fasta original/
+singularity shell orthomcl.img
+cd complaintFasta
+for fasta in ../orginal/*.fasta; do
+orthomclAdjustFasta $(basename ${fasta%.*}) ${fasta} 1
+done
+```
+
+The arguments supplied here are the 8 letter prefix for each file, input file and the field in the fasta file that should be used as identifier (in our case it was the first number so it is  `1`).
+
+For filtering, we will create another directory and save files there:
+
+```
+cd ..
+orthomclFilterFasta complaintFasta 10 20
+```
+
+Here, `10` is the minimum length for protein to keep and `20` is the maximum allowed stop codons in the sequences. This command will generate 2 files: `goodProteins.fasta`, containing all proteins that passed the filtering and `poorProteins.fasta`, containing all rejects.
+
+We can now exit the singularity image shell and run the next step on a cluster.
+
+```
+exit
+```
+
+#### 2. Find similar sequences using BLAST
+
+Depending the size of sequences, you can either split the `goodProteins.fasta` file to smaller bits and run the `blast` step in parallel or run it as single query file against single database (much slower). Here we will just split them to 4 pieces and run them all in a single slurm job.
+
+Load the module and create blast database
+
+```
+module load ncbi-blast
+makeblastdb -in goodProteins.fasta -dbtype prot -parse_seqids -out goodProteins.fasta
+```
+Split the fasta file to 4 parts
+```
+fasta-splitter.pl --n-parts 4 goodProteins.fasta
+```
+
+Generate commands for blast
+```
+for split in goodProteins.part-?.fasta; do
+echo "blastp -db ${split} -query goodProteins.fasta -outfmt 6 -out ${split}.tsv -num_threads 4";
+done > blastp.cmds
+```
+Create SLURM submission script and submit the jobs
+```
+makeSLURMp.py 4 blastp.cmds
+for sub in *.sub; do
+sbatch $sub;
+done
+```
+
+Once these jobs complete, you can merge the results to a single file
+
+```
+cat goodProteins.part-?.fasta.tsv >> blastresults.tsv
+```
+
+The scripts mentioned here are available on our GitHub repo `common_scripts`
+
+
+#### 3. Finding Orthologs:
