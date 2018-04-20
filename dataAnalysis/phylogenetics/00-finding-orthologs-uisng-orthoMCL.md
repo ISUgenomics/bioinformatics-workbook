@@ -142,8 +142,7 @@ Since we don't want to setup/configure a MySQL server we will use a `docker` con
 
 ```
 module load singularity
-singularity pull docker://granek/orthomcl
-singularity pull docker://mysql:5.7.20
+singularity pull --name orthomcl.simg shub://ISU-HPC/orthomcl
 ```
 
 This will create 2 `img` files (containers) for the mysql and orthoMCL
@@ -206,7 +205,7 @@ fasta-splitter.pl --n-parts 4 goodProteins.fasta
 Generate commands for blast
 ```
 for split in goodProteins.part-?.fasta; do
-echo "blastp -db ${split} -query goodProteins.fasta -outfmt 6 -out ${split}.tsv -num_threads 4";
+echo "blastp -db goodProteins.fasta -query ${split} -outfmt 6 -out ${split}.tsv -num_threads 4";
 done > blastp.cmds
 ```
 Create SLURM submission script and submit the jobs
@@ -225,5 +224,170 @@ cat goodProteins.part-?.fasta.tsv >> blastresults.tsv
 
 The scripts mentioned here are available on our GitHub repo `common_scripts`
 
+We will now convert the blast results to format that is needed for uploading to MySQL database
+
+```
+orthomclBlastParser blastresults.tsv ./complaintFasta/ >> similarSequences.txt
+```
+This will generate `similarSequences.txt` file that we will load to MySQL db.
+
 
 #### 3. Finding Orthologs:
+
+
+In this section, we will:
+
+1. Set up the MySQL config file so that orthoMCL knows how to access the database for storing/retrieving information
+2. Start the MySQL server on the container
+3. Setup database/tables for orthoMCL
+4. Load the BLAST results and call pairs
+5. Dump the results (pairs) from the MySQL db as a text file
+6. Stop the server
+7. Run clustering program (MCL)
+
+**Setting up config file**
+
+This is a simple text file, which provides information for OrthoMCL program about, the database and table name to which you're loading the blast results, username and password for the MySQL server and some settings (that you can change)
+
+You can create one as follows:
+```
+cat > orthomcl.config <<END
+dbVendor=mysql
+dbConnectString=dbi:mysql:orthomcl:mysql_local_infile=1:localhost:3306
+dbLogin=root
+dbPassword=my-secret-pw
+similarSequencesTable=SimilarSequences
+orthologTable=Ortholog
+inParalogTable=InParalog
+coOrthologTable=CoOrtholog
+interTaxonMatchView=InterTaxonMatch
+percentMatchCutoff=50
+evalueExponentCutoff=-5
+oracleIndexTblSpc=NONE
+END
+```
+
+or download the one from [here](https://raw.githubusercontent.com/ISU-HPC/orthomcl/master/orthomcl.config):
+```
+curl \
+https://raw.githubusercontent.com/ISU-HPC/orthomcl/master/orthomcl.config > orthomcl.config
+```
+**Start MySQL server**
+
+We use a singularity instance (new feature in version 2.4) to run the MySQL server service.
+
+```
+module load singularity
+singularity pull --name mysql.simg shub://ISU-HPC/mysql
+```
+
+Create local directories for MySQL. These will be bind-mounted into the container and allow other
+containers to connect to the database via a local socket as well as for the database to be stored on the
+host filesystem and thus persist between container instances.
+
+```
+mkdir -p ${PWD}/mysql/var/lib/mysql ${PWD}/mysql/run/mysqld
+```
+
+Start the singularity instance for the MySQL server
+```
+singularity instance.start --bind ${HOME} \
+--bind ${PWD}/mysql/var/lib/mysql/:/var/lib/mysql \
+--bind ${PWD}/mysql/run/mysqld:/run/mysqld \
+./mysql.simg mysql
+```
+
+Run the container startscript to initialize and start the MySQL server. Note that initialization is only done the first time and the script will automatically skip initialization if it is not needed. This command must be run each time the MySQL server is needed (e.g., each time the container is spun-up to provide the MySQL server).
+```
+singularity run instance://mysql
+```
+
+
+**Setup database and tables (schema) for running orthoMCL**
+
+
+create a database named `orhtomcl`
+
+```
+singularity exec instance://mysql mysqladmin create orthomcl
+```
+
+
+Since we already have the singularity image for the orthoMCL, we will use the scripts in there to install schema for the database and create all the necessary tables for running next steps.
+
+```
+singularity shell --bind $PWD \
+  --bind ${PWD}/mysql/run/mysqld:/run/mysqld \
+  ./orthomcl.simg
+```
+ install schema
+ ```
+ orthomclInstallSchema orthomcl.config
+ ```
+
+
+
+**Load BLAST results and call pairs**
+
+Next, load the parsed blast results:
+
+```
+orthomclLoadBlast orthomcl.config similarSequences.txt
+```
+
+Call pairs:
+
+```
+orthomclPairs orthomcl.config pairs.log cleanup=no
+```
+
+**Get the results**
+
+```
+orthomclDumpPairsFiles orthomcl.config
+```
+
+The output will be a directory (called `pairs`) and a file (called `mclinput`). The pairs directory, will
+contain three files: `orthologs.txt`, `coorthologs.txt`, `inparalogs.txt`. Each of these files describes
+pair-wise relationships between proteins. They have three columns: `Protein 1`, `Protein 2` and
+normalized similarity score between them. The `mclinput` file contains the identical information as
+the three files in pairs directory but merged as a single file and in a format accepted by the mcl program.
+
+
+**Stop the MySQL server**
+
+Stopping server:
+
+```
+singularity instance.stop mysql
+```
+
+**Run the clustering program**
+
+MCL program (Dongen 2000) will be used to cluster the pairs extracted in the previous steps to determine
+ortholog groups.
+```
+mcl mclInput --abc -I 1.5 -o groups_1.5.txt
+```
+Here, `--abc` refers to the input format (tab delimited, 3 fields format), `-I` refers to inflation value and `-o` refers to output file name. Inflation value will determine how tight the clusters will be. It can range from 1 to 6, but most publications use values between 1.2 -1.5 for detecting orthologous groups.
+The final step is to name the groups called by mcl program.
+
+```
+orthomclMclToGroups OG1.5_ 1000 < groups_1.5.txt > named_groups_1.5.txt
+```
+Here, `OG1.5_` is the prefix we use to name the ortholog group, `1000` is the starting number for the
+ortholog group and last 2 fields are input and output file name respectively.
+
+
+If you want to test this for other inflation values, you can create a loop and run these commands again:
+
+```
+for I in 2.0 2.5 3.0 3.5; do
+mcl mclInput --abc -I $I -o groups_$I.txt;
+orthomclMclToGroups OG$I_ 1000 < groups_$I.txt > named_groups_$I.txt;
+done
+```
+
+### Formatting and processing results
+
+Next, we will filter the results to select only 1:1 orthologs. For this, we will need a frequency table constructed form the `named_groups_1.5.txt` file.
