@@ -138,7 +138,7 @@ $ head -n 1 *.fasta |grep "^>"
 
 ### Running OrthoMCL program
 
-Since we don't want to setup/configure a MySQL server we will use a `docker` container (using the `singularity` program) for running. We will also use another container with all the OrthoMCL programs installed in it.
+Since we don't want to manually install the orthoMCL program and run, We will use the singularity container (made by ISU-HPC) .
 
 ```
 module load singularity
@@ -154,7 +154,7 @@ orthomcl.simg
 
 
 
-**Fig 2:**  Overview of OrthoMCL pipeline. Here, all orange boxes will per performed using the `orthomcl.img` singularity container and pink boxes in `mysql-5.7.20.img`. The BLAST analysis (yellow box) will be done outside the container to speed up the process.
+**Fig 2:**  Overview of OrthoMCL pipeline. Here, all orange boxes will per performed using the `orthomcl.simg` singularity container and pink boxes in `mysql.simg`. The BLAST analysis (yellow box) will be done outside the container to speed up the process.
 
 #### 1. Clean and filter sequences
 
@@ -163,7 +163,7 @@ For this, we will create a directory where we store the formatted and filtered s
 ```
 mkdir -p original complaintFasta
 mv *.fasta original/
-singularity shell orthomcl.img
+singularity shell orthomcl.simg
 cd complaintFasta
 for fasta in ../orginal/*.fasta; do
 orthomclAdjustFasta $(basename ${fasta%.*}) ${fasta} 1
