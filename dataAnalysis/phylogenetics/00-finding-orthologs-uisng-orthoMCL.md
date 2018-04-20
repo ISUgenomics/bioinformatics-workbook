@@ -390,4 +390,15 @@ done
 
 ### Formatting and processing results
 
-Next, we will filter the results to select only 1:1 orthologs. For this, we will need a frequency table constructed form the `named_groups_1.5.txt` file.
+Next, we will filter the results to select only 1:1 orthologs. For this, we will need a frequency table constructed form the `named_groups_1.5.txt` file. We can create a simple bash script that counts the number of time each species occurs in each line and create frequency table. Script is available [here](https://github.com/ISUgenomics/common_scripts/blob/master/CopyNumberGen.sh)
+
+```
+CopyNumberGen.sh named_groups_2.5.txt > named_groups_2.5_freq.txt
+```
+
+Since our downstream analysis requires single copy orthologs (SCOs), we will now select the orhtolog groups that have exactly one gene per organism and present in all of them.
+
+
+```
+ExtractSCOs.sh named_groups_2.5_freq.txt > scos_list_2.5.txt
+```
