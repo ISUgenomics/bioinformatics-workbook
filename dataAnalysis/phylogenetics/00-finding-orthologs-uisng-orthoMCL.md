@@ -145,11 +145,11 @@ module load singularity
 singularity pull --name orthomcl.simg shub://ISU-HPC/orthomcl
 ```
 
-This will create 2 `img` files (containers) for the mysql and orthoMCL
+This will create `simg` file (containers) for the orthoMCL program
 ```
-mysql-5.7.20.img
-orthomcl.img
+orthomcl.simg
 ```
+
 ![The overview of running OrthoMCL](assets/Fig4.png)
 
 
