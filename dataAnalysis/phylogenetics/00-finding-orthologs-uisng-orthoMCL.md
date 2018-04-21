@@ -418,3 +418,27 @@ By counting the number of lines in `scos_list_${i}.txt` file, you can count how 
 ```
 wc -l scos_list_*.txt
 ```
+
+in our case, we see that `1.5` value gave us higest number of SCOs
+```
+scos_list_1.5.txt	3329
+scos_list_2.0.txt	3272
+scos_list_2.5.txt	3240
+scos_list_3.0.txt	3213
+scos_list_3.5.txt	3176
+scos_list_4.0.txt	3150
+scos_list_4.5.txt	3114
+scos_list_5.0.txt	3079
+scos_list_5.5.txt	3057
+scos_list_6.0.txt	3042
+```
+
+This makes sense, as lower the inflation value, tighter the clusters created by `mcl` program. We will use the `1.5` value file for the next step.
+
+For each of these SCO ortholog group, we will extract the fasta sequence, and write them to separate file. Eg., `OG1297` has 1 gene per oragnism. We will create a file `OG1297.fa` with 13 sequences each belonging differnt spp. We will create 3,329 such files, required for next step of alignment and tree reconstruction.
+
+
+
+
+
+
