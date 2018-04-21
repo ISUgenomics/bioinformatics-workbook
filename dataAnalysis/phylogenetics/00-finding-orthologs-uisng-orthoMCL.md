@@ -379,10 +379,11 @@ Here, `OG1.5_` is the prefix we use to name the ortholog group, `1000` is the st
 ortholog group and last 2 fields are input and output file name respectively.
 
 
-If you want to test this for other inflation values, you can create a loop and run these commands again:
+If you want to test this for other inflation values (ranges from 1.5-6.0), you can create a loop and run this with different `I` values.
 
+For running it on all possible `I` values from 1.5-6 wiht increments of 0.5:
 ```
-for I in 2.0 2.5 3.0 3.5; do
+for I in $(seq 1.5 0.5 6); do
 mcl mclInput --abc -I $I -o groups_$I.txt;
 orthomclMclToGroups OG$I_ 1000 < groups_$I.txt > named_groups_$I.txt;
 done
