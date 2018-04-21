@@ -437,6 +437,20 @@ This makes sense, as lower the inflation value, tighter the clusters created by 
 
 For each of these SCO ortholog group, we will extract the fasta sequence, and write them to separate file. Eg., `OG1297` has 1 gene per oragnism. We will create a file `OG1297.fa` with 13 sequences each belonging differnt spp. We will create 3,329 such files, required for next step of alignment and tree reconstruction.
 
+Create a list of orthogroups that have SCOs using the file created from the last step
+
+```
+cut -f 1 scos_list_1.5.txt| grep -v "OG_name" | sed 's/$/:/' > scos.ids
+grep -Fw -f scos.ids named_groups_1.5.txt > named_groups_1.5_scos.txt
+```
+
+Extract the sequences:
+```
+ExtractSeq.sh -o orhtogroups named_groups_1.5_scos.txt  goodProteins.fasta
+```
+
+This will create a folder named `orhtogroups`, with 3,329 files each containing 13 sequences. This will be the results from this chapter that we will use in the next excercise of tree reconstruction.
+
 
 
 
