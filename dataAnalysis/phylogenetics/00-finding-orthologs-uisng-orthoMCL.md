@@ -1,6 +1,6 @@
 # Finding orthologs using OrthoMCL program
 
-This is the first section of Phylogenomics chapter, where we predict orthologs from the gene predictions for carrying out downstream analysis. We will use OrthoMCL program for this purpose, using the Singularity container. We will use many different species of plasmodium as an example dataset for this exercise.
+This is the first section of Phylogenomics chapter, where we predict orthologs from the genes of whole genomes. Although, there are several methods to predict orthologs, we will primarily use OrthoMCL program. Since orthoMCL depends on MySQL, we will use Singularity containers for running the MySQL server (and OrthoMCL). We will use many different species of _Plasmodium_ as an example dataset for this exercise.
 
 Following is the outline for this chapter:
 
@@ -10,9 +10,9 @@ Following is the outline for this chapter:
 4. Formatting and processing results (for downstream analysis)
 
 
-### Downloading data
+## 1. Downloading data
 
-At the time of writing this tutorial, there were 13 RefSeq assemblies available on [NCBI](https://www.ncbi.nlm.nih.gov/assembly/?term=txid5820%5BOrganism%3Aexp%5D), with chromosomal level assembly. We will use them all for finding orthologs. Although we will only need the protein sequences for this section, we will also download the CDS sequences that is necessary for other sections following this chapter. This step may vary if you want to use another dataset or custom dataset.
+At the time of writing this tutorial, there were 13 RefSeq assemblies available for _Plasmodium_ spp. on [NCBI](https://www.ncbi.nlm.nih.gov/assembly/?term=txid5820%5BOrganism%3Aexp%5D) (with chromosomal level assembly). We will use them all for finding orthologs. We will only need the protein sequences for this section. This step may vary if you want to use another dataset or custom dataset so you may have to change the below commands accordingly.
 
 ![Downloading Proteins](assets/Fig2.png)
 
@@ -42,7 +42,7 @@ Following is the summary:
 | GCF_900002375.1_PBANKA01_protein.faa                   | *Plasmodium berghei* ANKA       | 4,896    |
 | GCF_900002385.1_PY17X01_protein.faa                    | *Plasmodium yoelii*             | 5,926    |
 
-### Cleaning and formatting the data to desired specifications
+## 2. Cleaning and formatting the data to desired specifications
 
 Next step is to clean up this data so that it is easier to handle for both program and for the user. Since these files are identified by accessing id, we will rename them to some easily readable name. We will use the first 4 letters of genus name and first 4 letters of spp name (eg: `plaviva` for *Plasmodium vivax* Sal-1).
 
@@ -63,7 +63,7 @@ GCF_900002335.2_PCHAS01_protein.faa
 GCF_900002375.1_PBANKA01_protein.faa
 GCF_900002385.1_PY17X01_protein.faa
 ```
-##### script to rename files
+#### script to rename files
 
 ```
 for faa in *.faa; do
@@ -136,7 +136,7 @@ $ head -n 1 *.fasta |grep "^>"
 >XP_001608309.1
 ```
 
-### Running OrthoMCL program
+## 3. Running OrthoMCL program
 
 Since we don't want to manually install the orthoMCL program and run, We will use the singularity container (made by ISU-HPC) .
 
@@ -156,7 +156,7 @@ orthomcl.simg
 
 **Fig 2:**  Overview of OrthoMCL pipeline. Here, all orange boxes will per performed using the `orthomcl.simg` singularity container and pink boxes in `mysql.simg`. The BLAST analysis (yellow box) will be done outside the container to speed up the process.
 
-#### 1. Clean and filter sequences
+### A. Clean and filter sequences
 
 For this, we will create a directory where we store the formatted and filtered sequences. We will use `orthomclAdjustFasta` and `orthomclFilterFasta` for these steps.
 
@@ -187,7 +187,7 @@ We can now exit the singularity image shell and run the next step on a cluster.
 exit
 ```
 
-#### 2. Find similar sequences using BLAST
+### B. Find similar sequences using BLAST
 
 Depending the size of sequences, you can either split the `goodProteins.fasta` file to smaller bits and run the `blast` step in parallel or run it as single query file against single database (much slower). Here we will just split them to 4 pieces and run them all in a single slurm job.
 
@@ -232,20 +232,20 @@ orthomclBlastParser blastresults.tsv ./complaintFasta/ >> similarSequences.txt
 This will generate `similarSequences.txt` file that we will load to MySQL db.
 
 
-#### 3. Finding Orthologs:
+### C. Finding Orthologs:
 
 
 In this section, we will:
 
-1. Set up the MySQL config file so that orthoMCL knows how to access the database for storing/retrieving information
-2. Start the MySQL server on the container
-3. Setup database/tables for orthoMCL
-4. Load the BLAST results and call pairs
-5. Dump the results (pairs) from the MySQL db as a text file
-6. Stop the server
-7. Run clustering program (MCL)
+i. Set up the MySQL config file so that orthoMCL knows how to access the database for storing/retrieving information
+ii. Start the MySQL server on the container
+iii. Setup database/tables for orthoMCL
+iv. Load the BLAST results and call pairs
+v. Dump the results (pairs) from the MySQL db as a text file
+vi. Stop the server
+vii. Run clustering program (MCL)
 
-**Setting up config file**
+#### i. Setting up config file
 
 This is a simple text file, which provides information for OrthoMCL program about, the database and table name to which you're loading the blast results, username and password for the MySQL server and some settings (that you can change)
 
@@ -272,7 +272,7 @@ or download the one from [here](https://raw.githubusercontent.com/ISU-HPC/orthom
 curl \
 https://raw.githubusercontent.com/ISU-HPC/orthomcl/master/orthomcl.config > orthomcl.config
 ```
-**Start MySQL server**
+#### ii. Start MySQL server
 
 We use a singularity instance (new feature in version 2.4) to run the MySQL server service.
 
@@ -303,7 +303,7 @@ singularity run instance://mysql
 ```
 
 
-**Setup database and tables (schema) for running orthoMCL**
+#### iii. Setup database and tables (schema) for running orthoMCL
 
 
 create a database named `orhtomcl`
@@ -327,7 +327,7 @@ singularity shell --bind $PWD \
 
 
 
-**Load BLAST results and call pairs**
+#### iv. Load BLAST results and call pairs
 
 Next, load the parsed blast results:
 
@@ -341,7 +341,7 @@ Call pairs:
 orthomclPairs orthomcl.config pairs.log cleanup=no
 ```
 
-**Get the results**
+#### v. Get the results
 
 ```
 orthomclDumpPairsFiles orthomcl.config
@@ -354,7 +354,7 @@ normalized similarity score between them. The `mclinput` file contains the ident
 the three files in pairs directory but merged as a single file and in a format accepted by the mcl program.
 
 
-**Stop the MySQL server**
+#### vi. Stop the MySQL server
 
 Stopping server:
 
@@ -362,7 +362,7 @@ Stopping server:
 singularity instance.stop mysql
 ```
 
-**Run the clustering program**
+#### vii. Run the clustering program
 
 MCL program (Dongen 2000) will be used to cluster the pairs extracted in the previous steps to determine
 ortholog groups.
@@ -389,7 +389,7 @@ orthomclMclToGroups OG${i}_ 1000 < groups_${i}.txt > named_groups_${i}.txt;
 done
 ```
 
-### Formatting and processing results
+## 4. Formatting and processing results
 
 Next, we will filter the results to select only 1:1 orthologs. For this, we will need a frequency table constructed form the `named_groups_1.5.txt` file. We can create a simple bash script that counts the number of time each species occurs in each line and create frequency table. Script is available [here](https://github.com/ISUgenomics/common_scripts/blob/master/CopyNumberGen.sh)
 
@@ -450,9 +450,3 @@ ExtractSeq.sh -o orhtogroups named_groups_1.5_scos.txt  goodProteins.fasta
 ```
 
 This will create a folder named `orhtogroups`, with 3,329 files each containing 13 sequences. This will be the results from this chapter that we will use in the next excercise of tree reconstruction.
-
-
-
-
-
-
