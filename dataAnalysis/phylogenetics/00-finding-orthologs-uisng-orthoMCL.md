@@ -383,9 +383,9 @@ If you want to test this for other inflation values (ranges from 1.5-6.0), you c
 
 For running it on all possible `I` values from 1.5-6 wiht increments of 0.5:
 ```
-for I in $(seq 1.5 0.5 6); do
-mcl mclInput --abc -I $I -o groups_$I.txt;
-orthomclMclToGroups OG$I_ 1000 < groups_$I.txt > named_groups_$I.txt;
+for i in $(seq 1.5 0.5 6); do
+mcl mclInput --abc -I ${i} -o groups_${i}.txt;
+orthomclMclToGroups OG${i}_ 1000 < groups_${i}.txt > named_groups_${i}.txt;
 done
 ```
 
@@ -402,4 +402,19 @@ Since our downstream analysis requires single copy orthologs (SCOs), we will now
 
 ```
 ExtractSCOs.sh named_groups_2.5_freq.txt > scos_list_2.5.txt
+```
+
+If you used all possible inflation values, you can run it in a loop:
+
+```
+for i in $(seq 1.5 0.5 6); do
+CopyNumberGen.sh named_groups_${i}.txt > named_groups_$[i}_freq.txt;
+ExtractSCOs.sh named_groups_${i}_freq.txt > scos_list_${i}.txt;
+done
+```
+
+By counting the number of lines in `scos_list_${i}.txt` file, you can count how many single copy orthologs were predicted for various inflation values.
+
+```
+wc -l scos_list_*.txt
 ```
