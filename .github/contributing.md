@@ -11,7 +11,7 @@ To begin, here are links to answer some of the common questions:
 
 # How you can help:
 
-### 1. Testing published workflows:
+### 1. Testing/reviewing published workflows:
 
 If you are following a particular protocol, please let us know if it worked or not. Also, we would be grateful if you let us know if changes were necessary to get it working! If you are familiar with GitHub, you can also make changes and send us the pull request. We only request that you include why the changes were necessary when submitting your pull request.
 
@@ -25,7 +25,7 @@ In bioinformatics there are many ways to answer the same question. It is also tr
 
 ### 4. Adding new protocols/methods
 
-Are we missing a favorite topic of yours? Well, we were just waiting for you to write that section! We are very glad that you noticed it, please add your section of interest and send us the pull request. 
+Are we missing a favorite topic of yours? Well, we were just waiting for you to write that section! We are very glad that you noticed it, please add your section of interest and send us the pull request.
 
 ### 5. Suggesting topics
 
@@ -45,15 +45,15 @@ Please send a [GitHub Pull Request to bioinformatics-workbook](https://github.co
 Always write a clear log message for your commits. One-line messages are fine for small changes, but bigger changes should look like this:
 
     $ git commit -m "A brief summary of the commit
-    > 
+    >
     > A paragraph describing what changed and its impact."
 
 ## Writing conventions
 
 Start reading our code and you'll get the hang of it. We can optimize for readability.
 
-  * Self promotion is not allowed, unless you're Heng Li!
-  * Use best practices whenever possible. There might be many ways to do things, but the goal here is to make it smooth for beginners without being too confusing. 
-  * To consistently find the images for each chapter, images should be saved in the `assets` folder of each section f
-  * Methods should be generalized, but we also strongly encourage public datasets used as examples. Please avoid using private datasets that are not accessible, so others can replicate your analysis. 
-
+  * Self promotion is not allowed, unless you're _Heng Li_!
+  * Use best practices whenever possible. There might be many ways to do things, but the goal here is to make it **smooth for beginners without being too confusing**.
+  * To consistently find the images for each chapter, images should be saved in the `assets` folder of each section. **Please no copyrights!**
+  * Methods should be generalized, but we also strongly encourage _public datasets used as examples_. Please avoid using private datasets that are not accessible, so others can replicate your analysis.
+  *
