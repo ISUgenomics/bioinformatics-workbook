@@ -1,4 +1,4 @@
-# How to contribute
+## How to contribute
 
 We are really glad you're reading this! We need volunteer contributors for making the bioinformatics workbook successful! Please do not hesitate to contact us via email or issues. We want you working on the stuff that you're excited about.
 
@@ -9,7 +9,7 @@ To begin, here are links to answer some of the common questions:
   * Funding agencies (coming soon)
   * Issues and bugs
 
-# How you can help:
+## How you can help
 
 ### 1. Testing/reviewing published workflows:
 
