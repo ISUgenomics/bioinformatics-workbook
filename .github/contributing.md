@@ -65,5 +65,5 @@ Start reading our code and you'll get the hang of it. We optimize for readabilit
   * Self promotion is not allowed, unless you're Heng Li!
   * Use best practices whenever possible. There might be many ways to do things, but the goal here is to make it smooth for beginners without being very confusing. 
   * So that we can consistently find the images for each chapter in a known location, images should be saved in the `assets` folder of the section for whcih the chapter belongs to. 
-  * Methods should be generalized, but we also encourage public data as exaple for running tutorial methods. 
+  * Methods should be generalized, but we also strongly encourage public datasets used as example for explaining mehtods. Please avoid using private datasets that are not accessible for others to replicate your analysis. 
 
