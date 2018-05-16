@@ -15,6 +15,6 @@ Happy writing!
 
 ## Funding
 
-* Primary support comes from  SCINet project of the USDA Agricultural Research Service, ARS (USDA-ARS) project number
-0500-00093-001-00-D
-* Additional support from National Science Foundation (NSF) IOS #1546858
+* Primary support from  SCINet project of the United States Department of Agriculture - Agricultural Research Service, (USDA-ARS) project number
+[0500-00093-001-00-D](https://www.ars.usda.gov/research/project/?accnNo=426574)
+* Additional support from National Science Foundation (NSF) [IOS#1546858](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1546858)
