@@ -8,7 +8,7 @@ Please start your exploration at the [index](https://isugenomics.github.io/bioin
 
 ## Collaborative etiquette
 
-This project is an Open Source and encourages everyone to be fearless in their contributions. However, we have some ground rules to make this a happy, collaborative place for everyone. Our contribution guidelines are listed [here](https://github.com/ISUgenomics/bioinformatics-workbook/blob/master/contributing.md). Please pay attention to the [Code of Conduct](https://github.com/ISUgenomics/bioinformatics-workbook/blob/master/contributing.md#code-of-conduct). Don't hesitate to reach out for us if you need help (email GIFhelp@iastate.edu; twitter isugif).
+This project is an Open Source and encourages everyone to be fearless in their contributions. However, we have some ground rules to make this a happy, collaborative place for everyone. Our contribution guidelines are listed [here](https://github.com/ISUgenomics/bioinformatics-workbook/blob/master/contributing.md). Please pay attention to the [Code of Conduct](https://github.com/ISUgenomics/bioinformatics-workbook/blob/master/CODE_OF_CONDUCT.md). Don't hesitate to reach out for us if you need help at gifhelp@iastate.edu or tweet @isugif).
 
 Happy writing!
 
