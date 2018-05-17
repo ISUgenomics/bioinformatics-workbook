@@ -2,12 +2,16 @@
 
 We are really glad you're reading this! We need volunteer contributors for making the bioinformatics workbook successful! Please do not hesitate to contact us via email or issues. We want you working on the stuff that you're excited about.
 
-To begin, here are links to answer some of the common questions:
+Making contribution is simple:
 
-  * Roadmap (coming soon)
-  * Our vision (coming soon)
-  * Funding agencies (coming soon)
-  * Issues and bugs
+   1. Fork the repo on GitHub
+   2. Clone the project to your own machine
+   3. Commit changes to your own branch
+   4. Push your work back up to your fork
+   5. Submit a Pull request so that we can review your changes
+
+NOTE: Be sure to merge the latest from "upstream" before making a pull request!
+
 
 ## How you can help
 
@@ -21,7 +25,7 @@ Typos and bad grammar can make a methods section difficult to read. If you have 
 
 ### 3. Contributing to sections of published methods
 
-In bioinformatics there are many ways to answer the same question. It is also true that using a particular method over another may influence the final results. Hence, we encourage the addition of alternative methods to the exisiting workflows that may be more adaptable to your organism or circumstances. Otherwise, please follow existing conventions, and explain why any methodological changes may be necessary.
+In bioinformatics there are many ways to answer the same question. It is also true that using a particular method over another may influence the final results. Hence, we encourage the addition of alternative methods to the existing workflows that may be more adaptable to your organism or circumstances. Otherwise, please follow existing conventions, and explain why any methodological changes may be necessary.
 
 ### 4. Adding new protocols/methods
 
@@ -55,7 +59,7 @@ Start reading our code and you'll get the hang of it. We can optimize for readab
   * Self promotion is not allowed, unless you're _Heng Li_!
   * Use best practices whenever possible. There might be many ways to do things, but the goal here is to make it **smooth for beginners without being too confusing**.
   * To consistently find the images for each chapter, images should be saved in the `assets` folder of each section. **Please no copyrights!**
-  * Methods should be generalized, but we also strongly encourage _public datasets used as examples_. Please avoid using private datasets that are not accessible, so others can replicate your analysis.
+  * Methods should be generalized, but we also strongly encourage _public datasets used as examples_. Please avoid using private datasets that are not accessible, allowing others to replicate your tutorials.
 
 ## Code of Conduct:
 
