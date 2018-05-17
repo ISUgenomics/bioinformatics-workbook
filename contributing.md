@@ -12,6 +12,8 @@ Making contribution is simple:
 
 NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
+If you're comfortable making contributions any other way, please feel free to do it your way and send us the pull request, we will gladly review the changes.
+
 
 ## How you can help
 
