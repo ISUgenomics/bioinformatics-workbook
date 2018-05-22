@@ -24,9 +24,28 @@ There will be 4 files (paired) generated upon completion of these commands.
 
 
 ## 1. Oases/Velvet
-Oases is a de novo transcriptome assembler designed to produce transcripts from short read sequencing technologies, such as Illumina
+Oases is a de novo transcriptome assembler designed to produce transcripts from short read sequencing technologies, such as Illumina. This has 3 steps, first you run `velveth` to create hash, then you run `velvetg` to make assemblies and finally run the `oases` to generate transcriptome assembly.
 
-Generate has
+Run velveth
+```
+module load velvet
+velveth velvet-oases 21,71,10 \
+  -shortPaired -fastq -separate ../R1_pairedout.fastq ../R2_pairedout.fastq
+  -shortPaired2 -fastq -separate ../R1_pairedout.fastq ../R2_pairedout.fastq
+```
+Run velvetg
+```
+for dir in velvet-oases*; do
+  velvetg $dir -read_trkg yes -ins_length 200;
+done
+```
+Run Oases
+```
+for dir in velvet-oases*; do
+  oases $f -min_trans_lgth 100 -ins_length 200;
+done
+```
+
 
 ## 2. SOAPdenovo-Trans
 SOAPdenovo-Trans is a de novo transcriptome assembler basing on the SOAPdenovo framework, adapt to alternative splicing and different expression level among transcripts.The assembler provides a more accurate, complete and faster way to construct the full-length transcript sets.
