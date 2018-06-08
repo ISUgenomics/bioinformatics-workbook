@@ -165,7 +165,7 @@ mkdir -p original complaintFasta
 mv *.fasta original/
 singularity shell orthomcl.simg
 cd complaintFasta
-for fasta in ../orginal/*.fasta; do
+for fasta in ../original/*.fasta; do
 orthomclAdjustFasta $(basename ${fasta%.*}) ${fasta} 1
 done
 ```
