@@ -408,7 +408,7 @@ If you used all possible inflation values, you can run it in a loop:
 
 ```
 for i in $(seq 1.5 0.5 6); do
-CopyNumberGen.sh named_groups_${i}.txt > named_groups_$[i}_freq.txt;
+CopyNumberGen.sh named_groups_${i}.txt > named_groups_${i}_freq.txt;
 ExtractSCOs.sh named_groups_${i}_freq.txt > scos_list_${i}.txt;
 done
 ```
