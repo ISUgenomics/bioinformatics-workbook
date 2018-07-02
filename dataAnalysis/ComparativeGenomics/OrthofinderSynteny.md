@@ -575,4 +575,4 @@ cp /work/GIF/software/programs/circos/0.69-4/etc/housekeeping.conf .
 circos -conf circos.conf
 ```
 
-![Circos](../../assets/E.coliSynteny)
+![Circos](../../assets/E.coliSynteny.png)
