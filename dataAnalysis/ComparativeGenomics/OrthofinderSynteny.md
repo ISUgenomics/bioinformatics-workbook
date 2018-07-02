@@ -504,7 +504,7 @@ show_tick_labels    = yes
    radius           = 1r
    color            = black
    thickness        = 10p
-   multiplier       = 1e-5
+   multiplier       = 1e-4
    format           = %d
 <tick>
    spacing        = 10u
@@ -548,7 +548,7 @@ ideogram.conf
          thickness        = 4r
    </break>
  </spacing>
- radius           = 0.84r
+ radius           = 0.74r
  thickness        = 80p
  fill             = yes
  stroke_color     = white
@@ -574,3 +574,5 @@ cp /work/GIF/software/programs/circos/0.69-4/etc/housekeeping.conf .
 
 circos -conf circos.conf
 ```
+
+![Circos](../../assets/E.coliSynteny)
