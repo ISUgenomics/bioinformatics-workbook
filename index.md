@@ -36,15 +36,15 @@
     * [Create Index for all worksheets](dataWrangling/microsoftExcel/generate-index-sheet-linking-all-spreadsheets-in-excel.md)
 
 ### Data analysis
-  * [Gene orthology, synteny, and visualization with opscan, iadhore, and circos](dataAnalysis/Gene_Orthology_And_Synteny.md)
-  * [Gene orthology, synteny, and visualization with orthofinder, iadhore, and circos](dataAnalysis/OrthofinderSynteny.md)
-  * [Gene overlap significance testing with R Gene_overlap package](dataAnalysis/Gene_Category_Overlap_Fishers_exact_testing.md)
-  * [Helitron identification in a genome sequence](dataAnalysis/Helitron_Scanner.md)    
-  * [DNA transposon annotation with Inverted-Repeats Finder](dataAnalysis/InvertedRepeatsFinderForDNATransposonAnnotation.md)
-  * [LTR retrotransposon annoatation with LTR-Finder](dataAnalysis/LTRFinder.md)
-  * [Repeat annotation from next-gen sequencing reads using RepeatExplorer](dataAnalysis/RepeatExplorer.md)
-  * [De-novo repeat identification and annotation from genome assemblies using RepeatModeler and RepeatMasker ](dataAnalysis/RepeatModeler_RepeatMasker.md)
-  * [Tandem duplication annotation in a genome assembly using Mummer and RedTandem](dataAnalysis/Tandem_Duplication_Detection.md)
+  * [Gene orthology, synteny, and visualization with opscan, iadhore, and circos](dataAnalysis/ComparativeGenomics/Gene_Orthology_And_Synteny.md)
+  * [Gene orthology, synteny, and visualization with orthofinder, iadhore, and circos](dataAnalysis/ComparativeGenomics/OrthofinderSynteny.md)
+  * [Gene overlap significance testing with R Gene_overlap package](dataAnalysis/ComparativeGenomics/Gene_Category_Overlap_Fishers_exact_testing.md)
+  * [Helitron identification in a genome sequence](dataAnalysis/ComparativeGenomics/Helitron_Scanner.md)    
+  * [DNA transposon annotation with Inverted-Repeats Finder](dataAnalysis/ComparativeGenomics/InvertedRepeatsFinderForDNATransposonAnnotation.md)
+  * [LTR retrotransposon annoatation with LTR-Finder](dataAnalysis/ComparativeGenomics/LTRFinder.md)
+  * [Repeat annotation from next-gen sequencing reads using RepeatExplorer](dataAnalysis/ComparativeGenomics/RepeatExplorer.md)
+  * [De-novo repeat identification and annotation from genome assemblies using RepeatModeler and RepeatMasker ](dataAnalysis/ComparativeGenomics/RepeatModeler_RepeatMasker.md)
+  * [Tandem duplication annotation in a genome assembly using Mummer and RedTandem](dataAnalysis/ComparativeGenomics/Tandem_Duplication_Detection.md)
   * [RNA-Seq example with a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md): Arabidopsis with a genome
   * [RNA-Seq example without a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-without-a-genome.md): Arabidopsis without a genome
   * [Differential Expression Analysis](dataAnalysis/RNA-Seq/RNA-SeqIntro/Differential-Expression-Analysis.md): DESeq2
