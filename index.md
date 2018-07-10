@@ -47,6 +47,8 @@
     * [Repeat annotation from next-gen sequencing reads using RepeatExplorer](dataAnalysis/ComparativeGenomics/RepeatExplorer.md)
     * [De-novo repeat identification and annotation from genome assemblies using RepeatModeler and RepeatMasker ](dataAnalysis/ComparativeGenomics/RepeatModeler_RepeatMasker.md)
     * [Tandem duplication annotation in a genome assembly using Mummer and RedTandem](dataAnalysis/ComparativeGenomics/Tandem_Duplication_Detection.md)
+  * Genome Assembly
+    * [Genome scaffolding using synteny with pyscaf](dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md): E. coli and Arabidopsis genome scaffolding
   * RNA-Seq analysis
     * [RNA-Seq example with a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md): Arabidopsis with a genome
     * [RNA-Seq example without a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-without-a-genome.md): Arabidopsis without a genome
