@@ -1,9 +1,6 @@
 # Pyscaf is a genome scaffolding program that can scaffold assemblies based on synteny, long reads, and short reads.
 
-Dependencies: <brk\>
-Python 2.7 <brk\>
-python FastaIndex <brk\>
-LAST assembler <brk\>
+Dependencies: Python 2.7,python FastaIndex, py-pillow, LAST assembler
 
 ### Load the dependencies and needed files
 ```
@@ -180,8 +177,8 @@ scaffold00011   242324  4       NZ_AIGG01000086.1 NZ_AIGG01000087.1 NZ_AIGG01000
 
 ##############################################################################
 ```
-There is also a nice dotplot output if there aren't too many scaffolds <brk\>
-![Scaffolded E.coli genome](../../assets/E.coliGenomeDotPlot)
+There is also a nice dotplot output if there aren't too many scaffolds.
+![Scaffolded E.coli genome](../../assets/E.coliGenomeDotPlot.png)
 
 ##  PyScaf also works on larger genomes rather quickly
 Though genomes at the size of 1Gbp the scaffolding decreases in speed significantly. Here I'll scaffold a fragmented Arabidopsis genome assembly with a chromosome level Arabidopsis genome assembly.
