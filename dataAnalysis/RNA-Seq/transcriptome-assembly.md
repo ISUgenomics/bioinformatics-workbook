@@ -127,4 +127,9 @@ IDBA-Tran is an iterative De Bruijn Graph De Novo short read assembler for trans
 ## 6. Cufflinks
 
 
-Use the merged bam file from Step 4 (Triniyt Genome Guided), for this step.
+Use the merged bam file from Step 4 (Trinity Genome Guided), for this step.
+
+```
+module load cufflinks
+cufflinks merged_SRRs.bam
+```
