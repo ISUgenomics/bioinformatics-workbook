@@ -9,6 +9,7 @@ Note, PROSITE is needed for LTR retroelement annotation, but not necessary <br/>
 ### Get your genome
 ```
 #I will be using the Araport11 Arabidopsis genome
+wget https://www.arabidopsis.org/download_files/Genes/TAIR10_genome_release/TAIR10_chromosome_files/TAIR10_chr_all.fas
 TAIR10_chr_all.fas
  ```
 

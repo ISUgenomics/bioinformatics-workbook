@@ -36,9 +36,13 @@ Are we missing a favorite topic of yours? Well, we were just waiting for you to 
 
 ### 5. Suggesting topics
 
-If you're working on a project and you're stuck with not knowing how to proceed, then please provide us the list of topics for which you may need methods. We will add it to our list or increase the method's priority in our development of this workbook.  
+If you're working on a project and you're stuck with not knowing how to proceed, then please provide us the list of topics for which you may need methods. We will add it to our list or increase the method's priority in our development of this workbook.
 
-### 6. Anything missing that may make the workbook more useful?
+### 6. Sharing your methods with us
+
+Not time to write or add methods? No problem! Just send us your methods/protocols of doing things, either as published papers, simple writeup, weblink, wikipage, whatever the form it is. We will try to convert it and add it our workbook, crediting you! You will also be added as contributor.
+
+### 7. Anything missing that may make the workbook more useful?
 
 It can be anything, please feel free to get in touch with us! We will be more than happy to hear your opinion and adjust the workbook to make it more suitable to your needs.
 
