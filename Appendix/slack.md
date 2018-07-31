@@ -27,11 +27,27 @@ The thin left panel has the teams that you have joined.  The thick left panel co
 4. **#Hash #tag #everything**, that way when you search you can search with the hash to find what you want
 5. the symbol on the right next to the search bar that is a circle with an i in the middle will get you back to channel contents (highlights, pinned items, files etc)
 6. Pin important posts and documents and results
-7. Add useful documents (powerpoints, papers etc)
 8. if someone forgot to hash you can post right after them and hash for them, it will get searchers close to the post
 9. While searching click on the time/date to take you to archived posts
 10. **Don't forget to Hash everything**
 11. You can copy a previous post to quote it by copying its link and including it in the next message you write
+
+
+## Why do some people hate Slack?
+
+Recently had a conversation with a two individuals that I highly respect one running a bioinformatics core and the other a PI running a lab.  Both didn't like Slack but really wanted to.  Based on their common experience, here is a short list of reason why you and your group may not need Slack to increase communication.
+
+1. There are fewer than 4 people in your group with an imbalance in knowledge.
+
+Here is the logic.  Slack if implemented well means less frustration for new members of a group or experienced members trying out an unfamiliar protocol that someone in the group knows well.  
+
+**Example 1**
+Person A is working on a problem and spends an hour banging his/her head against the wall.  Person A asks in Slack if anyone has overcome this problem.  Person B replies with "Oh yeah, I hate that, see this documentation here or try this."
+
+**Example 2**
+Person A is just starting a new problem and doesn't want to try to figure it out so just asks on slack exactly how to do it.  Person B spends lots and lots of time explaining step by step how to solve the problem that Person A is capable of doing with a little effort.
+
+In Example 2 above, Person B will hate slack as this individual will not be able to get anything of their own work done but will be constantly answering questions.
 
 
 ## More Slack Resources

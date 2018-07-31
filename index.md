@@ -22,8 +22,6 @@
   * Transferring data
     * [Downloading with wget](dataAcquisition/FileTransfer/downloading-files-via-wget.md)
 
-
-
 ### Data Wrangling
   * FASTA(Q) manipulations
     * [Determine Sequence Lengths](dataWrangling/fastaq-manipulations/calculate-sequence-lengths-in-a-fasta-file.md)
@@ -48,7 +46,8 @@
     * [De-novo repeat identification and annotation from genome assemblies using RepeatModeler and RepeatMasker ](dataAnalysis/ComparativeGenomics/RepeatModeler_RepeatMasker.md)
     * [Tandem duplication annotation in a genome assembly using Mummer and RedTandem](dataAnalysis/ComparativeGenomics/Tandem_Duplication_Detection.md)
   * Genome Assembly
-    * [Canu](dataAnalysis/GenomeAssembly/LongRead/Canu.md)
+    * [GenomeScope to estimate genome size](dataAnalysis/GenomeAssembly/genomescope.md)
+    * [Canu for long read assembly](dataAnalysis/GenomeAssembly/LongRead/Canu.md)
     * [Genome scaffolding using synteny with pyscaf](dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md): E. coli and Arabidopsis genome scaffolding
   * RNA-Seq analysis
     * [RNA-Seq example with a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md): Arabidopsis with a genome
@@ -57,13 +56,16 @@
   * [ATAC-seq](https://github.com/ISUgenomics/bioinformatics-workbook/blob/master/dataAnalysis/ATAC-seq/ATAC_tutorial.md) in Arabidopsis
 
 ### Data visualization
+* [Viewing files remotely without transferring](Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 
 ### Appendix
   * Useful programs
     * [Introduction to GitHub](Appendix/github/introgithub.md)
     * [Introduction to Slack](Appendix/slack.md)
+    * [How to use Markdown](Appendix/Markdown.md)
   * Scripting and command line
     * [Bioawk Basics](Appendix/bioawk-basics.md)
+    * [Introduction to Version Control and Github](Appendix/github/githubBasics.md)
   * Installation
     * [How do I install a program?](Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
   * HPC
@@ -76,4 +78,11 @@
         * [SLURM job submission dependencies](/Appendix/HPC/SLURM/submitting-dependency-jobs-using-slurm.md)
     * PBS-Torque
         * [cheatsheat Torque](Appendix/HPC/pbstorque/submitting-dependency-jobs-using-pbs-torque.md)
+    * Miscellaneous
+        * [Passwordless SSH](Appendix/HPC/password-less-ssh-login.md)
+    * Introduction to UNIX
+        * [Unix basics 1](Appendix/unix-basics-1.md)  
+        * [Unix basics 2](Appendix/unix-basics-2.md)
+        * [Unix basics 3 (grep)](Appendix/unix-basics-3.md)
+        * [Unix basics 4 (sed)](Appendix/unix-basics-4.md)
   * [Other website links of interest](Appendix/OtherLinks.md)

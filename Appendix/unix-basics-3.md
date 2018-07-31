@@ -167,14 +167,14 @@ grep -v "^$" FILENAME
 When dealing with multiple files, you will end up in situations where you want to process subset of files that are of interest. To quickly find those file, knowing a unique term that occurs in them, you can use `grep`
 
 ```
-gerp -rl "PATTERN" .
+grep -rl "PATTERN" .
 ```
 here `-r` recursively searches all files in sub-folders and `-l`, rather than printing the matching line, prints the filename after the first occurrence. Note the `.` at the end, it tells `grep` to use all the files that are in the directory. The result is that you will have a subset of files that are of interest to you.
 
 If you want files that do not you the term, you can replace `-l` with `-L` (like the option `-v` for negative match). This will list only files that **DO NOT** have any match.
 
 ```
-gerp -rL "PATTERN" .
+grep -rL "PATTERN" .
 ```
 
 ### 10. Print lines before or after the matching term
