@@ -36,10 +36,15 @@ These steps can be run individual if you specifiy the (-step) parameter as defin
 
 Let us assemble a bacterial genome [Bacillus thuringiensis strain: HS18-1](https://www.ncbi.nlm.nih.gov/sra/?term=SRR2093876). This particular genome is interesting because it shows insecticidal activity against Diptera.  The raw data contains 1.5G of data and the genome size is 6.4 mb.  The assembly can be found on [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_001182785.1).  Therefore, we will have over 200x coverage, plenty for a genome assembly with canu.  Canu recommends 30-60x minimum coverage.
 
-#### Download the data from SRA
+#### Download the data from ENA
+
+The European Nucleotide Archive has the files already in fastq format and it is easy to download.
+The main page with this project data is [PRJNA288953](https://www.ebi.ac.uk/ena/data/view/PRJNA288953)
+We are only going to take the pacbio data which is the 3rd file link under the '''Read Files''' tab.
+
 
 ```
-
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR209/006/SRR2093876/SRR2093876_subreads.fastq.gz
 ```
 
 #### Running Canu
@@ -47,6 +52,15 @@ Let us assemble a bacterial genome [Bacillus thuringiensis strain: HS18-1](https
 The name of the module will vary here and you should check to see what version you are using.  In this tutorial we used version 1.7 with java/1.8.0_121
 
 ```
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --time=24:00:00
+#SBATCH --mem=64G
+#SBATCH --mail-user=YOUREMAILADDRESS
+#SBATCH --mail-type=begin
+#SBATCH --mail-type=end
+#SBATCH --error=JobName.%J.err
+#SBATCH --output=JobName.%J.out
 module load canu
 
 canu -p Bt2 -d Bt2_assembly genomeSize=6.2m  -pacbio-raw SRR2093876_subreads.fastq.gz
@@ -65,7 +79,31 @@ You can read all of this from the quick start and documentation for Canu but her
   * -nanopore-corrected
 
 
+#### OUTPUT
+Canu took about half an hour to run this dataset.  The output looked like this.
 
+```
+Bt2_assembly]$ ls
+Bt2.contigs.fasta   Bt2.contigs.layout.readToTig  Bt2.gkpStore      Bt2.report                 Bt2.unitigs.bed    Bt2.unitigs.layout            canu-logs     correction
+Bt2.contigs.gfa     Bt2.contigs.layout.tigInfo    Bt2.gkpStore.err  Bt2.trimmedReads.fasta.gz  Bt2.unitigs.fasta  Bt2.unitigs.layout.readToTig  canu.out      trimming
+Bt2.contigs.layout  Bt2.correctedReads.fasta.gz   Bt2.gkpStore.gkp  Bt2.unassembled.fasta      Bt2.unitigs.gfa    Bt2.unitigs.layout.tigInfo    canu-scripts  unitigging
+```
+
+You can get a sense of progress on your larger datasets by looking at the canu-scripts folder.  The final script is canu.12.sh.  
+
+```
+Bt2_assembly/canu-scripts/
+canu.01.out  canu.02.out  canu.03.out  canu.04.out  canu.05.out  canu.06.out  canu.07.out  canu.08.out  canu.09.out  canu.10.out  canu.11.out  canu.12.out
+canu.01.sh   canu.02.sh   canu.03.sh   canu.04.sh   canu.05.sh   canu.06.sh   canu.07.sh   canu.08.sh   canu.09.sh   canu.10.sh   canu.11.sh   canu.12.sh
+```
+
+The assembled contigs are in Bt2.contigs.fasta.  Recall we set the -p prefix parameter to Bt2.  Other useful files include:
+
+* Bt2.unassembled.fasta   These are reads that weren't assembled.  
+* Bt2.report              This file contains information about each step.
+
+
+Below I grabbed the contigs that appear to be Circular representing plasmids.
 ```
 grep ">" Bt2_assembly/Bt2.contigs.fasta  | grep Circular=yes
 >tig00000137 len=515061 reads=2993 covStat=742.81 gappedBases=no class=contig suggestRepeat=no suggestCircular=yes
