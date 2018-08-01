@@ -48,6 +48,7 @@
   * Genome Assembly
     * [GenomeScope to estimate genome size](dataAnalysis/GenomeAssembly/genomescope.md)
     * [Canu for long read assembly](dataAnalysis/GenomeAssembly/LongRead/Canu.md)
+      * [Canu on XSEDE bridges machine](dataAnalysis/GenomeAssembly/LongRead/Canu_bridges.md)
     * [Genome scaffolding using synteny with pyscaf](dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md): E. coli and Arabidopsis genome scaffolding
   * RNA-Seq analysis
     * [RNA-Seq example with a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md): Arabidopsis with a genome
@@ -85,4 +86,7 @@
         * [Unix basics 2](Appendix/unix-basics-2.md)
         * [Unix basics 3 (grep)](Appendix/unix-basics-3.md)
         * [Unix basics 4 (sed)](Appendix/unix-basics-4.md)
+    * XSEDE
+        * [What is XSEDE, and how do I get an allocation](Appendix/HPC/xsede/xsede.md)
+
   * [Other website links of interest](Appendix/OtherLinks.md)
