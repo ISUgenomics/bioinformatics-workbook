@@ -38,6 +38,10 @@
     * [Gene orthology, synteny, and visualization with opscan, iadhore, and circos](dataAnalysis/ComparativeGenomics/Gene_Orthology_And_Synteny.md)
     * [Gene orthology, synteny, and visualization with orthofinder, iadhore, and circos](dataAnalysis/ComparativeGenomics/OrthofinderSynteny.md)
     * [Gene overlap significance testing with R Gene_overlap package](dataAnalysis/ComparativeGenomics/Gene_Category_Overlap_Fishers_exact_testing.md)
+  * MetaGenomics
+    * [Intro to Metagenomics](dataAnalysis/Metagenomics/MetagenomicsP1.md)
+    * [Qiime2](dataAnalysis/Metagenomics/Qiime2.md)
+    * [DADA2](dataAnalysis/Metagenomics/Dada2.md)
   * Genomic Repeats
     * [Helitron identification in a genome sequence](dataAnalysis/ComparativeGenomics/Helitron_Scanner.md)    
     * [DNA transposon annotation with Inverted-Repeats Finder](dataAnalysis/ComparativeGenomics/InvertedRepeatsFinderForDNATransposonAnnotation.md)
