@@ -1,3 +1,5 @@
+# QIIME2
+
 ---
 title: "Amplicon analysis with QIIME2"
 excerpt: "An example workflow using QIIME2 version 2017.7"
