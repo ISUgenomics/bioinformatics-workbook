@@ -1,3 +1,5 @@
+# DADA2
+
 ---
 title: "Amplicon analysis with Dada2"
 excerpt: "An example workflow using Dada2"

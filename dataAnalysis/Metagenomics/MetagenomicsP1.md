@@ -1,3 +1,5 @@
+# Introduction to Metagenomics
+
 ---
 title: "Metagenomics tutorial part 1: Quality control, assembly and mapping"
 excerpt: "An example workflow for assembly based metagenomics"
