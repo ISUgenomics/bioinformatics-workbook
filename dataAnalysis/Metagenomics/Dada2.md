@@ -1048,4 +1048,6 @@ TODO
 
 ## Further Reading
 
-* [Original Tutorial by Benjamin](https://benjjneb.github.io/dada2/tutorial.html)
+* [Original Tutorial by Benjamin Callahan](https://benjjneb.github.io/dada2/tutorial.html)
+* [Tutorial by Adam Rivers](https://usda-ars-gbru.github.io/Microbiome-workshop/tutorials/amplicon/)
+* [DADA2 Manuscript](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/)
