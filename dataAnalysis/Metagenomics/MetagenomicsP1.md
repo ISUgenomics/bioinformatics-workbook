@@ -5,7 +5,7 @@ layout: single
 author: "Adam Rivers"
 ---
 By Adam Rivers
-{% include toc %}
+
 
 # Overview
 Shotgun metagenomics data can be analyzed using several different approaches. Each approach is best suited for a particular group of questions. The methodological approaches can be broken down into three broad areas: read-based approaches, assembly-based approaches and detection-based approaches. This tutorial takes an assembly-based approach. The key points of the approaches are listed in this table:

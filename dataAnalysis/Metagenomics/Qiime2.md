@@ -6,7 +6,7 @@ author: "Adam Rivers"
 
 ---
 By Adam Rivers, Designed from the official [QIIME2 tutorials](https://docs.qiime2.org/2017.7/tutorials/)
-{% include toc %}
+
 
 
 **Why QIIME 2?** There are a number of great software packages for general amplicon analysis.

@@ -4,7 +4,7 @@ excerpt: "An example workflow using Dada2"
 layout: single
 ---
 
-{% include toc %}
+
 
 This is a first draft of an Amplicon sequencing tutorial the
 ARS Microbiome workshop. It is modified from the Dada2 tutorial created
