@@ -34,6 +34,8 @@
     * [Create Index for all worksheets](dataWrangling/microsoftExcel/generate-index-sheet-linking-all-spreadsheets-in-excel.md)
 
 ### Data analysis
+  * Alignment
+    * [Blast Command Line Basic Example](dataAnalysis/blast/blastExample.md)
   * Comparative Genomics
     * [Gene orthology, synteny, and visualization with opscan, iadhore, and circos](dataAnalysis/ComparativeGenomics/Gene_Orthology_And_Synteny.md)
     * [Gene orthology, synteny, and visualization with orthofinder, iadhore, and circos](dataAnalysis/ComparativeGenomics/OrthofinderSynteny.md)
