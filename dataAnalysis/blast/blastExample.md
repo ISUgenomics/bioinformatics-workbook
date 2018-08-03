@@ -23,8 +23,9 @@ gunzip GCA_002994505.1_ASM299450v1_genomic.fna.gz
 Manually type out the C-lectin gene in the Paper and add a fasta header.  This is just the first part of the gene starting from the start site.
 
 ```
->C-lectin
-actgctgttgaggacactgctgttgaggaaactgctgttgaagacactgctgttggaggaactgctgttgaggaaactgctgttgaagacactgctgttgaggaaactgctgttgaggaactgccgttgaggaaactgctgttgaggacactgctgttgaggacacggctgttgaggaca
+>C-LECTIN
+MKTLLILSVVLCAALSVRAAAVVPAEAATAQLGDKAAPEPEAVKDTAVEDTAVEETAVEDTAVEETAVEDTAVEETAVEDTAVEETAVEDTAVEDTAVEDTAVEDTAVEDTAVEETAVEDTAVEDTAVEDTAVAAGRPAGLRQTRLSFCLDGWQSFSGKCYFLANHPDSWANAERFCASYEGSLASVGSIWEYNFLQRMVKTGGHAFAWIGGYYFQGEWRWEDGSRFDY
+SNWDTPRSTAYYQCLLLNSQVSMGWSNNGCNMNFPFVCQVRQLNC
 ```
 Put this into a file using nano or vim
 
