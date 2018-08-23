@@ -24,10 +24,8 @@ Line 2: Sequence data
 ```
 ---
 ## Examples
-```
-Line 1: starts with “>” followed by ID  
-Line 2: Sequence data
-```
+
+
 
 ```bash
 >gi|296581|emb|Z22600.1| D.tigrina homeodomain mRNA
@@ -49,14 +47,14 @@ AGDEGKLNSAKKAACDFSEGIRNIEHHQCSDKDLNPTENHATERHPEKCPRISVANVHVEPCGTDARASS
 ---
 ## Common Errors that occur with this file type
 
-* Program requires the sequences to all be on a single but the fasta file is on multiple lines
-* Program requies the sequences to be on multiple lines with a string length per line less than 80 characters but the sequences are written on a single lines
+* Program requires the sequences to be all on a single line but the fasta file is on multiple lines
+* Program requires the sequences to be on multiple lines with a string length per line less than 80 characters but the sequences are written on a single line
 
 ---
 
 # FASTQ File Format
 
-FASTQ files are similar to FASTA but contain the quality score of the sequence data (only nucleotide sequences). The format contains two additional lines beyond FASTA format.
+FASTQ files are similar to FASTA but also contain the quality score of the sequence data (only nucleotide sequences). The format contains two additional lines beyond FASTA format.
 
 ```
 Line 1: starts with “@” followed by ID  
@@ -64,10 +62,8 @@ Line 2: Sequence data
 Line 3: Starts with “+”       rest of the description is optional  
 Line 4:Quality score for each base in the sequence
 ```
-
-Text file format for storing sequences and its quality scores (only nucleotide sequences)
-File extension is .fastq or .fq
-4 lines per entry
+---
+## Example
 
 ```
 @HISEQ:402:H147CADXX:1:1101:1250:2208 1:N:0:CGATGT
@@ -79,18 +75,27 @@ CCCFFFFFH#4AFIJJJJJJJJIJJJJJJJJJJJJJJJJJJHHHHHHFFFFFFFEEEEED
 ## Quality score
 
 * Probability of an error in base calling
-* Higher score means low probability of error
+* Higher score means lower probability of error
+* Quality scores are often represented as ASCII characters
+* Here are the ASCII characters in left-to-right increasing order of quality:
+
+```
+!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+```
+
+
+* The rule for converting an ASCII character to an integer varies
 * Different types of encoding available (Sanger, Phred, etc..)
 * Different sequencing technologies use different encoding
 
-For more information on Quality Score encoding see [Fastq Quality score Encoding](introduction/fastqquality-Score-encoding.md)
+For more information on Quality Score encoding see [Fastq Quality score Encoding](introduction/fastqquality-score-encoding.md)
 
 
 ---
 
-# GFF3: General Feature Format
+# GFF or General Feature Format
 
-This is a nine column tab separated text file that stores information about gene annotation.
+This is a nine column tab separated text file that stores information about gene annotation. It has several versions which are similar but not compatible
 
 ```
 Column 1  seqID (e.g. chromosome/scaffold, genome id, etc..)  
@@ -103,10 +108,11 @@ Column 7  Strand (+,-,.)
 Column 8  Phase  
 Column 9  List of attributes in the format tag=value. Multiple attributes are separated by “;”
 ```
-Undefined fields are replaced with “.” character
+Undefined fields are replaced with “.” character    
+In GFF3 format, the first line ```## gff -version 3``` is mandatory.
 
 ---
-## Example GFF File
+## Examples
 ```
 ##gff-version 3
 ##date Thu Nov  7 15:29:10 2013
@@ -139,10 +145,8 @@ Chr1	TAIR9	mRNA	799191	802436	.	+	.	ID=AT1G03270.1;Parent=AT1G03270;Name=AT1G032
 Chr1	TAIR9	protein	799191	802436	.	+	.	ID=AT1G03270.1-Protein;Name=AT1G03270.1;Derives_from=AT1G03270.1
 Chr1	TAIR9	exon	799191	799431	.	+	.	Parent=AT1G03270.1
 ```
----
-## Example from GFF3, canonical gene definition by Lincoln Stein
+![](---)
 
-![](https://github.com/The-Sequence-Ontology/Specifications/blob/master/img/figure1.png)
 
 ```
 ##gff-version 3
@@ -194,9 +198,9 @@ ctg123 . CDS	     	   5000  5500  .  +  1  ID=cds00004;Parent=mRNA00003;Name=ede
 ctg123 . CDS	     	   7000  7600  .  +  1  ID=cds00004;Parent=mRNA00003;Name=edenprotein.4
 ```
 ---
-##  More information on GFF files
+##  More information on GFF3 files
 
-* [GFF3 definition](https://raw.githubusercontent.com/The-Sequence-Ontology/Specifications/master/img/figure1.png)
+* [GFF3 definition by Lincoln Stein ](http://www.webcitation.org/getfile?fileid=35b562d24f860c023d8b7c6c7a2bbe23b6f3b56f)
 
 ---
 
