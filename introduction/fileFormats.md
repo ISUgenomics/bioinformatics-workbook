@@ -393,7 +393,7 @@ Flag describes the combination of bitwise FLAGs. Each flag value represent a cer
 
  Each bit is defined in the following table:
 
-![flags](assets/SAM Flag description.png)
+![flags](assets/SAMFlagDescription.png)
 
 For example Flag value of 17 means that the read is mapped on the reverse strand and it has multiple segments. There are tools to convert the combination value to a feature list such as  https://broadinstitute.github.io/picard/explain-flags.html
 
