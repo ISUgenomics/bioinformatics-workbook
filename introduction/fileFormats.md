@@ -23,7 +23,7 @@ Line 1: starts with “>” followed by ID
 Line 2: Sequence data
 ```
 ---
-## Examples
+## Examples for FASTA file
 
 
 
@@ -45,9 +45,9 @@ ESGSATLKDSLSVQLSNLGIVRSMKKNRQTQPQNKSVYIALESDSSEERVNAPDGCSVRDQELFQIAPGG
 AGDEGKLNSAKKAACDFSEGIRNIEHHQCSDKDLNPTENHATERHPEKCPRISVANVHVEPCGTDARASS
 ```
 ---
-## Common Errors that occur with this file type
+## Common Errors that occur with FASTA file
 
-* Program requires the sequences to be all on a single line but the fasta file is on multiple lines
+* Program requires the sequences to be all on a single line but the FASTA file is on multiple lines
 * Program requires the sequences to be on multiple lines with a string length per line less than 80 characters but the sequences are written on a single line
 
 ---
@@ -63,7 +63,7 @@ Line 3: Starts with “+”       rest of the description is optional
 Line 4:Quality score for each base in the sequence
 ```
 ---
-## Example
+## Example for FASTQ file
 
 ```
 @HISEQ:402:H147CADXX:1:1101:1250:2208 1:N:0:CGATGT
@@ -112,7 +112,7 @@ Undefined fields are replaced with “.” character
 In GFF3 format, the first line ```## gff -version 3``` is mandatory.
 
 ---
-## Examples
+## Examples for GFF file
 ```
 ##gff-version 3
 ##date Thu Nov  7 15:29:10 2013
@@ -146,7 +146,7 @@ Chr1	TAIR9	protein	799191	802436	.	+	.	ID=AT1G03270.1-Protein;Name=AT1G03270.1;D
 Chr1	TAIR9	exon	799191	799431	.	+	.	Parent=AT1G03270.1
 ```
 
-Following example is the [canonical gene defined by Lincoln Stein](http://www.webcitation.org/getfile?fileid=35b562d24f860c023d8b7c6c7a2bbe23b6f3b56f)
+Following example is the [canonical gene definition by Lincoln Stein](http://www.webcitation.org/getfile?fileid=35b562d24f860c023d8b7c6c7a2bbe23b6f3b56f)
 ```
 ##gff-version 3
 ##sequence-region   ctg123 1 1497228
@@ -208,10 +208,10 @@ GTF is a slight variation on GFF. The first 8 columns are the same.  The 9th col
 * gene_id  
 * transcript_id  
 
-Each attribute consist of a type/value pare which should be separated with exactly one space and should end in ;
+Each attribute consist of a type/value pare which should be separated with exactly one space and should end in ";"
 
 ---
-## GTF format
+## Example for GTF file
 ```
 AB000381 Twinscan  CDS          380   401   .   +   0  gene_id "001"; transcript_id "001.1";
 AB000381 Twinscan  CDS          501   650   .   +   2  gene_id "001"; transcript_id "001.1";
@@ -220,7 +220,7 @@ AB000381 Twinscan  start_codon  380   382   .   +   0  gene_id "001"; transcript
 AB000381 Twinscan  stop_codon   708   710   .   +   0  gene_id "001"; transcript_id "001.1";
 ```
 
-## GFF format for comparison
+## GFF for comparison
 ```
 ctg123 . mRNA            1050  9000  .  +  .  ID=mRNA00001;Parent=gene00001;Name=EDEN.1
 ctg123 . mRNA            1050  9000  .  +  .  ID=mRNA00002;Parent=gene00001;Name=EDEN.2
@@ -236,15 +236,14 @@ VCF is a text file for storing sequence variants, SNPs and InDels. Unlike other 
 
 
 
-* Meta data lines : each line starts with ## and should be followed by key=value pairs  
+* Meta data lines : each line starts with ## followed by key=value pairs  
 * single header line : starts with single # and describes columns in the data lines  
 * data lines: sequence variation data  
-Line 4:Quality score for each base in the sequence
 
 
 ## Meta data lines
 
- should start with a single "fileformat" field
+ Should start with a single "fileformat" line
 
 ```
 ##fileformat=format verstion number
@@ -252,19 +251,19 @@ Line 4:Quality score for each base in the sequence
 it is strongly recommended that meta data includes INFO, FILTER and FORMAT lines.
 
 
-#### INFO
+### INFO
 First four keys are mandatory
 ```
 ##INFO=<ID=GT,Number=number,Type=type,Description="description",Source="source",Version="version">
 ```
 
-#### FILTER
+### FILTER
 
 ```
 ##FILTER=<ID=ID,Description="description">
 ```
 
-#### FORMAT
+### FORMAT
 
 ```
 ##FORMAT=<ID=ID,Number=number,Type=type,Description="description">
@@ -291,7 +290,7 @@ Column 11: sample–2 and so on …
 
 ```
 ---
-## Data line Examples
+### VCF Data line Examples
 
 ```
 Chr1    27767199        .       G       GA      743.73  .       AC=2;AF=1.00;AN=2;BaseQRankSum=-1.985;ClippingRankSum=-0.117;DP=42;FS=0.000;MLEAC=2;MLEAF=1.00;MQ=41.32;MQ0=0;MQRankSum=-1.129;QD=17.71;ReadPosRankSum=-0.195   GT:AD:DP:GQ:PL  1/1:2,30:32:38:781,38,0
@@ -302,7 +301,7 @@ Chr1    27768651        .       A       ATG     1909.73 .       AC=2;AF=1.00;AN=
 
 ---
 
-## Example of VCF file
+## Example for VCF file
 
 ```
 ##fileformat=VCFv4.1
@@ -351,7 +350,7 @@ SAM is a tab limited text file that stores sequence alignments. SAM includes two
 Header lines start with @ and are optional but if present they should be placed prior to alignment lines.    
 Each field has a TAG:Value format.  
 
-#### Header record types
+### Header record types
 
 | Tag |  Description    |
 | :------------- | :------------- |
@@ -361,7 +360,7 @@ Each field has a TAG:Value format.
 |@PG |program|
 | @CO | One line comment|
 
-For more information on Tags and their values please visit [SAM specifications PDF](https://samtools.github.io/hts-specs/SAMv1.pdf)
+More information on Tags and their values can be found at  [SAM specifications PDF](https://samtools.github.io/hts-specs/SAMv1.pdf)
 
 ---
 
@@ -429,7 +428,7 @@ The POS indicate that the read aligns start at position 5 on the reference. The 
 ```
 
 ---
-## SAM file Example
+## Example for SAM file
 ```
 @HD     VN:1.0  SO:unsorted
 @PG     ID:GSNAP        PN:gsnap        VN:2014-06-10   CL:gsnap -d TAIR10 --dir=./GSNAPdb//TAIR10 --failed-input=./GSNAPout//1ab-1_failed_alignments -t 4 -N 1 -B 5 -m 5 --part=0/8 --input-buffer-size=1000000 --output-buffer-size=1000000 -A sam --split-output=./GSNAPout//OUT.gsnap.1ab-1_CGATGT_L008_R1_001.fastq.0.8 .//1ab-1_CGATGT_L008_R1_001.fastq .//1ab-1_CGATGT_L008_R2_001.fastq
@@ -448,14 +447,14 @@ HISEQ:496:C4KY7ACXX:8:1101:1606:2994    133     *       0       0       *       
 
 
 ## More information
->>>>>>> Andrew6
+
 
 [SAM specifications PDF](https://samtools.github.io/hts-specs/SAMv1.pdf)
 
 ---
-# BAM
+# BAM: Binary Alignemtn Map
 
-BAM is the binary format for storing sequencing alignments.  It has a smaller storage footprint and needs to be decompressed to be human readable.
+BAM is the binary format of a SAM file.  It has a smaller storage footprint and needs to be decompressed to be human readable.
 
 
 [Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)
