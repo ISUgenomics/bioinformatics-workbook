@@ -23,11 +23,9 @@ Line 1: starts with “>” followed by ID
 Line 2: Sequence data
 ```
 ---
-## Examples
-```
-Line 1: starts with “>” followed by ID  
-Line 2: Sequence data
-```
+## Examples for FASTA file
+
+
 
 ```bash
 >gi|296581|emb|Z22600.1| D.tigrina homeodomain mRNA
@@ -47,16 +45,16 @@ ESGSATLKDSLSVQLSNLGIVRSMKKNRQTQPQNKSVYIALESDSSEERVNAPDGCSVRDQELFQIAPGG
 AGDEGKLNSAKKAACDFSEGIRNIEHHQCSDKDLNPTENHATERHPEKCPRISVANVHVEPCGTDARASS
 ```
 ---
-## Common Errors that occur with this file type
+## Common Errors that occur with FASTA file
 
-* Program requires the sequences to all be on a single but the fasta file is on multiple lines
-* Program requies the sequences to be on multiple lines with a string length per line less than 80 characters but the sequences are written on a single lines
+* Program requires the sequences to be all on a single line but the FASTA file is on multiple lines
+* Program requires the sequences to be on multiple lines with a string length per line less than 80 characters but the sequences are written on a single line
 
 ---
 
-# FASTQ File Format
+# FASTQ
 
-FASTQ files are similar to FASTA but contain the quality score of the sequence data (only nucleotide sequences). The format contains two additional lines beyond FASTA format.
+FASTQ files are similar to FASTA but also contain the quality score of the sequence data (only nucleotide sequences). The format contains two additional lines beyond FASTA format.
 
 ```
 Line 1: starts with “@” followed by ID  
@@ -64,10 +62,8 @@ Line 2: Sequence data
 Line 3: Starts with “+”       rest of the description is optional  
 Line 4:Quality score for each base in the sequence
 ```
-
-Text file format for storing sequences and its quality scores (only nucleotide sequences)
-File extension is .fastq or .fq
-4 lines per entry
+---
+## Example for FASTQ file
 
 ```
 @HISEQ:402:H147CADXX:1:1101:1250:2208 1:N:0:CGATGT
@@ -79,18 +75,27 @@ CCCFFFFFH#4AFIJJJJJJJJIJJJJJJJJJJJJJJJJJJHHHHHHFFFFFFFEEEEED
 ## Quality score
 
 * Probability of an error in base calling
-* Higher score means low probability of error
+* Higher score means lower probability of error
+* Quality scores are often represented as ASCII characters
+* Here are the ASCII characters in left-to-right increasing order of quality:
+
+```
+!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+```
+
+
+* The rule for converting an ASCII character to an integer varies
 * Different types of encoding available (Sanger, Phred, etc..)
 * Different sequencing technologies use different encoding
 
-For more information on Quality Score encoding see [Fastq Quality score Encoding](introduction/fastqquality-Score-encoding.md)
+For more information on Quality Score encoding see [Fastq Quality score Encoding](fastqquality-score-encoding.md)
 
 
 ---
 
-# GFF3: General Feature Format
+# GFF: General Feature Format
 
-This is a nine column tab separated text file that stores information about gene annotation.
+This is a nine column tab separated text file that stores information about gene annotation. It has several versions which are similar but not compatible
 
 ```
 Column 1  seqID (e.g. chromosome/scaffold, genome id, etc..)  
@@ -103,10 +108,11 @@ Column 7  Strand (+,-,.)
 Column 8  Phase  
 Column 9  List of attributes in the format tag=value. Multiple attributes are separated by “;”
 ```
-Undefined fields are replaced with “.” character
+Undefined fields are replaced with “.” character    
+In GFF3 format, the first line ```## gff -version 3``` is mandatory.
 
 ---
-## Example GFF File
+## Examples for GFF file
 ```
 ##gff-version 3
 ##date Thu Nov  7 15:29:10 2013
@@ -139,11 +145,8 @@ Chr1	TAIR9	mRNA	799191	802436	.	+	.	ID=AT1G03270.1;Parent=AT1G03270;Name=AT1G032
 Chr1	TAIR9	protein	799191	802436	.	+	.	ID=AT1G03270.1-Protein;Name=AT1G03270.1;Derives_from=AT1G03270.1
 Chr1	TAIR9	exon	799191	799431	.	+	.	Parent=AT1G03270.1
 ```
----
-## Example from GFF3, canonical gene definition by Lincoln Stein
 
-![](https://github.com/The-Sequence-Ontology/Specifications/blob/master/img/figure1.png)
-
+Following example is the [canonical gene definition by Lincoln Stein](http://www.webcitation.org/getfile?fileid=35b562d24f860c023d8b7c6c7a2bbe23b6f3b56f)
 ```
 ##gff-version 3
 ##sequence-region   ctg123 1 1497228
@@ -194,10 +197,9 @@ ctg123 . CDS	     	   5000  5500  .  +  1  ID=cds00004;Parent=mRNA00003;Name=ede
 ctg123 . CDS	     	   7000  7600  .  +  1  ID=cds00004;Parent=mRNA00003;Name=edenprotein.4
 ```
 ---
-##  More information on GFF files
+##  More information on GFF3 files
 
-* [GFF3 definition](https://raw.githubusercontent.com/The-Sequence-Ontology/Specifications/master/img/figure1.png)
-
+* [GFF3 definition by Lincoln Stein ](http://www.webcitation.org/getfile?fileid=35b562d24f860c023d8b7c6c7a2bbe23b6f3b56f)
 ---
 
 # GTF: Gene Transfer Formats
@@ -206,8 +208,10 @@ GTF is a slight variation on GFF. The first 8 columns are the same.  The 9th col
 * gene_id  
 * transcript_id  
 
+Each attribute consist of a type/value pare which should be separated with exactly one space and should end in ";"
+
 ---
-## GTF format
+## Example for GTF file
 ```
 AB000381 Twinscan  CDS          380   401   .   +   0  gene_id "001"; transcript_id "001.1";
 AB000381 Twinscan  CDS          501   650   .   +   2  gene_id "001"; transcript_id "001.1";
@@ -216,7 +220,7 @@ AB000381 Twinscan  start_codon  380   382   .   +   0  gene_id "001"; transcript
 AB000381 Twinscan  stop_codon   708   710   .   +   0  gene_id "001"; transcript_id "001.1";
 ```
 
-## GFF format for comparison
+## GFF for comparison
 ```
 ctg123 . mRNA            1050  9000  .  +  .  ID=mRNA00001;Parent=gene00001;Name=EDEN.1
 ctg123 . mRNA            1050  9000  .  +  .  ID=mRNA00002;Parent=gene00001;Name=EDEN.2
@@ -226,11 +230,78 @@ ctg123 . mRNA            1300  9000  .  +  .  ID=mRNA00003;Parent=gene00001;Name
 
 ---
 
-# VCF: Variant Call Formats
+# VCF: Variant Call Format
 
-VCF is a text file for storing sequence variants, SNPs and InDels.  It has **meta-information** lines, a single **header line** describing columns in the data, and the **data lines**.
+VCF is a text file for storing sequence variants, SNPs and InDels. Unlike other formats VCF does not store all of the redundant  genetic data that is shared across the genomes.
 
-## Example VCF
+
+
+* Meta data lines : each line starts with ## followed by key=value pairs  
+* single header line : starts with single # and describes columns in the data lines  
+* data lines: sequence variation data  
+
+
+## Meta data lines
+
+ Should start with a single "fileformat" line
+
+```
+##fileformat=format verstion number
+```
+it is strongly recommended that meta data includes INFO, FILTER and FORMAT lines.
+
+
+### INFO
+First four keys are mandatory
+```
+##INFO=<ID=GT,Number=number,Type=type,Description="description",Source="source",Version="version">
+```
+
+### FILTER
+
+```
+##FILTER=<ID=ID,Description="description">
+```
+
+### FORMAT
+
+```
+##FORMAT=<ID=ID,Number=number,Type=type,Description="description">
+```
+
+---
+
+## Header line
+
+```
+#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  sample1 sample2 ... sampleN
+
+Column 1: CHROM – chromosome name  
+Column 2: POS – position in the chromosome  
+Column 3:  ID – identifier  
+Column 4: REF – reference base(s) in the   reference genome  
+Column 5: ALT – alternate base(s) in the comparing sequence  
+Column 6: QUAL – quality score  
+Column 7: FILTER – filter status  
+Column 8: INFO – additional information  
+Column 9: FORMAT – genotype information  
+Column 10: sample–1  
+Column 11: sample–2 and so on …  
+
+```
+---
+### VCF Data line Examples
+
+```
+Chr1    27767199        .       G       GA      743.73  .       AC=2;AF=1.00;AN=2;BaseQRankSum=-1.985;ClippingRankSum=-0.117;DP=42;FS=0.000;MLEAC=2;MLEAF=1.00;MQ=41.32;MQ0=0;MQRankSum=-1.129;QD=17.71;ReadPosRankSum=-0.195   GT:AD:DP:GQ:PL  1/1:2,30:32:38:781,38,0
+Chr1    27767571        .       CATAT   C       814.73  .       AC=2;AF=1.00;AN=2;DP=46;FS=0.000;MLEAC=2;MLEAF=1.00;MQ=43.25;MQ0=0;QD=4.43      GT:AD:DP:GQ:PL  1/1:0,19:19:64:852,64,0
+Chr1    27768362        .       T       C       1676.77 .       AC=2;AF=1.00;AN=2;DP=39;FS=0.000;MLEAC=2;MLEAF=1.00;MQ=39.97;MQ0=0;QD=31.09     GT:AD:DP:GQ:PL  1/1:0,39:39:99:1705,117,0
+Chr1    27768651        .       A       ATG     1909.73 .       AC=2;AF=1.00;AN=2;DP=52;FS=0.000;MLEAC=2;MLEAF=1.00;MQ=43.32;MQ0=0;QD=18.36     GT:AD:DP:GQ:PL  1/1:0,44:44:99:1947,129,0
+```
+
+---
+
+## Example for VCF file
 
 ```
 ##fileformat=VCFv4.1
@@ -261,82 +332,103 @@ Chr1    27768651        .       A       ATG     1909.73 .       AC=2;AF=1.00;AN=
 
 ```
 ---
-
-## Meta information in VCF file
-
-INFO
-
-```
-##INFO=<ID=GT,Number=number,Type=type,Description="description",Source="source",Version="version">
-##INFO=<ID=DP,Number=1,Type=Integer,Description="Approximate read depth; some reads may have been filtered">
-
-```
----
-
-# ID and Type are mandatory
-
-```
-##INFO=<ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes, for each ALT allele, in the same order as listed">
-##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency, for each ALT allele, in the same order as listed">
-##INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes">
-##INFO=<ID=BaseQRankSum,Number=1,Type=Float,Description="Z-score from Wilcoxon rank sum test of Alt Vs. Ref base qualities">
-##INFO=<ID=ClippingRankSum,Number=1,Type=Float,Description="Z-score From Wilcoxon rank sum test of Alt vs. Ref number of hard clipped bases">
-##INFO=<ID=DP,Number=1,Type=Integer,Description="Approximate read depth; some reads may have been filtered">
-##INFO=<ID=DS,Number=0,Type=Flag,Description="Were any of the samples downsampled?">
-##INFO=<ID=FS,Number=1,Type=Float,Description="Phred-scaled p-value using Fisher's exact test to detect strand bias">
-##INFO=<ID=HaplotypeScore,Number=1,Type=Float,Description="Consistency of the site with at most two segregating haplotypes">
-```
----
-
-## FILTER
-```
-##FILTER=<ID=ID,Description="description">
-##FILTER=<ID=LowQual,Description="Low quality">
-```
-## FORMAT
-```
-##FORMAT=<ID=ID,Number=number,Type=type,Description="description">
-##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Approximate read depth (reads with MQ=255 or with bad mates are filtered)”>
-```
----
-## Header
-
-```
-Column 1: CHROM – chromosome name  
-Column 2: POS – position in the chromosome  
-Column 3:  ID – identifier  
-Column 4: REF – reference base(s) in the   reference genome  
-Column 5: ALT – alternate base(s) in the comparing sequence  
-Column 6: QUAL – quality score  
-Column 7: FILTER – filter status  
-Column 8: INFO – additional information  
-Column 9: FORMAT – genotype information  
-Column 10: sample–1  
-Column 11: sample–2 and so on …  
-
-
-#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  sample1 sample2 ... sampleN
-```
----
-## Data lines Example
-
-```
-Chr1    27767199        .       G       GA      743.73  .       AC=2;AF=1.00;AN=2;BaseQRankSum=-1.985;ClippingRankSum=-0.117;DP=42;FS=0.000;MLEAC=2;MLEAF=1.00;MQ=41.32;MQ0=0;MQRankSum=-1.129;QD=17.71;ReadPosRankSum=-0.195   GT:AD:DP:GQ:PL  1/1:2,30:32:38:781,38,0
-Chr1    27767571        .       CATAT   C       814.73  .       AC=2;AF=1.00;AN=2;DP=46;FS=0.000;MLEAC=2;MLEAF=1.00;MQ=43.25;MQ0=0;QD=4.43      GT:AD:DP:GQ:PL  1/1:0,19:19:64:852,64,0
-Chr1    27768362        .       T       C       1676.77 .       AC=2;AF=1.00;AN=2;DP=39;FS=0.000;MLEAC=2;MLEAF=1.00;MQ=39.97;MQ0=0;QD=31.09     GT:AD:DP:GQ:PL  1/1:0,39:39:99:1705,117,0
-Chr1    27768651        .       A       ATG     1909.73 .       AC=2;AF=1.00;AN=2;DP=52;FS=0.000;MLEAC=2;MLEAF=1.00;MQ=43.32;MQ0=0;QD=18.36     GT:AD:DP:GQ:PL  1/1:0,44:44:99:1947,129,0
-```
----
 ## More information for VCF files
 
 [VCF 4.2 specification PDF](http://samtools.github.io/hts-specs/VCFv4.2.pdf)
 
 ---
-# SAM Sequence Alignment/Map
+# SAM: Sequence Alignment/Map
 
-SAM is a tab limited text file that stores sequence alignments.  Header lines start with @.  There are 11 mandatory columns
+SAM is a tab limited text file that stores sequence alignments. SAM includes two sections:
 
-## Examples
+* Header section
+* Alignemnt section
+
+---
+
+## Header sections
+Header lines start with @ and are optional but if present they should be placed prior to alignment lines.    
+Each field has a TAG:Value format.  
+
+### Header record types
+
+| Tag |  Description    |
+| :------------- | :------------- |
+| @HD      | The header line     |
+| @SQ | Reference sequence dictionary
+|@RG | Group read |
+|@PG |program|
+| @CO | One line comment|
+
+More information on Tags and their values can be found at  [SAM specifications PDF](https://samtools.github.io/hts-specs/SAMv1.pdf)
+
+---
+
+## Alignment section
+
+Each alignment line has 11 mandatory columns
+
+### Mandatory columns in alignment lines      
+
+![columns](assets/SAMcolumns.png)
+
+### Examples for alignmetn lines       
+
+
+    HISEQ:496:C4KY7ACXX:8:1101:1606:2994    73      4       13740599        36      100M    *       0       0
+    ATCACAAAGAATATTCATCAATGCTTCACAAAACATTGGAAGGGGTAATAATGATGGAGACGTTTCCAAAAACAACCGTTGATGTTTTTCCATTGTTTCT
+    ;;?=?;=BDDCA:CEEE@4A?,AEB?A?9A?<+?::?CCCD1))08?BD4B?<BBD:C=)(5-;A7@AA=CC/=??(3>@5;;AD###############
+    MD:Z:32G10T45G5G4       NH:i:1  HI:i:1  NM:i:4  SM:i:36 XQ:i:40 X2:i:0  XO:Z:HU PG:Z:A
+
+
+     HISEQ:496:C4KY7ACXX:8:1101:1606:2994    133     *       0       0       *       4       13740599        0
+    ATACAATCGAAAATCATAGTTATTTATGCTCATTCATCGGAAGCTGGGGCAGACTGTTTCAGACAATTACCCATTATTTCTCGAACACTTGAACTAGCAT
+    (85@34?#############################################################################################
+    XO:Z:HU
+
+---
+### FLAG definition
+
+Flag describes the combination of bitwise FLAGs. Each flag value represent a certain combination of features of the alignment. Every bit is related to the absence (0) or presence (1) of a feature.
+
+ Each bit is defined in the following table:
+
+![flags](assets/SAMFlagDescription.png)
+
+For example Flag value of 17 means that the read is mapped on the reverse strand and it has multiple segments. There are tools to convert the combination value to a feature list such as  https://broadinstitute.github.io/picard/explain-flags.html
+
+----
+
+### CIGAR string definition
+
+CIGAR describes how the read aligns with the reference. It consists of one or more components. Each component comprises an operator and the number of bases which the operator applies to. The following table gives an overview of these operators
+
+![cigar](assets/SAMcigar.png)
+
+### CIGAR Example
+
+for the folowing alignemtn:
+
+![cigar-example](assets/CIGARexample.png)
+
+we get:
+
+```
+   POS: 5
+   CIGAR: 3M1I3M1D5M
+```
+The POS indicate that the read aligns start at position 5 on the reference. The first 3 bases in the read align with the reference (3M). The next base is missing on the reference (1I). The next 3 bases align (3M). The next base is missing in the read (1D). Then 5 more bases match with the reference (5M).  
+
+### More examples for CIGAR
+
+```
+100M – 100 matches
+2S98M – 2 soft clipped followed by 98 matches
+61M3I36M – 61 matches, 3 insertions, 36 matches
+```
+
+---
+## Example for SAM file
 ```
 @HD     VN:1.0  SO:unsorted
 @PG     ID:GSNAP        PN:gsnap        VN:2014-06-10   CL:gsnap -d TAIR10 --dir=./GSNAPdb//TAIR10 --failed-input=./GSNAPout//1ab-1_failed_alignments -t 4 -N 1 -B 5 -m 5 --part=0/8 --input-buffer-size=1000000 --output-buffer-size=1000000 -A sam --split-output=./GSNAPout//OUT.gsnap.1ab-1_CGATGT_L008_R1_001.fastq.0.8 .//1ab-1_CGATGT_L008_R1_001.fastq .//1ab-1_CGATGT_L008_R2_001.fastq
@@ -352,56 +444,17 @@ HISEQ:496:C4KY7ACXX:8:1101:1606:2994    133     *       0       0       *       
 ```
 ---
 
-## Columns in SAM file
-
-![columns](assets/SAMcolumns.png)
-
-```
-HISEQ:496:C4KY7ACXX:8:1101:1606:2994    73      4       13740599        36      100M    *       0       0
-    ATCACAAAGAATATTCATCAATGCTTCACAAAACATTGGAAGGGGTAATAATGATGGAGACGTTTCCAAAAACAACCGTTGATGTTTTTCCATTGTTTCT
-    ;;?=?;=BDDCA:CEEE@4A?,AEB?A?9A?<+?::?CCCD1))08?BD4B?<BBD:C=)(5-;A7@AA=CC/=??(3>@5;;AD###############
-    MD:Z:32G10T45G5G4       NH:i:1  HI:i:1  NM:i:4  SM:i:36 XQ:i:40 X2:i:0  XO:Z:HU PG:Z:A
-HISEQ:496:C4KY7ACXX:8:1101:1606:2994    133     *       0       0       *       4       13740599        0
-    ATACAATCGAAAATCATAGTTATTTATGCTCATTCATCGGAAGCTGGGGCAGACTGTTTCAGACAATTACCCATTATTTCTCGAACACTTGAACTAGCAT
-    (85@34?#############################################################################################
-    XO:Z:HU
-```
----
-## FLAG definitions
-
-![flags](assets/SAMflags.png)
-
-|Flag value| definition|
-|----------|-----------|
-|1 | Multiple segments|
-|4 | Segment unmapped |
-|8 | Next segment unmapped|
-|64| First segment|
-|128| Last segment|
-
-
-## CIGAR string definition
-![cigar](assets/SAMcigar.png)
-
-
-```
-100M – 100 matches
-2S98M – 2 soft clipped followed by 98 matches
-61M3I36M – 61 matches, 3 insertions, 36 matches
-```
-
----
 
 
 ## More information
->>>>>>> Andrew6
+
 
 [SAM specifications PDF](https://samtools.github.io/hts-specs/SAMv1.pdf)
 
 ---
-# BAM
+# BAM: Binary Alignemtn Map
 
-BAM is the binary format for storing sequencing alignments.  It has a smaller storage footprint and needs to be decompressed to be human readable.
+BAM is the binary format of a SAM file.  It has a smaller storage footprint and needs to be decompressed to be human readable.
 
 
 [Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)
