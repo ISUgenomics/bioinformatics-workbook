@@ -2,6 +2,13 @@
 
 This handy guide is for installing programs in `UNIX` environment. Most of these steps assume that you are installing package in a group accessible location, without root access and utilizing the environment module systems for package management. However, you can easily modify these steps for other cases as well.
 
+
+
+### Conda
+
+One of the easiest ways you can install you own software in your home or project directory is through the [Conda package manager](https://conda.io/docs/user-guide/getting-started.html). Thousands of biological packages and their dependencies can be installed with a single command using the [Bioconda repository](https://bioconda.github.io/) for the Conda package manager.
+
+
 ### Unpacking
 
 Packages are usually compressed in many different ways for easy handling. Before proceeding to installation, it must be unpacked. Depending on the compression (looking at the extension) use any of the following commands to unpack.

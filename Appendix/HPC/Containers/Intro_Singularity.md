@@ -102,6 +102,11 @@ This output has been truncated
 ## How to install and use Singularity on your locall machine (Mac)
 If you want to explore containers on your local Mac you canfFollow the directions on this website [http://singularity.lbl.gov/install-mac](http://singularity.lbl.gov/install-mac)
 
+Note: You may need to issue the following command if you update your operating system or get a new computer.
+
+```
+Note you may need to allow Oracle permission via your security settings if you are on a mac.  See [this website](https://apple.stackexchange.com/questions/301303/virtualbox-5-1-28-fails-to-install-on-macos-10-13-due-to-kext-security)
+```
 
 #### Starting a singularity Virtual Machine (VM) instance on the Mac
 
@@ -115,6 +120,8 @@ vagrant init singularityware/singularity-2.4
 vagrant up
 vagrant ssh
 ```
+
+
 
 #### Running a command using a Singularity container.  (Same as above)
 ```
