@@ -160,3 +160,8 @@ Seriola quinqueradiata DNA, linkage group 2, BAC clone: 013_p20
 ```
 
 The important part here is that it matches linkage group 2 in Seriola quinqueradiata which is where the QTL is reported in the paper.
+
+
+### Additional Reading
+
+* [Another Basic Blast tutorial with installation by Eric Normandeau  ](https://github.com/enormandeau/ncbi_blast_tutorial)
