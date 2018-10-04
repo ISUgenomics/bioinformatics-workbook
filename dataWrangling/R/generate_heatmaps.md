@@ -42,7 +42,8 @@ Row_8,6,3,21,32,3,87
 Row_9,37,98,36,12,36,7
 Row_10,85,75,34,25,2,9
 ```
-==== Running Analyses ====
+
+## Creating the heatmap
 
 Open R in either Windows/Linux/Mac. You will need following packages for this tutorial. If you don't have them, please install using the following commands:
 
