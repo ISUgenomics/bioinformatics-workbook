@@ -1,6 +1,6 @@
 ## Clustering and Heatmap generation using R
 
-Clustering and heat-map helps us to visualize trends in large dataset. Here, this method will describe how to create one in R
+Clustering and heatmap helps us to visualize trends in large dataset. Here, this method will describe how to create one in R
 
 ## Preparing the dataset
 
