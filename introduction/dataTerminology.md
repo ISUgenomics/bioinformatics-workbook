@@ -10,7 +10,7 @@ Upon completion of this section the learner will know the definitions for the fo
 * chromosome
 
 ## What is a base?
-There are four common bases in DNA sequence, ```A```denine, ```G```uanine, ```C```ytosine and ```T```hymine. ```U```racil is found in RNA inplace of Thyamine
+There are four common bases in DNA sequence, ```A```denine, ```G```uanine, ```C```ytosine and ```T```hymine. ```U```racil is found in RNA in place of Thyamine
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Nucleotides_1.svg/1320px-Nucleotides_1.svg.png)
 Image taken from [wikipedia](https://en.wikipedia.org/wiki/Nucleotide) where more information about nucleotides can be found also be found.
