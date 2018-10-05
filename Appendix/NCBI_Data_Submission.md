@@ -11,12 +11,13 @@ If you are not sure about what type of data you have, then you can use the submi
 ![](assets/SubmitFig1.png)
 
 Here is the page that you need to decide which type of submission you want to proceed with.  In the top left corner of this page you are given the options below.
-![](assets/Submit Fig2.png)
-
+![](assets/SubmitFig2.png)
 
 For simplicity I will perform an example submission of some short read sequencing. When submitting a single sample there is always the need for three different submissions: a BioProject, a BioSample, and a submission specific to your type of data, here I will demonstrate a typical sequence read archive submission.
 
-Because having a definition for each required submission type may facilitate a better understanding, here are the two types you will always encounter. 1. The BioProject is an submission to gather details about your research project and acts as an umbrella to contain all of your other data types. 2. BioSamples describe each biological sample in your research project, for which you have data to deposit.  The BioSample can also act as an umbrella for many different data types with the same specimen.
+Because having a definition for each required submission type may facilitate a better understanding, here are the two types you will always encounter.
+1. The BioProject is an submission to gather details about your research project and acts as an umbrella to contain all of your other data types.
+2. BioSamples describe each biological sample in your research project, for which you have data to deposit.  The BioSample can also act as an umbrella for many different data types with the same specimen.
 
 As for doing a short read sequencing deposition, I will also perform both a BioProject and BioSample submission.  Then I can submit all of the required metadata for a sequence read archive submission.
 
@@ -24,30 +25,30 @@ As for doing a short read sequencing deposition, I will also perform both a BioP
 
 After clicking BioProject, you'll be asked to add your personal or organizations information. Click continue.
 
-![](assets/BioProject fig1 submitter.png)
+![](assets/BioProjectfig1submitter.png)
 
 Then insert the data types that you will be depositing.
-![](assets/BioProject fig2 project type.png)
+![](assets/BioProjectfig2projecttype.png)
 
 The next form's purpose is to add details about the organism of the study.
-![](assets/Bioproject fig3 target.png)
+![](assets/Bioprojectfig3target.png)
 
 Then you'll be taken to a page to add information about your project, data release date (up to 4 years holding time), the project's grants pertinent to the data, links to your data, etc.
-![](assets/Bioproject fig4 general info.png)
+![](assets/Bioprojectfig4generalinfo.png)
 
 The next page will give you the option to enter your BioSamples. I will do this in a separate step to avoid confusion.  
-![](assets/BioProject fig5 Biosample.png)
+![](assets/BioProjectfig5Biosample.png)
 
 Usually journals do not publish without prior data deposition, but if your work is already published include it at this step.
-![](assets/Bioproject fig5 publications.png)
+![](assets/Bioprojectfig5publications.png)
 
 Then submit your Bioproject to be done with step 1.
-![](assets/BioProject fig 7 Overview.png)
+![](assets/BioProjectfig7Overview.png)
 
 ### BioSample submission
 
 If you click "My submissions" on the top of the screen, you'll be redirected to your submission screen.  Here you can choose Biosample.
-![](assets/Submit Fig2.png)
+![](assets/SubmitFig2.png)
 
 The first step is the same as for the bioproject, which is the chance to update the information of the submitter.
 
@@ -59,7 +60,7 @@ For this example I am submitting DNA-seq from an invertebrate.
 ![](assets/biosamplefig2SampleType.png)
 
 Now the real work starts, which is highly dependent on the collections of your organisms attributes.
-![](assets/Biosample attributes.png)
+![](assets/Biosampleattributes.png)
 
 When many samples are to be deposited, the easiest method is to download and fill in the excel template. As is explained in the text at the top of the Biosample excel sheet, green columns are required, yellow are optional, and blue colors need at least one field filled out.
 If you run your cursor over each colored header then you can get more information on what is acceptable.
@@ -74,7 +75,7 @@ Once NCBI agrees that you've entered all the information in correctly, you can m
 ### Short read archive submission
 
 If you click "My submissions" on the top of the screen, you'll be redirected to your submission screen.  Here you can choose "Sequence Read Archive".
-![](assets/Submit Fig2.png)
+![](assets/SubmitFig2.png)
 
 The first step is the same as for the Bioproject and Biosample, which is the chance to update the information of the submitter.
 
@@ -82,7 +83,7 @@ Then you are taken to the next screen that asks for your bioproject ID (found in
 ![](assets/ShortReadArchiveGenInfo.png)
 
 The next step is very much like the attributes step of the Biosample, except everything in the second sheet is required.  Other info can be had in sheet 1 and 3.
-![](assets/SRA metadata.png)
+![](assets/SRAmetadata.png)
 
 In the excel sheet you'll have to fill in your bioproject and biosample accessions (found in "My submissions" shortly after submission).  Then you'll have to have a unique library ID, a title for each data sample, the library strategy (DNA-seq is WGS, or whole genome sequencing), a library source (Genomic), the type of library selection (PCR), the library layout (single or paired), the sequencing platform (Illumina), the illumina instrument (Hiseq 3000), a brief description of methods, the sequencing file type (fastq), and then the names of your sequencing files. If you are unsure of the data type you have, more information can be had in excel sheet 1 and 3.
 ![](assets/metadataExcel.png)
