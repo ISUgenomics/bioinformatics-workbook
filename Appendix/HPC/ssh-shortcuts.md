@@ -4,7 +4,7 @@ Are you tired of typing full length host-names while connecting via SSH? Do you 
 
 The hard-way:
 
-```
+```bash
 # connect
 ssh username@login.scinet.science
 # scp
@@ -22,13 +22,13 @@ Create a `config` file under the `~/.ssh` directory, with the short name for the
 
 First, edit the file
 
-```
+```bash
 vi ~/.ssh/config
 ```
 
 and add the details:
 
-```
+```bash
 Host ceres
   Hostname login.scinet.science
   User username
@@ -42,13 +42,13 @@ Host condo
 
 Set permissions straight:
 
-```
+```bash
 chmod 600 ~/.ssh/config
 ```
 
 Now, have fun! the above commands can now be done using:
 
-```
+```bash
 # connect
 ssh ceres
 # scp
@@ -59,7 +59,7 @@ rsync -e 'ssh -c aes128-ctr' -rts your_folder ceres:/path/to/destination/
 
 You can read more about the config by opening the man page:
 
-```
+```bash
 man ssh-config
 ```
 
