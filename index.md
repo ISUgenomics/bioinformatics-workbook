@@ -87,6 +87,7 @@
         * [cheatsheat Torque](Appendix/HPC/pbstorque/submitting-dependency-jobs-using-pbs-torque.md)
     * Miscellaneous
         * [Passwordless SSH](Appendix/HPC/password-less-ssh-login.md)
+        * [SSH shortcuts](Appendix/HPC/ssh-shortcuts.md)
     * Introduction to UNIX
         * [Unix basics 1](Appendix/unix-basics-1.md)  
         * [Unix basics 2](Appendix/unix-basics-2.md)
@@ -94,5 +95,6 @@
         * [Unix basics 4 (sed)](Appendix/unix-basics-4.md)
     * XSEDE
         * [What is XSEDE, and how do I get an allocation](Appendix/HPC/xsede/xsede.md)
+
 
   * [Other website links of interest](Appendix/OtherLinks.md)
