@@ -17,7 +17,7 @@ As you can see, if you have a bunch of hosts, it gets really hairy to retype the
 
 The Solution:
 
-Create a config file under the ```~/.ssh``` directory, with the short name for these host-names. Then you can simply connect to the server by using the short name instead of the full host-name!
+Create a config file under the `~/.ssh` directory, with the short name for these host-names. Then you can simply connect to the server by using the short name instead of the full host-name!
 
 
 First, edit the file
