@@ -1,6 +1,6 @@
 # How to submit your sequencing data to NCBI
 
-Submitting sequencing data is a requirement for nearly every journal, and thus getting things in order right away will make this process go much faster.
+Submitting sequencing data is a requirement for nearly every journal, and thus getting things in order as soon as your sequencing is received  will make this process go much faster.
 
 First you'll have to create an account on ncbi before submission.  Here is a current link --10/04/2018
 https://www.ncbi.nlm.nih.gov/account/register/?back_url=https%3A%2F%2Fwww.ncbi.nlm.nih.gov%2F&partners-uri=cms:/account/partners
@@ -8,7 +8,7 @@ https://www.ncbi.nlm.nih.gov/account/register/?back_url=https%3A%2F%2Fwww.ncbi.n
 Now the next step is finding the submission link, which I always have trouble with.  You can find a link at the bottom left of the ncbi homepage (https://www.ncbi.nlm.nih.gov/) that says "Submit Data".
 
 If you are not sure about what type of data you have, then you can use the submission wizard, otherwise the giant blue picture hyperlinks to get you started on a submission.
-![Submission Wizard](assets/Submit Fig1.png)
+![](assets/SubmitFig1.png)
 
 Here is the page that you need to decide which type of submission you want to proceed with.  In the top left corner of this page you are given the options below.
 ![](assets/Submit Fig2.png)
@@ -121,4 +121,4 @@ Once done transferring, which can take awhile, you click "Select preload folder"
 Select your folder, and if your files match your metadata and have completely uploaded, click "Use selected folder" and "Continue" to the final overview and submit page.  
 
 
-It takes about 2-4 weeks for NCBI to process your data and assign accession numbers.  Now all you have to do is sit tight and wait.  If there are problems with your submission that the online form did not catch, you'll likely receive an email from NCBI staff for clarification. 
+It takes about 2-4 weeks for NCBI to process your data and assign accession numbers.  Now all you have to do is sit tight and wait.  If there are problems with your submission that the online form did not catch, you'll likely receive an email from NCBI staff for clarification.
