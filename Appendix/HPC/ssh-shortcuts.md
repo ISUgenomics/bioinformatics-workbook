@@ -1,6 +1,6 @@
 ## Shortcuts for SSH hosts
 
-Are you tired of typing full length host-names while connecting via SSH? Do you frequently `scp` files from one server to another and have to lookup what the host-names are? Do you want to `rsync` between local and remote host easily with a a simple command? Then, read-on.
+Are you tired of typing full length host-names while connecting via SSH? Do you frequently `scp` files from one server to another and have to lookup what the host-names are? Do you want to `rsync` between local and remote host easily with a simple command? Then, read-on.
 
 The hard-way:
 
@@ -15,9 +15,9 @@ rsync -e 'ssh -c aes128-ctr' -rts your_folder username@login.scinet.science:/pat
 
 As you can see, if you have a bunch of hosts, it gets really hairy to retype them every time you want to do any of these things.
 
-The Solution:
+### The Solution
 
-Create a config file under the `~/.ssh` directory, with the short name for these host-names. Then you can simply connect to the server by using the short name instead of the full host-name!
+Create a `config` file under the `~/.ssh` directory, with the short name for these host-names. Then you can simply connect to the server by using the short name instead of the full host-name!
 
 
 First, edit the file
