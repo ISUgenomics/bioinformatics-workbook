@@ -1,6 +1,6 @@
 # How to submit your sequencing data to NCBI
 
-Submitting sequencing data is a requirement for nearly every journal, and thus getting things in order as soon as your sequencing is received  will make this process go much faster.
+Submitting sequencing data is a requirement for nearly every journal, and thus getting it in order as soon as your sequencing is received  will make this process go much faster.  This is mostly because the details of your sequencing will be fresh in your mind, and with the variability in BioSample/metadata submissions by type, you may not record sufficient enough detail to submit at a later date.  
 
 First you'll have to create an account on ncbi before submission.  Here is a current link --10/04/2018
 
