@@ -76,7 +76,7 @@ less /work/GIF/remkv6/Baum/01_SCNDovetailScaffolding/01_DovetailOutput/download/
 ln -s ../../03_RepeatModelerMasker/RM_9173.TueNov281539072017/consensi.fa.classified
 ```
 
-### Gather maker and modify to suit your specific system.  Total run time 7 hrs
+### Gather maker and modify to suit your specific system.
 Set up and modify the Maker control files for the first round of gene prediction
 ```
 #Copy the 3 maker control files, which are essentially config files needed to run maker
@@ -257,9 +257,9 @@ clean_up=0 #removes theVoid directory with individual analysis files, 1 = yes, 0
 TMP= #specify a directory other than the system default temporary directory for temporary files
 ##################################################################################################################################
 ```
-Maker submission script.  very finicky.  there is always a perl warning that can be ignored
-###Argument "2.56_01" isn't numeric in numeric ge (>=) at /work/GIF/software/programs/perl/5.24.1/lib/site_perl/5.24.1/x86_64-linux-thread-multi/forks.pm line 1570.
+### Submit your first round of maker -- took 7hrs with 129MB genome
 
+I ran this first maker run on 8 nodes, the output of which is subjected to gff_merge and fasta_merge scripts.  These essentially give an initial annotation gff and fasta.
 ```
 #!/bin/bash
 #SBATCH -J SCNMaker
@@ -287,18 +287,23 @@ maker -base ${MAKERDIR} -fix_nucleotides -dsindex
 gff3_merge  -d ${MAKERDIR}.maker.output/${MAKERDIR}_master_datastore_index.log
 fasta_merge -d ${MAKERDIR}.maker.output/${MAKERDIR}_master_datastore_index.log
 ```
-### Round 1 maker results?
+Maker can be finicky. I always receive a perl warning that can be ignored
 ```
-[remkv6@condo024 01_maker]$ less DovetailSCNMaker1.all.gff |awk '$3=="mRNA"' |grep "mRNA-1" |awk '{print $5-$4}' |summary.sh
+Argument "2.56_01" isn't numeric in numeric ge (>=) at /work/GIF/software/programs/perl/5.24.1/lib/site_perl/5.24.1/x86_64-linux-thread-multi/forks.pm line 1570.
+```
+### Round 1 maker results
+```
+Compare primary transcript lengths and quantity from first maker run
+less DovetailSCNMaker1.all.gff |awk '$3=="mRNA"' |grep "mRNA-1" |awk '{print $5-$4}' |summary.sh
 Total:  56,467,884
 Count:  22,237
 Mean:   2,539
 Median: 1,665
 Min:    5
 Max:    65,204
-[remkv6@condo024 01_maker]$ less UnmaskedBraker.gff3 |awk '$3=="mRNA"' |less
-[remkv6@condo024 01_maker]$ less UnmaskedBraker.gff3 |awk '$3=="mRNA"' |grep "\.t1" |less
-[remkv6@condo024 01_maker]$ less UnmaskedBraker.gff3 |awk '$3=="mRNA"' |grep "\.t1" |awk '{print $5-$4}' |summary.sh
+
+Compare primary transcript lengths and quantity from earlier braker run.
+less UnmaskedBraker.gff3 |awk '$3=="mRNA"' |grep "\.t1" |awk '{print $5-$4}' |summary.sh
 Total:  42,868,159
 Count:  20,085
 Mean:   2,134
@@ -513,7 +518,8 @@ Max:    65,204
 
 ### Ran snap and augustus for a fourth round of maker.
 
-```#-----Genome (these are always required)
+```
+#-----Genome (these are always required)
 genome=/work/GIF/remkv6/Baum/01_SCNDovetailScaffolding/09_Maker/01_maker/Renamednematode_sp._22Aug2017_DZkUC.fasta #(fasta file or fasta embeded in GFF3 file)
 organism_type=eukaryotic #eukaryotic or prokaryotic. Default is eukaryotic
 
@@ -626,13 +632,4 @@ Only 3 genes from the unmasked braker were not called as part of the maker genes
 Scaffold_46     AUGUSTUS        gene    1255    3337    0.09    -       .       ID=g7868;
 Scaffold_86     AUGUSTUS        gene    1       579     0.52    -       .       ID=g15467;
 Scaffold_95     AUGUSTUS        gene    991     4533    0.77    +       .       ID=g15681;
-
-
- how many maker genes do not overlap with the known effectors
- bedtools intersect -wo -v -b DovetailSCNMaker4.all.NOFASTA.gff -a <(sed 's/;/\t/1' ../../06_EffectorAnalyses/nematode_sp.effector.gff |awk '{print $1,$3,$4,
-$5,$6,$7,$8,$9,$10}' |tr " " "\t")  |awk '$3=="gene"' |less
-all genes overlap, yay
 ```
-
-
-Sent arun the protein, transcripts, and gff file for interproscan on 4/30/18
