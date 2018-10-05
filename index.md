@@ -86,7 +86,7 @@
     * PBS-Torque
         * [cheatsheat Torque](Appendix/HPC/pbstorque/submitting-dependency-jobs-using-pbs-torque.md)
     * Miscellaneous
-        * [Passwordless SSH](Appendix/HPC/password-less-ssh-login.md)
+        * [Password-less SSH](Appendix/HPC/password-less-ssh-login.md)
         * [SSH shortcuts](Appendix/HPC/ssh-shortcuts.md)
     * Introduction to UNIX
         * [Unix basics 1](Appendix/unix-basics-1.md)  
