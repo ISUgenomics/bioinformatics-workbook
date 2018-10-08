@@ -2,7 +2,7 @@
 
 If you're a coder, then you already know how useful the syntax highlighting is for your programming language. However, if you're a biologist and work with lots of biology specific files (fasta, msa, vcf etc) on command-line, then you might have noticed how non-intuitive it feels for manually inspecting them. This tutorial aims to reduce that feeling a little bit and makes working on CLI a bit better!
 
-If you want a hands-on approach with support to custom files, first section covers `nano` text editor syntax coloring and second section for `vim`. If you want a more permanent solution then move on the third section that covers a program called `BioSyntax`. BioSyntax comes with present syntax coloring for pretty much all types of files in Biology/Bioinformatics.
+If you want a hands-on approach with support to custom files, first section covers `nano` text editor syntax coloring. Since for `vim` has complicated syntax file formats, we will use a readymade solution that uses the program called `BioSyntax`. BioSyntax comes with present syntax coloring for pretty much all types of files in Biology/Bioinformatics and works with various other commands as well (like `less`, `vim` etc.).
 
 ## Nano as the text editor (custom syntax coloring)
 
@@ -91,4 +91,47 @@ The screenshot for the above format:
 
 
 
-## VIM as the text editor (custom syntax coloring)
+## Using BioSyntax (for vim and other tools)
+
+[BioSyntax](https://github.com/bioSyntax/bioSyntax) integrates  with vim, less, gedit, & sublime and automatically recognizes file formats for various biological [file formats](https://biosyntax.org/man#supported-file-formats). The publication is available [here](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2315-y) and you should cite the article if you use this tool in your project.
+
+### Install
+
+Follow [these](biosyntax.org/install) guidelines from their official website. SInce you will most likely not have `sudo` access, you may have to install `source-highlight` program manually first before attempting BioSyntax installation. Follow these steps:
+```
+wget ftp://ftp.gnu.org/gnu/src-highlite/source-highlight-3.1.8.tar.gz
+tar xf source-highlight-3.1.8.tar.gz
+mkdir /path/to/somedir/sourcehighlight/
+cd source-highlight-3.1.8
+./configure --prefix=/path/to/somedir/sourcehighlight
+make
+make install
+```
+ Once installed, set the variables correctly so that the program can find the files it needs. Add these lines to your `.bashrc`
+
+ ```
+ PATH=PATH:/path/to/installationdir/bin
+LD_LIBRARY_PATH=LD_LIBRARY_PATH:/path/to/installationdir/lib
+LIBRARY_PATH=LIBRARY_PATH:/path/to/installationdir/lib
+PKG_CONFIG_PATH=PKG_CONFIG_PATH:/path/to/installationdir/lib/pkgconfig
+CMAKE_LIBRARY_PATH=CMAKE_LIBRARY_PATH:/path/to/installationdir/lib
+LD_LIBRARY_PATH=LD_LIBRARY_PATH:/path/to/installationdir/lib
+C_INCLUDE_PATH=C_INCLUDE_PATH:/path/to/installationdir/include
+CPLUS_INCLUDE_PATH=CPLUS_INCLUDE_PATH:/path/to/installationdir/include
+CMAKE_INCLUDE_PATH=CMAKE_INCLUDE_PATH:/path/to/installationdir/include
+MANPATH=MANPATH:/path/to/installationdir/share/man
+```
+
+Now, you are ready to install `bioSyntax`
+
+```bash
+wget https://github.com/bioSyntax/bioSyntax/releases/download/v1.0.0/bioSyntax-1.0.0.zip
+unzip bioSyntax-1.0.0.zip
+cd bioSyntax-master
+# for installing colors for less
+bash bioSyntax_INSTALL.sh less
+# or for vim
+bash bioSyntax_INSTALL.sh vim
+```
+
+restart the terminal and you're all set to use the bioSyntax!
