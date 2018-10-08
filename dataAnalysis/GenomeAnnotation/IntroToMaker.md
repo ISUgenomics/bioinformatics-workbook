@@ -1,4 +1,4 @@
-# Tutorial of how to run Maker2 gene annotation pipeline
+excerpt# Tutorial of how to run Maker2 gene annotation pipeline
 
 I will be outlining how I performed a gene annotation of the soybean cyst nematode (*Heterodera glycines*) genome using Maker2.
 
@@ -175,6 +175,7 @@ en_score_limit=20 #Exonerate nucleotide percent of maximal score threshold
 ##################################################################################################################################
 ```
 
+``Set options for the first round of MAKER``
 
 This is the maker control file that will be modified for each round of maker. For the first round we will do a gene prediction using Maker's internal algorithm with the transcripts and proteins, as well as a repeatmasking of the genome using the predicted repeat sequences from RepeatModeler.
 
@@ -199,7 +200,8 @@ Note there are only a few options that I have changed.  Particularly:
 *  alt_splice= "on"
 
 
-Why softmask?  Here is an exerpt from the original maker publication. "Soft masking excludes these re-
+``Why softmask?``  
+Here is an exerpt from the original maker publication. "Soft masking excludes these re-
 gions (low complexity repeats) from nucleating BLAST alignments (Korf et al. 2003) butleaves them available for inclusion in annotations, as many pro-
 tein-coding  genes  contain  runs  of  low  complexity  sequence."
 
@@ -319,7 +321,7 @@ Maker can be finicky. I always receive a perl warning that can be ignored
 Argument "2.56_01" isn't numeric in numeric ge (>=) at /work/GIF/software/programs/perl/5.24.1/lib/site_perl/5.24.1/x86_64-linux-thread-multi/forks.pm line 1570.
 
 If Maker finished without error, the last line of the MAKER.error file will read MAKER is now finished!!!, and the datastore index log will have an entry for when MAKER started each entry in the genome FASTA file and when it finished or failed that entry.
-It is also good to check the "dpp_contig_master_datastore_index.log" file for errors
+It is also good to check the "[YourName]_master_datastore_index.log" file for errors.  Mine was "DovetailSCNMaker4_master_datastore_index.log"
 ```
 ### Round 1 maker results
 ```
@@ -343,7 +345,7 @@ Max:    40,213
 ```
 
 ### Round 2 maker took 2-3 hours
-Run snap
+``Train SNAP gene prediction software``
 ```
 #/work/GIF/remkv6/Baum/01_SCNDovetailScaffolding/09_Maker/01_maker/01_snap
 cp ../DovetailSCNMaker1.all.gff .
@@ -354,17 +356,20 @@ fathom -categorize 1000 genome.ann genome.dna
  forge export.ann export.dna
  hmm-assembler.pl pyu . > pyu.hmm
 ```
-Change options in maker_opts.ctl.
+``Change options in maker_opts.ctl``
 
 Major changes are to remove the repeat, est, and protein fasta seqs.
 Add the new gff that was created from round 1
 Add the newly made snap Evidence.
 
-I already had a trained augustus from running braker on this genome, so adding the species in the augustus program folder was fairly simple.  Another tutorial will be created to show how to run braker, which depending on your genome size and amount of data can take a day to a couple weeks to finish.  However, another option is to use the trained augustus from running BUSCO (Benchmarking Universal Single Copy Orthologs) with the --long parameter on your genome. Using a BUSCO training may not be optimal, but it is definitely faster and can be improved upon in subsequent rounds of maker.  The second tutorial I link at the start shows more information on how to do this.
+``How did I get Augustus evidence?``
+
+I already had a trained augustus from running braker on this genome, so adding the species in the augustus program folder was fairly simple.  Another tutorial will be created to show how to run braker, which depending on your genome size and amount of data, can take a day to a couple weeks to finish.  However, another option is to use the trained augustus from running BUSCO (Benchmarking Universal Single Copy Orthologs) with the --long parameter on your genome. Using a BUSCO training may not be optimal, but it is definitely faster and can be improved upon in subsequent rounds of maker.  This tutorial below provides instruction on how to use BUSCO for augustus training.
+
 [BUSCO as Augustus training for MAKER](https://gist.github.com/darencard/bb1001ac1532dd4225b030cf0cd61ce2)
 
 
-Add the augustus species, which needs to be in the species directory of the augustus you are running.  
+Add the augustus species, which needs to be in the species directory of the augustus you are running.  For me it is found here "augustus/3.2.1/config/species/"
 ```
 #-----Genome (these are always required)
 genome=/work/GIF/remkv6/Baum/01_SCNDovetailScaffolding/09_Maker/01_maker/Renamednematode_sp._22Aug2017_DZkUC.fasta #(fasta file or fasta embeded in GFF3 file)
@@ -384,7 +389,7 @@ other_pass=1 #passthrough anyything else in maker_gff: 1 = yes, 0 = no
 est=
 altest=
 est_gff=
-altest_gff= #aligned ESTs from a closly relate species in GFF3 format
+altest_gff= #aligned ESTs from a closely relate species in GFF3 format
 
 #-----Protein Homology Evidence (for best results provide a file for at least one)
 protein=
@@ -395,7 +400,7 @@ model_org= #select a model organism for RepBase masking in RepeatMasker
 rmlib=
 repeat_protein= #provide a fasta file of transposable element proteins for RepeatRunner
 rm_gff=
-prok_rm=0 #forces MAKER to repeatmask prokaryotes (no reason to change this), 1 = yes, 0 = no
+prok_rm=0 #forces MAKER to repeat-mask prokaryotes (no reason to change this), 1 = yes, 0 = no
 softmask=1 #use soft-masking rather than hard-masking in BLAST (i.e. seg and dust filtering)
 
 #-----Gene Prediction
@@ -443,24 +448,38 @@ TMP= #specify a directory other than the system default temporary directory for 
 ```
 Gene models after two rounds of maker
 ```
-Total:  64,439,401
-Count:  22,915
-Mean:   2,812
-Median: 1,734
+less DovetailSCNMaker2.all.gff |awk '$3=="mRNA"' |grep "mRNA-1" |awk '{print $5-$4}' |summary.sh
+Total:  71,225,049
+Count:  28,115
+Mean:   2,533
+Median: 1,499
 Min:    5
 Max:    65,204
+
+Compare primary transcript lengths and quantity from earlier braker run.
+less UnmaskedBraker.gff3 |awk '$3=="mRNA"' |grep "\.t1" |awk '{print $5-$4}' |summary.sh
+Total:  42,868,159
+Count:  20,085
+Mean:   2,134
+Median: 1,540
+Min:    200
+Max:    40,213
 ```
 
 
 
 ### Round 3 maker  #took like 2 hours
+``Train GeneMark``
 ```
 #/work/GIF/remkv6/Baum/01_SCNDovetailScaffolding/09_Maker/01_maker/02_GeneMark
+#You have to get the product key into your home directory, and name it appropriately or genemark will not run.
 cd ~/
 wget http://topaz.gatech.edu/GeneMark/tmp/GMtool_EVsJK/gm_key_64.gz
 gunzip gm_key_64.gz
 mv gm_key_64 .gm_key
 cd -
+
+#run genemark
 echo "module load genemark" >>genemark.sh
 echo "/opt/rit/app/genemark/4.32/bin/gmes_petap.pl --ES --min_contig 20000 --cores 16 --sequence Renamednematode_sp._22Aug2017_DZkUC.fasta" >>genemark.sh
 ```
@@ -543,12 +562,22 @@ TMP= #specify a directory other than the system default temporary directory for 
 ```
 Gene models after Round3 maker
 ```
-Total:  61,487,460
-Count:  23,186
-Mean:   2,651
-Median: 1,723
+less DovetailSCNMaker3.all.gff |awk '$3=="mRNA"' |grep "mRNA-1" |awk '{print $5-$4}' |summary.sh
+Total:  70,680,837
+Count:  30,005
+Mean:   2,355
+Median: 1,441
 Min:    5
 Max:    65,204
+
+Compare primary transcript lengths and quantity from earlier braker run.
+less UnmaskedBraker.gff3 |awk '$3=="mRNA"' |grep "\.t1" |awk '{print $5-$4}' |summary.sh
+Total:  42,868,159
+Count:  20,085
+Mean:   2,134
+Median: 1,540
+Min:    200
+Max:    40,213
 ```
 
 ### Ran snap and augustus for a fourth round of maker.
@@ -628,6 +657,26 @@ tries=2 #number of times to try a contig if there is a failure for some reason
 clean_try=0 #remove all data from previous run before retrying, 1 = yes, 0 = no
 clean_up=0 #removes theVoid directory with individual analysis files, 1 = yes, 0 = no
 TMP= #specify a directory other than the system default temporary directory for temporary files
+```
+Gene model characteristics after fourth round of maker
+```
+less DovetailSCNMaker4.all.gff |awk '$3=="mRNA"' |grep "mRNA-1" |awk '{print $5-$4}' |summary.sh
+Total:  71,203,444
+Count:  27,001
+Mean:   2,637
+Median: 1,564
+Min:    5
+Max:    65,204
+
+
+Compare primary transcript lengths and quantity from earlier braker run.
+less UnmaskedBraker.gff3 |awk '$3=="mRNA"' |grep "\.t1" |awk '{print $5-$4}' |summary.sh
+Total:  42,868,159
+Count:  20,085
+Mean:   2,134
+Median: 1,540
+Min:    200
+Max:    40,213
 ```
 
 ### Evaluating the quality of your gene predictions
