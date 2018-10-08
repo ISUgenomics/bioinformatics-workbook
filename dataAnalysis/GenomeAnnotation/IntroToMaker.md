@@ -360,7 +360,8 @@ Major changes are to remove the repeat, est, and protein fasta seqs.
 Add the new gff that was created from round 1
 Add the newly made snap Evidence.
 
-I already had a trained augustus from running braker on this genome, so adding the species in the augustus program folder was fairly simple.  Another tutorial will be created to show how to run braker, which depending on your genome size and amount of data can take a day to a couple weeks to finish.  However, another option is to use the trained augustus from running BUSCO (Benchmarking Universal Single Copy Orthologs) with the --long parameter on your genome. Using a BUSCO training may not be optimal, but it is definitely faster and can be improved upon in subsequent rounds of maker.  The second tutorial I link at the start shows more information on how to do this. [BUSCO as Augustus training for MAKER] (https://gist.github.com/darencard/bb1001ac1532dd4225b030cf0cd61ce2)
+I already had a trained augustus from running braker on this genome, so adding the species in the augustus program folder was fairly simple.  Another tutorial will be created to show how to run braker, which depending on your genome size and amount of data can take a day to a couple weeks to finish.  However, another option is to use the trained augustus from running BUSCO (Benchmarking Universal Single Copy Orthologs) with the --long parameter on your genome. Using a BUSCO training may not be optimal, but it is definitely faster and can be improved upon in subsequent rounds of maker.  The second tutorial I link at the start shows more information on how to do this.
+[BUSCO as Augustus training for MAKER](https://gist.github.com/darencard/bb1001ac1532dd4225b030cf0cd61ce2)
 
 
 Add the augustus species, which needs to be in the species directory of the augustus you are running.  
