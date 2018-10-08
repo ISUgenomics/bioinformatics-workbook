@@ -1,8 +1,8 @@
-excerpt# Tutorial of how to run Maker2 gene annotation pipeline
+# Tutorial of how to run Maker2 gene annotation pipeline
 
-I will be outlining how I performed a gene annotation of the soybean cyst nematode (*Heterodera glycines*) genome using Maker2.
+I have outlined how to perform a gene annotation of the soybean cyst nematode (*Heterodera glycines*) genome using Maker2.
 
-This is the original MAKER publication, which details more about the general MAKER algorithm, but lacks detail on any other predictor besides SNAP.
+This is the original MAKER publication, which details more about the general MAKER algorithm, when MAKER lacked all other gene predictors besides SNAP.
 [MAKER Publication](https://genome.cshlp.org/content/18/1/188.short)
 
 This is the original publication for the MAKER2 gene prediction pipeline.  This version of maker includes the addition of multiple gene *ab-initio* prediction tools as well as AED score support for gene models.
@@ -16,6 +16,10 @@ There are a number of nice Maker tutorials that can found online.
 
 Here is a Maker tutorial that gave me the idea to use BUSCO to train Augustus.
 [Darren Card Tutorial](https://gist.github.com/darencard/bb1001ac1532dd4225b030cf0cd61ce2)
+
+``Is there a specific order to run different predictors in Maker?``
+While there are multiple ways to run Maker, all tips and tutorials that I have run across have always done the maker annotation first, and then incorporated the other ab-initio predictors subsequently. This leads us to the first step of finding all transcriptional and protein resources for the initial MAKER prediction.
+
 
 ### Download all transcriptional resources for the clade in which your species resides
 
@@ -38,7 +42,7 @@ For the soybean cyst nematode, that includes all publicly available resources fo
 #Download all data here
 #/work/GIF/remkv6/Baum/01_SCNDovetailScaffolding/09_Maker/
 ```
-Download transcripts and proteins associated with the assembled genomes for species in your clade.  Downloaded on 4/20/18 from:
+Download transcripts and proteins associated with the assembled genomes for species in your clade.  I downloaded mine on 4/20/18 from:
 https://parasite.wormbase.org/ftp.html
 
 
@@ -90,7 +94,7 @@ less /work/GIF/remkv6/Baum/01_SCNDovetailScaffolding/01_DovetailOutput/download/
 ln -s ../../03_RepeatModelerMasker/RM_9173.TueNov281539072017/consensi.fa.classified
 ```
 
-### Gather maker and modify to suit your specific system.
+### Gather maker ctrl files and modify to suit your specific system.
 Set up and modify the Maker control files for the first round of gene prediction
 ```
 #Copy the 3 maker control files, which are essentially config files needed to run maker
@@ -105,7 +109,7 @@ maker_bopts.ctl -- This one controls the parameters of each program if you want 
 maker_opts.ctl -- This is the key control file that will be subject to change for each round of maker.
 ###############################################################################
 ```
-I will only use blastn, blastx, tblastx, repeatmasker, exonerate, snap, gmhmme3(GeneMark), augustus, and tRNAscan.  FGENESH cost money, so skipped that one.
+I will only use blastn, blastx, tblastx, repeatmasker, exonerate, snap, gmhmme3(GeneMark), and augustus.  FGENESH costs, so skipped that one.
 
 
 To ensure proper parsing of the files, make sure that there are no spaces between the equal sign and the path to the files.  See my examples below
@@ -201,9 +205,7 @@ Note there are only a few options that I have changed.  Particularly:
 
 
 ``Why softmask?``  
-Here is an exerpt from the original maker publication. "Soft masking excludes these re-
-gions (low complexity repeats) from nucleating BLAST alignments (Korf et al. 2003) butleaves them available for inclusion in annotations, as many pro-
-tein-coding  genes  contain  runs  of  low  complexity  sequence."
+Here is an exerpt from the original maker publication. "Soft masking excludes these regions (low complexity repeats) from nucleating BLAST alignments (Korf et al. 2003) but leaves them available for inclusion in annotations, as many protein-coding  genes  contain  runs  of  low  complexity  sequence."
 
 
 maker_opts.ctl
@@ -350,6 +352,7 @@ Max:    40,213
 #/work/GIF/remkv6/Baum/01_SCNDovetailScaffolding/09_Maker/01_maker/01_snap
 cp ../DovetailSCNMaker1.all.gff .
 module load GIF/maker
+#essentially copy and paste your round one maker gff here and run.
 maker2zff DovetailSCNMaker1.all.gff
 fathom -categorize 1000 genome.ann genome.dna
  fathom -export 1000 -plus uni.ann uni.dna
@@ -410,8 +413,8 @@ augustus_species= nematode_sp._22Aug2017_DZkUC  #Augustus gene prediction specie
 fgenesh_par_file= #FGENESH parameter file
 pred_gff= #ab-initio predictions from an external GFF3 file
 model_gff= #annotated gene models from an external GFF3 file (annotation pass-through)
-est2genome=1 #infer gene predictions directly from ESTs, 1 = yes, 0 = no
-protein2genome=1 #infer predictions from protein homology, 1 = yes, 0 = no
+est2genome=0 #infer gene predictions directly from ESTs, 1 = yes, 0 = no
+protein2genome=0 #infer predictions from protein homology, 1 = yes, 0 = no
 trna=0 #find tRNAs with tRNAscan, 1 = yes, 0 = no
 snoscan_rrna= #rRNA file to have Snoscan find snoRNAs
 unmask=0 #also run ab-initio prediction programs on unmasked sequence, 1 = yes, 0 = no
@@ -524,9 +527,9 @@ augustus_species=  #Augustus gene prediction species model
 fgenesh_par_file= #FGENESH parameter file
 pred_gff= #ab-initio predictions from an external GFF3 file
 model_gff= #annotated gene models from an external GFF3 file (annotation pass-through)
-est2genome=1 #infer gene predictions directly from ESTs, 1 = yes, 0 = no
-protein2genome=1 #infer predictions from protein homology, 1 = yes, 0 = no
-trna=1 #find tRNAs with tRNAscan, 1 = yes, 0 = no
+est2genome=0 #infer gene predictions directly from ESTs, 1 = yes, 0 = no
+protein2genome=0 #infer predictions from protein homology, 1 = yes, 0 = no
+trna=0 #find tRNAs with tRNAscan, 1 = yes, 0 = no
 snoscan_rrna= #rRNA file to have Snoscan find snoRNAs
 unmask=0 #also run ab-initio prediction programs on unmasked sequence, 1 = yes, 0 = no
 
@@ -622,8 +625,8 @@ augustus_species= nematode_sp._22Aug2017_DZkUC  #Augustus gene prediction specie
 fgenesh_par_file= #FGENESH parameter file
 pred_gff= #ab-initio predictions from an external GFF3 file
 model_gff= #annotated gene models from an external GFF3 file (annotation pass-through)
-est2genome=1 #infer gene predictions directly from ESTs, 1 = yes, 0 = no
-protein2genome=1 #infer predictions from protein homology, 1 = yes, 0 = no
+est2genome=0 #infer gene predictions directly from ESTs, 1 = yes, 0 = no
+protein2genome=0 #infer predictions from protein homology, 1 = yes, 0 = no
 trna=0 #find tRNAs with tRNAscan, 1 = yes, 0 = no
 snoscan_rrna= #rRNA file to have Snoscan find snoRNAs
 unmask=0 #also run ab-initio prediction programs on unmasked sequence, 1 = yes, 0 = no
@@ -705,7 +708,7 @@ sed 's/AED:/AED:\t/g' DovetailSCNMaker4.all.maker.model_gff%3Amaker.transcripts.
 ![AEDGraph](../../assets/AEDGraph.png)
 
 
-### Renaming genes
+### Rename the complicated MAKER gene and transcript names to something more easier to parse for publication
 ```
 get rid of the fasta sequences in the gff
 awk 'substr($1,1,1)==">" {print NR}' DovetailSCNMaker4.all.gff
