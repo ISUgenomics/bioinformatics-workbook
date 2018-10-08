@@ -1,7 +1,21 @@
-# Tutorial of how to run MakerP gene annotation pipeline
+# Tutorial of how to run Maker2 gene annotation pipeline
 
-I will be outlining how I performed a gene annotation of the soybean cyst nematode (*Heterodera glycines*) genome using MakerP.
+I will be outlining how I performed a gene annotation of the soybean cyst nematode (*Heterodera glycines*) genome using Maker2.
 
+This is the original MAKER publication, which details more about the general MAKER algorithm, but lacks detail on any other predictor besides SNAP.
+[MAKER Publication](https://genome.cshlp.org/content/18/1/188.short)
+
+This is the original publication for the MAKER2 gene prediction pipeline.  This version of maker includes the addition of multiple gene *ab-initio* prediction tools as well as AED score support for gene models.
+[MAKER2 Publication](https://bmcbioinformatics.biomedcentral.com/track/pdf/10.1186/1471-2105-12-491)
+
+The "Genome Annotation and Curation Using MAKER and MAKER-P" publication has a list of example protocols that may be helpful and may add some detail to my choices below.
+[Genome Annotation with MAKER and MAKER-P](https://currentprotocols.onlinelibrary.wiley.com/doi/abs/10.1002/0471250953.bi0411s48)
+
+There are a number of nice Maker tutorials that can found online.
+[Utah MAKER Tutorial](http://weatherby.genetics.utah.edu/MAKER/wiki/index.php/MAKER_Tutorial_for_WGS_Assembly_and_Annotation_Winter_School_2018#Ab_Initio_Gene_Prediction)
+
+Here is a Maker tutorial that gave me the idea to use BUSCO to train Augustus.
+[Darren Card Tutorial](https://gist.github.com/darencard/bb1001ac1532dd4225b030cf0cd61ce2)
 
 ### Download all transcriptional resources for the clade in which your species resides
 
@@ -81,13 +95,20 @@ Set up and modify the Maker control files for the first round of gene prediction
 ```
 #Copy the 3 maker control files, which are essentially config files needed to run maker
 for f in /work/GIF/remkv6/Purcell/Abalone/29_MakerP/02_MakerRun2/maker_* ;do cp $f . ;done
+#Of course you can use maker to copy these files for you
+maker -CTL
+
+#Here are the three files you need
 ################################################################################
 maker_exe.ctl-- This file points to the executable programs that we will be using.
 maker_bopts.ctl -- This one controls the parameters of each program if you want to change the default settings.
 maker_opts.ctl -- This is the key control file that will be subject to change for each round of maker.
 ###############################################################################
 ```
-I will only use blastn, blastx, tblastx, repeatmasker, exonerate, snap, gmhmme3, augustus, and tRNAscan.
+I will only use blastn, blastx, tblastx, repeatmasker, exonerate, snap, gmhmme3(GeneMark), augustus, and tRNAscan.  FGENESH cost money, so skipped that one.
+
+
+To ensure proper parsing of the files, make sure that there are no spaces between the equal sign and the path to the files.  See my examples below
 
 maker_as_exe.ctl
 ```
@@ -155,7 +176,7 @@ en_score_limit=20 #Exonerate nucleotide percent of maximal score threshold
 ```
 
 
-This is the makerP control file that will be modified for each round of makerP. For the first round we will do a gene prediction using MakerP's internal algorithm with the transcripts and proteins, as well as a repeatmasking of the genome using the predicted repeat sequences from RepeatModeler.
+This is the maker control file that will be modified for each round of maker. For the first round we will do a gene prediction using Maker's internal algorithm with the transcripts and proteins, as well as a repeatmasking of the genome using the predicted repeat sequences from RepeatModeler.
 
 Note there are only a few options that I have changed.  Particularly:
 *  genome=  "point directly to your genome"
@@ -176,6 +197,12 @@ Note there are only a few options that I have changed.  Particularly:
 *  est2genome= "on"
 *  protein2genome= "on"
 *  alt_splice= "on"
+
+
+Why softmask?  Here is an exerpt from the original maker publication. "Soft masking excludes these re-
+gions (low complexity repeats) from nucleating BLAST alignments (Korf et al. 2003) butleaves them available for inclusion in annotations, as many pro-
+tein-coding  genes  contain  runs  of  low  complexity  sequence."
+
 
 maker_opts.ctl
 ```
@@ -290,6 +317,9 @@ fasta_merge -d ${MAKERDIR}.maker.output/${MAKERDIR}_master_datastore_index.log
 Maker can be finicky. I always receive a perl warning that can be ignored
 ```
 Argument "2.56_01" isn't numeric in numeric ge (>=) at /work/GIF/software/programs/perl/5.24.1/lib/site_perl/5.24.1/x86_64-linux-thread-multi/forks.pm line 1570.
+
+If Maker finished without error, the last line of the MAKER.error file will read MAKER is now finished!!!, and the datastore index log will have an entry for when MAKER started each entry in the genome FASTA file and when it finished or failed that entry.
+It is also good to check the "dpp_contig_master_datastore_index.log" file for errors
 ```
 ### Round 1 maker results
 ```
@@ -328,7 +358,11 @@ Change options in maker_opts.ctl.
 
 Major changes are to remove the repeat, est, and protein fasta seqs.
 Add the new gff that was created from round 1
-Add the newly made snap Evidence
+Add the newly made snap Evidence.
+
+I already had a trained augustus from running braker on this genome, so adding the species in the augustus program folder was fairly simple.  Another tutorial will be created to show how to run braker, which depending on your genome size and amount of data can take a day to a couple weeks to finish.  However, another option is to use the trained augustus from running BUSCO (Benchmarking Universal Single Copy Orthologs) with the --long parameter on your genome. Using a BUSCO training may not be optimal, but it is definitely faster and can be improved upon in subsequent rounds of maker.  The second tutorial I link at the start shows more information on how to do this. [BUSCO as Augustus training for MAKER] (https://gist.github.com/darencard/bb1001ac1532dd4225b030cf0cd61ce2)
+
+
 Add the augustus species, which needs to be in the species directory of the augustus you are running.  
 ```
 #-----Genome (these are always required)
@@ -595,18 +629,30 @@ clean_up=0 #removes theVoid directory with individual analysis files, 1 = yes, 0
 TMP= #specify a directory other than the system default temporary directory for temporary files
 ```
 
-Evaluating aed scores
+### Evaluating the quality of your gene predictions
+Maker generates two different types of quality metrics for the predicted gene models.  
+1. MAKER mRNA Quality Index (QI)
+2. Annnotation Edit Distance scores (AED)
+
+The maker quality index has nine columns to define the quality of a predicted gene.
+```
+QI:0|0.77|0.68|1|0.77|0.78|19|462|824
+```
+![MakerQualityIndices](../../assets/MakerAEDExplanations.png)
+
+
+The AED scores denote something different.  AED scores are numbers between 0 and 1, with zero scores representing perfect concordance of the available evidence, and a value of one indicating a complete lack of support with the available evidence
 ```
 sed 's/AED:/AED:\t/g' DovetailSCNMaker4.all.maker.model_gff%3Amaker.transcripts.fasta |grep ">" |awk '{print $5*10}' |sed 's/\./\t/g' |cut -f 1 |sort|uniq -c |sort -k2,2 |less
 
 
-These genes need further investigation to keep.  must have pfam domains or they can be removed
+These genes need further investigation to keep.
 sed 's/AED:/AED:\t/g' DovetailSCNMaker4.all.maker.model_gff%3Amaker.transcripts.fasta |grep ">" |awk '$5>.99' |wc
    435    3480   49658
 
 ```
 
-![AEDGraph](../assets/AEDGraph.png)
+![AEDGraph](../../assets/AEDGraph.png)
 
 
 ### Renaming genes
