@@ -371,6 +371,7 @@ I already had a trained augustus from running braker on this genome, so adding t
 
 [BUSCO as Augustus training for MAKER](https://gist.github.com/darencard/bb1001ac1532dd4225b030cf0cd61ce2)
 
+[Straight-up Augustus trainging: tutorial](http://avrilomics.blogspot.com/2013/04/training-augustus-gene-finding-software.html)
 
 Add the augustus species, which needs to be in the species directory of the augustus you are running.  For me it is found here "augustus/3.2.1/config/species/"
 ```
