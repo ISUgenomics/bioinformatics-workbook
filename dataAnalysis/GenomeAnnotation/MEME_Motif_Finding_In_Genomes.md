@@ -42,7 +42,8 @@ module use /opt/rit/modules
 module load meme
 meme SeedDormancy.fasta -oc SeedDormancyMemeLg -dna -mod zoops -nmotifs 5 -revcomp -maxsize 1000000 -maxsites 500  -maxw 100 -bfile 1orderMarkovPromoters
 ```
-
+MEME provides three output files that are useful, and txt file, xml file, and an html file.  The txt is easily parsable, the xml file is useful for input, and the html file provides a nice output to peruse by eye.
+![HTML Output](../../assets/memeTut.html)
 ## Scan for motifs in the upstream sequences for each gene, FIMO
 
 Here is a link to the readme for each option, including those that I did not use below.
@@ -57,6 +58,7 @@ This run took a few minutes to complete with a single thread.
 
 fimo -oc RevisedSeedDormancyFIMO --bgfile 1orderMarkovPromoters SeedDormancyMemeLg/meme.xml  TAIR10_upstream_1000_translation_start_20101028
 ```
+![HTML Output](../../assets/fimoTut.html)
 
 ## Look to see which genes have these motifs
 ```
