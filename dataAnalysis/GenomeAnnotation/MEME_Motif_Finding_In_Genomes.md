@@ -33,7 +33,8 @@ Here is the meme manual, which discusses the many different options that can be 
 
 This meme run of 569 x 1000bp upstream sequences involved in seed dormancy took 15.5 hrs with 16 processors.
 
-![Meme Manual](http://meme-suite.org/doc/meme.html?man_type=web)
+http://meme-suite.org/doc/meme.html?man_type=web
+
 ```
 #this one compensates for the sequences being DNA, allows zero or one motif (zoops), a max of 5 motifs, both strands (revcomp), a larger maximum memory available, a maximum motif size of 100bp, a max number of sites equal to 500, and a markov background file of dinucleotide frequencies for the promoter (-bfile 1orderMarkovPromoters)
 
