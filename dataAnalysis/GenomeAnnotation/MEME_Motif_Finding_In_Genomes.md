@@ -48,7 +48,7 @@ MEME provides three output files that are useful, and txt file, xml file, and an
 
 Here is a link to the readme for each option, including those that I did not use below.
 
-![FIMO Manual](http://meme-suite.org/doc/fimo.html)
+http://meme-suite.org/doc/fimo.html
 
 This essentially finds the motifs in the promoter fasta file, using the same background file for dinucleotide frequency that was used for MEME.
 
