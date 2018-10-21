@@ -193,3 +193,19 @@ ggplot(input, aes(x=Organism,y=length)) +
    theme(axis.text.x = element_text(angle = 90))
 ```
 ![image](assets/fifthB.png)
+
+To color these gene families:
+
+
+```python
+p1 <- ggplot(input, aes(x=Organism,y=length)) +
++    geom_boxplot(colour = lines1, fill = fill1) +
++    facet_grid( .~ family) +
++    theme(axis.text.x = element_text(angle = 90))
+p2 <- p1 + facet_wrap(~family)
+p2 <- p1 + geom_boxplot(data = fam2, colour = lines2, fill = fill2)
+p3 <- p2 + geom_boxplot(data = fam3, colour = lines3, fill = fill3)
+p4 <- p3 + geom_boxplot(data = fam4, colour = lines4, fill = fill4)
+```
+
+![image](assets/sixth.png)
