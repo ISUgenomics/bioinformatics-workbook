@@ -37,6 +37,16 @@ Table 1: Gene length for 4 different gene families and for 3 different organism.
 | Midwestern Dragon | 623           | 323           | 354           | 206           |
 | Midwestern Dragon | 733           | 123           | 244           | 646           |
 | Midwestern Dragon | 751           | 477           | 474           | 1390          |
+| Sun Drop Flower   | 743           | 100           | 473           | 625           |
+| Sun Drop Flower   | 160           | 230           | 164           | 1207          |
+| Sun Drop Flower   | 260           | 569           | 493           | 650           |
+| Sun Drop Flower   | 443           | 156           | 340           | 775           |
+| Sun Drop Flower   | 366           | 380           | 312           | 167           |
+| Sun Drop Flower   | 465           | 201           | 162           | 1435          |
+| Sun Drop Flower   | 576           | 488           | 440           | 1130          |
+| Sun Drop Flower   | 390           | 388           | 199           | 1171          |
+| Sun Drop Flower   | 164           | 115           | 324           | 554           |
+| Sun Drop Flower   | 790           | 578           | 449           | 530           |
 
 
  If this table is in excel, we would want to export it as tab-delimited file in order to further manipulate using UNIX commands and then import it in R. For exporting: `File` > `Save As` > choose format `Text (Tab delimited)(*.txt)` and `Save`.
