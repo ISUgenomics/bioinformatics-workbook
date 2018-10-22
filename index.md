@@ -7,7 +7,7 @@
 
 ### Introduction
   * [Introduction to Bioinformatics](introduction/introduction.md)
-  * Introduction to bioinformatics Terminalogy
+  * Introduction to bioinformatics Terminology
     * [Reads, contigs and scaffolds](/introduction/dataTerminology.md)
   * [Introduction to File Formats](introduction/fileFormats.md)
       * [What is a Quality Score?](introduction/fastqquality-score-encoding.md)
