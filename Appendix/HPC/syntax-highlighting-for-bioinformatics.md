@@ -97,7 +97,7 @@ The screenshot for the above format:
 
 ### Install
 
-Follow [these](biosyntax.org/install) guidelines from their official website. SInce you will most likely not have `sudo` access, you may have to install `source-highlight` program manually first before attempting BioSyntax installation. Follow these steps:
+Follow [these](https://biosyntax.org/install) guidelines from their official website. Since you will most likely not have `sudo` access, you may have to install `source-highlight` program manually first before attempting BioSyntax installation. Follow these steps:
 ```
 wget ftp://ftp.gnu.org/gnu/src-highlite/source-highlight-3.1.8.tar.gz
 tar xf source-highlight-3.1.8.tar.gz
