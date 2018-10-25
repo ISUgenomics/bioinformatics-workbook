@@ -28,7 +28,7 @@ sed 's/\t/,/g' test_dataset.txt > test_dataset.csv
 
 The new data file should look like this:
 
-```
+```bash
 $ cat test_dataset.csv
 ,A,B,C,D,E,F
 Row_1,97,14,99,65,57,29
@@ -47,7 +47,7 @@ Row_10,85,75,34,25,2,9
 
 Open R in either Windows/Linux/Mac. You will need following packages for this tutorial. If you don't have them, please install using the following commands:
 
-```
+```python
 install.packages(c("gplots", "vegan", "RColorBrewer", "Cairo"))
 source("https://bioconductor.org/biocLite.R")
 biocLite("Heatplus")
@@ -55,7 +55,7 @@ biocLite("Heatplus")
 
 Once done, proceed with the follwing commands to generate heatmap.
 
-```
+```python
 # load required packages
 library(gplots)
 library(Heatplus)
@@ -77,14 +77,22 @@ heatmap(as.matrix(data.prop), Rowv = NA, Colv = NA, col = scaleyellowred, margin
 # Cluster the data, first rows
 data.dist <- vegdist(data.prop, method = "bray")
 row.clus <- hclust(data.dist, "aver")
-# then columns, you can skip one of the clustering if you don't want to mess a particular row or column
+# then columns, you can skip one of the clustering if you don't want to mess a particular row/column
 data.dist.g <- vegdist(t(data.prop), method = "bray")
 col.clus <- hclust(data.dist.g, "aver")
 # generate a heatmap
-heatmap(as.matrix(data.prop), Rowv = as.dendrogram(row.clus), Colv = as.dendrogram(col.clus), col = scaleyellowred, margins = c(7, 8), xlab = "Column names", ylab = "Row names", main = "Title", pch=10)
+p <- heatmap(as.matrix(data.prop), 
+   Rowv = as.dendrogram(row.clus), 
+   Colv = as.dendrogram(col.clus), 
+   col = scaleyellowred, 
+   margins = c(7, 8), 
+   xlab = "Column names", 
+   ylab = "Row names", 
+   main = "Title", pch=10)
+p
 # to save it as scalable vector graphics (change svg to png, pdf etc if you need other formats)
 svg("heatmap.svg")
-heatmap(as.matrix(data.prop), Rowv = as.dendrogram(row.clus), Colv = as.dendrogram(col.clus), col = scaleyellowred, margins = c(7, 8), xlab = "Column names", ylab = "Row names", main = "Title", pch=10)
+p
 dev.off()
 ```
 

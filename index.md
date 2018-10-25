@@ -64,6 +64,8 @@
 
 ### Data visualization
 * [Viewing files remotely without transferring](Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
+* [Creating Boxplots in R](dataWrangling/R/generate-boxplots.md)
+* [Creating Heatmaps in R](dataWrangling/R/generate_heatmaps.md)
 
 ### Appendix
   * Useful programs
