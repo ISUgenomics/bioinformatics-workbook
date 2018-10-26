@@ -35,7 +35,7 @@
  * Data Management
     * [Deposition of Data to NCBI SRA](dataWrangling/NCBI_Data_Submission.md)
 
-### Data analysis
+### Data Analysis
   * Alignment
     * [Blast Command Line Basic Example](dataAnalysis/blast/blastExample.md)
   * Comparative Genomics
