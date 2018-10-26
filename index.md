@@ -32,7 +32,8 @@
     * [Create workbook from multiple text files](dataWrangling/microsoftExcel/export-multiple-worksheets-as-separate-text-files-in-excel.md)
     * [Create text files from workbook with multiple worksheets](dataWrangling/microsoftExcel/export-multiple-worksheets-as-separate-text-files-in-excel.md)
     * [Create Index for all worksheets](dataWrangling/microsoftExcel/generate-index-sheet-linking-all-spreadsheets-in-excel.md)
-
+ * Data Management
+    * [Deposition of Data to NCBI SRA](dataWrangling/NCBI_Data_Submission.md)
 ### Data analysis
   * Alignment
     * [Blast Command Line Basic Example](dataAnalysis/blast/blastExample.md)
@@ -44,7 +45,7 @@
     * [Intro to Metagenomics](dataAnalysis/Metagenomics/MetagenomicsP1.md)
     * [Qiime2](dataAnalysis/Metagenomics/Qiime2.md)
     * [DADA2](dataAnalysis/Metagenomics/Dada2.md)
-  * Genomic Repeats
+  * Genomic Repeat Identification
     * [Helitron identification in a genome sequence](dataAnalysis/ComparativeGenomics/Helitron_Scanner.md)    
     * [DNA transposon annotation with Inverted-Repeats Finder](dataAnalysis/ComparativeGenomics/InvertedRepeatsFinderForDNATransposonAnnotation.md)
     * [LTR retrotransposon annoatation with LTR-Finder](dataAnalysis/ComparativeGenomics/LTRFinder.md)
@@ -56,6 +57,10 @@
     * [Canu for long read assembly](dataAnalysis/GenomeAssembly/LongRead/Canu.md)
       * [Canu on XSEDE bridges machine](dataAnalysis/GenomeAssembly/LongRead/Canu_bridges.md)
     * [Genome scaffolding using synteny with pyscaf](dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md): E. coli and Arabidopsis genome scaffolding
+  * Gene Annotation
+    * [Intro to Maker gene prediction](dataAnalysis/GenomeAnnotation/Intro_To_Maker.md)
+    * [Intro to Braker2 gene prediction](dataAnalysis/GenomeAnnotation/Intro_To_Braker2.md)
+    * [Motif Identification and finding with MEME and FIMO](dataAnalysis/GenomeAnnotation/MEME_Motif_Finding_In_Genomes.md)
   * RNA-Seq analysis
     * [RNA-Seq example with a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md): Arabidopsis with a genome
     * [RNA-Seq example without a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-without-a-genome.md): Arabidopsis without a genome
