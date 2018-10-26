@@ -63,8 +63,8 @@
     * [Intro to Braker2 Gene Prediction](dataAnalysis/GenomeAnnotation/Intro_to_Braker2.md)
     * [Motif Identification and Finding with MEME and FIMO](dataAnalysis/GenomeAnnotation/MEME_Motif_Finding_In_Genomes.md)
   * RNA-Seq Analysis
-    * [RNA-Seq Example with a Genome Assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md): Arabidopsis with a genome
-    * [RNA-Seq Example without a Genome Assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-without-a-genome.md): Arabidopsis without a genome
+    * [RNA-Seq Example with a Genome Assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md): Arabidopsis with a Genome
+    * [RNA-Seq Example without a Genome Assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-without-a-genome.md): Arabidopsis without a Genome
     * [Differential Expression Analysis](dataAnalysis/RNA-Seq/RNA-SeqIntro/Differential-Expression-Analysis.md): DESeq2
   * Specialized Sequencing
     * [ATAC-Seq](https://github.com/ISUgenomics/bioinformatics-workbook/blob/master/dataAnalysis/ATAC-seq/ATAC_tutorial.md) in Arabidopsis
