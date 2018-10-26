@@ -7,10 +7,10 @@
 
 ### Introduction
   * [Introduction to Bioinformatics](introduction/introduction.md)
-  * Introduction to bioinformatics Terminalogy
-    * [Reads, contigs and scaffolds](/introduction/dataTerminology.md)
-  * [Introduction to File Formats](introduction/fileFormats.md)
-      * [What is a Quality Score?](introduction/fastqquality-score-encoding.md)
+  * Introduction to bioinformatics terminology
+    * [Reads, contigs, and scaffolds](/introduction/dataTerminology.md)
+    * [Introduction to File Formats](introduction/fileFormats.md)
+    * [What is a Quality Score?](introduction/fastqquality-score-encoding.md)
 
 ### Experimental Design
   * [Introduction to Experimental Design](experimentalDesign/eD_introduction.md)
