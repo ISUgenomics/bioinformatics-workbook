@@ -59,7 +59,7 @@
     * [Genome scaffolding using synteny with pyscaf](dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md): E. coli and Arabidopsis genome scaffolding
   * Gene Annotation
     * [Intro to Maker gene prediction](dataAnalysis/GenomeAnnotation/Intro_To_Maker.md)
-    * [Intro to Braker2 gene prediction](dataAnalysis/GenomeAnnotation/Intro_To_Braker2.md)
+    * [Intro to Braker2 gene prediction](dataAnalysis/GenomeAnnotation/Intro_to_Braker2.md)
     * [Motif Identification and finding with MEME and FIMO](dataAnalysis/GenomeAnnotation/MEME_Motif_Finding_In_Genomes.md)
   * RNA-Seq analysis
     * [RNA-Seq example with a genome assembly](dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md): Arabidopsis with a genome
