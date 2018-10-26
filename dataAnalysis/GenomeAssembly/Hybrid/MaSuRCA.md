@@ -71,7 +71,6 @@ In this example, we have three fastq files 2 files from a single Mi-Seq Illumina
 DATA
 PE = pa 250 50 SRR3703081_1.fastq  SRR3703081_2.fastq
 PACBIO = SRR3405330.fastq
-CLOSE_GAPS=1
 END
 
 PARAMETERS
@@ -81,7 +80,7 @@ LIMIT_JUMP_COVERAGE = 300
 CA_PARAMETERS =  cgwErrorRate=0.15
 KMER_COUNT_THRESHOLD = 1
 NUM_THREADS = 28
-JF_SIZE = 20000000000
+JF_SIZE = 200000000
 SOAP_ASSEMBLY=0
 END
 ```
@@ -90,6 +89,7 @@ END
 
 ```
 # make a folder for the masurca run, we will call it 01_masurca
+cd ..
 mkdir 01_masurca
 cd 01_masurca
 vim sr_config.txt
@@ -195,6 +195,169 @@ scontrol show job $SLURM_JOB_ID
 
 ### Submit SLURM job
 
+
 ```
 sbatch masurca_AT.sub
 ```
+
+**NOTE:** prior to running the following files should be in your directory
+
+```
+SRR3405330.fastq  SRR3703081_1.fastq  SRR3703081_2.fastq  masurca_AT.sub  sr_config.txt
+```
+
+### Output
+
+
+
+
+
+### Assembly statistics
+
+
+```
+module load perl/5.18.4-threads
+perl ~/isugif/utilities/utilities/new_Assemblathon.pl final.genome.scf.fasta
+
+
+---------------- Information for assembly 'final.genome.scf.fasta' ----------------
+
+
+                                         Number of scaffolds       6037
+                                     Total size of scaffolds  100660109
+                                            Longest scaffold     296097
+                                           Shortest scaffold        309
+                                 Number of scaffolds > 1K nt       5543  91.8%
+                                Number of scaffolds > 10K nt       2909  48.2%
+                               Number of scaffolds > 100K nt         62   1.0%
+                                 Number of scaffolds > 1M nt          0   0.0%
+                                Number of scaffolds > 10M nt          0   0.0%
+                                          Mean scaffold size      16674
+                                        Median scaffold size       9375
+                                         N50 scaffold length      32181
+                                          L50 scaffold count        878
+                                                 scaffold %A      31.98
+                                                 scaffold %C      18.05
+                                                 scaffold %G      18.03
+                                                 scaffold %T      31.94
+                                                 scaffold %N       0.00
+                                         scaffold %non-ACGTN       0.00
+                             Number of scaffold non-ACGTN nt          0
+
+                Percentage of assembly in scaffolded contigs       0.0%
+              Percentage of assembly in unscaffolded contigs     100.0%
+                      Average number of contigs per scaffold        1.0
+Average length of break (>25 Ns) between contigs in scaffold          0
+
+                                           Number of contigs       6037
+                              Number of contigs in scaffolds          0
+                          Number of contigs not in scaffolds       6037
+                                       Total size of contigs  100660109
+                                              Longest contig     296097
+                                             Shortest contig        309
+                                   Number of contigs > 1K nt       5543  91.8%
+                                  Number of contigs > 10K nt       2909  48.2%
+                                 Number of contigs > 100K nt         62   1.0%
+                                   Number of contigs > 1M nt          0   0.0%
+                                  Number of contigs > 10M nt          0   0.0%
+                                            Mean contig size      16674
+                                          Median contig size       9375
+                                           N50 contig length      32181
+                                            L50 contig count        878
+                                                   contig %A      31.98
+                                                   contig %C      18.05
+                                                   contig %G      18.03
+                                                   contig %T      31.94
+                                                   contig %N       0.00
+                                           contig %non-ACGTN       0.00
+                               Number of contig non-ACGTN nt          0
+
+```
+
+
+
+### SLURM output file
+
+* AT_0.o4290911
+
+This file provides time stamps of the steps that were run with MaSuRCA.  When you have more data this may come in handy to determine what step you are on.   This small dataset took about 33 minutes to run.  Your assembly stats may vary slightly if you rerun it multiple times.
+```
+Verifying PATHS...
+jellyfish OK
+runCA OK
+createSuperReadsForDirectory.perl OK
+nucmer OK
+mega_reads_assemble_cluster.sh OK
+creating script file for the actions...done.
+execute assemble.sh to run assembly
+[Fri Oct 26 08:29:01 EDT 2018] Processing pe library reads
+[Fri Oct 26 08:30:02 EDT 2018] Average PE read length 249
+[Fri Oct 26 08:30:02 EDT 2018] Using kmer size of 127 for the graph
+[Fri Oct 26 08:30:02 EDT 2018] MIN_Q_CHAR: 33
+[Fri Oct 26 08:30:02 EDT 2018] Creating mer database for Quorum
+[Fri Oct 26 08:31:11 EDT 2018] Error correct PE
+[Fri Oct 26 08:36:18 EDT 2018] Estimating genome size
+[Fri Oct 26 08:37:06 EDT 2018] Estimated genome size: 147278815
+[Fri Oct 26 08:37:06 EDT 2018] Creating k-unitigs with k=127
+[Fri Oct 26 08:41:11 EDT 2018] Computing super reads from PE
+[Fri Oct 26 08:46:02 EDT 2018] Using CABOG from /opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/masurca-3.2.8-hgdshdatclkrv7kct6kqgfb3fa536iji/bin/../CA8/Linux-amd64/bin
+[Fri Oct 26 08:46:02 EDT 2018] Running mega-reads correction/assembly
+[Fri Oct 26 08:46:02 EDT 2018] Using mer size 15 for mapping, B=17, d=0.029
+[Fri Oct 26 08:46:02 EDT 2018] Estimated Genome Size 147278815
+[Fri Oct 26 08:46:02 EDT 2018] Estimated Ploidy 1
+[Fri Oct 26 08:46:02 EDT 2018] Using 28 threads
+[Fri Oct 26 08:46:02 EDT 2018] Output prefix mr.41.15.17.0.029
+[Fri Oct 26 08:46:02 EDT 2018] Pacbio coverage <25x, using the longest subreads
+[Fri Oct 26 08:46:02 EDT 2018] Reducing super-read k-mer size
+[Fri Oct 26 08:48:51 EDT 2018] Mega-reads pass 1
+[Fri Oct 26 08:48:51 EDT 2018] Running locally in 1 batch
+[Fri Oct 26 08:49:38 EDT 2018] Mega-reads pass 2
+[Fri Oct 26 08:49:38 EDT 2018] Running locally in 1 batch
+[Fri Oct 26 08:49:42 EDT 2018] Refining alignments
+[Fri Oct 26 08:49:43 EDT 2018] Joining
+[Fri Oct 26 08:49:43 EDT 2018] Gap consensus
+[Fri Oct 26 08:49:43 EDT 2018] Warning! Some or all gap consensus jobs failed, see files in mr.41.15.17.0.029.join_consensus.tmp, proceeding anyway, to rerun gap consensus erase mr.41.15.17.0.029.1.fa and re-run asse
+mble.sh
+[Fri Oct 26 08:49:43 EDT 2018] Generating assembly input files
+[Fri Oct 26 08:49:44 EDT 2018] Coverage of the mega-reads less than 5 -- using the super reads as well
+[Fri Oct 26 08:49:49 EDT 2018] Coverage threshold for splitting unitigs is 15 minimum ovl 250
+[Fri Oct 26 08:49:49 EDT 2018] Running assembly
+[Fri Oct 26 08:58:46 EDT 2018] Recomputing A-stat
+recomputing A-stat for super-reads
+[Fri Oct 26 09:01:15 EDT 2018] Mega-reads initial assembly complete
+[Fri Oct 26 09:01:15 EDT 2018] No gap closing possible
+[Fri Oct 26 09:01:15 EDT 2018] Removing redundant scaffolds
+[Fri Oct 26 09:02:07 EDT 2018] Assembly complete, final scaffold sequences are in CA.mr.41.15.17.0.029/final.genome.scf.fasta
+[Fri Oct 26 09:02:07 EDT 2018] All done
+[Fri Oct 26 09:02:07 EDT 2018] Final stats for CA.mr.41.15.17.0.029/final.genome.scf.fasta
+N50 32439
+Sequence 100640646
+Average 16714.9
+E-size 43482.6
+Count 6021
+JobId=4290986 JobName=AT_0
+   UserId=severin(50922) GroupId=mc48o5p(15124) MCS_label=N/A
+   Priority=2764 Nice=0 Account=mc48o5p QOS=rm
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:33:14 TimeLimit=2-00:00:00 TimeMin=N/A
+   SubmitTime=2018-10-26T08:28:28 EligibleTime=2018-10-26T08:28:28
+   StartTime=2018-10-26T08:28:54 EndTime=2018-10-28T08:28:55 Deadline=N/A
+   PreemptTime=None SuspendTime=None SecsPreSuspend=0
+   LastSchedEval=2018-10-26T08:28:54
+   Partition=RM AllocNode:Sid=br005:26364
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=r203
+   BatchHost=r203
+   NumNodes=1 NumCPUs=28 NumTasks=16 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=28,mem=123200M,node=1,billing/gpu=28
+   Socks/Node=* NtasksPerN:B:S:C=16:0:*:* CoreSpec=*
+   MinCPUsNode=16 MinMemoryNode=123200M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+
+```
+
+
+### Errors
+
+It appears the do_consensus.sh to perform gapfilling is currently having an issue that should be fixed in new releases.  This step can be performed manually.  [See here for more information](https://github.com/alekseyzimin/masurca/issues/53)
