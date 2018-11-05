@@ -214,10 +214,11 @@ SRR3405330.fastq  SRR3703081_1.fastq  SRR3703081_2.fastq  masurca_AT.sub  sr_con
 
 ### Assembly statistics
 
+This script was originally part of the [assemblathon paper](https://gigascience.biomedcentral.com/articles/10.1186/2047-217X-2-10) that we keep locally in our shop to explore the quality of genomes.  You can download it to your machine from our [ISUGIFsingularity/utilities repo](https://github.com/ISUGIFsingularity/utilities/blob/master/utilities/new_Assemblathon.pl).  You will want to change the first line to #!/bin/perl.
 
 ```
 module load perl/5.18.4-threads
-perl ~/isugif/utilities/utilities/new_Assemblathon.pl final.genome.scf.fasta
+perl new_Assemblathon.pl final.genome.scf.fasta
 
 
 ---------------- Information for assembly 'final.genome.scf.fasta' ----------------
@@ -361,3 +362,5 @@ JobId=4290986 JobName=AT_0
 ### Errors
 
 It appears the do_consensus.sh to perform gapfilling is currently having an issue that should be fixed in new releases.  This step can be performed manually.  [See here for more information](https://github.com/alekseyzimin/masurca/issues/53)
+
+The assembly is correct but it hasn't been gap filled.
