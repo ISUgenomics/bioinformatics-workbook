@@ -48,7 +48,8 @@ The uri is the important bit of information you will need to download this image
 ```
 singularity pull shub://ISUGIFsingularity/utilities:1.0.1
 ```
-
+If you get a **CERTIFICATE_VERIFY_FAILED:** error then you can set your python certificate verification to off.
+```export PYTHONHTTPSVERIFY=0```
 
 #### Direct execution of Singularity containers
 Containers often have runscripts that will provide you with useful information on how to use the container. The run scripts get initiated by executing the image as follows:
