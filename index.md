@@ -57,6 +57,7 @@
     * [GenomeScope to Estimate Genome Size](dataAnalysis/GenomeAssembly/genomescope.md)
     * [Canu for Long Read Assembly](dataAnalysis/GenomeAssembly/LongRead/Canu.md)
       * [Canu on XSEDE Bridges Machine](dataAnalysis/GenomeAssembly/LongRead/Canu_bridges.md)
+    * [Masurca with Pacbio and Illumina](dataAnalysis/GenomeAssembly/Hybrid/MaSuRCA.md)
     * [Genome Scaffolding Using Synteny with Pyscaf](dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md): E. coli and Arabidopsis Genome Scaffolding
   * Gene Annotation
     * [Intro to Maker Gene Prediction](dataAnalysis/GenomeAnnotation/Intro_To_Maker.md)
