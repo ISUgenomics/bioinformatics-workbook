@@ -32,6 +32,12 @@ If this is your first time using XSEDE, I would recommend a Startup Allocation r
 
 Once you are more familiar with XSEDE through your Startup allocation and have some performance and coding metrics you can apply for a Research Allocation to meet your computing needs. This is also done in the XUP ``` allocations tab/ Submit/review Request``` sub-tab.  More information on the requirements for the allocation request including formatting and required documentation can be found in their [Research Allocation Documentation](https://portal.xsede.org/allocations/research)
 
+## Getting started on Bridges
+
+If you decide to use bridges resources then you will need to create a separate login and password. See the following documentation for more information
+
+* [Getting started on Bridges](https://portal.xsede.org/psc-bridges)
+
 ## More information
 
 * [XSEDE Getting Started Guide](https://www.xsede.org/web/site/for-users/getting-started)

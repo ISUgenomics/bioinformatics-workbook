@@ -31,9 +31,9 @@ fasta-get-markov -m 1 TAIR10_upstream_1000_translation_start_20101028 >1orderMar
 
 Here is the meme manual, which discusses the many different options that can be used to identify motifs from a set of fasta sequences.
 
-This meme run of 569 x 1000bp upstream sequences involved in seed dormancy took 15.5 hrs with 16 processors.
-
 http://meme-suite.org/doc/meme.html?man_type=web
+
+This meme run of 569 x 1000bp upstream sequences involved in seed dormancy took 15.5 hrs with 16 processors.
 
 ```
 #this one compensates for the sequences being DNA, allows zero or one motif (zoops), a max of 5 motifs, both strands (revcomp), a larger maximum memory available, a maximum motif size of 100bp, a max number of sites equal to 500, and a markov background file of dinucleotide frequencies for the promoter (-bfile 1orderMarkovPromoters)
@@ -59,7 +59,7 @@ This run took a few minutes to complete with a single thread.
 
 fimo -oc RevisedSeedDormancyFIMO --bgfile 1orderMarkovPromoters SeedDormancyMemeLg/meme.xml  TAIR10_upstream_1000_translation_start_20101028
 ```
-![HTML Output](https://isugenomics.github.io/bioinformatics-workbook/assets/fimoTut.html)
+[HTML Output](https://isugenomics.github.io/bioinformatics-workbook/assets/fimoTut.html)
 
 ## Look to see which genes have these motifs
 ```
