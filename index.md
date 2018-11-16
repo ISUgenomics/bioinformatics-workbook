@@ -42,6 +42,7 @@
     * [Gene Orthology, Synteny, and Visualization with Opscan, Iadhore, and Circos](dataAnalysis/ComparativeGenomics/Gene_Orthology_And_Synteny.md)
     * [Gene Orthology, Synteny, and Visualization with Orthofinder, Iadhore, and Circos](dataAnalysis/ComparativeGenomics/OrthofinderSynteny.md)
     * [Gene Overlap Significance Testing with R Gene_overlap Package](dataAnalysis/ComparativeGenomics/Gene_Category_Overlap_Fishers_exact_testing.md)
+    * [Phylostratiography: determining the LCA of all genes in a genome](dataAnalysis/ComparativeGenomics/phylostratr.md)
   * Metagenomics
     * [Intro to Metagenomics](dataAnalysis/Metagenomics/MetagenomicsP1.md)
     * [Qiime2](dataAnalysis/Metagenomics/Qiime2.md)
