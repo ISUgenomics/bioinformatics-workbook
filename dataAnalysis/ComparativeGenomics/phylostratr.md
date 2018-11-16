@@ -62,14 +62,6 @@ From there, install packages:
 ```
 install.packages("curl")
 install.packages("devtools")
-install.packages("taxize")
-install.packages("reshape2)
-install.packages("taxizedb")
-install.packages("dplyr")
-install.packages("readr")
-install.packages("phylostratr")
-install.packages("magrittr")
-install.packages("devtools)
 # phylostratr
 install_github("arendsee/phylostratr")
 ```
