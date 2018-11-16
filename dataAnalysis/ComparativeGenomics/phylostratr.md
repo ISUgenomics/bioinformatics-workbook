@@ -70,6 +70,9 @@ With this, you will be set to run `phylostratr` analysis.
 
 ### Running `phylostratr`
 
+**PLEASE REFER THE LATEST INSTRUCTIONS FOR RUNNING PHYLOSTRATR [HERE](https://github.com/arendsee/phylostratr/blob/master/vignettes/arabidopsis.Rmd)**
+
+
 We will run `phylostratr` in 3 parts. In the first part, we will find the taxonomy id for the species of interest from NCBI and choose all the species for determining the gene age. Second, we will run the BLAST (all possible 1 vs. 1). We will do this in a HPC cluster to speed up the process. Last, we will finish running the `phylostratr`, writing results in a csv file and save plots as pdf.
 
 #### 1. Setting up focal species and downloading protein sequences
