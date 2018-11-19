@@ -1,7 +1,7 @@
 #  Determining evolutionary origin of all genes in a genome
 
 `phylostratr` is an R package for generating phylostratigraphy of all genes in a genome. You will need complete predicted proteins translated from the transcripts for a given genome.
-Please cite (Phylostratr)[https://www.biorxiv.org/content/early/2018/07/03/360164] if you use this software for your research
+Please cite [Phylostratr](https://www.biorxiv.org/content/early/2018/07/03/360164) if you use this software for your research
 
 ## Installation
 
