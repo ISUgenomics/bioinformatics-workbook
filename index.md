@@ -6,6 +6,13 @@ header:
   overlay_image: /assets/images/dna.jpg
 excerpt: 'A tutorial to help scientists design their projects and analyze their data.'
 feature_row:
+
+  - title: "Command Line Basics and Useful Programs"
+    image_path: /assets/images/computer.jpg
+    alt: "Programs"
+    url: "/Appendix/programs"
+    btn_label: "Learn More"
+
   - title: "Experimental Design"
     image_path: /assets/images/experiment.jpg
     alt: "Baiscs"
@@ -27,54 +34,47 @@ feature_row:
     url: "/introduction/terminology_index"
     btn_label: "Learn More"
 
-  - image_path: /assets/images/computer.jpg
-    alt: "data management"
-    title: "Command Line Basics"
-    excerpt: "Introduction and basics"
-    url: "/introduction/introduction"
-    btn_label: "Learn More"
-
-  - image_path: /assets/images/metagenomics.jpg
-    alt: "fully responsive"
-    title: "Metagenomics"
-    excerpt: "Sequencing environmental DNA from mixed communities"
-    url: "/tutorials/exp_design/bio_sys"
-
-    btn_label: "Learn More"
-  - image_path: /assets/images/annotation.jpg
-    alt: "Annotation"
-    title: "Genome Annotation"
-    excerpt: "Genome Annotation"
-    url: "/tutorials/exp_design/bio_sys"
-    btn_label: "Learn More"
-
-  - image_path: /assets/images/orthology.png
-    alt: "fully responsive"
-    title: "Comparative Genomics"
-    excerpt: "Comparative Genomics"
-    url: "exp_design_index.md"
-
-    btn_label: "Learn More"
-
-  - image_path: /assets/images/assembly.jpg
-    alt: "fully responsive"
-    title: "Genome Assembly"
-    excerpt: "Genome assembly"
-    url: "/tutorials/metagenomics/"
-    btn_label: "Learn More"
-
-  - image_path: /assets/images/rna.png
+  - image_path: /assets/images/rna.jpg
     alt: "fully responsive"
     title: "RNA Sequencing"
     excerpt: "RNA Sequencing"
-    url: "/tutorials/metagenomics/"
+    url: "dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-intro"
     btn_label: "Learn More"
 
+
+  - image_path: /assets/images/annotation.png
+    alt: "Annotation"
+    title: "Genome Assembly and Annotation"
+    excerpt: "Genome Annotation"
+    url: "/dataAnalysis/GenomeAnnotation/annotation_index"
+    btn_label: "Learn More"
+
+  - image_path: /assets/images/comp_genomics.jpg
+    alt: "fully responsive"
+    title: "Comparative Genomics"
+    excerpt: "Comparative Genomics"
+    url: "/dataAnalysis/ComparativeGenomics/compGenomics_index"
+    btn_label: "Learn More"
+
+  - title: "Metagenomics"
+    image_path: /assets/images/metagenomics.jpg
+    alt: "fully responsive"
+    url: "/dataAnalysis/Metagenomics/metagenomics_index"
+    caption: "Photo credit: [Kostas Tsobanoglou](https://commons.wikimedia.org/wiki/File:Diatoms-HCMR.jpg)"
+    btn_label: "Learn More"
+
+  - title: "Genome Repeat Identification"
+    image_path: /assets/images/repeats.png
+    alt: "fully responsive"
+    url: "dataAnalysis/ComparativeGenomics/Repeats_index"
+    btn_label: "Learn More"
+
+
   - title: "Data Visualization"
-    image_path: /assets/images/heatmap.png
+    image_path: /assets/images/Heatmap.jpg
     alt: "fully responsive"
     title: "Data Visualization"
-    url: "/dataWrangling/R/generate_heatmaps/"
+    url: "Appendix/dataVisualization_index/"
     btn_label: "Learn More"
 
 ---
