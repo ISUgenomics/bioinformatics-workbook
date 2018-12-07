@@ -15,45 +15,45 @@ header:
   * [Unix Basics 3 (grep)](../Appendix/unix-basics-3.md)
   * [Unix Basics 4 (sed)](../Appendix/unix-basics-4.md)
 * <span style="color:lightblue">HPC</span>
-* [How to Install a Program](/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
+  * [How to Install a Program](../Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
   * <span style="color:lightblue">SSH</span>
-    * [SSH Shortcuts](/HPC/ssh-shortcuts.md)
-    * [Password-less SSH](/HPC/password-less-ssh-login.md)
+    * [SSH Shortcuts](../Appendix/HPC/ssh-shortcuts.md)
+    * [Password-less SSH](../Appendix/HPC/password-less-ssh-login.md)
   * <span style="color:lightblue">SLURM</span>
-    * [SLURM Cheatsheet](/HPC/SLURM/slurm-cheatsheat.md)
-    * [SLURM Job Submission Dependencies](/HPC/SLURM/creating-slurm-job-submission-scripts-for-condo.md)
+    * [SLURM Cheatsheet](../Appendix/HPC/SLURM/slurm-cheatsheat.md)
+    * [SLURM Job Submission Dependencies](../Appendix/HPC/SLURM/creating-slurm-job-submission-scripts-for-condo.md)
   * <span style="color:lightblue">XSEDE</span>
-    * [XSEDE supercomputer](/HPC/xsede/xsede.md)
-    * [XSEDE supercell storage](/HPC/xsede/using-psc-supercell-storage-for-bridges-and-greenfield.md)
+    * [XSEDE supercomputer](../Appendix/HPC/xsede/xsede.md)
+    * [XSEDE supercell storage](../Appendix/HPC/xsede/using-psc-supercell-storage-for-bridges-and-greenfield.md)
   * <span style="color:lightblue">Containers</span>
-    * [Introduction to Containers](/HPC/Containers/Intro_Singularity.md)
-    * [Creating Containers Using Singularity](/HPC/Containers/creatingContainers.md)
-    * [Modifying Existing Containers](/HPC/Containers/modifyingExistingContainers.md)
+    * [Introduction to Containers](../Appendix/HPC/Containers/Intro_Singularity.md)
+    * [Creating Containers Using Singularity](../Appendix/HPC/Containers/creatingContainers.md)
+    * [Modifying Existing Containers](../Appendix/HPC/Containers/modifyingExistingContainers.md)
 
 * <span style="color:lightblue">GitHub</span>
-  * [Introduction to GitHub](/github/introgithub.md)
-  * [Some Helpful Commands For Your New Repository](/github/github2.md)
-  * [Best Practices on Github](/github/githubBasics.md)
+  * [Introduction to GitHub](../Appendix/github/introgithub.md)
+  * [Some Helpful Commands For Your New Repository](../Appendix/github/github2.md)
+  * [Best Practices on Github](../Appendix/github/githubBasics.md)
 * <span style="color:lightblue">Bioawk</span>
-  * [Bioawk Basics](bioawk-basics.md)
-* [Slack](slack.md)
-* [Markdown](Markdown.md)
-* [Viewing Files In Remote Machine Without Downloading](/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
+  * [Bioawk Basics](../Appendix/bioawk-basics.md)
+* [Slack](../Appendix/slack.md)
+* [Markdown](../Appendix/Markdown.md)
+* [Viewing Files In Remote Machine Without Downloading](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 
 ### Experimental Design
-* [Biological system](bio_sys.md)
-* [Sequencing Technology](sequencing.md)
-* [Costs](costs.md)
-* [Generic Examples of Experimental Design](eD_genericExamples.md)
+* [Biological system](../experimentalDesign/bio_sys.md)
+* [Sequencing Technology](../experimentalDesign/sequencing.md)
+* [Costs](../experimentalDesign/costs.md)
+* [Generic Examples of Experimental Design](../experimentalDesign/eD_genericExamples.md)
 * [List of Biology exceptions and irregularities](../Appendix/biology_tidbits.md)
 
 ### Data Acquisition and Wrangling
 * <span style="color:lightblue">File Transfer</span>
-  * [File Transfer using wget](/fileTransfer/downloading-files-via-wget.md)
-  * [File Transfer using Globus](/fileTransfer/file-transfer-using-globus-connect-personal-gcp.md)
-  * [File Transfer using irods](/fileTransfer/getting-data-from-iplant-via-irods.md)
-  * [File Transfer using SRA toolkit](/fileTransfer/sra.md)
-* [Data Sets Used in the tutorials](dataSets.md)
+  * [File Transfer using wget](../dataAcquisition/fileTransfer/downloading-files-via-wget.md)
+  * [File Transfer using Globus](../dataAcquisition/fileTransfer/file-transfer-using-globus-connect-personal-gcp.md)
+  * [File Transfer using irods](../dataAcquisition/fileTransfer/getting-data-from-iplant-via-irods.md)
+  * [File Transfer using SRA toolkit](../dataAcquisition/fileTransfer/sra.md)
+* [Data Sets Used in the tutorials](../dataAcquisition/dataSets.md)
 * <span style="color:lightblue">FASTA manipulation</span>
   * [FASTA(Q) Manipulation length](../dataWrangling/fastaq-manipulations/calculate-sequence-lengths-in-a-fasta-file.md)
   * [Determining Sequence length](../dataWrangling/fastaq-manipulations/converting-fastq-format-to-fasta.md)
@@ -67,42 +67,42 @@ header:
   * [Deposition of Data to NCBI SRA](../dataWrangling/NCBI_Data_Submission.md)
 
 ### Bioinformatics terminology
-* [Read, Contigs, Scafolds and Choromosome](dataTerminology.md)
-* [File Formats](fileFormats.md)
-* [Fasta Quality Score](fastqquality-score-encoding.md)
+* [Read, Contigs, Scafolds and Choromosome](../introduction/dataTerminology.md)
+* [File Formats](../introduction/fileFormats.md)
+* [Fasta Quality Score](../introduction/fastqquality-score-encoding.md)
 
 ### RNA Sequencing analysis
-* [RNA-Seq Example with a Genome Assembly](RNAseq-using-a-genome.md)
-* [RNA-Seq Example without a Genome Assembly](RNAseq-without-a-genome.md)
-* [Different Expression Analysis:DESeq2](Differential-Expression-Analysis.md)
+* [RNA-Seq Example with a Genome Assembly](../dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md)
+* [RNA-Seq Example without a Genome Assembly](../dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-without-a-genome.md)
+* [Different Expression Analysis:DESeq2](../dataAnalysis/RNA-Seq/RNA-SeqIntro/Differential-Expression-Analysis.md)
 
 ### Genome Assembly and Annotation
 * <span style="color:lightblue">Genome Assembly</span>
-  * [GenomeScope to Estimate Genome Size](genomescope.md)
-  * [Canu for Long Read Assembly](/LongRead/Canu.md)
-    * [Canu on XSEDE Bridges Machine](/LongRead/Canu_bridges.md)
-  * [Mascurca with Pacbio and Illumina](/Hybrid/MaSuRCA.md)
-  * [Genome Scaffolding Using Synteny eith Pyscaf](Pyscaf_Synteny_Scaffolding.md)
+  * [GenomeScope to Estimate Genome Size](../dataAnalysis/GenomeAssembly/genomescope.md)
+  * [Canu for Long Read Assembly](../dataAnalysis/GenomeAssembly/LongRead/Canu.md)
+    * [Canu on XSEDE Bridges Machine](../dataAnalysis/GenomeAssembly/LongRead/Canu_bridges.md)
+  * [Mascurca with Pacbio and Illumina](../dataAnalysis/GenomeAssembly/Hybrid/MaSuRCA.md)
+  * [Genome Scaffolding Using Synteny eith Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
 * <span style="color:lightblue">Genome Annotation</span>
-  * [Introduction to Maker Gene Prediction](Intro_To_Maker.md)
-  * [Introduction to Braker2 Gene Prediction](Intro_to_Braker2.md)
-  * [Motif Identification and Finding with MEME and FIMO](MEME_Motif_Finding_In_Genomes.md)  
+  * [Introduction to Maker Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_To_Maker.md)
+  * [Introduction to Braker2 Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_to_Braker2.md)
+  * [Motif Identification and Finding with MEME and FIMO](../dataAnalysis/GenomeAnnotation/MEME_Motif_Finding_In_Genomes.md)  
 
 ### Comparative Genomics
-* [Gene Orthology, Synteny, and Visualzation with Opscan, Iadhore and Circos](Gene_Orthology_And_Synteny.md)
-  * [Gene Orthology, Synteny, and Visualzation with Orthofinder, Iadhore and Circos](OrthofinderSynteny.md)
-  * [Gene Overlap Significance Testing with R Gene_overlap Package](Gene_Category_overlap_Fisher_exact_testing.md)  
-  * [Phylostratiophraphy:Determining the LCA of all Genes in a Genome](phylostratr.md)
+* [Gene Orthology, Synteny, and Visualzation with Opscan, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/Gene_Orthology_And_Synteny.md)
+  * [Gene Orthology, Synteny, and Visualzation with Orthofinder, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/OrthofinderSynteny.md)
+  * [Gene Overlap Significance Testing with R Gene_overlap Package](../dataAnalysis/ComparativeGenomics/Gene_Category_overlap_Fisher_exact_testing.md)  
+  * [Phylostratiophraphy:Determining the LCA of all Genes in a Genome](../dataAnalysis/ComparativeGenomics/phylostratr.md)
 
 ### Genome Repeat Identification
-* [Helitron Identification in a Genome Sequence](Helitron_Scanner.md)
-  * [DNA Transposon Annotation with Inverted-Repeats Finder](InvertedRepeatsFinderForDNATransposonAnnotation.md)
-  * [LTR Retrotransposon Annotation with LTR-Finder](LTRFinder.md)  
-  * [Repeat Annotation from Next-gen Sequencing Reads Using RepeatExplorer](RepeatExplorer.md)
-  * [De-Novo Repeat Identification and Annotation from Genome Assemblies using RepeatModeler and RepeatMasker](RepeatModeler_RepeatMasker.md)
-  * [Tandem Duplication Annotation in a Genome Assembly Using Mummer and RedTandem](Tandem_Duplication_Detection.md)
+* [Helitron Identification in a Genome Sequence](../dataAnalysis/ComparativeGenomics/Helitron_Scanner.md)
+  * [DNA Transposon Annotation with Inverted-Repeats Finder](../dataAnalysis/ComparativeGenomics/InvertedRepeatsFinderForDNATransposonAnnotation.md)
+  * [LTR Retrotransposon Annotation with LTR-Finder](../dataAnalysis/ComparativeGenomics/LTRFinder.md)  
+  * [Repeat Annotation from Next-gen Sequencing Reads Using RepeatExplorer](../dataAnalysis/ComparativeGenomics/RepeatExplorer.md)
+  * [De-Novo Repeat Identification and Annotation from Genome Assemblies using RepeatModeler and RepeatMasker](../dataAnalysis/ComparativeGenomics/RepeatModeler_RepeatMasker.md)
+  * [Tandem Duplication Annotation in a Genome Assembly Using Mummer and RedTandem](../dataAnalysis/ComparativeGenomics/Tandem_Duplication_Detection.md)
 
 ### Data Visuallization
-* [Viewing Files Remotely without Transferring](/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
+* [Viewing Files Remotely without Transferring](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 * [Creating Boxplots in R](../dataWrangling/R/generate-boxplots.md)
 * [Creating Heatmaps in R](../dataWrangling/R/generate_heatmaps.md)
