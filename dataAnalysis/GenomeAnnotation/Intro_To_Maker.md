@@ -741,3 +741,5 @@ Scaffold_46     AUGUSTUS        gene    1255    3337    0.09    -       .       
 Scaffold_86     AUGUSTUS        gene    1       579     0.52    -       .       ID=g15467;
 Scaffold_95     AUGUSTUS        gene    991     4533    0.77    +       .       ID=g15681;
 ```
+---
+[Table of contents](annotation_and_assembly_index.md)

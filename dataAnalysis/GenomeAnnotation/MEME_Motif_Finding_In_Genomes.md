@@ -113,3 +113,6 @@ less fimo.txt |awk '{print $3}' |sort|uniq -c|awk '$1==5' |awk '{print $2}' |gre
 
 ```
 Well, this isn't so promising for identifying a commonality among promoters for genes involved in seed dormancy, but it does demonstrate how to find motifs and search for motifs using statistically robust methodology with MEME and FIMO.
+
+---
+[Table of contents](annotation_and_assembly_index.md)
