@@ -42,4 +42,3 @@ Upon completion of this section on experimental design the learner will be able 
 ---
 
 [Next](/fileTransfer/downloading-files-via-wget.md){: .btn  .btn--primary}
-[Table of contents](../index-bk.md){: .btn  .btn--primary}

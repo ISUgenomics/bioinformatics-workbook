@@ -917,3 +917,7 @@ chromosomes_order = 000001,160,75,117,423,112,529,2,30syntmer,001124,000286,0001
 This gives us a nice visualization of synteny, as well as an estimate to which the extent of synteny exists between your two species.
 
 ![Circos](../../assets/GpallidaSyntenyH.glycinescircos.png)
+
+
+---
+[Table of contents](compGenomics_index.md)

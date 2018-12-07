@@ -225,3 +225,6 @@ kable()
 plot_heatmaps(results, heatmaps.pdf, focal_id = 381124)
 plot(strata)
 ```
+
+---
+[Table of contents](compGenomics_index.md)

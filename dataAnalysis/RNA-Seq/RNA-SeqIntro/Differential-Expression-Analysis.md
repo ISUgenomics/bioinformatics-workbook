@@ -172,3 +172,6 @@ volcanoplot(resdata, lfcthresh=1, sigthresh=0.05, textcx=.8, xlim=c(-2.3, 2))
 dev.off()
 ```
 ![Volcano Plot](Assets/diffexpr-volcanoplot.png)
+
+---
+[Table of contents](RNAseq-intro.md)

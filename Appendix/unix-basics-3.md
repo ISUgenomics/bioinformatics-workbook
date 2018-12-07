@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 ## `grep`
 
 `grep` (`g`lobally search a `r`egular `e`xpression and `p`rint) is one of the most useful commands in UNIX and it is commonly used to filter a file/input, line by line, against a pattern eg., to print each line of a file which contains a match for pattern.
@@ -197,3 +205,6 @@ You can also combine to get both before and after lines
 ```
 grep -B 10 -A 10 "PATTERN" FILENAME
 ```
+
+---
+[Table of contents](programs.md)

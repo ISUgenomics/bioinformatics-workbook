@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Creating SLURM job submission scripts for Condo
 
 For a quick list of frequently used SLURM commands/options, take a look at this [cheat sheet](https://gif.biotech.iastate.edu/slurm-slurm-job-management-cheat-sheet "SLURM job management cheat sheet"). This guide will show you how to generate SLURM job submission scripts for your commands, easily and efficiently!
@@ -55,3 +63,6 @@ sbatch $f;
 done
 ```
 All commands will be submitted and will start to run as per the availability of nodes.
+
+---
+[Table of contents](../../programs.md)

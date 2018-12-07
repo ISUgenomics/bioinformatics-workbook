@@ -88,3 +88,7 @@ Process the ltrfinder output and convert to bed format for genomic comparison.
 #remove the line with "Sequence"; get the chromosome and location; get rid of grep artifact "--" and empty lines; if character 1 from column 1 is "[" then print the second column (chromosome number) else print only the relevant locational information($3,$5,$8); get rid of "Strand:"; put chromosome and coordinates on same line; add the missing tab in the first line; get rid of all first tabs; convert spaces to tab for standard bed format.
 grep -v "Sequence" LTRfinder.out |grep "Location" -B 1 |sed 's/--//g' |sed '/^$/d' |awk '{if(substr($1,1,1)=="[") {print $2} else {print $3,$5,$8}}' |sed 's/Strand://g' |tr "\n" "\t" |sed 's/+/+\n/g' |sed 's/-/-\n/g' |awk '{if(NR==1) {print "\t"$0} else {print $0}}' |sed 's/\t//1' |tr " " "\t" >LTRfinder.bed
 ```
+
+
+---
+[Table of contents](Repeats_index.md)

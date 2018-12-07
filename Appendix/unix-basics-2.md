@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Unix Basics 2
 This exercise will provide you details about some administrative commands with examples. Here, you can learn how to change permissions for files and folders to modify its accessibility and commands to obtain information about the system you are using.
 
@@ -285,3 +293,6 @@ Some variables that are useful are:
 | `HOME`     | path for home                      |
 | `DISPLAY`  | where to route the display         |
 | `HISTFILE` | file where the history is saved    |
+
+---
+[Table of contents](programs.md)

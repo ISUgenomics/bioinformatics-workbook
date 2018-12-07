@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Setup password-less login for HPC
 
 Most HPC resources should now require double authentication which will make this type of password-less login not possible.  For those that don't have double authentication, this will work.
@@ -22,3 +30,6 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub userid@MACHINENAME
 ssh userid@MACHINENAME
 # Ensure file permissions for ~/.ssh/.id_rsa (local) and ~/.ssh/authorized_keys (remote) are such that it is only readable by you!
 ```
+
+---
+[Table of contents](../programs.md)

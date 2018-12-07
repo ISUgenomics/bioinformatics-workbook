@@ -1,3 +1,10 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
 
 ## All about SED command
 
@@ -120,3 +127,6 @@ sed '2 i line to insert' FILENAME
 
 ### 5. Extract portions of the lines
 still to come!
+
+---
+[Table of contents](programs.md)

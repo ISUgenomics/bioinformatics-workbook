@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # BioAWK basics
 Bioawk is an extension of the UNIX core utility command `awk`. It provides several features for biological data manipulation in a similar way as that of awk. This tutorial will give a brief introduction and examples for some common tasks that can be done with this command.
 

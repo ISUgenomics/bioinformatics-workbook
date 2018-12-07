@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Introduction to XSEDE
 
 ## What is XSEDE?
@@ -42,3 +50,6 @@ If you decide to use bridges resources then you will need to create a separate l
 
 * [XSEDE Getting Started Guide](https://www.xsede.org/web/site/for-users/getting-started)
 * [XSEDE Documentation](https://portal.xsede.org/group/xup/documentation-overview)
+
+---
+[Table of contents](../../programs.md)

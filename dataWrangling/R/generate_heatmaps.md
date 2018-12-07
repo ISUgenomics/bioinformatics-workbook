@@ -1,3 +1,11 @@
+---
+title: "Data Visualization"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 ## Clustering and Heatmap generation using R
 
 Clustering and heatmap helps us to visualize trends in large dataset. Here, this method will describe how to create one in R
@@ -81,13 +89,13 @@ row.clus <- hclust(data.dist, "aver")
 data.dist.g <- vegdist(t(data.prop), method = "bray")
 col.clus <- hclust(data.dist.g, "aver")
 # generate a heatmap
-p <- heatmap(as.matrix(data.prop), 
-   Rowv = as.dendrogram(row.clus), 
-   Colv = as.dendrogram(col.clus), 
-   col = scaleyellowred, 
-   margins = c(7, 8), 
-   xlab = "Column names", 
-   ylab = "Row names", 
+p <- heatmap(as.matrix(data.prop),
+   Rowv = as.dendrogram(row.clus),
+   Colv = as.dendrogram(col.clus),
+   col = scaleyellowred,
+   margins = c(7, 8),
+   xlab = "Column names",
+   ylab = "Row names",
    main = "Title", pch=10)
 p
 # to save it as scalable vector graphics (change svg to png, pdf etc if you need other formats)

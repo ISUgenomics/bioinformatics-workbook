@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Modifying Existing Containers
 
 First off, it is important that modifying existing containers should only be done to avoid having to rebuild a container from scratch while optimizing the recipe file.  The ultimate goal is for the container to be fully reproducible from the recipe file.  However, there are some containers that can take 2 hours to build and if you forgot to add a folder to the PATH directory or other similarly simple mistakes, 2 hours is a long time to wait to verify the container is working properly.
@@ -67,3 +75,7 @@ sudo singularity build container.simg recipe
 
 
 Once you have made all the changes and your image is working the way you want then you can make those changes in your original recipe file and recreate it from scratch for full reproducibility.
+
+
+---
+[Table of contents](../../programs.md)

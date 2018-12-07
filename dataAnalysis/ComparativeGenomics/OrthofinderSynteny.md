@@ -584,3 +584,6 @@ circos -conf circos.conf
 ```
 
 ![Circos](../../assets/E.coliSynteny.png)
+
+---
+[Table of contents](compGenomics_index.md)

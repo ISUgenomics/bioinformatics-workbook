@@ -1,3 +1,11 @@
+---
+title: "Metagenomics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # QIIME2
 
 ---
@@ -543,3 +551,6 @@ This tutorial covered a range of analyses that can be done with microbiome data 
 * Data management tools - [Qiita](https://qiita.ucsd.edu/), and from ARS scientist Dan Manter [myPhyloDB](http://www.myphylodb.org/)
 * Set analysis - From ARS Scientist Devin Coleman-Derr [MetaComet](https://probes.pw.usda.gov/MetaCoMET/)
 * Other general analysis tools - [Mothur](https://www.mothur.org/) and the R-based [Phyloseq](https://joey711.github.io/phyloseq/)
+
+---
+[Table of contents](metagenomics_index.md)

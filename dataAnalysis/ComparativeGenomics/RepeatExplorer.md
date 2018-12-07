@@ -84,3 +84,6 @@ seqtk mergepe 200kForwardTrimmedPairedRenamed.fasta 200kReverseTrimmedPairedRena
 
 These reads are now ready to go for the RepeatExplorer program, however there are a number of other options to consider when using RepeatExplorer.
 A custom repeat database can be used, when RepeatExplorer is annotating the clustered repeats (i.e. repeatmodeler/repeatmasker).  This may be helpful for later comparisons among datasets.
+
+---
+[Table of contents](Repeats_index.md)

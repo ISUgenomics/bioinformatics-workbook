@@ -1,3 +1,10 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
 
 # Introduction to Singularity Containers
 
@@ -187,3 +194,6 @@ to execute the script via the singularity container.
 #### To create your own containers see the next tutorial
 
 [How to create your own Containers](Appendix/HPC/Containers/creatingContainers.md)
+
+---
+[Table of contents](../../programs.md)

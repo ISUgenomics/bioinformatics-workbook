@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Quick reference sheet for SLURM resource manager
 
 ### Job scheduling commands
@@ -86,3 +94,6 @@ More information about Slurm can be found here:
 - [Slurm Cheat Sheat](https://www.chpc.utah.edu/presentations/SlurmCheatsheet.pdf)
 - [Slurm Basics](http://researchit.las.iastate.edu/slurm-basics)
 - [Slurm cluster commands](https://sites.google.com/a/case.edu/hpc-upgraded-cluster/slurm-cluster-commands)
+
+---
+[Table of contents](../../programs.md)

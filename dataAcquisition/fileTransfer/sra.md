@@ -154,4 +154,4 @@ Make sure you do this on Condoddtn node or as a PBS job
 
 [Next](../dataSets.md){: .btn  .btn--primary}
 [Previous](getting-data-from-iplant-via-irods.md){: .btn  .btn--primary}
-[Table of contents](../../index-bk.md){: .btn  .btn--primary}
+[Table of contents](../dAc_introduction.md){: .btn  .btn--primary}

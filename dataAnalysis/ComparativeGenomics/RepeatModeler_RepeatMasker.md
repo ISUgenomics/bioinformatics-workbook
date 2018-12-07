@@ -155,3 +155,6 @@ Now there is also a GFF that can be used for many other genomic comparisons.
 1       RepeatMasker    similarity      64859   64872   27.7    +       .       Target "Motif:A-rich" 1 37
 #truncated file for visualization of gff
 ```
+
+---
+[Table of contents](Repeats_index.md)

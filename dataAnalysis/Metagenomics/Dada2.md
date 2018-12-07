@@ -1,3 +1,12 @@
+---
+title: "Metagenomics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
 # DADA2
 
 ---
@@ -1053,3 +1062,6 @@ TODO
 * [Original Tutorial by Benjamin Callahan](https://benjjneb.github.io/dada2/tutorial.html)
 * [Tutorial by Adam Rivers](https://usda-ars-gbru.github.io/Microbiome-workshop/tutorials/amplicon/)
 * [DADA2 Manuscript](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/)
+
+---
+[Table of contents](metagenomics_index.md)

@@ -310,3 +310,6 @@ gene8   0       0       0       0       0       0
 ```
 
 Now we are ready for performing DGE analysis!
+
+---
+[Table of contents](RNAseq-intro.md)
