@@ -1,3 +1,12 @@
+---
+title: "Experimental Design"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
 ## Learning Objective
 
 Upon completion of this section on fastq quality scores the learner will understand the following:

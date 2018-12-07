@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Wrangling"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Retrieve FASTA sequences using sequence IDs
 ## 1. cdbfasta/cdbyank ###
 This is a tutorial for using file-based hashing tools (`cdbfasta` and `cdbyank`) that can be used for creating indices for quick retrieval of any particular sequences from large multi-FASTA files. Use `cdbfasta` to create the index file for a multi-FASTA file and `cdbyank` to pull records based on that index file.

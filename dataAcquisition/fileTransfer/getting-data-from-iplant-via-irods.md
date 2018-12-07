@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Acquisition"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Getting Data from iPlant/Cyverse
 
 Quick tutorial to download data from iPlant datastore to Lightning3/Condo using iRODS. iRODS is currently installed on Lightning3/Condo, to start using it, just load it using modules.

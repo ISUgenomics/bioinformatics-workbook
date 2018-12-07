@@ -1,3 +1,11 @@
+---
+title: Genome Repeats Identification
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 RepeatExplorer2 is a graph-based clustering algorithm that uses unassembled short reads to identify repeat families from low depth genomic sequencing.  Documentation can be found [here](http://repeatexplorer.org/?page_id=818).
 
 

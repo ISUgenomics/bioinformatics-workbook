@@ -1,3 +1,11 @@
+---
+title: Comparative Genomics
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Opscan 1:1 Ortholog Calling to Synteny with iAdhore
 Opscan is a software that will call orthologous genes between two sets of genes, a prerequisite for constructing synteny between species.
 There are many other software options out there that can provide ortholog calling capabilities, including BLAST, OrthoMCL, OrthoFinder, etc.  However, Opscan offers some unique benefits and is extremely fast. (20mins on 30k genes)

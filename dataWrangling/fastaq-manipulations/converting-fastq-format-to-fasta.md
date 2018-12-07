@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Wrangling"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Converting FASTQ format to FASTA
 
 There are several ways you can convert fastq to fasta sequences. Some methods are listed below.

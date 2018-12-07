@@ -1,3 +1,10 @@
+---
+title: RNA Sequence Analysis
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
 
 Lets now assume that *Arabidopsis* doesn't have a sequenced genome. We then start with the RNAseq reads and assemble them *denovo* into transcripts. One such denovo assembler, that we will showcase here is [__Trinity__](https://github.com/trinityrnaseq/trinityrnaseq/wiki). It incorporates three software modules, Inchworm, Chrysalis and Butterfly in sequence. It divides the data to many smaller de bruijn graphs, each representing the transcriptional complexity at a locus.
 

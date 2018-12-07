@@ -1,5 +1,5 @@
 ---
-
+title: RNA Sequence Analysis
 layout: single
 header:
   overlay_color: "444444"

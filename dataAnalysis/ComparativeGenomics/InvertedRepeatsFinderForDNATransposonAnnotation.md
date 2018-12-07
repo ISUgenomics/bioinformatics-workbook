@@ -1,3 +1,11 @@
+---
+title: Genome Repeats Identification
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Using Inverted Repeat Finder to identify DNA transposon borders in genomes
 Inverted repeats finder is primarily to identify inverted repeats in the genome, yet when combined with other repeat prediction software, full length DNA transposons can be identified. <brk/>
 [Software download](https://tandem.bu.edu/irf/irf.download.html)

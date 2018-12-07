@@ -1,3 +1,11 @@
+---
+title: Genome Annotation
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # MEME and FIMO tutorial
 This tutorial will go through how to identify a set of dna motifs that among a list of sequences. Once the motifs have been identified, they can be used to search a larger database of sequences.  This is really useful when trying to find patterns of conserved sequences in large databases of sequences.
 

@@ -1,3 +1,11 @@
+---
+title: Genome Repeats Identification
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Finding Helitrons in your genome using HelitronScanner
 
 Helitrons are rolling-circle transposons that are hard to identify, due to their lack of terminal repeats and target site duplications. Because Helitrons have poor sequence conservation, Helitronscanner was developed to identify DNA motifs conserved in helitrons, and then uses the motifs to identify similar regions in your genome.

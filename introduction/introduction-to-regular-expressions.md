@@ -1,3 +1,12 @@
+---
+title: "Experimental Design"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
 ## Regular Expressions Definition -- regex, regexp
 Regular expressions are the patterns used to find or find and replace text on the command line. Regular expressions are used in most modern programming languages and the syntax is usually very similar.
 

@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Wrangling"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Calculate Sequence Length (fasta)
 Sometimes it is essential to know the length distribution of your sequences. It may be your newly assembled scaffolds or it might be a genome, that you wish to know the size of chromosomes, or it could just be any multi fasta sequence file.
 ##  1. Using biopython ##

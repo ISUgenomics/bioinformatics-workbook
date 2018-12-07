@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Acquisition"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Downloading files using wget
 
 Wget is short for World Wide Web get and is used on the command line to download a file from a website or webserver.

@@ -1,3 +1,11 @@
+---
+title: Genome Repeats Identification
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Repeatmodeler is a repeat-identifying software that can provide a list of repeat family sequences to mask repeats in a genome with RepeatMasker.
 Things to consider with this software is that it can take a long time with large genomes (>1Gb==>96hrs on a 16 cpu node).  You also need to set the correct parameters in repeatmodeler so that you get repeats that are not only grouped by family, but are also annotated.
 

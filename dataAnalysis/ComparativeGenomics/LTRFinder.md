@@ -1,3 +1,11 @@
+---
+title: Genome Repeats Identification
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # LTR finder, annotate LTR elements in a genome, and obtain GFF for comparisons
 
 LTR-finder is a software focused on extensively charcaterizing LTR retrotransposons in a genome.  The algorithm was developed around identifying the common structural features of LTR retrotransposons.  Specifically, LTRfinder is quite good at identifying pairs of LTR's in the genome, and further annotates the intervening sequences for protein coding domains using Prosite. This software will by no means give a complete assessement of repeats in a genome (i.e. repeatmodeler,REPET,etc), but a refined look at LTR retroelements.<br/>

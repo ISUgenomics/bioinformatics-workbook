@@ -1,3 +1,11 @@
+---
+title: Genome Annotation
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Tutorial of how to run Maker2 gene annotation pipeline
 
 I have outlined how to perform a gene annotation of the soybean cyst nematode (*Heterodera glycines*) genome using Maker2.

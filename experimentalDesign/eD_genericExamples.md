@@ -1,3 +1,13 @@
+---
+title: "Experimental Design"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+{% include toc %}
+
 # **RNA-Seq Analysis Generic Example:** experiments with 192 samples or less
 
 #### Background

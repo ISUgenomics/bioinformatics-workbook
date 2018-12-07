@@ -1,3 +1,11 @@
+---
+title: Genome Repeats Identification
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Tandem Duplication Detection in a genome
 
 There many different ways to detect tandem duplications(TD) in a genome, although each is unique in the ability to detect TD.  Here I will cover how to use a software that can identify more ancient tandem duplications in a genome, and one that can only identify recent and highly similar TD. Redtandem essentially chains smaller alignments together, so that more diverged and ancient TD can be identified.  Mummer is essentially a self-alignment of the genome, that readily identifies recent TD, but misses ancient TD that have diverged in nucleotide similarity.    

@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Acquisition"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # File Transfer Using Globus Connect Personal (GCP)
 
 This tutorial explains how to transfer files to/from GIF server. You will need Global Connect Personal application to facilitate the file transfer.
