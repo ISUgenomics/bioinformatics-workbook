@@ -1,3 +1,11 @@
+---
+title: Genome Assembly
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Pyscaf is a genome scaffolding program that can scaffold assemblies based on synteny, long reads, and short reads.
 
 Dependencies: Python 2.7,python FastaIndex, py-pillow, LAST assembler

@@ -1,3 +1,11 @@
+---
+title: Genome Assembly
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Genome assembly with Canu
 
 Canu is based off of the [Celera Assembler](http://wgs-assembler.sourceforge.net/wiki/index.php?title=Main_Page) and is designed for noisy long-read data from [PacBio](http://www.pacb.com/) and [NanoPore](https://www.nanoporetech.com/).  More on the history of Canu can be found [here](http://canu.readthedocs.io/en/latest/history.html).

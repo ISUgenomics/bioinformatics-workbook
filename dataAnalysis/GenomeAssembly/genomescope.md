@@ -1,3 +1,11 @@
+---
+title: Genome Assembly
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Genomescope: genome properties using just raw sequence data
 
 Genomescope uses k-mer frequencies generated from raw read data to estimate the genome size, abundance of repetitive elements and rate of heterozygosity.
