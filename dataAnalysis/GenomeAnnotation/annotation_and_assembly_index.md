@@ -1,5 +1,5 @@
 ---
-title: Genome Annotation
+title: Genome Assembly and Annotation
 layout: single
 header:
   overlay_color: "444444"
@@ -16,7 +16,14 @@ The National Center for Biomedical Ontology (www.bioontology.org) develops tools
 
 ## Index
 
+* Genome Assembly
+  * [GenomeScope to Estimate Genome Size](genomescope.md)
+  * [Canu for Long Read Assembly](/LongRead/Canu.md)
+    * [Canu on XSEDE Bridges Machine](/LongRead/Canu_bridges.md)
+  * [Mascurca with Pacbio and Illumina](/Hybrid/MaSuRCA.md)
+  * [Genome Scaffolding Using Synteny eith Pyscaf](Pyscaf_Synteny_Scaffolding.md)
 
+* Genome Annotation
   * [Introduction to Maker Gene Prediction](Intro_To_Maker.md)
   * [Introduction to Braker2 Gene Prediction](Intro_to_Braker2.md)
   * [Motif Identification and Finding with MEME and FIMO](MEME_Motif_Finding_In_Genomes.md)  
