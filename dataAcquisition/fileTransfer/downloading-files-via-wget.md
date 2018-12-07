@@ -83,3 +83,10 @@ wget --mirror -p --convert-links -P ./LOCAL-DIR WEBSITE-URL
 - [Stack-exchange thread](http://unix.stackexchange.com/questions/117988/wget-with-wildcards-in-http-downloads)
 - [Blog](http://blog.alastair.pro/2012/10/21/wget-regex-filter-by-file-type/)
 - [Forum](http://www.linuxquestions.org/questions/linux-newbie-8/wget-with-regular-expressions-846368/)
+
+---
+
+
+[Next](file-transfer-using-globus-connect-personal-gcp.md){: .btn  .btn--primary}
+[Previous](../dAc_introduction.md){: .btn  .btn--primary}
+[Table of contents](../dAc_introduction.md){: .btn  .btn--primary}

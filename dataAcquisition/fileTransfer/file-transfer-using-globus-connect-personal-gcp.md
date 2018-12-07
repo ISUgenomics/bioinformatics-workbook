@@ -74,3 +74,11 @@ You will see a confirmation saying that the request has been submitted. It might
 ![](assets/16.png)
 
 Once you get the email, you can shut down the computer or exit the Globus application running in the background.
+
+
+----
+
+
+[Next](getting-data-from-iplant-via-irods.md){: .btn  .btn--primary}
+[Previous](downloading-files-via-wget.md){: .btn  .btn--primary}
+[Table of contents](../dAc_introduction.md){: .btn  .btn--primary}
