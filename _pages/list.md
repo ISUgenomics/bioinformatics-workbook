@@ -55,8 +55,8 @@ header:
   * [File Transfer using SRA toolkit](../dataAcquisition/fileTransfer/sra.md)
 * [Data Sets Used in the tutorials](../dataAcquisition/dataSets.md)
 * <span style="color:lightblue">FASTA manipulation</span>
-  * [FASTA(Q) Manipulation length](../dataWrangling/fastaq-manipulations/calculate-sequence-lengths-in-a-fasta-file.md)
-  * [Determining Sequence length](../dataWrangling/fastaq-manipulations/converting-fastq-format-to-fasta.md)
+  * [Determining Sequence length](../dataWrangling/fastaq-manipulations/calculate-sequence-lengths-in-a-fasta-file.md)
+  * [Converting FastQ to FASTA](../dataWrangling/fastaq-manipulations/converting-fastq-format-to-fasta.md)
   * [FASTQ Quality trimming](../dataWrangling/fastaq-manipulations/fastq-quality-trimming.md)
   * [Retrieving FASTA file using sequence ID](../dataWrangling/fastaq-manipulations/retrieve-fasta-sequences-using-sequence-ids.md)
 * <span style="color:lightblue">Manuplating Excel data sheets</span>
