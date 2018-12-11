@@ -18,9 +18,7 @@ header:
   * [Unix Basics 2](unix-basics-2.md)
   * [Grep](unix-basics-3.md)
   * [Sed](unix-basics-4.md)
-  * [Awk](unix-basics-5.md)
-  * [Working on multiple files at a time](unix-basics-7.md)  
-  * [Loops and scripting](unix-basics-8.md)
+  
 
 * <span style="color:lightblue">HPC</span>
   * [How to Install a Program](/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
