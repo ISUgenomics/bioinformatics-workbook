@@ -23,6 +23,7 @@ description              : "A workbook to help scientists working on bioinformat
 url                      : "https://isugenomics.github.io/" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "/bioinformatics-workbook" # the subpath of your site, e.g. "/blog"
 repository               : "isugenomics/bioinformatics-workbook" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+permalink: none
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
