@@ -46,7 +46,7 @@ feature_row:
     alt: "Annotation"
     title: "Genome Assembly and Annotation"
     excerpt: "Genome Annotation"
-    url: "/dataAnalysis/GenomeAnnotation/annotation_index"
+    url: "/dataAnalysis/GenomeAnnotation/annotation_and_assembly_index"
     btn_label: "Learn More"
 
   - image_path: /assets/images/comp_genomics.jpg
@@ -74,7 +74,7 @@ feature_row:
     image_path: /assets/images/Heatmap.jpg
     alt: "fully responsive"
     title: "Data Visualization"
-    url: "/Appendix/dataVisualization_index/"
+    url: "Appendix/dataVisualization_index"
     btn_label: "Learn More"
 
 ---
