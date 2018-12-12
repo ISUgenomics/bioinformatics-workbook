@@ -1,7 +1,7 @@
 ---
 title: "Table of Contents"
 
-permalink: /list/
+permalink: /list.html
 layout: single
 header:
   overlay_color: "444444"

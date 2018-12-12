@@ -1,13 +1,13 @@
 # main links
 main:
   - title: "About"
-    url: /about/
+    url: /about.html
   - title: "Tutorial Index"
-    url: /list/
+    url: /list.html
   - title: "Contributing"
-    url: /Contributing/
+    url: /Contributing.html
   - title: "People"
-    url: /people/
+    url: /people.html
 
 
 

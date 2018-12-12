@@ -1,7 +1,7 @@
 ---
 title: "People"
 
-permalink: /people/
+permalink: /people.html
 layout: single
 header:
   overlay_color: "444444"

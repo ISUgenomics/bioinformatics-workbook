@@ -1,6 +1,7 @@
 ---
 title: "Useful Programs and Unix Basics"
 layout: single
+permalink: /Appendix/unix-basics-2.html
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg

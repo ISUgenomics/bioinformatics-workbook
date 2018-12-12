@@ -1,7 +1,7 @@
 ---
 title: "About the Workbook"
 
-permalink: /about/
+permalink: /about.html
 layout: single
 header:
   overlay_color: "444444"

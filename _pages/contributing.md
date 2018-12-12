@@ -1,7 +1,7 @@
 ---
 title: "Contributing"
 
-permalink: /Contributing/
+permalink: /Contributing.html
 layout: single
 header:
   overlay_color: "444444"
