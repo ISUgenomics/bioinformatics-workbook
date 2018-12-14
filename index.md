@@ -17,7 +17,7 @@ feature_row:
     image_path: /assets/images/experiment.jpg
     alt: "Baiscs"
     excerpt: "Introduction and basics"
-    url: "/experimentalDesign/exp_design_index/"
+    url: "/experimentalDesign/exp_design_index"
     btn_label: "Learn More"
 
   - title: "Data Acquisition and Wrangling"
