@@ -18,10 +18,10 @@ The National Center for Biomedical Ontology (www.bioontology.org) develops tools
 
 * Genome Assembly
   * [GenomeScope to Estimate Genome Size](genomescope.md)
-  * [Canu for Long Read Assembly](/LongRead/Canu.md)
-    * [Canu on XSEDE Bridges Machine](/LongRead/Canu_bridges.md)
-  * [Mascurca with Pacbio and Illumina](/Hybrid/MaSuRCA.md)
-  * [Genome Scaffolding Using Synteny eith Pyscaf](Pyscaf_Synteny_Scaffolding.md)
+  * [Canu for Long Read Assembly](../GenomeAssembly/LongRead//Canu.md)
+    * [Canu on XSEDE Bridges Machine](../GenomeAssembly/LongRead/Canu_bridges.md)
+  * [Mascurca with Pacbio and Illumina](../GenomeAssembly/Hybrid/MaSuRCA.md)
+  * [Genome Scaffolding Using Synteny eith Pyscaf](../GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
 
 * Genome Annotation
   * [Introduction to Maker Gene Prediction](Intro_To_Maker.md)
