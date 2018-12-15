@@ -15,7 +15,7 @@ feature_row:
 
   - title: "Experimental Design"
     image_path: /assets/images/experiment.jpg
-    alt: "Baiscs"
+    alt: "Basics"
     excerpt: "Introduction and basics"
     url: "/experimentalDesign/exp_design_index"
     btn_label: "Learn More"
