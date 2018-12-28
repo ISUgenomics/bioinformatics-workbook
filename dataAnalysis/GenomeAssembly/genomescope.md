@@ -57,7 +57,7 @@ As you can see, there are 64 possibilities for a 3-mer and over a Trillion possi
 
 ### K-mer graph: estimating coverage depth of raw DNA reads for a genome using number of times a K-mer is observed (**coverage**) by number of K-mers with that coverage (**frequency**).
 
-<img src="/assets/images/genomescope/coveragexfrequency_0.png" width="652" height="310" alt="" />
+<img src="https://isugenomics.github.io/bioinformatics-workbook/assets/images/genomescope/coveragexfrequency_0.png" width="652" height="310" alt="" />
 
 The peak around 25 in the plot above is the coverage with the highest number of different 21-mers. Another way to put it is that there were 5e^7 unique 21-mers (frequency) that were observed 25 times (coverage). The normal-like distribution is due to the fact that we don't get perfect coverage of the genome. There are some regions with a little less coverage and some regions with a little more coverage but the average coverage depth is around 25.
 
@@ -77,11 +77,11 @@ All 3-Mers of this sequence "AAT**C**GGCCG" are AAT **ATC, TCG, CGG,** GGC, GCC,
 
 GenomeScope extended this idea by exploring how the K-mer graph changes with increasing heterozygosity, PCR errors and PCR duplicates. They determined that the idealized K-mer graph that you understand above is the extreme case where there is low heterozygosity, low PCR errors and low rates of PCR duplicates.
 
-<img src="/assets/images/genomescope/screen_shot_2017-02-16_at_7.31.20_am.png" width="326" height="310" alt="" title="White" />
+<img src="https://isugenomics.github.io/bioinformatics-workbook/assets/images/genomescope/screen_shot_2017-02-16_at_7.31.20_am.png" width="326" height="310" alt="" title="White" />
 
 The big peak at 25 in the graph above is in fact the homozygous portions of the genome that account for the identical 21-mers from both strands of the DNA. The dotted line corresponds to the predicted center of that peak. The small shoulder to the left of the peak corresponds to the heterozygous portions of the genome that accounts for different 21-mers from each strand of the DNA. The two dotted lines to the right of the main peak (at coverage = 25) are the duplicated heterozygous regions and duplicated homozygous regions and correspond to two smaller peaks. The **shape** of these peaks are affected by the **PCR errors** and **PCR duplicates**. The authors were able to come up with an equation (see below) that accurately models the shape and size of the K-mer graph using four negative binomial peaks which shape and size are determined by % heterozygosity, % PCR duplication, % PCR Error. All very useful pieces of information to learn about your genome from your raw data.
 
-<img src="/assets/images/genomescope/screen_shot_2017-02-26_at_5.34.01_am.png" width="2174" height="148" alt="GenomeScope equation" />
+<img src="https://isugenomics.github.io/bioinformatics-workbook/assets/images/genomescope/screen_shot_2017-02-26_at_5.34.01_am.png" width="2174" height="148" alt="GenomeScope equation" />
 
 Understanding all the elements of the equation is less important than knowing that it represents the summation of four negative binomials (peaks) whose shape are affected by **heterozygosity**, **PCR duplication** and **PCR Errors**.
 
@@ -112,11 +112,11 @@ That file can be processed by running GenomeScope online to generate the figures
 
 White
 
-<img src="/assets/images/genomescope/screen_shot_2017-02-16_at_7.31.20_am.png" width="326" height="310" alt="" title="White" />
+<img src="https://isugenomics.github.io/bioinformatics-workbook/assets/images/genomescope/screen_shot_2017-02-16_at_7.31.20_am.png" width="326" height="310" alt="" title="White" />
 
 Black
 
-<img src="/assets/images/genomescope/screen_shot_2017-02-16_at_7.30.50_am.png" width="326" height="310" alt="" title="Black" />
+<img src="https://isugenomics.github.io/bioinformatics-workbook/assets/images/genomescope/screen_shot_2017-02-16_at_7.30.50_am.png" width="326" height="310" alt="" title="Black" />
 
 
 First, I notice is that the genome size for these two are being predicted to be around 1GB which is a lower than I was expecting since pink, green and red have expected genome sizes of closer to 1.8 GB [GenomeSizeDB](http://www.genomesize.com/results.php?page=1)
