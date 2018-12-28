@@ -6,13 +6,13 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-Excel is most popular among researchers becuase of its ease of use and tons of useful features. In most cases scripting is the most effecient way to do these simple operations, but practicality of Excel for researchers and the crytic scripting commands will always make excel a better choice. Most common case of merging 2 spreadsheets is when users have a list of gene ids and another list of geneids with function. To merge these 2 sheets using the gene-ids, we can use the `VLOOKUP` function.
+Excel is most popular among researchers because of its ease of use and tons of useful features. In most cases scripting is the most efficient way to do these simple operations, but practicality of Excel for researchers and the cryptic scripting commands will always make excel a better choice. Most common case of merging 2 spreadsheets is when users have a list of gene ids and another list of geneids with function. To merge these 2 sheets using the gene-ids, we can use the `VLOOKUP` function.
 
 ### Data ###
 
 Typically, users will have something like this:
 
- __Sheet1__ : _list of gene ids with differential gene expression resutls_
+ __Sheet1__ : _list of gene ids with differential gene expression results_
 
 <img src="https://isugenomics.github.io//bioinformatics-workbook/dataWrangling/microsoftExcel/screenshots_for_vlookup/Fig1_sheet1.png" width="1030" height="426" alt="Sheet1"  />
 
@@ -28,7 +28,7 @@ Now, to add `GeneID` and `GeneName` information for the __Sheet1__ using the inf
 Type: `VLOOKUP` on the __Sheet1__ (E1) cell, you should see typical usage for the command as shown below. It needs 4 pieces of inforamtion:
 
   * `lookup_value` : which cell to use for looking up the value? since we need to look up information for `Ensembl Gene ID` it should be `A2` here
-  * `table_array` : where to look up? the entire table where the annoation is stored. This shoudl be the full table in __Sheet2__ (in this case: `Sheet2!$A$2:$C$49672`)
+  * `table_array` : where to look up? the entire table where the annotation is stored. This shoudl be the full table in __Sheet2__ (in this case: `Sheet2!$A$2:$C$49672`)
   * `col_index_num` : what cell value to print for matching ids? Since we need GeneID and it is the 2nd column of __Sheet2__, we should use the value of `2` here
   * `range_lookup` : do you need an exact match or approximate match? Since each gene id is unique, we need exact match, so we fill `FALSE` here
 
