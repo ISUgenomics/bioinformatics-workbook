@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Wrangling"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 Excel is most popular among researchers becuase of its ease of use and tons of useful features. In most cases scripting is the most effecient way to do these simple operations, but practicality of Excel for researchers and the crytic scripting commands will always make excel a better choice. Most common case of merging 2 spreadsheets is when users have a list of gene ids and another list of geneids with function. To merge these 2 sheets using the gene-ids, we can use the `VLOOKUP` function.
 
 ### Data ###
