@@ -21,7 +21,8 @@ header:
     * [Password-less SSH](../Appendix/HPC/password-less-ssh-login.md)
   * <span style="color:lightblue">SLURM</span>
     * [SLURM Cheatsheet](../Appendix/HPC/SLURM/slurm-cheatsheat.md)
-    * [SLURM Job Submission Dependencies](../Appendix/HPC/SLURM/creating-slurm-job-submission-scripts-for-condo.md)
+    * [Creating SLURM job submission scripts](../Appendix/HPC/SLURM/creating-slurm-job-submission-scripts-for-condo.md)
+    * [Submitting dependency jobs using SLURM](../Appendix/HPC/SLURM/submitting-dependency-jobs-using-slurm.md)
   * <span style="color:lightblue">XSEDE</span>
     * [XSEDE supercomputer](../Appendix/HPC/xsede/xsede.md)
     * [XSEDE supercell storage](../Appendix/HPC/xsede/using-psc-supercell-storage-for-bridges-and-greenfield.md)
