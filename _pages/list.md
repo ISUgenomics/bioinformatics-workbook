@@ -41,6 +41,11 @@ header:
 * [Markdown](../Appendix/Markdown.md)
 * [Viewing Files In Remote Machine Without Downloading](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 
+## [BLAST](../dataAnalysis/blast/blast_index.md)
+
+* [BLAST example: finding a gene in a genome](../dataAnalysis/blast/blastExample.md)
+* [Running BLAST in parallel](../dataAnalysis/blast/running-blast-jobs-in-parallel.md)
+
 ### Experimental Design
 * [Biological system](../experimentalDesign/bio_sys.md)
 * [Sequencing Technology](../experimentalDesign/sequencing.md)
