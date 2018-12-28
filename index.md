@@ -14,7 +14,7 @@ feature_row:
     btn_label: "Learn More"
 
   - title: "Introduction to BLAST"
-    image_path: /assets/images/computer.jpg
+    image_path: dataAnalysis/blast/assets/BLAST.png
     alt: "BLAST"
     url: "dataAnalysis/blast/blast_index"
     btn_label: "Learn More"
