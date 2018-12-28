@@ -18,6 +18,7 @@ header:
   * [Unix Basics 2](unix-basics-2.md)
   * [Grep](unix-basics-3.md)
   * [Sed](unix-basics-4.md)
+  * [Introduction to regular expressions](../introduction/introduction-to-regular-expressions.md)
 
 
 * <span style="color:lightblue">HPC</span>
@@ -50,4 +51,4 @@ header:
 ---
 
 [Next](/fileTransfer/downloading-files-via-wget.md){: .btn  .btn--primary}
-[Table of contents](../index-bk.md){: .btn  .btn--primary}
+[Table of contents](../index.md){: .btn  .btn--primary}
