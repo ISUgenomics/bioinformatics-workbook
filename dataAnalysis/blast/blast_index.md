@@ -21,8 +21,8 @@ There are four programs in blast that you can choose from.
 
 ## Index
 
-* [BLAST example: finding a gene in a genome](/bioinformatics-workbook/dataAnalysis/blast/blastExample.md)
-* [Running BLAST in parallel](/bioinformatics-workbook/dataAnalysis/blast/running-blast-jobs-in-parallel.md)
+* [BLAST example: finding a gene in a genome](https://isugenomics.github.io/bioinformatics-workbook/dataAnalysis/blast/blastExample.html)
+* [Running BLAST in parallel](https://isugenomics.github.io/bioinformatics-workbook/dataAnalysis/blast/running-blast-jobs-in-parallel.html)
 
 
 
