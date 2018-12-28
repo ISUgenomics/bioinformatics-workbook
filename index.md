@@ -13,6 +13,12 @@ feature_row:
     url: "/Appendix/programs"
     btn_label: "Learn More"
 
+  - title: "Introduction to BLAST"
+    image_path: /assets/images/computer.jpg
+    alt: "BLAST"
+    url: "dataAnalysis/blast/blast_index"
+    btn_label: "Learn More"
+
   - title: "Experimental Design"
     image_path: /assets/images/experiment.jpg
     alt: "Basics"
