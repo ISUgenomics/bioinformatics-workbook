@@ -123,7 +123,7 @@ fastq-dump --split-files --origfmt --gzip ${sra};
 done
 ```
 
-##Downloading all SRA files related to a BioProject/study
+## Downloading all SRA files related to a BioProject/study
 
 NCBI Sequence Read Archive (SRA) stores sequence and quality data (fastq files) in aligned or unaligned formats from NextGen sequencing platforms. A BioProject is a collection of biological data related to a single initiative, originating from a single organization or from a consortium. A BioProject record provides users a single place to find links to the diverse data types generated for that project. Often times, once single BioProject will hold a considerable number of experiments and it gets tedious to download them all individually. Here is the guide to show how to do this in a effecient way:
 {: style="text-align: justify"}
