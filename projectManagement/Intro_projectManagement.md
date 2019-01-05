@@ -1,3 +1,11 @@
+---
+title: "Project Management"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Introduction to Project Management
 
 Project management is defined as the process of keeping track of the many aspects of a project from experimental design through publication. There are five main aspects to project management.
