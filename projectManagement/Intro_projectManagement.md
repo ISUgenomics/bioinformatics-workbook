@@ -50,9 +50,9 @@ In bioinformatics, science is recorded digitally in a digital notebook. We recom
 
 #### Github
 
-Github is often thought of as a tool for programmers to version control code but it can also be used to version control text documents as an online notebook.  If you don't have a Github account, you can set one up based on this [Github Tutorial](/Appendix/github/introgithub.md) and as a researcher or educator you can request a free upgrade to get access to [unlimited private repos.](https://help.github.com/articles/about-github-education-for-educators-and-researchers/)
+Github is often thought of as a tool for programmers to version control code but it can also be used to version control text documents as an online notebook.  If you don't have a Github account, you can set one up based on this [Github Tutorial](/bioinformatics-workbook/Appendix/github/introgithub) and as a researcher or educator you can request a free upgrade to get access to [unlimited private repos.](https://help.github.com/articles/about-github-education-for-educators-and-researchers/)
 
-One of the great aspects of Github is that you can use [markdown](bioinformatics-workbook/Appendix/Markdown) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers, bullet points, code blocks and insert images very easily.
+One of the great aspects of Github is that you can use [markdown](/bioinformatics-workbook/Appendix/Markdown) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers, bullet points, code blocks and insert images very easily.
 
 Assuming you now have a github account, create a github repository with the same name you labeled your project folder (ie: WhiteAbaloneRNA-Seq or SeriolaGWAS).  
 
