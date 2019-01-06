@@ -29,7 +29,6 @@ With these properties in mind, let's step through each of the main aspects of pr
 
 Most Everyone uses folders to organize their files regardless of operating system (Windows, IOS, Linux).  A small change to how folders are labeled can significantly improve the ability for others to follow what you did, the order you did it and where you did it.
 
-#### labeling
 
 **Number folders in order of their creation by prepending the descriptive folder name that you usually create with a number starting with 00_, followed by 01_, 02_, 03_ and so forth like so:**
 
@@ -39,7 +38,9 @@ Most Everyone uses folders to organize their files regardless of operating syste
   * 02_AnalysisStepTwo
   * 03_AnalysisStepThree
 
-The extra 0 from 00 - 09 keeps the folders ordered when executing the list (ls) command.  The you in 6 months or the next person on the project will thank you as they can numerically follow your steps based on the folder number and the date the folder was generated (ls -lha).
+The extra 0 from 00 - 09 keeps the folders ordered when executing the list (ls) command.  The you in 6 months or the next person on the project will thank you as it is easy to numerically follow the steps based on the folder number and the date the folder was generated (ls -lha).
+
+The name of your project folder should be descriptive of the project, for example, WhiteAbaloneRNA-Seq or SeriolaGWAS.
 
 ## Notebook
 
@@ -47,37 +48,47 @@ Science isn't reproducible if it isn't recorded.  Traditionally, paper notebooks
 
 In bioinformatics, science is recorded digitally in a digital notebook. We recommend using Github as a digital notebook.
 
-Github is often thought of as a tool for programmers to version control code but it can also be used to version control text documents as an online notebook.  If you don't have a
+#### Github
 
-If you are currently recording your notes by pasting commands in a text document or using R markdown or a ipython notebook then using a github private repo will be
+Github is often thought of as a tool for programmers to version control code but it can also be used to version control text documents as an online notebook.  If you don't have a Github account, you can set one up based on this [Github Tutorial](/Appendix/github/introgithub.md) and as a researcher or educator you can request a free upgrade to get access to [unlimited private repos.](https://help.github.com/articles/about-github-education-for-educators-and-researchers/)
 
-We use [markdown](bioinformatics-workbook/Appendix/Markdown.md)
+One of the great aspects of Github is that you can use [markdown](/Appendix/Markdown.md) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers, bullet points, code blocks and insert images very easily.
 
+Assuming you now have a github account, create a github repository with the same name you labeled your project folder (ie: WhiteAbaloneRNA-Seq or SeriolaGWAS).  
 
+**For every subfolder you make in your project folder on your remote machine, create a markdown file in your github repository.**
 
+* Notebook_LastName
+    * 00_RawData.md
+    * 01_AnalysisStepOne.md
+    * 02_AnalysisStepTwo.md
+    * 03_AnalysisStepThree.md
 
+After you git clone your repo you can create a folder named Notebook_LastName and then add markdown files corresponding to each new subfolder you add during the analysis pipeline.
 
+#### Atom
 
+If you haven't already, download and install [Github ATOM](https://atom.io/).  This is a text editor that understands markdown syntax that allows you to preview markdown that you write in an adjacent window.  See [markdown](/Appendix/Markdown.md) tutorial for more information.
 
-
-
-While there are many philosophies as to how to best organize your digital notebook, I will present one to you that works well.  
-
-**For every folder you make, create a notebook that corresponds to that folder.**
-
-* Project folder
-  * 00_RawData.md
-  * 01_AnalysisStepOne.md
-  * 02_AnalysisStepTwo.md
-  * 03_AnalysisStepThree.md
-
-
+#### What, When, Where, Why, How and the Result
+For every step you make record it in your markdown folder along with
+  - Title
+  - Date
+  - Computername and path of working directory
+  - Description of what you are trying to do and why
+  - Code block of the commands you used
+  - Description of the result
 
 ## Communication and Discussion
 
+In a group with multiple active projects, it is helpful to have a running dialogue of progress and discussion for each project that can be easily referred to and searched.  
+
+Slack is a communication platform that is based around group chat channels. It is a transcript of conversations about projects that you can go back and reread. Slack permits, text, images and files to be attached during conversation.
 
 
 ## ToDo Lists
+
+
 
 ## Record of time spent
 
@@ -87,7 +98,7 @@ Example use cases
 
 * A grant was funded
 * preliminary data generation for a grant proposal
-*
+
 
 
 ## Learning Objectives
@@ -98,20 +109,4 @@ Example use cases
 
 * Introduction to Slack
 * Introduction to GitHub
-*
-
-# Introduction to using a github repo as an online notebook
-
-The main points in reproducibility is for someone that has not worked on the project to know exactly what you did, when you did it, where you did it and the version you used.  This can be accomplished relatively easily by following these guidelines.
-
-- Set up a folder on the computer or super computer that you will be analyzing your data.
-- Create subfolders for each analysis step with a number associated with each folder starting at 00_.  This will allow someone to be able to follow the steps you took from the folder structure (examples below)
-  - 00_rawData
-  - 01_DataQC
-  - 01_alignmentAndCounting
-  - 02_RNA-SeqDE
-- Create a corresponding Mark down file in this github repository that corresponds to the work found in each folder.
-- For every step you make record it in this mark down folder along with
-  - title
-  - date
-  - Computername and path of working directory
+* Introduction to Markdown
