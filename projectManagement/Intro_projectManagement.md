@@ -52,7 +52,7 @@ In bioinformatics, science is recorded digitally in a digital notebook. We recom
 
 Github is often thought of as a tool for programmers to version control code but it can also be used to version control text documents as an online notebook.  If you don't have a Github account, you can set one up based on this [Github Tutorial](/Appendix/github/introgithub.md) and as a researcher or educator you can request a free upgrade to get access to [unlimited private repos.](https://help.github.com/articles/about-github-education-for-educators-and-researchers/)
 
-One of the great aspects of Github is that you can use [markdown](/Appendix/Markdown.md) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers, bullet points, code blocks and insert images very easily.
+One of the great aspects of Github is that you can use [markdown](bioinformatics-workbook/Appendix/Markdown) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers, bullet points, code blocks and insert images very easily.
 
 Assuming you now have a github account, create a github repository with the same name you labeled your project folder (ie: WhiteAbaloneRNA-Seq or SeriolaGWAS).  
 
@@ -68,7 +68,7 @@ After you git clone your repo you can create a folder named Notebook_LastName an
 
 #### Atom
 
-If you haven't already, download and install [Github ATOM](https://atom.io/).  This is a text editor that understands markdown syntax that allows you to preview markdown that you write in an adjacent window.  See [markdown](/Appendix/Markdown.md) tutorial for more information.
+If you haven't already, download and install [Github ATOM](https://atom.io/).  This is a text editor that understands markdown syntax that allows you to preview markdown that you write in an adjacent window.  See [markdown](/bioinformatics-workbook/Appendix/Markdown) tutorial for more information.
 
 #### What, When, Where, Why, How and the Result
 For every step you make record it in your markdown folder along with
