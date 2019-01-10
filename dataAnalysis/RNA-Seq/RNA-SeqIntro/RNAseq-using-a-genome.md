@@ -29,14 +29,14 @@ This experiment compares WT and *atrx-1* mutant to analyze how loss of function 
 
 # 1. Download the data from public databases #
 
-## NCBI
+## A) NCBI
 Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer. The following code expects that you have sra-toolkit, GNU parallel and aspera installed on your computing cluster. On Ceres, in order to use an installed software, we load the relevant module.
 
 ```
 module load <path/to/sra-toolkit>
 module load <path/to/edirect>
 module load <path/to/parallel>
-esearch -db sra -query PRJNA276699 | efetch --format runinfo |cut -d "," -f 1 | awk 'NF>0' | grep -v "Run" > srr_numbers.txt
+esearch -db sra -query PRJNA348194 | efetch --format runinfo |cut -d "," -f 1 | awk 'NF>0' | grep -v "Run" > srr_numbers.txt
 while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/<version>/etc/asperaweb_id_dsa.openssh\" $line"; done<srr_numbers.txt > prefetch.cmds
 parallel <prefetch.cmds
 ```
@@ -45,17 +45,22 @@ After downloading the SRA files, we convert it to fastq format. We can use the f
 module load parallel
 parallel "fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
 ```
-## EBI
-EBI directly hosts the fastq files are available on their server (e.g. check [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using `wget` by supplying the links to each file.
+*Note: fastq-dump runs very slow*
+## B) EBI
+Another option is to go through EBI, which directly hosts the fastq files  on their server (e.g. check [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using `wget` by supplying the links to each file; for example in this case:
 
 ```
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/003/SRR4420293/SRR4420293_1.fastq.gz
+wget <link to file2>
+wget <link to file3>
+...
+....
 ```
 
 
 We also need the genome file and associated GTF/GFF file for for *Arabidopsis*. These are downloaded directly from [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch), or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html) or the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (phytozome needs logging in and selecting the files) .
 
-For this tutorial, we downloaded the following files from [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch).
+For this tutorial, we downloaded the following files from [NCBI](https://www.ncbi.nlm.nih.gov/genome/?term=Arabidopsis+thaliana).
 ```
 Genome Fasta File: GCF_000001735.3_TAIR10_genomic.fna
 Annotation file: GCF_000001735.3_TAIR10_genomic.gff
@@ -64,14 +69,14 @@ Annotation file: GCF_000001735.3_TAIR10_genomic.gff
 
 # 2. Quality Check #
 
-For this we will use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high quality illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them. It is convenient to run it in `parallel`.
+We use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high quality illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them. It is convenient to run it in `parallel`.
 
 ```
 module load fastqc
 module load parallel
 parallel "fastqc {} -o <fq_out_directory>" ::: *.fastq.gz
 ```
-Because we have a total of 6 quality outputs, we will have 6 html files and 6 zip files. We can use [`multiqc`](http://multiqc.info/) to aggregate the outputs and get a single html file to scan the quality of all the libraries.
+Because we have a total of 6 quality outputs, we will have 6 html files and 6 zip files. We can use [`multiqc`](http://multiqc.info/) to aggregate the outputs and get a single html file detailing the quality of all the libraries.
 
 ```
 cd fq_out_directory
@@ -108,11 +113,11 @@ You can peruse the complete report or download the plots and view them for examp
 ![per_base_n_content](Assets/fastqc_per_base_n_content_plot.png)
 ![per_base_sequence_quality](Assets/fastqc_per_base_sequence_quality_plot.png)
 
-If satistied with the results, proceed with the mapping. If not, then perform quality trimming. E.g. see [here](http://hannonlab.cshl.edu/fastx_toolkit/). If the quality is very bad it might make more sense to exclude that sample from the analysis.
+If satisfied with the results, proceed with the mapping. If not, then perform quality trimming. E.g. see [here](http://hannonlab.cshl.edu/fastx_toolkit/). If the quality is very bad it might make more sense to exclude that sample from the analysis.
 
 # 3. Mapping reads to the genome #
 
-There are several mapping programs available for aligning RNAseq reads to the genome. Generic aligners such as BWA, BowTie2, BBMap etc., are not suitable for mapping RNAseq reads because they are not splice aware. RNAseq reads are mRNA reads that only contain exonic regions, hence mapping them back to the genome requires splitting the individual reads that span an intron. This is only done by splice aware mappers. Here for this tutorial, we will use [`HISAT2`](https://ccb.jhu.edu/software/hisat2/index.shtml). HISAT2 is a successor of Tophat2.
+There are several mapping programs available for aligning RNAseq reads to the genome. Generic aligners such as BWA, bowtie2, BBMap etc., are not suitable for mapping RNAseq reads because they are not splice aware. RNAseq reads are mRNA reads that only contain exonic regions, hence mapping them back to the genome requires splitting the individual reads that span an intron. This is only done by splice aware mappers. In this tutorial, we will use [`HISAT2`](https://ccb.jhu.edu/software/hisat2/index.shtml). HISAT2 is a successor of Tophat2.
 
 
 ### HiSat2 for mapping ###
@@ -163,7 +168,7 @@ For mapping, each set of reads (forward and reverse or R1 and R2), we first set 
 ```
 #!/bin/bash
 set -o xtrace
-# set the rerefernce index:
+# set the reference index:
 GENOME="/path/to/refrence/GCF_000001735.3_TAIR10_genomic"
 # make an output directory to store the output aligned files
 mkdir -p /path/to/out_dir
@@ -177,7 +182,7 @@ R2_FQ="$2" # second argument
 
 # purge and load relevant modules.
 module purge
-module use /software/modulefiles/
+module use </software/modulefiles/>
 module load hisat2
 
 
@@ -205,7 +210,7 @@ set -o xtrace
 #SBATCH -J Hisat2
 #SBATCH -o Hisat2.o%j
 #SBATCH -e Hisat2.e%j
-#SBATCH --mail-user=csiva@iastate.edu
+#SBATCH --mail-user=<user_email_address>
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 cd $SLURM_SUBMIT_DIR
