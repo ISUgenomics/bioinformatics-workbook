@@ -6,35 +6,36 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+# Project Management
+
+
 # Introduction to Project Management
 
-Project management is defined as the process of keeping track of the many aspects of a project from experimental design through publication.
+Project management is an ongoing learning endeavor to discover what works well for you and your team.  What is presented here is a project management system that has evolved in the Genome Informatics Facility at Iowa State University, which is tasked with analyzing dozens of projects every year.  
 
-There are five main aspects to project management.
+Project management is defined as the process of keeping track of the many inputs and outputs of a project from experimental design through publication.
 
-  * Folders and Files
-  * Notebook record of commands, thought process and related code
-  * Communication and Discussion
-  * ToDo list
-  * Record of your time spent
+Many components of a project are generated, in an attempt to organize the inputs and outputs of a project.  How these components relate to each other and their organized is directly related to project management.
 
-## Learning Objectives
+The main components of project management include but may not be limited to:
 
-The overall goal of a solid project management process is the ability for a new person to join a project and be able to reproduce everything that has gone before and carry the project forward. This requires that all aspects of the project have the following properties.
+  1. Folders and Files
+  2. Notebook record of commands, thought process and related code
+  3. Communication and Discussion
+  4. ToDo list
+  5. Record of your time spent
 
-* Reproducibility (version, hash, date of download)
-* Location
-* Date
-* Version Control
 
-With these properties in mind, this tutorial will step through each of the main aspects of project management.
+The rest of this tutorial steps through the components of project management, how they are related and importantly how the adoption of some very simple rules help integrate these components and do not come with a large learning curve that can be prohibitive to quick adoption by your team.
 
-## Folders and Files
+## 1. Folders and Files
 
 Most people use folders to organize their files regardless of operating system (Windows, IOS, Linux).  A small change to how folders are labeled can significantly improve the ability for others to follow what you did, the order you did it in and where you did it.
 
 
-**Number folders in order of their creation by prepending the descriptive folder name that you usually create with a number starting with 00_, followed by 01_, 02_, 03_ and so forth like so:**
+**Number folders in order of their creation**
+
+Prepend the descriptive folder name that you usually create with a number starting with 00_, followed by 01_, 02_, 03_ and so forth like so:
 
 * Project folder
   * 00_RawData
@@ -46,20 +47,24 @@ The extra 0 from 00 - 09 keeps the folders in numerical order when executing the
 
 The name of your project folder should be descriptive of the project, for example, WhiteAbaloneRNA-Seq or SeriolaGWAS.
 
-## Notebook
+## 2. Notebook
 
 Science isn't reproducible if it isn't recorded.  Traditionally, paper notebooks have been used in the wet lab to record the science performed that day and the outcome.
 In bioinformatics, science is recorded digitally in a digital notebook. We recommend using GitHub as your digital notebook.
 
 #### GitHub
 
-GitHub is often thought of as a tool for programmers to version control code but it can also be used to version control text documents as an online notebook.  If you don't have a GitHub account, you can set one up based on this [GitHub Tutorial](/bioinformatics-workbook/Appendix/github/introgithub) and as a researcher or educator you can request a free upgrade to get access to [unlimited private repos.](https://help.github.com/articles/about-github-education-for-educators-and-researchers/)
+GitHub is often thought of as a tool for programmers to version control code but it can also be used to version control text documents as an online notebook.  If you don't have a GitHub account, you can set one up based on this [GitHub Tutorial](/bioinformatics-workbook/Appendix/github/introgithub) and the free version of GitHub now allows for unlimited free repositories. In addition, as a researcher or educator you can request a free upgrade to get access to [unlimited users in private repos.](https://help.github.com/articles/about-github-education-for-educators-and-researchers/).  
 
-One of the great aspects of GitHub is that you can use [markdown](/bioinformatics-workbook/Appendix/Markdown) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers```# ## ###```, bullet points ```*```, code blocks and insert images very easily.
+One of the great aspects of GitHub is that you can use [markdown](/bioinformatics-workbook/Appendix/Markdown) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers```# ## ###```, bullet points ```*```, code blocks and insert images very easily.  Markdown can also be easily converted to PDF for sharing.
 
 Assuming you now have a GitHub account, create a GitHub repository with the same name you labeled your project folder (ie: WhiteAbaloneRNA-Seq or SeriolaGWAS).  
 
-**For every subfolder you make in your project folder on your remote machine, create a markdown file in your GitHub repository.**
+Here is the first integration between project components.
+
+**For every subfolder create a markdown file**
+
+For every subfolder you make in your project folder on your remote machine or computer, create a markdown file in your GitHub repository.
 
 * Notebook_LastName
     * 00_RawData.md
@@ -69,9 +74,23 @@ Assuming you now have a GitHub account, create a GitHub repository with the same
 
 After you git clone your repo you can create a folder named Notebook_LastName and then add markdown files corresponding to each new subfolder you add during the analysis pipeline.
 
-#### Atom
+If you work on multiple machines and your laptop then create a folder for each machine.
+
+
+* Notebook_LastName
+  * remote machine
+    * 00_RawData.md
+    * 01_AnalysisStepOne.md
+    * 02_AnalysisStepTwo.md
+    * 03_AnalysisStepThree.md
+  * laptop
+    * 01_AnalysisStepOne.md
+    * 02_AnalysisStepTwo.md
+
+#### Atom (text editor)
 
 If you haven't already, download and install [GitHub ATOM](https://atom.io/).  This is a text editor that understands markdown syntax and allows you to preview markdown that you write in an adjacent window.  See [markdown](/bioinformatics-workbook/Appendix/Markdown) tutorial for more information.
+
 
 #### What, When, Where, Why, How and the Result
 For every step you perform bioinformatically, record it in your markdown file along with
@@ -82,7 +101,9 @@ For every step you perform bioinformatically, record it in your markdown file al
   - Code block of the commands you used
   - Description of the result
 
-## Communication and Discussion
+This last step is important as it is a discrete block of notes that is the smallest unit of replicable notes in your notebook.  The Why, How and Result can be replicated multiple times if it is the same day in the same folder.
+
+## 3. Communication and Discussion
 
 In a group with multiple active projects, it is helpful to have a running dialogue of progress and discussion for each project that can be easily referred to and searched.  Many times this comes in the form of email exchanges.  
 
@@ -92,7 +113,7 @@ However, a communication platform based around group chats can also be extremely
 
 [Slack](/bioinformatics-workbook/Appendix/slack) and create a channel for each active project.  This group chat (text messaging style) communication generates a transcript of conversations about projects that you can go back and reread. It also permits, text, images and files to be attached during conversation.  I strongly encourage you to use it primarily for text communication and discussion and not for file storage.
 
-You can create your own team using [this link: Team signup](https://slack.com/r/0mklqxar-0tnh0jhj) and get a $100 credit if you decide to purchase it beyond the free version.  The upgraded version will let you search beyond the 10,000 most recent messages in your group.
+You can create your own team using [this link: Team signup](https://slack.com/r/0mklqxar-0tnh0jhj) and get a $100 credit if you decide to purchase it beyond the free version.  The upgraded version will let you search beyond the 10,000 most recent messages in your group and there is a steep academic discount.
 
 #### OneNote
 
@@ -108,8 +129,9 @@ Microsoft Onenote has the ability to create notebooks, tabs and pages. This can 
     * Meeting date2 page
     * Meeting date3 page
 
+Since the Genome Informatics Facility works on multiple projects with multiple PIs, we use the PI name for the project name tab.  Within a lab group you may have a folder for every person in your group.
 
-## ToDo Lists
+## 4. ToDo Lists
 
 I used to write todo lists on a piece of paper and continue to add more to the todo list each day and cross off the items I completed.  After a while, this todo list was over a page long and important items would get buried far down on the list.  In order to change priority of the items on the list I had to rewrite the entire list or create a new sublist on a separate piece of paper.  This was frustrating and time consuming.  There is a better way.
 
@@ -137,15 +159,6 @@ Cool idea right?  But a real-life whiteboard and post-it notes would be very tim
 [Zenhub](https://www.zenhub.com/pricing) is free for public, personal, and academic repositories and the chrome or firefox plugin can be downloaded [from here](https://www.zenhub.com/extension).  It uses the issues in a github repository.  So now you can for every project have a Kanban board for all tasks related to that project.  If you have more than one project it may be helpful to create a separate private repository just for your todo lists on several projects.
 
 
-## Record of time spent
+## 5. Record of time spent
 
 Bioinformatics projects can be time consuming and frustrating with a lot of trial and error.  It often happens that at the end of a week, it doesn't feel like anything was accomplished.  Keeping track of your time spent on a daily basis can bring peace of mind.  This can be easily accomplished using a Google spreadsheet with days of the month at the top as columns and project names as rows on the left. For each project there should be two rows; hours spent and description of what you did.  The column widths can be relatively short since hours spent in a day is not more than 2 digits and the description can just flow into adjacent cells.  It is also helpful to see where your time is being spent and better manage your work/life balance and provide a tool for those in your group to manage their work/life balance.
-
-
-
-## Index
-
-* [Introduction to Slack](/bioinformatics-workbook/Appendix/slack)
-* [Introduction to GitHub](/bioinformatics-workbook/Appendix/github/introgithub)
-* [Introduction to Markdown](/bioinformatics-workbook/Appendix/Markdown)
-* [Zenhub Download](https://www.zenhub.com/extension)

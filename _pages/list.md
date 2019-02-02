@@ -41,6 +41,16 @@ header:
 * [Markdown](../Appendix/Markdown.md)
 * [Viewing Files In Remote Machine Without Downloading](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 
+## [Project Management landing page](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/projectManagement_index)
+* [Introduction to Project Management](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/Intro_projectManagement)
+* <span style="color:lightblue">GitHub</span>
+  * [Introduction to GitHub](../Appendix/github/introgithub.md)
+  * [Some Helpful Commands For Your New Repository](../Appendix/github/github2.md)
+  * [Best Practices on Github](../Appendix/github/githubBasics.md)
+* [Slack](../Appendix/slack.md)
+* [Markdown](../Appendix/Markdown.md)
+
+
 ## [BLAST](../dataAnalysis/blast/blast_index.md)
 
 * [BLAST example: finding a gene in a genome](../dataAnalysis/blast/blastExample.md)
