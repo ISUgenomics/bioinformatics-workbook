@@ -46,7 +46,6 @@ header:
 * <span style="color:lightblue">GitHub</span>
   * [Introduction to GitHub](../Appendix/github/introgithub.md)
   * [Some Helpful Commands For Your New Repository](../Appendix/github/github2.md)
-  * [Best Practices on Github](../Appendix/github/githubBasics.md)
 * [Slack](../Appendix/slack.md)
 * [Markdown](../Appendix/Markdown.md)
 
