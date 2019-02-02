@@ -13,6 +13,12 @@ feature_row:
     url: "/Appendix/programs"
     btn_label: "Learn More"
 
+  - title: "Introduction to Project Management"
+    image_path: /projectManagement/assets/PMatom.png
+    alt: "Project Management"
+    url: /projectManagement/Intro_projectManagement"
+    btn_label: "Learn More"
+
   - title: "Introduction to BLAST"
     image_path: dataAnalysis/blast/assets/BLAST.png
     alt: "BLAST"
