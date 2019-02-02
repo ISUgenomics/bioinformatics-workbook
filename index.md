@@ -16,7 +16,7 @@ feature_row:
   - title: "Introduction to Project Management"
     image_path: /projectManagement/assets/PMatom.png
     alt: "Project Management"
-    url: /projectManagement/projectManagement_index.md"
+    url: "/projectManagement/projectManagement_index"
     btn_label: "Learn More"
 
   - title: "Introduction to BLAST"
