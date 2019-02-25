@@ -13,11 +13,11 @@ Canu is based off of the [Celera Assembler](http://wgs-assembler.sourceforge.net
 
 ## Learning Objectives
 
-Upon completion of this section on experimental design the learner will be able to
+Upon completion of this section on Genome Assembly you will be able to
 
 * Download data from SRA
 * Evaluate the correct parameters to use when running canu for genome assembly
-* Execute Canu and obtain a the assembled genome of
+* Execute Canu and obtain a the assembled genome of [Bacillus thuringiensis](https://en.wikipedia.org/wiki/Bacillus_thuringiensis)
 
 
 ## Canu Steps
@@ -111,7 +111,8 @@ The assembled contigs are in Bt2.contigs.fasta.  Recall we set the -p prefix par
 * Bt2.report              This file contains information about each step.
 
 
-Below I grabbed the contigs that appear to be Circular representing plasmids.
+Below I grabbed the contigs that appear to be Circular representing plasmids.  This is the same number of plasmids reported by the [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_001182785.1) assembly.
+
 ```
 grep ">" Bt2_assembly/Bt2.contigs.fasta  | grep Circular=yes
 >tig00000137 len=515061 reads=2993 covStat=742.81 gappedBases=no class=contig suggestRepeat=no suggestCircular=yes
@@ -128,7 +129,7 @@ grep ">" Bt2_assembly/Bt2.contigs.fasta  | grep Circular=yes
 
 ## Additional Reading
 
-Below are links to canu documentation, github repo and other relevant websites related to canu.
+Below are links to canu documentation, GitHub repo and other relevant websites related to canu.
 
 * [Canu Tutorial](http://canu.readthedocs.io/en/latest/tutorial.html) Includes most of the links below and is fairly comprehensive
 * [Canu Quick Start](http://canu.readthedocs.io/en/latest/quick-start.html)  When you are too impatient to read the documentation
