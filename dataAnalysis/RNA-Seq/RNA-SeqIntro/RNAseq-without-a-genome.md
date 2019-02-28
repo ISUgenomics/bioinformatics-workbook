@@ -1,3 +1,10 @@
+---
+title: RNA Sequence Analysis
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
 
 Lets now assume that *Arabidopsis* doesn't have a sequenced genome. We then start with the RNAseq reads and assemble them *denovo* into transcripts. One such denovo assembler, that we will showcase here is [__Trinity__](https://github.com/trinityrnaseq/trinityrnaseq/wiki). It incorporates three software modules, Inchworm, Chrysalis and Butterfly in sequence. It divides the data to many smaller de bruijn graphs, each representing the transcriptional complexity at a locus.
 
@@ -145,3 +152,6 @@ TRINITY_DN10003_c0_g1   0.00    43.16   0.00    22.91   0.00    0.00
 TRINITY_DN10005_c0_g1   0.00    0.00    0.00    8.13    13.44   0.00
 ```
 This matrix can be imported into R and differential expression analyses performed using DESeq2 as explained [here](https://github.com/ISUgenomics/bioinformatics-workbook/blob/master/dataAnalysis/RNA-Seq/RNA-SeqIntro/dge-using-a-genome.md).
+
+---
+[Table of contents](RNAseq-intro.md)

@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Markdown
 
 [Markdown](https://daringfireball.net/projects/markdown/) is a text-based mark-up language that is easily rendered into HTML and PDF.
@@ -28,3 +36,6 @@ Here are some of the top reason for using Markdown besides its format interchang
 
 * [Github Mastering Markdown Guide](https://guides.github.com/features/mastering-markdown/)
 * [Generating Slides with markdown](https://github.com/gnab/remark/wiki/Markdown#content-classes)
+
+---
+[Table of contents](programs.md)

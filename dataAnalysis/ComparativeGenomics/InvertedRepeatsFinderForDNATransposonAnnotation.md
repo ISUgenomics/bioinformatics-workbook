@@ -1,3 +1,11 @@
+---
+title: Genome Repeats Identification
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Using Inverted Repeat Finder to identify DNA transposon borders in genomes
 Inverted repeats finder is primarily to identify inverted repeats in the genome, yet when combined with other repeat prediction software, full length DNA transposons can be identified. <brk/>
 [Software download](https://tandem.bu.edu/irf/irf.download.html)
@@ -95,3 +103,6 @@ Here is an example of how to convert the above to a bed file (assuming multiple 
 # if the first character doesn't matche "@" print left and right border, else print the chromosome line; Remove everything after CHROMOSOME;if the first letter of column 1 is "@", switch the order of chromosome and number, else print as is; delete "@"; if the first letter of the first column is "C" add the line to the name variable, else print name, left border, right border.
 less irf.out |awk '{if (substr($1,1,1)!="@") {print $1,$5} else {print $0}}' |sed 's/CHROMOSOME.*/CHROMOSOME/g' |awk '{if (substr($1,1,1)=="@") {print $2$1} else {print $0}}' |sed 's/@//g' |awk -v name=0 '{if(substr($1,1,1)=="C") {name=$1} else {print name,$1,$2}}'  |tr " " "\t" >IRF.bed
 ```
+
+---
+[Table of contents](Repeats_index.md)

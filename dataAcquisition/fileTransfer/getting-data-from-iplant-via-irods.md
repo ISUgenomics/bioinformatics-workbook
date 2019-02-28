@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Acquisition"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Getting Data from iPlant/Cyverse
 
 Quick tutorial to download data from iPlant datastore to Lightning3/Condo using iRODS. iRODS is currently installed on Lightning3/Condo, to start using it, just load it using modules.
@@ -61,6 +69,7 @@ irsync -r i:foo1 i:foo2
 ```
 
 Finally, if you want to transfer a single file from local host to remote (iplant), you can do it using `iput` command.
+
 ```
 iput filename
 ```
@@ -68,5 +77,12 @@ iput filename
 ### References ###
 For more information, follow these links:
 
-- [iRODS offical documentation ](https://www.irods.org/index.php/icommands|irods.org)
-- [iPlant basic usage guide](https://pods.iplantcollaborative.org/wiki/display/start/Using+icommands|pods.iplantcollaborative.org)
+* [iRODS](https://www.irods.org/index.php/icommands|irods.org)
+* [iPlant](https://pods.iplantcollaborative.org/wiki/display/start/Using+icommands|pods.iplantcollaborative.org)
+
+
+---
+
+[Next](sra.md){: .btn  .btn--primary}
+[Previous](file-transfer-using-globus-connect-personal-gcp.md){: .btn  .btn--primary}
+[Table of contents](../dAc_introduction.md){: .btn  .btn--primary}

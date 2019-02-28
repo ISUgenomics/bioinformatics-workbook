@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 ### Some helpful commands for your new repository
 
 --
@@ -159,3 +167,6 @@ I like [SourceTree](https://www.sourcetreeapp.com/).
 * Add and edit files in your collaborator's repository
 
 * Commit and push those changes to the remote
+
+---
+[Table of contents](../programs.md)

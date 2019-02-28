@@ -1,3 +1,11 @@
+---
+title: Genome Annotation
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # MEME and FIMO tutorial
 This tutorial will go through how to identify a set of dna motifs that among a list of sequences. Once the motifs have been identified, they can be used to search a larger database of sequences.  This is really useful when trying to find patterns of conserved sequences in large databases of sequences.
 
@@ -105,3 +113,6 @@ less fimo.txt |awk '{print $3}' |sort|uniq -c|awk '$1==5' |awk '{print $2}' |gre
 
 ```
 Well, this isn't so promising for identifying a commonality among promoters for genes involved in seed dormancy, but it does demonstrate how to find motifs and search for motifs using statistically robust methodology with MEME and FIMO.
+
+---
+[Table of contents](annotation_and_assembly_index.md)

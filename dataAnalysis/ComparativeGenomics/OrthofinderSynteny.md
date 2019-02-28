@@ -1,3 +1,11 @@
+---
+title: Comparative Genomics
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Finding orthology and synteny with orthofinder, iadhore, and circos.
 Orthofinder is a robust software that can find orthologs very quickly and with very little input.  We are going to take the output from orthofinder and use it as input for iAdhore.  I adhore is a program that uses homeologous genes to identify longer-term ancestral synteny (in comparison to direct chromosomal alignments (Mummer)).  With some modifications, the output from iadhore can be used to draw synteny plots with circos, or just to identify genomic feature overlap with Bedtools by creating a synteny gff.
 
@@ -576,3 +584,6 @@ circos -conf circos.conf
 ```
 
 ![Circos](../../assets/E.coliSynteny.png)
+
+---
+[Table of contents](compGenomics_index.md)

@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Guide for installing various types of programs in Linux
 
 This handy guide is for installing programs in `UNIX` environment. Most of these steps assume that you are installing package in a group accessible location, without root access and utilizing the environment module systems for package management. However, you can easily modify these steps for other cases as well.
@@ -251,3 +259,6 @@ In your module file, you need to add this line:
 prepend-path PATH /programname/version/bin
 ```
 Now the `.jar` files can be simply called as `'programname` (once module is loaded). No need to add `java` in front.
+
+---
+[Table of contents](../programs.md)

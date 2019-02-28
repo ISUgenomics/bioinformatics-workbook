@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Submitting dependency jobs using PBS-Torque
 
 To submit jobs one after the other (i.e., run second job after the completion of first), we can use `depend` function of `qsub`.
@@ -46,3 +54,6 @@ SECOND=`qsub -W depend=afterok:$FIRST second_job.sub`
 THIRD=`qsub -W depend=afterok:$SECOND third_job.sub`
 FOURTH=`qsub -W depend=afterok:$THIRD fourth_job.sub`
 ```
+
+---
+[Table of contents](../../programs.md)

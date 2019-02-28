@@ -1,0 +1,22 @@
+# main links
+main:
+  - title: "About"
+    url: /about.html
+  - title: "Tutorial Index"
+    url: /list.html
+  - title: "Contributing"
+    url: /Contributing.html
+  - title: "People"
+    url: /people.html
+
+
+
+
+  # - title: "About"
+  #   url: https://mmistakes.github.io/minimal-mistakes/about/
+  # - title: "Sample Posts"
+  #   url: /year-archive/
+  # - title: "Sample Collections"
+  #   url: /collection-archive/
+  # - title: "Sitemap"
+  #   url: /sitemap/

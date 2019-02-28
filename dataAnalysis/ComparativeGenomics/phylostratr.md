@@ -1,7 +1,16 @@
+---
+title: Comparative Genomics
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
 #  Determining evolutionary origin of all genes in a genome
 
 `phylostratr` is an R package for generating phylostratigraphy of all genes in a genome. You will need complete predicted proteins translated from the transcripts for a given genome.
-
+Please cite [Phylostratr](https://www.biorxiv.org/content/early/2018/07/03/360164) if you use this software for your research
 
 ## Installation
 
@@ -62,14 +71,6 @@ From there, install packages:
 ```
 install.packages("curl")
 install.packages("devtools")
-install.packages("taxize")
-install.packages("reshape2)
-install.packages("taxizedb")
-install.packages("dplyr")
-install.packages("readr")
-install.packages("phylostratr")
-install.packages("magrittr")
-install.packages("devtools)
 # phylostratr
 install_github("arendsee/phylostratr")
 ```
@@ -77,6 +78,9 @@ install_github("arendsee/phylostratr")
 With this, you will be set to run `phylostratr` analysis.
 
 ### Running `phylostratr`
+
+**PLEASE REFER THE LATEST INSTRUCTIONS FOR RUNNING PHYLOSTRATR [HERE](https://github.com/arendsee/phylostratr/blob/master/vignettes/arabidopsis.Rmd)**
+
 
 We will run `phylostratr` in 3 parts. In the first part, we will find the taxonomy id for the species of interest from NCBI and choose all the species for determining the gene age. Second, we will run the BLAST (all possible 1 vs. 1). We will do this in a HPC cluster to speed up the process. Last, we will finish running the `phylostratr`, writing results in a csv file and save plots as pdf.
 
@@ -221,3 +225,6 @@ kable()
 plot_heatmaps(results, heatmaps.pdf, focal_id = 381124)
 plot(strata)
 ```
+
+---
+[Table of contents](compGenomics_index.md)

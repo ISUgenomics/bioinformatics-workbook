@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 ## Shortcuts for SSH hosts
 
 Are you tired of typing full length host-names while connecting via SSH? Do you frequently `scp` files from one server to another and have to lookup what the host-names are? Do you want to `rsync` between local and remote host easily with a simple command? Then, read-on.
@@ -64,3 +72,6 @@ man ssh-config
 ```
 
 Now, combine this with [password-less login](password-less-ssh-login.md) and work smart!
+
+---
+[Table of contents](../programs.md)

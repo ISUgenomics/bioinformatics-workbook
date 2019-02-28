@@ -1,3 +1,11 @@
+---
+title: RNA Sequence Analysis
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Differential Gene Expression analysis #
 
 There are many programs that you can use to perform differential expression Some of the popular ones for RNA-seq are [`DESeq2`](https://bioconductor.org/packages/release/bioc/html/DESeq2.html),[`edgeR`](http://bioconductor.org/packages/release/bioc/html/edgeR.html), or [`QuasiSeq`](https://cran.r-project.org/web/packages/QuasiSeq/index.html). Here we will demonstrate differential expression using DESeq2 using data from
@@ -164,3 +172,6 @@ volcanoplot(resdata, lfcthresh=1, sigthresh=0.05, textcx=.8, xlim=c(-2.3, 2))
 dev.off()
 ```
 ![Volcano Plot](Assets/diffexpr-volcanoplot.png)
+
+---
+[Table of contents](RNAseq-intro.md)

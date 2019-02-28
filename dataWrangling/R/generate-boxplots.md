@@ -1,3 +1,11 @@
+---
+title: "Data Visualization"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 ## Using R to create boxplots
 
 For datasets that have many observations per sample and you want to visualize their distribution, boxplots are good choice. Here, the example dataset has average values of multiple observations for each sample. It is organized in this way:

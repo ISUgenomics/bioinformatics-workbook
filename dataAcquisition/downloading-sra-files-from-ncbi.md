@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Acquisition"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 SRA toolkit has been configured to connect to NCBI SRA and download via FTP. The simple command to fetch a SRA file and to split it to forward/reverse reads, use this command:
 
 <pre>

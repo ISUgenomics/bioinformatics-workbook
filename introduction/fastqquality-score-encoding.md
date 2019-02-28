@@ -1,3 +1,12 @@
+---
+title: "Terminology"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
 ## Learning Objective
 
 Upon completion of this section on fastq quality scores the learner will understand the following:
@@ -27,5 +36,5 @@ To determine if the score is <blockcode>Phred+33</blockcode>, <blockcode>Phred+6
                else \
                if(min>=59 && min<64 && max>73) \
                          print "Solexa+64"; else print "Unknown score encoding!";}'
-
- [Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)
+---
+[Table of contents](terminology_index.md)

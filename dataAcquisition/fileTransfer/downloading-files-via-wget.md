@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Acquisition"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Downloading files using wget
 
 Wget is short for World Wide Web get and is used on the command line to download a file from a website or webserver.
@@ -75,3 +83,10 @@ wget --mirror -p --convert-links -P ./LOCAL-DIR WEBSITE-URL
 - [Stack-exchange thread](http://unix.stackexchange.com/questions/117988/wget-with-wildcards-in-http-downloads)
 - [Blog](http://blog.alastair.pro/2012/10/21/wget-regex-filter-by-file-type/)
 - [Forum](http://www.linuxquestions.org/questions/linux-newbie-8/wget-with-regular-expressions-846368/)
+
+---
+
+
+[Next](file-transfer-using-globus-connect-personal-gcp.md){: .btn  .btn--primary}
+[Previous](../dAc_introduction.md){: .btn  .btn--primary}
+[Table of contents](../dAc_introduction.md){: .btn  .btn--primary}

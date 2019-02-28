@@ -1,3 +1,11 @@
+---
+title: Genome Annotation
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Tutorial of how to run Maker2 gene annotation pipeline
 
 I have outlined how to perform a gene annotation of the soybean cyst nematode (*Heterodera glycines*) genome using Maker2.
@@ -733,3 +741,5 @@ Scaffold_46     AUGUSTUS        gene    1255    3337    0.09    -       .       
 Scaffold_86     AUGUSTUS        gene    1       579     0.52    -       .       ID=g15467;
 Scaffold_95     AUGUSTUS        gene    991     4533    0.77    +       .       ID=g15681;
 ```
+---
+[Table of contents](annotation_and_assembly_index.md)

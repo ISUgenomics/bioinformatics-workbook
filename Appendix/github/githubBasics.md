@@ -1,3 +1,10 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
 
 # Basic GitHub commands
 
@@ -495,3 +502,4 @@ $ git push -u origin master
 ```
 
 ---
+[Table of contents](../programs.md)

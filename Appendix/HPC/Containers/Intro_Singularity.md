@@ -1,3 +1,10 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
 
 # Introduction to Singularity Containers
 
@@ -48,7 +55,8 @@ The uri is the important bit of information you will need to download this image
 ```
 singularity pull shub://ISUGIFsingularity/utilities:1.0.1
 ```
-
+If you get a **CERTIFICATE_VERIFY_FAILED:** error then you can set your python certificate verification to off.
+```export PYTHONHTTPSVERIFY=0```
 
 #### Direct execution of Singularity containers
 Containers often have runscripts that will provide you with useful information on how to use the container. The run scripts get initiated by executing the image as follows:
@@ -186,3 +194,6 @@ to execute the script via the singularity container.
 #### To create your own containers see the next tutorial
 
 [How to create your own Containers](Appendix/HPC/Containers/creatingContainers.md)
+
+---
+[Table of contents](../../programs.md)

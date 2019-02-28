@@ -1,3 +1,11 @@
+---
+title: Genome Assembly
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Running Quiver on the assembled genome (PacBio)
 
 For running Quiver, you will need a finished assembly file (`fasta`) format and `bax.h5` reads from SMRTcells. You will need to run `quiver` for every single file of `bax.h5` separately. To make this more effecient, you can use `GNU parallel`.
@@ -40,7 +48,7 @@ ref="$2"
 cpu=16
 cmph5tools.py merge --outFile out_all.cmp.h5 ${aligned[@]}
 cmph5tools.py sort --inPlace --deep out_all.cmp.h5
-samtools faidx ${ref} 
+samtools faidx ${ref}
 quiver out_all.cmp.h5 -j ${cpu} -r ${ref} -o ${ref%.*}_polished.fasta
 ```
 
@@ -55,13 +63,13 @@ For running the `runQuiver_prepare.sh`, you need to find all `bas.h5` files in t
 cd directories_with_smrtcell_data
 # create command file
 for bash5 in $(find $(pwd) -name "*.bas.h5"); do
-echo "./runQuiver_prepare.sh $bash5 genome.fasta"; 
+echo "./runQuiver_prepare.sh $bash5 genome.fasta";
 done > quiver_prepare.cmds
 # create slurm script
 makeSLURMs.py 1 quiver_prepare.cmds
 # submit the jobs
 for sub in *.sub; do
-sbatch $sub; 
+sbatch $sub;
 done
 ```
 
@@ -77,15 +85,3 @@ sbatch quiver_polish_0.sub
 ```
 
 You only have run this one as it will use all the alignment files you created in the first step. When the job completes sucessfully, you should be seeing a `genome_polished.fasta` file.
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Acquisition"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # File Transfer Using Globus Connect Personal (GCP)
 
 This tutorial explains how to transfer files to/from GIF server. You will need Global Connect Personal application to facilitate the file transfer.
@@ -66,3 +74,11 @@ You will see a confirmation saying that the request has been submitted. It might
 ![](assets/16.png)
 
 Once you get the email, you can shut down the computer or exit the Globus application running in the background.
+
+
+----
+
+
+[Next](getting-data-from-iplant-via-irods.md){: .btn  .btn--primary}
+[Previous](downloading-files-via-wget.md){: .btn  .btn--primary}
+[Table of contents](../dAc_introduction.md){: .btn  .btn--primary}

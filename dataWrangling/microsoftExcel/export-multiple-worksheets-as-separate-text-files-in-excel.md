@@ -1,3 +1,11 @@
+---
+title: "Introduction to Data Wrangling"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Export multiple worksheets as separate text files in Excel
 
 If there are large number of worksheets (tabs) in your excel file that you need to export as a separate text file, follow these guidelines. Note that the worksheet label will be used as file name for the text file with the `.txt` extension.

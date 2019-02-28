@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Introduction to Slack
 
 Slack is a communication platform that is based around group chat channels.  It is a transcript of conversations about projects that you can go back and reread.  Slack permits, text, images and files to be attached during conversation.
@@ -6,8 +14,9 @@ Slack is a communication platform that is based around group chat channels.  It 
 ---
 ## Downloading Slack
 
-You can sign up for slack [here: signup](https://slack.com/get-started)
-The slack application can be downloaded [here: application](https://slack.com/downloads/)
+* You can sign up for slack [here: signup](https://slack.com/get-started)
+* The free version the slack program can be downloaded [here: program](https://slack.com/downloads/)
+* Create your own team using [this link: Team signup](https://slack.com/r/0mklqxar-0tnh0jhj) and get a $100 credit.
 
 ---
 ## Understanding the GUI interface
@@ -53,3 +62,6 @@ In Example 2 above, Person B will hate slack as this individual will not be able
 ## More Slack Resources
 
 * [Why Slack?](https://slack.com/features)
+
+---
+[Table of contents](programs.md)

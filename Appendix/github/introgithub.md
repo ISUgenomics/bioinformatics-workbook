@@ -1,3 +1,11 @@
+---
+title: "Useful Programs and Unix Basics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Introduction to GitHub
 
 Github is a code hosting platform for version control and collaboration.  There are three primary use cases for using a version control system like github in science.
@@ -175,3 +183,6 @@ Also, allows for collaboration and back-up.
 ---
 
 Contibutions for this markdown document came from Matt Hufford and was modified with permission from his [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03X Fall 2017) course.
+
+---
+[Table of contents](../programs.md)

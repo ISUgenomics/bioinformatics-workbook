@@ -1,3 +1,12 @@
+---
+title: "Terminology"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
 # File Formats
 ---
 ## Learning Objective
@@ -456,5 +465,5 @@ HISEQ:496:C4KY7ACXX:8:1101:1606:2994    133     *       0       0       *       
 
 BAM is the binary format of a SAM file.  It has a smaller storage footprint and needs to be decompressed to be human readable.
 
-
-[Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)
+---
+[Table of contents](terminology_index.md)

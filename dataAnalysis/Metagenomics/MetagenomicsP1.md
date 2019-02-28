@@ -1,3 +1,11 @@
+---
+title: "Metagenomics"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Introduction to Metagenomics
 
 ---
@@ -513,3 +521,6 @@ As we did before we will convert the sam file to a bam file.
 Part one of the metagenome assembly tutorial deals with the most of the heavy computational work that requires computers with high memory and many processors. In real applications this kind of work would be submitted as a batch job using the SLURM scheduler so that it can run without your being logged into Ceres.
 
 The next major part of an assembly based workflow involves calling genes, annotating genes and binning contigs into genomes.  We will address this in Part 2 of the metagenomics tutorial.
+
+---
+[Table of contents](metagenomics_index.md)

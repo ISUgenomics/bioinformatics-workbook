@@ -1,3 +1,11 @@
+---
+title: Genome Annotation
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Tutorial of how to run Braker2 gene prediction pipeline
 
 I have outlined how to perform a gene annotation of the soybean cyst nematode (*Heterodera glycines*) using Braker2.1.
@@ -235,3 +243,6 @@ ERROR: in file /work/GIF/software/programs/braker/2.1.0/braker.pl at line 2858
 ```
 
 If braker ever fails due to time constraints or in a later braker analysis, you can just resubmit your same script (perhaps with --useexisting) and braker will start where it left off.
+
+---
+[Table of contents](annotation_and_assembly_index.md)
