@@ -271,7 +271,7 @@ pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/Viz
 VizPCA(object = CionaBrain, pcs.use = 1:2)
 dev.off()
 ```
-[VizPCA](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratDispersionVsExpression.pdf)
+[VizPCA.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratDispersionVsExpression-1.png)
 ```
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/UnlabeledPCA.pdf")
 PCAPlot(object = CionaBrain, dim.1 = 1, dim.2 = 2)
