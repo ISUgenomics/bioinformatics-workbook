@@ -77,7 +77,8 @@ cellranger-3.0.2/cellranger mkref --genome C_robusta --fasta=GCF_000224145.3_KH_
 #Witholding download times, this takes a few minutes.
 
 
-
+#need to rename your fastq files so tha they fit this format.
+#_L00#_  represents lane number
 mv  SRR8111691_1.fastq.gz SRR8111691_S1_L001_R1_001.fastq.gz
 mv  SRR8111691_2.fastq.gz SRR8111691_S1_L001_R2_001.fastq.gz
 mv  SRR8111692_1.fastq.gz SRR8111692_S1_L002_R1_001.fastq.gz
