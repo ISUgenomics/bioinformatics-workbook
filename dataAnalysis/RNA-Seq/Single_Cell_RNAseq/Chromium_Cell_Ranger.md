@@ -7,7 +7,7 @@ header:
 ---
 
 
-# How to process 10x genomics single cell rnaseq data deposited in SRA using CellRanger and Suerat.  
+# How to process 10x genomics single cell RNAseq data deposited in SRA using CellRanger and Seurat.  
 ### Software Installation
 ```
 #Cellranger from 10xgenomics. Install is unnecessary, as it is essentially a container
