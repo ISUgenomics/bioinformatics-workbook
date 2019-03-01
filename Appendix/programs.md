@@ -18,7 +18,8 @@ header:
   * [Unix Basics 2](unix-basics-2.md)
   * [Grep](unix-basics-3.md)
   * [Sed](unix-basics-4.md)
-  
+  * [Introduction to regular expressions](../introduction/introduction-to-regular-expressions.md)
+
 
 * <span style="color:lightblue">HPC</span>
   * [How to Install a Program](/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
@@ -28,6 +29,7 @@ header:
   * <span style="color:lightblue">SLURM</span>
     * [SLURM Cheatsheet](/HPC/SLURM/slurm-cheatsheat.md)
     * [SLURM Job Submission Dependencies](/HPC/SLURM/creating-slurm-job-submission-scripts-for-condo.md)
+    * [Submitting dependency jobs using SLURM](/HPC/SLURM/submitting-dependency-jobs-using-slurm.md)
   * <span style="color:lightblue">XSEDE</span>
     * [XSEDE supercomputer](/HPC/xsede/xsede.md)
     * [XSEDE supercell storage](/HPC/xsede/using-psc-supercell-storage-for-bridges-and-greenfield.md)
@@ -49,4 +51,4 @@ header:
 ---
 
 [Next](/fileTransfer/downloading-files-via-wget.md){: .btn  .btn--primary}
-[Table of contents](../index-bk.md){: .btn  .btn--primary}
+[Table of contents](../index.md){: .btn  .btn--primary}

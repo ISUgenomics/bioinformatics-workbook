@@ -47,7 +47,7 @@ module load sra-toolkit
 ```
 
 * the --split-files parameter is used to separate the paired end data into two files rather than the default single file.
-* [more info about SRA downloading found in this section of the workbook](https://github.com/ISUgenomics/bioinformatics-workbook/blob/3eae26f5ca6e7f16325372abdb8bbd9052b425d8/dataAcquisition/sra.md)
+* [more info about SRA downloading found in this section of the workbook](https://isugenomics.github.io/bioinformatics-workbook/dataAcquisition/fileTransfer/sra.html)
 * Download the data into the masurcatutorial/00_rawdata folder  
 ```
 # Illumina MiSeq data

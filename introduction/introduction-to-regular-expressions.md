@@ -1,5 +1,5 @@
 ---
-title: "Experimental Design"
+title: "Useful Programs and Unix Basics"
 layout: single
 header:
   overlay_color: "444444"

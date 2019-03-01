@@ -6,25 +6,15 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-# RNA sequencing without a reference genome
-
 Lets now assume that *Arabidopsis* doesn't have a sequenced genome. We then start with the RNAseq reads and assemble them *denovo* into transcripts. One such denovo assembler, that we will showcase here is [__Trinity__](https://github.com/trinityrnaseq/trinityrnaseq/wiki). It incorporates three software modules, Inchworm, Chrysalis and Butterfly in sequence. It divides the data to many smaller de bruijn graphs, each representing the transcriptional complexity at a locus.
-{: style="text-align: justify"}
 
-We are going to use the reads from the previous tutorial, [RNA-Seq Example with a Genome Assembly](RNAseq-using-a-genome.md)
 
 There are many ways to run Trinity. The official download page is [here](https://github.com/trinityrnaseq/trinityrnaseq/releases).
-Alternatively, you can import the official [Trinity Docker Image](https://hub.docker.com/r/trinityrnaseq/trinityrnaseq/) into a singularity image and run Trinity in a Singularity container. For more information on **Singularity** please visit the tutorial page [Singularity COntainers](../../../Appendix/Containers/)
- On Ceres singularity 2.4 is installed on nodes running linux Cent OS 7.4. This could be done from your project folder as follows.
- {: style="text-align: justify"}
-
+Alternatively, you can import the official [Trinity Docker Image](https://hub.docker.com/r/trinityrnaseq/trinityrnaseq/) into a singularity image and run Trinity in a Singularity container. On Ceres singularity 2.4 is installed on nodes running linux Cent OS 7.4. This could be done from your project folder as follows.
 *Note: The `pull` or import of the docker image could have also been done in the Trinity SBATCH script, but we demonstrate it separately just to show the process of building a singularity image. The pull command first saves a series of tar.gz files in the cache folder and then sequentially builds a squash image that we can use after mounting out working directory in the container, as shown in the SBATCH script.*
-{: style="text-align: justify"}
-
 
 ```
 salloc -p debug74
-module load singularity
 singularity pull docker://trinityrnaseq/trinityrnaseq
 WARNING: pull for Docker Hub is not guaranteed to produce the
 WARNING: same image on repeated pull. Use Singularity Registry
@@ -90,7 +80,6 @@ exit # exit from the relevant node
 #SBATCH --mail-user=<user_email_address>
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
-module load singularity
 cd $SLURM_SUBMIT_DIR
 ulimit -s unlimited
 scontrol show job $SLURM_JOB_ID
@@ -105,19 +94,16 @@ cat ../*2.*gz > right_2.gz
 singularity exec --bind $PWD trinityrnaseq.img Trinity --seqType fq --max_memory 120G --CPU 16 --normalize_by_read_set --output TrinityOut --left left_1.gz --right right_2.gz --trimmomatic
 ```
 After the complete run. We see the complete *de novo* assembly (trinity.fa) in the output directory, TrinityOut. We can perform a variety of downstream analyzes with this transcriptome assembly. For the purposes of this tutorial, we will demonstrate mapping the RNAseq reads back to the assembly using bowtie2, calculating transcript abundance, using FeatureCounts and then performing differential expression using DESeq2. We will use scripts that come packaged with Trinity.
-{: style="text-align: justify"}
 
 
 
 We will now build a transcriptome index and align the RNAseq back to transcriptome and estimate the abundance of the transcripts. When using the singularity image, the absolute path to the folder containing the relevant scripts must be given as follows:
-{: style="text-align: justify"}
 
 
 ```
 singularity exec --bind $PWD trinityrnaseq-2.5.0.img /usr/local/bin/trinityrnaseq/util/align_and_estimate_abundance.pl --transcripts path_to_assembly/TrinityOut/Trinity.fasta --seqType fq --left path_reads/93_1.gz --right transcriptomic_fastq/RNAseq/paired-end/Arabidopsis/93_2.gz --est_method RSEM --aln_method bowtie2 --trinity_mode --prep_reference --output_dir <RSEM_dir1> >& 93_AE_bt2.log &
 ```
 The transcriptome index will be built in the folder containing the transcriptome. Also because we specify __--trinity_mode__, a gene to transcript map file is also prepared, which can be used to produce gene level counts in addition to transcript counts.
-{: style="text-align: justify"}
 
 ```
 ./Trinity.fasta.gene_trans_map
@@ -131,11 +117,9 @@ The transcriptome index will be built in the folder containing the transcriptome
 ```
 
 We can run align_and_estimate_abundance.pl script for each set of reads. We store the bowtie2 alignment file and abundance estimates in separate directories for each set of reads.
-{: style="text-align: justify"}
 
 
 Now we build a transcript expression matrix for all samples using the *abundance_estimates_to_matrix.pl* script. We will prefix all the output files with "all" and use the base name of the directory as sample names.
-{: style="text-align: justify"}
 ```
 singularity exec --bind $PWD trinityrnaseq-2.5.0.img /usr/local/bin/trinityrnaseq/util/abundance_estimates_to_matrix.pl --est_method RSEM --name_sample_by_basedir --gene_trans_map transcriptomic_fastq/RNAseq/paired-end/trinity/TrinityOut/Trinity.fasta.gene_trans_map --out_prefix all RSEM_9*/*isoforms.results >& matrix1.log&
 ```

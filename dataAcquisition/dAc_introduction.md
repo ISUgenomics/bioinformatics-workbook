@@ -35,6 +35,7 @@ Upon completion of this section on experimental design the learner will be able 
   * [Create Workbook from Multiple Text Files](../dataWrangling/microsoftExcel/import-multiple-text-files-as-separate-worksheets-in-excel.md)
   * [Export multiple worksheets as separate text files ](../dataWrangling/microsoftExcel/export-multiple-worksheets-as-separate-text-files-in-excel.md)
   * [Create Index for All Worksheets](../dataWrangling/microsoftExcel/generate-index-sheet-linking-all-spreadsheets-in-excel.md)
+  * [Merge two spreadsheets using a common column](../dataWrangling/microsoftExcel/Merge_two_spreadsheets_using_a_common_column_in_Excel.md)
 * <span style="color:lightblue">Data Management</span>
   * [Deposition of Data to NCBI SRA](../dataWrangling/NCBI_Data_Submission.md)
 

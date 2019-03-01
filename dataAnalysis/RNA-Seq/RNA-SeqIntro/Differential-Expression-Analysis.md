@@ -8,7 +8,7 @@ header:
 
 # Differential Gene Expression analysis #
 
-There are many programs that you can use to perform differential expression. Some of the popular ones for RNA-seq are [`DESeq2`](https://bioconductor.org/packages/release/bioc/html/DESeq2.html),[`edgeR`](http://bioconductor.org/packages/release/bioc/html/edgeR.html), or [`QuasiSeq`](https://cran.r-project.org/web/packages/QuasiSeq/index.html). Here we will demonstrate differential expression using DESeq2 using data from the previous [tutorial](RNAseq-using-a-genome.md):
+There are many programs that you can use to perform differential expression Some of the popular ones for RNA-seq are [`DESeq2`](https://bioconductor.org/packages/release/bioc/html/DESeq2.html),[`edgeR`](http://bioconductor.org/packages/release/bioc/html/edgeR.html), or [`QuasiSeq`](https://cran.r-project.org/web/packages/QuasiSeq/index.html). Here we will demonstrate differential expression using DESeq2 using data from
 
 
 ### Differential Expression with DESeq2 ###
@@ -70,7 +70,7 @@ head(assay(rld))
 hist(assay(rld))
 
 # Principal Components Analysis
-plotPCA(rld)
+plotpca(rld)
 ```
 ![PCA.png](Assets/PCA.png)
 ```

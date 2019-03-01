@@ -14,8 +14,9 @@ Slack is a communication platform that is based around group chat channels.  It 
 ---
 ## Downloading Slack
 
-You can sign up for slack [here: signup](https://slack.com/get-started)
-The slack application can be downloaded [here: application](https://slack.com/downloads/)
+* You can sign up for slack [here: signup](https://slack.com/get-started)
+* The free version the slack program can be downloaded [here: program](https://slack.com/downloads/)
+* Create your own team using [this link: Team signup](https://slack.com/r/0mklqxar-0tnh0jhj) and get a $100 credit.
 
 ---
 ## Understanding the GUI interface

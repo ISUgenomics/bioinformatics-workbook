@@ -13,11 +13,23 @@ feature_row:
     url: "/Appendix/programs"
     btn_label: "Learn More"
 
+  - title: "Introduction to Project Management"
+    image_path: /projectManagement/assets/PMatom.png
+    alt: "Project Management"
+    url: "/projectManagement/projectManagement_index"
+    btn_label: "Learn More"
+
+  - title: "Introduction to BLAST"
+    image_path: dataAnalysis/blast/assets/BLAST.png
+    alt: "BLAST"
+    url: "dataAnalysis/blast/blast_index"
+    btn_label: "Learn More"
+
   - title: "Experimental Design"
     image_path: /assets/images/experiment.jpg
     alt: "Basics"
     excerpt: "Introduction and basics"
-    url: "/experimentalDesign/exp_design_index/"
+    url: "/experimentalDesign/exp_design_index"
     btn_label: "Learn More"
 
   - title: "Data Acquisition and Wrangling"
