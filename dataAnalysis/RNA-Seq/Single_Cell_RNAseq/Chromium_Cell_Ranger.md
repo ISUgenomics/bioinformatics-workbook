@@ -164,6 +164,7 @@ pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/Vio
 VlnPlot(object = CionaBrain, features.plot = c("nGene", "nUMI"), nCol = 2)
 dev.off()
 
+
 #plot number of genes vs number of UMI, another way to filter outliers for doublets etc.
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/GenesVsUMI.pdf")
 par(mfrow = c(1, 1))
@@ -260,6 +261,7 @@ PrintPCA(object = CionaBrain, pcs.print = 1:5, genes.print = 5, use.full = FALSE
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/VizPCA.pdf")
 VizPCA(object = CionaBrain, pcs.use = 1:2)
 dev.off()
+[VizPCA]((https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratDispersionVsExpression.pdf)
 
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/UnlabeledPCA.pdf")
 PCAPlot(object = CionaBrain, dim.1 = 1, dim.2 = 2)
