@@ -336,17 +336,15 @@ dev.off()
 ```
 [TSNEPlot.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratTSNEPlot-1.png)
 ### Sources
-```
-#How to run Cell Ranger starting with BCL files (Illumina base call files)
+
+#### How to run Cell Ranger starting with BCL files (Illumina base call files)
 https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/mkfastq
 
-#how do you prepare your fastq reads for Cell Ranger after you've downloaded from NCBIA SRA or any other published dataset.
+##### How do you prepare your fastq reads for Cell Ranger after you've downloaded from NCBIA SRA or any other published dataset.
 https://kb.10xgenomics.com/hc/en-us/articles/115003802691-How-do-I-prepare-Sequence-Read-Archive-SRA-data-from-NCBI-for-Cell-Ranger-
 
-#How do you prepare a custom reference (i.e. one that is not already indexed by 10genomics)
+#### How do you prepare a custom reference (i.e. one that is not already indexed by 10genomics)
 https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/advanced/references
 
-#Dave Tang's blog using the same human PBC sample as 10x. Lots of useful information for understanding different steps found all in one spot.
+#### Dave Tang's blog using the same human PBC sample as 10x. Lots of useful information for understanding different steps found all in one spot.
 https://davetang.org/muse/2018/08/09/getting-started-with-cell-ranger/
-
-```
