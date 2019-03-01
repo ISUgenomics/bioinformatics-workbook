@@ -172,14 +172,17 @@ CionaBrain <- CreateSeuratObject(raw.data = CionaBrain.data, min.cells = 3, min.
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/Violin.pdf")
 VlnPlot(object = CionaBrain, features.plot = c("nGene", "nUMI"), nCol = 2)
 dev.off()
-
-
+```
+[Violin.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratViolin-1.png)
+```
 #plot number of genes vs number of UMI, another way to filter outliers for doublets etc.
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/GenesVsUMI.pdf")
 par(mfrow = c(1, 1))
 GenePlot(object = CionaBrain, gene1 = "nUMI", gene2 = "nGene")
 dev.off()
-
+```
+[GenesVsUMI.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratGenesVsUMI-1.png)
+```
 #remove cells that have unique gene counts over 2200 (potential doublets) and less than 200(low depth/ambient RNA?)
 CionaBrain <- FilterCells(object = CionaBrain, subset.names = c("nGene", "percent.mito"), low.thresholds = c(200, -Inf), high.thresholds = c(2200, 0.05))
 
@@ -190,6 +193,9 @@ CionaBrain <- NormalizeData(object = CionaBrain, normalization.method = "LogNorm
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/DispersionVsExpression.pdf")
 CionaBrain <- FindVariableGenes(object = CionaBrain, mean.function = ExpMean, dispersion.function = LogVMR, x.low.cutoff = 0.0125, x.high.cutoff = 3, y.cutoff = 0.5)
 dev.off()
+```
+[DispersionVsExpression.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratDispersionVsExpression-1.png)
+```
 length(x = CionaBrain@var.genes)
 [1] 1910
 
@@ -271,29 +277,37 @@ pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/Viz
 VizPCA(object = CionaBrain, pcs.use = 1:2)
 dev.off()
 ```
-[VizPCA.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratDispersionVsExpression-1.png)
+[VizPCA.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratVizPCA-1.png)
 ```
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/UnlabeledPCA.pdf")
 PCAPlot(object = CionaBrain, dim.1 = 1, dim.2 = 2)
 dev.off()
-
+```
+[UnlabeledPCA.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratUnlabeledPCA-1.png)
+```
 #create a heat map of principle components
 CionaBrain <- ProjectPCA(object = CionaBrain, do.print = FALSE)
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/PCHeatmap.pdf")
 PCHeatmap(object = CionaBrain, pc.use = 1, cells.use = 500, do.balanced = TRUE, label.columns = FALSE)
 dev.off()
-
+```
+[PCHeatmap.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratPCHeatmap-1.png)
+```
 #Plot multiple PC heatmaps
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/MultPCHeatmap.pdf")
 PCHeatmap(object = CionaBrain, pc.use = 1:12, cells.use = 500, do.balanced = TRUE, label.columns = FALSE, use.full = FALSE)
 dev.off()
-
+```
+[MultPCHeatmap.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratMultPCHeatmap-1.png)
+```
 #Which of your PC are significant?  all 12 of mine were significant.
 CionaBrain <- JackStraw(object = CionaBrain, num.replicate = 100, display.progress = FALSE)
 pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/JackStrawPlot.pdf")
 JackStrawPlot(object = CionaBrain, PCs = 1:12)
 dev.off()
-
+```
+[JackStrawPlot.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratJackStrawPlot-1.png)
+```
 CionaBrain <- FindClusters(object = CionaBrain, reduction.type = "pca", dims.use = 1:12, resolution = 0.6, print.output = 0, save.SNN = TRUE)
 PrintFindClustersParams(object = CionaBrain)
 ################################################################################
@@ -319,7 +333,7 @@ pdf(file = "/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/testsra/outs/TSN
 TSNEPlot(object = CionaBrain)
 dev.off()
 ```
-
+[TSNEPlot.png](https://isugenomics.github.io/bioinformatics-workbook/assets/SeuratTSNEPlot-1.png)
 ### Sources
 ```
 #How to run Cell Ranger starting with BCL files (Illumina base call files)
