@@ -16,14 +16,14 @@ wget http://cf.10xgenomics.com/supp/cell-exp/refdata-cellranger-GRCh38-1.2.0.tar
 tar -zxvf refdata-cellranger-GRCh38-1.2.0.tar.gz
 ```
 * The only dependency for Cellranger is bcl2fastq. Mine was already installed on my HPC.  Here is a link to the website <br/>
-https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
+[bcl2fastq](https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html)
 * Suerat R package<br/>
-https://satijalab.org/seurat/install.html <br/>
+[Seurat](https://satijalab.org/seurat/install.html) <br/>
 Be aware that there are boat-loads of dependencies for Suerat, which is fine if installing on a local PC.  If on a cluster, I recommend asking an administrator to install it.
 
 * Install Genometools
 I was lucky in that this module existed for my HPC.  Here is a link to the website for download. <br/>
-http://genometools.org
+[Genometools](http://genometools.org)
 
 ##  An example using C. robusta/C. intestinalis SRA data
 
