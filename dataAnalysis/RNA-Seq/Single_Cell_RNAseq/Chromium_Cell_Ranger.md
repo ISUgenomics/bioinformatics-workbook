@@ -1,3 +1,12 @@
+---
+title: RNA Sequence Analysis
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
 # How to process 10x genomics single cell rnaseq data deposited in SRA using CellRanger and Suerat.  
 ### Software Installation
 ```
@@ -320,66 +329,9 @@ https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/l
 https://kb.10xgenomics.com/hc/en-us/articles/115003802691-How-do-I-prepare-Sequence-Read-Archive-SRA-data-from-NCBI-for-Cell-Ranger-
 
 #How do you prepare a custom reference (i.e. one that is not already indexed by 10genomics)
-
-
-```
-
-
-
-
-
-
-#creating --libraries file
-#/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/fastq
-ls -1 | sed 's/_/\t/1' |awk '{print $1}' |sed 's|^|/work/GIF/remkv6/USDA/20_CellRanger/01_CionaRobusta/fastq/,|g' |sed 's/$/,Gene Expression/g' >../libraries.csv
-
-
-
-```
-
-
-
-
-## Prepare reference for cellranger Dave Tangs tutorial
-```
-#this link shows how to use a custom reference
 https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/advanced/references
 
-#DaveTang's Tutorial
-
-wget -c -N http://s3-us-west-2.amazonaws.com/10x.files/samples/cell-exp/2.1.0/pbmc8k/pbmc8k_fastqs.tar
-tar -xf pbmc8k_fastqs.tar
-
-#get a copy of cell ranger 3.0
-https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest
-gunzip cellranger-tiny-bcl-1.2.0.tar.gz
-
-wget http://cf.10xgenomics.com/supp/cell-exp/refdata-cellranger-GRCh38-1.2.0.tar.gz
-tar -zxvf refdata-cellranger-GRCh38-1.2.0.tar.gz
-
-#Download BCL file -- base caller file that are usually had from the sequencing facility   
-wget http://cf.10xgenomics.com/supp/cell-exp/cellranger-tiny-bcl-1.2.0.tar.gz
-gunzip cellranger-tiny-bcl-1.2.0.tar.gz
-
-tar -zxvf cellranger-tiny-bcl-1.2.0.tar.gz
-wget http://cf.10xgenomics.com/supp/cell-exp/cellranger-tiny-bcl-simple-1.2.0.csv
-
-
-#Make sure cellranger can run
-cellranger-3.0.2/cellranger testrun --id=testrun --localcores=16 --localmem=120            
-
-
-#run mkfastq on human BCL sample data
-module load bcl2fastq2/2.20.0.422-py2-bpx6pnb
-cellranger-3.0.2/cellranger mkfastq --id=tiny-bcl  --localcores=16 --localmem=120  --run=cellranger-tiny-bcl-1.2.0 --csv=cellranger-tiny-bcl-simple-1.2.0.csv
-
-#run count on fastq files
-echo "module load bcl2fastq2/2.20.0.422-py2-bpx6pnb" >>RangerCnt.sh
-echo "cellranger-3.0.2/cellranger count --id=pbmc8k --transcriptome=refdata-cellranger-GRCh38-1.2.0 --fastqs=fastqs/ --sample=pbmc8k --localcores=16 --expect-cells=10000 --localmem=120" >RangerCnt.sh
-
-makeSLURMs.py 2 RangerCnt.sh
-
-
-
+#Dave Tang's blog using the same human PBC sample as 10x. Lots of useful information for understanding different steps found all in one spot.
+https://davetang.org/muse/2018/08/09/getting-started-with-cell-ranger/
 
 ```
