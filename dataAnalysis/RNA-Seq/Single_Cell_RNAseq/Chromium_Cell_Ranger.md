@@ -1,5 +1,5 @@
 ---
-title: RNA Sequence Analysis
+title: 10x genomics single-cell RNAseq analysis from SRA data using Cell Ranger and Seurat
 layout: single
 header:
   overlay_color: "444444"
@@ -7,7 +7,7 @@ header:
 ---
 
 
-# How to process 10x genomics single cell RNAseq data deposited in SRA using CellRanger and Seurat.  
+ 
 ## Software Installation
 
 * Cellranger from 10xgenomics. Install is unnecessary, as it is essentially a container <br/>
@@ -20,7 +20,6 @@ tar -zxvf refdata-cellranger-GRCh38-1.2.0.tar.gz
 * Suerat R package<br/>
 [Seurat](https://satijalab.org/seurat/install.html) <br/>
 Be aware that there are boat-loads of dependencies for Suerat, which is fine if installing on a local PC.  If on a cluster, I recommend asking an administrator to install it.
-
 * Install Genometools
 I was lucky in that this module existed for my HPC.  Here is a link to the website for download. <br/>
 [Genometools](http://genometools.org)
