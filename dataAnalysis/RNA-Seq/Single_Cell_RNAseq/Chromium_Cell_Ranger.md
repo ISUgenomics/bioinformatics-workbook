@@ -8,26 +8,22 @@ header:
 
 
 # How to process 10x genomics single cell RNAseq data deposited in SRA using CellRanger and Seurat.  
-### Software Installation
+## Software Installation
+
+* Cellranger from 10xgenomics. Install is unnecessary, as it is essentially a container <br/>
 ```
-#Cellranger from 10xgenomics. Install is unnecessary, as it is essentially a container
 wget http://cf.10xgenomics.com/supp/cell-exp/refdata-cellranger-GRCh38-1.2.0.tar.gz
 tar -zxvf refdata-cellranger-GRCh38-1.2.0.tar.gz
-
-#The only dependency for Cellranger is bcl2fastq. Mine was already installed on my HPC.  Here is a link to the website
+```
+* The only dependency for Cellranger is bcl2fastq. Mine was already installed on my HPC.  Here is a link to the website <br/>
 https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
-
-
-Suerat R package
-https://satijalab.org/seurat/install.html
+* Suerat R package<br/>
+https://satijalab.org/seurat/install.html <br/>
 Be aware that there are boat-loads of dependencies for Suerat, which is fine if installing on a local PC.  If on a cluster, I recommend asking an administrator to install it.
 
-#Install genometools
-I was lucky in that this module existed for my HPC.  Here is a link to the website for download.
+* Install Genometools
+I was lucky in that this module existed for my HPC.  Here is a link to the website for download. <br/>
 http://genometools.org
-
-
-```
 
 ##  An example using C. robusta/C. intestinalis SRA data
 
