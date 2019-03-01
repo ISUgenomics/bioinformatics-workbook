@@ -30,15 +30,9 @@ header:
     * [Introduction to Containers](../Appendix/HPC/Containers/Intro_Singularity.md)
     * [Creating Containers Using Singularity](../Appendix/HPC/Containers/creatingContainers.md)
     * [Modifying Existing Containers](../Appendix/HPC/Containers/modifyingExistingContainers.md)
-
-* <span style="color:lightblue">GitHub</span>
-  * [Introduction to GitHub](../Appendix/github/introgithub.md)
-  * [Some Helpful Commands For Your New Repository](../Appendix/github/github2.md)
-  * [Best Practices on Github](../Appendix/github/githubBasics.md)
 * <span style="color:lightblue">Bioawk</span>
   * [Bioawk Basics](../Appendix/bioawk-basics.md)
-* [Slack](../Appendix/slack.md)
-* [Markdown](../Appendix/Markdown.md)
+
 * [Viewing Files In Remote Machine Without Downloading](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 
 ## [Project Management landing page](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/projectManagement_index)
@@ -91,6 +85,8 @@ header:
 * [RNA-Seq Example with a Genome Assembly](../dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.md)
 * [RNA-Seq Example without a Genome Assembly](../dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-without-a-genome.md)
 * [Different Expression Analysis:DESeq2](../dataAnalysis/RNA-Seq/RNA-SeqIntro/Differential-Expression-Analysis.md)
+* [10x genomics single-cell RNAseq analysis from SRA data using Cell Ranger and Seurat](../dataAnalysis/RNA-Seq/Single_Cell_RNAseq/Chromium_Cell_Ranger.md)
+
 
 ### Genome Assembly and Annotation
 * <span style="color:lightblue">Genome Assembly</span>

@@ -37,15 +37,9 @@ header:
     * [Introduction to Containers](/HPC/Containers/Intro_Singularity.md)
     * [Creating Containers Using Singularity](/HPC/Containers/creatingContainers.md)
     * [Modifying Existing Containers](/HPC/Containers/modifyingExistingContainers.md)
-
-* <span style="color:lightblue">GitHub</span>
-  * [Introduction to GitHub](/github/introgithub.md)
-  * [Some Helpful Commands For Your New Repository](/github/github2.md)
-  * [Best Practices on Github](/github/githubBasics.md)
 * <span style="color:lightblue">Bioawk</span>
   * [Bioawk Basics](bioawk-basics.md)
-* [Slack](slack.md)
-* [Markdown](Markdown.md)
+
 * [Viewing Files In Remote Machine Without Downloading](/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 
 ---
