@@ -1,5 +1,5 @@
 ---
-title: How to analyze Hi-C data with Juicer, scaffold your assembly with HiC using 3D-DNA
+title: How to analyze Hi-C data with Juicer and scaffold your genome assembly using 3D-DNA
 layout: single
 header:
   overlay_color: "444444"
