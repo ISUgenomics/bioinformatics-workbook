@@ -196,7 +196,7 @@ runs in abot 8-9hrs 16cpu.  140gb bam merged_nodups.txt file.
 Juicer uses the .assembly and .hic files generated from 3D-DNA and juicer/3D-DNA
 [Juicebox Download](https://github.com/aidenlab/Juicebox/wiki/Download)
 
-There are some decent, yet incomplete sources of information via tutorial videos of genome assembly corrections using Juicebox.
+There are some sources of information via tutorial videos of genome assembly corrections using Juicebox.
 [Introduction to Juicebox for Hi-C exploration](https://www.youtube.com/watch?v=xjNXyeUSfZM)
 [JuiceBox tutorial for genome assembly correction](
 https://www.youtube.com/watch?v=Nj7RhQZHM18)
@@ -206,7 +206,6 @@ https://www.youtube.com/watch?v=Nj7RhQZHM18)
 ![MysteryGenome loaded into JuiceBox](https://isugenomics.github.io/bioinformatics-workbook/assets/JuiceBox.png)
 
 
-[Aiden lab forum](http://aidenlab.org/forum.html) -- Very helpful if you have a problem with their software.
 
 ## Sources
 
