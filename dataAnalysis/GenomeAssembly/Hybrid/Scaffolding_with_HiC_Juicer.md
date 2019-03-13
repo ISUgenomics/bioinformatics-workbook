@@ -205,7 +205,7 @@ https://www.youtube.com/watch?v=Nj7RhQZHM18)
 3. [A helpful lightning speed correction of the barrel medic genome] (https://www.youtube.com/watch?v=IMmVp8FodmY)
 
 ### Uploading files to Juicebox
-Juicer uses the .assembly and .hic files generated from 3D-DNA and juicer/3D-DNA. 
+Juicer uses the .assembly and .hic files generated from 3D-DNA and juicer/3D-DNA.
 ![MysteryGenome loaded into JuiceBox](https://isugenomics.github.io/bioinformatics-workbook/assets/JuiceBox.png)
 
 
@@ -216,4 +216,4 @@ Juicer uses the .assembly and .hic files generated from 3D-DNA and juicer/3D-DNA
 
 [Aiden lab forum](http://aidenlab.org/forum.html) -- Very helpful if you have a problem with their software.
 
-[Original publication of mosquito genome assembly using Hi-C](http://science.sciencemag.org/content/356/6333/92) --
+[Original publication of mosquito genome assembly using Hi-C](http://science.sciencemag.org/content/356/6333/92)
