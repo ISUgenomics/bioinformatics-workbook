@@ -1,13 +1,37 @@
-# How to analyze Hi-C data with Juicer, scaffold your assembly with HiC using 3DNA and Juicebox pipelines
+---
+title: How to analyze Hi-C data with Juicer, scaffold your assembly with HiC using 3D-DNA
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+#  Assess your needs
+```
 This tutorial was conducted with a 160Mb genome and 1 billion Hi-C reads, using juicer's CPU scripts on an HPC with 16 procs and 128Gb ram. There are more than a few things you will need to get started.  
 1.  Hi-C reads in fastq format
 2.  Genome
 3.  The restriction enzyme used for your HiC data
 4.  If you want to run hiccups(optional), you'll need a GPU node
-5.  Depending on your genome size, and amount of repetitive content, you may want to create a black list to prevent juicer from running forever on the dedup step. Essentially simple repeats are just evil for this step
+5.  Depending on your genome size and amount of repetitive content, you may want to create a black list to prevent juicer from running forever on the dedup step.  The blacklist will remove reads in these highly repetitive areas from the merged_sort.txt output from juicer. Essentially simple repeats are just evil for this step
+```
+# Software Dependencies  of this tutorial
+```
+Most of these are pretty common among HPC for bioinformatics.  I was lucky and didnt have to install anything.
+blast
+bedtools
+samtools
+bwa
+gnutls/3.5.13
+jdk (java development kit) 1.8
+bioawk
+lastz
+python
+parallel
+```
 
 ## Decide if you want a black list to get rid of reiterated simple repeats that kill juicer at the dedup step
-If not, move to the next step.
+If not, move to the next step (Initial setup of juicer scripts).
 ```
 makeblastdb -in MisAssFixed.Pilon.fasta -dbtype nucl -out Genome.DB
 
