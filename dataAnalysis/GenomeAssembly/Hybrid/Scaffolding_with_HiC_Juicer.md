@@ -15,9 +15,10 @@ This tutorial was conducted with a 160Mb genome and 1 billion Hi-C reads, using 
 4.  If you want to run hiccups(optional), you'll need a GPU node
 5.  Depending on your genome size and amount of repetitive content, you may want to create a black list to prevent juicer from running forever on the dedup step.  The blacklist will remove reads in these highly repetitive areas from the merged_sort.txt output from juicer. Essentially simple repeats are just evil for this step
 ```
-# Software Dependencies  of this tutorial
-```
+# Software Dependencies
 Most of these are pretty common among HPC for bioinformatics.  I was lucky and didnt have to install anything.
+
+```
 blast
 bedtools
 samtools
@@ -30,7 +31,7 @@ python
 parallel
 ```
 
-## Decide if you want a black list to get rid of reiterated simple repeats that kill juicer at the dedup step
+# Decide if you want a black list to get rid of reiterated simple repeats that kill juicer at the dedup step
 If not, move to the next step (Initial setup of juicer scripts).
 ```
 makeblastdb -in MisAssFixed.Pilon.fasta -dbtype nucl -out Genome.DB
@@ -44,10 +45,10 @@ Have this ready before you go to the deduplication stage
 
 ```
 
-### Initial setup of juicer scripts
+## Initial setup of juicer scripts
 ```
 #my starting directory
-#/work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads
+#/09_JuicerScaff/04_scnHicReads
 
 git clone https://github.com/theaidenlab/juicer.git
 cd juicer/
@@ -57,9 +58,9 @@ wget http://hicfiles.tc4ga.com.s3.amazonaws.com/public/juicer/juicer_tools.1.7.6
 ln -s juicer_tools.1.7.6_jcuda.0.8.jar juicer_tools.jar
 cd ..
 ```
-### softlink and index your reference
+## softlink and index your reference
 ```
-#/work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads/juicer
+#/09_JuicerScaff/04_scnHicReads/juicer
 
 mkdir references
 cd references
@@ -71,19 +72,19 @@ cd ..
 
 ### Predict the fragment sizes from a restriction enzyme digest for your genome.
 ```
-#/work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads/juicer
+#09_JuicerScaff/04_scnHicReads/juicer
 
 mkdir restriction_sites
 cd restriction_sites/
 module load python/2.7.15-ief5zfp
-python ../misc/generate_site_positions.py MboI MaskedMisAssFixed.Pilon.fasta /work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads/juicer/references/MisAssFixed.Pilon.fasta
+python ../misc/generate_site_positions.py MboI MaskedMisAssFixed.Pilon.fasta /09_JuicerScaff/04_scnHicReads/juicer/references/MisAssFixed.Pilon.fasta
 #created "MisAssFixed.Pilon.fasta_MboI.txt"
 cd ..
 ```
 
 ### Softlink all fastq files to fastq folder
 ```
-#/work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads/juicer
+#/09_JuicerScaff/04_scnHicReads/juicer
 
 mkdir fastq
 cd fastq
@@ -98,7 +99,7 @@ bioawk -c fastx '{print $name"\t"length($seq)}' MisAssFixed.Pilon.fasta >chrom.s
 
 ### Run juicer
 ```
-#/work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads/juicer
+#/09_JuicerScaff/04_scnHicReads/juicer
 
 module load bwa
 module load gnutls/3.5.13-7a3mvfy
@@ -113,7 +114,7 @@ I honestly could never get the SLURM scripts to submit to my system, and thus wa
 
 ### Dedup workaround
 ```
-#/work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads/02_juicerUnmasked/aligned
+#/09_JuicerScaff/04_scnHicReads/02_juicerUnmasked/aligned
 #remove the unfinished files from aligned/ folder
 rm dups.txt; rm merged_nodups.txt;rm opt_dups.txt
 
@@ -159,7 +160,7 @@ for f in x*dir; do echo "cd "$f"; bash scripts/juicer.sh -S dedup -y restriction
 ```
 ### Create your merged_nodups.txt file and generate your .hic and .assembly files
 ```
-#/work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads/juicer/aligned
+#/09_JuicerScaff/04_scnHicReads/juicer/aligned
 #This took hours to concatenate.
 cat x*dir/aligned/merged_nodups.txt > merged_nodups.txt
 
@@ -174,7 +175,7 @@ java -Xmx2g -jar ../scripts/juicer_tools.jar pre merged_nodups.txt merged_nodups
 
 # Run the 3D DNA pipeline to generate a scaffolded genome assembly that can be manipulated in juicebox
 ```
-/work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads/01_JuiceBox
+/09_JuicerScaff/04_scnHicReads/01_JuiceBox
 git clone https://github.com/theaidenlab/3d-dna.git
 cd 3d-dna/
 
@@ -184,7 +185,29 @@ module load gnutls/3.5.13-7a3mvfy
 module load jdk/8u172-b11-rnauqmr
 module load python
 module load parallel/20170322-36gxsog
-bash run-asm-pipeline.sh -m haploid /work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads/juicer/references/MisAssFixed.Pilon.fasta /work/GIF/remkv6/Baum/04_Dovetail2Restart/04_GapFilling/09_JuicerScaff/04_scnHicReads/juicer/aligned/merged_nodups.txt
+bash run-asm-pipeline.sh -m haploid /09_JuicerScaff/04_scnHicReads/juicer/references/MisAssFixed.Pilon.fasta /09_JuicerScaff/04_scnHicReads/juicer/aligned/merged_nodups.txt
 
 runs in abot 8-9hrs 16cpu.  140gb bam merged_nodups.txt file.
 ```
+
+# Upload your genome into Juicebox
+```
+Juicer uses the .assembly and .hic files generated from 3D-DNA and juicer/3D-DNA
+[Juicebox Download](https://github.com/aidenlab/Juicebox/wiki/Download)
+
+There are some decent, yet incomplete sources of information via tutorial videos of genome assembly corrections using Juicebox.
+[Introduction to Juicebox for Hi-C exploration](https://www.youtube.com/watch?v=xjNXyeUSfZM)
+[JuiceBox tutorial for genome assembly correction](
+https://www.youtube.com/watch?v=Nj7RhQZHM18)
+
+[A helpful lightning speed correction of the barrel medic genome] (https://www.youtube.com/watch?v=IMmVp8FodmY)
+
+```
+
+## Sources
+
+[Host website](https://github.com/aidenlab/juicer) -- Has all of the software and tutorials hosted here.
+
+[Aiden lab forum](http://aidenlab.org/forum.html) -- Very helpful if you have a problem with their software.
+
+[Original publication of mosquito genome assembly using Hi-C](http://science.sciencemag.org/content/356/6333/92) --
