@@ -191,18 +191,21 @@ bash run-asm-pipeline.sh -m haploid /09_JuicerScaff/04_HicReads/juicer/reference
 runs in abot 8-9hrs 16cpu.  140gb bam merged_nodups.txt file.
 ```
 
-# Upload your genome into Juicebox
-```
-Juicer uses the .assembly and .hic files generated from 3D-DNA and juicer/3D-DNA
+## How to use JuiceBox
+
+Download and install Juicebox
+
 [Juicebox Download](https://github.com/aidenlab/Juicebox/wiki/Download)
 
 There are some sources of information via tutorial videos of genome assembly corrections using Juicebox.
-[Introduction to Juicebox for Hi-C exploration](https://www.youtube.com/watch?v=xjNXyeUSfZM)
-[JuiceBox tutorial for genome assembly correction](
-https://www.youtube.com/watch?v=Nj7RhQZHM18)
 
-[A helpful lightning speed correction of the barrel medic genome] (https://www.youtube.com/watch?v=IMmVp8FodmY)
-```
+1. [Introduction to Juicebox for Hi-C exploration](https://www.youtube.com/watch?v=xjNXyeUSfZM)
+2. [JuiceBox tutorial for genome assembly correction](
+https://www.youtube.com/watch?v=Nj7RhQZHM18)
+3. [A helpful lightning speed correction of the barrel medic genome] (https://www.youtube.com/watch?v=IMmVp8FodmY)
+
+### Uploading files to Juicebox
+Juicer uses the .assembly and .hic files generated from 3D-DNA and juicer/3D-DNA. 
 ![MysteryGenome loaded into JuiceBox](https://isugenomics.github.io/bioinformatics-workbook/assets/JuiceBox.png)
 
 
