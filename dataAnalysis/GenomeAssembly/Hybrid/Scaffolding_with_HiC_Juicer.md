@@ -202,8 +202,11 @@ There are some decent, yet incomplete sources of information via tutorial videos
 https://www.youtube.com/watch?v=Nj7RhQZHM18)
 
 [A helpful lightning speed correction of the barrel medic genome] (https://www.youtube.com/watch?v=IMmVp8FodmY)
-
 ```
+![MysteryGenome loaded into JuiceBox](https://isugenomics.github.io/bioinformatics-workbook/assets/JuiceBox.png)
+
+
+[Aiden lab forum](http://aidenlab.org/forum.html) -- Very helpful if you have a problem with their software.
 
 ## Sources
 
