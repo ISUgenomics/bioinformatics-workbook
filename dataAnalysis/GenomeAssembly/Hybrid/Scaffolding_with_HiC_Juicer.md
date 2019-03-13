@@ -8,12 +8,13 @@ header:
 
 #  Assess your needs
 ```
-This tutorial was conducted with a 160Mb genome and 1 billion Hi-C reads, using juicer's CPU scripts on an HPC with 16 procs and 128Gb ram. There are more than a few things you will need to get started.  
+This tutorial was conducted with a 160Mb genome and 1 billion Hi-C reads, using juicer's CPU scripts on an HPC with 16 procs and 128Gb ram.
+Things you will need to get started.  
 1.  Hi-C reads in fastq format
 2.  Genome
 3.  The restriction enzyme used for your HiC data
 4.  If you want to run hiccups(optional), you'll need a GPU node
-5.  Depending on your genome size and amount of repetitive content, you may want to create a black list to prevent juicer from running forever on the dedup step.  The blacklist will remove reads in these highly repetitive areas from the merged_sort.txt output from juicer. Essentially simple repeats are just evil for this step
+5.  Depending on your genome size and amount of repetitive content, you may want to create a black list to prevent juicer from running forever on the dedup step. The blacklist will remove reads in these highly repetitive areas from the merged_sort.txt output from juicer. Essentially simple repeats are just evil for this step
 ```
 # Software Dependencies
 Most of these are pretty common among HPC for bioinformatics.  I was lucky and didnt have to install anything.
@@ -31,10 +32,10 @@ python
 parallel
 ```
 
-# Decide if you want a black list to get rid of reiterated simple repeats that kill juicer at the dedup step
+## Decide if you want a black list to get rid of reiterated simple repeats that kill juicer at the dedup step
 If not, move to the next step (Initial setup of juicer scripts).
 ```
-makeblastdb -in MisAssFixed.Pilon.fasta -dbtype nucl -out Genome.DB
+makeblastdb -in MysteryGenome.fasta -dbtype nucl -out Genome.DB
 
 blastn -db Genome.DB -dust no -num_threads 16 -outfmt 6 -query CentromereAndTelomereRepeats.fasta -evalue 100 -num_alignments 100000  -out Repeats2Genome.blastout
 
@@ -48,7 +49,7 @@ Have this ready before you go to the deduplication stage
 ## Initial setup of juicer scripts
 ```
 #my starting directory
-#/09_JuicerScaff/04_scnHicReads
+#/09_JuicerScaff/04_HicReads
 
 git clone https://github.com/theaidenlab/juicer.git
 cd juicer/
@@ -60,52 +61,52 @@ cd ..
 ```
 ## softlink and index your reference
 ```
-#/09_JuicerScaff/04_scnHicReads/juicer
+#/09_JuicerScaff/04_HicReads/juicer
 
 mkdir references
 cd references
-ln -s ../../../MisAssFixed.Pilon.fasta
+ln -s ../../../MysteryGenome.fasta
 module load bwa
-bwa index MisAssFixed.Pilon.fasta
+bwa index MysteryGenome.fasta
 cd ..
 ```
 
 ### Predict the fragment sizes from a restriction enzyme digest for your genome.
 ```
-#09_JuicerScaff/04_scnHicReads/juicer
+#09_JuicerScaff/04_HicReads/juicer
 
 mkdir restriction_sites
 cd restriction_sites/
 module load python/2.7.15-ief5zfp
-python ../misc/generate_site_positions.py MboI MaskedMisAssFixed.Pilon.fasta /09_JuicerScaff/04_scnHicReads/juicer/references/MisAssFixed.Pilon.fasta
-#created "MisAssFixed.Pilon.fasta_MboI.txt"
+python ../misc/generate_site_positions.py MboI MaskedMysteryGenome.fasta /09_JuicerScaff/04_HicReads/juicer/references/MysteryGenome.fasta
+#created "MysteryGenome.fasta_MboI.txt"
 cd ..
 ```
 
 ### Softlink all fastq files to fastq folder
 ```
-#/09_JuicerScaff/04_scnHicReads/juicer
+#/09_JuicerScaff/04_HicReads/juicer
 
 mkdir fastq
 cd fastq
-for f in /work/GIF/remkv6/Baum/01_SCNDovetailScaffolding/02_DovetailFastq/CP4477_hic_hiseq/*gz ; do ln -s $f;done
+for f in /work/GIF/remkv6/Baum/01_DovetailScaffolding/02_DovetailFastq/CP4477_hic_hiseq/*gz ; do ln -s $f;done
 cd ..
 ```
 ### Create a chromosome sizes file
 ```
 module load bioawk
-bioawk -c fastx '{print $name"\t"length($seq)}' MisAssFixed.Pilon.fasta >chrom.sizes
+bioawk -c fastx '{print $name"\t"length($seq)}' MysteryGenome.fasta >chrom.sizes
 ```
 
 ### Run juicer
 ```
-#/09_JuicerScaff/04_scnHicReads/juicer
+#/09_JuicerScaff/04_HicReads/juicer
 
 module load bwa
 module load gnutls/3.5.13-7a3mvfy
 #must be 1.8 jdk
 module load jdk/8u172-b11-rnauqmr
-bash scripts/juicer.sh  -y restriction_sites/MaskedMisAssFixed.Pilon.fasta_MboI.txt -z references/MaskedMisAssFixed.Pilon.fasta -p chrom.sizes
+bash scripts/juicer.sh  -y restriction_sites/MaskedMysteryGenome.fasta_MboI.txt -z references/MaskedMysteryGenome.fasta -p chrom.sizes
 ```
 For me, this ran for about 2 days before juicer started generating a merged_nodups.txt in the aligned folder. This is when I KILL THE PROCESS, as it takes more than 4 days to deduplicate my billion reads.  
 Adding a -S dedup allows the juicer script to restart the deduplication process, but all previous progress is erased.
@@ -114,7 +115,7 @@ I honestly could never get the SLURM scripts to submit to my system, and thus wa
 
 ### Dedup workaround
 ```
-#/09_JuicerScaff/04_scnHicReads/02_juicerUnmasked/aligned
+#/09_JuicerScaff/04_HicReads/02_juicerUnmasked/aligned
 #remove the unfinished files from aligned/ folder
 rm dups.txt; rm merged_nodups.txt;rm opt_dups.txt
 
@@ -154,13 +155,13 @@ LICENSE  README.md  aligned  chrom.sizes  debug  fastq  juiceIt_0.sub  juicer.sh
  merged_sort.txt
 ##############################################################################################
 # This takes every directory that was made from the above script, moves to that directory, and creates execution script for juicer to run in parallel.  Dont forget -S dedup.
-for f in x*dir; do echo "cd "$f"; bash scripts/juicer.sh -S dedup -y restriction_sites/MisAssFixed.Pilon.fasta_MboI.txt -z references/MisAssFixed.Pilon.fasta -p chrom.sizes";done >>dedup.sh
+for f in x*dir; do echo "cd "$f"; bash scripts/juicer.sh -S dedup -y restriction_sites/MysteryGenome.fasta_MboI.txt -z references/MysteryGenome.fasta -p chrom.sizes";done >>dedup.sh
 
 # I submitted these in parallel to four nodes
 ```
 ### Create your merged_nodups.txt file and generate your .hic and .assembly files
 ```
-#/09_JuicerScaff/04_scnHicReads/juicer/aligned
+#/09_JuicerScaff/04_HicReads/juicer/aligned
 #This took hours to concatenate.
 cat x*dir/aligned/merged_nodups.txt > merged_nodups.txt
 
@@ -175,7 +176,7 @@ java -Xmx2g -jar ../scripts/juicer_tools.jar pre merged_nodups.txt merged_nodups
 
 # Run the 3D DNA pipeline to generate a scaffolded genome assembly that can be manipulated in juicebox
 ```
-/09_JuicerScaff/04_scnHicReads/01_JuiceBox
+/09_JuicerScaff/04_HicReads/01_JuiceBox
 git clone https://github.com/theaidenlab/3d-dna.git
 cd 3d-dna/
 
@@ -185,7 +186,7 @@ module load gnutls/3.5.13-7a3mvfy
 module load jdk/8u172-b11-rnauqmr
 module load python
 module load parallel/20170322-36gxsog
-bash run-asm-pipeline.sh -m haploid /09_JuicerScaff/04_scnHicReads/juicer/references/MisAssFixed.Pilon.fasta /09_JuicerScaff/04_scnHicReads/juicer/aligned/merged_nodups.txt
+bash run-asm-pipeline.sh -m haploid /09_JuicerScaff/04_HicReads/juicer/references/MysteryGenome.fasta /09_JuicerScaff/04_HicReads/juicer/aligned/merged_nodups.txt
 
 runs in abot 8-9hrs 16cpu.  140gb bam merged_nodups.txt file.
 ```
