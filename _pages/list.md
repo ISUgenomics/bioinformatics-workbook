@@ -94,7 +94,7 @@ header:
   * [Canu for Long Read Assembly](../dataAnalysis/GenomeAssembly/LongRead/Canu.md)
     * [Canu on XSEDE Bridges Machine](../dataAnalysis/GenomeAssembly/LongRead/Canu_bridges.md)
   * [Mascurca with Pacbio and Illumina](../dataAnalysis/GenomeAssembly/Hybrid/MaSuRCA.md)
-  * [Genome Scaffolding Using Synteny eith Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
+  * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
   * [Hi-C scaffolding](../dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
 * <span style="color:lightblue">Genome Annotation</span>
   * [Introduction to Maker Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_To_Maker.md)
