@@ -151,7 +151,7 @@ x10merged_sort.txt.dir
 ##############################################################################################
 LICENSE  README.md  aligned  chrom.sizes  debug  fastq  juiceIt_0.sub  juicer.sh  misc  references  restriction_sites  scripts  splits
 ##############################################################################################
-# sample: contents of x01merged_sort.txt.dir
+# sample: contents of x01merged_sort.txt.dir/aligned/
 ##############################################################################################
  merged_sort.txt
 ##############################################################################################
