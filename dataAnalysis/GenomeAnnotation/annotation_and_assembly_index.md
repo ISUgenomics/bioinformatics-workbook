@@ -6,7 +6,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Genome Annotations Introduction
+# Genome Assembly and Annotations Introduction
 
 DNA annotation or genome annotation is the process of identifying the locations of genes and all of the coding regions in a genome and determining what those genes do. Once a genome is sequenced, it needs to be annotated to make sense of it.
 
@@ -21,7 +21,8 @@ The National Center for Biomedical Ontology (www.bioontology.org) develops tools
   * [Canu for Long Read Assembly](../GenomeAssembly/LongRead/Canu.md)
     * [Canu on XSEDE Bridges Machine](../GenomeAssembly/LongRead/Canu_bridges.md)
   * [Mascurca with Pacbio and Illumina](../GenomeAssembly/Hybrid/MaSuRCA.md)
-  * [Genome Scaffolding Using Synteny eith Pyscaf](../GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
+  * [Genome Scaffolding Using Synteny with Pyscaf](../GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
+  * [Hi-C scaffolding](../GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
 
 * Genome Annotation
   * [Introduction to Maker Gene Prediction](Intro_To_Maker.md)
