@@ -157,7 +157,18 @@ LICENSE  README.md  aligned  chrom.sizes  debug  fastq  juiceIt_0.sub  juicer.sh
 ##############################################################################################
 # This takes every directory that was made from the above script, moves to that directory, and creates execution script for juicer to run in parallel.  Dont forget -S dedup.
 for f in x*dir; do echo "cd "$f"; bash scripts/juicer.sh -S dedup -y restriction_sites/MysteryGenome.fasta_MboI.txt -z references/MysteryGenome.fasta -p chrom.sizes";done >>dedup.sh
-
+#sample output from the above script
+###############################################################
+cd x00merged_sort.txt.dir; bash scripts/juicer.sh -S dedup -y restriction_sites/MysteryGenome.fasta_MboI.txt -z references/MysteryGenome.fasta -p chrom.sizes
+cd x01merged_sort.txt.dir; bash scripts/juicer.sh -S dedup -y restriction_sites/MysteryGenome.fasta_MboI.txt -z references/MysteryGenome.fasta -p chrom.sizes
+cd x02merged_sort.txt.dir; bash scripts/juicer.sh -S dedup -y restriction_sites/MysteryGenome.fasta_MboI.txt -z references/MysteryGenome.fasta -p chrom.sizes
+cd x03merged_sort.txt.dir; bash scripts/juicer.sh -S dedup -y restriction_sites/MysteryGenome.fasta_MboI.txt -z references/MysteryGenome.fasta -p chrom.sizes
+cd x04merged_sort.txt.dir; bash scripts/juicer.sh -S dedup -y restriction_sites/MysteryGenome.fasta_MboI.txt -z references/MysteryGenome.fasta -p chrom.sizes
+cd x05merged_sort.txt.dir; bash scripts/juicer.sh -S dedup -y restriction_sites/MysteryGenome.fasta_MboI.txt -z references/MysteryGenome.fasta -p chrom.sizes
+cd x06merged_sort.txt.dir; bash scripts/juicer.sh -S dedup -y restriction_sites/MysteryGenome.fasta_MboI.txt -z references/MysteryGenome.fasta -p chrom.sizes
+cd x07merged_sort.txt.dir; bash scripts/juicer.sh -S dedup -y restriction_sites/MysteryGenome.fasta_MboI.txt -z references/MysteryGenome.fasta -p chrom.sizes
+...etc
+###############################################################
 # I submitted these in parallel to four nodes
 ```
 ### Create your merged_nodups.txt file and generate your .hic and .assembly files
