@@ -15,22 +15,22 @@ Things you will need to get started.
 2.  Genome
 3.  The restriction enzyme used for your HiC data
 4.  If you want to run hiccups(optional), you'll need a GPU node
-5.  Depending on your genome size and amount of repetitive content, you may want to create a black list to prevent juicer from running forever on the dedup step. The blacklist will remove reads in these highly repetitive areas from the merged_sort.txt output from juicer. Essentially simple repeats are just evil for this step
+5.  Depending on your genome size and amount of repetitive content, you may want to create a black list to prevent juicer from running forever on the dedup step. The blacklist will remove reads in these highly repetitive areas from the merged_sort.txt output from juicer. Essentially simple repeats are just evil for this step.
 
 # Software Dependencies
 Most of these are pretty common among HPC for bioinformatics.  I was lucky and didnt have to install anything.
 
 ```
-blast
-bedtools
-samtools
-bwa
-gnutls/3.5.13
-jdk (java development kit) 1.8
-bioawk
-lastz
-python
-parallel
+blast -- I used 2.7.1
+bedtools -- I used 2.27.1
+samtools -- I used 1.8-6
+bwa -- I used 0.7.17
+gnutls -- I used 3.5.13
+jdk (java development kit)1.7-1.8 -- I used 1.8
+bioawk -- I used 1.0-3
+lastz -- I used 1.03.73
+python -- I used 2.7.15
+parallel -- I used 20170322
 ```
 
 ## Decide if you want a black list to get rid of reiterated simple repeats that kill juicer at the dedup step
