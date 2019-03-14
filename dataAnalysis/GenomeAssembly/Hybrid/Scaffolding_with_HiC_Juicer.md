@@ -220,7 +220,7 @@ https://www.youtube.com/watch?v=Nj7RhQZHM18)
 Juicer uses the .assembly and .hic files generated from 3D-DNA and juicer/3D-DNA.
 ![MysteryGenome loaded into JuiceBox](https://isugenomics.github.io/bioinformatics-workbook/assets/JuiceBox.png)
 
-
+This is what a genome assembly looks like from a population of highly heterozygous individuals.  It is not nearly as neat as the barrel medic genome, but lots of scaffolding opportunities are possible. 
 
 ## Sources
 
