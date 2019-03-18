@@ -112,7 +112,7 @@ bash scripts/juicer.sh  -y restriction_sites/MaskedMysteryGenome.fasta_MboI.txt 
 For me, this ran for about 2 days before juicer started generating a merged_nodups.txt in the aligned folder. This is when I KILL THE PROCESS, as it takes more than 4 days to deduplicate my billion reads.  
 Adding a -S dedup allows the juicer script to restart the deduplication process, but all previous progress is erased.
 
-I honestly could never get the SLURM scripts to submit to my system, and thus was forced to work with the cpu scripts.  Here is my workaround to get the dedup to run in parallel, and enable submission to multiple nodes.
+Here is my workaround to get the dedup to run in parallel using the cpu scripts, which enable submission to multiple nodes.
 
 ### Dedup workaround
 ```
@@ -171,11 +171,18 @@ cd x07merged_sort.txt.dir; bash scripts/juicer.sh -S dedup -y restriction_sites/
 ###############################################################
 # I submitted these in parallel to four nodes
 ```
-### Create your merged_nodups.txt file and generate your .hic and .assembly files
+# Two choices moving forward
+#### Choice 1: Create your merged_nodups.txt file and generate your .hic and .assembly files
+This choice is faster and will give you the assembly files you want more quickly.  However this path will not give you all of the standard juicer output.  
 ```
+################################################################################
 #/09_JuicerScaff/04_HicReads/juicer/aligned
-#This took hours to concatenate.
+#Rename your old merged_sort.txt
+mv merged_sort.txt Round1MergedSort.txt
+
 cat x*dir/aligned/merged_nodups.txt > merged_nodups.txt
+#Beware, if you kill juicer early before the .hic file is completed, you may find lines of binary in your merged_nodups.txt files.
+
 
 # generate a hic file manually with the deduplicated reads
 module load bwa
@@ -184,7 +191,29 @@ module load gnutls/3.5.13-7a3mvfy
 module load jdk/8u172-b11-rnauqmr
 java -Xmx2g -jar ../scripts/juicer_tools.jar pre merged_nodups.txt merged_nodups.hic ../chrom.sizes
 ```
+#### Choice 2: Rerun juicer on the merged_nodups.txt reads to completely remove duplicates. (about 24hrs for me)
+The program will then generate all the associated file output with this method, but does not dramatically affect the number of duplicates found.
 
+To be more careful with removing all duplicates, you should run juicer -S dedup on your newly merged_nodups.txt file, and rename it to  merged_sort.txt. Then rerun through juicer.
+The file is 82GB smaller this time around and only takes a day to run without getting stuck on duplicates
+This removes only 115KB of duplicates the second run through.
+```
+#/09_JuicerScaff/04_HicReads/juicer/aligned
+#Rename your old merged_sort.txt
+mv merged_sort.txt Round1MergedSort.txt
+
+#Concatenate all split merged_nodups.txt files
+cat x*dir/aligned/merged_nodups.txt > merged_sort.txt
+
+#To be careful to remove all duplicates, you should run juicer -S dedup on your newly generated merged_sort.txt.
+This removes only 15KB of duplicates the second run through.
+module load bwa
+module load gnutls/3.5.13-7a3mvfy
+#must be 1.8 jdk
+module load jdk/8u172-b11-rnauqmr
+bash scripts/juicer.sh  -S dedup -y restriction_sites/MaskedMysteryGenome.fasta_MboI.txt -z references/MaskedMysteryGenome.fasta -p chrom.sizes
+
+```
 
 # Run the 3D DNA pipeline to generate a scaffolded genome assembly that can be manipulated in juicebox
 ```
