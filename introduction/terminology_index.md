@@ -21,6 +21,6 @@ Upon completion of this section the learner will know the definitions for the fo
 
 ## Index
 
-* [Read, Contigs, Scafolds and Choromosome](dataTerminology.md)
+* [Reads, Contigs, Scaffolds and Chromosome](dataTerminology.md)
 * [File Formats](fileFormats.md)
 * [Fasta Quality Score](fastqquality-score-encoding.md)
