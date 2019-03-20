@@ -172,15 +172,15 @@ cd x07merged_sort.txt.dir; bash scripts/juicer.sh -S dedup -y restriction_sites/
 # I submitted these in parallel to four nodes
 ```
 # Two choices moving forward
-#### Choice 1: Create your merged_nodups.txt file and generate your .hic and .assembly files
+#### Choice 1: Create your merged_nodups.txt file and generate your .hic files
 This choice is faster and will give you the assembly files you want more quickly.  However this path will not give you all of the standard juicer output.  
 ```
 ################################################################################
 #/09_JuicerScaff/04_HicReads/juicer/aligned
 #Rename your old merged_sort.txt
 mv merged_sort.txt Round1MergedSort.txt
+cat x*dir/aligned/merged_nodups.txt |sort --parallel=16 -k2,2d -k6,6d > merged_nodups.txt
 
-cat x*dir/aligned/merged_nodups.txt > merged_nodups.txt
 #Beware, if you kill juicer early before the .hic file is completed, you may find lines of binary in your merged_nodups.txt files.
 
 
@@ -203,7 +203,7 @@ This removes only 115KB of duplicates the second run through.
 mv merged_sort.txt Round1MergedSort.txt
 
 #Concatenate all split merged_nodups.txt files
-cat x*dir/aligned/merged_nodups.txt > merged_sort.txt
+cat x*dir/aligned/merged_nodups.txt |sort --parallel=16 -k2,2d -k6,6d > merged_sort.txt
 
 #To be careful to remove all duplicates, you should run juicer -S dedup on your newly generated merged_sort.txt.
 This removes only 15KB of duplicates the second run through.
