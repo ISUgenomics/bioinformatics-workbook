@@ -11,7 +11,7 @@ If there is a large file of sequences, then the traditional way for doing a BLAS
 ## 1. Using GNU Parallel to split the large job to smaller chunks
 One easy way is to use the ''parallel'' command from the [GNU Parallel](http://www.gnu.org/software/parallel).
 To do this:
-```
+```bash
 cat large.fasta | \
 parallel -S :,server1,server2 \
 --block 100k \
@@ -27,7 +27,7 @@ Here, the large file is divided into blocks of 100kb, making sure that each 'pie
 ## 2. Splitting input query in to smaller pieces
 
 For this you have to use an external script (for splitting the input file). One such script can be found [here](https://github.com/ISUgenomics/common_scripts/blob/master/fasta-splitter.pl) on GitHub. The steps to run this are as follows. First set up a blast script (your favorite flavor against your chosen database. In this case `blastp` against `swissprot-db`). Name this file as ` runBLASTp.sh`
-```
+```bash
 #!/bin/bash
 # perfoms NR blast (blastx)
 infile="$1"
@@ -50,7 +50,7 @@ fasta-splitter.pl --n-parts 10--measure count input_seq.fasta
 
 Set up a commands to run these splits with the `runBLASTp.sh` script
 
-```
+```bash
 for file in input.part-??.fasta; do echo "./runBLASTp.sh $file"; done >> blast.cmds
 cat blast.cmds
 /runBLASTp.sh input.part-01.fasta
@@ -65,7 +65,7 @@ cat blast.cmds
 /runBLASTp.sh input.part-10.fasta
 ```
 You can request 5 nodes, with 16 procs for this job on condo to run them all in parallel. You can do this with a job file as shown below (note: if you have more than 10 splits, request the number of nodes accordingly):
-```
+```bash
 #!/bin/bash
 #PBS -l nodes=5:ppn=16
 #PBS -l walltime=168:00:00
