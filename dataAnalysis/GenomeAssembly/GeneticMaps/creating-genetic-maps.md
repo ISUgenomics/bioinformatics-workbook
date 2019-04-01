@@ -11,7 +11,7 @@ Genetic map, as the name suggest is simply knowing the relative positions of spe
 
 Since each cross here is RIL population, we can use any single cross as an example to construct genetic map, provided we have information about how traits are segregating. Although, you can collect the traits information by phenotyping these individuals, it is tedious and time consuming. But fortunately, if you can overcome this by using the sequences information. GBS (Genotype By Sequencing), can be used for this purpose.
 
-Buckler group (_Wallace et. al._(https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004845)) used these NAM lines for GWAS studies and generating SNPs for all these progenies (usig GBS), including parents. These genotypes form all the mapping population can provide information about how these are segregating in the population.  The data in this publication is available on CyVerse
+Buckler group ([_Wallace et. al._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004845)) used these NAM lines for GWAS studies and generating SNPs for all these progenies (usig GBS), including parents. These genotypes form all the mapping population can provide information about how these are segregating in the population.  The data in this publication is available on CyVerse [link](https://data.iplantcollaborative.org/dav/iplant/commons/community_released/panzea/genotypes/GBS/v27/)
 
 ```
 /iplant/home/shared/panzea/genotypes/GBS/v27
@@ -23,6 +23,15 @@ From that source, we obtained the metadata for all the individuals and the SNPs 
 ZeaGBSv27_publicSamples_raw_AGPv4-181023.vcf.gz
 AllZeaGBSv2.7_publicSamples_metadata20140411.xlsx
 ```
+You do not need a CyVerse account for downloading this data, you can just use the iRods commands to get them directly to your working environment.
+
+```bash
+module load irods
+icd /iplant/home/shared/panzea/genotypes/GBS/v27
+iget ZeaGBSv27_publicSamples_raw_AGPv4-181023.vcf.gz
+iget AllZeaGBSv2.7_publicSamples_metadata20140411.xlsx
+```
+
 
 ## Data cleanup
 
