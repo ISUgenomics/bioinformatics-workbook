@@ -5,7 +5,9 @@ In the previous section, we developed a genetic map for maize NAM founder line C
 ## Dataset
 
 1. From the previous section, we need the `results_onemap.txt`, genetic map that we created for CML247.
-2. MaizeGDB hosts the original markers developed by [_McMullen et. al._](http://science.sciencemag.org/content/325/5941/737), that are accessible on [MaizeGDB](https://www.maizegdb.org/data_center/pos?id=1167939). The markers can be downloaded as separate files for each chromosome. We refer them as GoldenGate markers (based on technology used to develop this).
+2. MaizeGDB hosts the original markers developed by [_McMullen et. al._](http://science.sciencemag.org/content/325/5941/737), that are accessible on [MaizeGDB](https://www.maizegdb.org/data_center/pos?id=1167939). The markers can be downloaded as separate files for each chromosome. We refer them as GoldenGate markers (based on technology used to develop this). This was originally developed for V2 of B73, but MaizeGDB manually processed them and lifted them over for V3. The original file also had some sequences instead of co-ordinates, which can also be used for our purpose  
+
+
 3. A genome to scaffold. We need to have the same genome for which the map was developed and preferably as scaffolds. [MaizeGDB](https://www.maizegdb.org/genome/genome_assembly/Zm-CML247-DRAFT-PANZEA-1.0) hosts a version of CML247 that can be used for this exercise.
 
 ### Obtaining datasets
@@ -26,6 +28,15 @@ wget -O CML247_1203807.map https://www.maizegdb.org/map_text?id=1203807
 wget -O CML247_1203832.map https://www.maizegdb.org/map_text?id=1203832
 wget -O CML247_1203857.map https://www.maizegdb.org/map_text?id=1203857
 ```
+other markers:
+
+```bash
+wget http://de.iplantcollaborative.org/dl/d/B323A70C-F0D8-4BEF-9707-FD8198B5251C/NAM_map_and_genos-120731.zip
+unzip NAM_map_and_genos-120731.zip
+
+```
+Note: The excel file is not readable CLI, so we save it as tsv. The converted format is also saved in this repo and can be found [here](assets/all_markers.txt).
+
 
 Scaffolds for `CML247` can also be downloaded from MaizeGDB using `wget` command
 
@@ -158,8 +169,11 @@ rm ${base}_onemap-cM.csv 2>/dev/null;
 cat *_right.csv | grep -v "^chr" >> ${base}_onemap-cM.csv;
 ```
 
+`om5_ExtractAndMapMarkers.sh`
+
+*_Note: the B73V4 path at Line16, should be corrected before running this script_*
+
 ```bash
-om5_ExtractAndMapMarkers.sh
 #!/bin/bash
 if [ "$#" -ne 4 ] ; then
 echo "please provide:"
@@ -168,14 +182,14 @@ echo -e "\t\t(2) csv marker file checked, processed and merged"
 echo -e "\t\t(3) VCF file to obtain co-ordinates for the markers"
 echo -e "\t\t(4) NAM line name for naming the output file"
 echo "";
-echo "./04_onemap_ExtractAndMapMarkers.sh <index_path> <csv_file> <vcf_file> <NAM-name>" ;
+echo "./om5_ExtractAndMapMarkers.sh <index_path> <csv_file> <vcf_file> <NAM-name>" ;
 echo "";
 exit 0;
 fi
 module load bedtools2
 module load hisat2
 module load samtools
-B73v4="/work/LAS/mhufford-lab/arnstrm/Canu_1.8/required-files/B73.fasta"
+B73v4="Zm-B73-REFERENCE-GRAMENE-4.0.fa"
 # full path for ht2 files
 index="$1"
 # full path for markers csv file
@@ -235,4 +249,170 @@ om5_ExtractAndMapMarkers.sh CML247 CML247_onemap-cM.csv B73xCML247_cleaned.vcf C
 
 The final result will be the mapping position of the markers on the draft genome, in a CSV format (`CML247_mapped_onemap-cM.csv`). The scripts will also output other useful information such as how many markers were found per chromosomes, how many was extractable (sequence), chromosome names identified by OneMap and what was it changed to, number of mapping markers etc., Please double check these numbers to make sure the script is doing what it is supposed to do.
 
- 
+
+### Processing GoldenGate markers:
+
+The steps are similar, but these markers are slightly in different format. First, the markers are relatively small, so in order to make them mappable we need to extract some flanking sequences. Second, the co-ordinates are given for V3 of B73. Again, for processing GoldenGate markers, we will setup a series of scripts and run them at the end.
+
+
+`gg1_ProcessMaizeGDBmaps.sh`
+
+*_Note: the B73V3 path at line18 and `all_markers.txt` file path at line 19 of this script should be corrected before running this script_*
+
+```bash
+#!/bin/bash
+if [ "$#" -ne 2 ] ; then
+echo "please provide:"
+echo -e "\t\t(1) text file for markers downloaded from MaizeGDB, each CHR should be in separate file"
+echo -e "\t\t(2) NAM line name for naming the output file"
+echo "";
+echo "./gg1_ProcessMaizeGDBmaps.sh <maizegdb file> <NAM-name>" ;
+echo "";
+exit 0;
+fi
+# load needed modules
+module use /work/GIF/software/modules
+module load cdbfasta
+module load GIF/maker
+module load bioawk
+module load bedtools2
+# initialize variables
+ref="Zea_mays.AGPv3.22.dna.toplevel.fa"
+markers="all_markers.txt"
+# nam line name eg: Ki3
+nam="$2"
+# maizeGDB file (tsv format)
+file="$1"
+# read the file and choose the linkage group based on the markers mapping to B73 chr
+chr=$(cut -f 5 $file |grep -v "C_v3" |sort |uniq -c |awk 'NF>1 {print $2"\t"$1}' |sort -k2,2 -rn |head -n 1 |cut -f 1)
+# write a bed file for all markers with co-ordinates
+cut -f 1,2,6 $file | awk 'NF==3' | sed 's/,//g' | awk -v x=$chr '{print x"\t"$3"\t"$3+100"\t"$1"\t"$2"\t+"}' > ${nam}_chr${chr}.bed
+# extract the markers
+bedtools getfasta -fi $ref -bed ${nam}_chr${chr}.bed -name > ${nam}_chr${chr}.fasta
+# write a marker file with cM info
+awk 'BEGIN{OFS=FS="\t"}{print $1"\t"$4"\t"$5}' ${nam}_chr${chr}.bed > ${nam}_chr${chr}.tsv
+# markers without co-ordinates but with sequences instead
+cut -f 1,2,6 $file | awk 'NF<3' | awk '{print $1}' > ${nam}_chr${chr}.notfound
+# add them to the marker file with cM info and to the fasta file
+grep -F -f ${nam}_chr${chr}.notfound $file | awk -v x=$chr 'NF==3 {print x"\t"$1"\t"$2}' >> ${nam}_chr${chr}.tsv
+grep -F -f ${nam}_chr${chr}.notfound $file | awk 'NF==3 {print ">"$1"\n"$3}' >> ${nam}_chr${chr}.fasta
+# another attempt to recover markers from Maggies data
+cut -f 2 ${nam}_chr${chr}.tsv > ${nam}_chr${chr}.present
+cut -f 1 $file | grep -v "Locus" | grep -Fwv -f ${nam}_chr${chr}.present > ${nam}_chr${chr}.absent
+# Maggie's marker file
+
+# info extracted and written to a bed file
+grep -Fwi -f ${nam}_chr${chr}.absent $markers | awk -v x=$chr '{print x"\t"$3"\t"$3+100"\t"$1"\t"$2"\t+"}' > ${nam}_chr${chr}.bed
+# extract sequences
+bedtools getfasta -fi $ref -bed ${nam}_chr${chr}.bed -name >> ${nam}_chr${chr}.fasta
+awk 'BEGIN{OFS=FS="\t"}{print $1"\t"$4"\t"$5}' ${nam}_chr${chr}.bed >> ${nam}_chr${chr}.tsv
+# remove intermediary files
+rm ${nam}_chr${chr}.bed ${nam}_chr${chr}.notfound ${nam}_chr${chr}.present ${nam}_chr${chr}.absent
+# print stats
+ids=$(cut -f 2  ${nam}_chr${chr}.tsv | sort |uniq |wc -l)
+seq=$(grep -c ">" ${nam}_chr${chr}.fasta)
+tot=$(grep -v "Locus" $file |wc -l)
+echo "For $nam Chr ${chr}, orignal file had ${tot} markers, but only $ids had information and $seq sequences were able to extract"
+```
+`gg2_MergeMarkers.sh`
+
+```bash
+#!/bin/bash
+# merge gg markers and fasta file
+if [ "$#" -ne 1 ] ; then
+echo "please provide a NAM name for the marker file";
+exit 0
+fi
+base=$1
+cat *.fasta >> ${base}_merged.fasta
+cat *.tsv >> ${base}_merged.txt
+```
+The files created in this step (merged fasta file and merged txt file) are needed for the next script.
+
+`gg3_MapMarkers.sh`
+```bash
+#!/bin/bash
+if [ "$#" -ne 4 ] ; then
+echo "please provide:"
+echo -e "\t\t(1) path for hisat2 indexed NAM genome (without ht2 extension)"
+echo -e "\t\t(2) golder gate marker file, processed and merged"
+echo -e "\t\t(3) information file for markers, with cM"
+echo -e "\t\t(4) NAM line name for naming the output file"
+echo "";
+echo "./gg3_MapMarkers.sh <index_path> <marker fasta> <info file txt> <NAM-name>" ;
+echo "";
+exit 0;
+fi
+# load modules
+module load samtools
+module load bedtools2
+module load hisat2
+# variables
+index="$1"
+markers="$2"
+nam="$4"
+info="$3"
+# map markers
+hisat2 -p 12 --mp 1,1 --no-softclip -f -x ${index} -U ${markers}  1> ${nam}_mapped.sam 2> mapping_stats.txt
+# sort and covert to bam
+samtools view -b -o ${nam}_mapped.bam ${nam}_mapped.sam
+samtools sort -o ${nam}_sorted.bam ${nam}_mapped.bam
+bedtools bamtobed -i ${nam}_sorted.bam |  awk '{print $4"\t"$1"\t"$2}' > ${nam}_part1.txt
+# generate info
+awk 'BEGIN{OFS=FS="\t"}{print $2,$1,$3}' ${info} > ${nam}_part2.txt
+echo "Scaffold ID,scaffold position,LG,genetic position" > ${nam}_GG-mapped.csv
+awk 'BEGIN{OFS=FS="\t"}FNR==NR{a[$1]=$2 FS $3;next}{ print $0, a[$1]}' ${nam}_part2.txt ${nam}_part1.txt | sed 's/ //g' | cut -f 2- |sed 's/\t/,/g' >> ${nam}_GG-mapped.csv
+```
+
+Now run all these scripts as follows:
+
+```bash
+for map in *.map; do
+gg1_ProcessMaizeGDBmaps.sh $map CML247
+done
+gg2_MergeMarkers.sh CML247
+gg3_MapMarkers.sh CML247 CML247_merged.fasta CML247_merged.txt CML247
+```
+
+Just like the OneMap processing step, this will create `CML247_GG-mapped.csv` as the final result. This contains mapping position of the markers on the draft genome, in a CSV format.  Now we can proceed with using them for scaffolding the genome.
+
+
+### Running ALLMAPS to scaffold the genome.
+
+ALLMAPS is pain to install manually as they have various dependencies. Even if your cluster already have it installted, the graphics component of it will most likely not work as the program installers will not test them for all functionality. To avoid this we will just use the `singularity` container. Even with the container, some of the script is not available and should be provided externally.
+
+First we will setup a script:
+
+`runALLMAPS.sh`
+
+```bash
+#!/bin/bash
+export PATH=$PATH:/shared/software/GIF/programs/UCSC/323/bin
+# golden gate markers
+csv1="$1"
+# one map GBS markers
+csv2="$2"
+# genome file to scaffold
+fasta="$3"
+# merge markers
+python -m jcvi.assembly.allmaps merge ${csv1} ${csv2} -o combined.bed
+# edit the weights file to give additional weight to Goldengate markers
+sed -i 's/_GG_mapped 1/_GG_mapped 2/g' weights.txt
+# run scaffolding
+python -m jcvi.assembly.allmaps path combined.bed $fasta
+```
+
+Add additional path for our environment:
+
+```bash
+export SINGULARITY_BINDPATH="/shared/software/GIF/programs/UCSC/323/bin"
+```
+
+run the script using container
+
+```bash
+singularity shell \
+   --bind $PWD \
+   jcvi.simg \
+   ./runALLMAPS.sh CML247_GG-mapped.csv CML247_mapped_onemap-cM.csv CML247-scaf.fasta
+```
