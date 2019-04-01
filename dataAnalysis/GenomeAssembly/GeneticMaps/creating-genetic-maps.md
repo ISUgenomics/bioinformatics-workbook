@@ -455,3 +455,31 @@ dev.off()
 # write results
 write_map(map_list_all, "results_onemap.txt")
 ```
+
+The results are also available [here](assets/results_onemap.txt).
+
+To visualize these markers on various linkage groups, you can plot the density map.
+
+```r
+library("LinkageMapView")
+carrot <- read.csv("results_onemap.txt", sep=",", stringsAsFactors=TRUE, header=TRUE)
+maxpos <- "687.023775181122"
+at.axis <- seq(0, maxpos)
+axlab <- vector()
+for (lab in 0:maxpos) {
+if (!lab %% 50) {
+axlab <- c(axlab, lab)
+}
+else {
+axlab <- c(axlab, NA)
+}
+}
+outfile = file.path(".", "CML247_density-map.pdf")
+lmv.linkage.plot(carrot, outfile, denmap=TRUE, cex.axis = 1, at.axis = at.axis, labels.axis = axlab, col.lgtitle = "blue",cex.lgtitle=1, main="CML247 marker density")
+```
+
+
+![density-maps](assets/CML247-density.png)
+
+
+# References
