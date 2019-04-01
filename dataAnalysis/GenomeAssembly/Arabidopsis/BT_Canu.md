@@ -15,7 +15,7 @@ Canu is based off of the [Celera Assembler](http://wgs-assembler.sourceforge.net
 
 Upon completion of this section on Genome Assembly you will be able to
 
-* Download data from SRA
+* Download data from SRA  
 * Evaluate the correct parameters to use when running canu for genome assembly
 * Execute Canu and obtain a the assembled genome of [Bacillus thuringiensis](https://en.wikipedia.org/wiki/Bacillus_thuringiensis)
 
@@ -42,7 +42,7 @@ These steps can be run individual if you specifiy the (-step) parameter as defin
 
 ## An Example with canu
 
-Let us assemble a bacterial genome [Bacillus thuringiensis strain: HS18-1](https://www.ncbi.nlm.nih.gov/sra/?term=SRR2093876). This particular genome is interesting because it shows insecticidal activity against Diptera.  The raw data contains 1.5G of data and the genome size is 6.4 mb.  The assembly can be found on [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_001182785.1).  Therefore, we will have over 200x coverage, plenty for a genome assembly with canu.  Canu recommends 30-60x minimum coverage.
+Let us assemble a bacterial genome [Bacillus thuringiensis strain: HS18-1](https://www.ncbi.nlm.nih.gov/sra/?term=SRR2093876). This particular genome is interesting because it shows insecticidal activity against Diptera.  The raw data contains 1.5G of data and the genome size is 6.4 mb.  The assembly can be found on [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_001182785.1).  Therefore, we will have over 200x coverage, plenty for a genome assembly with canu.  Canu recommends 30-60x minimum coverage.  The paper for this assembly can be read [here](https://www.sciencedirect.com/science/article/pii/S0168165615300961)
 
 #### Download the data from ENA
 
