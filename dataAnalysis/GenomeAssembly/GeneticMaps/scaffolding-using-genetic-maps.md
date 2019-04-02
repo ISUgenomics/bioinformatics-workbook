@@ -1,4 +1,12 @@
-# Applications of Genetic Map
+---
+title: "Scaffolding Genomes using Genetic map"
+layout: single
+header:
+overlay_color: "444444"
+overlay_image: /assets/images/dna.jpg
+---
+
+# Scaffolding Genomes using Genetic map
 
 In the previous section, we developed a genetic map for maize NAM founder line CML247 using the GBS dataset from [_Wallace et. al._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004845). The original paper ([_McMullen et. al._](http://science.sciencemag.org/content/325/5941/737)) that created this NAM population also had genetic markers for all the NAMs, albeit few but great quality (referred as Golden Gate markers, based on technology used). Together, they make great resource for various applications. Here, we will use them as genetic map, mapping them to publicly available CML247 genome and creating pseduomolecules from the scaffolds. A quick note: CML247 genome already has pseudomolecules (12), but for this exercise, we will break them to create artificial scaffolds (39) and then put them together using genetic map.
 
