@@ -96,6 +96,11 @@ header:
   * [Mascurca with Pacbio and Illumina](../dataAnalysis/GenomeAssembly/Hybrid/MaSuRCA.md)
   * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
   * [Hi-C scaffolding](../dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
+* <span style="color:lightblue">Genetic Map</span>
+    * [Generating Genetic Maps from GBS data]( ../dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
+    * [Using Genetic Map to create AGPs]( ../dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
+
+
 * <span style="color:lightblue">Genome Annotation</span>
   * [Introduction to Maker Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_To_Maker.md)
   * [Introduction to Braker2 Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_to_Braker2.md)

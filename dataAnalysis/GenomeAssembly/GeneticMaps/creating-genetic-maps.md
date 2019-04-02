@@ -1,3 +1,10 @@
+---
+title: "Creating Genetic Maps from GBS data"
+layout: single
+header:
+overlay_color: "444444"
+overlay_image: /assets/images/dna.jpg
+---
 # Genetic Maps
 
 Genetic map, as the name suggest is simply knowing the relative positions of specific sequences across the genome. There are various methods to generate them, but most popular method is to use a cross between the know parents and examining their progenies. These kinds of crosses to create specific group of individuals of known ancestry is called as mapping population. Many types of mapping population exist. Here we will use the data collected from a Recombinant Inbred Line (RIL) (through selfing) to create a genetic map.
