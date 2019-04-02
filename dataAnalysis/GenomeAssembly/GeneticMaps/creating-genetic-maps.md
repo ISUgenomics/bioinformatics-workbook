@@ -458,7 +458,9 @@ write_map(map_list_all, "results_onemap.txt")
 
 The results are also available [here](assets/results_onemap.txt).
 
-To visualize these markers on various linkage groups, you can plot the density map.
+The genetic map generated from GBS data using OneMap is listed below. The large gaps in the maps are due to using the GBS data as input for the genetic map.
+GBS data is prone to genotyping errors including heterozygosity, excessive single cross events, unexpected double recombinants, segregation distortion and allele switching etc, as a result
+it will lead to distortion of the linkage maps, especially by expanding the map distance due to overestimation of recombination frequencies [ref](https://www.nature.com/articles/s41598-017-16006-z).
 
 ```r
 library("LinkageMapView")
