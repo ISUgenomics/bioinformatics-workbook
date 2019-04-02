@@ -269,6 +269,36 @@ om5_ExtractAndMapMarkers.sh ../0-index/CML247 CML247_onemap-cM.csv B73xCML247_cl
 
 The final result will be the mapping position of the markers on the draft genome, in a CSV format (`CML247_mapped_onemap-cM.csv`). The scripts will also output other useful information such as how many markers were found per chromosomes, how many was extractable (sequence), chromosome names identified by OneMap and what was it changed to, number of mapping markers etc., Please double check these numbers to make sure the script is doing what it is supposed to do.
 
+stdout:
+```
+results_onemap_chr10    10      S10(126);
+results_onemap_chr1     1       S1(209);
+results_onemap_chr2     2       S2(186);S7(1);
+results_onemap_chr3     3       S3(170);S8(1);
+results_onemap_chr4     4       S4(172);
+results_onemap_chr5     5       S5(188);
+results_onemap_chr6     6       S6(132);
+results_onemap_chr7     7       S7(115);
+results_onemap_chr8     8       S8(129);
+results_onemap_chr9     9       S9(114);
+the linkage group was listed as 10 but was changed to 10
+the linkage group was listed as 1 but was changed to 1
+the linkage group was listed as 2 but was changed to 2
+the linkage group was listed as 3 but was changed to 3
+the linkage group was listed as 4 but was changed to 4
+the linkage group was listed as 5 but was changed to 5
+the linkage group was listed as 6 but was changed to 6
+the linkage group was listed as 7 but was changed to 7
+the linkage group was listed as 8 but was changed to 8
+the linkage group was listed as 9 but was changed to 9
+```
+
+Also, copy the results to `3-allmaps` directory:
+
+```bash
+cp CML247_mapped_onemap-cM.csv ../3-allmaps/
+```
+
 
 ### Processing GoldenGate markers:
 
@@ -396,6 +426,28 @@ gg3_MapMarkers.sh ../index/CML247 CML247_merged.fasta CML247_merged.txt CML247
 
 Just like the OneMap processing step, this will create `CML247_GG-mapped.csv` as the final result. This contains mapping position of the markers on the draft genome, in a CSV format.  Now we can proceed with using them for scaffolding the genome.
 
+stdout:
+```
+For CML247 Chr 1, orignal file had 102 markers, but only 94 had information and 94 sequences were able to extract
+For CML247 Chr 2, orignal file had 85 markers, but only 76 had information and 76 sequences were able to extract
+For CML247 Chr 3, orignal file had 78 markers, but only 62 had information and 62 sequences were able to extract
+For CML247 Chr 4, orignal file had 72 markers, but only 64 had information and 64 sequences were able to extract
+Feature (5:229199657-229199757) beyond the length of 5 size (217959525 bp).  Skipping.
+Feature (5:239413450-239413550) beyond the length of 5 size (217959525 bp).  Skipping.
+For CML247 Chr 5, orignal file had 100 markers, but only 87 had information and 85 sequences were able to extract
+For CML247 Chr 6, orignal file had 49 markers, but only 41 had information and 41 sequences were able to extract
+For CML247 Chr 7, orignal file had 53 markers, but only 44 had information and 44 sequences were able to extract
+For CML247 Chr 8, orignal file had 64 markers, but only 52 had information and 52 sequences were able to extract
+For CML247 Chr 9, orignal file had 55 markers, but only 48 had information and 48 sequences were able to extract
+For CML247 Chr 10, orignal file had 44 markers, but only 34 had information and 34 sequences were able to extract
+```
+
+copy the results file to `3-allmaps`
+
+```
+cp CML247_GG-mapped.csv ../3-allmaps/
+```
+
 
 ### Running ALLMAPS to scaffold the genome.
 
@@ -434,5 +486,105 @@ run the script using container
 singularity shell \
    --bind $PWD \
    jcvi.simg \
-   ./runALLMAPS.sh CML247_GG-mapped.csv CML247_mapped_onemap-cM.csv CML247-scaf.fasta
+   ./runALLMAPS.sh CML247_GG-mapped.csv CML247_mapped_onemap-cM.csv ../0-index/CML247-scf.fasta
 ```
+
+### Results
+
+![Chr 1](assets/cml247-chr1-1.png)
+Fig 1: Chromosome 1 map reconstructed
+
+![Chr 2](assets/cml247-chr2-1.png)
+Fig 2: Chromosome 2 map reconstructed
+
+
+![Chr 3](assets/cml247-chr3-1.png)
+Fig 3: Chromosome 3 map reconstructed
+
+
+![Chr 4](assets/cml247-chr4-1.png)
+Fig 4: Chromosome 4 map reconstructed
+
+
+![Chr 5](assets/cml247-chr5-1.png)
+Fig 5: Chromosome 5 map reconstructed
+
+
+![Chr 6](assets/cml247-chr6-1.png)
+Fig 6: Chromosome 6 map reconstructed
+
+
+![Chr 7](assets/cml247-chr7-1.png)
+Fig 7: Chromosome 7 map reconstructed
+
+
+![Chr 8](assets/cml247-chr8-1.png)
+Fig 8: Chromosome 8 map reconstructed
+
+
+![Chr 9](assets/cml247-chr9-1.png)
+Fig 9: Chromosome 9 map reconstructed
+
+
+![Chr 10](assets/cml247-chr10-1.png)
+Fig 10: Chromosome 10 map reconstructed
+
+
+### Summary stats:
+
+| Name         | Original    | Broken     | ALLMAPS     |
+|--------------|-------------|------------|-------------|
+| chr1         | 314,213,739 |            | 314,214,139 |
+| chr2         | 249,681,198 |            | 249,681,498 |
+| chr3         | 244,672,137 |            | 244,672,437 |
+| chr4         | 256,279,567 |            | 256,279,867 |
+| chr5         | 225,248,118 |            | 225,248,418 |
+| chr6         | 177,173,665 |            | 177,173,865 |
+| chr7         | 183,069,952 |            | 183,070,152 |
+| chr8         | 187,099,910 |            | 187,100,110 |
+| chr9         | 167,637,472 |            | 167,637,672 |
+| chr10        | 154,525,371 |            | 154,525,571 |
+| Chr0         | 13,837,885  |            |             |
+| unplaced     | 89,817,495  |            |             |
+| CML247-scf00 |             |            | 13,837,885  |
+| CML247-scf37 |             |            | 75,000,000  |
+| CML247-scf38 |             |            | 14,817,495  |
+| CML247-scf01 |             | 75,000,000 |             |
+| CML247-scf02 |             | 75,000,000 |             |
+| CML247-scf03 |             | 75,000,000 |             |
+| CML247-scf04 |             | 75,000,000 |             |
+| CML247-scf05 |             | 14,213,739 |             |
+| CML247-scf06 |             | 75,000,000 |             |
+| CML247-scf07 |             | 75,000,000 |             |
+| CML247-scf08 |             | 75,000,000 |             |
+| CML247-scf09 |             | 24,681,198 |             |
+| CML247-scf10 |             | 75,000,000 |             |
+| CML247-scf11 |             | 75,000,000 |             |
+| CML247-scf12 |             | 75,000,000 |             |
+| CML247-scf13 |             | 19,672,137 |             |
+| CML247-scf14 |             | 75,000,000 |             |
+| CML247-scf15 |             | 75,000,000 |             |
+| CML247-scf16 |             | 75,000,000 |             |
+| CML247-scf17 |             | 31,279,567 |             |
+| CML247-scf18 |             | 75,000,000 |             |
+| CML247-scf19 |             | 75,000,000 |             |
+| CML247-scf20 |             | 75,000,000 |             |
+| CML247-scf21 |             | 248,118    |             |
+| CML247-scf22 |             | 75,000,000 |             |
+| CML247-scf23 |             | 75,000,000 |             |
+| CML247-scf24 |             | 27,173,665 |             |
+| CML247-scf25 |             | 75,000,000 |             |
+| CML247-scf26 |             | 75,000,000 |             |
+| CML247-scf27 |             | 33,069,952 |             |
+| CML247-scf28 |             | 75,000,000 |             |
+| CML247-scf29 |             | 75,000,000 |             |
+| CML247-scf30 |             | 37,099,910 |             |
+| CML247-scf31 |             | 75,000,000 |             |
+| CML247-scf32 |             | 75,000,000 |             |
+| CML247-scf33 |             | 17,637,472 |             |
+| CML247-scf34 |             | 75,000,000 |             |
+| CML247-scf35 |             | 75,000,000 |             |
+| CML247-scf36 |             | 4,525,371  |             |
+
+
+Basically, we were able to put together all the broken scaffolds to the original chromosomes using the genetic map!
