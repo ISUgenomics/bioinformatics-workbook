@@ -23,7 +23,9 @@ The National Center for Biomedical Ontology (www.bioontology.org) develops tools
   * [Mascurca with Pacbio and Illumina](../GenomeAssembly/Hybrid/MaSuRCA.md)
   * [Genome Scaffolding Using Synteny with Pyscaf](../GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
   * [Hi-C scaffolding](../GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
-
+* Genetic Map
+  * [Generating Genetic Maps from GBS data](../dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
+  * [Using Genetic Map to create AGPs](../dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
 * Genome Annotation
   * [Introduction to Maker Gene Prediction](Intro_To_Maker.md)
   * [Introduction to Braker2 Gene Prediction](Intro_to_Braker2.md)
