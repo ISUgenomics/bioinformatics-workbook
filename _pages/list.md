@@ -97,8 +97,8 @@ header:
   * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
   * [Hi-C scaffolding](../dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
 * <span style="color:lightblue">Genetic Map</span>
-    * [Generating Genetic Maps from GBS data](../dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
-    * [Using Genetic Map to create AGPs](../dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
+    * [Generating Genetic Maps from GBS data](bioinformatics-workbook/dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
+    * [Using Genetic Map to create AGPs](bioinformatics-workbook/dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
 
 
 * <span style="color:lightblue">Genome Annotation</span>
