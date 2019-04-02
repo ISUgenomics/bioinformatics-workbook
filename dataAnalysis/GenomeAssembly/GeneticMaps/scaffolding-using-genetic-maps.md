@@ -1,14 +1,13 @@
 # Applications of Genetic Map
 
-In the previous section, we developed a genetic map for maize NAM founder line CML247 using the GBS dataset from [_Wallace et. al._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004845). The original paper ([_McMullen et. al._](http://science.sciencemag.org/content/325/5941/737)) that created this NAM population also had created a genetic map, albeit with less number of markers. So in this exercise, we will use both these genetic maps to scaffold CML247 genome.
+In the previous section, we developed a genetic map for maize NAM founder line CML247 using the GBS dataset from [_Wallace et. al._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004845). The original paper ([_McMullen et. al._](http://science.sciencemag.org/content/325/5941/737)) that created this NAM population also had a set of genetic markers, albeit few as compared to the GBS. These markers, can also be used as genetic map. So in this exercise, we will use both these genetic set of markers to scaffold CML247 genome.
 
 ## Dataset
 
 1. From the previous section, we need the `results_onemap.txt`, genetic map that we created for CML247.
-2. MaizeGDB hosts the original markers developed by [_McMullen et. al._](http://science.sciencemag.org/content/325/5941/737), that are accessible on [MaizeGDB](https://www.maizegdb.org/data_center/pos?id=1167939). The markers can be downloaded as separate files for each chromosome. We refer them as GoldenGate markers (based on technology used to develop this). This was originally developed for V2 of B73, but MaizeGDB manually processed them and lifted them over for V3. The original file also had some sequences instead of co-ordinates, which can also be used for our purpose  
+2. [MaizeGDB](https://www.maizegdb.org/data_center/pos?id=1167939) hosts the original markers developed by [_McMullen et. al._](http://science.sciencemag.org/content/325/5941/737). The markers can be downloaded as separate files for each chromosome. We refer them as GoldenGate markers (based on technology used to develop this). This was originally developed for V2 of B73, but MaizeGDB manually processed them and lifted them over for V3. The original file also had some sequences instead of co-ordinates, which can also be used for our purpose  
 
-
-3. A genome to scaffold. We need to have the same genome for which the map was developed and preferably as scaffolds. [MaizeGDB](https://www.maizegdb.org/genome/genome_assembly/Zm-CML247-DRAFT-PANZEA-1.0) hosts a version of CML247 that can be used for this exercise.
+3. A genome to scaffold. We need to have the same genome for which the map was developed and preferably as scaffolds. MaizeGDB hosts a version of [CML247](https://www.maizegdb.org/genome/genome_assembly/Zm-CML247-DRAFT-PANZEA-1.0) that can be used for this exercise.
 
 ### Obtaining datasets
 
@@ -42,8 +41,8 @@ Scaffolds for `CML247` can also be downloaded from MaizeGDB using `wget` command
 
 ```
 wget https://ftp.maizegdb.org/MaizeGDB/FTP/Zm-CML247-DRAFT-PANZEA-1.0/Zm-CML247-DRAFT-PANZEA-1.0.fasta.gz
-gunzip Zm-CML247-DRAFT-PANZEA-1.0/Zm-CML247-DRAFT-PANZEA-1.0.fasta.gz
-mv Zm-CML247-DRAFT-PANZEA-1.0/Zm-CML247-DRAFT-PANZEA-1.0.fasta CML247-scaf.fasta
+gunzip Zm-CML247-DRAFT-PANZEA-1.0.fasta.gz
+mv gunzip Zm-CML247-DRAFT-PANZEA-1.0.fasta CML247-chr.fa
 ```
 
 Apart from these primary datasets, we will also need additional data for this tutorial. First, the GoldenGate markers were developed for version 3, And GBS map was developed using the version 4, so we need both these genomes to extract marker sequences.
@@ -71,6 +70,19 @@ singularity pull docker://tanghaibao/jcvi
 4. Merge these markers and create a weights file (GoldenGate markers need to be weighed higher than GBS markers)
 5. Run ALLMAPS and create AGP file as well as Pseduomolecules for CML247.
 
+### Organization
+
+We will organize the working directory this way:
+
+```
+CML247
+├── 0-index
+├── 1-onemap
+├── 2-goldengate
+└── 3-allmaps
+```
+ `0-index` will hold the HiSat2 index files for the scaffolds, We will carryout processing OneMap and GoldenGate maps in `1-onemap` and `2-goldengate` respectively. And finally run ALLMAPS in `3-allmaps` folder.
+
 ### Preparing genome
 
 Create a script for indexing genome `00_build_index_hisat2.sh`
@@ -92,16 +104,24 @@ file=$2
 module load hisat2
 hisat2-build ${file} $NAM
 ```
+But the genome we downloaded are already in Chromosome level assembly! As we don't have a real scaffolds to work with, we will break this every 750Mb and generate "scaffolds" to show the utility of this exercise. Do these steps in `0-index`.
 
-run it as:
+To split them we will use UCSC kent-util package.
 
 ```bash
-./00_build_index_hisat2.sh CML247 CML247-scaf.fasta
+faSplit size CML247-chr.fa 75000000 CML247-scf -oneFile
+```
+This will break the 11 pseudomolecules in to 39 "scaffolds"
+
+Next, index them:
+
+```bash
+./00_build_index_hisat2.sh CML247 CML247-scf.fa
 ```
 
 ### Processing OneMap genome map:
 
-Split the OneMap genetic map to different chromosomes and check if they are consistent. Genetic map programs identify chromosome names based on the size (largest to smallest). While it works for most genomes, in maize the sizes are not in descending order, so we will have to rename them to correct chromosomes. We will create a series of scripts and run them to achieve this:
+Split the OneMap genetic map to different chromosomes and check if they are consistent. Genetic map programs identify chromosome names based on the size (largest to smallest). While it works for most genomes, in maize the sizes are not in descending order, so we will have to rename them to correct chromosomes. Run these steps in `1-onemap`. Place the VCF file and onemap results file in this directory. We will create a series of scripts and run them to achieve this:
 
 `om1_splitOnemap.sh`
 
@@ -244,7 +264,7 @@ for f in *.csv; do
    ./om3_FixLinkageGroupName.sh $f;
 done
 ./om4_MakeMarkerFile.sh CML247
-om5_ExtractAndMapMarkers.sh CML247 CML247_onemap-cM.csv B73xCML247_cleaned.vcf CML247
+om5_ExtractAndMapMarkers.sh ../0-index/CML247 CML247_onemap-cM.csv B73xCML247_cleaned.vcf CML247
 ```
 
 The final result will be the mapping position of the markers on the draft genome, in a CSV format (`CML247_mapped_onemap-cM.csv`). The scripts will also output other useful information such as how many markers were found per chromosomes, how many was extractable (sequence), chromosome names identified by OneMap and what was it changed to, number of mapping markers etc., Please double check these numbers to make sure the script is doing what it is supposed to do.
@@ -252,7 +272,7 @@ The final result will be the mapping position of the markers on the draft genome
 
 ### Processing GoldenGate markers:
 
-The steps are similar, but these markers are slightly in different format. First, the markers are relatively small, so in order to make them mappable we need to extract some flanking sequences. Second, the co-ordinates are given for V3 of B73. Again, for processing GoldenGate markers, we will setup a series of scripts and run them at the end.
+The steps are similar, but these markers are slightly in different format (run these in `2-goldengate` folder) First, the markers are relatively small, so in order to make them mappable we need to extract some flanking sequences. Second, the co-ordinates are given for V3 of B73. Again, for processing GoldenGate markers, we will setup a series of scripts and run them at the end.
 
 
 `gg1_ProcessMaizeGDBmaps.sh`
@@ -371,7 +391,7 @@ for map in *.map; do
 gg1_ProcessMaizeGDBmaps.sh $map CML247
 done
 gg2_MergeMarkers.sh CML247
-gg3_MapMarkers.sh CML247 CML247_merged.fasta CML247_merged.txt CML247
+gg3_MapMarkers.sh ../index/CML247 CML247_merged.fasta CML247_merged.txt CML247
 ```
 
 Just like the OneMap processing step, this will create `CML247_GG-mapped.csv` as the final result. This contains mapping position of the markers on the draft genome, in a CSV format.  Now we can proceed with using them for scaffolding the genome.
@@ -379,7 +399,7 @@ Just like the OneMap processing step, this will create `CML247_GG-mapped.csv` as
 
 ### Running ALLMAPS to scaffold the genome.
 
-ALLMAPS is pain to install manually as they have various dependencies. Even if your cluster already have it installted, the graphics component of it will most likely not work as the program installers will not test them for all functionality. To avoid this we will just use the `singularity` container. Even with the container, some of the script is not available and should be provided externally.
+ALLMAPS is pain to install manually as they have various dependencies. Even if your cluster already have it installted, the graphics component of it will most likely not work as the program installers will not test them for all functionality. To avoid this we will just use the `singularity` container. Even with the container, some of the script is not available and should be provided externally. Run these in `3-allmaps` directory.
 
 First we will setup a script:
 
