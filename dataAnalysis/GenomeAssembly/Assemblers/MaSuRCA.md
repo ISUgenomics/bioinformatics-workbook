@@ -67,7 +67,7 @@ header:
 
 ## How to run MaSuRCA
 
-  * #### Using a Singularity container.
+  * #### Using a Singularity container
 
   You don't have to run MaSuRCA using a singularity container as it may be already installed on your machine or you can install it locally using conda.  The benefit of a container is that it is fully reproducible by anyone else by providing them the container.  To make containers easier, we have created
 
@@ -78,7 +78,7 @@ header:
   ```
   This repo contains the [singularity recipe](https://github.com/ISUGIFsingularity/masurca/blob/master/Singularity.1.0.0) if you want to build it from scratch.  However, You can also directly download the image from [singularity hub](https://www.singularity-hub.org/collections/1814).
 
-  ```
+  ```bash
   cd masurca/SIMG
   module load singularity
   singularity pull shub://ISUGIFsingularity/masurca:1.0.0
@@ -101,7 +101,7 @@ header:
 
   This script can be found in the repo you just cloned under bin
 
-  ```
+  ```bash
   #!/bin/bash
 
   module load singularity
@@ -116,7 +116,7 @@ header:
 
   **masurca_AT.sub**
 
-  ```
+  ```bash
   #!/bin/bash
   #SBATCH -N 1
   #SBATCH --ntasks-per-node=16
@@ -141,8 +141,6 @@ header:
 
 ## Expected files generated during assembly
 
-
-
 |files|in|output |folder | |
 |--|--|--|--|--|
 |AT_0.e4290986|AT_0.o4290986|CA.mr.41.15.17.0.029|CA.mr.41.15.17.0.029.log|CA_dir.txt|
@@ -158,12 +156,10 @@ header:
 |runCA.spec|sr_config.txt|super1.err|superReadSequences.named.fasta|tigStore.err|
 |unitig_cov.txt|unitig_layout.txt|work1|work1_mr||
 
-### SLURM standard output
-
-  * AT_0.o4290911
+## SLURM standard output
 
   This file provides time stamps of the steps that were run with MaSuRCA.  When you have more data this may come in handy to determine what step you are on.   This small dataset took about 33 minutes to run.  Your assembly stats may vary slightly if you rerun it multiple times.
-  
+
   ```
   Verifying PATHS...
   jellyfish OK
@@ -242,7 +238,7 @@ header:
 
 
 
-### Errors
+## Errors
 
 * Consensus
 
