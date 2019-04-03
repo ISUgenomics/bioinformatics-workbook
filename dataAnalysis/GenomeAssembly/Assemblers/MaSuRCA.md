@@ -163,9 +163,7 @@ header:
   * AT_0.o4290911
 
   This file provides time stamps of the steps that were run with MaSuRCA.  When you have more data this may come in handy to determine what step you are on.   This small dataset took about 33 minutes to run.  Your assembly stats may vary slightly if you rerun it multiple times.
-
-  <details>
-    <summary>Consensus</summary>
+  
   ```
   Verifying PATHS...
   jellyfish OK
@@ -242,17 +240,12 @@ header:
 
   ```
 
-  </details>
 
 
 ### Errors
 
-<details>
-  <summary>Consensus</summary>
-
-
+* Consensus
 
     It appears the do_consensus.sh to perform gapfilling is currently having an issue that should be fixed in new releases.  This step can be performed manually.  [See here for more information](https://github.com/alekseyzimin/masurca/issues/53)
 
   The assembly is correct but it hasn't been gap filled.
-</details>
