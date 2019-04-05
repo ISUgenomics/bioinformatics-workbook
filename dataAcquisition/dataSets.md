@@ -6,6 +6,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+
 # What dataset will we use throughout this text?
 
 As much as possible, we will be using Arabidopsis data from multiple NCBI BioProject that contains datasets for many of the most common data analyses.  The following BioProjects were chosen.  
@@ -20,7 +21,7 @@ As much as possible, we will be using Arabidopsis data from multiple NCBI BioPro
 | ncRNA                | SOLiD    | single     | [PRJNA169627](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA169627)                  | [Deep sequencing of small RNAs]()                                                                                                                                          |
 | microRNA             | Illumina | single     | [PRJNA355875](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA355875)                  | [Differential expression of microRNAs in wildtype versus DCL1 mutants in Arabidopsis thaliana](https://www.ncbi.nlm.nih.gov/pubmed/28407097)                               |
 | Long Reads           | PacBio   | long-reads | [PRJNA314706](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA314706)                  | [Diploid Arabidopsis thaliana genome sequencing and assembly](https://www.ncbi.nlm.nih.gov/pubmed/27749838)                                                                |
-| DNAseq               | Illumina | paired-end | [PRJEB13889](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB13889)                    | [Genome stability under UV-B in Arabidopsis thaliana]()                                                                                                                    |
+| DNAseq               | Illumina | paired-end | [PRJEB13889](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB13889)                    | [Genome stability under UV-B in Arabidopsis   thaliana](https://www.nature.com/articles/ncomms13522/)                                                                                                                    |
 | DNAseq               | Illumina | mate-pair  | [SRX1434948](https://www.ncbi.nlm.nih.gov/sra/SRX1434948/)                                | [Arabidopsis thaliana Genome sequencing and assembly](https://www.ncbi.nlm.nih.gov/pubmed/27711162)                                                                        |
 | 16s-rRNA             | Illumina | paired-end | [MG-RAST:4457768.3-4459735.3](https://docs.qiime2.org/2017.10/tutorials/moving-pictures/) | [Moving pictures of the human microbiome (“Moving Pictures” tutorial)](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2011-12-5-r50)                          |
 | Shotgun metagenomics | Illumina | paired-end | [ERX2017035](https://www.ncbi.nlm.nih.gov/sra/ERX2017035/)                                | [A case of hepatic brucelloma studied by next generation sequencing]()                                                                                                     |

@@ -8,7 +8,7 @@ header:
 
 # Running Quiver on the assembled genome (PacBio)
 
-For running Quiver, you will need a finished assembly file (`fasta`) format and `bax.h5` reads from SMRTcells. You will need to run `quiver` for every single file of `bax.h5` separately. To make this more effecient, you can use `GNU parallel`.
+For running Quiver, you will need a finished assembly file (`fasta`) format and `bax.h5` reads from SMRTcells. You will need to run `quiver` for every single file of `bax.h5` separately. To make this more efficient, you can use `GNU parallel`.
 
 First, set up a `runQuiver_prepare.sh` script as follows:
 

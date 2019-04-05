@@ -1,0 +1,281 @@
+-- Canu 1.7
+--
+-- CITATIONS
+--
+-- Koren S, Walenz BP, Berlin K, Miller JR, Phillippy AM.
+-- Canu: scalable and accurate long-read assembly via adaptive k-mer weighting and repeat separation.
+-- Genome Res. 2017 May;27(5):722-736.
+-- http://doi.org/10.1101/gr.215087.116
+--
+-- Read and contig alignments during correction, consensus and GFA building use:
+--   Šošic M, Šikic M.
+--   Edlib: a C/C ++ library for fast, exact sequence alignment using edit distance.
+--   Bioinformatics. 2017 May 1;33(9):1394-1395.
+--   http://doi.org/10.1093/bioinformatics/btw753
+--
+-- Overlaps are generated using:
+--   Berlin K, et al.
+--   Assembling large genomes with single-molecule sequencing and locality-sensitive hashing.
+--   Nat Biotechnol. 2015 Jun;33(6):623-30.
+--   http://doi.org/10.1038/nbt.3238
+--
+--   Myers EW, et al.
+--   A Whole-Genome Assembly of Drosophila.
+--   Science. 2000 Mar 24;287(5461):2196-204.
+--   http://doi.org/10.1126/science.287.5461.2196
+--
+--   Li H.
+--   Minimap and miniasm: fast mapping and de novo assembly for noisy long sequences.
+--   Bioinformatics. 2016 Jul 15;32(14):2103-10.
+--   http://doi.org/10.1093/bioinformatics/btw152
+--
+-- Corrected read consensus sequences are generated using an algorithm derived from FALCON-sense:
+--   Chin CS, et al.
+--   Phased diploid genome assembly with single-molecule real-time sequencing.
+--   Nat Methods. 2016 Dec;13(12):1050-1054.
+--   http://doi.org/10.1038/nmeth.4035
+--
+-- Contig consensus sequences are generated using an algorithm derived from pbdagcon:
+--   Chin CS, et al.
+--   Nonhybrid, finished microbial genome assemblies from long-read SMRT sequencing data.
+--   Nat Methods. 2013 Jun;10(6):563-9
+--   http://doi.org/10.1038/nmeth.2474
+--
+-- CONFIGURE CANU
+--
+-- Detected Java(TM) Runtime Environment '1.8.0_161' (from 'java').
+-- Detected gnuplot version '4.6 patchlevel 2' (from 'gnuplot') and image format 'png'.
+-- Detected 28 CPUs and 126 gigabytes of memory.
+-- Detected Slurm with 'sinfo' binary in /opt/packages/slurm/default/bin/sinfo.
+-- Detected Slurm with 'MaxArraySize' limited to 19999 jobs.
+--
+-- Found  34 hosts with  80 cores and 3023 GB memory under Slurm control.
+-- Found   2 hosts with 352 cores and 1209 GB memory under Slurm control.
+-- Found 768 hosts with  28 cores and  125 GB memory under Slurm control.
+-- Found   8 hosts with  64 cores and 3023 GB memory under Slurm control.
+-- Found   1 host  with  96 cores and 1503 GB memory under Slurm control.
+-- Found   2 hosts with  16 cores and  186 GB memory under Slurm control.
+-- Found  42 hosts with  32 cores and  125 GB memory under Slurm control.
+-- Found   9 hosts with  40 cores and  185 GB memory under Slurm control.
+-- Found   2 hosts with 288 cores and 1209 GB memory under Slurm control.
+--
+--                     (tag)Threads
+--            (tag)Memory         |
+--        (tag)         |         |  algorithm
+--        -------  ------  --------  -----------------------------
+-- Grid:  meryl      8 GB    4 CPUs  (k-mer counting)
+-- Grid:  cormhap    6 GB    4 CPUs  (overlap detection with mhap)
+-- Grid:  obtovl     4 GB    4 CPUs  (overlap detection)
+-- Grid:  utgovl     4 GB    4 CPUs  (overlap detection)
+-- Grid:  ovb        3 GB    1 CPU   (overlap store bucketizer)
+-- Grid:  ovs        8 GB    1 CPU   (overlap store sorting)
+-- Grid:  red        4 GB    4 CPUs  (read error detection)
+-- Grid:  oea        4 GB    1 CPU   (overlap error adjustment)
+-- Grid:  bat       16 GB    4 CPUs  (contig construction)
+-- Grid:  gfa        8 GB    4 CPUs  (GFA alignment and processing)
+--
+-- In 'Bt2.gkpStore', found PacBio reads:
+--   Raw:        474856
+--   Corrected:  34753
+--   Trimmed:    34186
+--
+-- Generating assembly 'Bt2' in '/pylon5/mc48o5p/severin/canuTutorial/Bt2_assembly'
+--
+-- Parameters:
+--
+--  genomeSize        6200000
+--
+--  Overlap Generation Limits:
+--    corOvlErrorRate 0.2400 ( 24.00%)
+--    obtOvlErrorRate 0.0450 (  4.50%)
+--    utgOvlErrorRate 0.0450 (  4.50%)
+--
+--  Overlap Processing Limits:
+--    corErrorRate    0.3000 ( 30.00%)
+--    obtErrorRate    0.0450 (  4.50%)
+--    utgErrorRate    0.0450 (  4.50%)
+--    cnsErrorRate    0.0750 (  7.50%)
+--
+--
+-- BEGIN ASSEMBLY
+--
+-- Using slow alignment for consensus (iteration '1').
+-- Configured 1 contig and 1 unitig consensus jobs.
+--
+--                     (tag)Threads
+--            (tag)Memory         |
+--        (tag)         |         |  algorithm
+--        -------  ------  --------  -----------------------------
+-- Grid:  cns        6 GB    4 CPUs  (consensus)
+--
+-- All 2 consensus jobs finished successfully.
+-- Using slow alignment for consensus (iteration '0').
+-- Configured 1 contig and 1 unitig consensus jobs.
+-- Using slow alignment for consensus (iteration '0').
+-- Configured 1 contig and 1 unitig consensus jobs.
+----------------------------------------
+-- Starting command on Thu Mar 21 20:09:03 2019 with 1265148.495 GB free disk space
+
+    cd unitigging
+    /pylon5/mc48o5p/severin/whiteAbaloneGenome/canu/canu-1.7.1/Linux-amd64/bin/tgStoreLoad \
+      -G ./Bt2.gkpStore \
+      -T ./Bt2.ctgStore 2 \
+      -L ./5-consensus/ctgcns.files \
+    > ./5-consensus/ctgcns.files.ctgStoreLoad.err 2>&1
+
+-- Finished on Thu Mar 21 20:09:03 2019 (lickety-split) with 1265148.495 GB free disk space
+----------------------------------------
+----------------------------------------
+-- Starting command on Thu Mar 21 20:09:03 2019 with 1265148.495 GB free disk space
+
+    cd unitigging
+    /pylon5/mc48o5p/severin/whiteAbaloneGenome/canu/canu-1.7.1/Linux-amd64/bin/tgStoreLoad \
+      -G ./Bt2.gkpStore \
+      -T ./Bt2.utgStore 2 \
+      -L ./5-consensus/utgcns.files \
+    > ./5-consensus/utgcns.files.utgStoreLoad.err 2>&1
+
+-- Finished on Thu Mar 21 20:09:03 2019 (lickety-split) with 1265148.495 GB free disk space
+----------------------------------------
+-- Purging consensus output after loading to ctgStore and/or utgStore.
+-- Purged 2 .cns outputs.
+----------------------------------------
+-- Starting command on Thu Mar 21 20:09:03 2019 with 1265148.495 GB free disk space
+
+    cd unitigging
+    /pylon5/mc48o5p/severin/whiteAbaloneGenome/canu/canu-1.7.1/Linux-amd64/bin/tgStoreDump \
+      -G ./Bt2.gkpStore \
+      -T ./Bt2.ctgStore 2 \
+      -sizes -s 6200000 \
+    > ./Bt2.ctgStore/seqDB.v002.sizes.txt
+
+-- Finished on Thu Mar 21 20:09:04 2019 (1 second) with 1265148.495 GB free disk space
+----------------------------------------
+-- Found, in version 2, after consensus generation:
+--   contigs:      24 sequences, total length 6519408 bp (including 1 repeats of total length 21602 bp).
+--   bubbles:      0 sequences, total length 0 bp.
+--   unassembled:  2056 sequences, total length 7926320 bp.
+--
+-- Contig sizes based on genome size --
+--            NG (bp)  LG (contigs)    sum (bp)
+--         ----------  ------------  ----------
+--     10     5034018             1     5034018
+--     20     5034018             1     5034018
+--     30     5034018             1     5034018
+--     40     5034018             1     5034018
+--     50     5034018             1     5034018
+--     60     5034018             1     5034018
+--     70     5034018             1     5034018
+--     80     5034018             1     5034018
+--     90      344327             3     5893406
+--    100      102856             5     6261975
+--
+----------------------------------------
+-- Starting command on Thu Mar 21 20:09:04 2019 with 1265148.495 GB free disk space
+
+    cd unitigging
+    /pylon5/mc48o5p/severin/whiteAbaloneGenome/canu/canu-1.7.1/Linux-amd64/bin/tgStoreCoverageStat \
+      -G ./Bt2.gkpStore \
+      -T ./Bt2.ctgStore 2 \
+      -s 6200000 \
+      -o ./Bt2.ctgStore.coverageStat \
+    > ./Bt2.ctgStore.coverageStat.err 2>&1
+
+-- Finished on Thu Mar 21 20:09:04 2019 (lickety-split) with 1265148.495 GB free disk space
+----------------------------------------
+----------------------------------------
+-- Starting command on Thu Mar 21 20:09:04 2019 with 1265148.495 GB free disk space
+
+    cd unitigging/4-unitigger
+    ./alignGFA.sh \
+    > alignGFA.err 2>&1
+
+-- Finished on Thu Mar 21 20:09:05 2019 (1 second) with 1265146.27 GB free disk space
+----------------------------------------
+----------------------------------------
+-- Starting command on Thu Mar 21 20:09:05 2019 with 1265146.27 GB free disk space
+
+    cd .
+    /pylon5/mc48o5p/severin/whiteAbaloneGenome/canu/canu-1.7.1/Linux-amd64/bin/tgStoreDump \
+      -G ./unitigging/Bt2.gkpStore \
+      -T ./unitigging/Bt2.ctgStore 2 \
+      -o ./Bt2.contigs \
+      -layout \
+    > ./Bt2.contigs.layout.err 2>&1
+
+-- Finished on Thu Mar 21 20:09:06 2019 (1 second) with 1265146.27 GB free disk space
+----------------------------------------
+----------------------------------------
+-- Starting command on Thu Mar 21 20:09:06 2019 with 1265146.27 GB free disk space
+
+    cd .
+    /pylon5/mc48o5p/severin/whiteAbaloneGenome/canu/canu-1.7.1/Linux-amd64/bin/tgStoreDump \
+      -G ./unitigging/Bt2.gkpStore \
+      -T ./unitigging/Bt2.utgStore 2 \
+      -o ./Bt2.unitigs \
+      -layout \
+    > ./Bt2.unitigs.layout.err 2>&1
+
+-- Finished on Thu Mar 21 20:09:06 2019 (lickety-split) with 1265146.27 GB free disk space
+----------------------------------------
+----------------------------------------
+-- Starting command on Thu Mar 21 20:09:06 2019 with 1265146.27 GB free disk space
+
+    cd .
+    /pylon5/mc48o5p/severin/whiteAbaloneGenome/canu/canu-1.7.1/Linux-amd64/bin/tgStoreDump \
+      -G ./unitigging/Bt2.gkpStore \
+      -T ./unitigging/Bt2.ctgStore 2 \
+      -consensus -fasta \
+      -unassembled \
+    > ./Bt2.unassembled.fasta
+    2> ./Bt2.unassembled.err
+
+-- Finished on Thu Mar 21 20:09:06 2019 (lickety-split) with 1265146.27 GB free disk space
+----------------------------------------
+----------------------------------------
+-- Starting command on Thu Mar 21 20:09:06 2019 with 1265146.27 GB free disk space
+
+    cd .
+    /pylon5/mc48o5p/severin/whiteAbaloneGenome/canu/canu-1.7.1/Linux-amd64/bin/tgStoreDump \
+      -G ./unitigging/Bt2.gkpStore \
+      -T ./unitigging/Bt2.ctgStore 2 \
+      -consensus -fasta \
+      -contigs \
+    > ./Bt2.contigs.fasta
+    2> ./Bt2.contigs.err
+
+-- Finished on Thu Mar 21 20:09:06 2019 (lickety-split) with 1265146.27 GB free disk space
+----------------------------------------
+----------------------------------------
+-- Starting command on Thu Mar 21 20:09:06 2019 with 1265146.27 GB free disk space
+
+    cd .
+    /pylon5/mc48o5p/severin/whiteAbaloneGenome/canu/canu-1.7.1/Linux-amd64/bin/tgStoreDump \
+      -G ./unitigging/Bt2.gkpStore \
+      -T ./unitigging/Bt2.utgStore 2 \
+      -consensus -fasta \
+      -contigs \
+    > ./Bt2.unitigs.fasta
+    2> ./Bt2.unitigs.err
+
+-- Finished on Thu Mar 21 20:09:06 2019 (lickety-split) with 1265146.27 GB free disk space
+----------------------------------------
+--
+-- Assembly 'Bt2' finished in '/pylon5/mc48o5p/severin/canuTutorial/Bt2_assembly'.
+--
+-- Summary saved in 'Bt2.report'.
+--
+-- Sequences saved:
+--   Contigs       -> 'Bt2.contigs.fasta'
+--   Unassembled   -> 'Bt2.unassembled.fasta'
+--   Unitigs       -> 'Bt2.unitigs.fasta'
+--
+-- Read layouts saved:
+--   Contigs       -> 'Bt2.contigs.layout'.
+--   Unitigs       -> 'Bt2.unitigs.layout'.
+--
+-- Graphs saved:
+--   Contigs       -> 'Bt2.contigs.gfa'.
+--   Unitigs       -> 'Bt2.unitigs.gfa'.
+--
+-- Bye.
