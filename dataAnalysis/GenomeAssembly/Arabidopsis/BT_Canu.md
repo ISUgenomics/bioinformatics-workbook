@@ -6,11 +6,6 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Genome assembly with Canu
-
-Canu is based off of the [Celera Assembler](http://wgs-assembler.sourceforge.net/wiki/index.php?title=Main_Page) and is designed for noisy long-read data from [PacBio](http://www.pacb.com/) and [NanoPore](https://www.nanoporetech.com/).  More on the history of Canu can be found [here](http://canu.readthedocs.io/en/latest/history.html).
-
-
 ## Learning Objectives
 
 Upon completion of this section on Genome Assembly you will be able to
@@ -90,12 +85,16 @@ You can read all of this from the quick start and documentation for Canu but her
 #### OUTPUT
 Canu took about half an hour to run this dataset.  The output looked like this.
 
-```
-Bt2_assembly]$ ls
-Bt2.contigs.fasta   Bt2.contigs.layout.readToTig  Bt2.gkpStore      Bt2.report                 Bt2.unitigs.bed    Bt2.unitigs.layout            canu-logs     correction
-Bt2.contigs.gfa     Bt2.contigs.layout.tigInfo    Bt2.gkpStore.err  Bt2.trimmedReads.fasta.gz  Bt2.unitigs.fasta  Bt2.unitigs.layout.readToTig  canu.out      trimming
-Bt2.contigs.layout  Bt2.correctedReads.fasta.gz   Bt2.gkpStore.gkp  Bt2.unassembled.fasta      Bt2.unitigs.gfa    Bt2.unitigs.layout.tigInfo    canu-scripts  unitigging
-```
+|Files|output|from assembly|
+|--|--|--|
+|Bt2.contigs.fasta|Bt2.contigs.gfa|Bt2.contigs.layout|
+|Bt2.contigs.layout.readToTig|Bt2.contigs.layout.tigInfo|Bt2.correctedReads.fasta.gz|
+|Bt2.gkpStore|Bt2.gkpStore.err|Bt2.gkpStore.gkp|
+|Bt2.report|Bt2.trimmedReads.fasta.gz|Bt2.unassembled.fasta|
+|Bt2.unitigs.bed|Bt2.unitigs.fasta|Bt2.unitigs.gfa|
+|Bt2.unitigs.layout|Bt2.unitigs.layout.readToTig|Bt2.unitigs.layout.tigInfo|
+|canu.out|canu-logs|canu-scripts|
+|correction|trimming|unitigging|
 
 You can get a sense of progress on your larger datasets by looking at the canu-scripts folder.  The final script is canu.12.sh.  
 

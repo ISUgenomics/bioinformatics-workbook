@@ -245,3 +245,12 @@ header:
     It appears the do_consensus.sh to perform gapfilling is currently having an issue that should be fixed in new releases.  This step can be performed manually.  [See here for more information](https://github.com/alekseyzimin/masurca/issues/53)
 
   The assembly is correct but it hasn't been gap filled.
+
+
+
+  ## Further Reading
+
+  * Main software website links
+    * [MaSuRCA  home page](http://www.genome.umd.edu/masurca.html)
+    * [MaSuRCA  Paper](https://academic.oup.com/bioinformatics/article/29/21/2669/195975)
+    * [MaSuRCA github and Manual](https://github.com/alekseyzimin/masurca)
