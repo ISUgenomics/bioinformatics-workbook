@@ -8,7 +8,7 @@ overlay_image: /assets/images/dna.jpg
 
 # Visualize Gaps in Assemblies
 
-The scaffold-level assemblies usually contain gaps and it is very important measure to know how big and widespread these gaps are to evaluate quality of an assembly. Here, in this tutorial, we will examine few publicly available maize genomes and plot the gaps in them.
+The scaffold-level assemblies usually contain gaps and it is very important know how big and widespread these gaps are in order to evaluate the quality of an assembly. Here, in this tutorial, we will examine few publicly available maize genomes and plot the gaps in them.
 
 
 ## Dataset
@@ -77,15 +77,24 @@ for gaps in *.txt; do
 done
 # combined file for gaps
 cat *-size.txt > lines_info.txt
+# add headers
+for size in *-size.txt; do
+  sed -i '1 i Line\tNsize' $size;
+done
 # total gap size per genome file
 datamash groupby 1 sum 2 <lines_info.txt > total_gaps_bases.txt
+# add headers
+sed -i '1 i Line\tGapSize' lines_info.txt;
+sed -i '1 i Lines\tTotalGapSize' lines_info.txt;
 ```
 
 Now that we have all the files, we will plot them in R.
 
 ## Plots
 
-1. Gap distribution per line to visualize how big and how frequent gaps are in the genome.
+### Gap distribution per line to visualize how big and how frequent gaps are in the genome.
+
+Now the files are created, in the R terminal, run these commands.
 
 ```r
 size=read.table("B73-size.txt", header=TRUE)
@@ -104,7 +113,9 @@ dev.off()
 
 **Figure 1**: Gap size in B73
 
-2. Total gaps in each maize line
+### Total gaps in each maize line
+
+Again, open the R terminal or R-Studio and enter these commands.
 
 ```r
 library(ggplot2)
