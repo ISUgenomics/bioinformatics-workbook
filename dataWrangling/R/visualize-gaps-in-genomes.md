@@ -92,9 +92,9 @@ Now that we have all the files, we will plot them in R.
 
 ## Plots
 
-### Gap distribution per line to visualize how big and how frequent gaps are in the genome.
+### Gaps per maize line
 
-Now the files are created, in the R terminal, run these commands.
+Distribution of gaps per line to visualize how big and how frequent gaps are in the assemblies. Now the files are created, in the R terminal, run these commands.
 
 ```r
 size=read.table("B73-size.txt", header=TRUE)
