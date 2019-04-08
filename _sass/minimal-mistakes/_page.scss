@@ -16,19 +16,11 @@
   animation-delay: 0.15s;
 
   @include breakpoint($x-large) {
-    max-width: $x-large;
+    max-width: $x;
   }
 }
 
-.page {
- @include breakpoint($large) {
-   float: right;
-   width: 100%;
- }
 
- @include breakpoint($x-large) {
-   width: 100%;
- }
 
  .page__inner-wrap {
    float: left;
