@@ -6,43 +6,21 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Genome assembly with Canu
 
-Canu is based off of the [Celera Assembler](http://wgs-assembler.sourceforge.net/wiki/index.php?title=Main_Page) and is designed for noisy long-read data from [PacBio](http://www.pacb.com/) and [NanoPore](https://www.nanoporetech.com/).  More on the history of Canu can be found [here](http://canu.readthedocs.io/en/latest/history.html).
-
+# Canu genome assembly of Bacillus thuringiensis
 
 ## Learning Objectives
 
-Upon completion of this section on experimental design the learner will be able to
+Upon completion of this section on Genome Assembly you will be able to
 
-* Download data from SRA
+* Download data from SRA  
 * Evaluate the correct parameters to use when running canu for genome assembly
-* Execute Canu and obtain a the assembled genome of
+* Execute Canu and obtain a the assembled genome of [Bacillus thuringiensis](https://en.wikipedia.org/wiki/Bacillus_thuringiensis)
 
 
-## Canu Steps
-
-The Canu Assembler has three steps
-* Correct   (-correct)
-* Trim      (-trim)
-* Assemble  (-assemble)
-
-These steps can be run individual if you specifiy the (-step) parameter as defined in parenthesis above or these steps will be all run if no step parameter is specified.
-
-## Canu parameter considerations
-
-* Trio binning
-  * If you have sequence data from the parents and the F1 offspring
-* Raw Data type requires a different parameter to read each datatype
-  * PacBio
-  * Nanopore
-* Coverage
-  * Low Coverage parameters can be set to improve assembly output depending on the sequencing technology See [Canu Quick Start Guide](http://canu.readthedocs.io/en/latest/quick-start.html) for more details.
 
 
-## An Example with canu
-
-Let us assemble a bacterial genome [Bacillus thuringiensis strain: HS18-1](https://www.ncbi.nlm.nih.gov/sra/?term=SRR2093876). This particular genome is interesting because it shows insecticidal activity against Diptera.  The raw data contains 1.5G of data and the genome size is 6.4 mb.  The assembly can be found on [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_001182785.1).  Therefore, we will have over 200x coverage, plenty for a genome assembly with canu.  Canu recommends 30-60x minimum coverage.
+Let us assemble a bacterial genome [Bacillus thuringiensis strain: HS18-1](https://www.ncbi.nlm.nih.gov/sra/?term=SRR2093876). This particular genome is interesting because it shows insecticidal activity against Diptera.  The raw data contains 1.5G of data and the genome size is 6.4 mb.  The assembly can be found on [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_001182785.1).  Therefore, we will have over 200x coverage, plenty for a genome assembly with canu.  Canu recommends 30-60x minimum coverage.  The paper for this assembly can be read [here](https://www.sciencedirect.com/science/article/pii/S0168165615300961)
 
 #### Download the data from ENA
 
@@ -57,7 +35,7 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR209/006/SRR2093876/SRR2093876_subread
 
 #### Running Canu
 
-The name of the module will vary here and you should check to see what version you are using.  In this tutorial we used version 1.7 with java/1.8.0_121
+The name of the module will vary here and you should check to see what version you are using.  In this tutorial we used version 1.8 with java/1.8.0_121
 
 ```
 #!/bin/bash
@@ -90,12 +68,16 @@ You can read all of this from the quick start and documentation for Canu but her
 #### OUTPUT
 Canu took about half an hour to run this dataset.  The output looked like this.
 
-```
-Bt2_assembly]$ ls
-Bt2.contigs.fasta   Bt2.contigs.layout.readToTig  Bt2.gkpStore      Bt2.report                 Bt2.unitigs.bed    Bt2.unitigs.layout            canu-logs     correction
-Bt2.contigs.gfa     Bt2.contigs.layout.tigInfo    Bt2.gkpStore.err  Bt2.trimmedReads.fasta.gz  Bt2.unitigs.fasta  Bt2.unitigs.layout.readToTig  canu.out      trimming
-Bt2.contigs.layout  Bt2.correctedReads.fasta.gz   Bt2.gkpStore.gkp  Bt2.unassembled.fasta      Bt2.unitigs.gfa    Bt2.unitigs.layout.tigInfo    canu-scripts  unitigging
-```
+|Files|output|from assembly|
+|--|--|--|
+|Bt2.contigs.fasta|Bt2.contigs.gfa|Bt2.contigs.layout|
+|Bt2.contigs.layout.readToTig|Bt2.contigs.layout.tigInfo|Bt2.correctedReads.fasta.gz|
+|Bt2.gkpStore|Bt2.gkpStore.err|Bt2.gkpStore.gkp|
+|Bt2.report|Bt2.trimmedReads.fasta.gz|Bt2.unassembled.fasta|
+|Bt2.unitigs.bed|Bt2.unitigs.fasta|Bt2.unitigs.gfa|
+|Bt2.unitigs.layout|Bt2.unitigs.layout.readToTig|Bt2.unitigs.layout.tigInfo|
+|canu.out|canu-logs|canu-scripts|
+|correction|trimming|unitigging|
 
 You can get a sense of progress on your larger datasets by looking at the canu-scripts folder.  The final script is canu.12.sh.  
 
@@ -111,7 +93,8 @@ The assembled contigs are in Bt2.contigs.fasta.  Recall we set the -p prefix par
 * Bt2.report              This file contains information about each step.
 
 
-Below I grabbed the contigs that appear to be Circular representing plasmids.
+Below I grabbed the contigs that appear to be Circular representing plasmids.  This is the same number of plasmids reported by the [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_001182785.1) assembly.
+
 ```
 grep ">" Bt2_assembly/Bt2.contigs.fasta  | grep Circular=yes
 >tig00000137 len=515061 reads=2993 covStat=742.81 gappedBases=no class=contig suggestRepeat=no suggestCircular=yes
@@ -128,7 +111,7 @@ grep ">" Bt2_assembly/Bt2.contigs.fasta  | grep Circular=yes
 
 ## Additional Reading
 
-Below are links to canu documentation, github repo and other relevant websites related to canu.
+Below are links to canu documentation, GitHub repo and other relevant websites related to canu.
 
 * [Canu Tutorial](http://canu.readthedocs.io/en/latest/tutorial.html) Includes most of the links below and is fairly comprehensive
 * [Canu Quick Start](http://canu.readthedocs.io/en/latest/quick-start.html)  When you are too impatient to read the documentation

@@ -14,19 +14,34 @@ For DNA annotation, a previously unknown sequence representation of genetic mate
 
 The National Center for Biomedical Ontology (www.bioontology.org) develops tools for automated annotation[3] of database records based on the textual descriptions of those records.
 
-## Index
+### Introduction to Genome Assembly
 
-* Genome Assembly
-  * [GenomeScope to Estimate Genome Size](../GenomeAssembly/genomescope.md)
-  * [Canu for Long Read Assembly](../GenomeAssembly/LongRead/Canu.md)
-    * [Canu on XSEDE Bridges Machine](../GenomeAssembly/LongRead/Canu_bridges.md)
-  * [Mascurca with Pacbio and Illumina](../GenomeAssembly/Hybrid/MaSuRCA.md)
-  * [Genome Scaffolding Using Synteny with Pyscaf](../GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
-  * [Hi-C scaffolding](../GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
-* Genetic Map
-  * [Generating Genetic Maps from GBS data](bioinformatics-workbook/dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
-  * [Using Genetic Map to create AGPs](bioinformatics-workbook/dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
-* Genome Annotation
+  * [Introduction to Canu](../GenomeAssembly/Assemblers/canu.md)
+    * [Canu on XSEDE Bridges Super Computer](../GenomeAssembly/LongRead/Canu_bridges.md)
+  * [Introduction to SPAdes](../GenomeAssembly/Assemblers/spades.md)
+  * [Introduction to MaSuRCA](../GenomeAssembly/Assemblers/MaSuRCA.md)
+
+### Introduction to Genome Annotation
   * [Introduction to Maker Gene Prediction](Intro_To_Maker.md)
   * [Introduction to Braker2 Gene Prediction](Intro_to_Braker2.md)
   * [Motif Identification and Finding with MEME and FIMO](MEME_Motif_Finding_In_Genomes.md)  
+
+### Tools for assessing the quality of a Genome Assembly
+
+  * [GenomeScope to Estimate Genome Size](../GenomeAssembly/genomescope.md)
+  * [Genome Scaffolding Using Synteny with Pyscaf](../GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
+  * [Hi-C scaffolding](../GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
+
+### Genome Assembly Examples
+
+* [Bacillus thuringiensis data set](../GenomeAssembly/BT/BT_background.md)
+  * [Canu Assembly of Bacillus thuringiensis](../GenomeAssembly/BT/BT_Canu.md)
+  * [SPAdes Assembly of Bacillus thuringiensis](../GenomeAssembly/BT/BT_spades.md)
+* [Arabidopsis thaliana data set](../GenomeAssembly/Arabidopsis/Arabidopsis_background.md)
+  * [MaSuRCA assembly of Arabidopsis thanliana](dataAnalysis/GenomeAssembly/Arabidopsis/AT_MaSuRCA.md )
+
+
+### Genetic Map Construction
+
+  * [Generating Genetic Maps from GBS data](bioinformatics-workbook/dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
+  * [Using Genetic Map to create AGPs](bioinformatics-workbook/dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)

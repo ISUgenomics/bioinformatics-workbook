@@ -6,7 +6,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Genome Assembly with hybrid reads using MaSuRCA
+# MaSuRCA Genome Assembly of Arabidopsis
 
 ### Background about the data Analysis
 
@@ -16,9 +16,9 @@ As with many examples in this workbook, we will explore publicly available data 
 
 The data for this analysis is taken from the following NCBI project.  It contains both long and short reads.  We will only be using a fraction of these files so that the analysis will complete quickly but the full run could also performed with these data.
 
-| SeqType              | Platform | ReadType   | BioProject                                                                                | Experiment                                                                                                                                                                 |
-|----------------------|----------|------------|-------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Long Reads           | PacBio   | long-reads | [PRJNA314706](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA314706)                  | [Diploid Arabidopsis thaliana genome sequencing and assembly](https://www.ncbi.nlm.nih.gov/pubmed/27749838)              
+| SeqType              | Platform | ReadType   | BioProject  | Experiment                                                |
+|----------------------|----------|------------|-----|-------------------------------------------------------------------|
+| Long Reads           | PacBio   | long-reads | [PRJNA314706](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA314706)| [Diploid Arabidopsis thaliana genome sequencing and assembly](https://www.ncbi.nlm.nih.gov/pubmed/27749838)    |          
 
 
 The last column links directly to the article written about these data and experiment.
@@ -28,12 +28,14 @@ The last column links directly to the article written about these data and exper
 #### Let's start by organizing our data analysis folder,
 
 * make a project directory called masurcatutorial
+
 ```
 mkdir masurcatutorial
 cd masurcatutorial
 ```
 
 * make a directory for your raw data, let's call this step 00
+
 ```
 mkdir 00_rawdata
 cd 00_rawdata
@@ -41,7 +43,7 @@ cd 00_rawdata
 
 #### Load the sra tool kit and download SRA file and convert to fastq file
 
-*
+
 ```
 module load sra-toolkit
 ```
@@ -49,6 +51,7 @@ module load sra-toolkit
 * the --split-files parameter is used to separate the paired end data into two files rather than the default single file.
 * [more info about SRA downloading found in this section of the workbook](https://isugenomics.github.io/bioinformatics-workbook/dataAcquisition/fileTransfer/sra.html)
 * Download the data into the masurcatutorial/00_rawdata folder  
+
 ```
 # Illumina MiSeq data
 fastq-dump --split-files SRR3703081
@@ -58,18 +61,7 @@ fastq-dump SRR3405330
 
 While we are using MiSeq and PacBio data for this example, it is more common to have HiSeq and PacBio or HiSeq and Nanopore data.
 
-### Background reading about the Assembling program MaSuRCA
-
-* [MaSuRCA  home page](http://www.genome.umd.edu/masurca.html)
-* [MaSuRCA  Paper](https://academic.oup.com/bioinformatics/article/29/21/2669/195975)
-* [MaSuRCA github and Manual](https://github.com/alekseyzimin/masurca)
-
-
-### Background on the required Configuration file
-
-MaSuRCA requires a configuration file that states the type of data you have and the parameters you want to use in your run. See the github page for more information on the configuration file specific to your particular input files.  Here is a run down of some of the more common features.
-
-* [MaSuRCA github and Manual](https://github.com/alekseyzimin/masurca)
+### MaSuRCA requires a Configuration file
 
 In this example, we have three fastq files 2 files from a single Mi-Seq Illumina run and a single file from a PacBio run (SRR3405330.fastq  SRR3703081_1.fastq  SRR3703081_2.fastq).
 
@@ -106,62 +98,14 @@ vim sr_config.txt
 ls /fullpath2analysisfolder/00_rawdata/ | xargs -I xx ln -s "/fullpath2analysisfolder/00_rawdata/"xx
 ```
 
-If you have jump libraries or Nanopore you can enter them into the config file with lines that look similar to this.
-
-```
-JUMP = jb 15000 1000 Unicorn_R1_001.fastq Unicorn_R2_001.fastq
-NANOPORE = Unicorn_NP.fastq
-```
-
-As stated in the [MaSuRCA Manual](https://github.com/alekseyzimin/masurca), here are some of the more common points in the manual to be aware of.
-
-```
-# DATA is specified as type {PE,JUMP,OTHER,PACBIO} and 5 fields:
-1)two_letter_prefix 2)mean 3)stdev 4)fastq(.gz)_fwd_reads
-
-#whether to attempt to close gaps in scaffolds with Illumina data
-CLOSE_GAPS=1
-
-PacBio/MinION data are supported. Note that you have to have 50x + coverage in Illumina Paired End reads to use PacBio of Oxford Nanopore MinION data. Supply PacBio or MinION reads (cannot use both at the same time) in a single fasta file as:
-
-PACBIO=file.fa or NANOPORE=file.fa
-```
-
 
 ### Running MaSuRCA using a Singularity container.
 
-You don't have to run MaSuRCA using a singularity container as it may be already installed on your machine or you can install it locally using conda.  The benefit of a container is that it is fully reproducible by anyone else by providing them the container.  To make containers easier, we have created
-
-
-#### Clone the repository
-
-```
-git clone https://github.com/ISUGIFsingularity/masurca.git
-```
-This repo contains the [singularity recipe](https://github.com/ISUGIFsingularity/masurca/blob/master/Singularity.1.0.0) if you want to build it from scratch.  However, You can also directly download the image from [singularity hub](https://www.singularity-hub.org/collections/1814).
-
-```
-cd masurca/SIMG
-module load singularity
-singularity pull shub://ISUGIFsingularity/masurca:1.0.0
-# create a softlink if the singularity pull results in a file other than ISUGIFsingularity-masurca-master-1.0.0.simg as my wrappers are expecting the later and not the former
-ln -s masurca_1.0.0.sif ISUGIFsingularity-masurca-master-1.0.0.simg
-```
-
-#### Set variables ```gitmasurca``` and ```PATH``` so we can find the container and the runscripts
-
-modify and add the following lines to your .bashrc file.
-
-* masurcagit is the path to the repo you just cloned.
-
-```
-export masurcagit="/home/severin/isugif/masurca/"
-export PATH=$masurcagit/wrappers/:$PATH
-```
+In this example we use a MaSuRCA container.  See the main MaSuRCA tutorial for more information if you haven't already downloaded the git repository and pulled the singularity container from singularity hub.  You can also use your locally installed MaSuRCA instead.
 
 - **runMaSuRCA.sh**
 
-This script can be found in the repo you just cloned under bin
+This script can be found in the repo you just cloned under bin in the git repo.  MASURCA in the script below is the wrapper to call the singularity container.  Delete that MASURCA from the beginning of each line if you are running using your local installation.
 
 ```
 #!/bin/bash
@@ -214,10 +158,22 @@ sbatch masurca_AT.sub
 SRR3405330.fastq  SRR3703081_1.fastq  SRR3703081_2.fastq  masurca_AT.sub  sr_config.txt
 ```
 
-### Output
+### This what to expect in your output folder from a successful run
 
-
-
+|files|in|output |folder | |
+|--|--|--|--|--|
+|AT_0.e4290986|AT_0.o4290986|CA.mr.41.15.17.0.029|CA.mr.41.15.17.0.029.log|CA_dir.txt|
+|--|--|--|--|--|
+|ESTIMATED_GENOME_SIZE.txt|PLOIDY.txt|SRR3405330.fastq|SRR3703081_1.fastq|SRR3703081_2.fastq|
+|assemble.sh|containees.txt|create_mega-reads.err|environment.sh|genome.uid|
+|global_arrival_rate.txt|guillaumeKUnitigsAtLeast32bases_all.fasta|guillaumeKUnitigsAtLeast32bases_all.jump.fasta|guillaumeKUnitigsAtLeast32bases_all.41.fasta|k_u_hash_0|
+|masurca_AT.sub|meanAndStdevByPrefix.pe.txt|mr.41.15.17.0.029.all.txt|mr.41.15.17.0.029.mr.txt|mr.41.15.17.0.029.single.txt|
+|mr.41.15.17.0.029.sr.frg|mr.41.15.17.0.029.txt|mr.41.15.17.0.029.1.allowed|mr.41.15.17.0.029.1.fa|mr.41.15.17.0.029.1.frg|
+|mr.41.15.17.0.029.1.mates.frg|mr.41.15.17.0.029.1.trims.txt|mr.41.15.17.0.029.1.unjoined.fa|mr.41.15.17.0.029.1.to_join.fa.tmp|mr.41.15.17.0.029.all_mr.fa|
+|mr.41.15.17.0.029.all_mr.maximal.fa|mr.41.15.17.0.029.join_consensus.tmp|mr.41.15.17.0.029.maximal_mr.txt|pa.renamed.fastq|pacbio_nonredundant.fa|
+|pe.cor.fa|pe.cor.tmp.log|pe_data.tmp|quorum.err|quorum_mer_db.jf|
+|runCA.spec|sr_config.txt|super1.err|superReadSequences.named.fasta|tigStore.err|
+|unitig_cov.txt|unitig_layout.txt|work1|work1_mr||
 
 
 ### Assembly statistics
