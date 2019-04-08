@@ -7,7 +7,7 @@ header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 sidebar:
-  title: testing sidebar
+  - title: testing sidebar
 ---
 
 {% assign author = site.data.authors[page.author] %}
