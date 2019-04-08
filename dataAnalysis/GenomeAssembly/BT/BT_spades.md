@@ -12,7 +12,7 @@ header:
 <a rel="author"
   href="{{ author.twitter }}"
   title="{{ author.name }}">
-    This tutorial was authored by {{ author.name }}
+    This Tutorial was authored by {{ author.name }}
 </a>
 
 ## Organizing the project folder
