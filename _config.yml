@@ -111,7 +111,7 @@ author:
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Computational Biologist"
   location         : "Ames, IA"
-  email            : gifhelpn@iastate.edu
+  email            : gifhelp@iastate.edu
   uri              :
   home             : # null (default), "absolute or relative url to link to author home"
   bitbucket        :
