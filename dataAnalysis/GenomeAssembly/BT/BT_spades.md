@@ -9,9 +9,9 @@ header:
 
 {% assign author = site.data.authors[page.author] %}
 <a rel="author"
-  href="{{ author.links[Twitter].url }}"
-  title="This tutorial was authored by {{ author.name }}">
-    {{ author.name }}
+  href="{{ author.links[3].url }}"
+  title="{{ author.name }}">
+    This Tutorial was authored by {{ author.name }}
 </a>
 
 ## Organizing the project folder
