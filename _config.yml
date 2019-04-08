@@ -278,6 +278,6 @@ defaults:
       related: true
       layout: single
       author_profile: false
-      share: false
+      
 
 theme: jekyll-theme-minimal

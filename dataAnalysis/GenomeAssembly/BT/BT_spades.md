@@ -8,12 +8,6 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-{% assign author = site.data.authors[page.author] %}
-<a rel="author"
-  href="{{ author.twitter }}"
-  title="{{ author.name }}">
-    This TTutorial was authored by {{ author.name }}
-</a>
 
 ## Organizing the project folder
 
