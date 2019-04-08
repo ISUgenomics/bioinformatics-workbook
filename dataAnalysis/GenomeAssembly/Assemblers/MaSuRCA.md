@@ -86,7 +86,7 @@ header:
   ln -s masurca_1.0.0.sif ISUGIFsingularity-masurca-master-1.0.0.simg
   ```
 
-  #### Set variables ```gitmasurca``` and ```PATH``` so we can find the container and the runscripts
+  * #### Set variables ```gitmasurca``` and ```PATH``` so we can find the container and the runscripts
 
   modify and add the following lines to your .bashrc file.
 
@@ -158,7 +158,7 @@ header:
 
 ## SLURM standard output
 
-  This file provides time stamps of the steps that were run with MaSuRCA.  When you have more data this may come in handy to determine what step you are on.   This small dataset took about 33 minutes to run.  Your assembly stats may vary slightly if you rerun it multiple times.
+  * This file provides time stamps of the steps that were run with MaSuRCA.  When you have more data this may come in handy to determine what step you are on.   This small dataset took about 33 minutes to run.  Your assembly stats may vary slightly if you rerun it multiple times.
 
   ```
   Verifying PATHS...
@@ -244,7 +244,7 @@ header:
 
     It appears the do_consensus.sh to perform gapfilling is currently having an issue that should be fixed in new releases.  This step can be performed manually.  [See here for more information](https://github.com/alekseyzimin/masurca/issues/53)
 
-  The assembly is correct but it hasn't been gap filled.
+  The assembly is correct but it hasn't been gap filled.  This can occur on assemblies with lower levels of assembly coverage.
 
 
 
