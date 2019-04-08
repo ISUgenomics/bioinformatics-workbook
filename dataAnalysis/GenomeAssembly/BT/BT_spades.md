@@ -7,6 +7,13 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+{% assign author = site.data.people[page.author] %}
+<a rel="author"
+  href="https://twitter.com/{{ author.twitter }}"
+  title="{{ author.name }}">
+    {{ author.name }}
+</a>
+
 ## Organizing the project folder
 
 Make a main directory where all the work will be performed.
