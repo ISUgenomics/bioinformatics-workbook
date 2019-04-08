@@ -13,7 +13,8 @@ Andrew:
   links:
     - label: "twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/isugif"    
+      url: "https://twitter.com/isugif"
+      username: isugif   
     - label: "email"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:severin@iastate.edu"

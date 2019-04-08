@@ -79,11 +79,17 @@ naver_site_verification  :
 # Social Sharing
 twitter:
   username               : isugif
+  url                    : https://twitter.com/isugif
 facebook:
   username               :
   app_id                 :
   publisher              :
 og_image                 : # Open Graph/Twitter default site image
+email:
+  url                    :
+website:
+  url                    :
+
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
@@ -105,7 +111,7 @@ author:
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Computational Biologist"
   location         : "Ames, IA"
-  email            :
+  email            : gifhelpn@iastate.edu
   uri              :
   home             : # null (default), "absolute or relative url to link to author home"
   bitbucket        :
@@ -114,7 +120,7 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           :
+  github           : https://github.com/isugenomics
   gitlab           :
   google_plus      :
   keybase          :
@@ -278,6 +284,6 @@ defaults:
       related: true
       layout: single
       author_profile: false
-      
+
 
 theme: jekyll-theme-minimal
