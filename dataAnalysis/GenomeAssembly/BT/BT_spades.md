@@ -7,7 +7,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-{% assign author = site.data.people[page.author] %}
+{% assign author = site.data.authors[page.author] %}
 <a rel="author"
   href="https://twitter.com/{{ author.twitter }}"
   title="{{ author.name }}">
