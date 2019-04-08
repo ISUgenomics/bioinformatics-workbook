@@ -9,7 +9,7 @@ header:
 
 {% assign author = site.data.authors[page.author] %}
 <a rel="author"
-  href="{{ author.links[3].url }}"
+  href="{{ author.twitter }}"
   title="{{ author.name }}">
     This Tutorial was authored by {{ author.name }}
 </a>
