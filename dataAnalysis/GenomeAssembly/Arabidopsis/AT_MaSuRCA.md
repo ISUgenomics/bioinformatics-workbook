@@ -6,7 +6,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Genome Assembly of Arabidopsis using MaSuRCA
+# MaSuRCA Genome Assembly of Arabidopsis
 
 ### Background about the data Analysis
 

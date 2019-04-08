@@ -1,14 +1,11 @@
 ---
-title: Genome Assembly
+title: Spades Genome assembly of a Bacillus thuringiensis
 layout: single
+author: Andrew Severin
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
-
-# Spades Genome assembly of a Bacillus thuringiensis dataset
-
-
 
 ## Organizing the project folder
 
@@ -38,8 +35,6 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR209/006/SRR2093876/SRR2093876_subread
 ```
 
 ## QC on the data
-
-
 
 ### Illumina data
 If you only have a few files to check, it is easier to start an interactive node and run them quickly in the terminal.
@@ -121,15 +116,6 @@ spades.py \
 -o BT
 ```
 
-```
---careful		tries to reduce number of mismatches and short indels
---tmp-dir	<dirname>	directory for temporary files
--t/--threads	<int>		number of threads
--m/--memory	<int>		RAM limit for SPAdes in Gb (terminates if exceeded) [default 250 (Gb)]
---sanger	<filename>	file with Sanger reads
---pacbio	<filename>	file with PacBio reads
---nanopore	<filename>	file with Nanopore reads
-```
 
 |SPAdes| files output| from assembly|
 |--|--|--|

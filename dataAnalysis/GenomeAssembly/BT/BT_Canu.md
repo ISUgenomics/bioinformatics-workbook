@@ -6,6 +6,9 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+
+# Canu genome assembly of Bacillus thuringiensis
+
 ## Learning Objectives
 
 Upon completion of this section on Genome Assembly you will be able to
@@ -15,27 +18,7 @@ Upon completion of this section on Genome Assembly you will be able to
 * Execute Canu and obtain a the assembled genome of [Bacillus thuringiensis](https://en.wikipedia.org/wiki/Bacillus_thuringiensis)
 
 
-## Canu Steps
 
-The Canu Assembler has three steps
-* Correct   (-correct)
-* Trim      (-trim)
-* Assemble  (-assemble)
-
-These steps can be run individual if you specifiy the (-step) parameter as defined in parenthesis above or these steps will be all run if no step parameter is specified.
-
-## Canu parameter considerations
-
-* Trio binning
-  * If you have sequence data from the parents and the F1 offspring
-* Raw Data type requires a different parameter to read each datatype
-  * PacBio
-  * Nanopore
-* Coverage
-  * Low Coverage parameters can be set to improve assembly output depending on the sequencing technology See [Canu Quick Start Guide](http://canu.readthedocs.io/en/latest/quick-start.html) for more details.
-
-
-## An Example with canu
 
 Let us assemble a bacterial genome [Bacillus thuringiensis strain: HS18-1](https://www.ncbi.nlm.nih.gov/sra/?term=SRR2093876). This particular genome is interesting because it shows insecticidal activity against Diptera.  The raw data contains 1.5G of data and the genome size is 6.4 mb.  The assembly can be found on [NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_001182785.1).  Therefore, we will have over 200x coverage, plenty for a genome assembly with canu.  Canu recommends 30-60x minimum coverage.  The paper for this assembly can be read [here](https://www.sciencedirect.com/science/article/pii/S0168165615300961)
 
@@ -52,7 +35,7 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR209/006/SRR2093876/SRR2093876_subread
 
 #### Running Canu
 
-The name of the module will vary here and you should check to see what version you are using.  In this tutorial we used version 1.7 with java/1.8.0_121
+The name of the module will vary here and you should check to see what version you are using.  In this tutorial we used version 1.8 with java/1.8.0_121
 
 ```
 #!/bin/bash
