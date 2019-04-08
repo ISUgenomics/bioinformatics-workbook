@@ -10,7 +10,9 @@ Andrew:
   name        : "Andrew Severin"
   bio         : "Bioinformatician at the Genome Informatics Facility, Office of Biotechnology, Iowa State University"
   avatar      : "/assets/images/people/Andrew.png"
-  twitter     : https://twitter.com/isugif
+  twitter     : "isugif"
+  email       : "mailto:severin@iastate.edu"
+  website     : "https://gif.biotech.iastate.edu"
 # links:
 #     - label: "twitter"
 #       icon: "fab fa-fw fa-twitter-square"
