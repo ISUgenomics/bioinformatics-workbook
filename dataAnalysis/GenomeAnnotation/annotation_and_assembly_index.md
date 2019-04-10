@@ -43,5 +43,5 @@ The National Center for Biomedical Ontology (www.bioontology.org) develops tools
 
 ### Genetic Map Construction
 
-  * [Generating Genetic Maps from GBS data](bioinformatics-workbook/dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
-  * [Using Genetic Map to create AGPs](bioinformatics-workbook/dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
+  * [Generating Genetic Maps from GBS data](../GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
+  * [Using Genetic Map to create AGPs](../GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
