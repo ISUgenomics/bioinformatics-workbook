@@ -8,12 +8,12 @@ For this tutorial, we will use _Arabidopsis thaliana_, Ler strain, short read da
 
 Table 1: Dataset used for the Assembly
 
-| Run        | Instrument          | LibraryLayout | InsertSize (bp) | ReadLength | TotalReads   | Bases (Mbp) |
-|------------|---------------------|---------------|----------------:|------------|-------------:|------------:|
-| SRR3157034 | Illumina HiSeq 2000 | paired-end    | 0               | 100x2      | 93,446,768   | 17,823      |
-| SRR3166543 | Illumina HiSeq 2000 | paired-end    | 0               | 100x2      | 162,362,560  | 30,968      |
-| SRR3156163 | Illumina HiSeq 2000 | mate-pair     | 8,000           | 100x2      | 51,332,776   | 9,790       |
-| SRR3156596 | Illumina HiSeq 2000 | mate-pair     | 20,000          | 100x2      | 61,030,552   | 11,640      |
+| Run        | Instrument | Layout        | Insert (bp) | ReadLength | TotalReads   | Bases (Mbp) |
+|------------|------------|---------------|------------:|------------|-------------:|------------:|
+| SRR3157034 | HiSeq 2000 | paired-end    | 0           | 100x2      | 93,446,768   | 17,823      |
+| SRR3166543 | HiSeq 2000 | paired-end    | 0           | 100x2      | 162,362,560  | 30,968      |
+| SRR3156163 | HiSeq 2000 | mate-pair     | 8,000       | 100x2      | 51,332,776   | 9,790       |
+| SRR3156596 | HiSeq 2000 | mate-pair     | 20,000      | 100x2      | 61,030,552   | 11,640      |
 
 ## Download
 
@@ -34,7 +34,8 @@ while read line; do
   fastq-dump --split-files --origfmt ${line};
 done<srr.ids
 ```
-stdout:
+<details>
+  <summary>sra-toolkit stdout</summary>
 
 ```
 Read 51332776 spots for /work/GIF/arnstrm/ncbi/public/sra/SRR3156163.sra
@@ -46,6 +47,7 @@ Written 93446768 spots for /work/GIF/arnstrm/ncbi/public/sra/SRR3157034.sra
 Read 162362560 spots for /work/GIF/arnstrm/ncbi/public/sra/SRR3166543.sra
 Written 162362560 spots for /work/GIF/arnstrm/ncbi/public/sra/SRR3166543.sra
 ```
+</details>
 
 For a typical project, once you obtain the data, you will run the quality check (using Fastqc) and then proceed with the assembly steps. For this tutorial, to keep it focused on `platanus` assembler, we will skip it.
 
@@ -122,7 +124,7 @@ platanus_trim -i pe.fofn -t 16
 platanus_internal_trim -i mp.fofn -t 16
 ```
 <details>
-  <summary>pe trimming stdout!</summary>
+  <summary>pe trimming stdout</summary>
 
 ```
 Running with trim adapter mode
@@ -158,7 +160,13 @@ Execution time:     59.32 min
 ```
 </details>
 
+<details>
+  <summary>mp trimming stdout</summary>
 
+```
+
+```
+</details>
 
 
 After the run is complete, you will see the files with `.trimmed` and `.int_trimmed` extension. It will also display progress while trimming is running.
