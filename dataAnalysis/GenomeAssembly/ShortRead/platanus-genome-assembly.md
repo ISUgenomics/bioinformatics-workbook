@@ -4,7 +4,8 @@ This tutorial covers genome assembly for a sample dataset using `platanus` genom
 
 ## Dataset
 
-For this tutorial, we will use _Arabidopsis thaliana_, Ler strain, short read dataset, from the BioProject [PRJNA311266](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA311266). This dataset as 4 libraries, with both PE and MP reads. Although, it does have long reads (PacBio), we will not be using it for this tutorial. The SRA info can be found [here](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SAMN04457953).
+For this tutorial, we will use _Arabidopsis thaliana_, Ler strain, short read dataset, from the BioProject [PRJNA311266](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA311266). This dataset as 4 libraries, with both PE and MP reads. Although, it does have long reads (PacBio), we will not be using it for this tutorial. The SRA info can be found [here](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SAMN04457953). This assembly was published in 2016 by [_Zapata_ et. al](https://www.pnas.org/content/113/28/E4052). For a 117Mb genome, this is quite a bit of coverage.
+
 
 **Table 1: Dataset used for the Assembly**
 
@@ -975,21 +976,21 @@ The entire assembly was run on Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz machine 
 
 **Table 2: Time (real, user and sys) used for each step of the assembly**
 
-| step                   | real    | user    | sys     |
-|------------------------|---------|---------|---------|
-| fastq_dump             | 0:00:00 | 0:00:00 | 0:00:00 |
-| platanus_trim          | 0:59:19 | 4:26:47 | 0:01:41 |
-| platanus_internal_trim | 0:36:13 | 3:54:37 | 0:00:48 |
-| assembly               | 3:53:35 | 22:14:12 |	0:56:56 |
-| scaffold               | 0:25:35 | 1:59:41 | 0:04:53 |
-| gapclosing             | 0:00:00 | 0:00:00 | 0:00:00 |
+| step                   | real     | user     | sys      |
+|------------------------|---------:|---------:|---------:|
+| fastq_dump             | 0:00:00  | 0:00:00  | 0:00:00  |
+| platanus_trim          | 0:59:19  | 4:26:47  | 0:01:41  |
+| platanus_internal_trim | 0:36:13  | 3:54:37  | 0:00:48  |
+| assembly               | 3:53:35  | 22:14:12 | 0:56:56  |
+| scaffold               | 0:25:35  | 1:59:41  | 0:04:53  |
+| gapclosing             | 0:00:00  | 0:00:00  | 0:00:00  |
 
 The final assembly property after each step of `assemble`, `scaffold` and `gap_close` is as follows:
 
 **Table 3: Assemblathon stats for contigs, scaffolds and final assembly.**
 
 | Metrics                       | Contig      | Scaffold    | Final |
-|-------------------------------|-------------|-------------|-------|
+|-------------------------------|------------:|------------:|-------|
 | Number of scaffolds           | 249,090     | 18,915      |       |
 | Total size of scaffolds       | 146,125,822 | 128,269,400 |       |
 | Percentage genome represented | 124.9%      | 109.6%      |       |
