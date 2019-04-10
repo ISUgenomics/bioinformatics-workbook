@@ -1,4 +1,14 @@
-# Short read assembly using Platanus
+---
+title: "Short reads assembly using Platanus"
+layout: single
+author: Arun Seetharam
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+# Platanus
 
 This tutorial covers genome assembly for a sample dataset using `platanus` genome assembler. This assembly program uses short-reads (paired-end and mate-pair) as input data and works well for highly heterozygous genomes.
 
@@ -983,7 +993,7 @@ The entire assembly was run on Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz machine 
 **Table 2: Time (real, user and sys) used for each step of the assembly**
 
 | step                   | real     | user     | sys      |
-|------------------------|---------:|---------:|---------:|
+|------------------------|----------|----------|----------|
 | fastq_dump             | 0:00:00  | 0:00:00  | 0:00:00  |
 | platanus_trim          | 0:59:19  | 4:26:47  | 0:01:41  |
 | platanus_internal_trim | 0:36:13  | 3:54:37  | 0:00:48  |
@@ -991,7 +1001,8 @@ The entire assembly was run on Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz machine 
 | scaffold               | 0:25:35  | 1:59:41  | 0:04:53  |
 | gapclosing             | 0:00:00  | 0:00:00  | 0:00:00  |
 
-The final assembly property after each step of `assemble`, `scaffold` and `gap_close` is as follows:
+
+The stats for the assemblies obtained after each step (`assemble`, `scaffold` and `gap_close`) are as follows:
 
 **Table 3: Assemblathon stats for contigs, scaffolds and final assembly.**
 
