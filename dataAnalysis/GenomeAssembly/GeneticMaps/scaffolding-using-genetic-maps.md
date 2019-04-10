@@ -4,8 +4,8 @@ layout: single
 author: Arun Seetharam
 author_profile: true
 header:
-overlay_color: "444444"
-overlay_image: /assets/images/dna.jpg
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
 ---
 
 # Scaffolding Genomes using Genetic map
