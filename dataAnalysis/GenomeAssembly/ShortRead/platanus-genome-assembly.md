@@ -164,7 +164,45 @@ Execution time:     59.32 min
   <summary>mp trimming stdout</summary>
 
 ```
+Running with trim internal adapter mode
+Checking files:
+  SRR3156163_1.fastq SRR3156163_2.fastq  (100%)
+Checking files:
+  SRR3156596_1.fastq SRR3156596_2.fastq  (100%)
 
+Number of trimmed read with internal adapter:
+NUM_OF_TRIMMED_READ(FORWARD) = 0
+NUM_OF_TRIMMED_BASE(FORWARD) = 0
+NUM_OF_TRIMMED_READ(REVERSE) = 0
+NUM_OF_TRIMMED_BASE(REVERSE) = 0
+NUM_OF_TRIMMED_PAIR(OR) = 0
+NUM_OF_TRIMMED_PAIR(AND) = 0
+
+
+Number of trimmed read with adapter:
+NUM_OF_TRIMMED_READ(FORWARD) = 28379276
+NUM_OF_TRIMMED_BASE(FORWARD) = 621458117
+NUM_OF_TRIMMED_READ(REVERSE) = 28378747
+NUM_OF_TRIMMED_BASE(REVERSE) = 205825175
+NUM_OF_TRIMMED_PAIR(OR) = 28379567
+NUM_OF_TRIMMED_PAIR(AND) = 28378456
+
+
+Number of trimmed read because of low quality or too short (< 11bp):
+NUM_OF_TRIMMED_READ(FORWARD) = 62990345
+NUM_OF_TRIMMED_BASE(FORWARD) = 2047046061
+NUM_OF_TRIMMED_READ(REVERSE) = 60871687
+NUM_OF_TRIMMED_BASE(REVERSE) = 3391343381
+NUM_OF_TRIMMED_PAIR(OR) = 79275459
+NUM_OF_TRIMMED_PAIR(AND) = 44586573
+
+
+#### PROCESS INFORMATION ####
+User Time:         234.61 min
+System Time:         0.79 min
+VmPeak:           0.872 GByte
+VmHWM:            0.132 GByte
+Execution time:     36.22 min
 ```
 </details>
 
@@ -178,14 +216,14 @@ The main executable for this assembler is `platanus`. This comes with 3 options.
 
 ### Benchmark
 
-The entire assembly was run on Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz machine with 12 processors with 128gb RAM (HPC Condo cluster, free nodes). The table shows the time taken for each step (`[h]:mm:ss` format)
+The entire assembly was run on Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz machine with 12 processors and with 128gb RAM (HPC Condo cluster, free nodes). The table shows the time taken for each step (`[h]:mm:ss` format)
 
 
 | step                   | real    | user    | sys     |
 |------------------------|---------|---------|---------|
 | fastq_dump             | 0:00:00 | 0:00:00 | 0:00:00 |
 | platanus_trim          | 0:59:19 | 4:26:47 | 0:01:41 |
-| platanus_internal_trim | 0:00:00 | 0:00:00 | 0:00:00 |
+| platanus_internal_trim | 0:36:13 | 3:54:37 | 0:00:48 |
 | assembly               | 0:00:00 | 0:00:00 | 0:00:00 |
 | scaffold               | 0:00:00 | 0:00:00 | 0:00:00 |
 | gapclosing             | 0:00:00 | 0:00:00 | 0:00:00 |
