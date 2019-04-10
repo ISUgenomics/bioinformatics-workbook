@@ -222,7 +222,7 @@ platanus assemble \
    -tmp $TMPDIR
 ```
 
-We used most of the default options, except for `-t` number of threads (set to 12), `-m` max memory un GB to use for assembly step (set to 115GB), and the `-tmp` temp directory to use (set to scratch space).
+We used most of the default options, except for `-t` number of threads (set to 12), `-m` max memory un GB to use for assembly step (set to 115GB), and the `-tmp` temp directory to use (set to scratch space). Note that we used a regular expression (pattern) to provide all the files as input. We could have also provided each filename individually, but using patterns will reduce errors and makes it easier to read.
 
 <details>
   <summary>assembly stdout</summary>
@@ -231,8 +231,39 @@ We used most of the default options, except for `-t` number of threads (set to 1
 ```
 </details>
 
+There are only 3 output files from this step: `platanus_contig.fa`,  `platanus_contigBubble.fa` and `platanus_32merFrq.tsv`
+
 ### 3. Scaffolding
 
+In this step, we will use the contigs create in the previous step, along with trimmed reads (PE and MP) to scaffold the initial set of contigs. We will run the command as follows:
+
+```
+platanus scaffold \
+    -o platanus \
+    -c platanus_contig.fa \
+    -b platanus_contigBubble.fa \
+    -IP1 {SRR3157034,SRR3166543}_?.fastq.trimmed \
+    -OP2 SRR3156163_?.fastq.int_trimmed \
+    -n2 7000 \
+    -a2 8000 \
+    -d2 1000 \
+    -OP3 SRR3156596_?.fastq.int_trimmed \
+    -n3 19000 \
+    -a3 20000 \
+    -d3 2000 \
+    -t 12 \
+    -tmp $TMPDIR
+```
+
+Again, most of the default options were used. Other than the standard input files (files from previous steps:  `-c`, `-b`), paired-ends reads were provided as well. Since the insert size is 0 for these files, we did not have to specify anything for these files. However, the 2 set of files we have for mate-pair have different insert size and we need to provide it to the program separately. Hence, we provided them using `-OP1` and `-OP2` tags. For each library, we will also provide `-n` minimum insert size, `-a` average insert size and `-d` standard deviation. The trailing number is used for identifying library with its insert size tags. _Eg.,_ `-n2`, `-a2`, and `-d2` is associated with library `-OP2` and, `-n3`, `-a3`, and `-d3` with library `-OP3`. Just like in previous step, we will change `-t` number of threads (set to 12), and the `-tmp` temp directory to use (set to scratch space).
+
+There will 3 output files again:
+
+```
+platanus_scaffold.fa
+platanus_scaffoldBubble.fa
+platanus_scaffoldComponent.tsv
+```
 
 <details>
   <summary>scaffolding stdout</summary>
@@ -242,7 +273,19 @@ We used most of the default options, except for `-t` number of threads (set to 1
 </details>
 
 ### 4. Gap closing
+The final step is to close the gaps (reduce the N content in the genome introduced during scaffolding). We will need the scaffolds generated in the previous step. For this we will use the `gap_close` module. We will run it as follows:
 
+```bash
+platanus gap_close \
+    -o platanus \
+    -c platanus_scaffold.fa \
+    -IP1 {SRR3157034,SRR3166543}_?.fastq.trimmed \
+    -OP2 SRR3156163_?.fastq.int_trimmed \
+    -OP3 SRR3156596_?.fastq.int_trimmed \
+    -t 16 \
+    -tmp $TMPDIR
+```
+Most of the default options were used as usual, except for `-t` number of threads (set to 12), and the `-tmp` temp directory to use (set to scratch space). The 2 sets of PE libraries were provided as input using `IP1` option and the 2 mate-pair libraries separately using `-OP2` and `-OP3` options.  
 
 <details>
   <summary>gap-closing stdout</summary>
@@ -251,10 +294,11 @@ We used most of the default options, except for `-t` number of threads (set to 1
 ```
 </details>
 
-### Benchmark
+## Benchmark
 
 The entire assembly was run on Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz machine with 12 processors and with 128gb RAM (HPC Condo cluster, free nodes). The table shows the time taken for each step (`[h]:mm:ss` format)
 
+Table 2: Time (real, user and sys) used for each step of the assembly
 
 | step                   | real    | user    | sys     |
 |------------------------|---------|---------|---------|
@@ -264,3 +308,10 @@ The entire assembly was run on Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz machine 
 | assembly               | 0:00:00 | 0:00:00 | 0:00:00 |
 | scaffold               | 0:00:00 | 0:00:00 | 0:00:00 |
 | gapclosing             | 0:00:00 | 0:00:00 | 0:00:00 |
+
+The final assembly property after each step of `assemble`, `scaffold` and `gap_close` is as follows:
+
+Table 3: Assemblathon stats for contigs, scaffolds and final assembly.
+
+| Metrics                   | Contigs    | Scaffolds    | Final     |
+|---------------------------|------------|--------------|-----------|
