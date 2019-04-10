@@ -1,27 +1,15 @@
 Andrew Severin:
   name        : "Andrew Severin"
-  bio         : "Bioinformatician "
-  avatar      : "/assets/images/people/Andrew.png"
-  email       : "mailto:severin@iastate.edu"
-  website     : "https://gif.biotech.iastate.edu"
-  twitter     : "https://twitter.com/isugif"
-
-Andrew:
-  name        : "Andrew Severin"
-  bio         : "Bioinformatician at the Genome Informatics Facility, Office of Biotechnology, Iowa State University"
+  bio         : "Andrew Severin is the manager of the Genome Informatics Facility. He is an interdisciplinary scientist, working at the interface between  genetics and bioinformatics. "
   avatar      : "/assets/images/people/Andrew.png"
   twitter     : "isugif"
   email       : "mailto:severin@iastate.edu"
   website     : "https://gif.biotech.iastate.edu"
 
-# links:
-#     - label: "twitter"
-#       icon: "fab fa-fw fa-twitter-square"
-#       url: "https://twitter.com/isugif"
-#       username: isugif
-#     - label: "email"
-#       icon: "fas fa-fw fa-envelope-square"
-#       url: "mailto:severin@iastate.edu"
-#     - label: "website"
-#       icon: "fas fa-fw fa-link"
-#       url: "https://gif.biotech.iastate.edu"
+Arun Seetharam:
+  name        : "Arun Seetharam"
+  bio         : "My main interests are in the fields of bioinformatics and evolutionary genomics. Currently, I am working on various projects involving next-generation sequencing including the first de novo assembly of a teosinte genome. I am also developing pipelines to streamline the assembly and annotation process for newly sequenced organisms. My long-term goal is to study the genome organization and evolution of grass species. "
+  avatar      : "/assets/images/people/Arun.jpg"
+  twitter     : "arunseetharam"
+  email       : "mailto:arnstrm@iastate.edu"
+  website     : "https://gif.biotech.iastate.edu"

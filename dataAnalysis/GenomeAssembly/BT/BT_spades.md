@@ -1,7 +1,6 @@
 ---
 title: Spades Genome assembly of a Bacillus thuringiensis
 layout: single
-author: Andrew
 author: Andrew Severin
 author_profile: true
 header:
