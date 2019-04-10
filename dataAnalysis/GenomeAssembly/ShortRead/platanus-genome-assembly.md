@@ -229,6 +229,186 @@ We used most of the default options, except for `-t` number of threads (set to 1
   <summary>assembly stdout</summary>
 
 ```
+Platanus version: 1.2.4
+./platanus assemble -o platanus -f SRR3157034_1.fastq.trimmed SRR3157034_2.fastq.trimmed SRR3166543_1.fastq.trimmed SRR3166543_2.fastq.trimmed -t 12 -m 115 -tmp /scratch/arnstrm/504932
+
+K = 32, saving kmers from reads...
+AVE_READ_LEN=95.7062
+
+KMER_EXTENSION:
+K=32, KMER_COVERAGE=167.299 (>= 44), COVERAGE_CUTOFF=44
+K=42, KMER_COVERAGE=141.444, COVERAGE_CUTOFF=44, PROB_SPLIT=10e-inf
+K=52, KMER_COVERAGE=115.588, COVERAGE_CUTOFF=44, PROB_SPLIT=10e-13.035
+K=62, KMER_COVERAGE=89.7333, COVERAGE_CUTOFF=34, PROB_SPLIT=10e-10.2256
+K=72, KMER_COVERAGE=63.8782, COVERAGE_CUTOFF=18, PROB_SPLIT=10e-10.4294
+K=82, KMER_COVERAGE=38.0231, COVERAGE_CUTOFF=5, PROB_SPLIT=10e-10.485
+K=85, KMER_COVERAGE=30.2666, COVERAGE_CUTOFF=2, PROB_SPLIT=10e-11.0475
+K=86, KMER_COVERAGE=27.6811, COVERAGE_CUTOFF=2, PROB_SPLIT=10e-10.2631
+loading kmers...
+connecting kmers...
+removing branches...
+BRANCH_DELETE_THRESHOLD=0.5
+NUM_CUT=52771
+NUM_CUT=325
+NUM_CUT=0
+TOTAL_NUM_CUT=53096
+mapping reads on de Bruijn Graph nodes...
+TOTAL_MAPPED_READS=301160221
+TOTAL_UNMAPPED_READS=49230885
+TOTAL_SHORT_READS(<32)=2449016
+NUM_DELETE_NODE(reads are unmapped)=127838
+NUM_CUT_NODE=14250
+extracting reads (containing kmer used in contig assemble)...
+K = 42, loading kmers from contigs...
+K = 42, saving additional kmers(not found in contigs) from reads...
+COVERAGE_CUTOFF = 44
+loading kmers...
+connecting kmers...
+removing branches...
+BRANCH_DELETE_THRESHOLD=0.5
+NUM_CUT=32977
+NUM_CUT=262
+NUM_CUT=0
+TOTAL_NUM_CUT=33239
+mapping reads on de Bruijn Graph nodes...
+TOTAL_MAPPED_READS=297870532
+TOTAL_UNMAPPED_READS=48839229
+TOTAL_SHORT_READS(<42)=6130361
+NUM_DELETE_NODE(reads are unmapped)=34658
+NUM_CUT_NODE=9411
+extracting reads (containing kmer used in contig assemble)...
+K = 52, loading kmers from contigs...
+K = 52, saving additional kmers(not found in contigs) from reads...
+COVERAGE_CUTOFF = 44
+loading kmers...
+connecting kmers...
+removing branches...
+BRANCH_DELETE_THRESHOLD=0.5
+NUM_CUT=11612
+NUM_CUT=58
+NUM_CUT=1
+NUM_CUT=0
+TOTAL_NUM_CUT=11671
+mapping reads on de Bruijn Graph nodes...
+TOTAL_MAPPED_READS=294187616
+TOTAL_UNMAPPED_READS=48525575
+TOTAL_SHORT_READS(<52)=10126931
+NUM_DELETE_NODE(reads are unmapped)=14651
+NUM_CUT_NODE=6611
+extracting reads (containing kmer used in contig assemble)...
+K = 62, loading kmers from contigs...
+K = 62, saving additional kmers(not found in contigs) from reads...
+COVERAGE_CUTOFF = 34
+loading kmers...
+connecting kmers...
+removing branches...
+BRANCH_DELETE_THRESHOLD=0.5
+NUM_CUT=8760
+NUM_CUT=85
+NUM_CUT=0
+TOTAL_NUM_CUT=8845
+mapping reads on de Bruijn Graph nodes...
+TOTAL_MAPPED_READS=292269452
+TOTAL_UNMAPPED_READS=46285943
+TOTAL_SHORT_READS(<62)=14284727
+NUM_DELETE_NODE(reads are unmapped)=11077
+NUM_CUT_NODE=6253
+extracting reads (containing kmer used in contig assemble)...
+K = 72, loading kmers from contigs...
+K = 72, saving additional kmers(not found in contigs) from reads...
+COVERAGE_CUTOFF = 18
+loading kmers...
+connecting kmers...
+removing branches...
+BRANCH_DELETE_THRESHOLD=0.5
+NUM_CUT=11089
+NUM_CUT=73
+NUM_CUT=1
+NUM_CUT=0
+TOTAL_NUM_CUT=11163
+mapping reads on de Bruijn Graph nodes...
+TOTAL_MAPPED_READS=290273837
+TOTAL_UNMAPPED_READS=42592196
+TOTAL_SHORT_READS(<72)=19974089
+NUM_DELETE_NODE(reads are unmapped)=16011
+NUM_CUT_NODE=5055
+extracting reads (containing kmer used in contig assemble)...
+K = 82, loading kmers from contigs...
+K = 82, saving additional kmers(not found in contigs) from reads...
+COVERAGE_CUTOFF = 5
+loading kmers...
+connecting kmers...
+removing branches...
+BRANCH_DELETE_THRESHOLD=0.5
+NUM_CUT=35099
+NUM_CUT=316
+NUM_CUT=2
+NUM_CUT=0
+TOTAL_NUM_CUT=35417
+mapping reads on de Bruijn Graph nodes...
+TOTAL_MAPPED_READS=287485676
+TOTAL_UNMAPPED_READS=38455436
+TOTAL_SHORT_READS(<82)=26899010
+NUM_DELETE_NODE(reads are unmapped)=23565
+NUM_CUT_NODE=5757
+extracting reads (containing kmer used in contig assemble)...
+K = 85, loading kmers from contigs...
+K = 85, saving additional kmers(not found in contigs) from reads...
+COVERAGE_CUTOFF = 2
+loading kmers...
+connecting kmers...
+removing branches...
+BRANCH_DELETE_THRESHOLD=0.5
+NUM_CUT=92929
+NUM_CUT=705
+NUM_CUT=5
+NUM_CUT=0
+TOTAL_NUM_CUT=93639
+mapping reads on de Bruijn Graph nodes...
+TOTAL_MAPPED_READS=286286607
+TOTAL_UNMAPPED_READS=36890605
+TOTAL_SHORT_READS(<85)=29662910
+NUM_DELETE_NODE(reads are unmapped)=18033
+NUM_CUT_NODE=4914
+extracting reads (containing kmer used in contig assemble)...
+K = 86, loading kmers from contigs...
+K = 86, saving additional kmers(not found in contigs) from reads...
+COVERAGE_CUTOFF = 2
+loading kmers...
+connecting kmers...
+removing branches...
+BRANCH_DELETE_THRESHOLD=0.5
+NUM_CUT=76051
+NUM_CUT=455
+NUM_CUT=5
+NUM_CUT=0
+TOTAL_NUM_CUT=76511
+LENGTH_CUTOFF = 172
+COVERAGE_CUTOFF = 4
+removing erroneous nodes...
+NUM_REMOVED_NODES=62182
+NUM_REMOVED_NODES=1787
+NUM_REMOVED_NODES=6
+NUM_REMOVED_NODES=0
+TOTAL_NUM_REMOVED_NODES=63975
+AVE_KMER_COV_REMOVING_BUBBLE=27.7394
+removing bubbles...
+BUBBLE_IDENTITY_THRESHOLD=0.1
+NUM_REMOVED_BUBBLES=2332
+NUM_REMOVED_BUBBLES=1
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=2333
+mapping reads on de Bruijn Graph nodes...
+TOTAL_MAPPED_READS=284641512
+TOTAL_UNMAPPED_READS=37462911
+TOTAL_SHORT_READS(<86)=30735699
+NUM_DELETE_NODE(reads are unmapped)=613
+NUM_CUT_NODE=2839
+assemble completed!
+
+#### PROCESS INFORMATION ####
+VmPeak:         101.557 GByte
+VmHWM:            5.544 GByte
 ```
 </details>
 
@@ -270,6 +450,500 @@ platanus_scaffoldComponent.tsv
   <summary>scaffolding stdout</summary>
 
 ```
+Platanus version: 1.2.4
+./platanus scaffold -o platanus -c platanus_contig.fa -b platanus_contigBubble.fa -IP1 SRR3157034_1.fastq.trimmed SRR3157034_2.fastq.trimmed SRR3166543_1.fastq.trimmed SRR3166543_2.fastq.trimmed -OP2 SRR3156163_1.fastq.int_trimmed SRR3156163_2.fastq.int_trimmed -n2 7000 -a2 8000 -d2 1000 -OP3 SRR3156596_1.fastq.int_trimmed SRR3156596_2.fastq.int_trimmed -n3 19000 -a3 20000 -d3 2000 -t 12 -tmp /scratch/arnstrm/505110
+
+K=32, making hash table...
+K=32, making hash table...
+CONTIG_AVERAGE_COVERAGE = 214.328
+mapping bubbles on contigs...
+[LIBRARY 1]
+mapping reads...
+TOTAL_PAIR = 176420061
+MAPPED_PAIR = 120493353 (0.682991)
+MAPPED_IN_DIFFERENT_CONTIGS = 9222646 (0.0522766)
+MAPPED_IN_SAME_CONTIG = 111270707 (0.630715)
+AVERAGE_COVERAGE = 161.193
+[LIBRARY 2]
+mapping reads...
+TOTAL_PAIR = 43437115
+MAPPED_PAIR = 13187994 (0.303611)
+MAPPED_IN_DIFFERENT_CONTIGS = 10891832 (0.250749)
+MAPPED_IN_SAME_CONTIG = 2296162 (0.0528618)
+AVERAGE_COVERAGE = 17.3053
+Average insert size specified: AVE = 8000
+[LIBRARY 3]
+mapping reads...
+TOTAL_PAIR = 35013593
+MAPPED_PAIR = 3295364 (0.0941167)
+MAPPED_IN_DIFFERENT_CONTIGS = 3245212 (0.0926843)
+MAPPED_IN_SAME_CONTIG = 50152 (0.00143236)
+AVERAGE_COVERAGE = 4.30912
+Average insert size specified: AVE = 20000
+estimating insert-size...
+PEAK = 171
+LOWER_LIMIT (permissible range to estimate AVE_INS)= 43
+UPPER_LIMIT (permissible range to estimate AVE_INS)= 299
+AVE_INS = 174
+SD_INS = 23
+[LIBRARY 1]
+AVE_INS = 174, SD_INS = 23
+saving overlaps... (LEN_CUTOFF=46)
+destructing mapper objects...
+[LIBRARY 1]
+AVE_INS = 174, SD_INS = 23
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=17 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 46
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=23 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=312
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=312
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=1931
+NUM_SPLIT_LINK (not enough mapped pairs)=1
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=1932
+scaffolding...
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=1 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=3
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=3
+NUM_SPLIT_LINK (not originate from heterozygosity)=717 (COVERAGE_THRESHOLD)
+scaffolding...
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=1 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 69
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=1
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=1
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=1892
+NUM_SPLIT_LINK (not enough mapped pairs)=1
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=1893
+scaffolding...
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=1
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=1
+NUM_SPLIT_LINK (not originate from heterozygosity)=9 (COVERAGE_THRESHOLD)
+scaffolding...
+[LIBRARY 2]
+AVE_INS = 8000, SD_INS = 1000
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=24 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 2000
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=298
+NUM_SPLIT_LINK (not enough mapped pairs)=1
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=299
+deleting edges from repeat contigs...
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=294
+NUM_SPLIT_LINK (not enough mapped pairs)=1
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=295
+scaffolding...
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+NUM_SPLIT_LINK (not originate from heterozygosity)=5 (COVERAGE_THRESHOLD)
+scaffolding...
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=10 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 3000
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=8
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=8
+deleting edges from repeat contigs...
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=8
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=8
+scaffolding...
+linking scaffolds (MIN_LINK = 7)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+NUM_SPLIT_LINK (not originate from heterozygosity)=0 (COVERAGE_THRESHOLD)
+scaffolding...
+[LIBRARY 3]
+AVE_INS = 20000, SD_INS = 2000
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=42 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 4000
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=40
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=40
+deleting edges from repeat contigs...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=40
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=40
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+NUM_SPLIT_LINK (not originate from heterozygosity)=0 (COVERAGE_THRESHOLD)
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=4 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 6000
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=5
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=5
+deleting edges from repeat contigs...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=5
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=5
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+NUM_SPLIT_LINK (not originate from heterozygosity)=0 (COVERAGE_THRESHOLD)
+scaffolding...
+[LIBRARY 1]
+AVE_INS = 174, SD_INS = 23
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=3 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 46
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=12
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=12
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=3026
+NUM_SPLIT_LINK (not enough mapped pairs)=1
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=3027
+deleting edges from repeat contigs...
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=1
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=1
+NUM_SPLIT_LINK (not originate from heterozygosity)=100 (COVERAGE_THRESHOLD)
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=0 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 69
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=4180
+NUM_SPLIT_LINK (not enough mapped pairs)=2
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=4182
+deleting edges from repeat contigs...
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+NUM_SPLIT_LINK (not originate from heterozygosity)=5 (COVERAGE_THRESHOLD)
+scaffolding...
+Library1 PHYSICAL_COVERAGE=146
+SUM_SHORT_LIBRARY_PHYSICAL_COVERAGE=146
+Library2 PHYSICAL_COVERAGE=736
+Library3 PHYSICAL_COVERAGE=463
+SUM_LONG_LIBRARY_PHYSICAL_COVERAGE=1199
+checking erroneous scaffold using long libraries...
+spliting low coverage links...
+NUM_SPLIT_LINK(low coverage)= 143
+[LIBRARY 2]
+AVE_INS = 8000, SD_INS = 1000
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=3 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 2000
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=20
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=20
+deleting edges from repeat contigs...
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+NUM_SPLIT_LINK (not originate from heterozygosity)=0 (COVERAGE_THRESHOLD)
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=1 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 3000
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=16
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=16
+deleting edges from repeat contigs...
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+NUM_SPLIT_LINK (not originate from heterozygosity)=0 (COVERAGE_THRESHOLD)
+scaffolding...
+Library1 PHYSICAL_COVERAGE=146
+Library2 PHYSICAL_COVERAGE=736
+SUM_SHORT_LIBRARY_PHYSICAL_COVERAGE=882
+Library3 PHYSICAL_COVERAGE=463
+SUM_LONG_LIBRARY_PHYSICAL_COVERAGE=463
+[LIBRARY 3]
+AVE_INS = 20000, SD_INS = 2000
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=3 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 4000
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=20
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=20
+deleting edges from repeat contigs...
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+NUM_SPLIT_LINK (not originate from heterozygosity)=0 (COVERAGE_THRESHOLD)
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_OVERLAP_CONTIGS=1 (CONTAINED_HETERO)
+TOLERENCE_LEVEL_OF_CONTIG_OVERLAP = 6000
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+removing erroneous edges...
+NUM_SPLIT_LINK (not enough mapped pairs)=1
+NUM_SPLIT_LINK (not enough mapped pairs)=0
+TOTAL_SPLIT_LINK (not enough mapped pairs)=1
+deleting edges from repeat contigs...
+scaffolding...
+linking scaffolds (MIN_LINK = 3)
+sorting links in contigID order...
+estimating contig distances...
+constructing scaffold graph
+NUM_REMOVED_BUBBLES=0 (COVERAGE_THRESHOLD)
+removing bubbles... (MAX_BUBBLE_IDENTITY = 0.1)
+NUM_REMOVED_BUBBLES=0
+TOTAL_NUM_REMOVED_BUBBLES=0
+NUM_SPLIT_LINK (not originate from heterozygosity)=0 (COVERAGE_THRESHOLD)
+scaffolding...
+Library1 PHYSICAL_COVERAGE=146
+Library2 PHYSICAL_COVERAGE=736
+Library3 PHYSICAL_COVERAGE=463
+SUM_SHORT_LIBRARY_PHYSICAL_COVERAGE=1345
+SUM_LONG_LIBRARY_PHYSICAL_COVERAGE=0
+writing scaffold files...
+scaffold completed!
+
+#### PROCESS INFORMATION ####
+VmPeak:          12.303 GByte
+VmHWM:            2.066 GByte
 ```
 </details>
 
@@ -306,13 +980,36 @@ The entire assembly was run on Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz machine 
 | fastq_dump             | 0:00:00 | 0:00:00 | 0:00:00 |
 | platanus_trim          | 0:59:19 | 4:26:47 | 0:01:41 |
 | platanus_internal_trim | 0:36:13 | 3:54:37 | 0:00:48 |
-| assembly               | 0:00:00 | 0:00:00 | 0:00:00 |
-| scaffold               | 0:00:00 | 0:00:00 | 0:00:00 |
+| assembly               | 3:53:35 | 22:14:12 |	0:56:56 |
+| scaffold               | 0:25:35 | 1:59:41 | 0:04:53 |
 | gapclosing             | 0:00:00 | 0:00:00 | 0:00:00 |
 
 The final assembly property after each step of `assemble`, `scaffold` and `gap_close` is as follows:
 
 **Table 3: Assemblathon stats for contigs, scaffolds and final assembly.**
 
-| Metrics                   | Contigs    | Scaffolds    | Final     |
-|---------------------------|------------|--------------|-----------|
+| Metrics                       | Contig      | Scaffold    | Final |
+|-------------------------------|-------------|-------------|-------|
+| Number of scaffolds           | 249,090     | 18,915      |       |
+| Total size of scaffolds       | 146,125,822 | 128,269,400 |       |
+| Percentage genome represented | 124.9%      | 109.6%      |       |
+| Longest scaffold              | 153,225     | 15,741,082  |       |
+| Shortest scaffold             | 86          | 100         |       |
+| Number of scaffolds > 1K nt   | 19,518      | 2,799       |       |
+| Number of scaffolds > 10K nt  | 3,108       | 230         |       |
+| Number of scaffolds > 100K nt | 1           | 77          |       |
+| Number of scaffolds > 1M nt   | 0           | 25          |       |
+| Number of scaffolds > 10M nt  | 0           | 1           |       |
+| Mean scaffold size            | 587         | 6,781       |       |
+| Median scaffold size          | 101         | 204         |       |
+| N50 scaffold length           | 6,442       | 3,885,840   |       |
+| L50 scaffold count            | 5,705       | 9           |       |
+| NG50 scaffold length          | 8,795       | 4,991,028   |       |
+| LG50 scaffold count           | 3,773       | 8           |       |
+| N50- NG50 difference          | 2,353       | 1,105,188   |       |
+| scaffold %A                   | 31.6%       | 29.9%       |       |
+| scaffold %C                   | 18.7%       | 17.5%       |       |
+| scaffold %G                   | 18.3%       | 17.5%       |       |
+| scaffold %T                   | 31.4%       | 29.9%       |       |
+| scaffold %N                   | 0.0%        | 5.3%        |       |
+| scaffold %non-ACGTN           | 0.0%        | 0.0%        |       |
