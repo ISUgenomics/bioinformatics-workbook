@@ -240,6 +240,7 @@ We used most of the default options, except for `-t` number of threads (set to 1
 ```
 ```
 </details>
+
 ### 4. Gap closing
 
 
