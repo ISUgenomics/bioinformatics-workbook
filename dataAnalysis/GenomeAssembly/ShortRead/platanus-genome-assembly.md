@@ -49,7 +49,7 @@ Written 162362560 spots for /work/GIF/arnstrm/ncbi/public/sra/SRR3166543.sra
 ```
 </details>
 
-For a typical project, once you obtain the data, you will run the quality check (using Fastqc) and then proceed with the assembly steps. For this tutorial, to keep it focused on `platanus` assembler, we will skip it.
+For a typical project, once you obtain the data, you will run the quality check (using Fastqc) and then proceed with the assembly steps. For this tutorial, since we already know the quality, and to keep it focused on `platanus` assembler, we will skip it.
 
 The compiled versions of the `platanus` assembler are available at the assembly [homepage](http://platanus.bio.titech.ac.jp). You can download them directly and use the binaries for this tutorial.
 
@@ -123,6 +123,7 @@ Now run the trimming as follows (here `-i` is for input file and `-t` for number
 platanus_trim -i pe.fofn -t 16
 platanus_internal_trim -i mp.fofn -t 16
 ```
+
 <details>
   <summary>pe trimming stdout</summary>
 
