@@ -413,7 +413,13 @@ VmHWM:            5.544 GByte
 ```
 </details>
 
-There are only 3 output files from this step: `platanus_contig.fa`,  `platanus_contigBubble.fa` and `platanus_32merFrq.tsv`
+There are only 3 output files from this step:
+```
+platanus_contig.fa : assembled contiguous sequences
+platanus_contigBubble.fa : merged and removed bubble sequences
+platanus_32merFrq.tsv : kmer frequency distribution
+```
+
 
 ### 3. Scaffolding
 
@@ -442,9 +448,9 @@ Again, most of the default options were used. Other than the standard input file
 There will 3 output files again:
 
 ```
-platanus_scaffold.fa
-platanus_scaffoldBubble.fa
-platanus_scaffoldComponent.tsv
+platanus_scaffold.fa: assembled sequences with gaps
+platanus_scaffoldBubble.fa: removed bubble sequences
+platanus_scaffoldComponent.tsv: table describing contig joins
 ```
 
 <details>
