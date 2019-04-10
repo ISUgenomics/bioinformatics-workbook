@@ -6,7 +6,7 @@ This tutorial covers genome assembly for a sample dataset using `platanus` genom
 
 For this tutorial, we will use _Arabidopsis thaliana_, Ler strain, short read dataset, from the BioProject [PRJNA311266](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA311266). This dataset as 4 libraries, with both PE and MP reads. Although, it does have long reads (PacBio), we will not be using it for this tutorial. The SRA info can be found [here](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SAMN04457953).
 
-Table 1: Dataset used for the Assembly
+**Table 1: Dataset used for the Assembly**
 
 | Run        | Instrument | Layout        | Insert (bp) | ReadLength | TotalReads   | Bases (Mbp) |
 |------------|------------|---------------|------------:|------------|-------------:|------------:|
@@ -298,7 +298,7 @@ Most of the default options were used as usual, except for `-t` number of thread
 
 The entire assembly was run on Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz machine with 12 processors and with 128gb RAM (HPC Condo cluster, free nodes). The table shows the time taken for each step (`[h]:mm:ss` format)
 
-Table 2: Time (real, user and sys) used for each step of the assembly
+**Table 2: Time (real, user and sys) used for each step of the assembly**
 
 | step                   | real    | user    | sys     |
 |------------------------|---------|---------|---------|
@@ -311,7 +311,7 @@ Table 2: Time (real, user and sys) used for each step of the assembly
 
 The final assembly property after each step of `assemble`, `scaffold` and `gap_close` is as follows:
 
-Table 3: Assemblathon stats for contigs, scaffolds and final assembly.
+**Table 3: Assemblathon stats for contigs, scaffolds and final assembly.**
 
 | Metrics                   | Contigs    | Scaffolds    | Final     |
 |---------------------------|------------|--------------|-----------|
