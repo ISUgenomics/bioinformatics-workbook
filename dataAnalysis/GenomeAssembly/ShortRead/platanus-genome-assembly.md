@@ -213,6 +213,42 @@ After the run is complete, you will see the files with `.trimmed` and `.int_trim
 
 The main executable for this assembler is `platanus`. This comes with 3 options. `assemble`, `scaffold` and `gap_close`. For this step, we need the `assemble` option.
 
+```bash
+platanus assemble \
+   -o platanus \
+   -f {SRR3157034,SRR3166543}_?.fastq.trimmed \
+   -t 12 \
+   -m 115 \
+   -tmp $TMPDIR
+```
+
+We used most of the default options, except for `-t` number of threads (set to 12), `-m` max memory un GB to use for assembly step (set to 115GB), and the `-tmp` temp directory to use (set to scratch space).
+
+<details>
+  <summary>assembly stdout</summary>
+
+```
+```
+</details>
+
+### 3. Scaffolding
+
+
+<details>
+  <summary>scaffolding stdout</summary>
+
+```
+```
+</details>
+### 4. Gap closing
+
+
+<details>
+  <summary>gap-closing stdout</summary>
+
+```
+```
+</details>
 
 ### Benchmark
 
