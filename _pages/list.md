@@ -96,6 +96,8 @@ header:
   * [Mascurca with Pacbio and Illumina](../dataAnalysis/GenomeAssembly/Hybrid/MaSuRCA.md)
   * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
   * [Hi-C scaffolding](../dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
+  * [Short read assembly using Platanus](../dataAnalysis/GenomeAssembly/ShortRead/platanus-genome-assembly.md)
+
 * <span style="color:lightblue">Genetic Map</span>
     * [Generating Genetic Maps from GBS data](../dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
     * [Using Genetic Map to create AGPs](../dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
