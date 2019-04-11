@@ -981,6 +981,83 @@ Most of the default options were used as usual, except for `-t` number of thread
   <summary>gap-closing stdout</summary>
 
 ```
+Platanus version: 1.2.4
+./platanus gap_close -o platanus -c platanus_scaffold.fa -IP1 SRR3157034_1.fastq.trimmed SRR3157034_2.fastq.trimmed SRR3166543_1.fastq.trimmed SRR3166543_2.fastq.trimmed -OP2 SRR3156163_1.fastq.int_trimmed SRR3156163_2.fastq.int_trimmed -OP3 SRR3156596_1.fastq.int_trimmed SRR3156596_2.fastq.int_trimmed -t 16 -tmp /scratch/arnstrm/505111
+
+K=32, making hash table...
+[PAIR_LIBRARY 1]
+mapping reads...
+TOTAL_PAIR = 176420061
+MAPPED_IN_SAME_CONTIG = 114172231 (0.647161)
+estimating insert-size...
+PEAK = 170
+LOWER_LIMIT (permissible range to estimate AVE_INS)= 43
+UPPER_LIMIT (permissible range to estimate AVE_INS)= 298
+AVE_INS = 173
+SD_INS = 24
+mapping reads that cover small gaps...
+[PAIR_LIBRARY 2]
+mapping reads...
+TOTAL_PAIR = 43437115
+MAPPED_IN_SAME_CONTIG = 9243937 (0.212812)
+estimating insert-size...
+PEAK = 8227
+LOWER_LIMIT (permissible range to estimate AVE_INS)= 2057
+UPPER_LIMIT (permissible range to estimate AVE_INS)= 14397
+AVE_INS = 8967
+SD_INS = 1236
+mapping reads that cover small gaps...
+[PAIR_LIBRARY 3]
+mapping reads...
+TOTAL_PAIR = 35013593
+MAPPED_IN_SAME_CONTIG = 1663835 (0.0475197)
+estimating insert-size...
+PEAK = 21776
+LOWER_LIMIT (permissible range to estimate AVE_INS)= 5444
+UPPER_LIMIT (permissible range to estimate AVE_INS)= 38108
+AVE_INS = 23799
+SD_INS = 4754
+mapping reads that cover small gaps...
+making hash table of gaps...
+making consensus sequences to close small gaps...
+NUM_GAP=18477
+NUM_CLOSED_GAP=5061
+[PAIR_LIBRARY 1]
+saving reads covering gaps...
+loading reads covering gaps...
+assembling localized reads...
+NUM_GAPS = 13416
+NUM_NOT_CLOSED_GAPS (too many reads are mapped comapering to coverage)= 91
+NUM_CLOSED_GAPS_USING_DE_BRUIJN = 4229
+NUM_CLOSED_GAPS_USING_OVERLAP_LAYOUT_CONSENSUS = 785
+[PAIR_LIBRARY 2]
+saving reads covering gaps...
+loading reads covering gaps...
+assembling localized reads...
+NUM_GAPS = 8402
+NUM_NOT_CLOSED_GAPS (too many reads are mapped comapering to coverage)= 20
+NUM_CLOSED_GAPS_USING_DE_BRUIJN = 26
+NUM_CLOSED_GAPS_USING_OVERLAP_LAYOUT_CONSENSUS = 94
+[PAIR_LIBRARY 3]
+saving reads covering gaps...
+loading reads covering gaps...
+assembling localized reads...
+NUM_GAPS = 8282
+NUM_NOT_CLOSED_GAPS (too many reads are mapped comapering to coverage)= 15
+NUM_CLOSED_GAPS_USING_DE_BRUIJN = 3
+NUM_CLOSED_GAPS_USING_OVERLAP_LAYOUT_CONSENSUS = 0
+[ALL LIBRARY]
+assembling localized reads...
+NUM_GAPS = 8279
+NUM_NOT_CLOSED_GAPS (too many reads are mapped comapering to coverage)= 122
+NUM_CLOSED_GAPS_USING_DE_BRUIJN = 17
+NUM_CLOSED_GAPS_USING_OVERLAP_LAYOUT_CONSENSUS = 0
+TOTAL_NUM_CLOSED_GAPS = 10215
+gap_close completed!!
+
+#### PROCESS INFORMATION ####
+VmPeak:          12.710 GByte
+VmHWM:            2.065 GByte
 ```
 </details>
 
@@ -1004,28 +1081,28 @@ The stats for the assemblies obtained after each step (`assemble`, `scaffold` an
 
 **Table 3: Assemblathon stats for contigs, scaffolds and final assembly.**
 
-| Metrics                       | Contig      | Scaffold    | Final |
-|-------------------------------|------------:|------------:|-------|
-| Number of scaffolds           | 249,090     | 18,915      |       |
-| Total size of scaffolds       | 146,125,822 | 128,269,400 |       |
-| Percentage genome represented | 124.9%      | 109.6%      |       |
-| Longest scaffold              | 153,225     | 15,741,082  |       |
-| Shortest scaffold             | 86          | 100         |       |
-| Number of scaffolds > 1K nt   | 19,518      | 2,799       |       |
-| Number of scaffolds > 10K nt  | 3,108       | 230         |       |
-| Number of scaffolds > 100K nt | 1           | 77          |       |
-| Number of scaffolds > 1M nt   | 0           | 25          |       |
-| Number of scaffolds > 10M nt  | 0           | 1           |       |
-| Mean scaffold size            | 587         | 6,781       |       |
-| Median scaffold size          | 101         | 204         |       |
-| N50 scaffold length           | 6,442       | 3,885,840   |       |
-| L50 scaffold count            | 5,705       | 9           |       |
-| NG50 scaffold length          | 8,795       | 4,991,028   |       |
-| LG50 scaffold count           | 3,773       | 8           |       |
-| N50- NG50 difference          | 2,353       | 1,105,188   |       |
-| scaffold %A                   | 31.6%       | 29.9%       |       |
-| scaffold %C                   | 18.7%       | 17.5%       |       |
-| scaffold %G                   | 18.3%       | 17.5%       |       |
-| scaffold %T                   | 31.4%       | 29.9%       |       |
-| scaffold %N                   | 0.0%        | 5.3%        |       |
-| scaffold %non-ACGTN           | 0.0%        | 0.0%        |       |
+| Metrics                       | Contig      | Scaffold    | Final       |
+|-------------------------------|------------:|------------:|------------:|
+| Number of scaffolds           | 249,090     | 18,915      | 18,915      |
+| Total size of scaffolds       | 146,125,822 | 128,269,400 | 127,986,775 |
+| Percentage genome represented | 124.9%      | 109.6%      | 109.4%      |
+| Longest scaffold              | 153,225     | 15,741,082  | 15,721,187  |
+| Shortest scaffold             | 86          | 100         | 86          |
+| Number of scaffolds > 1K nt   | 19,518      | 2,799       | 2,784       |
+| Number of scaffolds > 10K nt  | 3,108       | 230         | 230         |
+| Number of scaffolds > 100K nt | 1           | 77          | 77          |
+| Number of scaffolds > 1M nt   | 0           | 25          | 25          |
+| Number of scaffolds > 10M nt  | 0           | 1           | 1           |
+| Mean scaffold size            | 587         | 6,781       | 6,766       |
+| Median scaffold size          | 101         | 204         | 203         |
+| N50 scaffold length           | 6,442       | 3,885,840   | 3,861,540   |
+| L50 scaffold count            | 5,705       | 9           | 9           |
+| NG50 scaffold length          | 8,795       | 4,991,028   | 4,978,789   |
+| LG50 scaffold count           | 3,773       | 8           | 8           |
+| N50- NG50 difference          | 2,353       | 1,105,188   | 1,117,249   |
+| scaffold %A                   | 31.6%       | 29.9%       | 30.0%       |
+| scaffold %C                   | 18.7%       | 17.5%       | 17.6%       |
+| scaffold %G                   | 18.3%       | 17.5%       | 17.5%       |
+| scaffold %T                   | 31.4%       | 29.9%       | 30.0%       |
+| scaffold %N                   | 0.0%        | 5.3%        | 5.0%        |
+| scaffold %non-ACGTN           | 0.0%        | 0.0%        | 0.0%        |
