@@ -94,6 +94,7 @@ header:
   * [Canu for Long Read Assembly](../dataAnalysis/GenomeAssembly/LongRead/Canu.md)
     * [Canu on XSEDE Bridges Machine](../dataAnalysis/GenomeAssembly/LongRead/Canu_bridges.md)
   * [Mascurca with Pacbio and Illumina](../dataAnalysis/GenomeAssembly/Hybrid/MaSuRCA.md)
+  * [Short read assembly using Platanus](../dataAnalysis/GenomeAssembly/ShortRead/platanus-genome-assembly.md)
   * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
   * [Hi-C scaffolding](../dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
 * <span style="color:lightblue">Genetic Map</span>
