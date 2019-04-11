@@ -10,11 +10,11 @@ header:
 
 # Platanus
 
-This tutorial covers genome assembly for a sample dataset using `platanus` genome assembler. This assembly program uses short-reads (paired-end and mate-pair) as input data and works well for highly heterozygous genomes.
+This tutorial covers the short read genome assembly for _Arabidopsis thaliana_ using `platanus` genome assembler. This assembly program can use both paired-end and mate-pair data, progressively, for contigging and for scaffolding to generate an assembly. This is initially designed for highly heterozygous genomes, but performs equally well for inbred lines as well. For more information about this assembly program, checkout the its [publication](https://genome.cshlp.org/content/24/8/1384.long)
 
 ## Dataset
 
-For this tutorial, we will use _Arabidopsis thaliana_, Ler strain, short read dataset, from the BioProject [PRJNA311266](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA311266). This dataset as 4 libraries, with both PE and MP reads. Although, it does have long reads (PacBio), we will not be using it for this tutorial. The SRA info can be found [here](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SAMN04457953). This assembly was published in 2016 by [_Zapata_ et. al](https://www.pnas.org/content/113/28/E4052). For a 117Mb genome, this is quite a bit of coverage.
+For this tutorial, we will use _Arabidopsis thaliana_, Ler strain, short read dataset, from the BioProject [PRJNA311266](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA311266). This assembly was published in 2016 by [_Zapata_ et. al](https://www.pnas.org/content/113/28/E4052). The dataset has 4 libraries, with both PE and MP reads (2 each). Although, it does have long reads (PacBio), we will not be using it for this tutorial. The SRA info can be found [here](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SAMN04457953).  For a 117Mb genome, this is quite a bit of coverage.
 
 
 **Table 1: Dataset used for the Assembly**
