@@ -10,7 +10,7 @@ header:
 
 # Platanus
 
-This tutorial covers the short read genome assembly for _Arabidopsis thaliana_ using `platanus` genome assembler. This assembly program can use both paired-end and mate-pair data, progressively, for contigging and for scaffolding to generate an assembly. This is initially designed for highly heterozygous genomes, but performs equally well for inbred lines as well. For more information about this assembly program, checkout the its [publication](https://genome.cshlp.org/content/24/8/1384.long)
+This tutorial covers the short read genome assembly for _Arabidopsis thaliana_ using `platanus` genome assembler. This assembly program can use both paired-end and mate-pair data, progressively, for contigging and for scaffolding to generate an assembly. This was initially designed for highly heterozygous genomes, but performs equally well for inbred lines as well. For more information about this assembly program, checkout the its [publication](https://genome.cshlp.org/content/24/8/1384.long).
 
 ## Dataset
 
@@ -60,9 +60,9 @@ Written 162362560 spots for /work/GIF/arnstrm/ncbi/public/sra/SRR3166543.sra
 ```
 </details>
 
-For a typical project, once you obtain the data, you will run the quality check (using Fastqc) and then proceed with the assembly steps. For this tutorial, since we already know the quality, and to keep it focused on `platanus` assembler, we will skip it.
+Typically, we will start by checking the quality of reads after you obtain the data (using Fastqc), but for this tutorial, since we already know the quality, and to keep it focused on `platanus` assembler, we will skip it.
 
-The compiled versions of the `platanus` assembler are available at the assembly [homepage](http://platanus.bio.titech.ac.jp). You can download them directly and use the binaries for this tutorial.
+The compiled versions of the `platanus` assembler is available on the assembly [homepage](http://platanus.bio.titech.ac.jp). You can download them directly and use the binaries for this tutorial (no compiling or installation required).
 
 ```bash
 wget -O platanus http://platanus.bio.titech.ac.jp/?ddownload=145
