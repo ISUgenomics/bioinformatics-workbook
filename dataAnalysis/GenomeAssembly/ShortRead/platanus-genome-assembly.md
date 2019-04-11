@@ -86,8 +86,6 @@ The assembly process is simple and it does not create a lot of files. So to keep
 
 ```
 usda/
-├── mp.fofn
-├── pe.fofn
 ├── platanus
 ├── platanus_internal_trim
 ├── platanus_trim
@@ -453,7 +451,7 @@ platanus scaffold \
     -tmp $TMPDIR
 ```
 
-Again, most of the default options were used. Other than the standard input files (files from previous steps:  `-c`, `-b`), paired-ends reads were provided as well. Since the insert size is 0 for these files, we did not have to specify anything for these files. However, the 2 set of files we have for mate-pair have different insert size and we need to provide it to the program separately. Hence, we provided them using `-OP1` and `-OP2` tags. For each library, we will also provide `-n` minimum insert size, `-a` average insert size and `-d` standard deviation. The trailing number is used for identifying library with its insert size tags. _Eg.,_ `-n2`, `-a2`, and `-d2` is associated with library `-OP2` and, `-n3`, `-a3`, and `-d3` with library `-OP3`. Just like in previous step, we will change `-t` number of threads (set to 12), and the `-tmp` temp directory to use (set to scratch space).
+Again, most of the default options were used. It requires file from previous steps (contigs and bubbles file, using options `-c` and `-b`, respectively) and reads (both paired-end and mate-pair) as input. For paired-end reads, the insert size was 0, so no other information is provided. However, the 2 set of files we have for mate-pair have different insert sizes and should be included while running scaffolding. We do this by using `-OP2` and `-OP3` options (you can provide as many as you want, depending on number of libraries you use, here we only need 2). For each library, we will also provide `-n` minimum insert size, `-a` average insert size and `-d` standard deviation. The trailing number is used for identifying library with its insert size tags. _Eg.,_ `-n2`, `-a2`, and `-d2` is associated with library `-OP2` and, `-n3`, `-a3`, and `-d3` with library `-OP3`. Just like in previous step, we will change `-t` number of threads (set to 12), and the `-tmp` temp directory to use (set to scratch space).
 
 There will 3 output files again:
 
