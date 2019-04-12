@@ -1,12 +1,13 @@
 ---
-title: Genome Assembly
+title: Introduction to MaSuRCA genome assembler
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Introduction to MaSuRCA genome assembler
 
 
 ## Background

@@ -1,12 +1,13 @@
 ---
-title: Genome Assembly
+title: MaSuRCA Genome Assembly of Arabidopsis
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-# MaSuRCA Genome Assembly of Arabidopsis
 
 ### Background about the data Analysis
 
