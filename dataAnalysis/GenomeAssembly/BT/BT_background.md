@@ -1,12 +1,13 @@
 ---
-title: Organismal data
+title: Bacillus thuringiensis dataset
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Bacillus thuringiensis dataset
 
 ## Background
 

@@ -1,12 +1,13 @@
 ---
-title: Genome Assembly
+title: Canu genome assembly of Bacillus thuringiensis on XSEDE bridges
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Canu on Bridges
 
   Bridges is part of the NSF funded XSEDE resources that anyone can apply for supercomputing (See [XSEDE tutorial](Appendix/HPC/xsede/xsede.md) on how to get an allocation).
 

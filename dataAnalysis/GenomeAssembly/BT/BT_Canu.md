@@ -1,13 +1,13 @@
 ---
-title: Genome Assembly
+title: Canu genome assembly of Bacillus thuringiensis
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-
-# Canu genome assembly of Bacillus thuringiensis
 
 ## Learning Objectives
 
