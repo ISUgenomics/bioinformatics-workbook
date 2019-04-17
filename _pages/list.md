@@ -90,31 +90,29 @@ header:
 
 ### Genome Assembly and Annotation
 
-
-
 * <span style="color:lightblue">Introduction to Genome Assembly</span>
-    * [Introduction to Canu](../GenomeAssembly/Assemblers/canu.md)
-      * [Canu on XSEDE Bridges Super Computer](../GenomeAssembly/LongRead/Canu_bridges.md)
-    * [Introduction to SPAdes](../GenomeAssembly/Assemblers/spades.md)
-    * [Introduction to MaSuRCA](../GenomeAssembly/Assemblers/MaSuRCA.md)
+    * [Introduction to Canu](../dataAnalysis/GenomeAssembly/Assemblers/canu.md)
+      * [Canu on XSEDE Bridges Super Computer](../dataAnalysis/GenomeAssembly/BT/BT_Canu_bridges.md)
+    * [Introduction to SPAdes](../dataAnalysis/GenomeAssembly/Assemblers/spades.md)
+    * [Introduction to MaSuRCA](../dataAnalysis/GenomeAssembly/Assemblers/MaSuRCA.md)
 * <span style="color:lightblue">Introduction to Genome Annotation</span>
     * [Introduction to Maker Gene Prediction](Intro_To_Maker.md)
     * [Introduction to Braker2 Gene Prediction](Intro_to_Braker2.md)
     * [Motif Identification and Finding with MEME and FIMO](MEME_Motif_Finding_In_Genomes.md)  
 * <span style="color:lightblue">Tools for assessing the quality of a Genome Assembly</span>
-    * [GenomeScope to Estimate Genome Size](../GenomeAssembly/genomescope.md)
-    * [Genome Scaffolding Using Synteny with Pyscaf](../GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
+    * [GenomeScope to Estimate Genome Size](../dataAnalysis/GenomeAssembly/genomescope.md)
+    * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
     * [Hi-C scaffolding](../GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
 * <span style="color:lightblue">Genome Assembly Examples</span>
-  * [Bacillus thuringiensis data set](../GenomeAssembly/BT/BT_background.md)
-    * [Canu Assembly of Bacillus thuringiensis](../GenomeAssembly/BT/BT_Canu.md)
-    * [SPAdes Assembly of Bacillus thuringiensis](../GenomeAssembly/BT/BT_spades.md)
-  * [Arabidopsis thaliana data set](../GenomeAssembly/Arabidopsis/Arabidopsis_background.md)
-    * [MaSuRCA assembly of Arabidopsis thanliana](../GenomeAssembly/Arabidopsis/AT_MaSuRCA.md )
-    * [Short read assembly using Platanus](../GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
+  * [Bacillus thuringiensis data set](../dataAnalysis/GenomeAssembly/BT/BT_background.md)
+    * [Canu Assembly of Bacillus thuringiensis](../dataAnalysis/GenomeAssembly/BT/BT_Canu.md)
+    * [SPAdes Assembly of Bacillus thuringiensis](../dataAnalysis/GenomeAssembly/BT/BT_spades.md)
+  * [Arabidopsis thaliana data set](../dataAnalysis/GenomeAssembly/Arabidopsis/Arabidopsis_background.md)
+    * [MaSuRCA assembly of Arabidopsis thanliana](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_MaSuRCA.md )
+    * [Short read assembly using Platanus](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
 * <span style="color:lightblue">Genetic Map Construction</span>
-    * [Generating Genetic Maps from GBS data](../GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
-    * [Using Genetic Map to create AGPs](../GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
+    * [Generating Genetic Maps from GBS data](../dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
+    * [Using Genetic Map to create AGPs](../dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
 
 ### Comparative Genomics
 * [Gene Orthology, Synteny, and Visualzation with Opscan, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/Gene_Orthology_And_Synteny.md)
