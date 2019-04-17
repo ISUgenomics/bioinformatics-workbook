@@ -17,7 +17,7 @@ This particular genome is interesting because it shows insecticidal activity aga
 * [ NCBI SRA for Bacillus thuringiensis strain: HS18-1](https://www.ncbi.nlm.nih.gov/sra/?term=SRR2093876)
 * [NCBI genome assembly](https://www.ncbi.nlm.nih.gov/assembly/GCF_001182785.1).  
 
-## Files
+## ENA Files
 
 | SeqType   | Platform | BioProject  | Experiment  | Files ||
 |-----------|----------|-------------|-------------|
@@ -38,6 +38,34 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR209/002/SRR2093872/SRR2093872_1.fastq
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR209/002/SRR2093872/SRR2093872_2.fastq.gz
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR209/006/SRR2093876/SRR2093876_subreads.fastq.gz
 ```
+
+## SRA files
+
+
+| Run        | Instrument | Layout        | Insert (bp) | ReadLength | TotalReads   | Bases (Mbp) |
+|------------|------------|---------------|------------:|------------|-------------:|------------:|
+| SRR2093876 | PacBio RS II          | Single read    | 0           | 2563      | 93,446,768   | 1,339  |
+| SRR2093872 | Illumina HiSeq 2000   | mate-pair      | 2000        | 100x2      | 162,362,560  | 1,405	|
+| SRR2093871 | Illumina HiSeq 2000   | paired-end     | 8,000       | 100x2      | 51,332,776   | 1,398 |
+
+## How to download from SRA
+
+Downloading from SRA will be performed using the [sra-toolkit](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc).
+* create a file with the SRA ids and name it `srr.ids`
+
+  ```
+  SRR2093876
+  SRR2093872
+  SRR2093871
+  ```
+* Assuming the sra-toolkit is installed then load the module and run the following bash script on the command line.
+  ```bash
+  module load sra-toolkit
+  while read line; do
+    fastq-dump --split-files --origfmt ${line};
+  done<srr.ids
+  ```
+
 
 
 ## Assembly statistics for Bacillus thuringiensis
