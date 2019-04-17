@@ -28,7 +28,7 @@ For this tutorial, we will use _Arabidopsis thaliana_, Ler strain, short read da
 
 ## Download
 
-We will use the [sra-toolkit]() to get the fastq files needed. After you copy the SRR ids for the files, we will save it as `srr.ids`
+We will use the [sra-toolkit](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc) to get the fastq files needed. After you copy the SRR ids for the files, we will save it as `srr.ids`
 
 `srr.ids`
 

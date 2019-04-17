@@ -38,8 +38,8 @@ The National Center for Biomedical Ontology (www.bioontology.org) develops tools
   * [Canu Assembly of Bacillus thuringiensis](../GenomeAssembly/BT/BT_Canu.md)
   * [SPAdes Assembly of Bacillus thuringiensis](../GenomeAssembly/BT/BT_spades.md)
 * [Arabidopsis thaliana data set](../GenomeAssembly/Arabidopsis/Arabidopsis_background.md)
-  * [MaSuRCA assembly of Arabidopsis thanliana](dataAnalysis/GenomeAssembly/Arabidopsis/AT_MaSuRCA.md )
-  * [Short read assembly using Platanus](../dataAnalysis/GenomeAssembly/ShortRead/platanus-genome-assembly.md)
+  * [MaSuRCA assembly of Arabidopsis thanliana](../GenomeAssembly/Arabidopsis/AT_MaSuRCA.md )
+  * [Short read assembly using Platanus](../GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
 
 ### Genetic Map Construction
 

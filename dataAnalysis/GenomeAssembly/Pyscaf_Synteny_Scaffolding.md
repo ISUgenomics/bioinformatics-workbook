@@ -11,7 +11,7 @@ header:
 Dependencies: Python 2.7,python FastaIndex, py-pillow, LAST assembler
 
 ### Load the dependencies and needed files
-```
+```bash
 #Things needed to run pyscaf
 git clone https://github.com/lpryszcz/pyScaf.git
 
@@ -37,12 +37,10 @@ gunzip GCF_000732965.1_ASM73296v1_genomic.fna.gz
 #pyscaf will throw errors with a fna extension, so change those to .fa
 mv GCF_000249815.1_ASM24981v2_genomic.fna GCF_000249815.1_ASM24981v2_genomic.fa
 mv GCF_000732965.1_ASM73296v1_genomic.fna GCF_000732965.1_ASM73296v1_genomic.fa
-
-
 ```
 
 ### Run pyscaf on the two E. coli genomes
-```
+```bash
 module load python
 module load py-fastaindex/0.11rc7-py2-sj3lhkk
 module load last
@@ -55,7 +53,7 @@ module load py-pillow/3.2.0-py2-ods24od
 
 ### What are the changes in the genome stats?
 
-```
+```bash
 cd /work/GIF/remkv6/USDA/16_pyscaf/assemblathon2-analysis
 perl assemblathon_stats.pl ../GCF_000249815.1_ASM24981v2_genomic.fa
 ##############################################################################

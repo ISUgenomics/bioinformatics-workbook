@@ -26,23 +26,26 @@ header:
 
    Here is an example of the config file (**sr_config.txt**)
 
-  ```bash
-  DATA
-  PE = pa 250 50 SRR3703081_1.fastq  SRR3703081_2.fastq
-  PACBIO = SRR3405330.fastq
-  END
+     ```
+     DATA
+     PE = pa 250 50 SRR3166543_1.fastq  SRR3166543_2.fastq
+     PE = pb 250 50 SRR3157034_1.fastq  SRR3157034_2.fastq
+     JUMP = ja 8000 1600 SRR3156163_1.fastq  SRR3156163_2.fastq
+     JUMP = jb 20000 4000 SRR3156596_1.fastq  SRR3156596_2.fastq
+     PACBIO = SRR3405330.fastq
+     END
 
-  PARAMETERS
-  GRAPH_KMER_SIZE = auto
-  USE_LINKING_MATES = 0
-  LIMIT_JUMP_COVERAGE = 300
-  CA_PARAMETERS =  cgwErrorRate=0.15
-  KMER_COUNT_THRESHOLD = 1
-  NUM_THREADS = 28
-  JF_SIZE = 200000000
-  SOAP_ASSEMBLY=0
-  END
-  ```
+     PARAMETERS
+     GRAPH_KMER_SIZE = auto
+     USE_LINKING_MATES = 0
+     LIMIT_JUMP_COVERAGE = 300
+     CA_PARAMETERS =  cgwErrorRate=0.15
+     KMER_COUNT_THRESHOLD = 1
+     NUM_THREADS = 28
+     JF_SIZE = 200000000
+     SOAP_ASSEMBLY=0
+     END
+     ```
 
   If you have jump libraries or Nanopore you can enter them into the config file with lines that look similar to this.
 
@@ -63,6 +66,8 @@ header:
   PacBio/MinION data are supported. Note that you have to have 50x + coverage in Illumina Paired End reads to use PacBio of Oxford Nanopore MinION data. Supply PacBio or MinION reads (cannot use both at the same time) in a single fasta file as:
 
   PACBIO=file.fa or NANOPORE=file.fa
+
+  More than one entry for each data type/set of files is allowed EXCEPT for PacBio/Nanopore data. That is if you have several pairs of PE fastq files, specify each pair on a separate line with a different two-letter prefix.
   ```
 
 
