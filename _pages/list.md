@@ -96,9 +96,9 @@ header:
     * [Introduction to SPAdes](../dataAnalysis/GenomeAssembly/Assemblers/spades.md)
     * [Introduction to MaSuRCA](../dataAnalysis/GenomeAssembly/Assemblers/MaSuRCA.md)
 * <span style="color:lightblue">Introduction to Genome Annotation</span>
-    * [Introduction to Maker Gene Prediction](Intro_To_Maker.md)
-    * [Introduction to Braker2 Gene Prediction](Intro_to_Braker2.md)
-    * [Motif Identification and Finding with MEME and FIMO](MEME_Motif_Finding_In_Genomes.md)  
+    * [Introduction to Maker Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_To_Maker.md)
+    * [Introduction to Braker2 Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_to_Braker2.md)
+    * [Motif Identification and Finding with MEME and FIMO](../dataAnalysis/GenomeAnnotation/MEME_Motif_Finding_In_Genomes.md)  
 * <span style="color:lightblue">Tools for assessing the quality of a Genome Assembly</span>
     * [GenomeScope to Estimate Genome Size](../dataAnalysis/GenomeAssembly/genomescope.md)
     * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
