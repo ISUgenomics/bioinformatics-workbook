@@ -1,12 +1,12 @@
 ---
-title: Kraken metagenomics on nematodes
+title: Kraken2 metagenomics on nematodes
 layout: single
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-#  Here I will try to see what kind of bacteria and viruses lie within the Tylenchida nematode RNAseq.
+#  Here I will try to see what kind of bacteria and viruses lie within the Tylenchida nematode RNAseq using kraken2.
 
 
 ## Build appropriate kraken2 database
@@ -598,6 +598,14 @@ I took these files, added the species name to the fifth column, removed those en
 
 ![Kraken](../../assets/KrakenNetwork.png)
 Large green hexagons are the source species RNASEQ, red diamonds are viruses, and triangles are bacteria present in two or more species.  
+
+### Sources
+
+```
+The best source to get more information on kraken2
+
+https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown
+```
 
 ---
 [Table of contents](compGenomics_index.md)
