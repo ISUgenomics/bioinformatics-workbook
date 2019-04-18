@@ -14,7 +14,7 @@ header:
 #/work/GIF/remkv6/USDA/21_kraken
 
 #softlink the fastq
-mkdir 0
+mkdir fastq
 for f in ../../../Baum/05_738NewAnalyses/04_NewRNAseqOnlineAlignment4Jbrowse/01_trim/*fastq.gz; do ln -s $f;done
 
 
@@ -37,8 +37,10 @@ for subsection in gb wgs
 if [ -z "Viral" ]
 ########
 sh download_taxonomy.sh
+```
 
-#To add your genomes to the kraken database, you will have to look up the taxonomy ID and add this to each fasta header. i.e. (>sequence"|kraken:taxid|390850)
+#### To add your genomes to the kraken database, you will have to look up the taxonomy ID and add this to each fasta header. i.e. (>sequence"|kraken:taxid|390850)
+```
 I found the taxids here: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi
 bioawk -c fastx '{print ">"$name"|kraken:taxid|6326\n"$seq}' B.xylophilus.fa >B.xylophilusTax.fa
 bioawk -c fastx '{print ">"$name"|kraken:taxid|166010\n"$seq}' D.destructor.fa >D.destructorTax.fa
@@ -55,8 +57,10 @@ bioawk -c fastx '{print ">"$name"|kraken:taxid|6306\n"$seq}' M.incognita.fa >M.i
 bioawk -c fastx '{print ">"$name"|kraken:taxid|6303\n"$seq}' M.javanica.fa >M.javanicaTax.fa
 bioawk -c fastx '{print ">"$name"kraken:taxid|51029\n"$seq}' H.glycines.fa >H.glycinesTax.fa
 
+```
 
-#We are now ready to set the database to download and build
+### We are now ready to set the database to download and build
+```
 module use /work/GIF/software/modules
 module load GIF/kraken2
 module load blast-plus
@@ -96,7 +100,10 @@ fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files SRR2389452 #Meloid
 fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files ERR790021 #Meloidogyne arenaria
 fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files SRR6269845 #Heterodera glycines
 fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files SRR6269844 & #Heterodera glycines
+```
 
+### Create Kraken scripts
+```
 paste <(ls -1 */*R1*gz) <(ls -1 */*R1*gz) |while read line; do echo "kraken2 -db Plant --threads 16 --report "$line".report --gzip-compressed  --unclassified-out "${line%.*}"unclassified#.fq --classified-out "${line%.*}"classified#.fq --paired "$line" > "${line%.*} ;done |awk '{print $1,$2,$3,$4,$5,$6,$8,$9,$10,$12,$13,$15,$16,$17,$18,$19,$21".Kraken.out"}' >kraken.sh
 
 
@@ -137,6 +144,7 @@ I took these files, added the species name to the fifth column, removed those en
 
 ```
 ![Kraken](../../assets/KrakenNetwork.png)
+Large green hexagons are the source species RNASEQ, red diamonds are viruses, and triangles are bacteria present in two or more species.  
 
 ---
 [Table of contents](compGenomics_index.md)
