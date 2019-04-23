@@ -14,7 +14,7 @@ This exercise is designed to provide the basic skills required for working in th
 The data files required for this workshop can be found on our website. You need to download this and place it in your home directory (`/home/username`), before you start this exercise. Please use the commands below to get started (you will learn what these command does later in the exercise). Open the terminal and enter these commands (commands are case sensitive) and each command should be entered in a single line followed by &#8629; (`Enter`) key.
 ```
 cd ~
-curl -O http://www.public.iastate.edu/~arnstrm/WORKSHOP_FILES.tar.gz
+curl -O http://gif-server.biotech.iastate.edu/arnstrm/WORKSHOP_FILES.tar.gz
 ```
 Once your cursor (command prompt) comes back to the original position, type
 ```
