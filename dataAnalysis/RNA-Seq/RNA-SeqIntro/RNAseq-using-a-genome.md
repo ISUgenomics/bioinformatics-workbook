@@ -37,7 +37,7 @@ module load <path/to/sra-toolkit>
 module load <path/to/edirect>
 module load <path/to/parallel>
 esearch -db sra -query PRJNA348194 | efetch --format runinfo |cut -d "," -f 1 | awk 'NF>0' | grep -v "Run" > srr_numbers.txt
-while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/<version>/etc/asperaweb_id_dsa.openssh\" $line"; done<srr_numbers.txt > prefetch.cmds
+while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/.../ascp|/path.../etc/asperaweb_id_dsa.openssh\" $line"; done<srr_numbers.txt > prefetch.cmds
 parallel <prefetch.cmds
 ```
 After downloading the SRA files, we convert it to fastq format. We can use the fast-dump command as follows: (this step is slow and if possible run these commands using [gnu parallel](https://www.gnu.org/software/parallel/)). We assume that all SRA files are in a specific folder.
