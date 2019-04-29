@@ -81,9 +81,9 @@ The data for this analysis is taken from the following NCBI project.  It contain
 
   ```bash
   ls -lha | awk '{print $5, $NF}'
-  238M SRR3156160_1.fastq
-  8.2G SRR3156163_1.fastq
-  8.2G SRR3156163_2.fastq
+  125M SRR3156160_1.fastq
+  8.1G SRR3156163_1.fastq
+  8.1G SRR3156163_2.fastq
   218M SRR3156596_1.fastq
   218M SRR3156596_2.fastq
   1.2G SRR3157034_1.fastq

@@ -112,8 +112,8 @@ spades.py \
 --pacbio /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093876_subreads.fastq.gz \
 --pe1-1 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093871_1.fastq.gz  \
 --pe1-2 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093871_2.fastq.gz  \
---pe2-1 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093872_1.fastq.gz  \
---pe2-2 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093872_2.fastq.gz  \
+--mp1-1 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093872_1.fastq.gz  \
+--mp1-2 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093872_2.fastq.gz  \
 --careful \
 -o BT
 ```
