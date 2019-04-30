@@ -25,7 +25,7 @@ header:
     * [Canu Assembly of Bacillus thuringiensis](../GenomeAssembly/BT/BT_Canu.md)
     * [SPAdes Assembly of Bacillus thuringiensis](../GenomeAssembly/BT/BT_spades.md)
   * [Arabidopsis thaliana data set](../GenomeAssembly/Arabidopsis/Arabidopsis_background.md)
-    * [MaSuRCA assembly of Arabidopsis thaliana](../GenomeAssembly/Arabidopsis/AT_MaSuRCA.md )
+    * [MaSuRCA assembly of Arabidopsis thaliana](../GenomeAssembly/Arabidopsis/AT_MaSuRCA.md)
     * [Platanus aassembly of Arabidopsis thaliana](../GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
 
 ### Tools for assessing the quality of a Genome Assembly
