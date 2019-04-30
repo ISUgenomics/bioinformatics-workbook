@@ -116,5 +116,5 @@ Below are links to canu documentation, GitHub repo and other relevant websites r
 * [Canu Faq Page](https://canu.readthedocs.io/en/latest/faq.html#) Really useful information about Canu
 * [Read the Canu Paper](http://biorxiv.org/content/early/2016/08/24/071282)
 
-
+[Bacillus thuringiensis data set Info](BT_background.md)
 [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
