@@ -1,5 +1,5 @@
 ---
-title: Genome Annotation
+title: Introduction to Maker
 layout: single
 header:
   overlay_color: "444444"
@@ -742,4 +742,4 @@ Scaffold_86     AUGUSTUS        gene    1       579     0.52    -       .       
 Scaffold_95     AUGUSTUS        gene    991     4533    0.77    +       .       ID=g15681;
 ```
 ---
-[Table of contents](annotation_and_assembly_index.md)
+[Back to the Assembly and Annotation Index page](annotation_and_assembly_index.md)

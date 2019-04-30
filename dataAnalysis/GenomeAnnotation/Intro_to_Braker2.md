@@ -1,5 +1,5 @@
 ---
-title: Genome Annotation
+title: Introduction to Braker2
 layout: single
 header:
   overlay_color: "444444"
@@ -245,4 +245,4 @@ ERROR: in file /work/GIF/software/programs/braker/2.1.0/braker.pl at line 2858
 If braker ever fails due to time constraints or in a later braker analysis, you can just resubmit your same script (perhaps with --useexisting) and braker will start where it left off.
 
 ---
-[Table of contents](annotation_and_assembly_index.md)
+[Back to the Assembly and Annotation Index page](annotation_and_assembly_index.md)
