@@ -349,4 +349,4 @@ So 108 scaffolds put into chromosome 1, 81 into chromosome 2, 43 into chromosome
 
 ---
 
-* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
+* [Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)

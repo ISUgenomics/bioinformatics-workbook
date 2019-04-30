@@ -106,7 +106,7 @@ Then export the kmer count histogram
 
 That file can be processed by running GenomeScope online to generate the figures described above.
 
-- [Genome Scope](http://qb.cshl.edu/genomescope/)
+- [GenomeScope](http://qb.cshl.edu/genomescope/)
 
 
 
@@ -140,4 +140,4 @@ For more information on how GenomeScope works, check out this poster and supplem
 
 ---
 
-* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
+* [Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)

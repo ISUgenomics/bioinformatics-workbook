@@ -31,8 +31,10 @@ header:
 ### Tools for assessing the quality of a Genome Assembly
 
   * [GenomeScope to Estimate Genome Size](../GenomeAssembly/genomescope.md)
-  * [Genome Scaffolding Using Synteny with Pyscaf](../GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
+
+### Tools for Scaffolding assemblies
   * [Hi-C scaffolding](../GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
+  * [Genome Scaffolding Using Synteny with Pyscaf](../GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
 
 ### Genetic Map Construction
 
