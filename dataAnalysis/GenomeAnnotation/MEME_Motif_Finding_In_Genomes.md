@@ -1,6 +1,8 @@
 ---
 title: Genome Annotation
 layout: single
+author: Rick Masonbrink
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
