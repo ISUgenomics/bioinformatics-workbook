@@ -167,5 +167,7 @@ new_Assemblathon scaffolds.fasta
 Average length of break (>25 Ns) between contigs in scaffold          0
 ```
 
-[Bacillus thuringiensis data set Info](BT_background.md)
-[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
+---
+
+* [Bacillus thuringiensis data set Info](BT_background.md)
+* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

@@ -600,5 +600,6 @@ Fig 10: Chromosome 10 map reconstructed
 Basically, we were able to put together all the broken scaffolds to the original chromosomes using the genetic map!
 
 
+---
 
-[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
+* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

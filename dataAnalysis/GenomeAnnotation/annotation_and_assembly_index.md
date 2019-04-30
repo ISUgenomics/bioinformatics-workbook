@@ -15,7 +15,7 @@ header:
 ### Introduction to Genome Assembly
 
   * [Introduction to Canu](../GenomeAssembly/Assemblers/canu.md)
-    * [Canu on XSEDE Bridges Super Computer](../GenomeAssembly/LongRead/Canu_bridges.md)
+    * [Canu on XSEDE Bridges Super Computer](../GenomeAssembly/BT/BT_Canu_bridges.md)
   * [Introduction to SPAdes](../GenomeAssembly/Assemblers/spades.md)
   * [Introduction to MaSuRCA](../GenomeAssembly/Assemblers/MaSuRCA.md)
 

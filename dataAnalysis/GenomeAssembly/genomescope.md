@@ -1,6 +1,8 @@
 ---
 title: Genome Assembly
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
@@ -135,3 +137,7 @@ For more information on how GenomeScope works, check out this poster and supplem
 - [GenomeScope supplementary file and deeper explanation of equations](http://biorxiv.org/content/biorxiv/suppl/2017/02/28/075978.DC2/075978-1.pdf)
 
 [Table of contents](/index.md)
+
+---
+
+* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

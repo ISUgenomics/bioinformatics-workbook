@@ -1,6 +1,8 @@
 ---
 title: How to analyze Hi-C data with Juicer and scaffold your genome assembly using 3D-DNA
 layout: single
+author: Rick Masonbrink
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
@@ -253,8 +255,8 @@ This is what a genome assembly looks like from a population of highly heterozygo
 
 ## Sources
 
-[Host website](https://github.com/aidenlab/juicer) -- Has all of the software and tutorials hosted here.
+* [Host website](https://github.com/aidenlab/juicer) -- Has all of the software and tutorials hosted here.
+* [Aiden lab forum](http://aidenlab.org/forum.html) -- Very helpful if you have a problem with their software.
+* [Original publication of mosquito genome assembly using Hi-C](http://science.sciencemag.org/content/356/6333/92)
 
-[Aiden lab forum](http://aidenlab.org/forum.html) -- Very helpful if you have a problem with their software.
-
-[Original publication of mosquito genome assembly using Hi-C](http://science.sciencemag.org/content/356/6333/92)
+---

@@ -102,5 +102,6 @@ This assembly will be considered the gold standard that we strive for with the d
 ```
 
 
+---
 
-[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
+* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
