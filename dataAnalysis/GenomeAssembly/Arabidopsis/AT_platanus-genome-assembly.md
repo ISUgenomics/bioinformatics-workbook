@@ -433,7 +433,7 @@ platanus_32merFrq.tsv : kmer frequency distribution
 
 In this step, we will use the contigs create in the previous step, along with trimmed reads (PE and MP) to scaffold the initial set of contigs. We will run the command as follows:
 
-```
+```bash
 platanus scaffold \
     -o platanus \
     -c platanus_contig.fa \

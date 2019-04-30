@@ -100,3 +100,7 @@ This assembly will be considered the gold standard that we strive for with the d
                                          scaffold %non-ACGTN       0.00
                              Number of scaffold non-ACGTN nt          0
 ```
+
+
+
+[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

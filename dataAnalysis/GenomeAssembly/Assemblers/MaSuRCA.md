@@ -264,8 +264,8 @@ header:
 
 ## Tutorial examples with real datasets
 
-* [Example with Arabidopsis](/bioinformatics-workbook/dataAnalysis/GenomeAssembly/Arabidopsis/AT_MaSuRCA.md)
+* [Example with Arabidopsis](../Arabidopsis/AT_MaSuRCA.md)
 
 
 
-[Back to the Assembly and Annotation Index page](/bioinformatics-workbook/dataAnalysis/GenomeAnnotation/annotation_and_assembly_index.md)
+[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

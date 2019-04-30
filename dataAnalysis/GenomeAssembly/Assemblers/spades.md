@@ -112,3 +112,6 @@ header:
   * [SPAdes 3.13.0 Manual](http://cab.spbu.ru/files/release3.13.0/manual.html)
   * [Center for Algorithmic Biotechnology](http://cab.spbu.ru/software/spades/#benchmark)
   * [SPAdes Genome paper 2012](http://cab.spbu.ru/software/spades/#benchmark)
+
+
+[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
