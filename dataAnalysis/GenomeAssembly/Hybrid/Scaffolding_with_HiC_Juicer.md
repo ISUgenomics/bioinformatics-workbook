@@ -260,3 +260,5 @@ This is what a genome assembly looks like from a population of highly heterozygo
 * [Original publication of mosquito genome assembly using Hi-C](http://science.sciencemag.org/content/356/6333/92)
 
 ---
+
+* [Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)
