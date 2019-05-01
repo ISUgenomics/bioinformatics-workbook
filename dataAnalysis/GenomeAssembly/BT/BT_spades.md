@@ -1,7 +1,9 @@
 ---
 title: Spades Genome assembly of a Bacillus thuringiensis
 layout: single
-author: Andrew Severin,Arun Seetharam
+author:
+  - Andrew Severin
+  - Arun Seetharam
 author_profile: true
 header:
   overlay_color: "444444"
