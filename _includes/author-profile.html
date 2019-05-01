@@ -1,3 +1,6 @@
+{% assign author = page.author | default: page.authors[0] | default: site.author %}
+{% assign author = site.data.authors[author] | default: author %}
+
 {% assign authorCount = page.authors | size %}
 {% if authorCount == 0 %}
   {% if page.author and site.data.authors[page.author] %}
@@ -10,6 +13,7 @@
 {% else %}
   {% assign authors = page.authors %}
 {% endif %}
+
 
 <div itemscope itemtype="http://schema.org/Person">
   {% for authorid in authors %}
