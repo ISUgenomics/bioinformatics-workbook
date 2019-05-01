@@ -13,7 +13,7 @@
 
 <div itemscope itemtype="http://schema.org/Person">
   {% for authorid in authors %}
-  <p>
+
   {% if author.avatar %}
     <div class="author__avatar">
       {% if author.avatar contains "://" %}
@@ -271,6 +271,6 @@
       {% include author-profile-custom-links.html %}
     </ul>
   </div>
-  </p>
+
   {% endfor %}
 </div>
