@@ -13,7 +13,6 @@ header:
 **Genome Assembly** is the process of using DNA sequencing data to generate a representation of bases contained in chromosomes or the full genomes of an organism in the proper order and orientation.   
 
 ### [Introduction to Genome Assembly](../GenomeAssembly/Intro_GenomeAssembly.md)
-
   * [Introduction to Canu](../GenomeAssembly/Assemblers/canu.md)
     * [Canu on XSEDE Bridges Super Computer](../GenomeAssembly/BT/BT_Canu_bridges.md)
   * [Introduction to SPAdes](../GenomeAssembly/Assemblers/spades.md)
@@ -26,7 +25,7 @@ header:
     * [SPAdes Assembly of Bacillus thuringiensis](../GenomeAssembly/BT/BT_spades.md)
   * [Arabidopsis thaliana data set](../GenomeAssembly/Arabidopsis/Arabidopsis_background.md)
     * [MaSuRCA assembly of Arabidopsis thaliana](../GenomeAssembly/Arabidopsis/AT_MaSuRCA.md)
-    * [Platanus aassembly of Arabidopsis thaliana](../GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
+    * [Platanus assembly of Arabidopsis thaliana](../GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
 
 ### Tools for assessing the quality of a Genome Assembly
 
