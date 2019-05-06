@@ -90,7 +90,7 @@ header:
 
 ### Genome Assembly and Annotation
 
-* <span style="color:lightblue">[Introduction to Genome Assembly](../GenomeAssembly/Intro_GenomeAssembly)</span>
+* <span style="color:lightblue">[Introduction to Genome Assembly](../GenomeAssembly/Intro_GenomeAssembly.md)</span>
     * [Introduction to Canu](../dataAnalysis/GenomeAssembly/Assemblers/canu.md)
       * [Canu on XSEDE Bridges Super Computer](../dataAnalysis/GenomeAssembly/BT/BT_Canu_bridges.md)
     * [Introduction to SPAdes](../dataAnalysis/GenomeAssembly/Assemblers/spades.md)

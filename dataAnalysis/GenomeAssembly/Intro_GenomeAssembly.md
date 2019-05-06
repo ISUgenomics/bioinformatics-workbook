@@ -12,8 +12,10 @@ header:
 
 Upon completion of this section on Genome Assembly you will understand the following:
 
+* What are the goals of a genome assembly project?
 * What is Whole Genome Sequence Assembly.
 * Why is it a Genome assembly a hard problem
+* What are the two main Genome Assembly Algorithms?
 
 # What are the goals of a genome assembly project?
 
@@ -85,7 +87,7 @@ Like any scientific endeavor, genome assembly starts with experimental design an
 * ## Expertise
   Requires the installation of assembly programs, learning how they work, testing of parameters to optimise the output.  Lots of assemblers out there to choose from.
 
-# Genome Assembly Algorithms
+# What are the two main Genome Assembly Algorithms?
 
 There are two main classes of genome assembly: Overlap Layout Consensus (OLC) amd Debruijn Graph (DBG).
 

@@ -12,7 +12,7 @@ header:
 
 **Genome Assembly** is the process of using DNA sequencing data to generate a representation of bases contained in chromosomes or the full genomes of an organism in the proper order and orientation.   
 
-### [Introduction to Genome Assembly](../GenomeAssembly/Intro_GenomeAssembly)
+### [Introduction to Genome Assembly](../GenomeAssembly/Intro_GenomeAssembly.md)
 
   * [Introduction to Canu](../GenomeAssembly/Assemblers/canu.md)
     * [Canu on XSEDE Bridges Super Computer](../GenomeAssembly/BT/BT_Canu_bridges.md)
