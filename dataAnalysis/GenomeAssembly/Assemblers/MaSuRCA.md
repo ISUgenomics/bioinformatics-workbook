@@ -267,5 +267,6 @@ header:
 * [Example with Arabidopsis](../Arabidopsis/AT_MaSuRCA.md)
 
 
+---
 
-[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
+* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
