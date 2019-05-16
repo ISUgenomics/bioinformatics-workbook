@@ -204,7 +204,6 @@ the script:
 # script to prepare fastq files for GATK snp calling
 # Arun Seetharam
 # 5/16/2019
-
 if [ $# -ne 3 ] ; then
    echo -e "usage: $(basename "$0") <reference> <read R1> <read R2>"
    echo ""
@@ -214,7 +213,6 @@ if [ $# -ne 3 ] ; then
    echo ""
    exit 0
 fi
-
 module load picard
 module load bwa
 module load samtools
@@ -230,19 +228,22 @@ PICARD_CMD="java -Xmx100g -Djava.io.tmpdir=$TMPDIR -jar ${PICARD_HOME}/picard.ja
 # platform id from fastq file
 if [ ${R1: -3} == ".gz" ]; then
    PLT=$(zcat $R1 |head -n 1 |cut -f 3 -d ":")
+   RGPU=$(zcat $R1 |head -n 1 |cut -f 3-5 -d ":")
 else
    PLT=$(cat $R1 |head -n 1 |cut -f 3 -d ":")
+   RGPU=$(cat $R1 |head -n 1 |cut -f 3-5 -d ":")
 fi
 
 # time stamp as string of numbers
 TDATE=$(date '+%Y-%m-%d %H:%M:%S' |sed 's/ /T/g')
-
-echo $R1
-echo $R2
-echo $OUT
-echo $PLT
-echo $TDATE
-
+# read group identifier, should be unique, usually genotype name
+RGID=$(echo $R1 |cut -f 1-3 -d "_")
+#  library identifier
+RGLB="$RGID"
+# platform name choose either ILLUMINA, SOLID, LS454, HELICOS and PACBIO
+RGPL="ILLUMINA"
+# genotype name, this will appear in VCF file header
+RGSM="$RGID"
 # convert fastq to sam and add readgroups
 $PICARD_CMD FastqToSam \
    FASTQ=${R1} \
@@ -267,7 +268,6 @@ $PICARD_CMD MarkIlluminaAdapters \
 echo >&2 ERROR: MarkIlluminaAdapters failed for $OUT
 exit 1
 }
-
 # convert bam back to fastq for mapping
 $PICARD_CMD SamToFastq \
    I=${OUT}_markilluminaadapters.bam \
@@ -278,7 +278,6 @@ $PICARD_CMD SamToFastq \
 echo >&2 ERROR: SamToFastq failed for $OUT
 exit 1
 }
-
 # mapping reads to indexed genome
 bwa mem \
    -M \
@@ -289,7 +288,6 @@ bwa mem \
 echo >&2 ERROR: BWA failed for $OUT
 exit 1
 }
-
 # merging alignments
 $PICARD_CMD MergeBamAlignment \
    R=$REF \
@@ -307,12 +305,10 @@ $PICARD_CMD MergeBamAlignment \
 echo >&2 ERROR: MergeBamAlignment failed for $OUT
 exit 1
 }
-
-
 # mark duplicates
 $PICARD_CMD MarkDuplicates \
   INPUT=${OUT}_snippet_mergebamalignment.bam \
-  OUTPUT=${OUT}_final.bam \
+  OUTPUT=${OUT}_prefinal.bam \
   METRICS_FILE=${OUT}_mergebamalignment_markduplicates_metrics.txt \
   OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500 \
   CREATE_INDEX=true \
@@ -320,9 +316,22 @@ $PICARD_CMD MarkDuplicates \
 echo >&2 ERROR: MarkDuplicates failed for $OUT
 exit 1
 }
-
+# add read groups
+$PICARD_CMD AddOrReplaceReadGroups \
+  INPUT=${OUT}_prefinal.bam \
+  OUTPUT=${OUT}_final.bam \
+  RGID=${RGID} \
+  RGLB=${RGLB} \
+  RGPL=${RGPL} \
+  RGPU=${RGPU} \
+  RGSM=${RGSM} \
+  CREATE_INDEX=true \
+  TMP_DIR=$TMPDIR || {
+echo >&2 ERROR: Adding read groups failed for $OUT
+exit 1
+}
 echo >&2 "ALL DONE!"
-
+# cleanup
 rm ${OUT}_fastqtosam.bam
 rm ${OUT}_markilluminaadapters.bam
 rm ${OUT}_samtofastq_interleaved.fq
@@ -330,6 +339,8 @@ rm ${OUT}_bwa_mem.bam
 rm ${OUT}_snippet_mergebamalignment.bam
 rm ${OUT}_snippet_mergebamalignment.bai
 ```
+
+
 
 ### Step 3: GATK round 1 variant calling
 
