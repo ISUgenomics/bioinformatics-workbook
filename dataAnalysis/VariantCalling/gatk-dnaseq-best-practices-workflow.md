@@ -69,7 +69,9 @@ The files and folders will be organized as follows:
 
 ## Workflow
 
-Lucid charts workflow
+![workflow](assets/gatk-workflow.png)
+
+Fig 1: Overview of this tutorial
 
 ### Step 0: Quality check the files
 
