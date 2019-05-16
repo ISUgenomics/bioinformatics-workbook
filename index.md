@@ -10,7 +10,7 @@ feature_row:
   - title: "Command Line Basics and Useful Programs"
     image_path: /assets/images/computer.jpg
     alt: "Programs"
-    url: "/Appendix/programs"
+    url: "/Appendix/programs/"
     btn_label: "Learn More"
 
   - title: "Introduction to Project Management"
