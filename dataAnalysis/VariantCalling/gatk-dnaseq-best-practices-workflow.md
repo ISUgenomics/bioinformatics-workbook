@@ -222,7 +222,10 @@ ulimit -c unlimited
 REF=$1
 R1=$2
 R2=$3
+# adjust this to suit your input file name
 OUT=$(echo $R1 |cut -f 1-3 -d "_")
+PICARD_HOME=$(dirname $(which picard))
+PICARD_CMD="java -Xmx100g -Djava.io.tmpdir=$TMPDIR -jar ${PICARD_HOME}/picard.jar"
 
 # platform id from fastq file
 if [ ${R1: -3} == ".gz" ]; then
@@ -241,7 +244,7 @@ echo $PLT
 echo $TDATE
 
 # convert fastq to sam and add readgroups
-picard FastqToSam \
+$PICARD_CMD FastqToSam \
    FASTQ=${R1} \
    FASTQ2=${R2} \
    OUTPUT=${OUT}_fastqtosam.bam \
@@ -256,7 +259,7 @@ echo >&2 ERROR: FastqToSam failed for $OUT
 exit 1
 }
 # marking adapters
-picard MarkIlluminaAdapters \
+$PICARD_CMD MarkIlluminaAdapters \
    I=${OUT}_fastqtosam.bam \
    O=${OUT}_markilluminaadapters.bam \
    M=${OUT}_markilluminaadapters_metrics.txt \
@@ -266,7 +269,7 @@ exit 1
 }
 
 # convert bam back to fastq for mapping
-picard SamToFastq \
+$PICARD_CMD SamToFastq \
    I=${OUT}_markilluminaadapters.bam \
    FASTQ=${OUT}_samtofastq_interleaved.fq \
    CLIPPING_ATTRIBUTE=XT \
@@ -288,7 +291,7 @@ exit 1
 }
 
 # merging alignments
-picard MergeBamAlignment \
+$PICARD_CMD MergeBamAlignment \
    R=$REF \
    UNMAPPED_BAM=${OUT}_fastqtosam.bam \
    ALIGNED_BAM=${OUT}_bwa_mem.bam \
@@ -307,7 +310,7 @@ exit 1
 
 
 # mark duplicates
-picard MarkDuplicates \
+$PICARD_CMD MarkDuplicates \
   INPUT=${OUT}_snippet_mergebamalignment.bam \
   OUTPUT=${OUT}_final.bam \
   METRICS_FILE=${OUT}_mergebamalignment_markduplicates_metrics.txt \
