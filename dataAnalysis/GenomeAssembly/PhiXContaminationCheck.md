@@ -67,9 +67,10 @@ tblastx -db seriola_blastDB -query NC_001422.fna -outfmt 6 | sort -k 7n > phiX_2
  12.	 bitscore	 bit score
  ```
 
- ## Output
+## Output
 
 As you can see the only match in the blastn is the phiX genome we added and it aligned perfectly with 100% match and the full 5386 bp length.  You will not likely get a perfect match that is full length.  If you do not have PhiX contamination, this file will be empty.
+
 ```
 phiX_2_seriola.blastnout
 ::::::::::::::
