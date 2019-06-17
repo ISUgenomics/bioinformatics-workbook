@@ -11,9 +11,9 @@ header:
 ### Command Line Basics and Useful Programs
 * <span style="color:lightblue">Introduction to Unix</span>
   * [Unix Basics 1](../Appendix/Unix/unix-basics-1.md)  
-  * [Unix Basics 2](../Appendix/unix-basics-2.md)
-  * [Unix Basics 3 (grep)](../Appendix/unix-basics-3.md)
-  * [Unix Basics 4 (sed)](../Appendix/unix-basics-4.md)
+  * [Unix Basics 2](../Appendix/Unix/unix-basics-2.md)
+  * [Unix Basics 3 (grep)](../Appendix/Unix/unix-basics-3.md)
+  * [Unix Basics 4 (sed)](../Appendix/Unix/unix-basics-4.md)
 * <span style="color:lightblue">HPC</span>
   * [How to Install a Program](../Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
   * <span style="color:lightblue">SSH</span>
