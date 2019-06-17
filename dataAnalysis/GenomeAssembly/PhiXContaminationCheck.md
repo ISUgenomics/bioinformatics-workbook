@@ -1,5 +1,12 @@
-# Checking your Assembly for PhiX contamination
-
+---
+title: Checking your Assembly for PhiX contamination
+layout: single
+author: Andrew Severin
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
 
 ## Download PhiX sequence from NCBI
 
