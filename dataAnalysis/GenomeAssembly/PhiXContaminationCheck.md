@@ -8,7 +8,19 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-## Download PhiX sequence from NCBI
+# Learning Objectives
+
+Upon completion of this section on Checking your Assembly for PhiX contamination you will understand the following:
+
+* Where can I find the sequence for PhiX that is a common contaminent?
+* How do I check my genome for PhiX contamination using BLAST?
+
+PhiX is a very common contaminant that can be misassembled into genomes
+
+  - Read [Large-scale contamination of microbial isolate genomes by Illumina PhiX control](https://environmentalmicrobiome.biomedcentral.com/articles/10.1186/1944-3277-10-18)for more details on this issue.
+
+
+# Download PhiX sequence from NCBI
 
 ```
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/Viruses/enterobacteria_phage_phix174_sensu_lato_uid14015/NC_001422.fna
@@ -17,7 +29,7 @@ seqlen.awk NC_001422.fna
 gi|9626372|ref|NC_001422.1| 5386
 
 ```
-## Download a Genome
+# Download a Genome
 
 If you assembled a genome, you will have a genome to test.  If you need a genome for this exercise. You can download one.  This genome is a fish (_Seriola dorsalis_).
 
@@ -26,7 +38,7 @@ wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/002/814/215/GCF_002814215.1_Sedo
 gunzip GCF_002814215.1_Sedor1_genomic.fna.gz
 ```
 
-## Prep example genome
+# Prep example genome
 
 In this example we are going to artificially add the PhiX phage genome so that we can find it in later steps.  In this way you can see the difference between a strong hit and random noise from short alignments that blast will also find.  If you have a genome that you want to see if it has PhiX you should skip this step.
 
@@ -34,7 +46,7 @@ In this example we are going to artificially add the PhiX phage genome so that w
 cat NC_001422.fna >> GCF_002814215.1_Sedor1_genomic.fna
 ```
 
-## Make a Blast database for the _Seriola_ genome
+# Make a Blast database for the _Seriola_ genome
 
 ```
 module load blast
@@ -43,7 +55,7 @@ makeblastdb -in GCF_002814215.1_Sedor1_genomic.fna -input_type fasta -dbtype pro
 
 ```
 
-## Perform blast to find potential contamination in the genome
+# Perform blast to find potential contamination in the genome
 
 ```
 blastn  -db seriola_blastDB -query NC_001422.fna -outfmt 6 | sort -k 7n > phiX_2_seriola.blastnout
@@ -51,7 +63,7 @@ blastn  -db seriola_blastDB -query NC_001422.fna -outfmt 6 | sort -k 7n > phiX_2
 tblastx -db seriola_blastDB -query NC_001422.fna -outfmt 6 | sort -k 7n > phiX_2_seriola.tblastxout
 ```
 
-#### Header information for blast output
+### Header information for blast output
 ```
  1.	 qseqid	 query (e.g., gene) sequence id
  2.	 sseqid	 subject (e.g., reference genome) sequence id
@@ -67,7 +79,7 @@ tblastx -db seriola_blastDB -query NC_001422.fna -outfmt 6 | sort -k 7n > phiX_2
  12.	 bitscore	 bit score
  ```
 
-## Output
+# BLAST Output
 
 As you can see the only match in the blastn is the phiX genome we added and it aligned perfectly with 100% match and the full 5386 bp length.  You will not likely get a perfect match that is full length.  If you do not have PhiX contamination, this file will be empty.
 
@@ -117,3 +129,8 @@ Here I sort the output by the subject (target) sequence in the assembly then req
 more phiX_2_seriola.tblastxout | sort -k 2n | awk '$3>50 && $4>30' | awk '{print $2}' | sort | uniq -c
      45 NC_001422.1
 ```
+
+
+# Further Reading
+
+* [Large-scale contamination of microbial isolate genomes by Illumina PhiX control](https://environmentalmicrobiome.biomedcentral.com/articles/10.1186/1944-3277-10-18)
