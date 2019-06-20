@@ -30,6 +30,7 @@ header:
 ### Tools for assessing the quality of a Genome Assembly
 
   * [GenomeScope to Estimate Genome Size](../GenomeAssembly/genomescope.md)
+  * [Checking a genome for contamination from vectors using UniVec](../GenomeAssembly/univecContaminationCheck.md)
   * [Check a genome for PhiX contamination](../GenomeAssembly/PhiXContaminationCheck.md)
 
 ### Tools for Scaffolding assemblies
