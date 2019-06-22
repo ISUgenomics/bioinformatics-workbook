@@ -1,5 +1,5 @@
 ---
-title: Genomescope: genome properties using just raw sequence data
+title: Genomescope genome properties using just raw sequence data
 layout: single
 author: Andrew Severin
 author_profile: true
