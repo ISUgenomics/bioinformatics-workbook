@@ -9,6 +9,7 @@ header:
 ---
 
 
+
 Genomescope uses k-mer frequencies generated from raw read data to estimate the genome size, abundance of repetitive elements and rate of heterozygosity.
 
 ## Background
