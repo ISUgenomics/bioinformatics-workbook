@@ -7,11 +7,12 @@ header:
 excerpt: 'A tutorial to help scientists design their projects and analyze their data.'
 feature_row:
 
-  - title: "Command Line Basics and Useful Programs"
-    image_path: /assets/images/computer.jpg
-    alt: "Programs"
+  - image_path: /assets/images/computer.jpg
+    alt: "Command Line Basics"
+    title: "Command Line Basics and Useful Programs"
     url: "/Appendix/programs"
     btn_label: "Learn More"
+    caption: "photo credit [Arun Seetharam]"
 
   - title: "Introduction to Project Management"
     image_path: /projectManagement/assets/PMatom.png
@@ -52,7 +53,6 @@ feature_row:
     excerpt: "RNA Sequencing"
     url: "dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-intro"
     btn_label: "Learn More"
-
 
   - image_path: /assets/images/annotation.png
     alt: "Annotation"
