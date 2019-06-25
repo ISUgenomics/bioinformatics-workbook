@@ -271,7 +271,7 @@ compress_html:
 collections:
   tutorials:
       output: true
-#      permalink: /:collection/:path/
+      permalink: /:collection/:path/
 
 # Defaults
 defaults:
