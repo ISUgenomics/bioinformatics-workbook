@@ -342,13 +342,267 @@ rm ${OUT}_snippet_mergebamalignment.bam
 rm ${OUT}_snippet_mergebamalignment.bai
 ```
 
+At the end of this step, you will have the following files as output:
 
+```
+Aha18_final.bam
+AhaN1_final.bam
+AhaN4_final.bam
+AhaN3_final.bam
+```
 
 ### Step 3: GATK round 1 variant calling
 
+At this step, you will need the indexed genome and interval list (`coords.bed`)  from the `Step 0`. Running the script will generate the commands that you will need to submit as slurm script as before.
+
+Before starting, setup the files/folders as follows:
+```bash
+cd 4_gatk-round-1
+for finalbam in ../3_pre-processing/*_final.ba?; do
+  ln -s $finalbam
+done
+```
+The `gatk3_cmdsgen.sh` is as follows:
+
+```bash
+#!/bin/bash
+# script to generate GATK commands for snp calling
+# gatk haplotype caller
+# for each windows specified
+# Arun Seetharam
+# 5/16/2019
+
+if [ $# -lt 3 ] ; then
+   echo -e "usage: $(basename "$0") <windows bed file> <genome fasta file> <regex for bam files>"
+   echo ""
+   echo -e "\twindows.bed:\tBED formatted reference intervals to call SNPs"
+   echo -e "\tgenome.fasta:\tFASTA formatted reference genome"
+   echo -e "\tfinal.bam files:\tBAM formatted final files from processing step"
+   echo ""
+   exit 0
+fi
+
+unset -v bamfiles
+list="$1"
+bamfiles=(*"${3}")
+REF="$3"
+
+for bam in ${bamfiles[@]}; do
+echo -en "-I ${bam} ";
+done > CombinedBAM_temp
+
+
+while read line; do
+if ! [[ $line == @* ]]; then
+g2=$(echo $line | awk '{print $1":"$2"-"$3}'); \
+g1=$(echo $line | awk '{print $1"_"$2"_"$3}'); \
+CWD=$(pwd)
+echo "gatk --java-options \"-Xmx80g -XX:+UseParallelGC\" HaplotypeCaller -R ${REF} $(cat CombinedBAM_temp) -L "${g2}" --output "${g1}".vcf;";
+fi
+done<${list}
+```
+
+Run this script as:
+
+```bash
+gatk3_cmdsgen.sh ../0_index/ahalleri_coords.bed ../0_index/ahalleri.fasta *final.bam > gatk.cmds
+```
+This will generate `2239` commands (one gatk command per interval). Since the GATK 4 cannot use multiple threads, you can run one job per thread and thus fit multiple jobs in a single node. Using multiple nodes, you can run these commands much faster than running a single command on a bigger interval or a whole genome.
+
+Before, you ran `makeSLURMs.py` script. This job runs the commands serially. Another script `makeSLURMp.py` also does the same thing, but instead it runs the command in parallel. We will use that and specify how many jobs we want to run. To split them
+
+```bash
+makeSLURMp.py 220 gatk.cmds
+# some fixing is needed to make sure that it runs the right number of jobs
+# and then submit
+for sub in *.sub; do
+  sed -i 's/parallel -j 1 --joblog/parallel -j 18 --joblog/g' $sub;
+  sbatch $sub;
+done
+```
+This will run 18 jobs at time and 220 jobs total, per node. Upon completion, you will see many VCF file (2239 total) and its associated index files (idx)
+
+Next step is to merge and perform filtering on these variants to use them to re-calibrate the bam files. The re-calibrated bam files will be then used for calling variants in the similar fashion.
+
+Run the `gatk4_filter.sh` for merging, filtering and cleaning-up files
+
+```bash
+#!/bin/bash
+# script to filter snps
+# gatk tutorial
+# Arun Seetharam
+# 5/16/2019
+
+merged=merged
+#change name as you wish
+ref=$1
+if [ $# -lt 1 ] ; then
+   echo -e "usage: $(basename "$0")  <genome fasta file>"
+   echo ""
+   echo -e "\tgenome.fasta:\tFASTA formatted reference genome"
+   echo ""
+   exit 0
+fi
+module load vcftools
+module load GIF/datamash
+module load gatk
+module load bcftools
+mkdir -p vcffiles idxfiles
+# merge vcf files
+mv *.vcf ./vcffiles
+mv *.idx ./idxfiles
+cd vcffiles
+vcf=(*.vcf)
+module load parallel
+parallel "grep -v '^#' {}" ::: *.vcf >> ../${merged}.body
+grep "^#" ${vcf[1]} > ../${merged}.head
+cd ..
+cat ${merged}.head ${merged}.body >> ${merged}.vcf
+cat ${merged}.vcf | vcf-sort -t $TMPDIR -p 36 -c > ${merged}_sorted.vcf
+# calculate stats
+bcftools stats ${merged}_sorted.vcf > ${merged}_sorted.vchk
+plot-vcfstats ${merged}_sorted.vchk -p plots/
+maxdepth=$(grep -oh ";DP=.*;" ${merged}_sorted.vcf | cut -d ";" -f 2 | cut -d "="  -f 2 | datamash mean 1 sstdev 1 | awk '{print $1+$2*5}')
+# separate SNPs and INDELs
+vcftools --vcf ${merged}_sorted.vcf --keep-only-indels --recode --recode-INFO-all --out ${merged}_sorted-indels.vcf
+vcftools --vcf ${merged}_sorted.vcf --remove-indels --recode --recode-INFO-all --out ${merged}_sorted-snps.vcf
+gatk --java-options \"-Xmx80g -XX:+UseParallelGC\" VariantFiltration \
+    --reference $ref \
+    --variant ${merged}_sorted-snps.vcf \
+    --filter-expression "QD < 2.0 || FS > 60.0 || MQ < 45.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0 || DP > ${maxdepth}" \
+    --filter-name "FAIL" \
+    --output ${merged}_filtered-snps.vcf
+gatk --java-options \"-Xmx80g -XX:+UseParallelGC\" VariantFiltration \
+    --reference $ref \
+    --variant ${merged}_sorted-indels.vcf \
+    --filter-expression "QD < 2.0 || FS > 200.0 || ReadPosRankSum < -20.0" \
+    --filter-name "FAIL" \
+    --output ${merged}_filtered-indels.vcf
+```
+
+Run this script as:
+
+```bash
+cd 4_gatk-round-1
+gatk4_filter.sh ../0_index/ahalleri.fasta
+```
+
+After completion, you will have the first round results for SNP calling. Technically, this can be used as results, the best practices recommend that you run another round of SNP calling using this results to calibrate the original BAM files.
+
+The main results from this script are:
+
+```
+merged_filtered-snps.vcf
+merged_filtered-indels.vcf
+```
 
 ### Step 4: Variant Recalibration
 
+As mentioned before, we will run the recalibration of each BAM file with the script `gatk5_bsqr.sh` in `5_recalibration` folder.
+
+```bash
+#!/bin/bash
+# script to bsqr for SNP calling
+# gatk SNP calling tutorial
+# Arun Seetharam
+# 5/16/2019
+if [ $# -lt 3 ] ; then
+   echo -e "usage: $(basename "$0") <genome file> <VCF file> <bam file>"
+   echo ""
+   echo -e "\tgenome.fasta:\tFASTA formatted reference genome"
+   echo -e "\tvcffile:\tVCF format first round filtered SNPs, you can also use known SNPs from other sources as well"
+   echo -e "\tfinal.bam files:\tBAM formatted final files from processing step"
+   echo ""
+   exit 0
+fi
+module load gatk
+module load r-geneplotter
+REF="$1"
+FRVCF="$2"
+IBAM="$3"
+OBAM=$(basename ${IBAM} | sed 's/_final.bam//g')
+
+gatk BaseRecalibrator \
+   --reference $REF \
+   --input $IBAM \
+   --known-sites ${FRVCF} \
+   --output ${OBAM}_bef-R1.table
+
+gatk ApplyBQSR \
+   --reference $REF \
+   --input $IBAM \
+   --output ${OBAM}_recal.bam \
+   --bqsr-recal-file ${OBAM}_bef-R1.table
+
+gatk BaseRecalibrator \
+   --reference $REF \
+   --input ${OBAM}_recal.bam \
+   --known-sites ${FRVCF} \
+   --output ${OBAM}_aft-R1.table
+
+gatk AnalyzeCovariates \
+   -before ${OBAM}_bef-R1.table \
+   -after ${OBAM}_aft-R1.table \
+   -plots ${OBAM}-AnalyzeCovariates.pdf
+```
+
+Now, create commands and slurm submission script to run them on each BAM file
+
+```bash
+cd 5_recalibration
+for bam in ../3_pre-processing/*final.bam; do
+  ln -s $bam
+done
+for bam in *_final.bam; do
+  echo "./GATK_06_BSQR.sh $bam"
+done > bsqr.cmds
+makeSLURMs.py 1 bsqr.cmds
+for sub in bsqr_?.sub; do
+  sbatch $sub;
+done
+```
+
+upon completion, you will have BAM files with `_recal.bam` suffix. You will need to rerun the entire process of `step 3` using these files.
+
+
 ### Step 5: GATK round 2 variant calling
 
-### Step 6: Filtering and finalizing variants
+We will now move to folder `6_gatk_round-2` and re-run the GATK SNPcalling. You can easily reuse all the SLURM scripts that you generated in the step3
+
+Organize:
+
+```bash
+cd 6_gatk_round-2
+for recalbam in ../5_recalibration/*_recal.ba?; do
+  ln -s $recalbam
+done
+```
+Next, run the commands generator script:
+
+```bash
+gatk3_cmdsgen.sh ../0_index/ahalleri_coords.bed ../0_index/ahalleri.fasta *recal.bam > gatk.cmds
+```
+This will generate `2239` commands (one gatk command per interval).
+
+```bash
+makeSLURMp.py 220 gatk.cmds
+# some fixing is needed to make sure that it runs the right number of jobs
+# and then submit
+for sub in *.sub; do
+  sed -i 's/parallel -j 1 --joblog/parallel -j 18 --joblog/g' $sub;
+  sbatch $sub;
+done
+```
+Once all the jobs complete, run filtering script:
+
+```bash
+cd 6_gatk_round-2
+gatk4_filter.sh ../0_index/ahalleri.fasta
+```
+
+The will create final results for SNP calling:
+
+```
+merged_filtered-snps.vcf
+merged_filtered-indels.vcf
+```
