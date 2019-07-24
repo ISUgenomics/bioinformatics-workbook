@@ -38,9 +38,10 @@ Downloading from SRA will be performed using the [sra-toolkit](https://trace.ncb
   SRR3156596
   SRR3157034
   SRR3166543
-```
+  ```
 
 * Assuming the sra-toolkit is installed then load the module and run the following bash script on the command line.
+
   ```bash
   module load sra-toolkit
   while read line; do
@@ -49,13 +50,15 @@ Downloading from SRA will be performed using the [sra-toolkit](https://trace.ncb
   ```
 
 * The pacbio data has to be downloaded separately
+
   ```
   fastq-dump --table SEQUENCE --origfmt SRR3156160
   ```
 
-  **Note:** sra-toolkit will create a folder named ```ncbi`` in your home directory ```/home/userid/ncbi```  If you have a disk storage limit on your home directory (most supercomputers do), you will want to move that folder to a different location and then create a softlink in your home folder.
+  **Note:** sra-toolkit will create a folder named ```ncbi``` in your home directory ```/home/userid/ncbi```  If you have a disk storage limit on your home directory (most supercomputers do), you will want to move that folder to a different location and then create a softlink in your home folder.
 
-  **Error example:** 2019-04-16T19:43:49 fastq-dump.2.8.1 err: unknown while writing file within file system module - unknown system error errno='Disk quota exceeded(122)'
+  **Error example:** 2019-04-16T19:43:49 fastq-dump.2.8.1 err: unknown while writing file within file system module - unknown system error errno=Disk quota exceeded(122)
+
 
 ## Assembly statistics for Arabidopsis
 
@@ -72,3 +75,6 @@ Downloading from SRA will be performed using the [sra-toolkit](https://trace.ncb
 |Contig L50	|27|
 |Total number of chromosomes and plasmids|	7|
 |Number of component sequences (WGS or clone)	|30|
+
+
+[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

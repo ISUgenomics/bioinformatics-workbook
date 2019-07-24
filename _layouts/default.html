@@ -23,7 +23,12 @@
       {{ content }}
     </div>
 
-
+    {% if site.search == true %}
+      <div class="search-content">
+        {% include_cached search/search_form.html %}
+      </div>
+    {% endif %}
+    
     <div class="page__footer">
       <footer>
         {% include footer/custom.html %}

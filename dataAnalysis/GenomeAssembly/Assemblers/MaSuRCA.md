@@ -253,10 +253,20 @@ header:
   The assembly is correct but it hasn't been gap filled.  This can occur on assemblies with lower levels of assembly coverage.
 
 
-
-  ## Further Reading
+## Further Reading
 
   * Main software website links
     * [MaSuRCA  home page](http://www.genome.umd.edu/masurca.html)
     * [MaSuRCA  Paper](https://academic.oup.com/bioinformatics/article/29/21/2669/195975)
     * [MaSuRCA github and Manual](https://github.com/alekseyzimin/masurca)
+
+
+
+## Tutorial examples with real datasets
+
+* [Example with Arabidopsis](../Arabidopsis/AT_MaSuRCA.md)
+
+
+---
+
+* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

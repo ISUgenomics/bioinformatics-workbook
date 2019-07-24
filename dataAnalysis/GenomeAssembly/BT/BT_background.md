@@ -42,19 +42,19 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR209/006/SRR2093876/SRR2093876_subread
 ## SRA files
 
 
-| Run        | Instrument | Layout        | Insert (bp) | ReadLength | TotalReads   | Bases (Mbp) |
-|------------|------------|---------------|------------:|------------|-------------:|------------:|
-| SRR2093876 | PacBio RS II          | Single read    | 0           | 2563      | 93,446,768   | 1,339  |
-| SRR2093872 | Illumina HiSeq 2000   | mate-pair      | 2000        | 100x2      | 162,362,560  | 1,405	|
-| SRR2093871 | Illumina HiSeq 2000   | paired-end     | 8,000       | 100x2      | 51,332,776   | 1,398 |
+| Run        | Instrument            | Layout        | Insert (bp) | ReadLength | TotalReads   | Bases (Mbp) |
+|------------|------------           |---------------|------------:|------------|-------------:|------------:|
+| SRR2093876 | PacBio RS II          | Single read    | 0           | 2563      |     | 1398  |
+| SRR2093871 | Illumina HiSeq 2000   | paired-end     | 200       | 100x2      |   | 1,339 |
+| SRR2093872 | Illumina HiSeq 2000   | mate-pair      | 2000        | 100x2      |   | 1,405	|
+
 
 ## How to download from SRA
 
-Downloading from SRA will be performed using the [sra-toolkit](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc).
+Downloading from SRA will be performed using the [sra-toolkit](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc). Additional metadata for these files can be found on NCBI here: [SAMN03840349](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SAMN03840349)
 * create a file with the SRA ids and name it `srr.ids`
 
   ```
-  SRR2093876
   SRR2093872
   SRR2093871
   ```
@@ -66,6 +66,10 @@ Downloading from SRA will be performed using the [sra-toolkit](https://trace.ncb
   done<srr.ids
   ```
 
+* The pacbio data has to be downloaded separately
+    ```
+    fastq-dump --table SEQUENCE --origfmt SRR2093876
+    ```
 
 
 ## Assembly statistics for Bacillus thuringiensis
@@ -96,3 +100,8 @@ This assembly will be considered the gold standard that we strive for with the d
                                          scaffold %non-ACGTN       0.00
                              Number of scaffold non-ACGTN nt          0
 ```
+
+
+---
+
+* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

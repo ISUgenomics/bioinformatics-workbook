@@ -81,9 +81,9 @@ The data for this analysis is taken from the following NCBI project.  It contain
 
   ```bash
   ls -lha | awk '{print $5, $NF}'
-  238M SRR3156160_1.fastq
-  8.2G SRR3156163_1.fastq
-  8.2G SRR3156163_2.fastq
+  125M SRR3156160_1.fastq
+  8.1G SRR3156163_1.fastq
+  8.1G SRR3156163_2.fastq
   218M SRR3156596_1.fastq
   218M SRR3156596_2.fastq
   1.2G SRR3157034_1.fastq
@@ -381,3 +381,6 @@ This file provides time stamps of the steps that were run with MaSuRCA.  When yo
 It appears the do_consensus.sh to perform gapfilling is currently having an issue that should be fixed in new releases.  This step can be performed manually.  [See here for more information](https://github.com/alekseyzimin/masurca/issues/53)
 
 The assembly is correct but it hasn't been gap filled.
+
+[Arabidopsis data set Info](Arabidopsis_background.md)
+[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

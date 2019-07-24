@@ -1,6 +1,8 @@
 ---
 title: Genome Assembly
 layout: single
+author: Rick Masonbrink
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
@@ -342,6 +344,9 @@ scaffold00005   12054261        62      KV766492.1 KV766494.1 LXSY01004106.1 LXS
 So 108 scaffolds put into chromosome 1, 81 into chromosome 2, 43 into chromosome 3, 45 into chromosome 4, 62 into chromosome 5.
 
 #unfortunately too many scaffolds to show in the dotplot, but a figure can be drawn by removing some of the small un-scaffoldable scaffolds from the assembly prior to running pyscaf.
-
-
 ```
+
+
+---
+
+* [Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)

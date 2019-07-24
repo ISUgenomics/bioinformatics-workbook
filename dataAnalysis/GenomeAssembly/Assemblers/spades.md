@@ -53,8 +53,8 @@ header:
   --pacbio /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093876_subreads.fastq.gz \
   --pe1-1 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093871_1.fastq.gz  \
   --pe1-2 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093871_2.fastq.gz  \
-  --pe2-1 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093872_1.fastq.gz  \
-  --pe2-2 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093872_2.fastq.gz  \
+  --mp1-1 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093872_1.fastq.gz  \
+  --mp1-2 /pylon5/mc48o5p/severin/spadesTutorial/00_rawdata/SRR2093872_2.fastq.gz  \
   --careful \
   -o BT
   ```
@@ -112,3 +112,6 @@ header:
   * [SPAdes 3.13.0 Manual](http://cab.spbu.ru/files/release3.13.0/manual.html)
   * [Center for Algorithmic Biotechnology](http://cab.spbu.ru/software/spades/#benchmark)
   * [SPAdes Genome paper 2012](http://cab.spbu.ru/software/spades/#benchmark)
+
+
+[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

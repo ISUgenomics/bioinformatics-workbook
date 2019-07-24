@@ -10,10 +10,10 @@ header:
 
 ### Command Line Basics and Useful Programs
 * <span style="color:lightblue">Introduction to Unix</span>
-  * [Unix Basics 1](../Appendix/unix-basics-1.md)  
-  * [Unix Basics 2](../Appendix/unix-basics-2.md)
-  * [Unix Basics 3 (grep)](../Appendix/unix-basics-3.md)
-  * [Unix Basics 4 (sed)](../Appendix/unix-basics-4.md)
+  * [Unix Basics 1](../Appendix/Unix/unix-basics-1.md)  
+  * [Unix Basics 2](../Appendix/Unix/unix-basics-2.md)
+  * [Unix Basics 3 (grep)](../Appendix/Unix/unix-basics-3.md)
+  * [Unix Basics 4 (sed)](../Appendix/Unix/unix-basics-4.md)
 * <span style="color:lightblue">HPC</span>
   * [How to Install a Program](../Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
   * <span style="color:lightblue">SSH</span>
@@ -90,7 +90,7 @@ header:
 
 ### Genome Assembly and Annotation
 
-* <span style="color:lightblue">Introduction to Genome Assembly</span>
+* <span style="color:lightblue">[Introduction to Genome Assembly](../dataAnalysis/GenomeAssembly/Intro_GenomeAssembly.md)</span>
     * [Introduction to Canu](../dataAnalysis/GenomeAssembly/Assemblers/canu.md)
       * [Canu on XSEDE Bridges Super Computer](../dataAnalysis/GenomeAssembly/BT/BT_Canu_bridges.md)
     * [Introduction to SPAdes](../dataAnalysis/GenomeAssembly/Assemblers/spades.md)
@@ -101,6 +101,9 @@ header:
     * [Motif Identification and Finding with MEME and FIMO](../dataAnalysis/GenomeAnnotation/MEME_Motif_Finding_In_Genomes.md)  
 * <span style="color:lightblue">Tools for assessing the quality of a Genome Assembly</span>
     * [GenomeScope to Estimate Genome Size](../dataAnalysis/GenomeAssembly/genomescope.md)
+    * [Checking a genome for contamination from vectors using UniVec](../dataAnalysis/GenomeAssembly/univecContaminationCheck.md)
+    * [Check a genome for PhiX contamination](../dataAnalysis/GenomeAssembly/PhiXContaminationCheck.md)
+* <span style="color:lightblue">Tools for Scaffolding assemblies</span>  
     * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
     * [Hi-C scaffolding](../GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
 * <span style="color:lightblue">Genome Assembly Examples</span>

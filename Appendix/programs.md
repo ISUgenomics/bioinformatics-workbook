@@ -14,10 +14,10 @@ header:
 ## Index
 
 * <span style="color:lightblue">Introduction to Unix</span>
-  * [Unix Basics 1](unix-basics-1.md)
-  * [Unix Basics 2](unix-basics-2.md)
-  * [Grep](unix-basics-3.md)
-  * [Sed](unix-basics-4.md)
+  * [Unix Basics 1](Unix/unix-basics-1.md)
+  * [Unix Basics 2](Unix/unix-basics-2.md)
+  * [Grep](Unix/unix-basics-3.md)
+  * [Sed](Unix/unix-basics-4.md)
   * [Introduction to regular expressions](../introduction/introduction-to-regular-expressions.md)
 
 

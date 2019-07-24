@@ -37,7 +37,7 @@ module load <path/to/sra-toolkit>
 module load <path/to/edirect>
 module load <path/to/parallel>
 esearch -db sra -query PRJNA348194 | efetch --format runinfo |cut -d "," -f 1 | awk 'NF>0' | grep -v "Run" > srr_numbers.txt
-while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/<version>/etc/asperaweb_id_dsa.openssh\" $line"; done<srr_numbers.txt > prefetch.cmds
+while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/.../ascp|/path.../etc/asperaweb_id_dsa.openssh\" $line"; done<srr_numbers.txt > prefetch.cmds
 parallel <prefetch.cmds
 ```
 After downloading the SRA files, we convert it to fastq format. We can use the fast-dump command as follows: (this step is slow and if possible run these commands using [gnu parallel](https://www.gnu.org/software/parallel/)). We assume that all SRA files are in a specific folder.
@@ -141,8 +141,9 @@ For HiSat2 mapping, you need to first index the genome and then use the read pai
 cd $SLURM_SUBMIT_DIR
 scontrol show job $SLURM_JOB_ID
 ulimit -s unlimited
-module use /software/modulefiles/
+
 module load hisat2
+
 GENOME="/path/to/refrence/GCF_000001735.3_TAIR10_genomic.fna"
 hisat2-build $GENOME ${GENOME%.*}
 
@@ -164,7 +165,7 @@ Once complete, you should see a number of files with `.ht2` extension.  These ar
 
 #### Hisat2 Mapping ####
 
-For mapping, each set of reads (forward and reverse or R1 and R2), we first set up a run_hisat2.sh script.
+For mapping, each set of reads (forward and reverse or R1 and R2), we first set up a `run_hisat2.sh` script as follows:
 ```
 #!/bin/bash
 set -o xtrace
@@ -182,9 +183,9 @@ R2_FQ="$2" # second argument
 
 # purge and load relevant modules.
 module purge
-module use </software/modulefiles/>
-module load hisat2
 
+module load hisat2
+module load samtools
 
 OUTPUT=$(basename ${R1_FQ} |cut -f 1 -d "_");
 
@@ -200,7 +201,7 @@ rm $ODIR\/${OUTPUT}.sam
 
 ```
 
-For setting it up to run with each set of file, we can set a SLURM script that loops over each fastq file. Note that this script calls the run_hisat2.sh script for each pair of fastq file supplied as its argument.
+For setting it up to run with each set of file, we can set a SLURM script (`loop_hisat2.sh`) that loops over each fastq file. Note that this script calls the run_hisat2.sh script for each pair of fastq file supplied as its argument.
 ```
 #!/bin/bash
 set -o xtrace
@@ -224,7 +225,10 @@ fq2=$(echo $fq1 | sed 's/1/2/g');
 done >& hisat2_1.log
 
 ```
-
+Now submit this job as follows:
+```
+sbatch loop_hisat2.sh
+```
 
 This should create, following files as output:
 ```
@@ -248,7 +252,7 @@ ODIR="path/to/counts"
 
 
 module purge
-module use /software/modulefiles/
+
 module load subread
 module load parallel
 

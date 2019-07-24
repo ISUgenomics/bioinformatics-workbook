@@ -100,9 +100,9 @@ header:
         * [Password-less SSH](../Appendix/HPC/password-less-ssh-login.md)
         * [SSH Shortcuts](../Appendix/HPC/ssh-shortcuts.md)
     * Introduction to UNIX
-        * [Unix Basics 1](../Appendix/unix-basics-1.md)  
-        * [Unix Basics 2](../Appendix/unix-basics-2.md)
-        * [Unix Basics 3 (grep)](../Appendix/unix-basics-3.md)
-        * [Unix Basics 4 (sed)](../Appendix/unix-basics-4.md)
+        * [Unix Basics 1](../Appendix/Unix/unix-basics-1.md)  
+        * [Unix Basics 2](../Appendix/Unix/unix-basics-2.md)
+        * [Unix Basics 3 (grep)](../Appendix/Unix/unix-basics-3.md)
+        * [Unix Basics 4 (sed)](../Appendix/Unix/unix-basics-4.md)
     * XSEDE
         * [What is XSEDE, and How to Get an Allocation](../Appendix/HPC/xsede/xsede.md)

@@ -433,7 +433,7 @@ platanus_32merFrq.tsv : kmer frequency distribution
 
 In this step, we will use the contigs create in the previous step, along with trimmed reads (PE and MP) to scaffold the initial set of contigs. We will run the command as follows:
 
-```
+```bash
 platanus scaffold \
     -o platanus \
     -c platanus_contig.fa \
@@ -1105,3 +1105,7 @@ The stats for the assemblies obtained after each step (`assemble`, `scaffold` an
 | scaffold %T                   | 31.4%       | 29.9%       | 30.0%       |
 | scaffold %N                   | 0.0%        | 5.3%        | 5.0%        |
 | scaffold %non-ACGTN           | 0.0%        | 0.0%        | 0.0%        |
+
+
+[Arabidopsis data set Info](Arabidopsis_background.md)
+[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

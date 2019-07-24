@@ -1,6 +1,8 @@
 ---
 title: "Scaffolding Genomes using Genetic map"
 layout: single
+author: Arun Seetharam
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
@@ -596,3 +598,8 @@ Fig 10: Chromosome 10 map reconstructed
 
 
 Basically, we were able to put together all the broken scaffolds to the original chromosomes using the genetic map!
+
+
+---
+
+* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

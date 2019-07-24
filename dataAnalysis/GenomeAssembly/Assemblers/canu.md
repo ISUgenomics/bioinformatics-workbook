@@ -95,3 +95,6 @@ header:
   * [Canu Manual](http://canu.readthedocs.io/en/latest/history.html)
   * [Canu Quick Start Guide](http://canu.readthedocs.io/en/latest/quick-start.html)
   * [Canu Genome Paper 2017](https://genome.cshlp.org/content/27/5/722.full)
+
+
+[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
