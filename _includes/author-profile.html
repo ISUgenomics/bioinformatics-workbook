@@ -1,8 +1,12 @@
-{% assign author = page.author | default: page.authors[0] | default: site.author %}
-{% assign author = site.data.authors[author] | default: author %}
+  {% assign authors = {{page.author | split: "," }} %}
+{% else %}
+  {% assign authors = page.authors %}
+{% endif %}
+
 
 <div itemscope itemtype="http://schema.org/Person">
-
+  {% for author in authors %}
+  <p>
   {% if author.avatar %}
     <div class="author__avatar">
       {% if author.avatar contains "://" %}
@@ -260,4 +264,6 @@
       {% include author-profile-custom-links.html %}
     </ul>
   </div>
+  </p>
+  {% endfor %}
 </div>
