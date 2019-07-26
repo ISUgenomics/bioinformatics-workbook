@@ -1,4 +1,4 @@
-{% assign authors = {{page.author | split: "," }} %}
+{% assign authors = page.author | split: "," %}
 {% for author in authors %}
 {% assign author = site.data.authors[author] | default: author %}
 
