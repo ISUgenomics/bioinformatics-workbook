@@ -1,7 +1,8 @@
 ---
 title: "Unix CheatSheet"
 layout: single
-author: Arun Seetharam,Andrew Severin
+author: Arun Seetharam
+autor1: Andrew Severin
 author_profile: true
 header:
   overlay_color: "444444"
