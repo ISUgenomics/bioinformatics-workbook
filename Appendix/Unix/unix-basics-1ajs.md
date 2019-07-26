@@ -6,44 +6,265 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-## Opening a Terminal
+
+
+
+
+|Topic| Commands you will learn|
+|--|--|
+|What is Unix?|
+|Can I learn Unix?|
+|Logging into a remote machine:| 	ssh|
+|Viewing files and current location:|	ls, pwd|
+|editing files|				nano, vim|
+|creating and changing directories:|	mkdir, cd|
+|copying, moving and deleting:|		cp, mv, rm|
+|viewing files:|				cat, head, tail, less|
+|redirecting output:|			>, <, >>|
+|word count, download, transfer:|	wc, wget, scp|
+
+# Introduction
+
+## What is Unix?
+* Widely used multiuser operating system
+* Linux: free version of UNIX-like operating system
+* Red Hat Enterprise Linux, Ubuntu, and CentOS
+* Used on high-end workstations, database servers, web servers and managing shared resources
+* Standard features include: Security, reliability, scalability
+* supports multi-user (as in 100s)
+
+
+## Can I learn Unix?
+
+* **Yes!** Absolutely. It is just another way of operating your computer
+* No more difficult than learning Word, Excel or Powerpoint
+* Biggest difference
+  * In Linux:  You type the command to execute
+  * In Windows and Mac: You use your mouse to execute a command
+* **Remember. In the Terminal, “Don’t use the mouse.”**
+
+
+## What is a terminal?
+
+A terminal is the program that is used to access files on your laptop/computer that is sitting in front of you (local machine) or access to files on a supercomputer in a different location (remote machine).  You can access a terminal on a Mac or Windows machine as described below.
 
 ### On a Mac (OS)
 
-Use the Finder ![](assets/MagnifyingGlass.png) and search for and open the Terminal program ![](assets/terminal.png).
-
+1. Use the Finder ![](assets/MagnifyingGlass.png) and search for and open the Terminal program ![](assets/terminal.png).
+2. Type ```ssh username@hostname```
+  * Example1:  ```ssh andrew.severin@ceres.scinet.science```
+  * Example2: ```ssh severin@bridges.psc.edu```
+3. Hit by &#8629; (`Enter`) key and enter your password and verification code.
+  * Note: as you type the password, you will not see your typing.
 
 ### On a PC (Windows)
 
+On Windows, it will be easier for you to login first to a linux based system for the rest of this tutorial (remote machine).  You will first need to open up the command prompt which is similar to a terminal in the Mac OS operating system.
+
+1. Press windows key + r, type cmd and enter
+
+  ![](assets/WindowsRun.png)
+
+* Type ssh usename@hostname
+  * Example1:  ```ssh andrew.severin@ceres.scinet.science```
+  * Example2: ```ssh severin@bridges.psc.edu```
+  * Hit by &#8629; (`Enter`) key and enter your password and verification code.
+    * Note: as you type the password, you will not see your typing.
+
+2. Search for ```cmd``` using Window's search.
+
+  ![](assets/WindowsSearch.png)
 
 
+## Terminal Terminology
 
-This exercise is designed to provide the basic skills required for working in the UNIX environment, using plenty of relevant examples, specifically for biologists.  If you are using your personal computer, make sure that you have downloaded the files required for the workshop. This exercise will provide you information regarding navigation, files and directory creation/modification and some administrative things related to file permissions.
+When working in a terminal, it is helpful to know some basic terminology for when asking for help or describing a problem.
 
-## Getting started
+  * **Welcome Message:** the startup message when logging into a remote machine
+  * **Prompt:** The text next to where you type your commands
+    * prompts can be modified to include addtional information like hostname or current folder location
+  * **Command:** the function or script you are trying to run.
+  * **Argument:** added to a Command to modify the output
+    * there is always a space between a command an the argument
+  * **Standard Out:** the result of a command
+  * **Standard Error:** the error of a failed command
 
-The data files required for this workshop can be found on our website. You need to download this and place it in your home directory (`/home/username`), before you start this exercise. Please use the commands below to get started (you will learn what these command does later in the exercise). Open the terminal and enter these commands (commands are case sensitive) and each command should be entered in a single line followed by &#8629; (`Enter`) key.
+![](assets/TerminalWelcome_small.png)
+
+
+# Getting started with Commands
+
+Let us start by getting everyone logged in and to the same location in the file system. If you haven't already logged in to a remote machine by typing in the following command in the terminal.
 
 ```
-cd ~
-curl -O http://gif-server.biotech.iastate.edu/arnstrm/WORKSHOP_FILES.tar.gz
+ssh usename@hostname
 ```
-Once your cursor (command prompt) comes back to the original position, type
-```
-tar xf WORKSHOP_FILES.tar.gz
-ls
-```
-You should see `WORKSHOP_FILES` listed there.
+* username is your username for the system
+  * severin
+  * andrew.severin
+  * etc
+* hostname is the name of the computer
+  * bridges.psc.edu
+  * ceres.scinet.science
+  * etc
 
-PS: all materials, including the slides, handout and instructions to set up your computer should be in the folder you downloaded.
+Once you have logged in you will see a bunch of text fly by your screen.  That text is the welcome message on the remote machine. Now that everyone is logged in. Let us make sure everyone is in their home directory and set the behavior of the pwd command so there is no difference in the output of this command.  Type in the two following commands and hit the &#8629; (`Enter`) key
+
+```
+cd
+alias pwd="pwd -P"
+clear
+```
 
 ## Navigation
-This section will introduce you to some basic file/directory navigation and manipulation techniques.
+* ```mkdir, pwd, cd, ls, ..```
 
-### To know the present location
+This section will introduce you to some basic file/directory navigation
+
+### mkdir -- Make Directory
+Let's make a new directory (folder) called unixTutorial.  To create a directory, the `mkdir` (`m`a`k`e `dir`ectory) command can be used. Type in the next command and hit the &#8629; (`Enter`) key. Notice there is a space between the mkdir command and the filename we supply to the mkdir command
+
+```
+mkdir unixTutorial
+```
+
+**NOTE:** Unlike PC/Mac folders, in Unix it is better to not include spaces in names for directories. (the underscore "\_" can be used to replace any spaces you might want).
+
+Once you hit return, you will not see anything it will just give you a new prompt and if you try to type it again you will get an error message. Go ahead and try this if you want.
+
+```
+mkdir unixTutorial
+mkdir: cannot create directory ‘unixTutorial’: File exists
+```
+
+
+### pwd -- `P`ath of `W`orking `D`irectory
+
+At this point you might be feeling like you are completely blind because you can't see the result of what you did.  So let me teach you a few more commands and change that.  This command will tell you where you are.
+
 ```
 pwd
 ```
+In my case this returns the following where severin is my username that I used to log in.
+```
+/home/severin
+```
+
+What this is telling me is that I am in a directory named severin which is in a directory named home.
+
+### `cd` -- `C`hange `D`irectory
+
+You will recall we made a directory called unixTutorial above. We can change to that directory using the `cd` command.
+
+```
+cd unixTutorial
+```
+Now if we type the path of working directory command `pwd` we get the following
+```
+pwd
+/home/severin/unixTutorial
+```
+We are now in a directory called unixTutorial which is a subdirectory of severin which is a subdirectory of home.
+
+To change back to the previous directory we can type in the full path like so.
+
+```
+cd /home/severin/
+```
+
+or we can use `..` which refers to the directory above the one you are in and type this.
+
+```
+cd ..
+```
+
+Try this out with the following commands
+
+```
+cd
+cd unixTutorial
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd
+cd unixTutorial
+pwd
+```
+
+| | |
+|--| -- |
+|a | b|
+
+
+### `ls` (`l`i`s`t) command
+
+Now that we know how to move between directories, The contents of a directory can be viewed using .
+```
+ls DIRECTORY
+```
+
+If no directory name is provided then `ls` will list all the contents of the present directory. Like any other command, you can use absolute path or abbreviated path. There are also various options available for `ls` command.
+Some very useful options include:
+```
+ls –l #Lists all the files in lengthy or detailed view
+ls –t #Lists all the files, sorted based on creation time
+ls –S #Lists all the files, sorted based on size
+```
+You can also combine these options together for getting more focused results.
+
+Looking at the manual for `ls`, what option can you use to view hidden files in a directory (files starting with dot)?
+
+Can you sort the files based on its extension? How?
+
+***Task 1.5: Examine the contents of the tutorials directory. Try options such as `-l`, `-t`, `-a` and `-X`. Also check if you can combine many options together (like `-la` or `-lh` etc). Try these:***
+```
+ls -l tutorials
+ls -a
+ls -1 tutorials
+ls -lh tutorials
+ls -t tutorials
+```
+
+
+# File creation editing
+* ```touch, ls, nano, vim,  ```
+
+# Editing and viewing files
+* ```cp more, less```
+
+
+## Renaming and deleting files
+
+* ```mv,rm```
+
+## Redirecting output
+* ```>, <, >>```
+
+# Word count downloading and transfering data
+
+* ```wc, wget, scp```
+
+
+cat, head, tail
+
+Sorting and unique:		sort, uniq
+Finding a pattern:			grep
+Data wrangling:			\*, |, and Awk
+Downloading from GitHub	git clone
+Comparing Files:			diff, comm
+Dividing files:			cut, split
+Merging Files:			cat, paste, join
+HPC:				salloc, sbatch interactive sessions
+
+man
+
+awk and perl
+regular expressions
+
 Returns you the present working directory (print working directory)
 
 You should see the output something like `/home/username` This means, you are now working in the username directory, which is located in home directory. The directory that you will be in after logging in is your home directory. You can also avoid writing the full path by using ~ in front of your username or simply `~`
@@ -69,21 +290,6 @@ This changes your location back to your DIRECTORY.
 **TIP**: You can type in first few letters of the directory name and then press `Tab` to auto complete rest of the name (especially useful when the file/directory name is long). This only works when there are unique matches for the starting letters you have typed. If there is more than one matching files/directories, pressing `Tab` twice will list all the matching names. You can also recall your previous commands by pressing &#8593; or &#8595; arrow keys or browse all your previously used commands by typing `history` on your terminal (typically, last 500 commands will be saved in this file).
 
 ## Directories and files
-
-### Making directories
-
-To create a directory, `mkdir` (`m`a`k`e `dir`ectory) can be used.
-
-```
-mkdir DIRECTORY
-```
-Unlike PC/Mac folders, here you can’t have space in your directory name (but some special characters are okay). You can also specify the path where you want to create your new folder.
-
-***Task 1.2: Make a new directory named `FirstDirectory` within the `WORKSHOP_FILES` directory. Then change your directory to the `FirstDirectory`.***
-
-```
-mkdir FirstDirectory
-```
 
 ### Copying directories
 
@@ -122,34 +328,7 @@ mv OLDNAME NEWNAME
 mv WORKSHOP_FILES tutorials
 ```
 
-### Viewing the contents of the directory
 
-The contents of a directory can be viewed using `ls` (`l`i`s`t) command.
-```
-ls DIRECTORY
-```
-
-If no directory name is provided then `ls` will list all the contents of the present directory. Like any other command, you can use absolute path or abbreviated path. There are also various options available for `ls` command.
-Some very useful options include:
-```
-ls –l #Lists all the files in lengthy or detailed view
-ls –t #Lists all the files, sorted based on creation time
-ls –S #Lists all the files, sorted based on size
-```
-You can also combine these options together for getting more focused results.
-
-Looking at the manual for `ls`, what option can you use to view hidden files in a directory (files starting with dot)?
-
-Can you sort the files based on its extension? How?
-
-***Task 1.5: Examine the contents of the tutorials directory. Try options such as `-l`, `-t`, `-a` and `-X`. Also check if you can combine many options together (like `-la` or `-lh` etc). Try these:***
-```
-ls -l tutorials
-ls -a
-ls -1 tutorials
-ls -lh tutorials
-ls -t tutorials
-```
 
 ### Creating and editing files
 ```
