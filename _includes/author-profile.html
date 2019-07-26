@@ -260,9 +260,13 @@
       {% include author-profile-custom-links.html %}
     </ul>
   </div>
+</div>
 
-  {% assign author = page.author1 %}
-  {% assign author = site.data.authors[author] %}
+
+{% assign author = page.author1 %}
+{% assign author = site.data.authors[author] %}
+
+<div itemscope itemtype="http://schema.org/Person">
 
   {% if author.avatar %}
     <div class="author__avatar">
