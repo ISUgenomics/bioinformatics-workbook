@@ -1,8 +1,4 @@
-{% assign author = page.author | default: page.authors[0] | default: site.author %}
 {% assign authors = {{page.author | split: "," }} %}
-{% else %}
-  {% assign authors = page.author %}
-{% endif %}
 
 <div itemscope itemtype="http://schema.org/Person">
   {% for author in authors %}
