@@ -59,7 +59,8 @@ header:
 |`chmod`	|change permissions for files/directories	|`chmod` <span style="color:Red">[OPTIONS] RELATIONS[+/-]PERMISSIONS FILE</span>|
 
 ## File manipulations
-|| | |
+
+|File manipulations| | |
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`grep`	|search a pattern	|grep <span style="color:Red">[OPTIONS] "PATTERN" FILENAME</span>|
