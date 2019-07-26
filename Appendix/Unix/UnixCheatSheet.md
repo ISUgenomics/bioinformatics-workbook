@@ -137,7 +137,7 @@ header:
 
 |PRE-DECLARED VARIABLES| |
 |--|--|
-|<span style="color:Green">Variables*</span>	|<span style="color:Green">Description</span>|
+|<span style="color:Green">Variables\*</span>	|<span style="color:Green">Description</span>|
 |`$USER`	|username|
 |`$HOME`|	home path|
 |`$PWD`|	working directory path|
@@ -146,6 +146,7 @@ header:
 |`$SHELL`|	current shell|
 |`$SSH_CLIENT`|	local client's IP address|
 |`$TERM`	|type of terminal|
+
 * env command lists all the assigned variables
 
 |HPC-CLUSTER Commands| | TORQUE|
