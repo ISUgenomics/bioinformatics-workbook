@@ -9,8 +9,8 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-
-|Navigation| ||
+## Navigation
+| | ||
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`ls` 	|list contents	|`ls` <span style="color:Red">[OPTIONS] DIRECTORY</span>|
@@ -18,7 +18,8 @@ header:
 |`cd`|change directory	|`cd` ~ or `cd` 		#home directory|
 | | 			|`cd` .. #previous (parent directory)|
 
-|File/Directory operations| | |
+## File/Directory operations
+|| | |
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`mkdir`	|make directory	|`mkdir` <span style="color:Red">DIRECTORY</span>|
@@ -35,8 +36,8 @@ header:
 |`rmdir`	|remove empty directory	|`rmdir` <span style="color:Red">DIRECTORY</span>|
 |`rm`	|remove file(s)	|`rm` <span style="color:Red">FILE</span>|
 
-
-|Compression/archiving| | |
+## Compression/archiving
+|| | |
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`zip`	|zip compress	|`zip` <span style="color:Red">OUTFILE.zip INFILE.txt</span>|
@@ -47,13 +48,14 @@ header:
 |`gzip`	|gzip files	|`gzip` <span style="color:Red">SOMEFILE</span>|
 |`gunzip`	|decompress gzipped files	|`gunzip` <span style="color:Red">SOMEFILE.gz</span>|
 
-|File permissions| | |
+## File permissions
+|| | |
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`chmod`	|change permissions for files/directories	|`chmod` <span style="color:Red">[OPTIONS] RELATIONS[+/-]PERMISSIONS FILE</span>|
 
-
-|File manipulations| | |
+## File manipulations
+|| | |
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`grep`	|search a pattern	|grep <span style="color:Red">[OPTIONS] "PATTERN" FILENAME</span>|
@@ -70,8 +72,8 @@ header:
 |`paste`	|combine files side by side	|`paste` <span style="color:Red">FILE1 FILE2</span> `>` <span style="color:Red">FILE3</span>|
 |`join`	|join files based on common field	|`join -t` <span style="color:Red">'DELIMITER'</span> `-1` <span style="color:Red">N</span> `-2` <span style="color:Red">N FILE1 FILE2</span>|
 
-
-|ADDITIONAL COMMANDS| |
+## ADDITIONAL COMMANDS
+|| |
 |--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
 |`du –sh` |DIR	show directory size|
@@ -88,7 +90,8 @@ header:
 |`ps`	|current running processes|
 |`wget` |URL	download specified URL|
 
-|SHORTCUTS| |
+## SHORTCUTS
+|| |
 |--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
 |`TAB`	|autocomplete names|
@@ -106,7 +109,8 @@ header:
 |`ctrl+r`	|reverse search history|
 |`cd ~`	|go to home|
 
-|NANO SHORTCUTS| |
+## NANO SHORTCUTS
+| | |
 |--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
 |`ctrl+r`	|read/insert file|
@@ -124,8 +128,8 @@ header:
 |`alt+w`	|find next match|
 |`ctrl+\`	|find and replace|
 
-
-|PIPES, REDIRECTS| |
+## PIPES, REDIRECTS
+| | |
 |--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
 |cmd `<` <span style="color:Red">file</span>	|use file as input|
@@ -135,8 +139,8 @@ header:
 |cmd `1>&2` <span style="color:Red">file</span>	|send output and error to file|
 |cmd1 `\|` <span style="color:Red">cmd2</span> 	|send output of cmd1 to cmd2|
 
-
-|PRE-DECLARED VARIABLES| |
+## PRE-DECLARED VARIABLES
+|| |
 |--|--|
 |<span style="color:Green">Variables\*</span>	|<span style="color:Green">Description</span>|
 |`$USER`	|username|
@@ -150,7 +154,8 @@ header:
 
 * env command lists all the assigned variables
 
-|HPC-CLUSTER Commands| | TORQUE|
+# HPC-CLUSTER Commands for TORQUE
+| | | |
 |--|--|--|
 |<span style="color:Green">Command</span>	|<span style="color:Green">Function</span>	|<span style="color:Green">Syntax/example usage</span> |
 |`squeue`	|show state of jobs	|`squeue` `–a`		# current jobs on cluster |
