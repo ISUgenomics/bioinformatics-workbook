@@ -1,12 +1,12 @@
 ---
-title: Kraken metagenomics on nematodes
+title: Kraken2 metagenomics on nematodes
 layout: single
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-#  Here I will try to see what kind of bacteria and viruses lie within the Tylenchida nematode RNAseq.
+#  Here I will try to see what kind of bacteria and viruses lie within the Tylenchida nematode RNAseq using kraken2.
 
 
 ## Build appropriate kraken2 database
@@ -104,7 +104,7 @@ fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files SRR6269844 & #Hete
 
 ### Create Kraken scripts
 ```
-paste <(ls -1 */*R1*gz) <(ls -1 */*R1*gz) |while read line; do echo "kraken2 -db Plant --threads 16 --report "$line".report --gzip-compressed  --unclassified-out "${line%.*}"unclassified#.fq --classified-out "${line%.*}"classified#.fq --paired "$line" > "${line%.*} ;done |awk '{print $1,$2,$3,$4,$5,$6,$8,$9,$10,$12,$13,$15,$16,$17,$18,$19,$21".Kraken.out"}' >kraken.sh
+paste <(ls -1 05_MattsReads/*_1*gz) <(ls -1 05_MattsReads/*_1*gz) |while read line; do echo "kraken2 -db NematodeViral --threads 16 --report "$line".report --gzip-compressed  --unclassified-out "${line%.*}"unclassified#.fq --classified-out "${line%.*}"classified#.fq --paired "$line" > "${line%.*} ;done |awk '{print $1,$2,$3,$4,$5,$6,$8,$9,$10,$12,$13,$15,$16,$17,$18,$19,$21".Kraken.out"}' >kraken.sh
 
 
 #kraken.sh
@@ -598,6 +598,14 @@ I took these files, added the species name to the fifth column, removed those en
 
 ![Kraken](../../assets/KrakenNetwork.png)
 Large green hexagons are the source species RNASEQ, red diamonds are viruses, and triangles are bacteria present in two or more species.  
+
+### Sources
+
+```
+The best source to get more information on kraken2
+
+https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown
+```
 
 ---
 [Table of contents](compGenomics_index.md)
