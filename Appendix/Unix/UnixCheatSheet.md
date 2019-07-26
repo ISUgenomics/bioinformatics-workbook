@@ -10,7 +10,8 @@ header:
 ---
 
 ## Navigation
-| | ||
+
+|Navigation| ||
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`ls` 	|list contents	|`ls` <span style="color:Red">[OPTIONS] DIRECTORY</span>|
@@ -19,7 +20,8 @@ header:
 | | 			|`cd` .. #previous (parent directory)|
 
 ## File/Directory operations
-|| | |
+
+|File/Directory operations | | |
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`mkdir`	|make directory	|`mkdir` <span style="color:Red">DIRECTORY</span>|
@@ -37,7 +39,8 @@ header:
 |`rm`	|remove file(s)	|`rm` <span style="color:Red">FILE</span>|
 
 ## Compression/archiving
-|| | |
+
+|Compression/archiving| | |
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`zip`	|zip compress	|`zip` <span style="color:Red">OUTFILE.zip INFILE.txt</span>|
@@ -49,7 +52,8 @@ header:
 |`gunzip`	|decompress gzipped files	|`gunzip` <span style="color:Red">SOMEFILE.gz</span>|
 
 ## File permissions
-|| | |
+
+|File permissions| | |
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`chmod`	|change permissions for files/directories	|`chmod` <span style="color:Red">[OPTIONS] RELATIONS[+/-]PERMISSIONS FILE</span>|
@@ -73,7 +77,8 @@ header:
 |`join`	|join files based on common field	|`join -t` <span style="color:Red">'DELIMITER'</span> `-1` <span style="color:Red">N</span> `-2` <span style="color:Red">N FILE1 FILE2</span>|
 
 ## ADDITIONAL COMMANDS
-|| |
+
+|ADDITIONAL COMMANDS| |
 |--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
 |`du –sh` |DIR	show directory size|
@@ -91,7 +96,8 @@ header:
 |`wget` |URL	download specified URL|
 
 ## SHORTCUTS
-|| |
+
+|SHORTCUTS| |
 |--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
 |`TAB`	|autocomplete names|
@@ -110,7 +116,8 @@ header:
 |`cd ~`	|go to home|
 
 ## NANO SHORTCUTS
-| | |
+
+|NANO SHORTCUTS| |
 |--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
 |`ctrl+r`	|read/insert file|
@@ -129,7 +136,8 @@ header:
 |`ctrl+\`	|find and replace|
 
 ## PIPES, REDIRECTS
-| | |
+
+|PIPES, REDIRECTS| |
 |--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
 |cmd `<` <span style="color:Red">file</span>	|use file as input|
@@ -140,7 +148,8 @@ header:
 |cmd1 `\|` <span style="color:Red">cmd2</span> 	|send output of cmd1 to cmd2|
 
 ## PRE-DECLARED VARIABLES
-|| |
+
+|PRE-DECLARED VARIABLES| |
 |--|--|
 |<span style="color:Green">Variables\*</span>	|<span style="color:Green">Description</span>|
 |`$USER`	|username|
@@ -154,8 +163,9 @@ header:
 
 * env command lists all the assigned variables
 
-# HPC-CLUSTER Commands for TORQUE
-| | | |
+## HPC-CLUSTER Commands for TORQUE
+
+|HPC-CLUSTER Commands | |TORQUE|
 |--|--|--|
 |<span style="color:Green">Command</span>	|<span style="color:Green">Function</span>	|<span style="color:Green">Syntax/example usage</span> |
 |`squeue`	|show state of jobs	|`squeue` `–a`		# current jobs on cluster |
