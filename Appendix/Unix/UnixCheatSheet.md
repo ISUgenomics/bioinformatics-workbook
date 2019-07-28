@@ -164,6 +164,23 @@ header:
 
 * env command lists all the assigned variables
 
+## HPC-CLUSTER Commands for SLURM
+
+|HPC-CLUSTER Commands | |TORQUE|
+|--|--|--|
+|<span style="color:Green">Command</span>	|<span style="color:Green">Function</span>	|<span style="color:Green">Syntax/example usage</span> |
+|sinfo -a	|list all queues|sinfo -a|
+|squeue	|list all jobs|squeue|
+|squeue -u userid	|list jobs for userid|squeue -u userid|
+|squeue -t R	|list running jobs|squeue -t R|
+|smap	|show jobs, partitions and nodes in a graphical network topology|smap|
+|sbatch	|submit a slurm job	|sbatch [script]|
+|scancel|	delete slurm batch job|	scancel [job_id]	|
+|scontrol hold	|hold slurm batch jobs	|scontrol hold [job_id]|
+|scontrol release	|release hold on slurm batch jobs	|scontrol release [job_id]	|
+
+* [Tutorial on SLURM commands](../HPC/SLURM/slurm-cheatsheat.md)
+
 ## HPC-CLUSTER Commands for TORQUE
 
 |HPC-CLUSTER Commands | |TORQUE|
