@@ -1,3 +1,13 @@
+---
+title: "Creating Genetic Maps from GBS data"
+layout: single
+author: Arun Seetharam
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # GATK Best Practices Workflow for DNA-Seq
 
 ## Introduction
