@@ -1,27 +1,13 @@
 ---
 title: "Unix Basics Lesson 1"
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-
-
-
-
-|Topic| Commands you will learn|
-|--|--|
-|What is Unix?|
-|Can I learn Unix?|
-|Logging into a remote machine:| 	ssh|
-|Viewing files and current location:|	ls, pwd|
-|editing files|				nano, vim|
-|creating and changing directories:|	mkdir, cd|
-|copying, moving and deleting:|		cp, mv, rm|
-|viewing files:|				cat, head, tail, less|
-|redirecting output:|			>, <, >>|
-|word count, download, transfer:|	wc, wget, scp|
 
 # Introduction
 ---
@@ -99,6 +85,8 @@ When working in a terminal, it is helpful to know some basic terminology for whe
 ---
 
 Let us start by getting everyone logged in and to the same location in the file system. If you haven't already logged in to a remote machine by typing in the following command in the terminal.
+
+**NOTE** When you are prompted for a password you won't see the typing.  Just keep typing.
 
 ```
 ssh usename@hostname
@@ -782,6 +770,7 @@ It is through this method that a long Unix 'one-liner' can be created. By lookin
 |`grep`	|search a pattern	|grep <span style="color:Red">[OPTIONS] "PATTERN" FILENAME</span>|
 |`sed` | stream editor | `sed 'OPERATION/REGEXP/REPLACEMENT/FLAGS'` <span style="color:Red">FILENAME</span> |  
 |`*`| variable used to represent many characters| `ls` <span style="color:Red">*.txt</span>|
+|'?'| variable used to represent any one character| 'ls' <span style="color:Red">?.txt</span> |
 
 
 ## `grep` -- `g`lobal `r`egular `e`xpression `p`rint
@@ -795,7 +784,7 @@ grep "space" myFirstFile.txt | wc
 ```
 This will print the lines where it finds the word "space" in it.
 
-If you wanted to print every occurance of the word then you can use the '-o' parameter.  You might want to use that to count the number of times a word occurred in a file.
+If you wanted to print every occurrence of the word then you can use the '-o' parameter.  You might want to use that to count the number of times a word occurred in a file.
 
 ```
 grep -o "space" myFirstFile.txt
@@ -811,7 +800,7 @@ Some other commonly used parameters.
 |-c | print only the count of matching lines|
 |-n | prefix the output with line number|
 
-## history -- gives a history of recently used Unix commands
+## `history` -- gives a history of recently used Unix commands
 
 Browse all your previously used commands by typing `history` on your terminal (typically, last 500 commands will be saved in this file).
 
@@ -824,6 +813,30 @@ history | grep -i myfirst | grep -v space | grep uniq
 ```
 
 You can also recall your previous commands by pressing &#8593; or &#8595; arrow keys.
+
+## `?` and `*` -- variables to represent one or many chracters
+
+First, let's undo our sorting of numbers and letters by using the `*` variable that represents all letters repeated for as many times
+
+```
+mv Numbers/*.txt .
+mv Letters/*.txt .
+ls
+```
+Here is an easier way using variables. You will notice that all the numbers have a single character and all the letters have two characters.  We can use the `?` variable to represent any single character.  Therefore, all the Number files will have this pattern: `?.txt` and all the Letter text files will have this pattern: `??.txt`
+
+First, verify this with the `ls` command
+```
+ls ??.txt
+ls ?.txt
+```
+Then repeat the sorting using the `mv` command
+```
+mv ??.txt Letters
+mv ?.txt Numbers
+```
+And we are done.
+
 
 ## `sed` --  stream editor
 
