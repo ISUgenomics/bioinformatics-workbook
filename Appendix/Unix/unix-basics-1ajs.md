@@ -829,7 +829,18 @@ You can also recall your previous commands by pressing &#8593; or &#8595; arrow 
 
 ``` wget, scp, git clone```
 
+| | | |
+|--|--|--|
+|`wget` |URL	download specified URL| wget
 
+## `wget` -- download(get) from the www
+
+Here are some images you can download.  You can download anything on the web with this command as long as you have an https address.
+
+```
+wget https://bioinformaticsworkbook.org/Appendix/Unix/assets/kitten.jpg
+wget https://bioinformaticsworkbook.org/Appendix/Unix/assets/saltandpepper.jpg
+```
 
 
 ### man -- `man`uel
