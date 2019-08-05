@@ -24,6 +24,7 @@ header:
 |word count, download, transfer:|	wc, wget, scp|
 
 # Introduction
+---
 
 ## What is Unix?
 * Widely used multiuser operating system
@@ -75,6 +76,7 @@ On Windows, it will be easier for you to login first to a linux based system for
 
   ![](assets/WindowsSearch.png)
 
+**Note:** The window can be resized with the mouse and the font text can be increased by pressing `cmd +` or `control +` on Mac or Windows, respectively.
 
 ## Terminal Terminology
 
@@ -92,7 +94,9 @@ When working in a terminal, it is helpful to know some basic terminology for whe
 ![](assets/TerminalWelcome_small.png)
 
 
-# Getting started with Commands
+# Getting started
+
+---
 
 Let us start by getting everyone logged in and to the same location in the file system. If you haven't already logged in to a remote machine by typing in the following command in the terminal.
 
@@ -116,12 +120,21 @@ alias pwd="pwd -P"
 clear
 ```
 
-## Navigation
-* ```mkdir, pwd, cd, ls, ..```
+
+|| ||
+|--|--|--|
+| <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
+|`mkdir`	|make directory	|`mkdir` <span style="color:Red">DIRECTORY</span>|
+|`pwd`	|print working directory	|`pwd`|
+|`cd`|change directory	|`cd` ~ or `cd` 		#home directory|
+| | 			|`cd` .. #previous (parent directory)|
+|`ls` 	|list contents	|`ls` <span style="color:Red">[OPTIONS] DIRECTORY</span>|
+
+
 
 This section will introduce you to some basic file/directory navigation
 
-### mkdir -- Make Directory
+### mkdir -- `M`a`k`e `Dir`ectory Command
 Let's make a new directory (folder) called unixTutorial.  To create a directory, the `mkdir` (`m`a`k`e `dir`ectory) command can be used. Type in the next command and hit the &#8629; (`Enter`) key. Notice there is a space between the mkdir command and the filename we supply to the mkdir command
 
 ```
@@ -145,7 +158,7 @@ At this point you might be feeling like you are completely blind because you can
 ```
 pwd
 ```
-In my case this returns the following where severin is my username that I used to log in.
+In my case this returns the following to standard out where severin is my username that I used to log in.
 ```
 /home/severin
 ```
@@ -174,9 +187,12 @@ cd /home/severin/
 
 or we can use `..` which refers to the directory above the one you are in and type this.
 
+
 ```
 cd ..
 ```
+
+**NOTE:** Present directory is represented as `.` (dot) and parent directory is represented as `..` (dot dot).
 
 Try this out with the following commands
 
@@ -194,71 +210,433 @@ cd
 cd unixTutorial
 pwd
 ```
+**TIP**: You can type in first few letters of the directory name and then press `Tab` to auto complete rest of the name (especially useful when the file/directory name is long). This only works when there are unique matches for the starting letters you have typed. If there is more than one matching files/directories, pressing `Tab` twice will list all the matching names.
 
-| | |
-|--| -- |
-|a | b|
+
+# File creation editing
+---
+
+* ```ls, nano, vim```
+
+|| ||
+|--|--|--|
+| <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
+|`ls` 	|list contents	|`ls` <span style="color:Red">[OPTIONS] DIRECTORY</span>|
+|`nano`	|edit file	|`nano` <span style="color:Red">FILENAME</span>|
+|`vim` | edit a file | `vim` <span style="color:Red">FILENAME</span>
 
 
 ### `ls` (`l`i`s`t) command
 
-Now that we know how to move between directories, The contents of a directory can be viewed using .
+Now that we know how to move between directories, The contents of a directory can be viewed using `ls`. If no directory name is provided then `ls` will list all the contents of the present directory.
 ```
+ls
+ls .
 ls DIRECTORY
 ```
+Everyone should currently be in their unixTutorial directory that they just created, which is empty so the `ls` command will return you to a new prompt without anything written to standard out. To exit nano you type this series of keys -- hit `ctr x` press `y` for yes to save and hit `enter`.  Nano tells you how to exit along with many of the following shortcuts at the bottom of your screen and will step you through how to exit and save.
 
-If no directory name is provided then `ls` will list all the contents of the present directory. Like any other command, you can use absolute path or abbreviated path. There are also various options available for `ls` command.
-Some very useful options include:
+### nano -- Text editor more like a GUI
+
+Nano opens up and will feel like a typical text editor you are familiar with.  Arrow keys can be used navigate the text. Below are some additional shortcuts.
+
+|NANO SHORTCUTS| |
+|--|--|
+| <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
+|`ctrl+o`	|save file|
+|`ctrl+x`	|close file|
+|`alt+/`	|go to end of the file|
+|`ctrl+a`	|go to start of the line|
+|`ctrl+e`	|go to end of the line|
+|`ctrl+c`	|show line number|
+|`ctrl+_`	|go to line number |
+|`ctrl+w`	|find matching word|
+|`alt+w`	|find next match|
+|`ctrl+\`	|find and replace|
+
+#### <span style="color:Green">Exercise:</span>
+
+Copy and paste the following text into a file named myFirstFile.txt
 ```
-ls –l #Lists all the files in lengthy or detailed view
-ls –t #Lists all the files, sorted based on creation time
-ls –S #Lists all the files, sorted based on size
-```
-You can also combine these options together for getting more focused results.
-
-Looking at the manual for `ls`, what option can you use to view hidden files in a directory (files starting with dot)?
-
-Can you sort the files based on its extension? How?
-
-***Task 1.5: Examine the contents of the tutorials directory. Try options such as `-l`, `-t`, `-a` and `-X`. Also check if you can combine many options together (like `-la` or `-lh` etc). Try these:***
-```
-ls -l tutorials
-ls -a
-ls -1 tutorials
-ls -lh tutorials
-ls -t tutorials
+The greatest challenge is sifting through all the data that is generated by the
+simulation.  In fact, it is impossible.  Impossible because to record every
+event everywhere in the artificial universe would take more hard drive space
+than was physically possible to create given Earth's dwindling resources.
+Therefore, my life's greatest achievement was to encode a method to filter the
+data, so only the most relevant events related to what we want is recorded. In
+our case, that means space travel.  But not just any space travel, space travel
+between galaxies.
 ```
 
+Start by copying the text above using your mouse then in a terminal use nano to create a file named myFirstFile.txt
 
-# File creation editing
-* ```touch, ls, nano, vim,  ```
+```
+nano myFirstFile.txt
+```
+Paste your text and then hit `ctr x` press `y` for yes to save and hit `enter`, which will return you to the prompt.  This will save the file with the text in it.
 
-# Editing and viewing files
-* ```cp more, less```
+### VIM
+
+`vim` is another text editor that when you are more comfortable with the unix command line, it will be worth your time to learn.  Many first time Unix users type in `vim` to enter the editor and get stuck in the editor as it is less intuitive than nano.  I will not go into great detail in this introductory tutorial but want to provide you with resources to explore on your own. There is a command line like feature in this editor that a user can use to execute very powerful text editing functions.
+
+|Vim | Very Basics Usage|
+| -- | -- |
+|esc| Hitting escape will take you back to the original state when you opened vim.|
+|i| insert mode: In this mode it is possible to add/edit the text |
+|esc :wq| hitting escape then typing `:` `w` `q` will write(save) the file and quit|
+
+Copying and pasting work like other editors as long as you are in the insert mode.
+
+* [Things-about-vim-i-wish-i-knew-earlier](https://blog.petrzemek.net/2016/04/06/things-about-vim-i-wish-i-knew-earlier/)
+* [Learn-Vim-Progressively](http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/)
+* [Vim-adventures](http://vim-adventures.com/)
 
 
-## Renaming and deleting files
+#  Viewing file contents
+---
 
-* ```mv,rm```
+Easy to remember these commands using this sentence.
 
-## Redirecting output
-* ```>, <, >>```
+A `cat` has a `head` and a `tail`, `more` or `less`
+
+|File/Directory operations | | |
+|--|--|--|
+|`cat`	|catalog file contents	|`cat` <span style="color:Red">FILE</span>|
+|`head`|show first few lines of a file	|`head` <span style="color:Red">FILE</span>|
+|`tail`	|show last few lines of a file	|`tail` <span style="color:Red">FILE</span>|
+|`more`|view file (with less options)	|`more` <span style="color:Red">FILE</span>|
+|`less`	|view file (with more options)	|`less` <span style="color:Red">FILE</span>|
+|`seq` | write a sequence of numbers | `seq` <span style="color:Red">1 1 10</span>|
+
+### `seq` -- short for `seq`uence of numbers
+
+To fully appreciate the commands for viewing the contents of a file let's create a file with the numbers from 1 to 100.  Execute the following command and put it into a file named `numSeq.txt`
+
+```
+seq 1 1 100
+#copy the output then use nano
+nano numSeq.txt
+#make sure there is no extra empty lines at the end of the file.
+```
+
+### `cat` -- con`cat`enate and print files
+
+This command will print out the entire file. Try it out with the numSeq.txt file.  You should see all 100 numbers print to the screen.
+
+### `head` -- head of the file.
+
+This command will give you the first 10 lines of a file. Try it out with the numSeq.txt file.
+
+```
+head numSeq.txt
+```
+
+### `tail` -- tail of the file
+
+This command will give you the last 10 lines of a file.  Try it out with the numSeq.txt file.
+
+```
+tail numSeq.txt
+```
+
+### `more` -- command to step through a file one screen length at a time using the spacebar. hit `q` to quit the file before reaching the end.
+
+```
+more numSeq.txt
+```
+
+### `less` -- similar to the more command but lets you scroll backwards as well.
+
+```
+less numSeq.txt
+```
+
+|less navigation | |
+|--|--|
+|`q` | quit|
+|`u` or `space bar`| up one screen|
+|`d`| down one screen|
+|`g` <span style="color:Red">NUM</span>| go to line NUM|
+
+
+# Renaming, copying and deleting files and directories
+
+---
+
+|File/Directory operations | | |
+|--|--|--|
+| <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
+|`touch`|	create file	|`touch` <span style="color:Red">FILE</span>|
+|`mkdir`	|make directory	|`mkdir` <span style="color:Red">DIRECTORY</span>|
+|`rmdir`	|remove empty directory	|`rmdir` <span style="color:Red">DIRECTORY</span>|
+|`rm`	|remove file(s)	|`rm` <span style="color:Red">FILE</span>|
+|`cp`|copy files/directories	|`cp `<span style="color:Red">SOURCE DESTINATION</span>|
+|`mv`	|move files/directories	|`mv` <span style="color:Red">SOURCE DESTINATION</span>|
+
+
+
+### `touch` command
+
+This command is used to quickly create many empty files.
+
+```
+touch A.txt
+touch B.txt
+touch C.txt
+touch 1.txt
+touch 2.txt
+touch 3.txt
+```
+
+Now if you use the `ls` command the standard output will be
+
+```
+1.txt 2.txt 3.txt A.txt B.txt C.txt
+```
+You can also create multiple files using this command.
+```
+touch D.txt E.txt G.txt 4.txt 5.txt 6.txt
+ls
+```
+
+The standard output now returns
+```
+1.txt 2.txt 3.txt 4.txt 5.txt 6.txt A.txt B.txt C.txt D.txt E.txt G.txt
+```
+
+### `mkdir` -- `M`a`k`e `Dir`ectory
+We have already discussed the mkdir command but here is a brief review.  For this section of the tutorial we are going to make four folders named Numbers, Letters, Deleteme and Deleteme2.
+
+```
+mkdir Numbers
+mkdir Letters
+mkdir Deleteme
+mkdir Deleteme2
+ls
+```
+
+Let's also put a couple of files in the Deleteme and Deleteme2 folders.  We can accomplish this by using the touch command and a local path to where we want the file.  Up to this point we have put all the files into the same folder we are in.  In this example we will create an empty file named delete.txt and deleteme2 in the subfolders Deleteme and Deleteme2.
+
+```
+touch Deleteme/deleteme.txt
+touch Deleteme/deleteme1.txt
+touch Deleteme2/deleteme2.txt
+touch Deleteme2/deleteme3.txt
+```
+
+You can verify its there by using the ls command
+
+```
+#ls will show you the subfolder Deleteme and Deleteme2 exists
+ls
+
+#ls Deleteme will show you the contents of the subfolder Deleteme
+ls Deleteme
+ls Deleteme2
+```
+
+### Warning about deleting files and directories
+
+In Unix there is no undo command.  If you delete a file it is gone.  There is no trash bin.  The next two commands are very powerful commands and cna lead to unfortunate losses if not used with care. With that said you can only delete files you have created.  So it is impossible to delete someone else files without permission.
+
+### `rmdir` -- `R`e`m`ove `Dir`ectory
+This command can remove an empty directory
+
+Let's remove the extra Deleteme2 directory using this command
+
+```
+ls
+rmdir Deleteme2
+ls
+```
+The ls commands show the before and after usage of this command.
+
+Now try to delete the Deleteme folder
+
+```
+rmdir Deleteme
+```
+It will return
+```
+rmdir: Deleteme: Directory not empty
+```
+In order to remove this directory with the rmdir command you would have to delete all the files and folders in the directory.  However, you can use the remove (`rm`) command instead.
+
+## `rm` -- `R`e`m`ove file
+
+In this example, we will remove the file deleteme3.txt in the Deleteme2 directory.
+
+```
+ls Deleteme
+ls Deleteme2
+rm Deleteme2/deleteme3.txt
+ls Deleteme2
+ls Deleteme
+```
+
+**Exercise:** Remove the deleteme2.txt file.
+
+Now, having deleted both files from Deleteme2 directory we can use the rmdir command to delete the folder.
+
+```
+rmdir Deleteme2
+```
+
+If however, we do not want to go through and delete all the files we can also use the `rm` command to delete a folder without emptying it.
+
+```
+ls
+rm -r Deleteme
+ls
+```
+
+The `-r` is a parameter that attempts to remove directories as well as other types of files
+
+### `mv` -- `m`o`v`e command
+
+Move is used to move files to a different location and to rename a file.
+
+If we look in our unixTutorial directory using the `ls` command There should only be the following files and folders.  
+
+```
+1.txt           3.txt           5.txt           A.txt           C.txt           E.txt           Letters         myFirstFile.txt
+2.txt           4.txt           6.txt           B.txt           D.txt           G.txt           Numbers         numSeq.txt
+```
+
+Let's clean this up by moving all of the numbered txt files into Numbers and all the Letter txt files into Letters
+
+```
+mv 1.txt Numbers
+mv 2.txt 3.txt Numbers
+mv 4.txt 5.txt 6.txt Numbers
+```
+As you can see you can move more than one file at a time into a folder by listing multiple files before the directory you wish to move them to.
+
+**Exercise:** Put all the letter files into the Letters directory.
+
+The second function for the mv command is to rename a file.  If you look inside the Letters directory, you will see that one of the letter.txt files is not in sequence.
+
+```
+ls Letters
+A.txt B.txt C.txt D.txt E.txt G.txt
+```
+
+If we wanted to rename G.txt to F.txt we would do the following.
+
+```
+cd Letters
+ls
+mv G.txt F.txt
+ls
+```
+
+### `cp` -- `c`o`p`y command
+
+The `cp` command can be used to duplicate a file
+
+```
+ls  
+cp myFirstFile.txt mySecondFile.txt
+ls
+```
+You can verify it is a copy by `cat`ing the file, or you can use `more` or `less`
+```
+cat myFirstFile.txt
+cat mySecondFile.txt
+```
+
+You can also use the `-l` long format parameter that modifies the `ls` command to get more information about the files such size, date of creation, and ownership. As you can see with the following commands in the 5th column, the files are the same size (563 bytes).
+
+```
+ls -l myFirstFile.txt mySecondFile.txt
+```
+
+
+To copy a folder you have to add the `-r` parameter to copy recursively
+
+```
+cp -r Letters Letters_copy
+```
+
+Verify to yourself that the contents of the folder was copied correctly
+
+```
+ls -l Letters
+ls -l Letters_copy
+```
+
+
+# Counting, Sorting and Finding
+
+
+| | | |
+|--|--|--|
+|`wc`	|word count	|`wc` <span style="color:Red">FILENAME</span>| `wc` <span style="color:Red">FILENAME</span>|
+|`sort`	|sort files	|`sort` <span style="color:Red">FILE1</span> `>` <span style="color:Red">SORTED_FILE1</span>|
+|`uniq`	|display unique lines 	|`uniq` <span style="color:Red">[OPTIONS] INFILE</span> `>` <span style="color:Red">OUTFILE</span>|
+|`grep`	|search a pattern	|grep <span style="color:Red">[OPTIONS] "PATTERN" FILENAME</span>|
+|`*`| variable used to represent many characters| `ls` <span style="color:Red">*.txt</span>|
+
+## `wc` -- `w`ord `c`ount
+
+This function will give you the number of lines, the number of words and the number of characters in a file.
+
+The file numSeq.txt for example we created earlier and we know there are 100 lines and 100 words (ie numbers).  Use the following command to confirm this and to also determine the number of characters this file has.
+```
+wc  numSeq.txt
+```
+
+The wordcount  (`wc`) output can be modified with parameters to give you just the line count (`-l`), just the word count (`-w`) or just the character count ('-c').
+
+```
+wc -l numSeq.txt
+wc -c numSeq.txt
+wc -w numSeq.txt
+```
+
+**Note** The `-c` assumes that the characters are single byte if you are using multibyte characters you will want to use `-m`
+
+
+
+
+## `|` Pipe redirect
+
+![](assets/PipeIOS.png) 
+
+
+# Redirecting output
+---
+
+Up to this point we have learned individual commands that give you roughly the same kind of ability as you would using your mouse in in IOS or Windows operating systems.  From this point forward however, you will start to understand the power of being able to combine commands on the command line to execute more complex tasks and save time.
+
+
+* ```>, <, >>, |```
+
+## PIPES, REDIRECTS
+
+|PIPES, REDIRECTS| |
+|--|--|
+| <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
+|cmd `<` <span style="color:Red">file</span>	|use file as input|
+|cmd `>` <span style="color:Red">file</span>	|write output to file|
+|cmd `>>` <span style="color:Red">file</span>	|append output to file|
+|cmd `2>` <span style="color:Red">stderr</span>	|error output to file|
+|cmd `1>&2` <span style="color:Red">file</span>	|send output and error to file|
+|cmd1 `\|` <span style="color:Red">cmd2</span> 	|send output of cmd1 to cmd2|
+
+
+
+
+ |, and
+
+
 
 # Word count downloading and transfering data
 
 * ```wc, wget, scp```
 
 
-cat, head, tail
 
-Sorting and unique:		sort, uniq
-Finding a pattern:			grep
-Data wrangling:			\*, |, and Awk
-Downloading from GitHub	git clone
-Comparing Files:			diff, comm
-Dividing files:			cut, split
-Merging Files:			cat, paste, join
-HPC:				salloc, sbatch interactive sessions
 
 man
 
@@ -271,310 +649,34 @@ You should see the output something like `/home/username` This means, you are no
 
 `~` or `~username` 	same as	`/home/username`
 
-Present directory is represented as `.` (dot) and parent directory is represented as `..` (dot dot).
 
 
-### Changing directories
-To jump from one directory to another we use the cd (change directory) command.
-```
-cd ..
-```
-Changes your present location to the parent directory
-```
-cd DIRECTORY
-```
-This changes your location back to your DIRECTORY.
-
-***Task 1.1: Change your directory to the WORKSHOP_FILES directory present in your home directory.***
-
-**TIP**: You can type in first few letters of the directory name and then press `Tab` to auto complete rest of the name (especially useful when the file/directory name is long). This only works when there are unique matches for the starting letters you have typed. If there is more than one matching files/directories, pressing `Tab` twice will list all the matching names. You can also recall your previous commands by pressing &#8593; or &#8595; arrow keys or browse all your previously used commands by typing `history` on your terminal (typically, last 500 commands will be saved in this file).
-
-## Directories and files
-
-### Copying directories
-
-To copy a file, `cp` (`c`o`p`y) command is used. When using this command you have to provide both source file and destination file.
-```
-cp SOURCE DESTINATION
-```
-
-You can also specify the absolute path of the source and/or destination file. To know more about any command you can use man command, which opens the manual of the command you ask (referred as `man page`).
-
-```
-man cp
-```
-This opens the manual for the `cp` command. Take a look at the manual of `cp` command (use arrow keys to move top or bottom of the page). `OPTIONS` are arguments that can be used to accomplish more from the same command (and are not required for regular operation). Eg., by using option `–i` with the regular `cp` command, you can always make sure that you are not overwriting the existing file while copying (if the target already contains the same file). The syntax for using the options will also be provided in the manual. **To `exit`, press `q`***.
-
-*Looking at the man page for `cp` command, what options can be used to copy a directory (including all files within it)?*
-
-*How else you can get help on cp command (other than ‘man’)?*
-
-
-***Task 1.3: Now change your directory back to the home directory. Create a copy of `WORKSHOP_FILES` and name it as `BACKUP_WORKSHOP`). This will serve as a backup copy of all files that are required for the workshop (in case you accidentally modify the contents while working).***
-```
-cp -r WORKSHOP_FILES BACKUP_WORKSHOP
-```
-### Moving directories
-To move a file or a directory, `mv` (`m`o`v`e) command is used. Again, like the `cp` command you need to provide both source file and destination file.
-```
-mv SOURCE DESTINATION
-```
-Absolute path also works fine. Some of the options used by `cp` command also work with `mv` command. `mv` can also be used to rename files and directories
-```
-mv OLDNAME NEWNAME
-```
-***Task 1.4: Rename WORKSHOP_FILES as tutorials.***
-```
-mv WORKSHOP_FILES tutorials
-```
-
-
-
-### Creating and editing files
-```
-touch FILENAME
-```
-
-Creates a new file in the present location
-```
-nano FILENAME
-```
-Like notepad/textedit, this text editor lets you edit a file.
-
-***Task 1.6: Create a new file named firstfile inside the tutorials directory. You can create using touch or using nano. Then add some contents (Your name and email address) to the firstfile (using nano). After editing, press Ctrl + X to exit, then enter y to save changes and confirm the file name.***
-```
-touch firstfile
-nano firstfile
-```
-
-### Viewing contents of the files
-### Moving directories
-To move a file or a directory, `mv` (`m`o`v`e) command is used. Again, like the `cp` command you need to provide both source file and destination file.
-```
-mv SOURCE DESTINATION
-```
-Absolute path also works fine. Some of the options used by `cp` command also work with `mv` command. `mv` can also be used to rename files and directories
-```
-mv OLDNAME NEWNAME
-```
-***Task 1.4: Rename WORKSHOP_FILES as tutorials.***
-```
-mv WORKSHOP_FILES tutorials
-```
-
-### Viewing the contents of the directory
-
-The contents of a directory can be viewed using `ls` (`l`i`s`t) command.
-```
-ls DIRECTORY
-```
-
-If no directory name is provided then `ls` will list all the contents of the present directory. Like any other command, you can use absolute path or abbreviated path. There are also various options available for `ls` command.
-Some very useful options include:
-```
-ls –l #Lists all the files in lengthy or detailed view
-ls –t #Lists all the files, sorted based on creation time
-ls –S #Lists all the files, sorted based on size
-```
-You can also combine these options together for getting more focused results.
-
-Looking at the manual for `ls`, what option can you use to view hidden files in a directory (files starting with dot)?
-
-Can you sort the files based on its extension? How?
-
-***Task 1.5: Examine the contents of the tutorials directory. Try options such as `-l`, `-t`, `-a` and `-X`. Also check if you can combine many options together (like `-la` or `-lh` etc). Try these:***
-```
-ls -l tutorials
-ls -a
-ls -1 tutorials
-ls -lh tutorials
-ls -t tutorials
-```
-
-### Creating and editing files
-```
-touch FILENAME
-```
-
-Creates a new file in the present location
-```
-nano FILENAME
-```
-Like notepad/textedit, this text editor lets you edit a file.
-
-***Task 1.6: Create a new file named firstfile inside the tutorials directory. You can create using touch or using nano. Then add some contents (Your name and email address) to the firstfile (using nano). After editing, press Ctrl + X to exit, then enter y to save changes and confirm the file name.***
-```
-touch firstfile
-nano firstfile
-```
-
-### Viewing contents of the files
-There are various commands to print the contents of the file in bash. Most of these commands are often used in specific contexts. All these commands when executed with filenames displays the contents on the screen. Most common ones are `less`, `more`, `cat`, `head` and `tail`
-```
-less FILENAME
-#try this:
-less AT_cDNA.fa
-```
-Displays file contents on the screen with line scrolling (to scroll you can use arrow keys, `PgUp`/`PgDn` keys, `space bar` or `Enter` key).
-
-When you are done press `q` to exit.
-
-```
-more FILENAME
-# try this:
-more AT_cDNA.fa
-```
-
-Like `less` command, `more` also displays file contents on the screen with line scrolling, but uses only `space bar` or `Enter key` to scroll.
-
-When you are done press q to exit.
-
-```
-cat FILENAME
-try this:
-cat AT_cDNA.fa
-```
-Simplest form of displaying contents. It `cat`alogs the contents of the file on the screen. In case of large files, entire file will scroll on the screen without pausing
-
-
-```
-head FILENAME
-# try this:
-head AT_cDNA.fa
-```
-
-Displays only the starting lines of a file. The default is first ten lines. But any number of lines can be displayed using `–n` option (followed by required number of lines).
-```
-tail FILENAME
-try this:
-tail AT_cDNA.fa
-```
-
-Similar to head, but displays the last 10 lines. Again `–n` option can be used to change this.
-
-More information about any of these commands can be found in man pages (man command)
-
-***Task 1.7: Try using all these commands on the RefSeq.faa. You are also welcome to try these commands on various other files that are present in the tutorials directory. These commands don’t change the contents of the file; they just display them on the screen.***
-
-
-### Deleting files and directories
-
-To delete directories from the system, you can use `rmdir` (`r`e`m`ove `dir`ectory) command. You can also use `rm` command to delete file(s).
-
-```
-rmdir DIRECTORY
-```
-The directory should be empty before you use the rmdir command.
-```
-rm FILE
-```
-To delete a file `rm` command can be used
-Some useful options include : `–r` recursively delete files, `-f` delete forcefully
-```
-rm –rf DIRECTORY  [DO NOT USE THIS NOW!]
-```
-
-When you want to delete a folder, with all its content
-
-***Task 1.8: Delete the directory named delete_me inside the tutorials directory (to do this you may first want to delete the sample.txt file inside this directory).***
-```
-cd delete_me
-rm sample.txt
-cd ..
-rmdir delete_me
-```
 
-## Compression/Decompression
 
-There are several options for archiving and compressing groups of files or directories. Compressed files are not only easier to handle (copy/move) but also occupy less size on the disk (less than 1/3 of the original size). In Linux systems you can use `zip`, `tar` or `gz` for archiving and compressing files/directories.
+ You can also recall your previous commands by pressing &#8593; or &#8595; arrow keys or browse all your previously used commands by typing `history` on your terminal (typically, last 500 commands will be saved in this file).
 
-### zip
-```
-zip OUTFILE.zip INFILE.txt
-```
-Compress `INFILE.txt`
-```
-zip -r OUTDIR.zip DIRECTORY
-```
-Compress all files in a `DIRECTORY` into one archive file (`OUTDIR.zip`)
-```
-zip -r OUTFILE.zip . -i *.txt
-```
-Compress all txt files in a `DIRECTORY` into one archive file (`OUTFILE.zip`)
-```
-unzip SOMEFILE.zip
-```
-Decompress a file
-***Task 1.9: Zip AT_genes.gff file located in the tutorials directory. Check the file size before and after zip compression (Hint: use `ls` command with special options to check file sizes).***
-```
-zip AT_genes.gff.zip AT_genes.gff
-```
-*Is there any size difference before and after compressing?*
-
-### tar
-
-`tar` (`t`ape `ar`chive) utility saves many files together into a single archive file, and restores individual files from the archive. It also includes automatic archive compression/decompression options and special features for incremental and full backups.
-```
-tar -cvf OUTFILE.tar INFILE
-```
-archive `INFILE`
-
-```
-tar -czvf OUTFILE.tar.gz INFILE
-```
-archive and compress file `INFILE`
+### man -- `man`uel
 
-```
-tar -tvf SOMEFILE.tar
-```
-list contents of archive `SOMEFILE.tar`
-
-```
-tar -xvf SOMEFILE.tar
-```
-extract contents of `SOMEFILE.tar`
-
-```
-tar -xzvf SOMEFILE.tar.gz
-```
-extract contents of gzipped archive `SOMEFILE.tar.gz`
-
-```
-tar -czvf OUTFILE.tar.gz DIRECTORY
-```
-archive and compress all files in a directory into one archive file
+This command will provide a description of a unix command and list the parameters that can be used to modify its behavior.  To exit the manual for a command you press `q` like you do in the `less` command.
 
 ```
-tar -czvf OUTFILE.tar.gz *.txt
+man ls
+man cat
+man more
+man less
 ```
-archive and compress all ".txt" files in current directory into one archive file
 
-***Task 1.10: Archive and compress the `BACKUP_WORKSHOP` directory you created in Task 1.3 (you can name it as `backup.tar.gz` or anything you want)***
-
-```
-tar -czvf backup.tar.gz BACKUP_WORKSHOP
-```
-### gzip
+### ln -- `l`i`n`k
 
-`gzip` (`g`nu `zip`) compression utility designed as a replacement for `zip`, with much better compression and no patented algorithms. The standard compression system for all GNU software.
-```
-gzip SOMEFILE
-```
-compress `SOMEFILE` (also removes uncompressed file)
+Creating a symbolic link can be very useful when you need the same file in multiple locations.  This command will create a link to the file without actually duplicating the file.  All the unix commands will still work on the symbolic link as if it were a copy of the file in the folder.
 
 ```
-gunzip SOMEFILE.gz
+ln -s FILE
 ```
-uncompress `SOMEFILE.gz` (also removes compressed file)
 
-***Task 1.11: gzip the file AT_genes.gff and examine the size. gunzip it back so that you can use this file for the later exercises.***
+**NOTE**
+* The rm utility removes symbolic links, not the files referenced by the links.
+* Remote copying of files and folders may copy only the symbolic link and not the file it is linked to unless specified as a parameter.
 
-```
-gzip AT_genes.gff
-ls -lh
-gunzip AT_genes.gff.gz
-ls –lh
-```
 
----
-[Table of contents](programs.md)
+# Summary of commands learned
