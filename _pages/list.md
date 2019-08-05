@@ -31,8 +31,7 @@ header:
     * [Creating Containers Using Singularity](../Appendix/HPC/Containers/creatingContainers.md)
     * [Modifying Existing Containers](../Appendix/HPC/Containers/modifyingExistingContainers.md)
 * <span style="color:lightblue">Bioawk</span>
-  * [Bioawk Basics](../Appendix/bioawk-basics.md)
-
+  * [Bioawk Basics](../Appendix/Unix/bioawk-basics.md)
 * [Viewing Files In Remote Machine Without Downloading](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 
 ## [Project Management landing page](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/projectManagement_index)

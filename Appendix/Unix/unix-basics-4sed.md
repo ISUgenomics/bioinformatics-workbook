@@ -1,5 +1,5 @@
 ---
-title: "Useful Programs and Unix Basics"
+title: "SED Command"
 layout: single
 header:
   overlay_color: "444444"

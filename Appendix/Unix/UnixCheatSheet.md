@@ -38,6 +38,26 @@ header:
 |`rmdir`	|remove empty directory	|`rmdir` <span style="color:Red">DIRECTORY</span>|
 |`rm`	|remove file(s)	|`rm` <span style="color:Red">FILE</span>|
 
+
+## File manipulations
+
+|File manipulations| | |
+|--|--|--|
+| <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
+|`grep`	|search a pattern	|grep <span style="color:Red">[OPTIONS] "PATTERN" FILENAME</span>|
+|`sed`	|stream edit a file	|`sed 's/search/replace/g'` <span style="color:Red">FILENAME</span>|
+|`awk`	|multi-purpose command	|`awk 'PATTERN {ACTION}'` <span style="color:Red">FILENAME</span>|
+|`tr`	|translate or transliterate a file	|`tr` <span style="color:Red">[OPTIONS] "STRING1" "STRING2"</span>  `<` <span style="color:Red">INFILE</span> |
+|`wc`	|word count	|`wc` <span style="color:Red">FILENAME</span>|
+|`sort`	|sort files	|`sort` <span style="color:Red">FILE1</span> `>` <span style="color:Red">SORTED_FILE1</span>|
+|`uniq`	|display unique lines 	|`uniq` <span style="color:Red">[OPTIONS] INFILE</span> `>` <span style="color:Red">OUTFILE</span>|
+|`diff`	|display difference	|`diff` <span style="color:Red">[OPTIONS] FILE1 FILE2</span>|
+|`comm`	|display common lines among files	|`comm` <span style="color:Red">[OPTIONS] FILE1 FILE2</span>|
+|`cut`	|break files vertically based on fields	| `cut` `–d` <span style="color:Red">"DELIMITER"</span> `–f` <span style="color:Red">NUMBER FILE</span>|
+|`split`	|break files horizontally 	|split <span style="color:Red">[OPTIONS] FILENAME</span>|
+|`paste`	|combine files side by side	|`paste` <span style="color:Red">FILE1 FILE2</span> `>` <span style="color:Red">FILE3</span>|
+|`join`	|join files based on common field	|`join -t` <span style="color:Red">'DELIMITER'</span> `-1` <span style="color:Red">N</span> `-2` <span style="color:Red">N FILE1 FILE2</span>|
+
 ## Compression/archiving
 
 |Compression/archiving| | |
@@ -58,24 +78,6 @@ header:
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`chmod`	|change permissions for files/directories	|`chmod` <span style="color:Red">[OPTIONS] RELATIONS[+/-]PERMISSIONS FILE</span>|
 
-## File manipulations
-
-|File manipulations| | |
-|--|--|--|
-| <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
-|`grep`	|search a pattern	|grep <span style="color:Red">[OPTIONS] "PATTERN" FILENAME</span>|
-|`sed`	|stream edit a file	|`sed 's/search/replace/g'` <span style="color:Red">FILENAME</span>|
-|`awk`	|multi-purpose command	|`awk 'PATTERN {ACTION}'` <span style="color:Red">FILENAME</span>|
-|`tr`	|translate or transliterate a file	|`tr` <span style="color:Red">[OPTIONS] "STRING1" "STRING2"</span>  `<` <span style="color:Red">INFILE</span> |
-|`wc`	|word count	|`wc` <span style="color:Red">FILENAME</span>|
-|`sort`	|sort files	|`sort` <span style="color:Red">FILE1</span> `>` <span style="color:Red">SORTED_FILE1</span>|
-|`uniq`	|display unique lines 	|`uniq` <span style="color:Red">[OPTIONS] INFILE</span> `>` <span style="color:Red">OUTFILE</span>|
-|`diff`	|display difference	|`diff` <span style="color:Red">[OPTIONS] FILE1 FILE2</span>|
-|`comm`	|display common lines among files	|`comm` <span style="color:Red">[OPTIONS] FILE1 FILE2</span>|
-|`cut`	|break files vertically based on fields	| `cut` `–d` <span style="color:Red">"DELIMITER"</span> `–f` <span style="color:Red">NUMBER FILE</span>|
-|`split`	|break files horizontally 	|split <span style="color:Red">[OPTIONS] FILENAME</span>|
-|`paste`	|combine files side by side	|`paste` <span style="color:Red">FILE1 FILE2</span> `>` <span style="color:Red">FILE3</span>|
-|`join`	|join files based on common field	|`join -t` <span style="color:Red">'DELIMITER'</span> `-1` <span style="color:Red">N</span> `-2` <span style="color:Red">N FILE1 FILE2</span>|
 
 ## ADDITIONAL COMMANDS
 
