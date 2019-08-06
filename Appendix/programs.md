@@ -15,9 +15,9 @@ header:
 
 * <span style="color:lightblue">Introduction to Unix</span>
   * [Unix Basics 1](Unix/unix-basics-1.md)
-  * [Unix Basics 2](Unix/unix-basics-2.md)
-  * [Grep](Unix/unix-basics-3.md)
-  * [Sed](Unix/unix-basics-4.md)
+  * [Unix Basics 2](Unix/unix-basics-2admin.md)
+  * [Grep](Unix/unix-basics-3grep.md)
+  * [Sed](Unix/unix-basics-4sed.md)
   * [Introduction to regular expressions](../introduction/introduction-to-regular-expressions.md)
 
 
