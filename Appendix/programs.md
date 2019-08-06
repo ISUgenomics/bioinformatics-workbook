@@ -38,7 +38,7 @@ header:
     * [Creating Containers Using Singularity](/HPC/Containers/creatingContainers.md)
     * [Modifying Existing Containers](/HPC/Containers/modifyingExistingContainers.md)
 * <span style="color:lightblue">Bioawk</span>
-  * [Bioawk Basics](bioawk-basics.md)
+  * [Bioawk Basics](Unix/bioawk-basics.md)
 
 * [Viewing Files In Remote Machine Without Downloading](/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 
