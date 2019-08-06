@@ -122,7 +122,7 @@ clear
 
 This section will introduce you to some basic file/directory navigation
 
-### mkdir -- `M`a`k`e `Dir`ectory Command
+## mkdir -- <span style="color:Blue">M</span>ake <span style="color:Blue">Dir</span>ectory Command
 Let's make a new directory (folder) called unixTutorial.  To create a directory, the `mkdir` (`m`a`k`e `dir`ectory) command can be used. Type in the next command and hit the &#8629; (`Enter`) key. Notice there is a space between the mkdir command and the filename we supply to the mkdir command
 
 ```
@@ -139,7 +139,7 @@ mkdir: cannot create directory ‘unixTutorial’: File exists
 ```
 
 
-### pwd -- `P`ath of `W`orking `D`irectory
+## pwd -- <span style="color:Blue">P</span>ath of <span style="color:Blue">W</span>orking <span style="color:Blue">D</span>irectory
 
 At this point you might be feeling like you are completely blind because you can't see the result of what you did.  So let me teach you a few more commands and change that.  This command will tell you where you are.
 
@@ -153,7 +153,7 @@ In my case this returns the following to standard out where severin is my userna
 
 What this is telling me is that I am in a directory named severin which is in a directory named home.
 
-### `cd` -- `C`hange `D`irectory
+## `cd` -- <span style="color:Blue">C</span>hange <span style="color:Blue">D</span>irectory
 
 You will recall we made a directory called unixTutorial above. We can change to that directory using the `cd` command.
 
@@ -204,8 +204,6 @@ pwd
 # File creation editing
 ---
 
-* ```ls, nano, vim```
-
 || ||
 |--|--|--|
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
@@ -214,7 +212,7 @@ pwd
 |`vim` | edit a file | `vim` <span style="color:Red">FILENAME</span>
 
 
-### `ls` (`l`i`s`t) command
+## `ls` (<span style="color:Blue">l</span>i<span style="color:Blue">s</span>t) command
 
 Now that we know how to move between directories, The contents of a directory can be viewed using `ls`. If no directory name is provided then `ls` will list all the contents of the present directory.
 ```
@@ -224,7 +222,7 @@ ls DIRECTORY
 ```
 Everyone should currently be in their unixTutorial directory that they just created, which is empty so the `ls` command will return you to a new prompt without anything written to standard out. To exit nano you type this series of keys -- hit `ctr x` press `y` for yes to save and hit `enter`.  Nano tells you how to exit along with many of the following shortcuts at the bottom of your screen and will step you through how to exit and save.
 
-### nano -- Text editor more like a GUI
+## nano -- Text editor more like a GUI
 
 Nano opens up and will feel like a typical text editor you are familiar with.  Arrow keys can be used navigate the text. Below are some additional shortcuts.
 
@@ -263,7 +261,7 @@ nano myFirstfile.txt
 ```
 Paste your text and then hit `ctr x` press `y` for yes to save and hit `enter`, which will return you to the prompt.  This will save the file with the text in it.
 
-### VIM
+## VIM
 
 `vim` is another text editor that when you are more comfortable with the unix command line, it will be worth your time to learn.  Many first time Unix users type in `vim` to enter the editor and get stuck in the editor as it is less intuitive than nano.  I will not go into great detail in this introductory tutorial but want to provide you with resources to explore on your own. There is a command line like feature in this editor that a user can use to execute very powerful text editing functions.
 
@@ -296,7 +294,7 @@ A `cat` has a `head` and a `tail`, `more` or `less`
 |`less`	|view file (with more options)	|`less` <span style="color:Red">FILE</span>|
 |`seq` | write a sequence of numbers | `seq` <span style="color:Red">1 1 10</span>|
 
-### `seq` -- short for `seq`uence of numbers
+## `seq` -- short for <span style="color:Blue">seq</span>uence of numbers
 
 To fully appreciate the commands for viewing the contents of a file let's create a file with the numbers from 1 to 100.  Execute the following command and put it into a file named `numSeq.txt`
 
@@ -307,11 +305,11 @@ nano numSeq.txt
 #make sure there is no extra empty lines at the end of the file.
 ```
 
-### `cat` -- con`cat`enate and print files
+## `cat` -- con<span style="color:Blue">cat</span>enate and print files
 
 This command will print out the entire file. Try it out with the numSeq.txt file.  You should see all 100 numbers print to the screen.
 
-### `head` -- head of the file.
+## `head` -- head of the file.
 
 This command will give you the first 10 lines of a file. Try it out with the numSeq.txt file.
 
@@ -321,7 +319,7 @@ head -n 5 numSeq.txt
 ```
 The `-n` parameter tells the `head` function to printout in this case 5 lines instead of the default 10 lines.
 
-### `tail` -- tail of the file
+## `tail` -- tail of the file
 
 This command will give you the last 10 lines of a file.  Try it out with the numSeq.txt file.
 
@@ -330,13 +328,13 @@ tail numSeq.txt
 tail -n 5 numSeq.txt
 ```
 
-### `more` -- command to step through a file one screen length at a time using the spacebar. hit `q` to quit the file before reaching the end.
+## `more` -- command to step through a file one screen length at a time using the spacebar. hit `q` to quit the file before reaching the end.
 
 ```
 more numSeq.txt
 ```
 
-### `less` -- similar to the more command but lets you scroll backwards as well.
+## `less` -- similar to the more command but lets you scroll backwards as well.
 
 ```
 less numSeq.txt
@@ -366,7 +364,7 @@ less numSeq.txt
 
 
 
-### `touch` command
+## `touch` command
 
 This command is used to quickly create many empty files.
 
@@ -395,7 +393,7 @@ The standard output now returns
 1.txt 2.txt 3.txt 4.txt 5.txt 6.txt AA.txt BB.txt CC.txt DD.txt EE.txt GG.txt
 ```
 
-### `mkdir` -- `M`a`k`e `Dir`ectory
+## `mkdir` -- <span style="color:Blue">M</span>a<span style="color:Blue">k</span>e <span style="color:Blue">Dir</span>ectory
 We have already discussed the mkdir command but here is a brief review.  For this section of the tutorial we are going to make four folders named Numbers, Letters, Deleteme and Deleteme2.
 
 ```
@@ -430,7 +428,7 @@ ls Deleteme2
 
 In Unix there is no undo command.  If you delete a file it is gone.  There is no trash bin.  The next two commands are very powerful commands and cna lead to unfortunate losses if not used with care. With that said you can only delete files you have created.  So it is impossible to delete someone else files without permission.
 
-### `rmdir` -- `R`e`m`ove `Dir`ectory
+## `rmdir` -- <span style="color:Blue">R</span>e<span style="color:Blue">m</span>ove <span style="color:Blue">Dir</span>ectory
 This command can remove an empty directory
 
 Let's remove the extra Deleteme2 directory using this command
@@ -453,7 +451,7 @@ rmdir: Deleteme: Directory not empty
 ```
 In order to remove this directory with the rmdir command you would have to delete all the files and folders in the directory.  However, you can use the remove (`rm`) command instead.
 
-## `rm` -- `R`e`m`ove file
+## `rm` -- <span style="color:Blue">R</span>e<span style="color:Blue">m</span>ove file
 
 In this example, we will remove the file deleteme3.txt in the Deleteme2 directory.
 
@@ -465,7 +463,7 @@ ls Deleteme2
 ls Deleteme
 ```
 
-**Exercise:** Remove the deleteme2.txt file.
+#### <span style="color:Green">Exercise:</span> Remove the deleteme2.txt file.
 
 Now, having deleted both files from Deleteme2 directory we can use the rmdir command to delete the folder.
 
@@ -483,7 +481,7 @@ ls
 
 The `-r` is a parameter that attempts to remove directories as well as other types of files
 
-### `mv` -- `m`o`v`e command
+## `mv` -- <span style="color:Blue">m</span>o<span style="color:Blue">v</span>e command
 
 Move is used to move files to a different location and to rename a file.
 
@@ -503,7 +501,7 @@ mv 4.txt 5.txt 6.txt Numbers
 ```
 As you can see you can move more than one file at a time into a folder by listing multiple files before the directory you wish to move them to.
 
-**Exercise:** Put all the letter files into the Letters directory.
+#### <span style="color:Green">Exercise:</span> Put all the letter files into the Letters directory.
 
 The second function for the mv command is to rename a file.  If you look inside the Letters directory, you will see that one of the letter.txt files is not in sequence.
 
@@ -521,7 +519,7 @@ mv GG.txt FF.txt
 ls
 ```
 
-### `cp` -- `c`o`p`y command
+## `cp` -- <span style="color:Blue">c</span>o<span style="color:Blue">p</span>y command
 
 The `cp` command can be used to duplicate a file
 
@@ -580,7 +578,7 @@ Up to this point we have learned individual commands that give you roughly the s
 |cmd `>>` <span style="color:Red">file</span>	|append output to file|
 |cmd1 `\|` <span style="color:Red">cmd2</span> 	|send output of cmd1 to cmd2|
 
-## `wc` -- `w`ord `c`ount
+## `wc` -- <span style="color:Blue">w</span>ord <span style="color:Blue">c</span>ount
 
 This function will give you the number of lines, the number of words and the number of characters in a file.
 
@@ -601,7 +599,7 @@ wc -w numSeq.txt
 **Note** The `-c` assumes that the characters are single byte if you are using multibyte characters you will want to use `-m`
 
 
-## `tr` -- `tr`anslate
+## `tr` -- <span style="color:Blue">tr</span>anslate
 
 This command can take any individual character and replace it with another character
 
@@ -631,7 +629,7 @@ The above command first uses `cat` to put the contents of the file to standard o
 
 ![](assets/PipeIOS.png)
 
-## `shuf` -- `shuf`fle
+## `shuf` -- <span style="color:Blue">shuf</span>fle
 
 **NOTE:** If you are running this in IOS rather than on a linux machine you will need to use `gshuf` or `alias shuf=gshuf` for the above commands to run properly.
 
@@ -649,7 +647,7 @@ The first command will shuffle the contents of numSeq.txt and then redirect `>` 
 wc -l numSeqRandom.txt
 ```
 
-**Exercise:** Use `nano` to add 1e-10 and 1e10 to the top of the numSeqRandom.txt file.  We will show you how to sort all the numbers in the next section.
+#### <span style="color:Green">Exercise:</span> Use `nano` to add 1e-10 and 1e10 to the top of the numSeqRandom.txt file.  We will show you how to sort all the numbers in the next section.
 
 
 
@@ -707,7 +705,7 @@ sort -g numSeqRandom.txt | head
 
 That worked but how do we remove the duplicates.
 
-## uniq -- `uniq`ue command to remove duplicates of adjacent (presorted) lines
+## uniq -- <span style="color:Blue">Uniq</span>ue command to remove duplicates of adjacent (presorted) lines
 
 uniq will remove duplicate lines but only if the file is sorted first.
 
@@ -742,7 +740,7 @@ sort -g numSeqRandom.txt | uniq -c | head
 ```
 The first number represents the number of times the line was found (its frequency).
 
-**Exercise:** Identify the 5 most used words in myFirstfile.txt.  (Hint: cat,tr,sort, uniq, sort, tail, \|)
+#### <span style="color:Green">Exercise:</span> Identify the 5 most used words in myFirstfile.txt.  (Hint: cat,tr,sort, uniq, sort, tail, \|)
 
 ```
 cat myFirstfile.txt  | tr ' ' '\n' | sort | uniq -c | sort -n | tail -n 4
@@ -773,7 +771,7 @@ It is through this method that a long Unix 'one-liner' can be created. By lookin
 |'?'| variable used to represent any one character| 'ls' <span style="color:Red">?.txt</span> |
 
 
-## `grep` -- `g`lobal `r`egular `e`xpression `p`rint
+## `grep` -- <span style="color:Blue">g</span>lobal <span style="color:Blue">r</span>egular <span style="color:Blue">e</span>xpression <span style="color:Blue">p</span>rint
 
 This command will replace your find command in a text document.
 
@@ -838,7 +836,7 @@ mv ?.txt Numbers
 And we are done.
 
 
-## `sed` --  stream editor
+## `sed` --  <span style="color:Blue">s</span>tream <span style="color:Blue">ed</span>itor
 
 Most common use of `sed` is to substitute text, matching a pattern. The syntax for doing this in `sed` is as follows:
 
@@ -885,7 +883,7 @@ wget https://bioinformaticsworkbook.org/Appendix/Unix/assets/Cat.jpg
 wget https://bioinformaticsworkbook.org/Appendix/Unix/assets/saltandpepper.jpg
 ```
 
-## `scp` -- `s`ecure `c`o`p`y
+## `scp` -- <span style="color:Blue">s</span>ecure <span style="color:Blue">c</span>o<span style="color:Blue">p</span>y
 
 To transfer files from a remote machine to your local machine you can use `scp`.  Open up a new terminal on your local machine and change to your downloads folder.
 
@@ -898,11 +896,11 @@ scp andrew.severin@ceres.scinet.science:/home/andrew.severin/unixTutorial/Cat.jp
 ```
 The above command does a secure copy from the remote server : in folder unixTutorial to copy Cat.jpg to this folder (`.`)
 
-**Exercise:** Repeat this but for the saltandpepper.jpg image.  Use your mouse to look at the images you just downloaded.
+#### <span style="color:Green">Exercise:</span> Repeat this but for the saltandpepper.jpg image.  Use your mouse to look at the images you just downloaded.
 
 **NOTE:** If you don't know your hostname you can use the command `hostname` to find out. Try it.
 
-## `rsync` -- `r`emote `sync`
+## `rsync` -- <span style="color:Blue">r</span>emote <span style="color:Blue">sync</span>
 
 Sometimes you want to download an entire folder.  This can be achieved using the `rsync` command. In your local machine in the Downloads folder execute the following command.
 
@@ -914,7 +912,7 @@ rsync -avz -e ssh username@remotehostname:/home/andrew.severin/unixTutorial .
 
 # The Unix manual pages and soft links
 ---
-### man -- `man`uel
+## man -- <span style="color:Blue">man</span>uel
 
 This command will provide a description of a unix command and list the parameters that can be used to modify its behavior.  To exit the manual for a command you press `q` like you do in the `less` command.
 
@@ -925,7 +923,7 @@ man more
 man less
 ```
 
-### ln -- `l`i`n`k
+## ln -- <span style="color:Blue">l</span>i<span style="color:Blue">n</span>k
 
 Creating a symbolic link can be very useful when you need the same file in multiple locations.  This command will create a link to the file without actually duplicating the file.  All the unix commands will still work on the symbolic link as if it were a copy of the file in the folder.
 
