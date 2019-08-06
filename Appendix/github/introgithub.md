@@ -117,7 +117,7 @@ Copy the entire contents of this file and add it to your GitHub account.
 
 # How to Add SSH key to GitHub Repo
 
-Add your new ssh key to your GitHub account by going to [_SSH and GPG keys_](https://github.com/settings/profile/keys) in your profile Settings.
+Add your new ssh key to your GitHub account by going to [_SSH and GPG keys_](https://github.com/settings/profile/keys) in your profile Settings.  You will need to be logged into GitHub for the above link to work.
 
 ![](https://codenvy.com/docs-version/5.0.1/docs/assets/imgs/Clipboard6.jpg)
 
@@ -182,7 +182,7 @@ Also, allows for collaboration and back-up.
 
 ---
 
-Contibutions for this markdown document came from Matt Hufford and was modified with permission from his [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03X Fall 2017) course.
+Contibutions for this markdown document came from Matt Hufford and was modified with permission from his [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03r/Week_03X Fall 2017) course.
 
 ---
 [Table of contents](../programs.md)

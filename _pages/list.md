@@ -11,9 +11,9 @@ header:
 ### Command Line Basics and Useful Programs
 * <span style="color:lightblue">Introduction to Unix</span>
   * [Unix Basics 1](../Appendix/Unix/unix-basics-1.md)  
-  * [Unix Basics 2](../Appendix/Unix/unix-basics-2.md)
-  * [Unix Basics 3 (grep)](../Appendix/Unix/unix-basics-3.md)
-  * [Unix Basics 4 (sed)](../Appendix/Unix/unix-basics-4.md)
+  * [Unix Basics 2](../Appendix/Unix/unix-basics-2admin.md)
+  * [Unix Basics 3 (grep)](../Appendix/Unix/unix-basics-3grep.md)
+  * [Unix Basics 4 (sed)](../Appendix/Unix/unix-basics-4sed.md)
 * <span style="color:lightblue">HPC</span>
   * [How to Install a Program](../Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
   * <span style="color:lightblue">SSH</span>
@@ -50,7 +50,7 @@ header:
 
 ### Experimental Design
 * [Biological system](../experimentalDesign/bio_sys.md)
-* [Sequencing Technology](../experimentalDesign/sequencing.md)
+* [Sequencing Technology](../experimentalDesign/sequencingTechnology.md)
 * [Costs](../experimentalDesign/costs.md)
 * [Generic Examples of Experimental Design](../experimentalDesign/eD_genericExamples.md)
 * [List of Biology exceptions and irregularities](../Appendix/biology_tidbits.md)
@@ -104,13 +104,13 @@ header:
     * [Check a genome for PhiX contamination](../dataAnalysis/GenomeAssembly/PhiXContaminationCheck.md)
 * <span style="color:lightblue">Tools for Scaffolding assemblies</span>  
     * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
-    * [Hi-C scaffolding](../GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
+    * [Hi-C scaffolding](../dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
 * <span style="color:lightblue">Genome Assembly Examples</span>
   * [Bacillus thuringiensis data set](../dataAnalysis/GenomeAssembly/BT/BT_background.md)
     * [Canu Assembly of Bacillus thuringiensis](../dataAnalysis/GenomeAssembly/BT/BT_Canu.md)
     * [SPAdes Assembly of Bacillus thuringiensis](../dataAnalysis/GenomeAssembly/BT/BT_spades.md)
   * [Arabidopsis thaliana data set](../dataAnalysis/GenomeAssembly/Arabidopsis/Arabidopsis_background.md)
-    * [MaSuRCA assembly of Arabidopsis thanliana](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_MaSuRCA.md )
+    * [MaSuRCA assembly of Arabidopsis thanliana](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_MaSuRCA.md)
     * [Short read assembly using Platanus](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
 * <span style="color:lightblue">Genetic Map Construction</span>
     * [Generating Genetic Maps from GBS data](../dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
@@ -119,7 +119,7 @@ header:
 ### Comparative Genomics
 * [Gene Orthology, Synteny, and Visualzation with Opscan, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/Gene_Orthology_And_Synteny.md)
   * [Gene Orthology, Synteny, and Visualzation with Orthofinder, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/OrthofinderSynteny.md)
-  * [Gene Overlap Significance Testing with R Gene_overlap Package](../dataAnalysis/ComparativeGenomics/Gene_Category_overlap_Fisher_exact_testing.md)  
+  * [Gene Overlap Significance Testing with R Gene_overlap Package](../dataAnalysis/ComparativeGenomics/Gene_Category_Overlap_Fishers_exact_testing.md)  
   * [Phylostratiophraphy:Determining the LCA of all Genes in a Genome](../dataAnalysis/ComparativeGenomics/phylostratr.md)
 
 ### Genome Repeat Identification

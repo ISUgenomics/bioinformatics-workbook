@@ -82,7 +82,7 @@ header:
     * [Introduction to Slack](../Appendix/slack.md)
     * [How to use Markdown](../Appendix/Markdown.md)
   * Scripting and Command Line
-  * [Bioawk Basics](../Appendix/bioawk-basics.md)
+  * [Bioawk Basics](../Appendix/Unix/bioawk-basics.md)
     * [Introduction to Version Control and Github](../Appendix/github/githubBasics.md)
   * Installation
     * [How to Install a Program?](../Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
@@ -101,8 +101,8 @@ header:
         * [SSH Shortcuts](../Appendix/HPC/ssh-shortcuts.md)
     * Introduction to UNIX
         * [Unix Basics 1](../Appendix/Unix/unix-basics-1.md)  
-        * [Unix Basics 2](../Appendix/Unix/unix-basics-2.md)
-        * [Unix Basics 3 (grep)](../Appendix/Unix/unix-basics-3.md)
-        * [Unix Basics 4 (sed)](../Appendix/Unix/unix-basics-4.md)
+        * [Unix Basics 2](../Appendix/Unix/unix-basics-2admin.md)
+        * [Unix Basics 3 (grep)](../Appendix/Unix/unix-basics-3grep.md)
+        * [Unix Basics 4 (sed)](../Appendix/Unix/unix-basics-4sed.md)
     * XSEDE
         * [What is XSEDE, and How to Get an Allocation](../Appendix/HPC/xsede/xsede.md)

@@ -71,7 +71,7 @@ It can be anything, please feel free to get in touch with us! We will be more th
 
 ## Submitting changes
 
-Please send a [GitHub Pull Request to bioinformatics-workbook](https://github.com/ISUgenomics/bioinformatics-workbook/pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). Please follow our writing conventions (below) and make sure all of your commits are atomic (one feature per commit).
+Please send a [GitHub Pull Request to bioinformatics-workbook](https://github.com/ISUgenomics/bioinformatics-workbook/pull/new/master) with a clear list of what you've done (read more about [pull requests](https://help.github.com/en/articles/about-pull-requests)). Please follow our writing conventions (below) and make sure all of your commits are atomic (one feature per commit).
 {: style="text-align: justify"}
 
 Always write a clear log message for your commits. One-line messages are fine for small changes, but bigger changes should look like this:

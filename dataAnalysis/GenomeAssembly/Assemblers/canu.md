@@ -85,7 +85,7 @@ header:
 |correction|trimming|unitigging|
 
 ## SLURM standard output
-* An example of the output log can be found here: [canu.out](dataAnalysis/GenomeAssembly/Assemblers/logs/canu.out)
+* An example of the output log can be found here: [canu.out](logs/canu.out)
 
 ## Errors
 
