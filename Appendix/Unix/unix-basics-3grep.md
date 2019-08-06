@@ -1,7 +1,6 @@
 ---
 title: "Grep Command"
 layout: single
-layout: single
 author: Arun Seetharam
 header:
   overlay_color: "444444"
