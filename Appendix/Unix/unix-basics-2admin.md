@@ -295,4 +295,4 @@ Some variables that are useful are:
 | `HISTFILE` | file where the history is saved    |
 
 ---
-[Table of contents](programs.md)
+[Table of contents](../programs.md)

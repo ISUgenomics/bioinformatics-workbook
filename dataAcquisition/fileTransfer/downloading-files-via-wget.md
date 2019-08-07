@@ -81,7 +81,7 @@ wget --mirror -p --convert-links -P ./LOCAL-DIR WEBSITE-URL
 ##  Citations  
 
 - [Stack-exchange thread](http://unix.stackexchange.com/questions/117988/wget-with-wildcards-in-http-downloads)
-- [Blog](http://blog.alastair.pro/2012/10/21/wget-regex-filter-by-file-type/)
+- [Blog](https://web.archive.org/web/20161024002305/http://blog.alastair.pro/2012/10/21/wget-regex-filter-by-file-type/)
 - [Forum](http://www.linuxquestions.org/questions/linux-newbie-8/wget-with-regular-expressions-846368/)
 
 ---

@@ -154,4 +154,4 @@ TRINITY_DN10005_c0_g1   0.00    0.00    0.00    8.13    13.44   0.00
 This matrix can be imported into R and differential expression analyses performed using DESeq2 as explained [here](https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/dge-using-a-genome).
 
 ---
-[Table of contents](RNAseq-intro.md)
+[Table of contents](Differential-Expression-Analysis)

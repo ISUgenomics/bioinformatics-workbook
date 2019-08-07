@@ -13,7 +13,7 @@ Github is a code hosting platform for version control and collaboration.  There 
   * Bioinformatic **Program development**
   * **Documentation** of bioinformatic analyses
 
-Probably the most important use-case for new users is documentation.  For those transitioning from a wet-lab, git-hub repos can be thought of as the equivalent to a web-lab notebook, where every command performed in a bioinformatics analysis is recorded with an explanation as to why it was performed, when it was performed (date) and where it was performed (pwd). Github documents can be written using markdown (See [markdown](Appendix/Markdown.md) tutorial for an introduction).
+Probably the most important use-case for new users is documentation.  For those transitioning from a wet-lab, git-hub repos can be thought of as the equivalent to a web-lab notebook, where every command performed in a bioinformatics analysis is recorded with an explanation as to why it was performed, when it was performed (date) and where it was performed (pwd). Github documents can be written using markdown (See [markdown](../Markdown.md) tutorial for an introduction).
 
 ---
 # How to get a Github account
@@ -182,7 +182,7 @@ Also, allows for collaboration and back-up.
 
 ---
 
-Contibutions for this markdown document came from Matt Hufford and was modified with permission from his [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03r/Week_03X Fall 2017) course.
+Contibutions for this markdown document came from Matt Hufford and was modified with permission from his [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03/) course.  Check out his amazing power point he created at the above link.
 
 ---
 [Table of contents](../programs.md)
