@@ -208,4 +208,4 @@ grep -B 10 -A 10 "PATTERN" FILENAME
 ```
 
 ---
-[Table of contents](programs.md)
+[Table of contents](../programs.md)

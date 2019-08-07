@@ -56,7 +56,7 @@ In bioinformatics, science is recorded digitally in a digital notebook. We recom
 
 GitHub is often thought of as a tool for programmers to version control code but it can also be used to version control text documents as an online notebook.  If you don't have a GitHub account, you can set one up based on this [GitHub Tutorial](../Appendix/github/introgithub.md) and the free version of GitHub now allows for unlimited free repositories. In addition, as a researcher or educator you can request a free upgrade to get access to [unlimited users in private repos.](https://help.github.com/articles/about-github-education-for-educators-and-researchers/).  
 
-One of the great aspects of GitHub is that you can use [markdown](/bioinformatics-workbook/Appendix/Markdown) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers```# ## ###```, bullet points ```*```, code blocks and insert images very easily.  Markdown can also be easily converted to PDF for sharing.
+One of the great aspects of GitHub is that you can use [markdown](../Appendix/Markdown.md) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers```# ## ###```, bullet points ```*```, code blocks and insert images very easily.  Markdown can also be easily converted to PDF for sharing.
 
 Assuming you now have a GitHub account, create a GitHub repository with the same name you labeled your project folder (ie: WhiteAbaloneRNA-Seq or SeriolaGWAS).  
 
@@ -111,7 +111,7 @@ In a group with multiple active projects, it is helpful to have a running dialog
 
 However, a communication platform based around group chats can also be extremely effective when you have a medium sized group (3+) of knowledgeable individuals.  We use
 
-[Slack](/bioinformatics-workbook/Appendix/slack) and create a channel for each active project.  This group chat (text messaging style) communication generates a transcript of conversations about projects that you can go back and reread. It also permits, text, images and files to be attached during conversation.  I strongly encourage you to use it primarily for text communication and discussion and not for file storage.
+[Slack](../Appendix/slack.md) and create a channel for each active project.  This group chat (text messaging style) communication generates a transcript of conversations about projects that you can go back and reread. It also permits, text, images and files to be attached during conversation.  I strongly encourage you to use it primarily for text communication and discussion and not for file storage.
 
 You can create your own team using [this link: Team signup](https://slack.com/r/0mklqxar-0tnh0jhj) and get a $100 credit if you decide to purchase it beyond the free version.  The upgraded version will let you search beyond the 10,000 most recent messages in your group and there is a steep academic discount.
 

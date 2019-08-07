@@ -130,4 +130,4 @@ sed '2 i line to insert' FILENAME
 still to come!
 
 ---
-[Table of contents](programs.md)
+[Table of contents](../programs.md)

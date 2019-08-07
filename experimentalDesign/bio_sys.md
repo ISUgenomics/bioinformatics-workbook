@@ -45,6 +45,6 @@ There are four main aspects that should be considered to answer your biological 
 ---
 
 
-[Next](sequencing.md){: .btn  .btn--primary}
+[Next](sequencingTechnology.md){: .btn  .btn--primary}
 [Previous](exp_design_index.md){: .btn  .btn--primary}
 [Table of contents](exp_design_index){: .btn  .btn--primary}
