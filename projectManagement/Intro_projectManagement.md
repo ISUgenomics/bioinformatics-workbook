@@ -89,7 +89,7 @@ If you work on multiple machines and your laptop then create a folder for each m
 
 #### Atom (text editor)
 
-If you haven't already, download and install [GitHub ATOM](https://atom.io/).  This is a text editor that understands markdown syntax and allows you to preview markdown that you write in an adjacent window.  See [markdown](/bioinformatics-workbook/Appendix/Markdown) tutorial for more information.
+If you haven't already, download and install [GitHub ATOM](https://atom.io/).  This is a text editor that understands markdown syntax and allows you to preview markdown that you write in an adjacent window.  See [markdown](../Appendix/Markdown.md) tutorial for more information.
 
 
 #### What, When, Where, Why, How and the Result
