@@ -8,6 +8,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+{% include toc %}
 
 # Introduction
 ---

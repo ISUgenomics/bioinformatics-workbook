@@ -1,6 +1,8 @@
 ---
-title: "Experimental Design"
+title: "Experimental Design Generic Examples"
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
