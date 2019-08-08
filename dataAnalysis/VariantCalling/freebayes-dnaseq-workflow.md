@@ -16,7 +16,7 @@ header:
 
 ## Dataset
 
-For this tutorial we will use the dataset from BioProject [PRJNA283785](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA283785). This dataset has Illumina short reads for four different ecotypes of _Arabidopsis thaliana_ (`002185_Limeport-CC8070`, `002186_Limeport-CC28464`, `002187_Santa-Clara-CC8069`, `002188_Santa-Clara-CC28722`, `002189_Berkley-CC8068`, `002190_Berkley-CC28067`) and was originally used for re-evaluation of reported metal tolerance of _Arabidopsis thaliana_ accessions. These reads were sequenced on Illumina HiSeq 2000, with genomic DNA (WGS), random selection, paired layout, library strategy,
+For this tutorial we will use the dataset from BioProject [PRJNA283785](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA283785). This dataset has Illumina short reads for six different ecotypes of _Arabidopsis thaliana_ (`002185_Limeport-CC8070`, `002186_Limeport-CC28464`, `002187_Santa-Clara-CC8069`, `002188_Santa-Clara-CC28722`, `002189_Berkley-CC8068`, `002190_Berkley-CC28067`) and was originally used for re-evaluation of reported metal tolerance of _Arabidopsis thaliana_ accessions. These reads were sequenced on Illumina HiSeq 2000, with genomic DNA (WGS), random selection, paired layout, library strategy,
 
 
 **Table 1: Dataset used for freebayes SNP calling.**
@@ -107,7 +107,7 @@ module load fastqc
 parallel "fastqc {}"" ::: *.fastq
 ```
 
-you can examine the results by opening each html page or you can merge them to a single report using multiqc. The data seems [satisfactory](assets/fastqc), so we will proceed to next step.
+you can examine the results by opening each html page or you can merge them to a single report using multiqc. The data seems [satisfactory](assets/fastqc-freebayes), so we will proceed to next step.
 
 ### Step 1: Map the raw reads to the genome
 
