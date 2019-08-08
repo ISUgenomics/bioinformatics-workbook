@@ -1,5 +1,5 @@
 ---
-title: "Unix Basics Lesson 1"
+title: "Introduction to Unix"
 layout: single
 author: Andrew Severin
 author_profile: true
@@ -14,12 +14,12 @@ header:
 ---
 
 ## What is Unix?
-* Widely used multiuser operating system
-* Linux: free version of UNIX-like operating system
-* Red Hat Enterprise Linux, Ubuntu, and CentOS
+* Multiuser operating system
+* Linux: free version of this type of operating system
+  * Red Hat Enterprise Linux, Ubuntu, and CentOS
 * Used on high-end workstations, database servers, web servers and managing shared resources
 * Standard features include: Security, reliability, scalability
-* supports multi-user (as in 100s)
+  * Can supports 100s of users at a time
 
 
 ## Can I learn Unix?
