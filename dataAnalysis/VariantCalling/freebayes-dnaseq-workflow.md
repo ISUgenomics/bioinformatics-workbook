@@ -1,5 +1,5 @@
 ---
-title: "Creating Genetic Maps from GBS data"
+title: "FreeBayes variant calling workflow for DNA-Seq"
 layout: single
 author: Arun Seetharam
 author_profile: true
@@ -251,6 +251,6 @@ makeSLURMs.py 1 freebayes.cmds
 sbatch freebayes_0.sub
 ```
 
-When this completes, you will have the `output.vcf` file.
+When this completes, you will have the `output.vcf` file. This is your unfiltered raw variants file.
 
 ### Step 4: filter the VCF file
