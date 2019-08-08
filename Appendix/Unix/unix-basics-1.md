@@ -123,7 +123,7 @@ clear
 
 This section will introduce you to some basic file/directory navigation
 
-## mkdir -- <span style="color:Blue">M</span>ake <span style="color:Blue">Dir</span>ectory Command
+## mkdir -- <span style="color:Blue">M</span>a<span style="color:Blue">k</span>e <span style="color:Blue">Dir</span>ectory Command
 Let's make a new directory (folder) called unixTutorial.  To create a directory, the `mkdir` (`m`a`k`e `dir`ectory) command can be used. Type in the next command and hit the &#8629; (`Enter`) key. Notice there is a space between the mkdir command and the filename we supply to the mkdir command
 
 ```
