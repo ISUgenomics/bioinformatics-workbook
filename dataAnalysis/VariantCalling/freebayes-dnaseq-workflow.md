@@ -253,6 +253,15 @@ sbatch freebayes_0.sub
 
 When this completes, you will have the `output.vcf` file. This is your unfiltered raw variants file.
 
+For the files above, it took > 5hrs to complete. Because of the design, the program runs only on a single processor.
+
+```
+real    320m1.051s
+user    314m49.526s
+sys     0m50.473s
+```
+Another alternative is to run them in small chunks, a stretch of genome, at a time. Although the program does not have `threads` option, it can be trivially parallelizable. 
+
 ### Step 3b: Run freebayes (processing small chunks of genome, in parallel)
 
 Just like before, her run the freebayes but process the small chunks of genome at a time. Since freebayes can't utilize multiple processors, you can run this processing step, many at a time, finishing the analyses faster. Fortunately, the included script does all this for you!
