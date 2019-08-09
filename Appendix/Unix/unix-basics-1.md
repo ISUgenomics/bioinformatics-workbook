@@ -344,8 +344,8 @@ less numSeq.txt
 |less navigation | |
 |--|--|
 |`q` | quit|
-|`u` or `space bar`| up one screen|
-|`d`| down one screen|
+|`u` | up one screen|
+|`d` or `space bar`| down one screen|
 |`g` <span style="color:Red">NUM</span>| go to line NUM|
 
 
