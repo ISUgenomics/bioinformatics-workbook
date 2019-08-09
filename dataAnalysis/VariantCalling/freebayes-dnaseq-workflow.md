@@ -219,7 +219,7 @@ done
 
 Now we are ready to call SNPs on these bam files!
 
-### Step 3: Run freebayes
+### Step 3a: Run freebayes (single processor mode)
 
 Next is to run the actual variant calling program, whcih is the `freebayes`. We run this on all your processed bam files (alignment data) simultaneously. This will generate a single VCF file. The default settings should work for most use cases, but if your samples are not diploid, then you need to set the `--ploidy` and adjust the `--min-alternate-fraction` accordingly.
 
@@ -252,5 +252,44 @@ sbatch freebayes_0.sub
 ```
 
 When this completes, you will have the `output.vcf` file. This is your unfiltered raw variants file.
+
+### Step 3b: Run freebayes (processing small chunks of genome, in parallel)
+
+Just like before, her run the freebayes but process the small chunks of genome at a time. Since freebayes can't utilize multiple processors, you can run this processing step, many at a time, finishing the analyses faster. Fortunately, the included script does all this for you!
+
+
+```bash
+cd 6_freebayes-parallel
+for bam in ../4_processing/*-md-rg.bam*; do
+  ln -s $bam;
+done
+```
+Make a run script for freebayes (`runFreeBayesP.sh`):
+
+```bash
+#!/bin/bash
+ref="../0_index/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa"
+module load freebayes
+ls *-md-rg.bam > bam.fofn
+freebayes-parallel \
+   <(fasta_generate_regions.py ${ref}.fai 100000) 16 \
+   --fasta-reference ${ref} \
+   --bam-list bam.fofn  > output.vcf
+```
+make SLURM scripts and submit
+
+```bash
+echo "./runFreeBayesP.sh" > freebayes.cmds
+makeSLURMs.py 1 freebayes.cmds
+sbatch freebayes_0.sub
+```
+Time take for this step:
+
+```
+real    66m29.306s
+user    467m33.650s
+sys     12m4.956s
+```
+As you can see, this takes a fraction of time as compared to the non-parallel approach. If you have a large genome and access to large clusters, this is clearly should be the way to go!
 
 ### Step 4: filter the VCF file
