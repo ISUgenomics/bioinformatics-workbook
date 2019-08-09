@@ -402,6 +402,7 @@ mkdir Numbers
 mkdir Letters
 mkdir Deleteme
 mkdir Deleteme2
+mkdir Deleteme3
 ls
 ```
 
@@ -423,6 +424,7 @@ ls
 #ls Deleteme will show you the contents of the subfolder Deleteme
 ls Deleteme
 ls Deleteme2
+ls Deleteme3
 ```
 
 ### Warning about deleting files and directories
@@ -436,7 +438,7 @@ Let's remove the extra Deleteme2 directory using this command
 
 ```
 ls
-rmdir Deleteme2
+rmdir Deleteme3
 ls
 ```
 The ls commands show the before and after usage of this command.
@@ -444,11 +446,11 @@ The ls commands show the before and after usage of this command.
 Now try to delete the Deleteme folder
 
 ```
-rmdir Deleteme
+rmdir Deletem2
 ```
 It will return
 ```
-rmdir: Deleteme: Directory not empty
+rmdir: Deleteme2: Directory not empty
 ```
 In order to remove this directory with the rmdir command you would have to delete all the files and folders in the directory.  However, you can use the remove (`rm`) command instead.
 
@@ -577,7 +579,7 @@ Up to this point we have learned individual commands that give you roughly the s
 |cmd `<` <span style="color:Red">file</span>	|use file as input|
 |cmd `>` <span style="color:Red">file</span>	|write output to file|
 |cmd `>>` <span style="color:Red">file</span>	|append output to file|
-|cmd1 `\|` <span style="color:Red">cmd2</span> 	|send output of cmd1 to cmd2|
+|cmd1 `|` <span style="color:Red">cmd2</span> 	|send output of cmd1 to cmd2|
 
 ## `wc` -- <span style="color:Blue">w</span>ord <span style="color:Blue">c</span>ount
 
