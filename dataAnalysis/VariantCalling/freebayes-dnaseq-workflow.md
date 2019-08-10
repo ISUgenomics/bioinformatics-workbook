@@ -93,7 +93,7 @@ freebayes
 ## Overview
 
 ![workflow](assets/freebayes.png)
-Fig 1: overview of this tutorial
+**Fig 1: overview of this tutorial**
 
 
 ### Step 0: Quality check the files
@@ -375,18 +375,47 @@ The plots:
 
 
 ![overall quality](assets/quality.png)
-Fig 2: SNP quality distribution
+**Fig 2: SNP quality distribution**
 
 ![dotplot1](assets/dotplot1.png)
-Fig 3: SNPs across the genome, with DP and quality values
+**Fig 3: SNPs across the genome, with DP and quality values**
 
 ![dotplot1](assets/dotplot2.png)
-Fig 3: SNPs across the genome, with DP and quality values (zoomed in)
+**Fig 3: SNPs across the genome, with DP and quality values (zoomed in)**
 
 
 Based on the plots, the lines compared here are very similar to reference and they only differ in a small section of genome. The number of SNPs is very less as a result. No filtering is necessary, but if you wish to do some filtering:
 
 
 ```bash
+module load vcftools
+vcf=output_snps-only.vcf.recode.vcf
+vcftools --vcf $vcf \
+   --max-missing 1 \
+   --mac 3 \
+   --minQ 30 \
+   --recode \
+   --recode-INFO-all \
+   --out output_snps-only_max_missing_1_mac_3_minq_30
+```
+stdout
+```
+VCFtools - 0.1.14
+(C) Adam Auton and Anthony Marcketta 2009
 
- 
+Parameters as interpreted:
+        --vcf output_snps-only.vcf.recode.vcf
+        --recode-INFO-all
+        --mac 3
+        --minQ 30
+        --max-missing 1
+        --out output_snps-only_max_missing_1_mac_3_minq_30
+        --recode
+
+After filtering, kept 6 out of 6 Individuals
+Outputting VCF file...
+After filtering, kept 7871 out of a possible 449822 Sites
+Run Time = 4.00 seconds
+```
+
+After filtering, you have 7871 SNPs that are present in all individuals and are non-monomorphic.
