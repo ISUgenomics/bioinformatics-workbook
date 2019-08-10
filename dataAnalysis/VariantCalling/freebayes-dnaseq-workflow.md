@@ -54,6 +54,9 @@ Since reference genome of _Arabidopsis_ is [available](http://plants.ensembl.org
 ```bash
 wget ftp://ftp.ensemblgenomes.org/pub/plants/release-44/fasta/arabidopsis_thaliana/dna/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz
 gunzip Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz
+# for qc you will need GFF file:
+wget ftp://ftp.ensemblgenomes.org/pub/plants/release-44/gff3/arabidopsis_thaliana/Arabidopsis_thaliana.TAIR10.44.gff3.gz
+gunzip Arabidopsis_thaliana.TAIR10.44.gff3.gz
 ```
 
 These datasets are all we need to get started. Although, the SRA download through `prefetch` is faster, it takes long time for converting `sra` file to `fastq` using `fastq-dump`. Alternatively, you can obtain and download `fastq` files directly form [European Nucleotide Archive (ENA)](https://www.ebi.ac.uk/ena/data/view/PRJEB18647). The links are saved [here](assets/ena-links.txt) if you want to use them instead (note the IDs are different, but they are from the same study and the results will be identical regardless of what data you use)
@@ -260,7 +263,7 @@ real    320m1.051s
 user    314m49.526s
 sys     0m50.473s
 ```
-Another alternative is to run them in small chunks, a stretch of genome, at a time. Although the program does not have `threads` option, it can be trivially parallelizable. 
+Another alternative is to run them in small chunks, a stretch of genome, at a time. Although the program does not have `threads` option, it can be trivially parallelizable.
 
 ### Step 3b: Run freebayes (processing small chunks of genome, in parallel)
 
@@ -302,3 +305,88 @@ sys     12m4.956s
 As you can see, this takes a fraction of time as compared to the non-parallel approach. If you have a large genome and access to large clusters, this is clearly should be the way to go!
 
 ### Step 4: filter the VCF file
+
+In this final step, we will separate SNPs from InDels and do some plots to see how these variants are distributed. We will also do some filtering.
+
+```bash
+cd 7_filtering
+ln -s ../6_freebayes-parallel/output.vcf
+vcf=output.vcf
+# generate stats
+rtg vcfstats output.vcf > rtg_results-full.out
+```
+
+
+Table 1: RTG stats for the output VCF file:
+
+| Sample_Name                   | Santa-Clara-CC8069 | Berkley-CC8068    | Santa-Clara-CC28722 | Limeport-CC28464  | Berkley-CC28067   | Limeport-CC8070   |
+|:------------------------------|-------------------:|------------------:|--------------------:|------------------:|------------------:|------------------:|
+| SNPs                          | 15,481             | 14,597            | 14,173              | 14,269            | 14,623            | 14899             |
+| MNPs                          | 2,320              | 2,349             | 2,262               | 2,318             | 2,303             | 2347              |
+| Insertions                    | 2,207              | 2,123             | 2,086               | 2,152             | 2,190             | 2208              |
+| Deletions                     | 3,686              | 3,636             | 3,579               | 3,470             | 3,825             | 3619              |
+| Indels                        | 481                | 484               | 451                 | 479               | 492               | 480               |
+| Same_as_reference             | 462,491            | 463,551           | 464,239             | 464,105           | 463,336           | 463167            |
+| Missing_Genotype              | 313                | 239               | 189                 | 186               | 210               | 259               |
+| SNP_Transitions/Transversions | 1.05 (8677/8242)   | 1.07 (8278/7723)  | 1.07 (8060/7556)    | 1.07 (8086/7587)  | 1.08 (8314/7721)  | 1.06 (8373/7934 ) |
+| Total_Het/Hom_ratio           | 5.66 (20547/3628)  | 5.41 (19571/3618) | 5.22 (18924/3627)   | 5.31 (19091/3597) | 5.48 (19818/3615) | 5.56 (19961/3592) |
+| SNP_Het/Hom_ratio             | 9.96 (14068/1413)  | 9.55 (13214/1383) | 8.97 (12751/1422)   | 9.33 (12888/1381) | 9.51 (13232/1391) | 9.73 (13510/1389) |
+| MNP_Het/Hom_ratio             | 9.69 (2103/217)    | 10.4 (2143/206)   | 9.98 (2056/206)     | 9.17 (2090/228)   | 10.13 (2096/207)  | 10.28 (2139/208)  |
+| Insertion_Het/Hom_ratio       | 0.86 (1022/1185)   | 0.76 (919/1204)   | 0.77 (908/1178)     | 0.81 (964/1188)   | 0.84 (1003/1187)  | 0.86 (1024/1184)  |
+| Deletion_Het/Hom_ratio        | 4.34 (2996/690)    | 4.16 (2932/704)   | 4.09 (2876/703)     | 4.15 (2796/674)   | 4.42 (3119/706)   | 4.24 (2929/690)   |
+| Indel_Het/Hom_ratio           | 2.91 (358/123)     | 3.00 (363/121)    | 2.82 (333/118)      | 2.8 (353/126)     | 2.97 (368/124)    | 2.97 (359/121)    |
+| Insertion/Deletion_ratio      | 0.60 (2207/3686)   | 0.58 (2123/3636)  | 0.58 (2086/3579)    | 0.62 (2152/3470)  | 0.57 (2190/3825)  | 0.61 (2208/3619)  |
+| Indel/SNP+MNP_ratio           | 0.36 (6374/17801)  | 0.37 (6243/16946) | 0.37 (6116/16435)   | 0.37 (6101/16587) | 0.38 (6507/16926) | 0.37 (6307/17246) |
+
+Next, we will perform some filtering. But first, more QC
+
+```bash
+# separate indels
+vcftools --vcf $vcf --keep-only-indels --recode --recode-INFO-all --out output_indels-only.vcf
+# separate SNPs
+vcftools --vcf $vcf --remove-indels --recode --recode-INFO-all --out output_snps-only.vcf
+```
+
+QC plots:
+
+```bash
+ln -s ../0_index/Arabidopsis_thaliana.TAIR10.44.gff3
+ln -s ../0_index/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa
+```
+
+```r
+library(vcfR)
+vcf <- read.vcfR( "output_snps-only.vcf.recode.vcf", verbose = FALSE )
+dna <- ape::read.dna("Arabidopsis_thaliana.TAIR10.dna.toplevel.fa", format = "fasta")
+gff <- read.table("Arabidopsis_thaliana.TAIR10.44.gff3", sep="\t", quote="")
+chrom <- create.chromR(name='Supercontig', vcf=vcf, seq=dna, ann=gff)
+png("quality.png", width = 10, height = 8, units = 'in', res = 300)
+plot(chrom)
+dev.off()
+png("dotplots1.png", width = 10, height = 8, units = 'in', res = 300)
+chromoqc(chrom, dp.alpha=20)
+dev.off()
+png("dotplot2.png", width = 10, height = 8, units = 'in', res = 300)
+chromoqc(chrom, xlim=c(1.25e+07, 1.75e+07))
+dev.off()
+```
+
+The plots:
+
+
+![overall quality](assets/quality.png)
+Fig 2: SNP quality distribution
+
+![dotplot1](assets/dotplot1.png)
+Fig 3: SNPs across the genome, with DP and quality values
+
+![dotplot1](assets/dotplot2.png)
+Fig 3: SNPs across the genome, with DP and quality values (zoomed in)
+
+
+Based on the plots, the lines compared here are very similar to reference and they only differ in a small section of genome. The number of SNPs is very less as a result. No filtering is necessary, but if you wish to do some filtering:
+
+
+```bash
+
+ 
