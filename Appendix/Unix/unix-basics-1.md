@@ -13,6 +13,8 @@ header:
 # Introduction
 ---
 
+<object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/xidtu1yB-iM&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="https://www.youtube.com/v/xidtu1yB-iM&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>
+
 ## What is Unix?
 * Multiuser operating system
 * Linux: free version of this type of operating system
@@ -202,7 +204,7 @@ pwd
 **TIP**: You can type in first few letters of the directory name and then press `Tab` to auto complete rest of the name (especially useful when the file/directory name is long). This only works when there are unique matches for the starting letters you have typed. If there is more than one matching files/directories, pressing `Tab` twice will list all the matching names.
 
 
-# File creation editing
+# File creation and editing
 ---
 
 || ||
@@ -558,7 +560,7 @@ ls -l Letters_copy
 ```
 
 
-# Counting, Sorting and Redirecting output
+# Counting, Sorting and Redirecting Output
 ---
 
 Up to this point we have learned individual commands that give you roughly the same kind of ability as you would using your mouse in in IOS or Windows operating systems.  From this point forward however, you will start to understand the power of being able to combine commands on the command line to execute more complex tasks and save time.
@@ -651,8 +653,6 @@ wc -l numSeqRandom.txt
 ```
 
 #### <span style="color:Green">Exercise:</span> Use `nano` to add 1e-10 and 1e10 to the top of the numSeqRandom.txt file.  We will show you how to sort all the numbers in the next section.
-
-
 
 
 ## `sort` -- sort a file by lines, alpha numerically
