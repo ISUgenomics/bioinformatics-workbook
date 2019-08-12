@@ -569,7 +569,7 @@ Up to this point we have learned individual commands that give you roughly the s
 |`wc`	|word count	|`wc` <span style="color:Red">FILENAME</span>| `wc` <span style="color:Red">FILENAME</span>|
 |`sort`	|sort files	|`sort` <span style="color:Red">FILE1</span> `>` <span style="color:Red">SORTED_FILE1</span>|
 |`uniq`	|display unique lines 	|`uniq` <span style="color:Red">[OPTIONS] INFILE</span> `>` <span style="color:Red">OUTFILE</span>|
-|cmd1 `\|` <span style="color:Red">cmd2</span> 	|send output of cmd1 to cmd2| cat <span style="color:Red">FILENAME</span> `\|` sort `\|` uniq |
+|cmd1 `|` <span style="color:Red">cmd2</span> 	|send output of cmd1 to cmd2| cat <span style="color:Red">FILENAME</span> `|` sort `|` uniq |
 |`tr`	|translate or transliterate a file	|`tr` <span style="color:Red">[OPTIONS] "STRING1" "STRING2"</span>  `<` <span style="color:Red">INFILE</span> |
 |`shuf`| Generate random permutations| `shuf` <span style="color:Red">FILENAME</span>|
 
@@ -766,6 +766,7 @@ It is through this method that a long Unix 'one-liner' can be created. By lookin
 
 # Find and Replace
 ---
+
 | | | |
 |--|--|--|
 |`grep`	|search a pattern	|grep <span style="color:Red">[OPTIONS] "PATTERN" FILENAME</span>|
