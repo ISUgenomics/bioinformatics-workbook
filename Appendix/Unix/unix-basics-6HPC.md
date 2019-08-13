@@ -1,4 +1,14 @@
-## HPC cluster basics
+---
+title: "HPC cluster basics"
+layout: single
+author: Andrew Severin
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+# HPC cluster basics
 
 
 ### SLURM: Simple Linux Utility for Resource Management
