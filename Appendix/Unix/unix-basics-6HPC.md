@@ -1,5 +1,18 @@
 ## HPC cluster basics
 
+
+### SLURM: Simple Linux Utility for Resource Management
+
+* A simple text file with all the requirements for running your job
+  * Memory requirement
+  * Desired number of processors
+  * Length of time you want to run the job
+  * Type of queue you want to use (optional)
+  * where to write output and error files
+  * name foryour job while running on HPC
+
+
+
 ### Job script basics
 
 A typical job script will look like this:
@@ -36,16 +49,6 @@ Lines starting with `#SBATCH` are for `SLURM` resource manager to request resour
  <tr><td><blockcode>--mail-user </blockcode></td><td><blockcode>#SBATCH --mail-user user@domain.edu</blockcode></td><td>Email address to send notifications</td></tr>
 </tbody></table>
 
-
-### Job scheduling commands
-<table>
-<thead><tr><th>Commands</th><th>Function</th><th>Basic Usage</th><th>Example</th></tr></thead><tbody>
- <tr><td><blockcode>sbatch</blockcode></td><td>submit a slurm job</td><td>sbatch [script]</td><td>$ sbatch job.sub</td></tr>
- <tr><td><blockcode>scancel</blockcode></td><td>delete slurm batch job</td><td>scancel [job_id]</td><td>$ scancel 123456</td></tr>
- <tr><td><blockcode>scontrol hold</blockcode></td><td>hold slurm batch jobs</td><td>scontrol hold [job_id]</td><td>$ scontrol hold 123456</td></tr>
- <tr><td><blockcode>scontrol release </blockcode></td><td>release hold on slurm batch jobs</td><td>scontrol release  [job_id]</td><td>$ scontrol release  123456</td></tr>
-</tbody></table>
-
 ### Job management commands
 
 <table>
@@ -54,7 +57,41 @@ Lines starting with `#SBATCH` are for `SLURM` resource manager to request resour
  <tr><td><blockcode>squeue </blockcode></td><td>list all jobs</td></tr>
  <tr><td><blockcode>squeue -u userid</blockcode></td><td>list jobs for userid</td></tr>
  <tr><td><blockcode>squeue -t R</blockcode></td><td>list running jobs</td></tr>
- <tr><td><blockcode>smap</blockcode></td><td> show jobs, partitions and nodes in a graphical network topology</td></tr>
+
+</tbody></table>
+
+
+Let's go ahead and give these job management commands a try.
+
+```
+sinfo -a
+squeue
+squeue -t R
+#pick a name you saw when you typed squeue and specify all the jobs by that person with the following option
+squeue -u first.lastname
+```
+
+There can be a lot of information using those two commands. I have created some useful alias' that change the output to something more informative.
+
+```
+alias sq='squeue -o "%8i %12j %4t %10u %20q %20a %10g %20P %10Q %5D %11l %11L %R"'
+alias si='sinfo -o "%20P %5D %14F %8z %10m %10d %11l %16f %N"'
+```
+
+Where `(A/I/O/T)` = `available/idle/other/total`
+
+You can place those alias' into your `~/.bashrc` file and it will automatically load every time you log in.
+
+#### <span style="color:Green">Exercise:</span> Add these two alias' above to your `~/.bashrc` file
+```
+nano ~/.bashrc
+```
+
+### Job scheduling commands
+<table>
+<thead><tr><th>Commands</th><th>Function</th><th>Basic Usage</th><th>Example</th></tr></thead><tbody>
+ <tr><td><blockcode>sbatch</blockcode></td><td>submit a slurm job</td><td>sbatch [script]</td><td>$ sbatch job.sub</td></tr>
+ <tr><td><blockcode>scancel</blockcode></td><td>delete slurm batch job</td><td>scancel [job_id]</td><td>$ scancel 123456</td></tr>
 </tbody></table>
 
 
@@ -64,7 +101,11 @@ Lines starting with `#SBATCH` are for `SLURM` resource manager to request resour
 To start a interactive session execute the following:
 
 ```
-#this command will give 1 Node for a time of 4 hours
+# this command will give 1 Node for a time of 00 days: 00 hours: 01 minutes
 
-srun -N 1 -t 4:00:00 --pty /bin/bash
+salloc -N 1 -p brief-low -t 00:00:01
+
+# You can exit out of an interactive node by typing exit and hitting return
 ```
+
+Interactive sessions are very helpful when you need more computing power than your laptop or desktop to wrangle the data or to test new software prior to submitting a full batch script.

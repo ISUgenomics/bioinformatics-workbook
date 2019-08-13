@@ -15,10 +15,12 @@ header:
 
 * <span style="color:lightblue">Introduction to Unix</span>
   * [Unix Basics 1](Unix/unix-basics-1.md)
-  * [Unix Basics 2](Unix/unix-basics-2admin.md)
+  * [Introduction to HPC](Unix/unix-basics-6HPC.md)
+  * [Unix Admin commands](Unix/unix-basics-2admin.md)
   * [Grep](Unix/unix-basics-3grep.md)
   * [Sed](Unix/unix-basics-4sed.md)
   * [Introduction to regular expressions](../introduction/introduction-to-regular-expressions.md)
+
 
 
 * <span style="color:lightblue">HPC</span>
