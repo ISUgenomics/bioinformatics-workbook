@@ -13,7 +13,7 @@ header:
 # Introduction
 ---
 
-<object width="425" height="344"><param name="movie" value="https://www.youtube.com/v/_J9Hq2e31x0&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="https://www.youtube.com/v/_J9Hq2e31x0&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>
+
 
 ## What is Unix?
 * Multiuser operating system
@@ -84,6 +84,7 @@ When working in a terminal, it is helpful to know some basic terminology for whe
 
 
 # Getting started
+
 
 ---
 
@@ -204,8 +205,11 @@ pwd
 **TIP**: You can type in first few letters of the directory name and then press `Tab` to auto complete rest of the name (especially useful when the file/directory name is long). This only works when there are unique matches for the starting letters you have typed. If there is more than one matching files/directories, pressing `Tab` twice will list all the matching names.
 
 
+
 # File creation and editing
 ---
+
+
 
 || ||
 |--|--|--|
