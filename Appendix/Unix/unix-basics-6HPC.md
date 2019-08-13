@@ -1,5 +1,5 @@
 ---
-title: "HPC cluster basics"
+title: "HPC Cluster Basics"
 layout: single
 author: Andrew Severin
 author_profile: true
@@ -18,12 +18,12 @@ header:
   * Desired number of processors
   * Length of time you want to run the job
   * Type of queue you want to use (optional)
-  * where to write output and error files
-  * name foryour job while running on HPC
+  * Where to write output and error files
+  * Name foryour job while running on HPC
 
 
 
-### Job script basics
+### Job Script Basics
 
 A typical job script will look like this:
 
@@ -59,7 +59,7 @@ Lines starting with `#SBATCH` are for `SLURM` resource manager to request resour
  <tr><td><blockcode>--mail-user </blockcode></td><td><blockcode>#SBATCH --mail-user user@domain.edu</blockcode></td><td>Email address to send notifications</td></tr>
 </tbody></table>
 
-### Job management commands
+### Job Management Commands
 
 <table>
 <thead><tr><th>Job Status</th><th>Commands</th></tr></thead><tbody>
@@ -106,7 +106,7 @@ nano ~/.bashrc
 
 
 
-### Interactive session
+### Interactive Session
 
 To start a interactive session execute the following:
 
