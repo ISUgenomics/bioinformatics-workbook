@@ -110,6 +110,8 @@ Once you have logged in you will see a bunch of text fly by your screen.  That t
 ```
 cd
 alias pwd="pwd -P"
+alias ls='ls --color=auto -v'
+alias grep='grep --color=auto'
 clear
 ```
 

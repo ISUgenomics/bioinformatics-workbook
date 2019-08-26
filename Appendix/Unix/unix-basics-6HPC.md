@@ -111,9 +111,9 @@ nano ~/.bashrc
 To start a interactive session execute the following:
 
 ```
-# this command will give 1 Node for a time of 00 days: 00 hours: 01 minutes
+# this command will give 1 Node with 1 cpu in the brief-low queue for a time of 00 hours: 01 minutes: 00 seconds
 
-salloc -N 1 -p brief-low -t 00:00:01
+salloc -N 1 -n 1 -p brief-low -t 00:01:00
 
 # You can exit out of an interactive node by typing exit and hitting return
 ```
