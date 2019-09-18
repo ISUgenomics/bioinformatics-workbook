@@ -1,3 +1,14 @@
+---
+title: "Genome Dot Plots"
+layout: single
+author: Arun Seetharam
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
 # DotPlots for comparing genomes
 
 One of the primary comparative analyses that can be done once you have the genome is by visualizing the synteny with closely related species. Many characteristics for the genome can be easily highlighted with a good dotplot. Structural variations like inversion, deletion, duplication and insertions can be identified from these dotplots.
