@@ -143,3 +143,61 @@ The resulting file will be
 CML247-masked_B73.v4-masked_minimap2.paf
 ```
 Which is now ready to plot.
+
+
+### 3. Dot plot
+
+For Dot plot, we will use [dotPlotly](https://github.com/tpoorten/dotPlotly). There is a R Shiny app as well, but there is a limit on the file size that can plotted. Morover, if you upload a complex file like maize alignment, it will be very sluggish and interactive-ability will not be usable. So, we will download the script and run them locally to generate a static dotplot.
+
+Setup:
+
+```bash
+cd 4_paf-processing
+ln -s ../3_minimap/CML247-masked_B73.v4-masked_minimap2.paf
+```
+Download program
+```bash
+git clone https://github.com/tpoorten/dotPlotly.git
+```
+Run the script:
+
+```bash
+./dotPlotly/pafCoordsDotPlotly.R \
+   -i CML247-masked_B73.v4-masked_minimap2.paf \
+   -o CML247.plot \
+   -m 2000 \
+   -q 500000 \
+   -k 10 \
+   -s -t -l -p 12
+```
+
+The stdout:
+
+```
+PARAMETERS:
+input (-i): CML247-masked_B73.v4-masked_minimap2.paf
+output (-o): CML247.plot
+minimum query aggregate alignment length (-q): 5e+05
+minimum alignment length (-m): 2000
+plot size (-p): 12
+show horizontal lines (-l): TRUE
+number of reference chromosomes to keep (-k): 10
+show % identity (-s): TRUE
+show % identity for on-target alignments only (-t): TRUE
+produce interactive plot (-x): TRUE
+reference IDs to keep (-r):
+
+Number of alignments: 186189
+Number of query sequences: 608
+
+After filtering... Number of alignments: 64210
+After filtering... Number of query sequences: 11
+
+Warning: Ignoring unknown aesthetics: text
+```
+
+And the plot it generates is as follows:
+
+![DotPlots](R/assets/CML247.plot.png)
+
+Figure 2: Dot Plot comparing the 2 genomes. Here, target is B73 V4 and query is CML247. You can rename the axis labels in the plot by modifying the code.
