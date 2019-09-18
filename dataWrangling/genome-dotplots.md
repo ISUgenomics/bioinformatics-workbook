@@ -15,7 +15,7 @@ wget ftp://ftp.gramene.org/pub/gramene/release-61/fasta/zea_mays/dna/Zea_mays.B7
 # Genome of interest (Query)
 wget https://ftp.maizegdb.org/MaizeGDB/FTP/Zm-CML247-REFERENCE-PANZEA-1.1/Zm-CML247-REFERENCE-PANZEA-1.1.fa.gz
 # maize custom TE libraries
-wget https://github.com/mcstitzer/dawe_ab10_kindr/blob/master/identify_haplotypes/te_alignments/TE_12-Feb-2015_15-35.fa
+wget https://de.cyverse.org/dl/d/66ACA7F8-A367-4C48-9D63-828788F4F559/maizeTE10102014.RMname.nogene
 gunzip *.gz
 ```
 
@@ -35,7 +35,7 @@ SyntenyTutorial
 │   └── Zm-CML247-REFERENCE-PANZEA-1.1.fa
 ├── 2_repeatmasking
 │   ├── runRepeatMasker.sh
-│   └── TE_12-Feb-2015_15-35.fa
+│   └── maizeTE10102014.RMname.nogene
 ├── 3_minimap
 │   └── runMinimap.sh
 └── 4_paf-processing
@@ -44,10 +44,63 @@ SyntenyTutorial
 
 ## Programs needed
 
-The o
+Following programs are needed for this tutorial. Most of them can be installed via Conda environment, but some of them can be directly cloned from GitHub:
 
-## Repeatmask the genomes
+1. [RepeatMasker](http://www.repeatmasker.org)
+2. [MiniMap2](https://github.com/lh3/minimap2)
+3. [BioAWK](https://github.com/lh3/bioawk)
+4. [dotPlotly](https://github.com/tpoorten/dotPlotly)
 
-Setup a script as follows:
+## 1. Repeatmask the genomes
 
+For masking the maize genomes, it is essential to have an accurate, custom TE library. Using a generic repeat database will mask the genic regions and other essential. [Ou Shujun](https://github.com/oushujun), from [Hufford Lab](https://mhufford.public.iastate.edu/HuffordLab/home.html), here at ISU created a new maize repeat library, using _[The Extensive de novo TE Annotator (EDTA)](https://github.com/oushujun/EDTA)_. This is the Maize TE Consortium (MTEC) curated TE library created in 2014/10/10. The original sequence names were converted to fit the naming scheme of RepeatMasker, so that TEs could be parsed into class, super-families, and families. A TE-free whole-genome CDS dataset derived from the B73v4 annotation was used to clean any potential genic sequences in this MTEC library. TE sequences containing more than 1000 bp or 30% of genic sequences were discarded entirely, otherwise genic sequences were removed and the remaining sequences were joined. Cleaned TE sequences shorter than 80 bp were also discarded. As terminal structure of TEs is the key for their identification, any TE sequences with the beginning or ending 20 bp masked by CDS sequences were determined false positives and removed. Overall, a total of 1,359 sequences were remained from the original 1,546 sequences.
+
+
+
+Setup
+```bash
+cd 2_repeatmasking
+ln -s ../1_data/Zea_mays.B73_RefGen_v4.dna.toplevel.fa
+ln -s ../1_data/Zm-CML247-REFERENCE-PANZEA-1.1.fa
 ```
+
+Script `runRepeatMasker.sh`
+```bash
+#!/bin/bash
+conda activate repeatmasker
+lib="maizeTE10102014.RMname.nogene"
+genome=$1
+RepeatMasker \
+  -e ncbi \
+  -pa 36 \
+  -q \
+  -lib ${lib} \
+  -nocut \
+  -gff \
+  ${genome}
+```
+Generate commands and submit:
+
+```bash
+for fasta in *.fa; do
+  echo "./runRepeatMasker.sh $fasta"
+done > repmask.cmds
+makeSLURMs.py 1 repmask.cmds
+for sub in repmask_*sub; do
+  sbatch $sub;
+done
+```
+
+Once complete, you will have following output files:
+
+For B73.V4:
+```
+Zea_mays.B73_RefGen_v4.dna.toplevel.fa.out
+Zea_mays.B73_RefGen_v4.dna.toplevel.fa.masked
+Zea_mays.B73_RefGen_v4.dna.toplevel.fa.tbl
+Zea_mays.B73_RefGen_v4.dna.toplevel.fa.ori.out
+Zea_mays.B73_RefGen_v4.dna.toplevel.fa.cat.gz
+Zea_mays.B73_RefGen_v4.dna.toplevel.fa.gff
+```
+
+Here, the `<name>.fa.gff` provides a GFF file for masked regions, that can be visualized in [IGV](https://software.broadinstitute.org/software/igv/)
