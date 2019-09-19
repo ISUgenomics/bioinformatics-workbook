@@ -128,3 +128,93 @@ chr10   10      Chromosome
 ## 4. Generate a manifest file
 
 A manifest file ties together all the information that is required for the submission. Again, it is a simple text file, with `value` and `attributes` column. The `value` can only be specific terms as allowed by ENA. If you have more than 1 genome submission, easiest way would be to put all the information in tabular format and generate the manifest file by scripting. This will avoid typos and keep the files consistent.
+
+In our case, we had 27 genomes to submit, so all the required information was added in a single tabular text file (see example [here](R/assets/completed_manifest-trimmed.txt): `completed_manifest-trimmed.txt`)
+
+This is then broken down for each genome wiht a simple one-liner:
+
+```bash
+for i in {2..28}; do
+  awk -v x=${i} 'NR==1 || NR==x' completed_manifest-trimmed.txt |\
+  datamash transpose > manifest_${i}.txt;
+done
+
+for f in manifest_*.txt; do
+  g=$(grep "ASSEMBLYNAME" $f |cut -f 2 |cut -f 2 -d "-");
+  echo mv $f manifest_${g}.txt;
+done
+```
+An example manifest file looks like this:
+
+```
+SAMPLE  ERS3371164
+STUDY   PRJEB32225
+ASSEMBLYNAME    Zm-B73-REFERENCE-NAM-5.0
+ASSEMBLY_TYPE   clone or isolate
+COVERAGE        83
+PROGRAM Canu 1.8
+PLATFORM        PacBio SEQUEL
+MINGAPLENGTH    13
+MOLECULETYPE    genomic DNA
+DESCRIPTION     whole genome assembly of B73
+RUN_REF ERR3288215,ERR3288215,ERR3288216
+FASTA   B73.PLATINUM.scaffolds-v1.fasta.gz
+AGP     B73.PLATINUM-pg_and_ibm-based_v1.agp.gz
+CHROMOSOME_LIST chr-list.txt.gz
+```
+(all run ref info is not included for brevity)
+
+## 5. Submit!
+
+You will need the java command line program- `webin-cli` for this. It can be obtained from this `enasequence` [GitHub repo](https://github.com/enasequence/webin-cli/releases)
+
+```bash
+wget https://github.com/enasequence/webin-cli/releases/download/v1.8.11/webin-cli-1.8.11.jar
+```
+You can validate your submissions first before actually submitting.
+
+```bash
+java -jar ../webin-cli-1.8.6.jar \
+   -validate \
+   -ascp \
+   -manifest=manifest_CML52.txt \
+   -context=genome \
+   -username=YOURUSERNAME \
+   -password=YOURPASSWORD
+```
+The stdout:
+```
+INFO : Your application version is 1.8.6
+INFO : A new application version is available. Please download the latest version 1.8.11 from https://github.com/enasequence/webin-cli/releases
+INFO : Creating report file: /work/LAS/mhufford-lab/arnstrm/Canu_1.8/EBI-submission-files/manifest-reports/./webin-cli.report
+INFO : The submission has been validated successfully.
+```
+
+Once validated you can submit the genome as follows:
+
+```bash
+java -jar ../webin-cli-1.8.6.jar \
+   -submit \
+   -ascp \
+   -manifest=manifest_CML52.txt \
+   -context=genome \
+   -username=YOURUSERNAME \
+   -password=YOURPASSWORD
+```
+
+The stdout:
+
+```
+INFO : Your application version is 1.8.6
+INFO : Creating report file: /work/LAS/mhufford-lab/arnstrm/Canu_1.8/EBI-submission-files/Scaffolds/./webin-cli.report
+INFO : Submission has not been validated previously.
+INFO : The submission has been validated successfully.
+INFO : Invoking: ascp --file-checksum=md5 -d --mode=send --overwrite=always -QT -l300M --host=webin.ebi.ac.uk --user="YOURUSERNAME" --src-base="/work/LAS/mhufford-lab/arnstrm/Canu_1.8/EBI-submission-files/Scaffolds" --file-list="/tmp/FILE14052397021471900767LIST" "webin-cli/genome/Zm-CML52-REFERENCE-NAM-1.0"
+
+Completed: 650401K bytes transferred in 19 seconds
+ (271681K bits/sec), in 3 files.
+INFO : Files have been uploaded to webin.ebi.ac.uk.
+INFO : The submission has been completed successfully. The following analysis accession was assigned to the submission: ERZ1028866
+```
+
+After a day or two, you should get a confirmation email stating that your submission has been received and accession has been provided.
