@@ -1,3 +1,13 @@
+---
+title: "ENA data submission part 3"
+layout: single
+author: Arun Seetharam
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Submission Guidelines for Chromosomal level Assemblies to ENA
 
 This is the part 3 of the ENA data submission. Here we show how to submit the genome and connect it to your existing BioProject, BioExperiments and SRA datasets. This assumes that you have already finished the part 1 and 2 (BioProject creation and raw data submission) steps. To begin, you will need the following information:
