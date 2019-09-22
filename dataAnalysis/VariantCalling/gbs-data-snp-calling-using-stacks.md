@@ -147,7 +147,7 @@ For the GBS SNP calling pipeline, you need to have coordinate sorted bam file wi
 
 script `runSort-and-addReadgroups.sh`
 
-```
+```bash
 #!/bin/bash
 SAM="$1"
 samtools view --threads 36 -b -o ${SAM%.*}.bam ${SAM}
