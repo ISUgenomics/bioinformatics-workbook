@@ -132,7 +132,7 @@ for fq in $(find /path/to/stacks/3-stacks/b-demuxed -name "*.gz"); do
   echo ./run-bwa.sh $fq;
 done > bwa.cmds
 makeSLURMp.py 350 bwa.cmds
-for sub in process*.sub; do
+for sub in bwa*.sub; do
   sed -i 's/parallel -j 1/parallel -j 9/g' $sub;
   sbatch $sub
 done
@@ -142,3 +142,97 @@ Alignments will be written to `c-alignments` directory.
 
 
 ## Calling SNPs
+
+For the GBS SNP calling pipeline, you need to have coordinate sorted bam file with readgroups added to the BAM header. We will do this using `samtools` and `picard`
+
+script `runSort-and-addReadgroups.sh`
+
+```
+#!/bin/bash
+SAM="$1"
+samtools view --threads 36 -b -o ${SAM%.*}.bam ${SAM}
+samtools sort -o ${SAM%.*}_sorted.bam -T ${SAM%.*}_temp ${SAM%.*}.bam
+module load picard
+REF="/path/to/stacks/2-genome/Zea_mays.B73_RefGen_v4.dna.toplevel.fa"
+ulimit -c unlimited
+# example file looks like this:
+# Z002E0081-SRR391089_sorted.bam
+bam="${SAM%.*}_sorted.bam"
+RGID=$(basename $bam | rev | cut -f 1 -d "-" | rev | sed 's/_sorted.bam//g')
+RGSM=$(basename $bam | rev | cut -f 2- -d "-" | rev )
+RGLB="${RGSM}-L001"
+RGPU=001
+echo -e "$RGID\t$RGSM\t$RGLB\t$RGPU"
+java -Djava.io.tmpdir=$TMPDIR -Xmx50G -jar $PICARD_HOME/picard.jar AddOrReplaceReadGroups \
+      I=${bam} \
+      O=${bam%.*}_new.bam \
+      RGID=$RGSM \
+      RGLB=$RGLB \
+      RGPL=ILLUMINA \
+      RGPU=$RGPU \
+      RGSM=$RGSM
+module load samtools
+samtools index ${bam%.*}_new.bam
+```
+
+generate commands and submit:
+
+```bash
+for sam in *.sam; do
+  echo "./runSort-and-addReadgroups.sh $sam";
+done > sort.cmds
+makeSLURMp.py 350 sort.cmds
+for sub in sort*.sub; do
+  sed -i 's/parallel -j 1/parallel -j 9/g' $sub;
+  sbatch $sub
+done
+```
+
+Next, we run `gstacks`. This has to be run on all bam files together. So to the command generated will be really long:
+
+```bash
+for bam in *_new.bam; do
+  echo -n "-B $bam "
+done > middle
+```
+head file `head`
+```
+#!/bin/bash
+ml purge
+ml gcc/7.3.0-xegsmw4
+ml stacks
+gstacks
+```
+
+tail file `tail`
+```
+-O /path/to/stacks/3-stacks/d-gstacks -t 36
+```
+combine:
+
+```bash
+cat head middle tail >> gstacks.cmds
+# edit this file to remove newline
+makeSLURMs.py 1 gstacks.cmds
+sbatch gstacks_0.sub
+```
+
+Finally, run the `populations` script:
+
+```
+#!/bin/bash
+ml purge
+ml gcc/7.3.0-xegsmw4
+ml stacks
+input="/path/to/stacks/3-stacks/d-gstacks"
+output="/path/to/stacks/3-stacks/e-population"
+populations \
+   -P ${input} \
+   -O ${output} \
+   -t 36 \
+   --batch-size 10 \
+   --vcf \
+   --phylip
+```
+
+This will generate the results.
