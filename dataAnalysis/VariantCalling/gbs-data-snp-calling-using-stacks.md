@@ -192,7 +192,7 @@ Next, we run `gstacks`. This has to be run on all bam files together. So to the 
 
 ```bash
 for bam in *_new.bam; do
-  echo -n "-B $bam "
+  echo "   -B $bam \";
 done > middle
 ```
 head file `head`
@@ -201,24 +201,26 @@ head file `head`
 ml purge
 ml gcc/7.3.0-xegsmw4
 ml stacks
-gstacks
+gstacks \
 ```
 
-tail file `tail`
+tail file: `tail`
 ```
--O /path/to/stacks/3-stacks/d-gstacks -t 36
+   -O /path/to/stacks/3-stacks/d-gstacks \
+   -t 36
 ```
 combine:
 
 ```bash
+rm gstacks.cmds
 cat head middle tail >> gstacks.cmds
-# edit this file to remove newline
-makeSLURMs.py 1 gstacks.cmds
+makeSLURMs.py 100000 gstacks.cmds
 sbatch gstacks_0.sub
 ```
 
 Finally, run the `populations` script:
 
+the script: `run-populations.sh`
 ```
 #!/bin/bash
 ml purge
@@ -235,4 +237,20 @@ populations \
    --phylip
 ```
 
-This will generate the results.
+This will generate the final-results in the `e-population` directory:
+
+```
+populations.fixed.phylip
+populations.fixed.phylip.log
+populations.haplotypes.tsv
+populations.hapstats.tsv
+populations.haps.vcf
+populations.log
+populations.log.distribs
+populations.markers.tsv
+populations.snps.vcf
+populations.sumstats.tsv
+populations.sumstats_summary.tsv
+```
+
+## Final processing and filtering of SNPs
