@@ -40,6 +40,13 @@ stacks/
 ```
 ## Programs required
 
+1. Stacks
+2. NCBI-edirect
+3. enaBrowserTools
+4. BWA
+5. samtools
+6. Picard
+7. VCFTools
 
 ## Overview
 
@@ -252,5 +259,3 @@ populations.snps.vcf
 populations.sumstats.tsv
 populations.sumstats_summary.tsv
 ```
-
-## Final processing and filtering of SNPs
