@@ -108,6 +108,7 @@ GBSSeqToTagDBPlugin takes fastQ files as input, identifies tags and the taxa in 
 script `runTassel_0.sh`
 
 ```bash
+#/bin/bash
 ml tassel
 cwd=$(pwd)
 barcodes=${cwd}/barcode-for-tassel.tsv
@@ -140,7 +141,9 @@ The output for this step is `GBSV2.db` database file.
 TagExportToFastqPlugin retrieves distinct tags stored in the database and reformats them to a FASTQ file that can be read by the Bowtie2 or BWA aligner program.
 
 script `runTassel_1.sh`
+
 ```bash
+#/bin/bash
 ml tassel
 cwd=$(pwd)
 barcodes=${cwd}/barcode-for-tassel.tsv
@@ -169,6 +172,7 @@ Any alignment method can be used. Here we use BowTie2
 script `runBowtie2.sh`
 
 ```bash
+#/bin/bash
 ml bowtie2
 cwd=$(pwd)
 barcodes=${cwd}/barcode-for-tassel.tsv
@@ -198,6 +202,7 @@ SAMToGBSdbPlugin reads a SAM file to determine the potential positions of Tags a
 script `runTassel_3.sh`
 
 ```bash
+#/bin/bash
 ml tassel
 cwd=$(pwd)
 barcodes=${cwd}/barcode-for-tassel.tsv
@@ -226,16 +231,17 @@ This step will not generate any output, but you will notice the database (`GBSV2
 DiscoverySNPCallerPluginV2 takes a GBSv2 database file as input and identifies SNPs from the aligned tags. Tags positioned at the same physical location are aligned against one another, SNPs are called from the aligned tags, and the SNP position and allele data are written to the database.
 
 
-script `runTassel_4.sh`
+script `runTassel_4.sh` **Note: change the `-sC` and `-eC` for start and end chromosome for which you need stats for.
 
 ```bash
+#/bin/bash
 ml tassel
 cwd=$(pwd)
 barcodes=${cwd}/barcode-for-tassel.tsv
 db=${cwd}/GBSV2.db
 run_pipeline.pl -fork1 -DiscoverySNPCallerPluginV2 \
   -db ${db} \
-  -sC 9 \
+  -sC 1 \
   -eC 10 \
   -mnLCov 0.1 \
   -mnMAF 0.01 \
@@ -252,6 +258,77 @@ makeSLURMs.py 1 tassel_4.cmds
 sbatch tassel_4_0.sub
 ```
 
+This step will not generate any output, but you will notice the database (`GBSV2.db`) has been modified.
+
 ### 6. SNPQualityProfilerPlugin
 
 This plugin scores all discovered SNPs for various coverage, depth and genotypic statistics for a given set of taxa. If no taxa are specified, the plugin will score all taxa currently stored in the data base. If no taxa file is specified, the plugin uses the taxa stored in the database.
+
+
+script `runTassel_5.sh`
+
+```bash
+#/bin/bash
+ml tassel
+cwd=$(pwd)
+barcodes=${cwd}/barcode-for-tassel.tsv
+db=${cwd}/GBSV2.db
+run_pipeline.pl -fork1 -SNPQualityProfilerPlugin \
+  -db ${db}
+  -statFile "outputStats.txt" \
+  -deleteOldData true \
+  -endPlugin \
+  -runfork1
+```
+Create job and submit:
+
+```bash
+echo "./runTassel_5.sh" > tassel_5.cmds
+makeSLURMs.py 1 tassel_5.cmds
+sbatch tassel_5_0.sub
+```
+
+Output for this step is the file `outputStats.txt` with SNP statistics for chromosome 9 and 10.
+
+
+### 7. ProductionSNPCallerPluginV2
+
+This plugin converts data from fastq and keyfile to genotypes, then adds these to a genotype file in VCF or HDF5 format. VCF is the default output. An HDF5 file may be requested by using the suffix ".h5" on the file used in the output file parameter. Merging of samples to the same HDF5 output file may be accomplished by using the –ko option described below.
+
+script `runTassel_6.sh`
+```bash
+#!/bin/bash
+ml tassel
+cwd=$(pwd)
+barcodes=${cwd}/barcode-for-tassel.tsv
+db=${cwd}/GBSV2.db
+run_pipeline.pl -fork1 -ProductionSNPCallerPluginV2 \
+  -db ${db} \
+  -e ApeKI \
+  -i ${cwd} \
+  -k ${barcodes} \
+  -kmerLength 33 \
+  -o ${cwd}/tassel-gbs.vcf \
+  -endPlugin \
+  -runfork1
+
+run_pipeline.pl -fork1 -ProductionSNPCallerPluginV2 \
+  -db ${db} \
+  -e ApeKI \
+  -i ${cwd} \
+  -k ${barcodes} \
+  -kmerLength 33 \
+  -o ${cwd}/tassel-gbs.h5 \
+  -endPlugin \
+  -runfork1
+```
+
+Create job and submit:
+```bash
+echo "./runTassel_6.sh" > tassel_6.cmds
+makeSLURMs.py 1 tassel_6.cmds
+sbatch tassel_6_0.sub
+```
+
+
+The final file `tassel-gbs.vcf` and `tassel-gbs.h5` are the genotypes in VCF and HDF5 format.
