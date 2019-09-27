@@ -36,11 +36,11 @@ tassel/
 
  ## Programs required
 
- 1. Tassel V5
- 2. NCBI-edirect
- 3. enaBrowserTools
- 4. BowTie2
- 5. samtools
+ 1. [Tassel V5](https://www.maizegenetics.net/tassel)
+ 2. [NCBI-edirect](https://www.ncbi.nlm.nih.gov/books/NBK179288/)
+ 3. [enaBrowserTools](https://github.com/enasequence/enaBrowserTools)
+ 4. [BowTie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
+ 5. [samtools](http://www.htslib.org)
 
  ## Overview
 
