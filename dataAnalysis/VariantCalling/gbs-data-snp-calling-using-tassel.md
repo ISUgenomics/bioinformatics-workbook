@@ -106,6 +106,7 @@ bowtie2-build Zea_mays.B73_RefGen_v4.dna.toplevel.fa B73.v4
 GBSSeqToTagDBPlugin takes fastQ files as input, identifies tags and the taxa in which they appear, and stores this data to a local database. It keeps only good reads having a barcode and a cut site and no N’s in the useful part of the sequence. It trims off the barcodes and truncates sequences that (1) have a second cut site, or (2) read into the common adapter.
 
 script `runTassel_0.sh`
+
 ```bash
 ml tassel
 cwd=$(pwd)
@@ -123,6 +124,7 @@ run_pipeline.pl -Xms100G -Xmx180G -fork1 -GBSSeqToTagDBPlugin \
    -endPlugin \
    -runfork1
 ```
+
 Create job and submit:
 
 ```bash
