@@ -68,7 +68,7 @@ feature_row:
     url: "/dataAnalysis/ComparativeGenomics/compGenomics_index"
     btn_label: "Learn More"
 
-  - image_path: /assets/images/comp_genomics.jpg
+  - image_path: /assets/images/variants.png
     alt: "fully responsive"
     title: "Variant Discovery"
     excerpt: "Variant Discovery"
