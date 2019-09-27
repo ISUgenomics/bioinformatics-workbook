@@ -231,7 +231,7 @@ This step will not generate any output, but you will notice the database (`GBSV2
 DiscoverySNPCallerPluginV2 takes a GBSv2 database file as input and identifies SNPs from the aligned tags. Tags positioned at the same physical location are aligned against one another, SNPs are called from the aligned tags, and the SNP position and allele data are written to the database.
 
 
-script `runTassel_4.sh` **Note: change the `-sC` and `-eC` for start and end chromosome for which you need stats for.
+script `runTassel_4.sh` **Note: change the `-sC` and `-eC` for start and end chromosome for which you need stats for**.
 
 ```bash
 #/bin/bash
