@@ -93,7 +93,7 @@ cat header barcodes-gbs-data.tsv >> barcode-for-tassel.tsv
 B73 version 4 from Gramene, download and BWA index:
 
 ```bash
- cd tassel/0_genome
+cd tassel/0_genome
 wget ftp://ftp.gramene.org/pub/gramene/CURRENT_RELEASE/fasta/zea_mays/dna/Zea_mays.B73_RefGen_v4.dna.toplevel.fa.gz
 gunzip Zea_mays.B73_RefGen_v4.dna.toplevel.fa.gz
 ml bowtie2
