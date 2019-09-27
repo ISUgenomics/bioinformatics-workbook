@@ -8,6 +8,13 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+---
+title: "SNP calling for GBS data using Tassel pipeline"
+layout: single
+header:
+overlay_color: "444444"
+overlay_image: /assets/images/dna.jpg
+---
 
 
 # SNP calling for GBS data using Tassel pipeline

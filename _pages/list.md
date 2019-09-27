@@ -122,6 +122,14 @@ header:
   * [Gene Overlap Significance Testing with R Gene_overlap Package](../dataAnalysis/ComparativeGenomics/Gene_Category_Overlap_Fishers_exact_testing.md)  
   * [Phylostratiophraphy:Determining the LCA of all Genes in a Genome](../dataAnalysis/ComparativeGenomics/phylostratr.md)
 
+
+### Variant Discovery
+  * [FreeBayes variant calling workflow for DNA-Seq](../dataAnalysis/VariantCallingfreebayes-dnaseq-workflow.md)
+  * [GATK Best Practices Workflow for DNA-Seq](../dataAnalysis/VariantCallinggatk-dnaseq-best-practices-workflow.md)
+  * [SNP calling for GBS data using Stacks pipeline](../dataAnalysis/VariantCallinggbs-data-snp-calling-using-stacks.md)
+  * [SNP calling for GBS data using Tassel pipeline (GBS.v2)](../dataAnalysis/VariantCallinggbs-data-snp-calling-using-tassel.md)
+
+
 ### Genome Repeat Identification
 * [Helitron Identification in a Genome Sequence](../dataAnalysis/ComparativeGenomics/Helitron_Scanner.md)
 * [DNA Transposon Annotation with Inverted-Repeats Finder](../dataAnalysis/ComparativeGenomics/InvertedRepeatsFinderForDNATransposonAnnotation.md)

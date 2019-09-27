@@ -8,6 +8,14 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+---
+title: "FreeBayes variant calling workflow for DNA-Seq"
+layout: single
+header:
+overlay_color: "444444"
+overlay_image: /assets/images/dna.jpg
+---
+
 # FreeBayes variant calling workflow for DNA-Seq
 
 ## Introduction
