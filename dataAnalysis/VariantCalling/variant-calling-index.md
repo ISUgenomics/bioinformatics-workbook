@@ -6,7 +6,7 @@ header:
   overlay_image: /assets/images/variants.png
 ---
 
-In this [Variant Discovery](https://www.annualreviews.org/doi/full/10.1146/annurev-ecolsys-110316-022645) tutorials, you will learn:
+[Variant Discovery](https://www.annualreviews.org/doi/full/10.1146/annurev-ecolsys-110316-022645) tutorials:
 
 A single nucleotide polymorphism (SNP) is an orthologous nucleotide position that is variable across the genomes under study. SNPs are the result of mutations that produce base-pair differences among chromosome sequences.
 Their high abundance and genome-wide distribution make them a valuable source of genetic variation for studies of population demography, adaptation, and genome evolution (Brumfield et al. 2003, Morin et al. 2004).
