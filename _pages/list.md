@@ -124,10 +124,10 @@ header:
 
 
 ### Variant Discovery
-  * [FreeBayes variant calling workflow for DNA-Seq](../dataAnalysis/VariantCallingfreebayes-dnaseq-workflow.md)
-  * [GATK Best Practices Workflow for DNA-Seq](../dataAnalysis/VariantCallinggatk-dnaseq-best-practices-workflow.md)
-  * [SNP calling for GBS data using Stacks pipeline](../dataAnalysis/VariantCallinggbs-data-snp-calling-using-stacks.md)
-  * [SNP calling for GBS data using Tassel pipeline (GBS.v2)](../dataAnalysis/VariantCallinggbs-data-snp-calling-using-tassel.md)
+  * [FreeBayes variant calling workflow for DNA-Seq](../dataAnalysis/VariantCalling/freebayes-dnaseq-workflow.md)
+  * [GATK Best Practices Workflow for DNA-Seq](../dataAnalysis/VariantCalling/gatk-dnaseq-best-practices-workflow.md)
+  * [SNP calling for GBS data using Stacks pipeline](../dataAnalysis/VariantCalling/gbs-data-snp-calling-using-stacks.md)
+  * [SNP calling for GBS data using Tassel pipeline (GBS.v2)](../dataAnalysis/VariantCalling/gbs-data-snp-calling-using-tassel.md)
 
 
 ### Genome Repeat Identification
