@@ -36,13 +36,11 @@ tassel/
 
  ## Programs required
 
- 1. Tassel
+ 1. Tassel V5
  2. NCBI-edirect
  3. enaBrowserTools
- 4. BWA
+ 4. BowTie2
  5. samtools
- 6. Picard
- 7. VCFTools
 
  ## Overview
 
