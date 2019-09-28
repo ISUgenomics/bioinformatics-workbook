@@ -242,7 +242,7 @@ ml tassel
 cwd=$(pwd)
 barcodes=${cwd}/barcode-for-tassel.tsv
 db=${cwd}/GBSV2.db
-run_pipeline.pl -fork1 -DiscoverySNPCallerPluginV2 \
+run_pipeline.pl -Xms100G -Xmx180G -fork1 -DiscoverySNPCallerPluginV2 \
   -db ${db} \
   -sC 1 \
   -eC 10 \
@@ -276,7 +276,7 @@ ml tassel
 cwd=$(pwd)
 barcodes=${cwd}/barcode-for-tassel.tsv
 db=${cwd}/GBSV2.db
-run_pipeline.pl -fork1 -SNPQualityProfilerPlugin \
+run_pipeline.pl -Xms100G -Xmx180G -fork1 -SNPQualityProfilerPlugin \
   -db ${db}
   -statFile "outputStats.txt" \
   -deleteOldData true \
@@ -305,7 +305,7 @@ ml tassel
 cwd=$(pwd)
 barcodes=${cwd}/barcode-for-tassel.tsv
 db=${cwd}/GBSV2.db
-run_pipeline.pl -fork1 -ProductionSNPCallerPluginV2 \
+run_pipeline.pl -Xms100G -Xmx180G -fork1 -ProductionSNPCallerPluginV2 \
   -db ${db} \
   -e ApeKI \
   -i ${cwd} \
@@ -315,7 +315,7 @@ run_pipeline.pl -fork1 -ProductionSNPCallerPluginV2 \
   -endPlugin \
   -runfork1
 
-run_pipeline.pl -fork1 -ProductionSNPCallerPluginV2 \
+run_pipeline.pl -Xms100G -Xmx180G -fork1 -ProductionSNPCallerPluginV2 \
   -db ${db} \
   -e ApeKI \
   -i ${cwd} \
@@ -335,3 +335,17 @@ sbatch tassel_6_0.sub
 
 
 The final file `tassel-gbs.vcf` and `tassel-gbs.h5` are the genotypes in VCF and HDF5 format.
+
+
+## Pitfalls:
+
+1. You get `java.lang.OutOfMemoryError: GC overhead limit exceeded` error:
+
+When you run the `run_pipeline.pl` script, the default heap size is set to start with `-Xms512m` for a max of `-Xmx1536m`. This will definitely be not enough for a data size like this. You should set this to a maximum number that is available for your machine.  To set a different value:
+
+```bash
+run_pipeline.pl -Xms100G -Xmx180G
+```
+to set starting heap size of 100Gb and max heap size of 180Gb.
+
+If this doesn't work, then you will most likely have to find a bigger machine with higher memory.
