@@ -5,6 +5,9 @@ The best way to learn bioinformatics is through examples of real world problems.
 
 Please start your exploration at the [index](https://isugenomics.github.io/bioinformatics-workbook/).
 
+## Citing the Bioinformatics workbook
+
+Please use [![DOI](https://zenodo.org/badge/91881720.svg)](https://zenodo.org/badge/latestdoi/91881720) when citing our work.
 
 ## Collaborative etiquette
 
