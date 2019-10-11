@@ -143,3 +143,4 @@ header:
 * [Creating Boxplots in R](../dataWrangling/R/generate-boxplots.md)
 * [Creating Heatmaps in R](../dataWrangling/R/generate_heatmaps.md)
 * [Visulaize Gaps in the Genome assemblies](../dataWrangling/R/visualize-gaps-in-genomes.md)
+* [Generate synteny dotplots for genomes](../dataWrangling/genome-dotplots.md)
