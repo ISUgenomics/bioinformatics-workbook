@@ -29,8 +29,33 @@ This experiment compares WT and *atrx-1* mutant to analyze how loss of function 
 
 # 1. Download the data from public databases #
 
-## A) NCBI
-Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. In this case, however, we first download the SRA files from the public archives in NCBI in bulk using aspera high speed file transfer. The following code expects that you have sra-toolkit, GNU parallel and aspera installed on your computing cluster. On Ceres, in order to use an installed software, we load the relevant module.
+Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. However, in this example we can will downloaded data hosted on public repositories. There are several public data repositories that host the data.
+
+## A) EMBL-EBI's European Nucletide Archive (ENA)
+The best option is to directly download the fastq files  on the ENA server (e.g. check [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using `wget` by supplying the download links to each file; for example in this case:
+
+```
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/003/SRR4420293/SRR4420293_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/003/SRR4420293/SRR4420293_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/004/SRR4420294/SRR4420294_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/004/SRR4420294/SRR4420294_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/005/SRR4420295/SRR4420295_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/005/SRR4420295/SRR4420295_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/006/SRR4420296/SRR4420296_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/006/SRR4420296/SRR4420296_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/007/SRR4420297/SRR4420297_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/007/SRR4420297/SRR4420297_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/008/SRR4420298/SRR4420298_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/008/SRR4420298/SRR4420298_2.fastq.gz
+
+```
+
+## B) National Center for Biotechnology Information (NCBI)
+ The data is hosted as SRA (Sequence Read Archives) files on the public archives in NCBI. We can bulk download these using aspera high speed file transfer.
+
+ It is common to install software as environmental modules on your compute cluster. So we begin by loading the the relevant modules. The following code expects that you have sra-toolkit, GNU parallel and aspera installed on your computing cluster.
+
+ ##### Note: Sometimes a user might run into perl issues while using edirect. The installed version of perl should support the https protocol. ####
 
 ```
 module load <path/to/sra-toolkit>
@@ -46,17 +71,6 @@ module load parallel
 parallel "fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
 ```
 *Note: fastq-dump runs very slow*
-## B) EBI
-Another option is to go through EBI, which directly hosts the fastq files  on their server (e.g. check [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using `wget` by supplying the links to each file; for example in this case:
-
-```
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/003/SRR4420293/SRR4420293_1.fastq.gz
-wget <link to file2>
-wget <link to file3>
-...
-....
-```
-
 
 We also need the genome file and associated GTF/GFF file for for *Arabidopsis*. These are downloaded directly from [NCBI](https://www.ncbi.nlm.nih.gov/genome?term=NC_001284&cmd=DetailsSearch), or [plants Ensembl website](http://plants.ensembl.org/info/website/ftp/index.html) or the [Phytozome website](https://phytozome.jgi.doe.gov/pz/portal.html#!bulk?org=Org_Gmax "Glycine max") (phytozome needs logging in and selecting the files) .
 
