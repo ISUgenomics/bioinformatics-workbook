@@ -273,7 +273,7 @@ You will need [`subread`](http://subread.sourceforge.net/) and `parallel` module
 #SBATCH -J Hisat2
 #SBATCH -o Hisat2.o%j
 #SBATCH -e Hisat2.e%j
-#SBATCH --mail-user=csiva@iastate.edu
+#SBATCH --mail-user=<user_email_address>
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 set -o xtrace
