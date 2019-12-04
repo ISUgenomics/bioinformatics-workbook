@@ -27,9 +27,11 @@ This experiment compares WT and *atrx-1* mutant to analyze how loss of function 
 | WT | SRR4420293_1.fastq.gz <br> SRR4420293_2.fastq.gz | SRR4420294_1.fastq.gz <br> SRR4420294_2.fastq.gz | SRR4420295_1.fastq.gz <br> SRR4420295_2.fastq.gz |
 | atrx-1 | SRR4420296_1.fastq.gz <br> SRR4420296_2.fastq.gz| SRR4420297_1.fastq.gz <br> SRR4420297_2.fastq.gz| SRR4420298_1.fastq.gz <br> SRR4420298_2.fastq.gz |
 
-# 1. Download the data from public databases #
+# Raw Sequence Data #
 
 Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. However, in this example we can will downloaded data hosted on public repositories. There are several public data repositories that host the data.
+
+# 1. Download the data from public repositories #
 
 ## A) EMBL-EBI's European Nucletide Archive (ENA)
 The best option is to directly download the fastq files  on the ENA server (e.g. check [EBI](https://www.ebi.ac.uk/ena/data/view/PRJNA348194)) we can download them directly using `wget` by supplying the download links to each file; for example in this case:
@@ -55,7 +57,7 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/008/SRR4420298/SRR4420298_2.fastq
 
  It is common to install software as environmental modules on your compute cluster. So we begin by loading the the relevant modules. The following code expects that you have sra-toolkit, GNU parallel and aspera installed on your computing cluster.
 
- (# Note: Sometimes a user might run into perl issues while using edirect. The installed version of perl should support the https protocol.)
+ ##### Note: Sometimes a user might run into perl issues while using edirect. The installed version of perl should support the https protocol. ####
 
 ```
 module load <path/to/sra-toolkit>
