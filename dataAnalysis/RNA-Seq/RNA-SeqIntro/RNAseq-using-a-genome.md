@@ -145,7 +145,7 @@ For HiSat2 mapping, you need to first index the genome and then use the read pai
 
 ```
 #!/bin/bash
-#set -o xtrace
+
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=16
 #SBATCH -t 24:00:00
@@ -155,6 +155,7 @@ For HiSat2 mapping, you need to first index the genome and then use the read pai
 #SBATCH --mail-user=<user_email_address>
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
+set -o xtrace
 cd $SLURM_SUBMIT_DIR
 scontrol show job $SLURM_JOB_ID
 ulimit -s unlimited
@@ -221,7 +222,7 @@ rm $ODIR\/${OUTPUT}.sam
 For setting it up to run with each set of file, we can set a SLURM script (`loop_hisat2.sh`) that loops over each fastq file. Note that this script calls the run_hisat2.sh script for each pair of fastq file supplied as its argument.
 ```
 #!/bin/bash
-set -o xtrace
+
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=16
 #SBATCH -t 24:00:00
@@ -231,6 +232,7 @@ set -o xtrace
 #SBATCH --mail-user=<user_email_address>
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
+set -o xtrace
 cd $SLURM_SUBMIT_DIR
 ulimit -s unlimited
 scontrol show job $SLURM_JOB_ID
