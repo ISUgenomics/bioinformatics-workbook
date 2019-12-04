@@ -1,6 +1,8 @@
 ---
 title: "Experimental Design"
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
@@ -43,6 +45,6 @@ There are four main aspects that should be considered to answer your biological 
 ---
 
 
-[Next](sequencing.md){: .btn  .btn--primary}
+[Next](sequencingTechnology.md){: .btn  .btn--primary}
 [Previous](exp_design_index.md){: .btn  .btn--primary}
-[Table of contents](../index-bk.md){: .btn  .btn--primary}
+[Table of contents](exp_design_index){: .btn  .btn--primary}

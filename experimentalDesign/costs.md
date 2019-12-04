@@ -1,6 +1,8 @@
 ---
 title: "Experimental Design"
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
@@ -37,5 +39,5 @@ In the next sections we will go over several example experimental design problem
 
 
 [Next](eD_genericExamples.md){: .btn  .btn--primary}
-[Previous](sequencing.md){: .btn  .btn--primary}
-[Table of contents](../index-bk.md){: .btn  .btn--primary}
+[Previous](sequencingTechnology.md){: .btn  .btn--primary}
+[Table of contents](exp_design_index){: .btn  .btn--primary}

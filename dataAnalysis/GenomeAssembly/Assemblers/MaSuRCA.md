@@ -82,7 +82,7 @@ header:
   ```
   git clone https://github.com/ISUGIFsingularity/masurca.git
   ```
-  This repo contains the [singularity recipe](https://github.com/ISUGIFsingularity/masurca/blob/master/Singularity.1.0.0) if you want to build it from scratch.  However, You can also directly download the image from [singularity hub](https://www.singularity-hub.org/collections/1814).
+  This repo contains the [singularity recipe](https://github.com/ISUGIFsingularity/masurca/blob/master/Singularity.1.0.0) if you want to build it from scratch.  However, You can also directly download the image from [singularity hub](https://www.singularity-hub.org/).
 
   ```bash
   cd masurca/SIMG

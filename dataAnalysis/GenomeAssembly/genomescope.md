@@ -1,5 +1,5 @@
 ---
-title: Genome Assembly
+title: Genomescope genome properties using just raw sequence data
 layout: single
 author: Andrew Severin
 author_profile: true
@@ -8,7 +8,6 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Genomescope: genome properties using just raw sequence data
 
 Genomescope uses k-mer frequencies generated from raw read data to estimate the genome size, abundance of repetitive elements and rate of heterozygosity.
 
@@ -136,7 +135,7 @@ For more information on how GenomeScope works, check out this poster and supplem
 - [GenomeScope Github Page](https://github.com/schatzlab/genomescope)
 - [GenomeScope supplementary file and deeper explanation of equations](http://biorxiv.org/content/biorxiv/suppl/2017/02/28/075978.DC2/075978-1.pdf)
 
-[Table of contents](/index.md)
+[Table of contents](https://bioinformaticsworkbook.org/dataAnalysis/GenomeAnnotation/annotation_and_assembly_index)
 
 ---
 

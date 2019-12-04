@@ -35,4 +35,4 @@ Arabidopsis is one of several model organisms where significant amounts of data 
 
 
 [Previous](fileTransfer/sra.md){: .btn  .btn--primary}
-[Table of contents](../index-bk.md){: .btn  .btn--primary}
+[Table of contents](dAc_introduction.md){: .btn  .btn--primary}

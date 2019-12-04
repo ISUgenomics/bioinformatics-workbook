@@ -14,7 +14,7 @@ This tutorial will help you create your own Singularity container using a github
 You will need:
 * A GitHub Repo [https://github.com/](https://github.com/)
 * A Singularity Account [https://www.singularity-hub.org/](https://www.singularity-hub.org/)
-* Singularity installed locally via the vagrant virtual machine or on a linux machine where you have root access. [See Intro to Singularity](Singularity/Intro_Singularity.md)
+* Singularity installed locally via the vagrant virtual machine or on a linux machine where you have root access. [See Intro to Singularity](Intro_Singularity.md)
 
 
 #### Example recipe (shub://ISUGIFsingularity/utilities:utilities.1.0.0) for some basic scripts we use in GIF
@@ -178,7 +178,7 @@ singularity exec ISUGIFsingularity-utilities-master.simg ../utilities/new_Assemb
 
 #### Next tutorial Modifying existing containers for interesting
 
-* [Modifying Existing Containers](Appendix/HPC/Containers/modifyingExistingContainers.md)
+* [Modifying Existing Containers](modifyingExistingContainers.md)
 
 ---
 [Table of contents](../../programs.md)

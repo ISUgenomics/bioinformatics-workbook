@@ -40,7 +40,7 @@ singularity exec --bind $PWD ./maker.img maker --help
 
 #### Example from Singularity Hub
 
-First go to [Singularity Hub](https://www.singularity-hub.org/collections/) and locate the container you want through the search box located on the left side just below the ```ADD A COLLECTION``` button and above the list of containers.
+First go to [Singularity Hub](https://www.singularity-hub.org/) and locate the container you want through the search box located on the left side just below the ```ADD A COLLECTION``` button and above the list of containers.
 
 ![](assets/SingularityHubcollectionsPage.png)
 
@@ -193,7 +193,7 @@ to execute the script via the singularity container.
 
 #### To create your own containers see the next tutorial
 
-[How to create your own Containers](Appendix/HPC/Containers/creatingContainers.md)
+[How to create your own Containers](creatingContainers.md)
 
 ---
 [Table of contents](../../programs.md)

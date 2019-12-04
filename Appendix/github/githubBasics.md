@@ -115,7 +115,7 @@ If you [purchase](https://www.namecheap.com/) your own domain, it is simple to [
 
 
 
-Contibutions for this markdown document came from Matt Hufford and was modified with permission from his [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03X Fall 2017) course.
+Contibutions for this markdown document came from Matt Hufford and was modified with permission from his [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03r/Week_03X Fall 2017) course.
 
 
 

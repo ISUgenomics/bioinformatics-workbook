@@ -9,7 +9,7 @@ header:
 ---
 
 
-  Bridges is part of the NSF funded XSEDE resources that anyone can apply for supercomputing (See [XSEDE tutorial](Appendix/HPC/xsede/xsede.md) on how to get an allocation).
+  Bridges is part of the NSF funded XSEDE resources that anyone can apply for supercomputing (See [XSEDE tutorial](../../../Appendix/HPC/xsede/xsede.md) on how to get an allocation).
 
 
 ## Running on the large memory node

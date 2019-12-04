@@ -10,10 +10,10 @@ header:
 
 ### Command Line Basics and Useful Programs
 * <span style="color:lightblue">Introduction to Unix</span>
-  * [Unix Basics 1](../Appendix/unix-basics-1.md)  
-  * [Unix Basics 2](../Appendix/unix-basics-2.md)
-  * [Unix Basics 3 (grep)](../Appendix/unix-basics-3.md)
-  * [Unix Basics 4 (sed)](../Appendix/unix-basics-4.md)
+  * [Unix Basics 1](../Appendix/Unix/unix-basics-1.md)  
+  * [Unix Basics 2](../Appendix/Unix/unix-basics-2admin.md)
+  * [Unix Basics 3 (grep)](../Appendix/Unix/unix-basics-3grep.md)
+  * [Unix Basics 4 (sed)](../Appendix/Unix/unix-basics-4sed.md)
 * <span style="color:lightblue">HPC</span>
   * [How to Install a Program](../Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
   * <span style="color:lightblue">SSH</span>
@@ -31,8 +31,7 @@ header:
     * [Creating Containers Using Singularity](../Appendix/HPC/Containers/creatingContainers.md)
     * [Modifying Existing Containers](../Appendix/HPC/Containers/modifyingExistingContainers.md)
 * <span style="color:lightblue">Bioawk</span>
-  * [Bioawk Basics](../Appendix/bioawk-basics.md)
-
+  * [Bioawk Basics](../Appendix/Unix/bioawk-basics.md)
 * [Viewing Files In Remote Machine Without Downloading](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 
 ## [Project Management landing page](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/projectManagement_index)
@@ -51,7 +50,7 @@ header:
 
 ### Experimental Design
 * [Biological system](../experimentalDesign/bio_sys.md)
-* [Sequencing Technology](../experimentalDesign/sequencing.md)
+* [Sequencing Technology](../experimentalDesign/sequencingTechnology.md)
 * [Costs](../experimentalDesign/costs.md)
 * [Generic Examples of Experimental Design](../experimentalDesign/eD_genericExamples.md)
 * [List of Biology exceptions and irregularities](../Appendix/biology_tidbits.md)
@@ -101,14 +100,17 @@ header:
     * [Motif Identification and Finding with MEME and FIMO](../dataAnalysis/GenomeAnnotation/MEME_Motif_Finding_In_Genomes.md)  
 * <span style="color:lightblue">Tools for assessing the quality of a Genome Assembly</span>
     * [GenomeScope to Estimate Genome Size](../dataAnalysis/GenomeAssembly/genomescope.md)
+    * [Checking a genome for contamination from vectors using UniVec](../dataAnalysis/GenomeAssembly/univecContaminationCheck.md)
+    * [Check a genome for PhiX contamination](../dataAnalysis/GenomeAssembly/PhiXContaminationCheck.md)
+* <span style="color:lightblue">Tools for Scaffolding assemblies</span>  
     * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
-    * [Hi-C scaffolding](../GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
+    * [Hi-C scaffolding](../dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
 * <span style="color:lightblue">Genome Assembly Examples</span>
   * [Bacillus thuringiensis data set](../dataAnalysis/GenomeAssembly/BT/BT_background.md)
     * [Canu Assembly of Bacillus thuringiensis](../dataAnalysis/GenomeAssembly/BT/BT_Canu.md)
     * [SPAdes Assembly of Bacillus thuringiensis](../dataAnalysis/GenomeAssembly/BT/BT_spades.md)
   * [Arabidopsis thaliana data set](../dataAnalysis/GenomeAssembly/Arabidopsis/Arabidopsis_background.md)
-    * [MaSuRCA assembly of Arabidopsis thanliana](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_MaSuRCA.md )
+    * [MaSuRCA assembly of Arabidopsis thanliana](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_MaSuRCA.md)
     * [Short read assembly using Platanus](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
 * <span style="color:lightblue">Genetic Map Construction</span>
     * [Generating Genetic Maps from GBS data](../dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
@@ -117,8 +119,16 @@ header:
 ### Comparative Genomics
 * [Gene Orthology, Synteny, and Visualzation with Opscan, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/Gene_Orthology_And_Synteny.md)
   * [Gene Orthology, Synteny, and Visualzation with Orthofinder, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/OrthofinderSynteny.md)
-  * [Gene Overlap Significance Testing with R Gene_overlap Package](../dataAnalysis/ComparativeGenomics/Gene_Category_overlap_Fisher_exact_testing.md)  
+  * [Gene Overlap Significance Testing with R Gene_overlap Package](../dataAnalysis/ComparativeGenomics/Gene_Category_Overlap_Fishers_exact_testing.md)  
   * [Phylostratiophraphy:Determining the LCA of all Genes in a Genome](../dataAnalysis/ComparativeGenomics/phylostratr.md)
+
+
+### Variant Discovery
+  * [FreeBayes variant calling workflow for DNA-Seq](../dataAnalysis/VariantCalling/freebayes-dnaseq-workflow.md)
+  * [GATK Best Practices Workflow for DNA-Seq](../dataAnalysis/VariantCalling/gatk-dnaseq-best-practices-workflow.md)
+  * [SNP calling for GBS data using Stacks pipeline](../dataAnalysis/VariantCalling/gbs-data-snp-calling-using-stacks.md)
+  * [SNP calling for GBS data using Tassel pipeline (GBS.v2)](../dataAnalysis/VariantCalling/gbs-data-snp-calling-using-tassel.md)
+
 
 ### Genome Repeat Identification
 * [Helitron Identification in a Genome Sequence](../dataAnalysis/ComparativeGenomics/Helitron_Scanner.md)
@@ -133,3 +143,4 @@ header:
 * [Creating Boxplots in R](../dataWrangling/R/generate-boxplots.md)
 * [Creating Heatmaps in R](../dataWrangling/R/generate_heatmaps.md)
 * [Visulaize Gaps in the Genome assemblies](../dataWrangling/R/visualize-gaps-in-genomes.md)
+* [Generate synteny dotplots for genomes](../dataWrangling/genome-dotplots.md)

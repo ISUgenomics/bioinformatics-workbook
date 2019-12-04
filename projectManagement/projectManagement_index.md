@@ -28,7 +28,7 @@ We should strive for a project management process that would give the ability fo
 
 * [Introduction to Project Management](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/Intro_projectManagement)
 * Project Management Tools
-  * [Introduction to Slack](/bioinformatics-workbook/Appendix/slack)
+  * [Introduction to Slack](../Appendix/slack.md)
   * [Introduction to GitHub](../Appendix/github/introgithub.md)
-  * [Introduction to Markdown](/bioinformatics-workbook/Appendix/Markdown)
+  * [Introduction to Markdown](../Appendix/Markdown.md)
   * [Zenhub Download](https://www.zenhub.com/extension)

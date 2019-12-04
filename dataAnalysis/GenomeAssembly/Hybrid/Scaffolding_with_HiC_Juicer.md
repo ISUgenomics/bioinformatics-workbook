@@ -261,4 +261,4 @@ This is what a genome assembly looks like from a population of highly heterozygo
 
 ---
 
-* [Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)
+* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)

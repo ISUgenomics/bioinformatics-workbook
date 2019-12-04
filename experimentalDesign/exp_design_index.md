@@ -1,12 +1,13 @@
 ---
-title: "Experimental Design"
+title: "Introduction to Experimental Design"
 layout: single
+author: Andrew Severin
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-{% include toc %}
 
 
 # Introduction to Experimental Design
@@ -27,7 +28,7 @@ Upon completion of this section on experimental design the learner will be able 
 ## Index
 
 * [Biological system](bio_sys.md)
-
+* [Sequencing Technology](sequencingTechnology.md)
 * [Costs](costs.md)
 * [Generic Examples of Experimental Design](eD_genericExamples.md)
 * [List of Biology exceptions and irregularities](../Appendix/biology_tidbits.md)

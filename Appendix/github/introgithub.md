@@ -13,7 +13,7 @@ Github is a code hosting platform for version control and collaboration.  There 
   * Bioinformatic **Program development**
   * **Documentation** of bioinformatic analyses
 
-Probably the most important use-case for new users is documentation.  For those transitioning from a wet-lab, git-hub repos can be thought of as the equivalent to a web-lab notebook, where every command performed in a bioinformatics analysis is recorded with an explanation as to why it was performed, when it was performed (date) and where it was performed (pwd). Github documents can be written using markdown (See [markdown](Appendix/Markdown.md) tutorial for an introduction).
+Probably the most important use-case for new users is documentation.  For those transitioning from a wet-lab, git-hub repos can be thought of as the equivalent to a web-lab notebook, where every command performed in a bioinformatics analysis is recorded with an explanation as to why it was performed, when it was performed (date) and where it was performed (pwd). Github documents can be written using markdown (See [markdown](../Markdown.md) tutorial for an introduction).
 
 ---
 # How to get a Github account
@@ -117,7 +117,7 @@ Copy the entire contents of this file and add it to your GitHub account.
 
 # How to Add SSH key to GitHub Repo
 
-Add your new ssh key to your GitHub account by going to [_SSH and GPG keys_](https://github.com/settings/profile/keys) in your profile Settings.
+Add your new ssh key to your GitHub account by going to [_SSH and GPG keys_](https://github.com/settings/profile/keys) in your profile Settings.  You will need to be logged into GitHub for the above link to work.
 
 ![](https://codenvy.com/docs-version/5.0.1/docs/assets/imgs/Clipboard6.jpg)
 
@@ -182,7 +182,7 @@ Also, allows for collaboration and back-up.
 
 ---
 
-Contibutions for this markdown document came from Matt Hufford and was modified with permission from his [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03X Fall 2017) course.
+Contibutions for this markdown document came from Matt Hufford and was modified with permission from his [BCB546](https://github.com/EEOB-BioData/BCB546X-Fall2017/tree/master/Week_03/) course.  Check out his amazing power point he created at the above link.
 
 ---
 [Table of contents](../programs.md)

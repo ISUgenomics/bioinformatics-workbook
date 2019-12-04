@@ -1,4 +1,4 @@
 # Introduction to Data analysis
 
 
-[Table of contents](/index.md)
+[Table of contents](../index.md)

@@ -77,4 +77,4 @@ End Sub
 
 Now you are all set to import files. Click on `Macros` again, and then `Run`. A window should pop up asking location of the text files. Navigate to the files location and select all text files. Click `OK`. All text files will be imported to a new spreadsheet. It might take a while to complete, if there are large number of files, so be patient.
 
-[Table of contents](/index.md)
+[Table of contents](../../dataAcquisition/dAc_introduction.md)

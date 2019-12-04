@@ -139,7 +139,7 @@ time qiime demux summarize \
  Time to run: 1 minute
 
  Output:
- * ```demux.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fdemux.qzv) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/demux.qzv)
+ * ```demux.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fdemux.qzv) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/demux.qzv)
 
 This will create a visualization file. You can download the file to your local computer. From a new terminal window on your local computer copy the file:
 
@@ -182,8 +182,8 @@ sbatch /project/microbiome_workshop/amplicon/example/qiime2-phosphate-tutorial/d
 Time to run: 35 minutes
 
 Output:
-* ```rep-seqs-dada2.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Frep-seqs-dada2.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/rep-seqs-dada2.qza)
-* ```table-dada2.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftable-dada2.qzv) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/table-dada2.qzv)
+* ```rep-seqs-dada2.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Frep-seqs-dada2.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/rep-seqs-dada2.qza)
+* ```table-dada2.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftable-dada2.qzv) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/table-dada2.qzv)
 
 ## Option 2: Deblur (Faster)
 Deblur only uses forward reads at this time. You could get around this by merging your data with an outside tool like [BBmerge](http://jgi.doe.gov/data-and-tools/bbtools/bb-tools-user-guide/bbmerge-guide/) then importing your data as single ended. For simplicity, in this tutorial we will just use the forward reads.
@@ -203,11 +203,11 @@ sbatch /project/microbiome_workshop/amplicon/example/qiime2-phosphate-tutorial/d
 Time to run: 4 minutes
 
 Output:
-* ```deblurresults/representative_sequences.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fdeblurresults%2Frepresentative_sequences.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/deblurresults/representative_sequences.qza)
+* ```deblurresults/representative_sequences.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fdeblurresults%2Frepresentative_sequences.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/deblurresults/representative_sequences.qza)
 * ```deblurresults/stats.qza```
-[View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fdeblurresults%2Fstats.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/deblurresults/stats.qza)
+[View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fdeblurresults%2Fstats.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/deblurresults/stats.qza)
 * ```deblurresults/table.qza```
-[View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fdeblurresults%2Ftable.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/deblurresults/table.qza)
+[View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fdeblurresults%2Ftable.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/deblurresults/table.qza)
 
 Okay, we have just done the hard part of amplicon sequence analysis.  At this point we have our BIOM count table, the representative sequence variants and a stats file for Deblur.
 
@@ -224,7 +224,7 @@ time qiime feature-table summarize \
   Time to run: 30 seconds
 
  Output:
- * ```table-dada2.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftable-dada2.qzv) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/table-dada2.qzv)
+ * ```table-dada2.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftable-dada2.qzv) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/table-dada2.qzv)
 
 # Phylogenetics
 There are a number of diversity metrics like unifrac distance that require the construction of a phylogenetic tree.
@@ -240,7 +240,7 @@ time qiime alignment mafft \
 Time to run: 1 minute
 
 Output:
-* ```aligned-rep-seqs.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Faligned-rep-seqs.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/aligned-rep-seqs.qza)
+* ```aligned-rep-seqs.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Faligned-rep-seqs.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/aligned-rep-seqs.qza)
 
 ## Masking sites
 Some sites in the alignment are not phylogenetically informative. These sites are masked.
@@ -253,7 +253,7 @@ time qiime alignment mask \
 Time to run: 1 minute
 
 Output:
-* ```masked-aligned-rep-seqs.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fmasked-aligned-rep-seqs.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/masked-aligned-rep-seqs.qza)
+* ```masked-aligned-rep-seqs.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fmasked-aligned-rep-seqs.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/masked-aligned-rep-seqs.qza)
 
 ## Creating a tree
 Fastree is used to generate a phylogenetic tree from the masked alignment.
@@ -265,7 +265,7 @@ time qiime phylogeny fasttree \
 Time to run: 1 minute
 
 Output:
-* ```unrooted-tree.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Funrooted-tree.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/unrooted-tree.qza)
+* ```unrooted-tree.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Funrooted-tree.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/unrooted-tree.qza)
 
 ## Midpoint rooting
 Fastree creates an unrooted tree. We can root the tree at it's midpoint with this command:
@@ -277,7 +277,7 @@ time qiime phylogeny midpoint-root \
 Time to run: 5 seconds
 
 Output:
-* ```rooted-tree.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Frooted-tree.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/rooted-tree.qza)
+* ```rooted-tree.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Frooted-tree.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/rooted-tree.qza)
 
 # Taxonomic analysis
 Sequence variants are of limited usefulness by themselves. Often we are interested in what kinds of organisms are present in our sample, not just the diversity of the sample.  To identify these sequence variants two things are needed:  a reference database and an algorithm for identifying the sequence using the database.
@@ -305,7 +305,7 @@ time qiime feature-classifier classify-sklearn \
 Time to run: 4 minutes
 
 Output:
-* ```taxonomy.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftaxonomy.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/taxonomy.qza)
+* ```taxonomy.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftaxonomy.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/taxonomy.qza)
 
 ```bash
 qiime metadata tabulate \
@@ -314,7 +314,7 @@ qiime metadata tabulate \
   ```
 Time to run: 1 second
 
-* ```taxonomy.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftaxonomy.qzv) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/taxonomy.qzv)
+* ```taxonomy.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftaxonomy.qzv) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/taxonomy.qzv)
 
 
 Create a bar plot visualization of the taxonomy data:
@@ -328,7 +328,7 @@ qiime taxa barplot \
 Time to run: 1 minute
 
 Output:
-* ```taxa-bar-plots.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftaxa-bar-plots.qzv) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/taxa-bar-plots.qzv)
+* ```taxa-bar-plots.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftaxa-bar-plots.qzv) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/taxa-bar-plots.qzv)
 
 
 Looking at the the ```taxonomy.qzv``` file using https://view/qiime2.org We can see the data presented at different taxonomic levels and grouped by different experimental factors. If we drill down to taxonomic level 5 something looks a bit odd. There's lots of "Rickettsiales;f__mitochondria".  This is really  plant mitochondrial contamination. Some of these samples also have chloroplast contamination.  This kind of Taxonomic filtering isn't available in QIIME2 yet but it can be be done manually.
@@ -371,7 +371,7 @@ cd ..
 Time to run: 2 minutes
 
 Output:
-* ```table-dada2-filtered.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftable-dada2-filtered.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/table-dada2-filtered.qza)
+* ```table-dada2-filtered.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftable-dada2-filtered.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/table-dada2-filtered.qza)
 
 
 Since we have altered the qza file we can create a new bar plots:
@@ -387,7 +387,7 @@ qiime taxa barplot \
 Time to run: 1 minute
 
 Output:
-* ```taxa-bar-plots-filtered.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftaxa-bar-plots-filtered.qzv) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/taxa-bar-plots-filtered.qzv)
+* ```taxa-bar-plots-filtered.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Ftaxa-bar-plots-filtered.qzv) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/taxa-bar-plots-filtered.qzv)
 
 
 # Alpha and Beta diversity analysis
@@ -402,18 +402,18 @@ time qiime diversity core-metrics \
 ```
 
 Output (all files are in the directory ```core-diversity```):
-* ```bray_curtis_distance_matrix.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fbray_curtis_distance_matrix.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/bray_curtis_distance_matrix.qza)
-* ```bray_curtis_pcoa_results.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fbray_curtis_pcoa_results.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/bray_curtis_pcoa_results.qza)
-* ```evenness_vector.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fevenness_vector.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/evenness_vector.qza)
-* ```faith_pd_vector.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Ffaith_pd_vector.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/faith_pd_vector.qza)
-* ```jaccard_distance_matrix.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fjaccard_distance_matrix.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/jaccard_distance_matrix.qza)
-* ```jaccard_pcoa_results.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fjaccard_pcoa_results.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/jaccard_pcoa_results.qza)
-* ```observed_otus_vector.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fobserved_otus_vector.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/observed_otus_vector.qza)
-* ```shannon_vector.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fshannon_vector.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/shannon_vector.qza)
-* ```unweighted_unifrac_distance_matrix.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Funweighted_unifrac_distance_matrix.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/unweighted_unifrac_distance_matrix.qza)
-* ```unweighted_unifrac_pcoa_results.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Funweighted_unifrac_pcoa_results.qza)  [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/unweighted_unifrac_pcoa_results.qza)
-* ```weighted_unifrac_distance_matrix.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fweighted_unifrac_distance_matrix.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/weighted_unifrac_distance_matrix.qza)
-* ```weighted_unifrac_pcoa_results.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fweighted_unifrac_pcoa_results.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/core-diversity/weighted_unifrac_pcoa_results.qza)
+* ```bray_curtis_distance_matrix.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fbray_curtis_distance_matrix.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/bray_curtis_distance_matrix.qza)
+* ```bray_curtis_pcoa_results.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fbray_curtis_pcoa_results.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/bray_curtis_pcoa_results.qza)
+* ```evenness_vector.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fevenness_vector.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/evenness_vector.qza)
+* ```faith_pd_vector.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Ffaith_pd_vector.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/faith_pd_vector.qza)
+* ```jaccard_distance_matrix.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fjaccard_distance_matrix.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/jaccard_distance_matrix.qza)
+* ```jaccard_pcoa_results.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fjaccard_pcoa_results.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/jaccard_pcoa_results.qza)
+* ```observed_otus_vector.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fobserved_otus_vector.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/observed_otus_vector.qza)
+* ```shannon_vector.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fshannon_vector.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/shannon_vector.qza)
+* ```unweighted_unifrac_distance_matrix.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Funweighted_unifrac_distance_matrix.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/unweighted_unifrac_distance_matrix.qza)
+* ```unweighted_unifrac_pcoa_results.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Funweighted_unifrac_pcoa_results.qza)  [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/unweighted_unifrac_pcoa_results.qza)
+* ```weighted_unifrac_distance_matrix.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fweighted_unifrac_distance_matrix.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/weighted_unifrac_distance_matrix.qza)
+* ```weighted_unifrac_pcoa_results.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcore-diversity%2Fweighted_unifrac_pcoa_results.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/core-diversity/weighted_unifrac_pcoa_results.qza)
 
  Each of these output files can be examined using other ```qiime diversity``` subcommands.
 
@@ -427,7 +427,7 @@ Ordination is a dimensionality reduction technique that enables the visualizatio
  Time to run: 15 seconds
 
  Output:
- * ```pcoa-visualization.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fpcoa-visualization.qzv) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/pcoa-visualization.qzv)
+ * ```pcoa-visualization.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fpcoa-visualization.qzv) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/pcoa-visualization.qzv)
 
 
 # Differential abundance of sequence variants
@@ -460,7 +460,7 @@ time qiime gneiss add-pseudocount \
 Time to run: 6 seconds
 
 Output:
-* ```composition.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcomposition.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/composition.qza)
+* ```composition.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fcomposition.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/composition.qza)
 
 
 Perform [Ward's agglomerative clustering](https://arxiv.org/abs/1111.6285)
@@ -472,7 +472,7 @@ time qiime gneiss correlation-clustering \
 Time to run: 5 minutes
 
 Output:
-* ```hierarchy.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fhierarchy.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/hierarchy.qza)
+* ```hierarchy.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fhierarchy.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/hierarchy.qza)
 
 A tree has now been generated that can be used for making comparisons of sample groups.
 
@@ -487,7 +487,7 @@ time qiime gneiss ilr-transform \
 Time to run: 15 seconds
 
 Output:
-* ```balances.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fbalances.qza) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/balances.qza)
+* ```balances.qza``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fbalances.qza) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/balances.qza)
 
 The balances are normally distributed an can now be analyzed using mixed linear
 models  We can perform a regression on the three categorical data types, Genotype, Fraction (soil or endophytic compartment) or Soil).  Themodel explains about 10% of the total variation at all nodes of the trees. This is typical for these complex experiments.  The amount that can be explained increases as we move up the covariance tree. Overall the most predictive factor is Genotype which is encouraging.
@@ -502,7 +502,7 @@ time qiime gneiss ols-regression \
 ```
 
 Output:
-* ```regression_summary.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fregression_summary.qzv) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/regression_summary.qzv)
+* ```regression_summary.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fregression_summary.qzv) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/regression_summary.qzv)
 
 
 One of the assumptions if the ordinary least squares model is that the fixed factors are random, in other words the authors randomly arrived at the genotypes they knocked out. Of course that's not true, the genotypes were selected because they had an impact on the phosphorus stress response.  They are Fixed factors. A mixed linear model can account for fixed and random factors and effects. Gneiss offerers a linear mixed model regression too but the interface seems to be in development  so there is not much I can say about it but we can try it now. Statistical modeling is done by the [statsmodels](http://www.statsmodels.org/stable/mixed_linear.html) python package.
@@ -518,7 +518,7 @@ qiime gneiss lme-regression \
 ```
 
 Output:
-* ```linear_mixed_effects_model.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Flinear_mixed_effects_model.qzv) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/linear_mixed_effects_model.qzv)
+* ```linear_mixed_effects_model.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Flinear_mixed_effects_model.qzv) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/linear_mixed_effects_model.qzv)
 
 
 We can look at the most statistically significant balances and examine what taxa make up those partitions.
@@ -537,7 +537,7 @@ qiime gneiss balance-taxonomy \
 
 
 Output:
-* ```y0_taxa_summary.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fy0_taxa_summary.qzv) \| [Download](https://usda-ars-gbru.github.ioassets/qiime/y0_taxa_summary.qzv)
+* ```y0_taxa_summary.qzv``` [View](https://view.qiime2.org/?src=https%3A%2F%2Fusda-ars-gbru.github.io%2FMicrobiome-workshop%2Fassets%2Fqiime%2Fy0_taxa_summary.qzv) \| [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/qiime/y0_taxa_summary.qzv)
 
 
 In this case the y0 balance is a split between samples that have plants in them and raw soil. It makes sense that this is the largest effect.  What happens if you run balance y2 or decrease the taxonomic level?

@@ -349,7 +349,7 @@ Hit the **Draw Graph** button. Now all the assembled contigs are visible. Some a
 IF you have a Ssand-alone copy of [Blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download) installed on your computer you can label the contigs with with the reference genomes.
 
 Download the reference fasta file here:
-Ref_database.fna : [Download](https://usda-ars-gbru.github.ioassets/metagenome/Ref_database.fna)
+Ref_database.fna : [Download](https://github.com/USDA-ARS-GBRU/Microbiome-workshop/tree/master/assets/metagenome/Ref_database.fna)
 
 Select **Build blast database**
 Select **Load from Fasta File** and load ```Ref_database.fna```
