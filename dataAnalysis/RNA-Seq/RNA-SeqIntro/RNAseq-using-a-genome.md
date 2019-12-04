@@ -265,9 +265,25 @@ For quantifying transcript abundance from RNA-seq data, there are many programs 
 #### featureCounts ####
 You will need [`subread`](http://subread.sourceforge.net/) and `parallel` modules loaded.
 ```
-ANNOT="/path/to/GCF_000001735.3_TAIR10_genomic.gff"
-mkdir -p path/to/counts
-ODIR="path/to/counts"
+#!/bin/bash
+
+#SBATCH -N 1
+#SBATCH -n 16
+#SBATCH -t 24:00:00
+#SBATCH -J Hisat2
+#SBATCH -o Hisat2.o%j
+#SBATCH -e Hisat2.e%j
+#SBATCH --mail-user=csiva@iastate.edu
+#SBATCH --mail-type=begin
+#SBATCH --mail-type=end
+set -o xtrace
+
+
+cd $SLURM_SUBMIT_DIR
+ulimit -s unlimited
+ANNOT="/PATH/TO/GFF_FILE"
+mkdir -p counts
+ODIR="counts"
 
 
 module purge
@@ -275,7 +291,8 @@ module purge
 module load subread
 module load parallel
 
-parallel -j 4 "featureCounts -T 4 -s 2 -p -t gene -g ID -a $ANNOT -o $ODIR/{.}.gene.txt {}" ::: *.bam
+parallel -j 4 "featureCounts -T 4 -s 2 -p -t gene -g ID -a $ANNOT -o $ODIR/{/.}.gene.txt {}" ::: ../2-Hisat/Sam/*.bam
+scontrol show job $SLURM_JOB_ID
 
 ```
 This creates the following set of files in the specified output folder:
