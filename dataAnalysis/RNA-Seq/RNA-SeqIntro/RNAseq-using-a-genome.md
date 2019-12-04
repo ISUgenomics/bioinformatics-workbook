@@ -28,8 +28,12 @@ This experiment compares WT and *atrx-1* mutant to analyze how loss of function 
 | atrx-1 | SRR4420296_1.fastq.gz <br> SRR4420296_2.fastq.gz| SRR4420297_1.fastq.gz <br> SRR4420297_2.fastq.gz| SRR4420298_1.fastq.gz <br> SRR4420298_2.fastq.gz |
 
 # Raw Sequence Data #
+<<<<<<< HEAD
 
 Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. However, in this example we can will downloaded data hosted on public repositories. There are several public data repositories that host the data.
+=======
+Generally if the data is hosted at your local sequencing center you could download through a web interface or using `wget` or `curl` commands. However, in this example we will download data hosted on public repositories. There are several public data repositories that host the data.
+>>>>>>> Siva
 
 # 1. Download the data from public repositories #
 
