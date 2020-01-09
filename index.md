@@ -88,6 +88,11 @@ feature_row:
     url: "/dataAnalysis/ComparativeGenomics/Repeats_index"
     btn_label: "Learn More"
 
+    - title: "ATAC-sequencing"
+      image_path: /assets/images/ATAC.png
+      alt: "fully responsive"
+      url: "/dataAnalysis/ATAC-seq/ATAC_index"
+      btn_label: "Learn More"
 
   - title: "Data Visualization"
     image_path: /assets/images/Heatmap.jpg
