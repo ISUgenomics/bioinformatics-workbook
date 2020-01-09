@@ -89,9 +89,9 @@ feature_row:
     btn_label: "Learn More"
 
   - title: "ATAC-sequencing"
-    image_path: /assets/images/ATAC.png
+    image_path: /assets/images/ATAC.jpg
     alt: "fully responsive"
-    url: "/dataAnalysis/ATAC-seq/ATAC_index"
+    url: "/dataAnalysis/ATAC-seq/ATAC-index"
     btn_label: "Learn More"
 
   - title: "Data Visualization"
