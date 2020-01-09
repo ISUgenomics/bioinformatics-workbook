@@ -10,4 +10,4 @@ ATAC-seq (Assay for Transposase-Accessible Chromatin using sequencing) is a tech
 
 ## Index
 
-* [ATAC-seq](ATAC_tytorial.md)
+* [ATAC-seq](ATAC_tutorial.md)
