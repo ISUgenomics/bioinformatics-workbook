@@ -71,7 +71,7 @@ parallel <prefetch.cmds
 After downloading the SRA files, we convert it to fastq format. We can use the fast-dump command as follows: (this step is slow and if possible run these commands using [gnu parallel](https://www.gnu.org/software/parallel/)). We assume that all SRA files are in a specific folder.
 ```
 module load parallel
-parallel "fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
+parallel fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
 ```
 *Note: fastq-dump runs very slow*
 
