@@ -645,6 +645,8 @@ The above command first uses `cat` to put the contents of the file to standard o
 
 **NOTE:** If you are running this in IOS rather than on a linux machine you will need to use `gshuf` or `alias shuf=gshuf` for the above commands to run properly.
 
+**NOTE2:** You may need to install core utilities using ```brew install coreutils```
+
 Generate random permutations of lines of the file supplied.
 
 Let's use this command to shuffle our numSeq.txt file and then output into a new file using another redirect symbol `>`. Let's repeat this process but instead of overwriting the new file we append `>>` the standard output to the numSeqRandom.txt file.
