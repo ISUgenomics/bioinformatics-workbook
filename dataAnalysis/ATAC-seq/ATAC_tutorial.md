@@ -1,7 +1,7 @@
 ---
 title: ATAC Sequence Analysis
 layout: single
-author: Sivanandan Chudalayandi
+author: Arun Seetharam
 author_profile: true
 header:
   overlay_color: "444444"
