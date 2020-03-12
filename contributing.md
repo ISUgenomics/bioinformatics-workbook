@@ -4,7 +4,7 @@ We are really glad you're reading this! We need volunteer contributors for makin
 
 Making contribution is simple:
 
-1. Fork the repo on GitHub
+1. Fork the repo on [GitHub](https://github.com/ISUgenomics/bioinformatics-workbook)
 2. Clone the project to your own machine
 3. Edit the files or add files using your favorite editor
 4. Commit changes to your own branch
