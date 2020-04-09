@@ -351,7 +351,7 @@ Chr1    27768651        .       A       ATG     1909.73 .       AC=2;AF=1.00;AN=
 SAM is a tab limited text file that stores sequence alignments. SAM includes two sections:
 
 * Header section
-* Alignemnt section
+* Alignment section
 
 ---
 
@@ -381,7 +381,7 @@ Each alignment line has 11 mandatory columns
 
 ![columns](assets/SAMcolumns.png)
 
-### Examples for alignmetn lines       
+### Examples for alignment lines       
 
 
     HISEQ:496:C4KY7ACXX:8:1101:1606:2994    73      4       13740599        36      100M    *       0       0
@@ -416,7 +416,7 @@ CIGAR describes how the read aligns with the reference. It consists of one or mo
 
 ### CIGAR Example
 
-for the folowing alignemtn:
+for the following alignment:
 
 ![cigar-example](assets/CIGARexample.png)
 
@@ -461,7 +461,7 @@ HISEQ:496:C4KY7ACXX:8:1101:1606:2994    133     *       0       0       *       
 [SAM specifications PDF](https://samtools.github.io/hts-specs/SAMv1.pdf)
 
 ---
-# BAM: Binary Alignemtn Map
+# BAM: Binary Alignment Map
 
 BAM is the binary format of a SAM file.  It has a smaller storage footprint and needs to be decompressed to be human readable.
 
