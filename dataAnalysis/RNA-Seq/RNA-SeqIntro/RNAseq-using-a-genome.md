@@ -1,10 +1,13 @@
----
-title: RNA Sequence Analysis
+----
+title: RNAseq (with Genome)
 layout: single
+author: Siva Chudalayandi
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
+
 
 # RNA-Seq data Analysis
 
