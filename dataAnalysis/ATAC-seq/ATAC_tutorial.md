@@ -1,3 +1,14 @@
+---
+title: ATAC Sequence Analysis
+layout: single
+author: Siva Chudalayandi
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
 ### ATAC-seq tutorial:
 The data for this tutorial is based on this [paper; Jégu et al., 2017](http://europepmc.org/backend/ptpmcrender.fcgi?accid=PMC5471679&blobtype=pdf). The authors describe the role of a chromatin remodeling protein in controlling _Arabidopsis_ seedling morphogenesis by modulating chromatin accessibility. They base their conclusions on a combination of CHIPseq, ATAC-seq, MNAseseq and FAIREseq among other things. In this tutorial, we will work through the ATAC-seq dataset. Check the methods section in the paper for more details on the ATAC-seq library preparation, following the [standard procedure](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4374986/).  
 
