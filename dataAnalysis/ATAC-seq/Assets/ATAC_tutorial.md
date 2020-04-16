@@ -1,43 +1,36 @@
 ---
-title: CHIP Seq Analysis
+title: ATAC Sequence Analysis
 layout: single
-author: Siva Chudalayandi
+author: Sivanandan Chudalayandi
 author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-### CHIP-seq tutorial:
-The data for this tutorial is based on this [paper; Jégu et al., 2017](http://europepmc.org/backend/ptpmcrender.fcgi?accid=PMC5471679&blobtype=pdf). The authors describe the role of a chromatin remodeling protein in controlling _Arabidopsis_ seedling morphogenesis by modulating chromatin accessibility. They base their conclusions on a combination of CHIPseq, ATAC-seq, MNAseseq and FAIREseq among other things. In this tutorial, we will work through the CHIP-seq dataset. Check the methods section in the paper for more details on the CHIP-seq library preparation, following the [standard procedure](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4374986/).  
+
+### ATAC-seq tutorial:
+The data for this tutorial is based on this [paper; Jégu et al., 2017](http://europepmc.org/backend/ptpmcrender.fcgi?accid=PMC5471679&blobtype=pdf). The authors describe the role of a chromatin remodeling protein in controlling _Arabidopsis_ seedling morphogenesis by modulating chromatin accessibility. They base their conclusions on a combination of CHIPseq, ATAC-seq, MNAseseq and FAIREseq among other things. In this tutorial, we will work through the ATAC-seq dataset. Check the methods section in the paper for more details on the ATAC-seq library preparation, following the [standard procedure](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4374986/).  
 
 
 #### 1. Download fastq files directly from ENA website
 The fastq files for all the experiments described are available at the ENA website under the bioproject [PRJNA351855](https://www.ebi.ac.uk/ena/data/view/PRJNA351855)
- The CHIP-seq data in this set are thge first 6 libraries in the list. We will visit the other files when talking about CHIPseq. We can download the reads directly using wget.
+ The ATAC-seq data is the only paired end libraries in the list. We will visit the other files when talking about CHIPseq. We can download the reads directly using wget.
  ```
- wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR473/006/SRR4733906/SRR4733906.fastq.gz
- wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR473/007/SRR4733907/SRR4733907.fastq.gz
- wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR473/008/SRR4733908/SRR4733908.fastq.gz
- wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR473/009/SRR4733909/SRR4733909.fastq.gz
- wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR473/000/SRR4733910/SRR4733910.fastq.gz
- wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR473/001/SRR4733911/SRR4733911.fastq.gz
-
+ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR473/002/SRR4733912/SRR4733912_1.fastq.gz
+ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR473/002/SRR4733912/SRR4733912_2.fastq.gz
  ```
 
 #### 2. Quality Check
  ```
- mkdir Quality_CHIP
+ mkdir Quality_ATAC
  module load fastqc
- fastqc -o Quality_CHIP /path/to/CHIP*.gz
+ fastqc -o Quality_ATAC /path/to/ATAC_paired/*.gz
  ```
- Generally the mean quality value of each base in every sample is acceptable and the fastqc plot is given below:
+ We found that the nextera adapters have already been removed before depositing the sequences. We also confirmed this with the authors.
+ ![Adapter_Content](Assets/fastqc_adapter_content_plot.png)
 
- ![Mean Sequence Quality](Assets/CHIP_per_base_sequence_quality_plot.png)
-
-Additionally, there is some minor aqdapter contamination![](Assets/CHIP_adapter_content_plot.png):
-
-  We can remove them using one of many adapter trimming programs, for example [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html), or proceed without trimming since tghe contamination is minor.
+  However, if transposase adapters were present in large amounts the raw reads, we can remove them using one of many adapter trimming programs, for example [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html).
 
 #### 3. Download Arabidopsis Genome
 Before starting the alignment, we need the _Arabidopsis_ genome, which one can download from either [Araport](https://www.araport.org/data/araport11) or [EnsemblPlants](http://plants.ensembl.org/index.html).
