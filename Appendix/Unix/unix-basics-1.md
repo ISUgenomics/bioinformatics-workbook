@@ -43,7 +43,7 @@ A terminal is the program that is used to access files on your laptop/computer t
 
 1. Use the Finder ![](assets/MagnifyingGlass.png) and search for and open the Terminal program ![](assets/terminal.png).
 2. Type ```ssh username@hostname```
-  * Example1:  ```ssh andrew.severin@ceres.scinet.science```
+  * Example1:  ```ssh andrew.severin@login.scinet.science```
   * Example2: ```ssh severin@bridges.psc.edu```
 3. Hit by &#8629; (`Enter`) key and enter your password and verification code.
   * Note: as you type the password, you will not see your typing.
@@ -57,7 +57,7 @@ On Windows, it will be easier for you to login first to a linux based system for
   ![](assets/WindowsRun.png)
 
 * Type ssh usename@hostname
-  * Example1:  ```ssh andrew.severin@ceres.scinet.science```
+  * Example1:  ```ssh andrew.severin@login.scinet.science```
   * Example2: ```ssh severin@bridges.psc.edu```
   * Hit by &#8629; (`Enter`) key and enter your password and verification code.
     * Note: as you type the password, you will not see your typing.
@@ -102,7 +102,7 @@ ssh usename@hostname
   * etc
 * hostname is the name of the computer
   * bridges.psc.edu
-  * ceres.scinet.science
+  * login.scinet.science
   * etc
 
 Once you have logged in you will see a bunch of text fly by your screen.  That text is the welcome message on the remote machine. Now that everyone is logged in. Let us make sure everyone is in their home directory and set the behavior of the pwd command so there is no difference in the output of this command.  Type in the two following commands and hit the &#8629; (`Enter`) key
@@ -905,7 +905,7 @@ cd Downloads
 scp username@remotehostname:/home/andrew.severin/unixTutorial/Cat.jpg .
 
 #example
-scp andrew.severin@ceres.scinet.science:/home/andrew.severin/unixTutorial/Cat.jpg .
+scp andrew.severin@login.scinet.science:/home/andrew.severin/unixTutorial/Cat.jpg .
 ```
 The above command does a secure copy from the remote server : in folder unixTutorial to copy Cat.jpg to this folder (`.`)
 
