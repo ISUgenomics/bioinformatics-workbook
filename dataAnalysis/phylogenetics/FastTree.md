@@ -1,5 +1,5 @@
 ---
-title: RNA Sequence Analysis
+title: FastTree
 layout: single
 header:
   overlay_color: "444444"
