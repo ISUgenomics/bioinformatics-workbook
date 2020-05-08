@@ -40,5 +40,5 @@ I have recently joined the Genome Informatics Facility at Iowa State University.
 My main interests are in the fields of bioinformatics and evolutionary genomics. Currently, I am working on various projects involving next-generation sequencing including the first de novo assembly of a teosinte genome. I am also developing pipelines to streamline the assembly and annotation process for newly sequenced organisms. My long-term goal is to study the genome organization and evolution of grass species.
 
 ### Jennifer Chang
-![Jennifer](../assets/images/people/JenChang.png){:height="50%" width="50%" .align-left}
+![Jennifer](../assets/images/people/JenChangsm.png){: .align-left}
 I am an Iowa State University graduate, with a PhD in Bioinformatics and Computational Biology. I have been programming (in one language or another) since 2006 and have an interest in data visualization and software development. My research focus has been on analyzing and merging networks, monitoring the evolution of influenza A viruses in swine, and writing cross-platform pipelines. In 2020, I joined the Genomics Informatics Facility in the hopes of developing interdisciplinary pipelines and tutorials to meet the needs of the widespread research community.
