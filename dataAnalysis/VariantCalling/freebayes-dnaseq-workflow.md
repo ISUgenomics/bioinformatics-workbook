@@ -14,7 +14,7 @@ header:
 
 ## Introduction
 
-`freebayes` is a Bayesian genetic variant detector designed to find small polymorphisms, specifically SNPs (single-nucleotide polymorphisms), indels (insertions and deletions), MNPs (multi-nucleotide polymorphisms), and complex events (composite insertion and substitution events) smaller than the length of a short-read sequencing alignment [Garrison and Marth, 2012](https://arxiv.org/abs/1207.3907)).
+[`freebayes`](https://github.com/ekg/freebayes) is a Bayesian genetic variant detector designed to find small polymorphisms, specifically SNPs (single-nucleotide polymorphisms), indels (insertions and deletions), MNPs (multi-nucleotide polymorphisms), and complex events (composite insertion and substitution events) smaller than the length of a short-read sequencing alignment ([Garrison and Marth, 2012](https://arxiv.org/abs/1207.3907)).
 
 ## Dataset
 
