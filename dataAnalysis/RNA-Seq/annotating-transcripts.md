@@ -1,6 +1,6 @@
 # Running Trinotate for annotating the transcripts:
 
-Trinotate can be used to annotate the transcripts. The files used in this example are as follows:
+[Trinotate](https://github.com/Trinotate/Trinotate.github.io/wiki) can be used to annotate the transcripts. The files used in this example are as follows:
 
 1. Input fasta file `trinity.fasta`
 2. Databases:
@@ -77,3 +77,9 @@ ${TRINOTATE_HOME}/util/extract_GO_assignments_from_Trinotate_xls.pl  \
                          -G --include_ancestral_terms \
                          > go_annotations.txt
 ```
+
+## More information
+
+Trinotate does not yet have its own paper but is recommended to cite the following:
+
+* Bryant, D.M., Johnson, K., DiTommaso, T., Tickle, T., Couger, M.B., Payzin-Dogru, D., Lee, T.J., Leigh, N.D., Kuo, T.H., Davis, F.G. and Bateman, J., 2017. [A tissue-mapped axolotl de novo transcriptome enables identification of limb regeneration factors](https://pubmed.ncbi.nlm.nih.gov/28099853/). Cell reports, 18(3), pp.762-776. 

@@ -225,3 +225,10 @@ Trinity --seqType fq \
         --right SRR633726_2.fq.gz,SRR633727_2.fq.gz \
         --CPU 16
 ```  
+
+## More information
+
+* Capece, V., Garcia Vizcaino, J.C., Vidal, R., Rahman, R.U., Pena Centeno, T., Shomroni, O., Suberviola, I., Fischer, A. and Bonn, S., 2015. [Oasis: online analysis of small RNA deep sequencing data](https://pubmed.ncbi.nlm.nih.gov/25701573). Bioinformatics, 31(13), pp.2205-2207.
+* Zerbino, D.R., 2010. [Using the velvet de novo assembler for short‐read sequencing technologies](https://pubmed.ncbi.nlm.nih.gov/20836074/). Current protocols in bioinformatics, 31(1), pp.11-5.
+* Xie, Y., Wu, G., Tang, J., Luo, R., Patterson, J., Liu, S., Huang, W., He, G., Gu, S., Li, S. and Zhou, X., 2014. [SOAPdenovo-Trans: de novo transcriptome assembly with short RNA-Seq reads](https://pubmed.ncbi.nlm.nih.gov/24532719). Bioinformatics, 30(12), pp.1660-1666.
+* Grabherr, M.G., Haas, B.J., Yassour, M., Levin, J.Z., Thompson, D.A., Amit, I., Adiconis, X., Fan, L., Raychowdhury, R., Zeng, Q. and Chen, Z., 2011. [Full-length transcriptome assembly from RNA-Seq data without a reference genome](https://pubmed.ncbi.nlm.nih.gov/21572440/). Nature biotechnology, 29(7), p.644.

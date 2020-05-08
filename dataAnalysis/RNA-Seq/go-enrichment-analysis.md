@@ -40,4 +40,9 @@ dot -Tpng input.dot -o output.png
 ## GO enrichment using BiNGO
 
 
+## More information
+
+* Ashburner, M., Ball, C.A., Blake, J.A., Botstein, D., Butler, H., Cherry, J.M., Davis, A.P., Dolinski, K., Dwight, S.S., Eppig, J.T. and Harris, M.A., 2000. [Gene ontology: tool for the unification of biology](https://pubmed.ncbi.nlm.nih.gov/10802651). Nature genetics, 25(1), pp.25-29.
+* Gene Ontology Consortium, 2019. [The gene ontology resource: 20 years and still GOing strong](https://pubmed.ncbi.nlm.nih.gov/30395331). Nucleic acids research, 47(D1), pp.D330-D338.
+
 
