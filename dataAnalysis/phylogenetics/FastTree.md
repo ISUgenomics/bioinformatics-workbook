@@ -1,6 +1,8 @@
 ---
 title: FastTree
 layout: single
+author: Jennifer Chang
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
