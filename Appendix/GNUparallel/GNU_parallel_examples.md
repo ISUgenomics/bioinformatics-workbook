@@ -221,56 +221,54 @@ A good example of this in bioinformatics is aligning paired-end reads to a genom
 
 Let's download a toy example from Arabidopsis.  I grabbed the first 250 sequences from four Arabidposis samples taken from NCBI's SRA database.
 
-* need to find a place that people can easily download this from to their local or remote machines.  Github has some issues with this. Perhaps a gitrepo of just super simple raw data set examples then I could just git clone the entire repo and hopefully it will remain small
 
-
-```
-mkdir rawdata
-cd rawdata/
-git init
-git remote add origin -f https://github.com/ISUgenomics/GNU_parallel.git
-git config core.sparseCheckout true
-echo fastqfiles >> .git/info/sparse-checkout
-git pull origin master
+****Download the example raw data****
 
 ```
-
-
+mkdir bowtie
+cd bowtie
+wget www.bioinformaticsworkbook.org/Appendix/GNUparallel/fastqfiles.tar.gz
+tar -zxvf fastqfiles.tar.gz
 ```
-https://raw.githubusercontent.com/ISUgenomics/GNU_parallel/master/fastqfiles/SRR4420293_1.fastq?token=ABQPC5HDNOZWZFTT72GKZZC6TIOLM
 
+The reads are in a directory named `fastqfiles`
+
+
+****Left Reads:****
 ```
+fastqfiles/SRR4420295_1.fastq.gz
+fastqfiles/SRR4420293_1.fastq.gz
+fastqfiles/SRR4420294_1.fastq.gz
+```
+****Right reads****
+```
+fastqfiles/SRR4420294_2.fastq.gz
+fastqfiles/SRR4420293_2.fastq.gz
+fastqfiles/SRR4420295_2.fastq.gz
+```
+
+
+****Download Arabidopsis genome****
 
 ```
 wget https://www.arabidopsis.org/download_files/Genes/TAIR10_genome_release/TAIR10_chromosome_files/TAIR10_chr_all.fas
+```
+
+****Create the bowtie2 alignment database for the Arabidopsis genome****
+```
 module load bowtie2
+
 bowtie2-build  TAIR10_chr_all.fas tair
+```
+
+```
 parallel -j2 "bowtie2 --threads 4 -x tair -k1 -q -1 {1} -2 {2} -S {1/.}.sam >& {1/.}.log" ::: *_1.fastq :::+ *_2.fastq
 ```
 
 
 
 
-The reads are in a directory named `reads_dir`
 
-
-****Left Reads:****
-```
-first_R1.fq.gz
-second_R1.fq.gz
-third_R1.fq.gz
-fourth_R1.fq.gz
-fifth_R1.fq.gz
-```
-****Right reads****
-```
-first_R2.fq.gz
-second_R2.fq.gz
-third_R2.fq.gz
-fourth_R2.fq.gz
-fifth_R2.fq.gz
-
-```
 the genome index is located in a directory called `bwt_index`
 
 We decide to write the output SAM and log files to <out_dir>.
