@@ -189,6 +189,10 @@ incremental: false
 # Markdown Processing
 kramdown:
   input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+      # Use existing pygments syntax highlighting css
+      css_class: 'highlight'  
   hard_wrap: false
   auto_ids: true
   footnote_nr: 1
