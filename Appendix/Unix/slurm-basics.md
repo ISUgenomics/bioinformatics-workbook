@@ -19,22 +19,25 @@ header:
 * Provides a framework (commands) to start, cancel, and monitor a job
 * Keeps track of all jobs to ensure everyone can efficiently use all computing resources without stepping on each others toes.
 
-## SLURM functions:
+## SLURM Commands:
 
 The main SLURM user commands shown on the left give the user access to information pertaining to the super computing cluster and the ability to submit or cancel a job.  See table below for a description of the main SLURM user functions.
 
 |command | Description |
 | - | - |
-|sbatch | Submit a batch script to SLURM |
-|squeue| List all jobs currently running or in queue |
-|scancel| Cancel a job you submitted |
-|sinfo| Check the availability of nodes within all partitions|
-|scontrol | See the configuration of a specific node |
-|sacct| Displays accounting data for all jobs |
+|<span style="color:Blue">sbatch</span> | Submit a batch script to SLURM |
+|<span style="color:Blue">squeue</span>| List all jobs currently running or in queue |
+|<span style="color:Blue">scancel</span>| Cancel a job you submitted |
+|<span style="color:Blue">sinfo</span>| Check the availability of nodes within all partitions|
+|<span style="color:Blue">scontrol</span> | See the configuration of a specific node |
+|<span style="color:Blue">sacct</span>| Displays accounting data for all jobs |
 
 
 
 <!-- ![](assets/Slurm_components.png) Photo from [schedmd](https://slurm.schedmd.com/overview.html) -->
+
+
+## <span style="color:Blue">sinfo</span>
 
 To check the availability of nodes within all partitions:
 ```
@@ -51,7 +54,10 @@ brief-low           up    2:00:00     26   idle ceres19-compute-[10-11,13-20,25,
 mem768-low          up    2:00:00      3   idle ceres18-mem768-0,ceres19-mem768-[0-1]
 mem-low             up    2:00:00      3    mix ceres18-mem-[0-1],ceres19-mem-1
 ```
-To check availability within a specific partitio, in this case the partition called `short`
+
+
+## <span style="color:Blue">sinfo</span>
+To check availability within a specific partition, in this case the partition called `short`
 ```
 
 $ sinfo -p short
@@ -64,6 +70,8 @@ short*       up 2-00:00:00     32   idle ceres14-compute-[8-24],ceres19-compute-
       up 7-00:00:00      1   idle ceres19-mem-4
 
 ```
+
+## <span style="color:Blue">scontrol</span>
 To see the configuration of a specific node for example `ceres14-compute-8`
 
 ```
@@ -86,6 +94,8 @@ NodeName=ceres14-compute-8 Arch=x86_64 CoresPerSocket=10
    ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
 ```
 
+## <span style="color:Blue">squeue</span>
+
 
 If you want to check your jobs after submission:
 ```
@@ -97,6 +107,10 @@ squeue -u $USER
            2867456      long   Falcon sivanand  R   21:50:45      1 ceres14-compute-55
            2867883     short       sh sivanand  R      48:03      1 ceres14-compute-64
 ```
+
+## <span style="color:Blue">sbatch</span>
+<span style="color:Blue">
+</span>
 ## Slurm batch script: Guidelines
 
 * Number of nodes
