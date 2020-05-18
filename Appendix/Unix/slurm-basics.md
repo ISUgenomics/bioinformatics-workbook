@@ -36,6 +36,21 @@ The main SLURM user commands shown on the left give the user access to informati
 
 <!-- ![](assets/Slurm_components.png) Photo from [schedmd](https://slurm.schedmd.com/overview.html) -->
 
+## <span style="color:Blue">squeue</span>
+
+
+If you want to check your jobs after submission:
+```bash
+squeue -u $USER
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           2867457     short P3826e00 sivanand  R   21:50:29      1 ceres14-compute-53
+           2867458     short P6370337 sivanand  R   21:50:29      1 ceres14-compute-53
+           2867459     short Pa0567fb sivanand  R   21:50:29      1 ceres19-compute-38
+           2867456      long   Falcon sivanand  R   21:50:45      1 ceres14-compute-55
+           2867883     short       sh sivanand  R      48:03      1 ceres14-compute-64
+```
+
+
 
 ## <span style="color:Blue">sinfo</span>
 
@@ -108,10 +123,12 @@ huge                 1     1/0/0/1        4:16:1   3095104    14990      1-00:00
 
 
 ## <span style="color:Blue">scontrol</span>
-To see the configuration of a specific node for example `ceres14-compute-8`
+
+If you need to see the configuration of a specific node to determine if that type of node is sufficient for your analysis or to diagnose a problem (like insufficient memory <span style="color:Red">segmentation fault</span>). <span style="color:Blue">scontrol</span> can be used to look up information on a node for example `ceres14-compute-8`
 
 ```bash
 $ scontrol show nodes ceres14-compute-8
+
 NodeName=ceres14-compute-8 Arch=x86_64 CoresPerSocket=10
    CPUAlloc=0 CPUTot=40 CPULoad=0.01
    AvailableFeatures=AVX
@@ -130,19 +147,51 @@ NodeName=ceres14-compute-8 Arch=x86_64 CoresPerSocket=10
    ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
 ```
 
-## <span style="color:Blue">squeue</span>
+Sometimes, you want to know more about the job you just ran or is currently running.
 
-
-If you want to check your jobs after submission:
 ```bash
-squeue -u $USER
-             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-           2867457     short P3826e00 sivanand  R   21:50:29      1 ceres14-compute-53
-           2867458     short P6370337 sivanand  R   21:50:29      1 ceres14-compute-53
-           2867459     short Pa0567fb sivanand  R   21:50:29      1 ceres19-compute-38
-           2867456      long   Falcon sivanand  R   21:50:45      1 ceres14-compute-55
-           2867883     short       sh sivanand  R      48:03      1 ceres14-compute-64
+scontrol show job JOBID
 ```
+
+You can get the JOBID from by using the squeue command.
+
+```bash
+scontrol show job 2909617
+
+JobId=2909617 JobName=bash
+   UserId=remkv6(298590) GroupId=domain users(101) MCS_label=N/A
+   Priority=84730 Nice=0 Account=gif QOS=gif
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=0 Reboot=0 ExitCode=0:0
+   RunTime=06:58:38 TimeLimit=10:00:00 TimeMin=N/A
+   SubmitTime=2020-05-18T07:29:05 EligibleTime=2020-05-18T07:29:05
+   AccrueTime=Unknown
+   StartTime=2020-05-18T07:29:05 EndTime=2020-05-18T17:29:05 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2020-05-18T07:29:05
+   Partition=long_1node192 AllocNode:Sid=nova:71501
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=nova027
+   BatchHost=nova027
+   NumNodes=1 NumCPUs=4 NumTasks=4 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,mem=20400M,node=1
+   Socks/Node=* NtasksPerN:B:S:C=4:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryCPU=5100M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=bash
+   WorkDir=/work/gif/remkv6/Baum/04_DovetailSCNGenome/01_mikadoRerurn/01_BrakerFix/braker
+   Comment=Time 600, Med priority, overdrawn
+   Power=
+```
+
+**Hint** if you put this code at the end of your SLURM script it will output this to your standard out file after your job completes.
+
+```bash
+scontrol show job $SLURM_JOB_ID
+```
+
+
+
 
 ## <span style="color:Blue">sbatch</span>
 <span style="color:Blue">
