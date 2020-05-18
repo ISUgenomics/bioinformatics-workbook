@@ -31,6 +31,7 @@ The main SLURM user commands shown on the left give the user access to informati
 |<span style="color:Blue">sinfo</span>| Check the availability of nodes within all partitions|
 |<span style="color:Blue">scontrol</span> | See the configuration of a specific node or information about a job |
 |<span style="color:Blue">sacct</span>| Displays accounting data for all jobs |
+| <span style="color:Blue">salloc</span> | reserve an interactive node |
 
 
 
