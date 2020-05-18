@@ -39,8 +39,9 @@ The main SLURM user commands shown on the left give the user access to informati
 
 ## <span style="color:Blue">sinfo</span>
 
-To check the availability of nodes within all partitions:
-```
+Sometimes it can be difficult to get a node and you end up in the queue for a long time or you just want to test a script out before you submit and walk away to make sure that it will run well.  The easiest way to find out what nodes are available is to use the <span style="color:Blue">sinfo</span> command.
+
+```bash
 $ sinfo
 PARTITION        AVAIL  TIMELIMIT  NODES  STATE NODELIST
 debug               up    1:00:00      1  maint ceres19-compute-26
@@ -55,26 +56,61 @@ mem768-low          up    2:00:00      3   idle ceres18-mem768-0,ceres19-mem768-
 mem-low             up    2:00:00      3    mix ceres18-mem-[0-1],ceres19-mem-1
 ```
 
+SINFO provides the following information
 
-## <span style="color:Blue">sinfo</span>
-To check availability within a specific partition, in this case the partition called `short`
+
+|Definition | Description |
+| - | - |
+|PARTITION| a group of nodes |
+| AVIL | whether or not the node is up, down or in some other state|
+|TIMELIMIT| the amount of time a user can request a node in a given partition|
+| NODES | the number of nodes in a given partition |
+| STATE | maintenance, mix, idle, down, allocated |
+| NODELIST| the node names with a given STATE|
+
+With this information it is possible to find partitions that have idle nodes that could be used for a job.  Unfortunately, sinfo by itself is a bit messy so I have created an alias that formats the output to be easier to read
+
+```bash
+sinfo -o "%20P %5D %14F %10m %11l %N"
+PARTITION            NODES NODES(A/I/O/T) MEMORY     TIMELIMIT   NODELIST
+debug                3     0/3/0/3        126000+    1:00:00     ceres14-compute-4,ceres19-compute-[25-26]
+brief-low            92    33/58/1/92     381000     2:00:00     ceres18-compute-[0-27],ceres19-compute-[0-63]
+priority-gpu         1     1/0/0/1        379000     14-00:00:00 ceres18-gpu-0
+short*               100   51/48/1/100    126000+    2-00:00:00  ceres14-compute-[1-24,26-29,32-39,44-56,58-67],ceres18-compute-[24-27],ceres19-compute-[27-63]
+medium               67    49/17/1/67     126000+    7-00:00:00  ceres14-compute-[26-29,32-39,44-56,58-67],ceres18-compute-[25-27],ceres19-compute-[35-63]
+long                 34    31/3/0/34      126000+    21-00:00:00 ceres14-compute-[44-56,58-67],ceres18-compute-[26-27],ceres19-compute-[55-63]
+mem                  8     3/4/1/8        1530000+   7-00:00:00  ceres14-mem-[0-3],ceres18-mem-2,ceres19-mem-[2-4]
+mem768               1     0/1/0/1        763000     7-00:00:00  ceres18-mem768-1
+huge                 1     1/0/0/1        4:16:1   3095104    14990      1-00:00:00  fat,AVX,AVX2,AVX novahuge001
+
 ```
 
-$ sinfo -p short
-PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-short*       up 2-00:00:00      4  maint ceres14-compute-[1-3],ceres19-compute-40
-short*       up 2-00:00:00      1  down* ceres19-compute-37
-short*       up 2-00:00:00     47    mix ceres14-compute-[4-6,26-28,34-39,48-50,52-56,58-59,62,65],ceres18-compute-[24-27],ceres19-compute-[27,35-36,38-39,41-42,44-45,47,55-63]
-short*       up 2-00:00:00     16  alloc ceres14-compute-[7,29,32-33,44-47,51,60-61,63-64,66-67],ceres19-compute-28
-short*       up 2-00:00:00     32   idle ceres14-compute-[8-24],ceres19-compute-[29-34,43,46,48-54]
-      up 7-00:00:00      1   idle ceres19-mem-4
+If you edit your .bashrc file in your home directory and add this alias you can use si instead.
+
+```bash
+nano ~/.bashrc
+#add the following line
+alias si='sinfo -o "%20P %5D %14F %10m %11l %N"'
+#exit nano
+si
+debug                3     0/3/0/3        126000+    1:00:00     ceres14-compute-4,ceres19-compute-[25-26]
+brief-low            92    33/58/1/92     381000     2:00:00     ceres18-compute-[0-27],ceres19-compute-[0-63]
+priority-gpu         1     1/0/0/1        379000     14-00:00:00 ceres18-gpu-0
+short*               100   51/48/1/100    126000+    2-00:00:00  ceres14-compute-[1-24,26-29,32-39,44-56,58-67],ceres18-compute-[24-27],ceres19-compute-[27-63]
+medium               67    49/17/1/67     126000+    7-00:00:00  ceres14-compute-[26-29,32-39,44-56,58-67],ceres18-compute-[25-27],ceres19-compute-[35-63]
+long                 34    31/3/0/34      126000+    21-00:00:00 ceres14-compute-[44-56,58-67],ceres18-compute-[26-27],ceres19-compute-[55-63]
+mem                  8     3/4/1/8        1530000+   7-00:00:00  ceres14-mem-[0-3],ceres18-mem-2,ceres19-mem-[2-4]
+mem768               1     0/1/0/1        763000     7-00:00:00  ceres18-mem768-1
+huge                 1     1/0/0/1        4:16:1   3095104    14990      1-00:00:00  fat,AVX,AVX2,AVX novahuge001
 
 ```
+
+
 
 ## <span style="color:Blue">scontrol</span>
 To see the configuration of a specific node for example `ceres14-compute-8`
 
-```
+```bash
 $ scontrol show nodes ceres14-compute-8
 NodeName=ceres14-compute-8 Arch=x86_64 CoresPerSocket=10
    CPUAlloc=0 CPUTot=40 CPULoad=0.01
@@ -98,7 +134,7 @@ NodeName=ceres14-compute-8 Arch=x86_64 CoresPerSocket=10
 
 
 If you want to check your jobs after submission:
-```
+```bash
 squeue -u $USER
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            2867457     short P3826e00 sivanand  R   21:50:29      1 ceres14-compute-53
@@ -187,7 +223,8 @@ sleep.o2935316 # this is the standard output
 sleep.e2935316 # this is the std error
 ```
 Let's take a look at the std output file
-```
+
+```bash
 more sleep.o2935316
 
 JobId=2935316 JobName=sleep
@@ -237,12 +274,11 @@ This tells us that the command `ech` (deliberately mis-spelt) is not found.
 
 We could have also run the commands in the job script interactively by first reserving a node in the partion using `salloc`
 
-```
+```bash
 # this command will give 1 Node with 4 cpu in the short partitio for a time of 00 hours: 30 minutes: 00 seconds
 
 $ salloc -N 1 -n 4 -p short -t 00:30:00
-```
-```
+
 salloc: Pending job allocation 2935626
 salloc: job 2935626 queued and waiting for resources
 salloc: job 2935626 has been allocated resources
@@ -258,13 +294,13 @@ In an interactive session, we can primarily use it to run small test runs of a l
 
 We can run the commands from out job script above directly in the interactive session.
 
-```
+```bash
 sleep 10 && echo "I slept for 10 seconds"
 I slept for 10 seconds
 ```
 or
 
-```
+```bash
 sleep 20 && ech "I slept for 20 seconds"
 bash: ech: command not found
 
