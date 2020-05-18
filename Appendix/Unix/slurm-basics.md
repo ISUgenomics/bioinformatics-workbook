@@ -8,21 +8,33 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-### SLURM: Simple Linux Utility for Resource Management
-Most of the following details are as detailed in [schedmd](https://slurm.schedmd.com/overview.html
-)
-* Open source fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters.
+# Introduction to SLURM: Simple Linux Utility for Resource Management
 
+* Open source fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters.
 * HPC systems admins use this system for smooth resource distribution among various users. A user can submit jobs with specific resources to the centralized manager.
 
-### SLURM’s Three Basic functions
-* Allocates access to users for specified resources
+## The three objectives of SLURM:
 
-* Provides a framework to start, execute and monitor the job on those resources
+* Lets a user request a compute node to do an analysis (job)
+* Provides a framework (commands) to start, cancel, and monitor a job
+* Keeps track of all jobs to ensure everyone can efficiently use all computing resources without stepping on each others toes.
 
-* Manages or arbitrates resources by maintaining a queue of pending jobs
+## SLURM functions:
 
-![](assets/Slurm_components.png)
+The main SLURM user commands shown on the left give the user access to information pertaining to the super computing cluster and the ability to submit or cancel a job.  See table below for a description of the main SLURM user functions.
+
+|command | Description |
+| - | - |
+|sbatch | Submit a batch script to SLURM |
+|squeue| List all jobs currently running or in queue |
+|scancel| Cancel a job you submitted |
+|sinfo| Check the availability of nodes within all partitions|
+|scontrol | See the configuration of a specific node |
+|sacct| Displays accounting data for all jobs |
+
+
+
+<!-- ![](assets/Slurm_components.png) Photo from [schedmd](https://slurm.schedmd.com/overview.html) -->
 
 To check the availability of nodes within all partitions:
 ```
@@ -85,7 +97,7 @@ squeue -u $USER
            2867456      long   Falcon sivanand  R   21:50:45      1 ceres14-compute-55
            2867883     short       sh sivanand  R      48:03      1 ceres14-compute-64
 ```
-#### Slurm batch script: Guidelines
+## Slurm batch script: Guidelines
 
 * Number of nodes
 * Desired number of processors or jobs
@@ -98,7 +110,7 @@ squeue -u $USER
 
 ****One of the most important takeaways in this tutorial is that a job is best run on `compute nodes` and not on the `login node`.**** We generally write a batch script where we can reserve the necessary resources and then write the commands or the actual job that you want to do. Obviously this example is trivial, however in reality most jobs run by users involve atleast some component of heavy computing or memory.
 
-#### A typical Job Script
+## A typical Job Script
 * Every line in the script that begins with "##" is a comment and is a comment or an explanation*
 
 * This script invokes the unix sleep and echo commands*
@@ -243,3 +255,14 @@ sleep 20 && ech "I slept for 20 seconds"
 bash: ech: command not found
 
 ```
+
+## Additional Resources
+
+* Other Slurm tutorials
+  * [schedmd.com](https://slurm.schedmd.com/tutorials.html)
+  * [Fulton supercomputing](https://www.youtube.com/watch?v=U42qlYkzP9k&feature=player_embedded)
+
+
+## References
+
+This tutorial is a rehash of material found on [schedmd](https://slurm.schedmd.com/overview.html)

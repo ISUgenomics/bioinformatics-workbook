@@ -9,6 +9,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+## Introduction
 
 Some analyses take a long time because it is running on a single processor and there is a lot of data that needs processing.  A problem is consider **trivially parallelizable** if the data can be chunked into pieces and processed separately.  
 
