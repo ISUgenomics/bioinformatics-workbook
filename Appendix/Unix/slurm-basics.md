@@ -22,7 +22,7 @@ header:
 
 ## SLURM Commands:
 
-The main SLURM user commands shown on the left give the user access to information pertaining to the super computing cluster and the ability to submit or cancel a job.  See table below for a description of the main SLURM user functions.
+The main SLURM user commands, shown on the left, give the user access to information pertaining to the super computing cluster and the ability to submit or cancel a job.  See table below for a description of the main SLURM user functions.
 
 |command | Description |
 | - | - |
@@ -40,7 +40,7 @@ The main SLURM user commands shown on the left give the user access to informati
 
 ## <span style="color:Blue">squeue</span>
 
-The first SLURM command to learn is <span style="color:Blue">squeue</span>. It provides a list of all jobs that have been submitted to the SLURM scheduler by everyone using the supercomputer.
+The first SLURM command to learn is <span style="color:Blue">squeue</span>. It provides a list of all jobs that have been submitted to the SLURM scheduler by everyone using the supercomputer.  This command can tell you how busy a super computing resource is and if your job is running or not.
 
 ```bash
 squeue
@@ -80,7 +80,7 @@ In the above example `$USER` is your username.
 
 ## <span style="color:Blue">scancel</span>
 
-If you submitted a job and realize you need to cancel it for some reason, you would use the scancel command with the JOBID described above in <span style="color:Blue">squeue</span>
+If you submit a job and realize you need to cancel it for some reason, you will use the scancel command with the JOBID described above in <span style="color:Blue">squeue</span>
 
 ```
 scancel 2867457
@@ -93,13 +93,13 @@ This sends a signal to the SLURM schedule to stop a running job or remove a pend
 <span style="color:Blue">
 </span>
 
-The <span style="color:Blue">sbatch</span> command is the command used to submit jobs to the super computing cluster.  A job is a script that runs on computing resources.  The script contains the commands you want to run on the super computing node.
+The <span style="color:Blue">sbatch</span> command is the most important command as it is used to submit jobs to the super computing cluster.  A job is a script that runs on computing resources.  The script contains the commands you want to run on the super computing node.
 
 ```bash
 sbatch slurm.batch.sh
 ```
 
-Super easy to use once you have written the SLURM submission script.
+Super easy to use once you have written the SLURM submission script.  This is the part that many new users get stuck on but it really isn't so bad.  You just have to add a header to a text file that has your commands in it.
 
 ## SLURM batch script: Guidelines
 
@@ -114,7 +114,7 @@ The SLURM script contains a header with a SLURM SBATCH comment `#SBATCH`.  These
 * Name for your job while running on HPC
 * Email ID to get job status (Optional)
 
-Here is a table example of the description for the #SBATCH comments
+Here is a table descriptions for the most commonly used #SBATCH comments
 
 | SBATCH command | Description|
 | -- | -- |
@@ -131,16 +131,20 @@ Here is a table example of the description for the #SBATCH comments
 
 
 
-****One of the most important takeaways in this tutorial is that a job is best run on `compute nodes` and not on the `login node`.**** We generally write a batch script where we can reserve the necessary resources and then write the commands or the actual job that you want to do. Obviously this example is trivial, however in reality most jobs run by users involve at least some component of heavy computing or memory. It is poor etiquette to do any intensive computing on the `headnode` as it slows everyone down sometimes to the point where no one can use the `ls` command.
+#### **Super computing etiquette**
+
+One of the most important takeaways in this tutorial is that a job is best run on `compute nodes` and not on the `login node`. We generally write a batch script where we can reserve the necessary resources and then write the commands or the actual job that you want to do. Obviously this example is trivial, however in reality most jobs run by users involve at least some component of heavy computing or memory. It is poor etiquette to do any intensive computing on the `headnode` as it slows everyone down sometimes to the point where no one can use the `ls` command.
 
 ## Writing a SLURM job script
 
-A SLURM job script contains two components:
+Now that you know a little more about #SBATCH comments, A SLURM job script is straight forward to write and contains two components:
 
   * SLURM header with #SBATCH comments that define the resources you need
   * The commands you want to run
 
 ### SLURM header
+
+once you write this once, you could reuse it for other scripts you need by modifying the #SBATCH comments according to your need.
 
 ```bash
 #!/bin/bash
@@ -163,6 +167,8 @@ cd $SLURM_SUBMIT_DIR  # this line changes you into the directory you submitted t
 ```
 
 ### Commands you want to run
+
+In this example we will be taking advantage of the sleep command.
 
 ```
 ## The following lines are the commands that you want to run
@@ -195,7 +201,7 @@ squeue -u $USER
            2935316     short    sleep sivanand  R       0:04      1 ceres14-compute-34
 ```
 
-****Notes****:                                              . We are using the `-u` option for `squeue` and supplying the variable `$USER`, which referes to your ****user name****. We notice that the job, ****sleep****, is running on the node `ceres14-compute-34` in the `short` partition and has a job ID `2935316`.
+**Notes**:  We are using the `-u` option for `squeue` and supplying the variable `$USER`, which referes to your ****user name****. We notice that the job, ****sleep****, is running on the node `ceres14-compute-34` in the `short` partition and has a job ID `2935316`.
 
 Once the job is completed the following files appear
 
@@ -253,7 +259,7 @@ This tells us that the command `ech` (deliberately mis-spelt) is not found.
 
 ## <span style="color:Blue">sinfo</span>
 
-Sometimes it can be difficult to get a node and you end up in the queue for a long time or you just want to test a script out before you submit and walk away to make sure that it will run well.  The easiest way to find out what nodes are available is to use the <span style="color:Blue">sinfo</span> command.
+Sometimes it can be difficult to get a node and you end up in the SLURM queue for a long time or you just want to test a script out before you submit and walk away to make sure that it will run well.  The easiest way to find out what nodes are available is to use the <span style="color:Blue">sinfo</span> command.
 
 ```bash
 $ sinfo
@@ -282,7 +288,7 @@ SINFO provides the following information
 | STATE | maintenance, mix, idle, down, allocated |
 | NODELIST| the node names with a given STATE|
 
-With this information it is possible to find partitions that have idle nodes that could be used for a job.  Unfortunately, sinfo by itself is a bit messy so I have created an alias that formats the output to be easier to read
+With this information it is possible to find partitions that have idle nodes that could be used for a job.  Unfortunately, <span style="color:Blue">sinfo</span> by itself is a bit messy so I have created an alias that formats the output to be easier to read
 
 ```bash
 sinfo -o "%20P %5D %14F %10m %11l %N"
