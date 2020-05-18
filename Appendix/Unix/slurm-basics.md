@@ -73,6 +73,20 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            2867883     short       sh sivanand  R      48:03      1 ceres14-compute-64
 ```
 
+In the above example `$USER` is your username.
+
+
+## <span style="color:Blue">scancel</span>
+
+If you submitted a job and realize you need to cancel it for some reason, you would use the scancel command with the JOBID described above in <span style="color:Blue">squeue</span>
+
+```
+scancel 2867457
+```
+
+This sends a signal to the SLURM schedule to stop a running job or remove a pending job from the SLURM queue.
+
+
 
 
 ## <span style="color:Blue">sinfo</span>
