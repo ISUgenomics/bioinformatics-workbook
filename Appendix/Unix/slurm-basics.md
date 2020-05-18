@@ -2,6 +2,7 @@
 title: "Slurm Basics"
 layout: single
 author: Siva Chudalayandi
+author1: Andrew Severin
 author_profile: true
 header:
   overlay_color: "444444"
@@ -176,19 +177,19 @@ scontrol show job $SLURM_JOB_ID
 ## scontrol above is a slurm command to view the slurm configuration or state. It is useful to see how much of the resources you have used.
 ```
 
-### copy the SLURM header and the Sleep commands into a new file name
+### Copy the "SLURM header" and the "Commands you want to run" into a new file
 
 * save the job script as `slurm.batch.sh`
 
 This script can be submitted as follows:
 
-```
+```bash
 sbatch slurm.batch.sh
 ```
 
 This job will at least run for 1-2 mins, so soon after submitting you can actually issue commands to see the job run.
 
-```
+```bash
 squeue -u $USER
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            2935316     short    sleep sivanand  R       0:04      1 ceres14-compute-34
@@ -197,7 +198,8 @@ squeue -u $USER
 ****Notes****:                                              . We are using the `-u` option for `squeue` and supplying the variable `$USER`, which referes to your ****user name****. We notice that the job, ****sleep****, is running on the node `ceres14-compute-34` in the `short` partition and has a job ID `2935316`.
 
 Once the job is completed the following files appear
-```
+
+```bash
 sleep.o2935316 # this is the standard output where 2935316 is the JOBID
 sleep.e2935316 # this is the standard error where 2935316 is the JOBID
 ```
@@ -243,7 +245,7 @@ JobId=2935316 JobName=sleep
 
 Additionally, the error file `sleep.e2935316`:
 
-```
+```bash
 more sleep.e2935316
 /var/spool/slurmd/job2935316/slurm_script: line 16: ech: command not found
 ```
@@ -436,3 +438,10 @@ bash: ech: command not found
 ## References
 
 This tutorial is a rehash of material found on [schedmd](https://slurm.schedmd.com/overview.html)
+
+## Those useful aliases you wanted to put in your `~/.bashrc` file.
+
+```bash
+alias si='sinfo -o "%20P %5D %14F %10m %11l %N"'
+alias sq='squeue -o "%8i %12j %4t %10u %20q %20a %10g %20P %10Q %5D %11l %11L %R"'
+```
