@@ -38,11 +38,34 @@ The main SLURM user commands shown on the left give the user access to informati
 
 ## <span style="color:Blue">squeue</span>
 
+The first SLURM command to learn is <span style="color:Blue">squeue</span>. It provides a list of all jobs that have been submitted to the SLURM scheduler by everyone using the supercomputer.
 
-If you want to check your jobs after submission:
+```bash
+squeue
+
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+        2910274 long_1nod porechop  severin  PD   3:30:32      1 (Nodes required for job are DOWN, Drained or reserved)
+        2910262 long_1nod       sh  severin  R    4:01:00      1 nova013
+        2909617 long_1nod     bash   remkv6  R    7:13:38      1 nova027
+```
+
+
+| Header column | Definition |
+| - | - |
+| JOBID | The ID that job has been given, usually a large number |
+| PARTITION| the partition assigned to a given job |
+| NAME | the name provided to SLURM by the user for this job |
+| USER | The name of the user who submitted the job |
+| ST | The state of the job, running(R), PenDing(PD)|
+| NODES | number of nodes requested |
+|NODELIST(REASON)| which node(s) is the job running on or the reason why is it not running)
+
+This can be a really long list especially if you only want to see your own jobs.  To do that you can specify a user using the '-u' parameter.
+
 ```bash
 squeue -u $USER
-             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            2867457     short P3826e00 sivanand  R   21:50:29      1 ceres14-compute-53
            2867458     short P6370337 sivanand  R   21:50:29      1 ceres14-compute-53
            2867459     short Pa0567fb sivanand  R   21:50:29      1 ceres19-compute-38
