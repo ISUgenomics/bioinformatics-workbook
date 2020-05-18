@@ -88,7 +88,166 @@ scancel 2867457
 This sends a signal to the SLURM schedule to stop a running job or remove a pending job from the SLURM queue.
 
 
+## <span style="color:Blue">sbatch</span>
+<span style="color:Blue">
+</span>
 
+The <span style="color:Blue">sbatch</span> command is the command used to submit jobs to the super computing cluster.  A job is a script that runs on computing resources.  The script contains the commands you want to run on the super computing node.
+
+```bash
+sbatch slurm.batch.sh
+```
+
+Super easy to use once you have written the SLURM submission script.
+
+## SLURM batch script: Guidelines
+
+The SLURM script contains a header with a SLURM SBATCH comment `#SBATCH`.  These comments tell the SLURM schedule the following information.
+
+* Number of nodes
+* Desired number of processors or jobs
+* Type of partition/queue you want to use (optional)
+* Memory requirement (Optional)
+* Length of time you want to run the job (Each partition has a default)
+* Where to write output and error files
+* Name for your job while running on HPC
+* Email ID to get job status (Optional)
+
+Here is a table example of the description for the #SBATCH comments
+
+| SBATCH command | Description|
+| -- | -- |
+| #SBATCH -N 1 | Reserve a single node |
+| #SBATCH -n 4 | The job steps will launch a max of 4 jobs|
+| #SBATCH -p short|Reserve in the short partition|
+| #SBATCH -t 01:00:00| Reserve for 01 hour:00 minutes:00 seconds|
+| #SBATCH -J sleep|the name of the job is "sleep"|
+| #SBATCH -o sleep.o%j| write any std output to a file named sleep.o%j where %j is automatically replaced with the jobid|
+| #SBATCH -e sleep.e%j| write any std output to a file named sleep.e%j where %j is automatically replaced with the jobid|
+| #SBATCH --mail-user=user@domain.edu| Notify me at this email address|
+| #SBATCH --mail-type=begin| Notify by email when the job begins|
+| #SBATCH --mail-type=end| Notify by email when the job ends|
+
+
+
+****One of the most important takeaways in this tutorial is that a job is best run on `compute nodes` and not on the `login node`.**** We generally write a batch script where we can reserve the necessary resources and then write the commands or the actual job that you want to do. Obviously this example is trivial, however in reality most jobs run by users involve at least some component of heavy computing or memory. It is poor etiquette to do any intensive computing on the `headnode` as it slows everyone down sometimes to the point where no one can use the `ls` command.
+
+## Writing a SLURM job script
+
+A SLURM job script contains two components:
+
+  * SLURM header with #SBATCH comments that define the resources you need
+  * The commands you want to run
+
+### SLURM header
+
+```bash
+#!/bin/bash
+##The shebang line or the absolute path to the bash interpreter
+
+## All the lines below that start with a single `#SBATCH` is a SLURM SBATCH comment
+
+#SBATCH -N 1
+#SBATCH -n 4
+#SBATCH -p short
+#SBATCH -t 01:00:00
+#SBATCH -J sleep
+#SBATCH -o sleep.o%j
+#SBATCH -e sleep.e%j
+#SBATCH --mail-user=user@domain.edu
+#SBATCH --mail-type=begin
+#SBATCH --mail-type=end
+
+cd $SLURM_SUBMIT_DIR  # this line changes you into the directory you submitted the script once the job starts
+```
+
+### Commands you want to run
+
+```
+## The following lines are the commands that you want to run
+
+
+sleep 10 && echo "I slept for 10 seconds"
+sleep 20 && ech "I slept for 20 seconds"
+## Note in the above line, I deliberately mis spelt `ech`; this would cause a std error to be output
+sleep 60 && echo "I slept for 1 min"
+
+scontrol show job $SLURM_JOB_ID
+## scontrol above is a slurm command to view the slurm configuration or state. It is useful to see how much of the resources you have used.
+```
+
+### copy the SLURM header and the Sleep commands into a new file name
+
+* save the job script as `slurm.batch.sh`
+
+This script can be submitted as follows:
+
+```
+sbatch slurm.batch.sh
+```
+
+This job will at least run for 1-2 mins, so soon after submitting you can actually issue commands to see the job run.
+
+```
+squeue -u $USER
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           2935316     short    sleep sivanand  R       0:04      1 ceres14-compute-34
+```
+
+****Notes****:                                              . We are using the `-u` option for `squeue` and supplying the variable `$USER`, which referes to your ****user name****. We notice that the job, ****sleep****, is running on the node `ceres14-compute-34` in the `short` partition and has a job ID `2935316`.
+
+Once the job is completed the following files appear
+```
+sleep.o2935316 # this is the standard output where 2935316 is the JOBID
+sleep.e2935316 # this is the standard error where 2935316 is the JOBID
+```
+
+Let's take a look at the standard output file
+
+```bash
+more sleep.o2935316
+
+I slept for 10 seconds
+I slept for 1 min
+
+JobId=2935316 JobName=sleep
+   UserId=sivanandan.chudalayandi(1727000561) GroupId=sivanandan.chudalayandi(1727000561) MCS_label=N/A
+   Priority=213721 Nice=0 Account=scinet QOS=memlimit
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:01 TimeLimit=01:00:00 TimeMin=N/A
+   SubmitTime=2020-05-18T10:40:25 EligibleTime=2020-05-18T10:40:26
+   AccrueTime=2020-05-18T10:40:26
+   StartTime=2020-05-18T10:40:26 EndTime=2020-05-18T11:40:26 Deadline=N/A
+   PreemptEligibleTime=2020-05-18T10:40:26 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2020-05-18T10:40:26
+   Partition=short AllocNode:Sid=ceres19-ipa-0:39699
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=ceres14-compute-34
+   BatchHost=ceres14-compute-34
+   NumNodes=1 NumCPUs=4 NumTasks=4 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,mem=12400M,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryCPU=3100M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/project/isu_gif_vrsc/Siva/Service/Slurm/slurm.batch.sh
+   WorkDir=/project/isu_gif_vrsc/Siva/Service/Slurm
+   StdErr=/project/isu_gif_vrsc/Siva/Service/Slurm/sleep.e2935316
+   StdIn=/dev/null
+   StdOut=/project/isu_gif_vrsc/Siva/Service/Slurm/sleep.o2935316
+   Power=
+
+```
+****Note****: the line starting with `JobID` through `Power=` is the slurm configuration and state (`scontrol`) and gives you an idea of how many resources you have used as mentioned before. The last two lines are directly from our `echo` command in the script.
+
+Additionally, the error file `sleep.e2935316`:
+
+```
+more sleep.e2935316
+/var/spool/slurmd/job2935316/slurm_script: line 16: ech: command not found
+```
+This tells us that the command `ech` (deliberately mis-spelt) is not found.
 
 ## <span style="color:Blue">sinfo</span>
 
