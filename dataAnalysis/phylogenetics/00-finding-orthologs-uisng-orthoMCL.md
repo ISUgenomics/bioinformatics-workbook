@@ -450,3 +450,7 @@ ExtractSeq.sh -o orhtogroups named_groups_1.5_scos.txt  goodProteins.fasta
 ```
 
 This will create a folder named `orhtogroups`, with 3,329 files each containing 13 sequences. This will be the results from this chapter that we will use in the next excercise of tree reconstruction.
+
+## More information
+
+* Li, L., Stoeckert, C.J. and Roos, D.S., 2003. [OrthoMCL: identification of ortholog groups for eukaryotic genomes](https://pubmed.ncbi.nlm.nih.gov/12952885). Genome research, 13(9), pp.2178-2189.

@@ -29,3 +29,4 @@ There are four programs in blast that you can choose from.
 ## More information
 
 * [Online BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi)
+* Altschul, S.F., Gish, W., Miller, W., Myers, E.W. and Lipman, D.J., 1990. [Basic local alignment search tool](https://pubmed.ncbi.nlm.nih.gov/2231712). Journal of molecular biology, 215(3), pp.403-410.
