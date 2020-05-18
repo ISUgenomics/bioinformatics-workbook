@@ -17,7 +17,7 @@ header:
 ### Andrew Severin
 
 ![Andrew](../assets/images/people/Andrew.png){: .align-left}
-Andrew Severin is the manager of the Genome Informatics Facility. He assumed the position of manager of the new facility on September 1, 2011. He is an interdisciplinary scientist, working at the interface of genetics and bioinformatics. He earned his Ph.D. from Iowa State University in 2009.
+Andrew Severin is the manager of the Genome Informatics Facility. My group works at the interface between genetics and bioinformatics translating big data into informative data for interesting biological questions. I work with a wide variety of organisms from viruses, mycoplasmas and bacteria to soybean, maize, Arabidopsis, potato, nematode, pig, painted turtle, bees, wasps, zebrafish, abalone and yellowtailtuna. My broader research interests include understanding how a genome relates to a phenotype from a systems biology approach and comparative genomics.  The first step in this process has been the main focus for the last few years, which is the ability to create genomic resources for comparison (assembly, annotation, visualization) of many related organisms
 
 
 ### Sivanandan Chudalayandi
