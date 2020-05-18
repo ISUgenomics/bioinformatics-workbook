@@ -111,10 +111,10 @@ mem-low             up    2:00:00      3    mix ceres18-mem-[0-1],ceres19-mem-1
 SINFO provides the following information
 
 
-|Definition | Description |
+| Header column | Definition |
 | - | - |
 |PARTITION| a group of nodes |
-| AVIL | whether or not the node is up, down or in some other state|
+| AVAIL | whether or not the node is up, down or in some other state|
 |TIMELIMIT| the amount of time a user can request a node in a given partition|
 | NODES | the number of nodes in a given partition |
 | STATE | maintenance, mix, idle, down, allocated |
