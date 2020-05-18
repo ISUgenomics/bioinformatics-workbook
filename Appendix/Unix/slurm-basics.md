@@ -74,7 +74,7 @@ NodeName=ceres14-compute-8 Arch=x86_64 CoresPerSocket=10
    ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
 ```
 
-```
+
 If you want to check your jobs after submission:
 ```
 squeue -u $USER
@@ -84,7 +84,7 @@ squeue -u $USER
            2867459     short Pa0567fb sivanand  R   21:50:29      1 ceres19-compute-38
            2867456      long   Falcon sivanand  R   21:50:45      1 ceres14-compute-55
            2867883     short       sh sivanand  R      48:03      1 ceres14-compute-64
-
+```
 #### Slurm batch script: Guidelines
 
 * Number of nodes
