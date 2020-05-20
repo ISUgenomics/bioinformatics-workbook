@@ -1,5 +1,5 @@
 ---
-title: "Slurm Basics"
+title: "Introduction to Job Scheduling: SLURM"
 layout: single
 author: Siva Chudalayandi
 author1: Andrew Severin
