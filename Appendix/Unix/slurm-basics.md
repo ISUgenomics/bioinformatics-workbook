@@ -358,7 +358,7 @@ Sometimes, you want to know more about the job you just ran or is currently runn
 scontrol show job JOBID
 ```
 
-You can get the JOBID from by using the squeue command.
+You can get the JOBID from the output of the squeue command
 
 ```bash
 scontrol show job 2909617
@@ -393,6 +393,37 @@ JobId=2909617 JobName=bash
 
 ```bash
 scontrol show job $SLURM_JOB_ID
+```
+
+## sacct
+
+This command provides useful accounting information about submitted jobs.
+
+| Column | Description |
+| - | - |
+|JobID| Job ID number |
+|JobName| Name of the Job|
+|Partition | What partition of the SLURM queue is it running or queued for|
+|Account | Which account/group is it running on |
+|AllocCPUS|  Number of CPUs allocated/requested|
+|State ExitCode | State of job or exit code|
+
+
+By itself this command will only give you information about your jobs
+```
+sacct
+```
+
+Adding the `-a` parameter will provide information about all accounts.
+
+```
+sacct -a
+```
+
+And there is a format option that can give more useful column information.
+
+```
+sacct -a --format JobID,Partition,Timelimit,Start,Elapsed,NodeList%20,ExitCode,ReqMem,MaxRSS,MaxVMSize,AllocCPUS
 ```
 
 
@@ -450,4 +481,5 @@ This tutorial is a rehash of material found on [schedmd](https://slurm.schedmd.c
 ```bash
 alias si='sinfo -o "%20P %5D %14F %10m %11l %N"'
 alias sq='squeue -o "%8i %12j %4t %10u %20q %20a %10g %20P %10Q %5D %11l %11L %R"'
+alias sacct='sacct --format JobID,Partition,Timelimit,Start,Elapsed,NodeList%20,ExitCode,ReqMem,MaxRSS,MaxVMSize,AllocCPUS'
 ```
