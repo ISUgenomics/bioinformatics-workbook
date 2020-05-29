@@ -9,7 +9,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-## Introduction
+# Introduction
 
 Some analyses take a long time because it is running on a single processor and there is a lot of data that needs processing.  A problem is consider **trivially parallelizable** if the data can be chunked into pieces and processed separately.  
 
@@ -122,7 +122,9 @@ cp *.tab gzip/forloop
 #### Gzip using a for loop
 We can do this using a for loop as follows.
 
+* GNU-parallel/gzip/forloop
 ```
+cd gzip/forloop
 time for f in *.tab; do gzip $f; done
 real    0m15.801s
 user    0m1.414s
@@ -134,12 +136,15 @@ sys     0m5.045s
 However, we can make better use of all the available CPUs by using GNU parallel. The anatomy of the function is
 
 * `parallel` command
-* `-j10` number of jobs or cpus to use for processing
+* `-j10` number of jobs or cpus to use for processing.  Here we are using 10 cpus.
 * `"command"` in this case `gzip {}` where `{}` is a place holder for substituting a list of files defined after the delimiter
 * ':::' the delimiter
 * `*.tab` the list of files using the `*` operator for any file that ends in tab
 
+* GNU-parallel/gzip/parallel
+
 ```
+cd ../parallel
 time parallel -j10 "gzip {}" ::: *.tab
 
 real    0m6.405s
@@ -147,7 +152,7 @@ user    0m6.872s
 sys     0m11.623s
 ```
 
-As you can see this sped up the gziping command by a factor of 2.3.
+As you can see this sped up the gziping command by a factor of 2.3.  This may vary depending on the number of cpus you have and their speed.
 
 Here is how you can unzip all the files in parallel It takes about the same amount of time.
 ```
@@ -158,6 +163,10 @@ user    0m0.376s
 sys     0m1.367s
 
 ```
+If you want to unzip them you can run this command
+```
+time parallel -j10 "gunzip {}" ::: *.tab.gz
+```
 
 ### Example 2) listing all the files using `ls`
 
@@ -166,7 +175,10 @@ sys     0m1.367s
 
 Interestingly, this is about the same amount of time it takes to run a simple ls command on each file using parallel.  `ls` is a simple command and shouldn't take very long to run in parallel.
 
+* GNU-parallel
+
 ```
+cd ../..
 time parallel -j10 "ls {}" ::: *.tab > /dev/null
 
 real    0m5.955s
@@ -179,7 +191,7 @@ Above, I am redirecting the output to the null device so It doesn't print it to 
 However, if we add the `-X` parameter it finishes in a fraction of the time.
 
 ```
-time parallel -X -j10 "ls {}" ::: *.gz > /dev/null
+time parallel -X -j10 "ls {}" ::: *.tab > /dev/null
 
 real    0m0.333s
 user    0m0.210s
@@ -208,6 +220,8 @@ real    0m5.438s
 user    0m0.492s
 sys     0m1.398s
 ```
+
+Some of the difference may be due to IO speed writing to a JBOD on your HPC.  You may get improved results if you are running this example on local scratch space on a node or are testing this on your local laptop.
 
 
 
@@ -259,16 +273,9 @@ wget https://www.arabidopsis.org/download_files/Genes/TAIR10_genome_release/TAIR
 ```
 module load bowtie2
 
+# this next command will build a bowtie2 database named tair
 bowtie2-build  TAIR10_chr_all.fas tair
 ```
-
-```
-parallel -j2 "bowtie2 --threads 4 -x tair -k1 -q -1 {1} -2 {2} -S {1/.}.sam >& {1/.}.log" ::: *_1.fastq :::+ *_2.fastq
-```
-
-
-
-
 
 the genome index is located in a directory called `bwt_index`
 
@@ -276,24 +283,22 @@ We decide to write the output SAM and log files to <out_dir>.
 
 We can design a bash script with the bowtie2 command for each pair separately . Obviously if dealing with hundreds of files this could become cumbersome.
 
-```
+```bash
 module load bowtie2
-bowtie2 --threads 4 -x <bwt_index> -k1 -q -1 first_R1.fq.gz -2 first_R2.fq.gz -S <out_dir>/first_R1.sam >& <out_dir>/first.log
+bowtie2 --threads 4 -x tair -k1 -q -1 SRR4420293_1.fastq.gz -2 SRR4420293_2.fastq.gz -S first_R1.sam >& first.log
 ..........................
-..........................
-bowtie2 --threads 4 -x <bwt_index> -k1 -q -1 fifth_R1.fq.gz -2 fifth_R2.fq.gz -S <out_dir>/fifth_R1.sam >& <out_dir>/fifth.log
+bowtie2 --threads 4 -x tair -k1 -q -1 SRR4420295_1.fastq.gz -2 SRR4420295_2.fastq.gz -S fifth_R1.sam >& third.log
 
 ```
 
 GNU parallel let's us automate this task by using a combination of `substitution` and `separators` notably `:::` and `:::+`. We can also make optimum use of the available threads.
 
-```
+```bash
 module load bowtie2
-parallel -j2 "bowtie2 --threads 4 -x <bwt_index> -k1 -q -1 {1} -2 {2} -S <out_dir>/{1/.}.sam >& <out_dir?/{1/.}.log" ::: reads_dir/*R1*gz :::+ reads_dir/*R2*gz
+time parallel -j2 "bowtie2 --threads 4 -x tair -k1 -q -1 {1} -2 {2} -S {1/.}.sam >& {1/.}.log" ::: fastqfiles/*_1.fastq.gz :::+ fastqfiles/*_2.fastq.gz
 ```
 
-
-
+You may have also noticed some new syntax where we are using {1}, {2}, {1/.} and {2/.}.  The {1} will give us the first file and {2} the second from the list taking two at a time.  The {1/.} and {2/.} will take the prefix of the file name before the "."
 
 
 
@@ -301,6 +306,17 @@ parallel -j2 "bowtie2 --threads 4 -x <bwt_index> -k1 -q -1 {1} -2 {2} -S <out_di
 ****III) Splitting a big job to make use of all the available cpus****
 
 Lets assume we have a large file `test.fa`. Our aim is simply to count the lines in the fasta file.
+
+You can download this example trinity file like this.
+
+* GNU-parallel
+
+```
+mkdir trinity
+cd trinity
+wget www.bioinformaticsworkbook.org/Appendix/GNUparallel/test.fa
+```
+
 ```
 head test.fa
 
@@ -394,15 +410,8 @@ sys	0m0.003s
 
 Notice we use less time with each block being counted by each cpu. The longest time in this case is `0.026 seconds` compared to `1.237 seconds` when not making use of parallel.
 
-****A relevant Bioinformatics example****             
-We have seen above how we can use GNU parallel to take advantage of available computing power. We can use this to our advantage in performing blast searches of e.g, `test.fa` that we have seen above. We can separate the input fasta file into various chunks (say `size of 1024K`) based on any defined record separators/starter (`--recstart`) in this case `>`, i.e the fasta header then use `--pipe` to read from std input and spread the job to the available cpus.
 
-```
-cat test.fa | parallel --block 1024k --recstart '>' --pipe blastp -evalue 0.01 -outfmt 6 -db <nr> -query - > blast_results
-```
 
- The alternative of this command by using the faster `--pipepart` is as follows (*note: we can use the -a argument to directly read from the file*):
+# Example 4: Parallel Blast
 
- ```
- parallel -a test.fa --pipepart --block 1024k --recstart '>' blastp -evalue 0.01 -outfmt 6 -db <nr> -query - > blast_results
- ```
+See [Running NCBI-BLAST jobs in parallel](https://bioinformaticsworkbook.org/dataAnalysis/blast/running-blast-jobs-in-parallel.html)
