@@ -1,5 +1,5 @@
 ---
-title: Genome Assembly
+title: Genome Scaffolding with pyScaf
 layout: single
 author: Rick Masonbrink
 author_profile: true
@@ -8,7 +8,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Pyscaf is a genome scaffolding program that can scaffold assemblies based on synteny, long reads, and short reads.
+# [Pyscaf](https://github.com/lpryszcz/pyScaf) is a genome scaffolding program that can scaffold assemblies based on synteny, long reads, and short reads.
 
 Dependencies: Python 2.7,python FastaIndex, py-pillow, LAST assembler
 
@@ -348,5 +348,9 @@ So 108 scaffolds put into chromosome 1, 81 into chromosome 2, 43 into chromosome
 
 
 ---
+
+## Further reading
+
+* [Pyscaf github repo](https://github.com/lpryszcz/pyScaf)
 
 * [Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)
