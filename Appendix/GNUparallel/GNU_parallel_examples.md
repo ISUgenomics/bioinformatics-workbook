@@ -410,8 +410,12 @@ sys	0m0.003s
 
 Notice we use less time with each block being counted by each cpu. The longest time in this case is `0.026 seconds` compared to `1.237 seconds` when not making use of parallel.
 
+## other parameters of interest
 
+```
+--joblog  A logfile of the jobs completed so far
+```
 
-# Example 4: Parallel Blast
+## Example 4: Parallel Blast
 
 See [Running NCBI-BLAST jobs in parallel](https://bioinformaticsworkbook.org/dataAnalysis/blast/running-blast-jobs-in-parallel.html)
