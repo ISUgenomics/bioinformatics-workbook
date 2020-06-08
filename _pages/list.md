@@ -11,8 +11,8 @@ header:
 ### [Command Line Basics and Useful Programs](https://isugenomics.github.io/bioinformatics-workbook/Appendix/programs)
 * <span style="color:lightblue">Introduction to Unix</span>
   * [Unix Basics 1](../Appendix/Unix/unix-basics-1.md)  
-  * [Introduction to Job Scheduling: SLURM](Unix/01_slurm-basics.md)
-  * [Introduction to GNU parallel](GNUparallel/GNU_parallel_examples.md)
+  * [Introduction to Job Scheduling: SLURM](../Appendix/Unix/01_slurm-basics.md)
+  * [Introduction to GNU parallel](../Appendix/GNUparallel/GNU_parallel_examples.md)
   * [Introduction to HPC](../Appendix/Unix/unix-basics-6HPC.md)
   * [Unix Admin commands](../Appendix/Unix/unix-basics-2admin.md)
   * [Grep](../Appendix/Unix/unix-basics-3grep.md)
