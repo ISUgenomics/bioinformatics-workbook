@@ -16,6 +16,7 @@ header:
 * <span style="color:lightblue">Introduction to Unix</span>
   * [Unix Basics 1](Unix/unix-basics-1.md)
   * [Introduction to Job Scheduling: SLURM](Unix/01_slurm-basics.md)
+  * [Introduction to GNU parallel](GNUparallel/GNU_parallel_examples.md)
   * [Introduction to HPC](Unix/unix-basics-6HPC.md)
   * [Unix Admin commands](Unix/unix-basics-2admin.md)
   * [Grep](Unix/unix-basics-3grep.md)
