@@ -475,7 +475,8 @@ it will lead to distortion of the linkage maps, especially by expanding the map 
 
 ```r
 library("LinkageMapView")
-carrot <- read.csv("results_onemap.txt", sep=",", stringsAsFactors=TRUE, header=TRUE)
+carrot <- read.csv("results_onemap.txt", sep=" ", stringsAsFactors=TRUE, header=FALSE)
+carrot <- carrot[c("V1", "V3", "V2")]
 maxpos <- "687.023775181122"
 at.axis <- seq(0, maxpos)
 axlab <- vector()
@@ -495,9 +496,11 @@ lmv.linkage.plot(carrot, outfile, denmap=TRUE, cex.axis = 1, at.axis = at.axis, 
 ![density-maps](assets/CML247-density.png)
 
 
-# References
+# References & Acknowledgements
 
-
+* R/QTL Program
+* LinkageMapView
+* Joshua Havill, UMN, St. Paul, MN 55108
 ---
 
 * [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
