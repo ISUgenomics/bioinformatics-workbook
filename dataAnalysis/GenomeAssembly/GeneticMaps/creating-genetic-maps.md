@@ -498,9 +498,11 @@ lmv.linkage.plot(carrot, outfile, denmap=TRUE, cex.axis = 1, at.axis = at.axis, 
 
 # References & Acknowledgements
 
-* R/QTL Program
-* LinkageMapView
-* Joshua Havill, UMN, St. Paul, MN 55108
+1. R/QTL Program
+2. LinkageMapView
+3. Joshua Havill, UMN, St. Paul, MN 55108
+
+
 ---
 
 * [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
