@@ -8,7 +8,7 @@ header:
 
 # Downloading files using wget
 
-Wget is short for World Wide Web get and is used on the command line to download a file from a website or webserver.
+[Wget](https://en.wikipedia.org/wiki/Wget) is short for World Wide Web get and is used on the command line to download a file from a website or webserver.
 
 ## Learning Objective
 Upon completion of this section the learner will be able to:
@@ -21,11 +21,13 @@ Upon completion of this section the learner will be able to:
 
 Here is a generic example of how to use wget
 to download a file.
+
 ```
 wget http://link.edu/filename
 ```
 
 A are a couple of specific Examples
+
 *  Photo of a kitten in Rizal Park
 *  Photo of Arabidopsis
 
@@ -40,6 +42,7 @@ Sometimes you may find a need to download an entire directory of files and downl
 
 There are 2 options. You can either specify a regular expression for a file or put a regular expression in the URL itself.
 First option is useful, when there are large number of files in a directory, but you want to get only specific format of files (eg., fasta)
+
 ```
 wget -r --no-parent -A 'bar.*.tar.gz' http://url/dir/
 ```
@@ -56,7 +59,12 @@ Some times, if you have a series of files to download (and are numbered accordin
 
 ```
 wget http://localhost/file_{1..5}.txt
-# this will download file_1.txt, file_2.txt, file_3.txt, file_4.txt and file_5.txt
+# this will download 
+# |_ file_1.txt
+# |_ file_2.txt
+# |_ file_3.txt
+# |_ file_4.txt
+# |_ file_5.txt
 ```
 
 To archive the entire website (yes, every single file of that domain), you can use the mirror option.

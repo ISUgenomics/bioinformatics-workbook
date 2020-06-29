@@ -29,29 +29,25 @@ tar xf package.tar.gz
 But to be specific you can:
 
 ```
-# Files having *.tar.bz2 extension
-tar xvjf package.tar.bz2
-# Files having *.tar.gz extension
-tar xvzf package.tar.gz
-# Files having *.bz2 extension
-bunzip2 package.bz2
-# Files having *.rar extension
-unrar x package.rar
-# Files having *.gz extension
-gunzip package.gz
-# Files having *.tar extension
-tar xvf package.tar
-# Files having *.tbz2 extension
-tar xvjf package.tbz2
-# Files having *.tgz extension
-tar xvzf package.tgz
-# Files having *.zip extension
-unzip package.zip
-# Files having *.Z extension
-uncompress package.Z
-# Files having *.7z extension
-7z x package.7z
+# Pick a decompression command based on file extension:
+
+# === Use Tar
+tar xvjf package.tar.bz2       # Files having *.tar.bz2 extension
+tar xvzf package.tar.gz        # Files having *.tar.gz extension
+tar xvf package.tar            # Files having *.tar extension
+tar xvjf package.tbz2          # Files having *.tbz2 extension
+tar xvzf package.tgz           # Files having *.tgz extension
+
+# === Use other program
+bunzip2 package.bz2            # Files having *.bz2 extension
+gunzip package.gz              # Files having *.gz extension
+
+unzip package.zip              # Files having *.zip extension
+unrar x package.rar            # Files having *.rar extension
+uncompress package.Z           # Files having *.Z extension
+7z x package.7z                # Files having *.7z extension
 ```
+
 Once de-compressed, proceed with installation, depending on what type of package you are installing.
 
 ### Regular Linux packages
@@ -59,6 +55,7 @@ Once de-compressed, proceed with installation, depending on what type of package
 #### Standard approach
 
 Many `Linux/UNIX` programs comes with a standard set of files that lets you install programs with ease. After unpacking, if you see `configure` file in unpacked directory, use this approach.
+
 ```
 ./configure --prefix=/group/accessible/location/packagename
 # once complete you'll see 'Makefile' in that directory
@@ -66,14 +63,19 @@ make # reads instructions from 'Makefile' and builds executable programs
 make check # not needed, but helps in troubleshooting
 make install # installs program using 'Makefile' directions
 ```
+
 In case if something goes wrong or you get an error saying that you need `package x` before installing, then you can undo these steps before attempting installation again.
+
 ```
 make clean
 ```
+
 If the program doesn't work as intended or something goes wrong after installation, many programs can be safely uninstalled
+
 ```
 make uninstall
 ```
+
 Note that all of these options are not supported by all makefiles so your mileage may vary. It is also good idea to run all the above command in a `build` directroy inside the package directroy, so that if something doesn't work you can easily delete the `build` directory to start over.
 
 
@@ -82,10 +84,12 @@ Note that all of these options are not supported by all makefiles so your mileag
 *1. No configure file*
 
 Some programs will already have a `Makefile`. These programs do not need the first step (running `configure`), you can simply install them by typing
+
 ```
 make
 make install
 ```
+
 The executables are generally created either in the same directory or in the `bin` directory, within the package directory. Sometime these packages will allow you to install other locations as well. Consult the `README` or `INSTALL` files that came with the program or edit the `Makefile` to hard code the installation directory. In some cases, setting `PREFIX` variable to the desired installation location will also do the trick.
 
 ```
@@ -104,6 +108,7 @@ In some rare cases when you don't find a package for Red Hat Linux, but you have
 *3. Needs cmake*
 
 If the README file says that you need to use `camke` command, then use these steps to install:
+
 ```
 # after extraction, cd to the package
 cd package

@@ -18,6 +18,11 @@ Alternatively, you can import the official [Trinity Docker Image](https://hub.do
 ```
 salloc -p debug74
 singularity pull docker://trinityrnaseq/trinityrnaseq
+```
+
+<details><summary>See example singularity messages</summary>
+
+```
 WARNING: pull for Docker Hub is not guaranteed to produce the
 WARNING: same image on repeated pull. Use Singularity Registry
 WARNING: (shub://) to pull exactly equivalent images.
@@ -69,19 +74,25 @@ Cleaning up...
 exit # exit from the relevant node
 ```
 
+</details>
+
 ## Script for Trinity assembly:
+
+Since Trinity will take a while to run, we will create a [slurm](https://bioinformaticsworkbook.org/Appendix/HPC/SLURM/slurm-cheatsheat.html#gsc.tab=0) job. You may need to adjust `--ntasks-per-node` for the specific HPC you are using.
+
 ```
 #!/bin/bash
 #SBATCH -N 1
-#SBATCH -p debug74
-#SBATCH --ntasks-per-node=40 # For Trinity always reserve the whole node
-#SBATCH -t 96:00:00
-#SBATCH -J tri
-#SBATCH -o tri.o%j
-#SBATCH -e tri.e%j
+#SBATCH --partition=debug74
+#SBATCH --ntasks-per-node=40 #  For Trinity always reserve the whole node
+#SBATCH --time=96:00:00
+#SBATCH --job-name=tri
+#SBATCH --output=tri.o%j
+#SBATCH --error=tri.e%j
 #SBATCH --mail-user=<user_email_address>
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
+
 cd $SLURM_SUBMIT_DIR
 ulimit -s unlimited
 scontrol show job $SLURM_JOB_ID
@@ -93,18 +104,36 @@ cat ../*2.*gz > right_2.gz
 
 # running Trinity after mounting our working directory inside the container using $PWD.
 
-singularity exec --bind $PWD trinityrnaseq.img Trinity --seqType fq --max_memory 120G --CPU 16 --normalize_by_read_set --output TrinityOut --left left_1.gz --right right_2.gz --trimmomatic
+singularity exec --bind $PWD trinityrnaseq.img \
+ Trinity --seqType fq \
+ --max_memory 120G \
+ --CPU 16 \
+ --normalize_by_read_set \
+ --output TrinityOut \
+ --left left_1.gz \
+ --right right_2.gz \
+ --trimmomatic
 ```
+
 After the complete run. We see the complete *de novo* assembly (trinity.fa) in the output directory, TrinityOut. We can perform a variety of downstream analyzes with this transcriptome assembly. For the purposes of this tutorial, we will demonstrate mapping the RNAseq reads back to the assembly using bowtie2, calculating transcript abundance, using FeatureCounts and then performing differential expression using DESeq2. We will use scripts that come packaged with Trinity.
-
-
 
 We will now build a transcriptome index and align the RNAseq back to transcriptome and estimate the abundance of the transcripts. When using the singularity image, the absolute path to the folder containing the relevant scripts must be given as follows:
 
+```
+singularity exec --bind $PWD trinityrnaseq-2.5.0.img \
+ /usr/local/bin/trinityrnaseq/util/align_and_estimate_abundance.pl \
+ --transcripts path_to_assembly/TrinityOut/Trinity.fasta \
+ --seqType fq \
+ --left path_reads/93_1.gz \
+ --right transcriptomic_fastq/RNAseq/paired-end/Arabidopsis/93_2.gz \
+ --est_method RSEM \
+ --aln_method bowtie2 \
+ --trinity_mode \
+ --prep_reference \
+ --output_dir <RSEM_dir1> \
+ >& 93_AE_bt2.log &
+```
 
-```
-singularity exec --bind $PWD trinityrnaseq-2.5.0.img /usr/local/bin/trinityrnaseq/util/align_and_estimate_abundance.pl --transcripts path_to_assembly/TrinityOut/Trinity.fasta --seqType fq --left path_reads/93_1.gz --right transcriptomic_fastq/RNAseq/paired-end/Arabidopsis/93_2.gz --est_method RSEM --aln_method bowtie2 --trinity_mode --prep_reference --output_dir <RSEM_dir1> >& 93_AE_bt2.log &
-```
 The transcriptome index will be built in the folder containing the transcriptome. Also because we specify __--trinity_mode__, a gene to transcript map file is also prepared, which can be used to produce gene level counts in addition to transcript counts.
 
 ```
@@ -118,14 +147,23 @@ The transcriptome index will be built in the folder containing the transcriptome
 ./Trinity.fasta.bowtie2.2.bt2
 ```
 
-We can run align_and_estimate_abundance.pl script for each set of reads. We store the bowtie2 alignment file and abundance estimates in separate directories for each set of reads.
+We can run `align_and_estimate_abundance.pl` script for each set of reads. We store the bowtie2 alignment file and abundance estimates in separate directories for each set of reads.
 
 
-Now we build a transcript expression matrix for all samples using the *abundance_estimates_to_matrix.pl* script. We will prefix all the output files with "all" and use the base name of the directory as sample names.
+Now we build a transcript expression matrix for all samples using the `abundance_estimates_to_matrix.pl` script. We will prefix all the output files with "all" and use the base name of the directory as sample names.
+
 ```
-singularity exec --bind $PWD trinityrnaseq-2.5.0.img /usr/local/bin/trinityrnaseq/util/abundance_estimates_to_matrix.pl --est_method RSEM --name_sample_by_basedir --gene_trans_map transcriptomic_fastq/RNAseq/paired-end/trinity/TrinityOut/Trinity.fasta.gene_trans_map --out_prefix all RSEM_9*/*isoforms.results >& matrix1.log&
+singularity exec --bind $PWD trinityrnaseq-2.5.0.img \
+ /usr/local/bin/trinityrnaseq/util/abundance_estimates_to_matrix.pl \
+ --est_method RSEM \
+ --name_sample_by_basedir \
+ --gene_trans_map transcriptomic_fastq/RNAseq/paired-end/trinity/TrinityOut/Trinity.fasta.gene_trans_map \
+ --out_prefix all RSEM_9*/*isoforms.results \
+ >& matrix1.log&
 ```
+
 The matrix files generated are prefixed with "all" as under:
+
 ```
 ls all*
 
@@ -138,7 +176,6 @@ all.gene.TPM.not_cross_norm
 all.isoform.counts.matrix
 all.isoform.TPM.not_cross_norm
 ```
-
 
 ```
 head all.gene.counts.matrix
@@ -153,6 +190,7 @@ TRINITY_DN10002_c0_g1   0.00    0.00    0.00    54.31   0.00    0.00
 TRINITY_DN10003_c0_g1   0.00    43.16   0.00    22.91   0.00    0.00
 TRINITY_DN10005_c0_g1   0.00    0.00    0.00    8.13    13.44   0.00
 ```
+
 This matrix can be imported into R and differential expression analyses performed using DESeq2 as explained [here](https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/Differential-Expression-Analysis).
 
 ---
