@@ -17,7 +17,10 @@ The input file is the BAM format file that is coordinate sorted (`alignments_sor
 You can run the transcript assembly as follows:
 
 ```
-stringtie -v -o alignments_stringtie.gtf -p 16 alignments_sorted.bam
+stringtie -v \
+  -o alignments_stringtie.gtf \
+  -p 16 \
+  alignments_sorted.bam
 ```
 There are many more options that can be fine tuned for your dataset. Type `stringtie -h` for the help page.
 
@@ -26,7 +29,10 @@ There are many more options that can be fine tuned for your dataset. Type `strin
 Again the input is BAM file. The command is as follows:
 
 ```
-run_class.pl -a alignments_sorted.bam -o alignments_class2.gtf -p 16 --verbose
+run_class.pl -a alignments_sorted.bam \
+  -o alignments_class2.gtf \
+  -p 16 \
+  --verbose
 ```
 
 ### Trinity
@@ -34,13 +40,19 @@ run_class.pl -a alignments_sorted.bam -o alignments_class2.gtf -p 16 --verbose
 For Trinity, you can run the following command:
 
 ```
-Trinity --genome_guided_bam alignments_sorted.bam --max_memory 100G --genome_guided_max_intron 10000 --CPU 16
+Trinity --genome_guided_bam alignments_sorted.bam \
+  --max_memory 100G \
+  --genome_guided_max_intron 10000 \
+  --CPU 16
 ```
 
 ### Cufflinks
 
 ```
-cufflinks -o alignments_cufflinks.gtf -p 16 --multi-read-correct --frag-bias-correct genome.fasta alignments_sorted.bam
+cufflinks -o alignments_cufflinks.gtf \
+  -p 16 \
+  --multi-read-correct \
+  --frag-bias-correct genome.fasta alignments_sorted.bam
 ```
 
 
@@ -70,7 +82,9 @@ For this, you need to make sure that you run the alginment program with proper o
 Fortunately, `class2` program comes with an accessory executable that lets you add the `XS` flag post alignment! You can run this as follows:
 
 ```
-samtools view -h input.bam | addXS ref_genome.fasta | samtools view -bS - > output_with_xs_tag.bam
+samtools view -h input.bam |\
+  addXS ref_genome.fasta |\
+  samtools view -bS - > output_with_xs_tag.bam
 ```
 
 

@@ -8,7 +8,7 @@ header:
 
 # File Transfer Using Globus Connect Personal (GCP)
 
-This tutorial explains how to transfer files to/from GIF server. You will need Global Connect Personal application to facilitate the file transfer.
+This tutorial explains how to transfer files to/from GIF server. You will need [Global Connect Personal](https://www.globus.org/globus-connect-personal) application to facilitate the file transfer.
 Globus Connect Personal turns your laptop or other personal computer into a Globus endpoint and allows you to transfer and share files easily. Follow the instructions to set up a Globus account and transfer files to/from GIF server.
 
 ### 1.	Create Globus account and endpoint ###

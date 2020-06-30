@@ -67,14 +67,21 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR442/008/SRR4420298/SRR4420298_2.fastq
 module load <path/to/sra-toolkit>
 module load <path/to/edirect>
 module load <path/to/parallel>
-esearch -db sra -query PRJNA348194 | efetch --format runinfo |cut -d "," -f 1 | awk 'NF>0' | grep -v "Run" > srr_numbers.txt
-while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/.../ascp|/path.../etc/asperaweb_id_dsa.openssh\" $line"; done<srr_numbers.txt > prefetch.cmds
-parallel <prefetch.cmds
+
+esearch -db sra -query PRJNA348194 | \
+  efetch --format runinfo |\
+  cut -d "," -f 1 | \
+  awk 'NF>0' | \
+  grep -v "Run" > srr_numbers.txt
+  
+while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/.../ascp|/path.../etc/asperaweb_id_dsa.openssh\" ${line}"; done < srr_numbers.txt > prefetch.cmds
+parallel < prefetch.cmds
 ```
 After downloading the SRA files, we convert it to fastq format. We can use the fast-dump command as follows: (this step is slow and if possible run these commands using [gnu parallel](https://www.gnu.org/software/parallel/)). We assume that all SRA files are in a specific folder.
 ```
 module load parallel
-parallel fastq-dump --split-files --origfmt --gzip" ::: /path/to/SRA/*.sra
+INDIR=/path/to/sra/files/        # Folder containing input SRA files for fastq-dump
+parallel fastq-dump --split-files --origfmt --gzip" ::: ${INDIR}/*.sra
 ```
 *Note: fastq-dump runs very slow*
 
@@ -87,6 +94,13 @@ Annotation file: GCF_000001735.3_TAIR10_genomic.gff
 
 ```
 
+We can use `wget` to fetch both the Genome Fasta file and Annotation GFF file:
+
+```
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.gff.gz
+```
+
 # 2. Quality Check #
 
 We use `fastqc`, which is a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines ([link](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)). It provides various metrics to give a indication of how your data is. A high quality illumina RNAseq file should look something like [this](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html). Since there are 6 set of files (12 files total), and we need to run `fastqc` on each one of them. It is convenient to run it in `parallel`.
@@ -94,13 +108,16 @@ We use `fastqc`, which is a tool that provides a simple way to do quality contro
 ```
 module load fastqc
 module load parallel
-parallel "fastqc {} -o <fq_out_directory>" ::: *.fastq.gz
+
+OUTDIR=fq_out_directory
+
+parallel "fastqc {} -o ${OUTDIR}" ::: *.fastq.gz
 ```
 Because we have a total of 6 quality outputs, we will have 6 html files and 6 zip files. We can use [`multiqc`](http://multiqc.info/) to aggregate the outputs and get a single html file detailing the quality of all the libraries.
 
 ```
 cd fq_out_directory
-module load python_3
+module load python_3           # may need to search for multiqc module
 multiqc .
 [INFO   ]         multiqc : This is MultiQC v0.8
 [INFO   ]         multiqc : Template    : default
@@ -128,10 +145,15 @@ multiqc_sources.txt
 ```
 
 
-You can peruse the complete report or download the plots and view them for example: ![adapter_content](Assets/fastqc_adapter_content_plot.png)
+You can peruse the complete report or download the plots and view them for example: 
 
+<img src="https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/Assets/fastqc_adapter_content_plot.png" style="width:300px" /> <img src="https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/Assets/fastqc_per_base_n_content_plot.png" style="width:300px" /> <img src="https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/Assets/fastqc_per_base_sequence_quality_plot.png" style="width:300px" />
+
+<!--
+![adapter_content](Assets/fastqc_adapter_content_plot.png)
 ![per_base_n_content](Assets/fastqc_per_base_n_content_plot.png)
 ![per_base_sequence_quality](Assets/fastqc_per_base_sequence_quality_plot.png)
+ -->
 
 If satisfied with the results, proceed with the mapping. If not, then perform quality trimming. E.g. see [here](http://hannonlab.cshl.edu/fastx_toolkit/). If the quality is very bad it might make more sense to exclude that sample from the analysis.
 
@@ -144,33 +166,36 @@ There are several mapping programs available for aligning RNAseq reads to the ge
 
 #### Hisat2 Index ####
 
-For HiSat2 mapping, you need to first index the genome and then use the read pairs to map the indexed genome (one set at a time). For indexing the genome, we use the `hisat2-build` command as follows in a slurm script:
+For HiSat2 mapping, you need to first index the genome and then use the read pairs to map the indexed genome (one set at a time). For indexing the genome, we use the `hisat2-build` command as follows in a [slurm](https://bioinformaticsworkbook.org/Appendix/HPC/SLURM/slurm-cheatsheat.html#gsc.tab=0) script:
 
 ```
 #!/bin/bash
 
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=16
-#SBATCH -t 24:00:00
-#SBATCH -J HI_build
-#SBATCH -o HI_build.o%j
-#SBATCH -e HI_build.e%j
+#SBATCH --time=24:00:00
+#SBATCH --job-name=HI_build
+#SBATCH --output=HI_build.%j.out
+#SBATCH --error=HI_build.%j.err
 #SBATCH --mail-user=<user_email_address>
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
+
 set -o xtrace
-cd $SLURM_SUBMIT_DIR
-scontrol show job $SLURM_JOB_ID
+cd ${SLURM_SUBMIT_DIR}
+scontrol show job ${SLURM_JOB_ID}
 ulimit -s unlimited
 
 module load hisat2
 
-GENOME="/path/to/refrence/GCF_000001735.3_TAIR10_genomic.fna"
-hisat2-build $GENOME ${GENOME%.*}
+GENOME_FNA="/path/to/refrence/GCF_000001735.3_TAIR10_genomic.fna"
+GENOME=${GENOME_FNA%.*}                # Drops the .fna extension
+hisat2-build ${GENOME_FNA} ${GENOME}
 
 ```
 
 Once complete, you should see a number of files with `.ht2` extension.  These are the index files.
+
 ```
  GCF_000001735.3_TAIR10_genomic.1.ht2
  GCF_000001735.3_TAIR10_genomic.2.ht2
@@ -181,22 +206,25 @@ Once complete, you should see a number of files with `.ht2` extension.  These ar
  GCF_000001735.3_TAIR10_genomic.7.ht2
  GCF_000001735.3_TAIR10_genomic.8.ht2
 ```
+
  At the mapping step we simply refer to the index using `GCF_000001735.3_TAIR10_genomic` as described in the next step.
 
 
 #### Hisat2 Mapping ####
 
 For mapping, each set of reads (forward and reverse or R1 and R2), we first set up a `run_hisat2.sh` script as follows:
+
 ```
 #!/bin/bash
+
 set -o xtrace
+
 # set the reference index:
 GENOME="/path/to/refrence/GCF_000001735.3_TAIR10_genomic"
-# make an output directory to store the output aligned files
-mkdir -p /path/to/out_dir
-# set that as the output directory
-ODIR="/path/to/out_dir"
 
+# make an output directory to store the output aligned files
+OUTDIR="/path/to/out_dir"
+[[ -d ${OUTDIR} ]] || mkdir -p ${OUTDIR}        # If output directory doesn't exist, craete it
 
 p=8 # use 8 threads
 R1_FQ="$1" # first argument
@@ -208,51 +236,55 @@ module purge
 module load hisat2
 module load samtools
 
-OUTPUT=$(basename ${R1_FQ} |cut -f 1 -d "_");
+OUTFILE=$(basename ${R1_FQ} |cut -f 1 -d "_");
 
 hisat2 \
   -p ${p} \
   -x ${GENOME} \
   -1 ${R1_FQ} \
   -2 ${R2_FQ} \
-  -S $ODIR\/${OUTPUT}.sam &> ${OUTPUT}.log
-samtools view --threads 8 -bS -o $ODIR\/${OUTPUT}.bam $ODIR\/${OUTPUT}.sam
+  -S ${OUTDIR}/${OUTPUT}.sam &> ${OUTPUT}.log
+samtools view --threads ${p} -bS -o ${OUTDIR}/${OUTPUT}.bam ${OUTDIR}/${OUTFILE}.sam
 
-rm $ODIR\/${OUTPUT}.sam
+rm ${OUTDIR}/${OUTFILE}.sam
 
 ```
 
 For setting it up to run with each set of file, we can set a SLURM script (`loop_hisat2.sh`) that loops over each fastq file. Note that this script calls the run_hisat2.sh script for each pair of fastq file supplied as its argument.
+
 ```
 #!/bin/bash
 
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=16
-#SBATCH -t 24:00:00
-#SBATCH -J Hisat2
-#SBATCH -o Hisat2.o%j
-#SBATCH -e Hisat2.e%j
+#SBATCH --time=24:00:00
+#SBATCH --job-name=Hisat2
+#SBATCH --output=Hisat2.%j.out
+#SBATCH --error=Hisat2.%j.err
 #SBATCH --mail-user=<user_email_address>
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
-set -o xtrace
-cd $SLURM_SUBMIT_DIR
-ulimit -s unlimited
-scontrol show job $SLURM_JOB_ID
 
-for fq1 in *1.*gz;
-do
-fq2=$(echo $fq1 | sed 's/1/2/g');
-/path/to/run_hisat.sh ${fq1} ${fq2};
-done >& hisat2_1.log
+set -o xtrace
+cd ${SLURM_SUBMIT_DIR}
+ulimit -s unlimited
+scontrol show job ${SLURM_JOB_ID}
+
+for fq1 in *1.*gz; do
+  fq2=$(echo ${fq1} | sed 's/1/2/g');
+  bash run_hisat2.sh ${fq1} ${fq2};
+done &> hisat2_1.log
 
 ```
+
 Now submit this job as follows:
+
 ```
 sbatch loop_hisat2.sh
 ```
 
 This should create, following files as output:
+
 ```
 SRR4420298.bam
 SRR4420297.bam
@@ -261,45 +293,50 @@ SRR4420295.bam
 SRR4420294.bam
 SRR4420293.bam
 ```
+
 # 4. Abundance estimation #
 
 For quantifying transcript abundance from RNA-seq data, there are many programs available. Two most popular tools include, `featureCounts` and `HTSeq`. We will need a file with aligned sequencing reads (SAM/BAM files generated in previous step) and a list of genomic features (from the GFF file). `featureCounts` is a highly efficient general-purpose read summarization program that counts mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations. It also outputs stat info for the overall summarization results, including number of successfully assigned reads and number of reads that failed to be assigned due to various reasons. We can run featureCounts on all SAM/BAM files at the same time or individually.
 
 #### featureCounts ####
+
 You will need [`subread`](http://subread.sourceforge.net/) and `parallel` modules loaded.
+
 ```
 #!/bin/bash
 
 #SBATCH -N 1
-#SBATCH -n 16
-#SBATCH -t 24:00:00
-#SBATCH -J Hisat2
-#SBATCH -o Hisat2.o%j
-#SBATCH -e Hisat2.e%j
+#SBATCH --ntasks-per-node=16
+#SBATCH --time=24:00:00
+#SBATCH --job-name=Hisat2
+#SBATCH --output=Hisat2.%j.out
+#SBATCH --error=Hisat2.%j.err
 #SBATCH --mail-user=<user_email_address>
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
+
 set -o xtrace
 
-
-cd $SLURM_SUBMIT_DIR
+cd ${SLURM_SUBMIT_DIR}
 ulimit -s unlimited
-ANNOT="/PATH/TO/GFF_FILE"
-mkdir -p counts
-ODIR="counts"
-
+ANNOT_GFF="/PATH/TO/GFF_FILE"
+INDIR="/Path/TO/BAMFILES/DIR"
+OUTDIR=counts
+[[ -d ${OUTDIR} ]] || mkdir -p ${OUTDIR}
 
 module purge
 
 module load subread
 module load parallel
 
-parallel -j 4 "featureCounts -T 4 -s 2 -p -t gene -g ID -a $ANNOT -o $ODIR/{/.}.gene.txt {}" ::: ../2-Hisat/Sam/*.bam
-scontrol show job $SLURM_JOB_ID
+parallel -j 4 "featureCounts -T 4 -s 2 -p -t gene -g ID -a ${ANNOT_GFF} -o ${OUTDIR}/{/.}.gene.txt {}" ::: ${INDIR}/*.bam
+scontrol show job ${SLURM_JOB_ID}
 
 ```
+
 This creates the following set of files in the specified output folder:
 Count Files:
+
 ```
 SRR4420298.gene.txt
 SRR4420293.gene.txt
@@ -308,9 +345,11 @@ SRR4420296.gene.txt
 SRR4420295.gene.txt
 SRR4420294.gene.txt
 ```
+
 Each file has a commented line staring with a # which gives the command used to create the count table and the relevant seven columns as follows, for example:
 
 `head SRR4420298.gene.txt`
+
 ```
 # Program:featureCounts v1.5.2; Command:"featureCounts" "-T" "4" "-s" "2" "-p" "-t" "gene" "-g" "ID" "-a" "/path/to/GCF_000001735.3_TAIR10_genomic.gff" "-o" "/path/to/counts/SRR4420298.gene.txt" "SRR4420298.bam"
 
@@ -339,11 +378,19 @@ SRR4420297.gene.txt.summary
 Using the following command (a combination of paste and awk), we can produce a single count table. This count table could be loaded into R for differential expression analysis.
 
 ```
-paste <(awk 'BEGIN {OFS="\t"} {print $1,$7}' SRR4420293.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420294.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420295.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420296.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420297.gene.txt) <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420298.gene.txt) | grep -v '^\#' > At_count.txt
+paste <(awk 'BEGIN {OFS="\t"} {print $1,$7}' SRR4420293.gene.txt) \
+  <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420294.gene.txt) \
+  <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420295.gene.txt) \
+  <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420296.gene.txt) \
+  <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420297.gene.txt) \
+  <(awk 'BEGIN {OFS="\t"} {print $7}' SRR4420298.gene.txt) | \
+  grep -v '^\#' > At_count.txt
 ```
+
 You could also edit out the names of the samples to something succinct, for example, S293 instead of SRR4420293.bam.
 
 head At_count.txt
+
 ```
 Geneid  S293    S294    S295    S296    S297    S298
 gene0   11      1       10      28      11      13
@@ -357,7 +404,7 @@ gene7   49      15      67      258     83      45
 gene8   0       0       0       0       0       0
 ```
 
-Now we are ready for performing DGE analysis!
+Now we are ready for performing [DGE analysis](https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/Differential-Expression-Analysis.html#gsc.tab=0)!
 
 ---
 [Table of contents](RNAseq-intro.md)
