@@ -33,6 +33,7 @@ header:
 <details><summary>Install Java version 8 or later</summary>
 
 * [How to install Java 8 on Mac](https://stackoverflow.com/questions/24342886/how-to-install-java-8-on-mac)
+
 ```
 Note: Oracle Java 8/9/10 is no longer available for public download (license change).
 First install and update brew from Terminal:
@@ -47,7 +48,7 @@ brew cask install adoptopenjdk8
 brew cask install adoptopenjdk9
 brew cask install adoptopenjdk10
 brew cask install adoptopenjdk11
-```
+\```
 
 </details>
 * NextFlow
@@ -78,7 +79,7 @@ brew cask install adoptopenjdk11
 
 <details><summary>Nextflow has many commands but we are going to focus on the run command</summary>
 
-```
+```bash
 Commands:
   clean         Clean up project cache and work directories
   clone         Clone a project into a folder
@@ -94,7 +95,7 @@ Commands:
   run           Execute a pipeline project
   self-update   Update nextflow runtime to the latest available version
   view          View project script file(s)
-```
+\```
 
 
 </details>
