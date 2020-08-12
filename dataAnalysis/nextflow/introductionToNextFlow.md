@@ -30,8 +30,6 @@ header:
 ## Prerequisites
 
 
-<details><summary>Install Java version 8 or later</summary>
-
 * [How to install Java 8 on Mac](https://stackoverflow.com/questions/24342886/how-to-install-java-8-on-mac)
 
 ```
@@ -48,9 +46,8 @@ brew cask install adoptopenjdk8
 brew cask install adoptopenjdk9
 brew cask install adoptopenjdk10
 brew cask install adoptopenjdk11
-\```
+```
 
-</details>
 * NextFlow
 
 
@@ -77,7 +74,7 @@ brew cask install adoptopenjdk11
 ## Running a nextflow workflow
 
 
-<details><summary>Nextflow has many commands but we are going to focus on the run command</summary>
+Nextflow has many commands but we are going to focus on the run command
 
 ```bash
 Commands:
@@ -95,13 +92,9 @@ Commands:
   run           Execute a pipeline project
   self-update   Update nextflow runtime to the latest available version
   view          View project script file(s)
-\```
+```
 
-
-</details>
-
-
-### nextflow run
+## nextflow run
 
 `nextflow` run can be used on a nextflow `main.nf` script or can be run directly from github repos.  Let's try this using a nextflow blast script developed by Iowa State's Genome Informatic's Facility (ISUGIF).
 
