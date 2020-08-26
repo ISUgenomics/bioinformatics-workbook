@@ -103,15 +103,14 @@ Finally, if you want to transfer a single file from local host to remote (iplant
 iput filename
 ```
 
-A full list of irods commands can be found here:
-https://docs.irods.org/master/icommands/user/
+A full list of irods commands can be found [here](https://docs.irods.org/master/icommands/user/)
 
 
 ### References ###
 For more information, follow these links:
 
-* [iRODS](https://www.irods.org/index.php/icommands|irods.org)
-* [CyVerse](https://pods.iplantcollaborative.org/wiki/display/start/Using+icommands|pods.iplantcollaborative.org)
+* (iRODS)[https://www.irods.org/index.php/icommands]
+* (CyVerse)[https://pods.iplantcollaborative.org/wiki/display/start/Using+icommands|pods.iplantcollaborative.org]
 
 
 ---
