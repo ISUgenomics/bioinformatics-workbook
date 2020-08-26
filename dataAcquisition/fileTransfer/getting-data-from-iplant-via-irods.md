@@ -109,8 +109,8 @@ A full list of irods commands can be found [here](https://docs.irods.org/master/
 ### References ###
 For more information, follow these links:
 
-* (iRODS)[https://www.irods.org/index.php/icommands]
-* (CyVerse)[https://pods.iplantcollaborative.org/wiki/display/start/Using+icommands|pods.iplantcollaborative.org]
+* [iRODS](https://www.irods.org/index.php/icommands)
+* [CyVerse](https://pods.iplantcollaborative.org/wiki/display/start/Using+icommands)
 
 
 ---
