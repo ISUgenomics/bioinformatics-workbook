@@ -269,4 +269,4 @@ If your pipeline doesn't finish or errors at a specific process it can be restar
 
 
 
-## [Creating Your own workflow](dataAnalysis/nextflow/02_creatingAworkflow.md)
+## [Creating Your own workflow](02_creatingAworkflow.md)
