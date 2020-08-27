@@ -1,41 +1,56 @@
 ---
 title: "Introduction to Data Acquisition"
 layout: single
+author: Arun Seetharam
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-# Getting Data from iPlant/Cyverse
 
-Quick tutorial to download data from [iPlant](https://en.wikipedia.org/wiki/IPlant_Collaborative) datastore to Lightning3/Condo using [iRODS](https://irods.org/). iRODS is currently installed on [Lightning3/Condo](https://www.hpc.iastate.edu/guides/condo-2017), to start using it, just load it using modules.
 
+# Getting Data from iPlant/CyVerse
+
+This is the quick tutorial to download data from [CyVerse](https://en.wikipedia.org/wiki/IPlant_Collaborative) (previously known as iPlant) on HPC clusters using [iRODS](https://irods.org/). iRODS may or may not be available as module on your cluster, and if available as a module load the module to use `irods` commands.
+
+```bash
+# search
+module spider irods # or
+module spider icommands
+# load
+module load <module name>
 ```
-module use /data004/software/GIF/modules
-module load iRODS
+
+If the module is unavailable, you can either install it yourself following the guidelines [here](https://docs.irods.org/master/getting_started/installation/#irods-setup) or skip installation by using the singularity container (and run these commands within the container)
+
+```bash
+#pull container
+singularity pull --name irods.sif shub://mjstealey/singularity-irods-icommands
+# use container
+singularity shell --bind $PWD irods.sif
+singularity> iinit
 ```
 
-iRODS provides Unix command-line utilities to interact with the iPlant Data Store. Many commands are similar to Unix (by adding <code>i</code> to the common UNIX commands, you get iRODS commands or icommands).
+### 1. Login to your CyVerse account ###
 
-### 1. Login to your iPlant account ###
-
-Sometimes also referred as iRODS account, this is required to access private files from the iPlant data store. This is done by logging in via `iinit` command.
+Sometimes also referred as iRODS account, this is required to access private files from the CyVerse data store. This is done by logging in via `iinit` command. You only need this once per cluster. As it involves data transfer, the best practice recommends using the data transfer nodes on HPC.
 
 ```
 $ iinit
 One or more fields in your iRODS environment file (.irodsEnv) are
 missing; please enter them.
-Enter the host name (DNS) of the server to connect to:data.iplantcollaborative.org
-Enter the port number:1247
-Enter your irods user name:aseetharam
-Enter your irods zone:iplant
+Enter the host name (DNS) of the server to connect to: data.iplantcollaborative.org
+Enter the port number: 1247
+Enter your irods user name: <username>
+Enter your irods zone: iplant
 Those values will be added to your environment file (for use by
 other i-commands) if the login succeeds.
 Enter your current iRODS password:
 #password won't be displayed
 ```
 
-Now you are logged in. Although your working directory doesn't change, all `iCommands` can now access the iPlant datastore.
+Now you are logged in. Although your working directory doesn't change, all `iCommands` can now access the CyVerse datastore.
 You can `logout` anytime by typing `iexit` command.
 
 Alternatively, you can save this information in `~/.irods/irodsEnv` file as follows:
@@ -88,11 +103,14 @@ Finally, if you want to transfer a single file from local host to remote (iplant
 iput filename
 ```
 
+A full list of irods commands can be found [here](https://docs.irods.org/master/icommands/user/)
+
+
 ### References ###
 For more information, follow these links:
 
-* [iRODS](https://www.irods.org/index.php/icommands|irods.org)
-* [iPlant](https://pods.iplantcollaborative.org/wiki/display/start/Using+icommands|pods.iplantcollaborative.org)
+* [iRODS](https://www.irods.org/index.php/icommands)
+* [CyVerse](https://pods.iplantcollaborative.org/wiki/display/start/Using+icommands)
 
 
 ---
