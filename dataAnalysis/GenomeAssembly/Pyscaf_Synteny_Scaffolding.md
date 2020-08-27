@@ -48,7 +48,7 @@ module load py-fastaindex/0.11rc7-py2-sj3lhkk
 module load last
 module load py-pillow/3.2.0-py2-ods24od
 
- python pyScaf.py -f ../GCF_000249815.1_ASM24981v2_genomic.fa -t 16 --log ../E.coliPyscaf.output -r ../GCF_000732965.1_ASM73296v1_genomic.fa
+python pyScaf.py -f ../GCF_000249815.1_ASM24981v2_genomic.fa -t 16 --log ../E.coliPyscaf.output -r ../GCF_000732965.1_ASM73296v1_genomic.fa
 
 #this analysis took 5 seconds!
 ```
