@@ -10,11 +10,12 @@ header:
 
 ## Learning Objectives
 
-1. Something Useful
-2. nextflow files
-3. nextflow parameters
-4. nextflow process
-5. nextflow channel
+1. Introduction
+2. nextflow setup
+3. nextflow params
+4. nextflow config file
+5. nextflow process
+6. nextflow channels
 
 
 ## Introduction
@@ -23,7 +24,7 @@ Presumably, you are here because you want to take your bash scripts and put them
 
 * [Nextflow getting started](https://www.nextflow.io/docs/latest/getstarted.html)
 
-While it gives a good resource, it assumes you have had some experience with object oriented programming or even some background in groovy/Java. You will run across methods that aren't part of nextflow but part of the groovy language like [`.trim, .flatten, and the word "it"`].  At first this was hard to separate out and just wanted to know how to do X.  While they do have examples in their [nextflow patterns section], it wasn't quite sufficient to allow me to quickly learn to create a nextflow workflow.  This tutorial is aimed to bridge this gap.
+This is a great resource, but it assumes you have had some experience with object oriented programming or even some background in groovy/Java. You will run across methods that aren't part of nextflow but part of the groovy language like [`.trim, .flatten, and the word "it"`].  At first this was hard to separate out when we just wanted to know how to do X.  While they do have examples in their [nextflow patterns section](https://github.com/nextflow-io/patterns), it isn't quite sufficient yet to quickly learn to create a nextflow workflow.  This tutorial is aimed to bridge this gap.
 
 
 ## A practical example
@@ -35,7 +36,7 @@ The goal of this tutorial is to introduce you to the concepts of nextflow by bui
 This tutorial assumes that you are familiar with bash scripting and [how to run blast locally](https://bioinformaticsworkbook.org/dataAnalysis/blast/blastExample.html#gsc.tab=0).
 
 
-## Folder setup
+## Nextflow setup
 
 
 ### Create a github repo
@@ -44,7 +45,7 @@ Let's start by setting up our folder.  I usually do this by first creating a git
 
 ![Create New Github Repo](assets/CreateGithubRepo.png#1)
 
-Then pull it to my local machine.
+Then pull it to my local machine. Do not pull this repo as it will download the entire finished tutorial.
 
 ```
 git clone git@github.com:isugifNF/tutorial.git
@@ -183,12 +184,105 @@ git commit -c "added .gitignore"
 git push origin master
 ```
 
-
-
-
 ## Lesson 2: Nextflow Config file
 
+The nextflow config file is `nextflow.config`.  In here, we can set default global parameters for pipeline parameters (params), process, manifest, executor, profiles, docker, singularity, timeline, report and more.
 
+For now, we are going to just add additional pipeline parameters and move the `params.query` out of the `main.nf` file and into the `nextflow.config` file.
+
+
+Inside the `nextflow.config` file add the following parameters.
+
+**nextflow.config**
+
+  ```
+  params.query = "myquery.fasta"
+  params.dbDir = "/path/to/my/blastDB/"
+  params.dbName = "myBlastDB"
+  params.threads = 16
+  params.outdir = "out_dir"
+  ```
+
+Remove these lines from `main.nf`
+
+```
+blastdb="myBlastDatabase"
+params.query="file.fasta"
+```
+
+and let's modify the last print statement to include all the parameters.
+
+```
+println "I want to BLAST $params.query to $params.dbDir/$params.dbName using $params.threads CPUs and output it to $params.outdir"
+```
+
+Your `main.nf` file should look like this.
+
+```
+/usr/bin/env nextflow
+
+println "I want to BLAST $params.query to $params.dbDir/$params.dbName using $params.threads CPUs and output it to $params.outdir"
+
+```
+
+**output:**
+
+  ```
+  nextflow run main.nf
+  N E X T F L O W  ~  version 20.07.1
+  Launching `main.nf` [fervent_swanson] - revision: 418bbdfbef
+  I want to BLAST myquery.fasta to /path/to/my/blastDB//myBlastDB using 16 CPUs and output it to out_dir
+  ```
+
+  Let's add a `\n` to the beginning and end of the print statement so it reports a little more cleanly
+
+  ```
+  /usr/bin/env nextflow
+
+  println "\nI want to BLAST $params.query to $params.dbDir/$params.dbName using $params.threads CPUs and output it to $params.outdir\n"
+
+  ```
+
+**output: This looks better:**
+
+  ```
+  nextflow run main.nf
+  N E X T F L O W  ~  version 20.07.1
+  Launching `main.nf` [modest_crick] - revision: 87c6232474
+
+  I want to BLAST myquery.fasta to /path/to/my/blastDB//myBlastDB using 16 CPUs and output it to out_dir
+
+  ```
+
+#### Alternate params config
+
+We can also write the pipeline parameters in a different format that is more similar to what we will be using for the rest of the config definitions.
+
+Instead of
+
+```
+params.query = "myquery.fasta"
+params.dbDir = "/path/to/my/blastDB/"
+params.dbName = "myBlastDB"
+params.threads = 16
+params.outdir = "out_dir"
+```
+
+We can write it as follows.  Go ahead and change the nextflow.config file to look like this and rerun it to verify to yourself that it works identically.
+
+```
+params {
+  query = "myquery.fasta"
+  dbDir = "/path/to/my/blastDB/"
+  dbName = "myBlastDB"
+  threads = 16
+  outdir = "out_dir"
+}
+```
+
+```
+nextflow run main.nf
+```
 
 
 
