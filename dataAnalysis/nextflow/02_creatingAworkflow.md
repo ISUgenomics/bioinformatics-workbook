@@ -373,6 +373,61 @@ work/
 
 The folders inside the work directory are named based on a hash that allows nextflow to `-resume` from wherever it failed or was stopped.
 
+## Lesson 4: Integrating params with process
+
+Now that we have a working nextflow script, lets replace all that we can in the BLAST script with pipeline parameters we can set from the command line.
+
+The BLAST script inside **main.nf** currently looks like this.
+
+```
+  script:
+  """
+  blastn  -num_threads 2 -db $PWD/DB/blastDB -query $PWD/input.fasta -outfmt 6 -out input.blastout
+  """
+```
+
+As you recall and can look up in **nextflow.config** these are the current pipeline default parameters we have defined.
+
+```
+params {
+  query = "myquery.fasta"
+  dbDir = "/path/to/my/blastDB/"
+  dbName = "myBlastDB"
+  threads = 16
+  outdir = "out_dir"
+}
+```
+
+So we can change the BLAST script as follows
+
+```
+  script:
+  """
+  blastn  -num_threads $params.threads -db $params.dbDir/$params.dbName -query $params.query -outfmt 6 -out input.blastout
+  """
+```
+
+We should also adjust the defaults in **nextflow.config** to real files.
+
+```
+params {
+  query = "$PWD/input.fasta"
+  dbDir = "$PWD/DB/"
+  dbName = "blastDB"
+  threads = 2
+  outdir = "out_dir"
+}
+```
+
+## Exercise
+
+1. Make the changes described above to the **main.nf** and the **nextflow.config** scripts and show that it still works with `nextflow run main.nf`
+2. Test out the pipeline parameters `--query` `--threads`
+
+```
+nextflow run main.nf --query "$PWD/input.fasta" --threads 6
+```
+
 
 
 ## What is **it**?
