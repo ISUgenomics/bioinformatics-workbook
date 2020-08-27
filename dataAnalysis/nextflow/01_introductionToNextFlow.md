@@ -266,3 +266,7 @@ If your pipeline doesn't finish or errors at a specific process it can be restar
 ### Why nextflow?
 
 * [Using rapid prototyping to choose a bioinformatics workflow management system](https://www.biorxiv.org/content/10.1101/2020.08.04.236208v1.full.pdf+html)
+
+
+
+## [Creating Your own workflow](dataAnalysis/nextflow/02_creatingAworkflow.md)
