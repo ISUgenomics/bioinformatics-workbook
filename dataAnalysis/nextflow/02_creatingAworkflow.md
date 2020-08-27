@@ -284,7 +284,94 @@ params {
 nextflow run main.nf
 ```
 
+## Lesson 3: nextflow process
 
+Process definitions are what nextflow uses to define a script to run, the input to the script and the output of a script.  Ultimately workflows are comprised of nextflow processes.  In this example, we want to run BLAST.
+
+#### Setup and input files
+
+We will need a fasta file and a database.  We are going to use a toy example with only five fasta reads and use that input to generate the blast database and then align it to itself.
+
+Copy and paste the following fasta reads into a file named `input.fasta`
+
+<details><summary>input.fasta</summary>
+
+```
+>Scaffold_1_1..100
+CAGGCAAAATGTGGCACAAAAACAACAAATTGTTTAGTAGATACAGGGGCATCCATTTGTTGTATTTCGTCTGCTTTTCTGAGCACAGCTTTTGAAAACC
+>Scaffold_1_101..200
+TTACTCTTGGAAACTCACCCTTTCCACAGGTAAAAGGTGTTGGCGGCGAATTGCATAAAGTGTTAGGTTCAGTTGTGTTAGATTTTGTCATTGAGGATCA
+>Scaffold_1_201..300
+GGAATTTTCTCAAAGATTCTATGTACTGCCTACACTGCCGAAGGCAGTGATACTAGGTGAGAACTTCCTTAATGACAATGATGCAGTCTTAGATTATAGC
+>Scaffold_1_301..400
+TGTCATTCCTTGATACTCAACAACAGCACCTCAGATAGGCAATATATCAATTTCATAGCCAATTCAGTGCATGAGATTAGTGGATTAGCAAAAACACTAG
+>Scaffold_1_401..500
+ATCAGATTTACATCCCCCCTCAGAGTGAAATTCATTTCAAGGTCAGACTATCAGAGACCAAAGAGGATTCCCTCATCCTCATTGAACCCATTGCTTCCCT
+```
+</details>
+
+**Create the BLASTDB**
+
+You will need to have BLAST-plus installed on your computer. We will use the `makeblastdb` command to create a nucleotide database of the `input.fasta` file and then move the output to a folder named `DB`
+
+```
+makeblastdb -in input.fasta -dbtype 'nucl' -out blastDB
+mkdir DB
+mv blastDB.n* DB
+```
+
+**Test that BLAST works**
+
+This is the command we want to get into a process in a nextflow script.
+
+```
+blastn  -num_threads 2 -db $PWD/DB/blastDB -query $PWD/input.fasta -outfmt 6 -out input.blastout
+```
+
+#### nextflow runBlast process
+
+To write this as a nextflow process, we would write it in the following way. The command you want to run should be placed between the `"""`
+
+```
+process runBlast {
+
+  script:
+  """
+  blastn  -num_threads 2 -db $PWD/DB/blastDB -query $PWD/input.fasta -outfmt 6 -out input.blastout
+  """
+
+}
+```
+
+Note: it is critical that the input files use the **full path**.  This is why we have the `$PWD` (path of working directory Unix variable)
+
+
+
+**output:**
+
+```
+nextflow run main.nf
+N E X T F L O W  ~  version 20.07.1
+Launching `main.nf` [special_sinoussi] - revision: 24972a3b60
+
+I want to BLAST myquery.fasta to /path/to/my/blastDB//myBlastDB using 16 CPUs and output it to out_dir
+
+executor >  local (1)
+[e0/ac0a8e] process > runBlast [100%] 1 of 1 ✔
+
+```
+
+the **input.blastout** will be found in the work folder.
+
+```
+tree work/
+work/
+`-- e0
+    `-- ac0a8e23e6db0eb4b4e81b7d1656f5
+        `-- input.blastout
+```
+
+The folders inside the work directory are named based on a hash that allows nextflow to `-resume` from wherever it failed or was stopped.
 
 
 
