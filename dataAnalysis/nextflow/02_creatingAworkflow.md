@@ -75,57 +75,56 @@ README.md       main.nf         nextflow.config
 ## Lesson 1: Nextflow params
 
 Let's create a simple program that has a parameter to set our query input file that we will use for the BLAST program.
+  ```
+  #! /usr/bin/env nextflow
 
-```
-#! /usr/bin/env nextflow
+  blastdb="myBlastDatabase"
+  params.query="file.fasta"
 
-blastdb="myBlastDatabase"
-params.query="file.fasta"
-
-println "I will BLAST $params.query against $blastdb"
-```
+  println "I will BLAST $params.query against $blastdb"
+  ```
 
 #### Let's dissect it line by line.
 
 The first line is required for all nextflow programs  
 
-```
-#! /usr/bin/env nextflow
-```
+  ```
+  #! /usr/bin/env nextflow
+  ```
 
-The second line of code sets a variable inside the nextflow script.
+  The second line of code sets a variable inside the nextflow script.
 
-```
-blastdb="myBlastDatabase"
-```
+  ```
+  blastdb="myBlastDatabase"
+  ```
 
-The third line of code sets a pipeline parameter that can be set at the command line, which I will show you in just a minute. If you want to make a variable a pipeline parameter just prepend the variable with `params.`
+  The third line of code sets a pipeline parameter that can be set at the command line, which I will show you in just a minute. If you want to make a variable a pipeline parameter just prepend the variable with `params.`
 
-```
-params.query="file.fasta"
-```
+  ```
+  params.query="file.fasta"
+  ```
 
-The last line is a simple print statement that uses both a nextflow variable and a pipeline parameter.
+  The last line is a simple print statement that uses both a nextflow variable and a pipeline parameter.
 
-```
-println "I will BLAST $params.query against $blastdb"
-```
+  ```
+  println "I will BLAST $params.query against $blastdb"
+  ```
 
-Go ahead and run it.
+  Go ahead and run it.
 
-```
-nextflow run main.nf
-```
+  ```
+  nextflow run main.nf
+  ```
 
-Output should look like this
+  Output should look like this
 
-```
-N E X T F L O W  ~  version 20.07.1
-Launching `main.nf` [confident_williams] - revision: f407a6b0e1
-I will BLAST file.fasta against myBlastDatabase
-```
+  ```
+  N E X T F L O W  ~  version 20.07.1
+  Launching `main.nf` [confident_williams] - revision: f407a6b0e1
+  I will BLAST file.fasta against myBlastDatabase
+  ```
 
-You will also have the default `work/` folder that will appear but will be empty as we didn't do anything but print something to standard out.
+  You will also have the default `work/` folder that will appear but will be empty as we didn't do anything but print something to standard out.
 
 #### Exercises for comprehension
 
@@ -284,7 +283,7 @@ params {
 nextflow run main.nf
 ```
 
-## Lesson 3: nextflow process
+## Lesson 3: Nextflow process
 
 Process definitions are what nextflow uses to define a script to run, the input to the script and the output of a script.  Ultimately workflows are comprised of nextflow processes.  In this example, we want to run BLAST.
 
@@ -296,7 +295,7 @@ Copy and paste the following fasta reads into a file named `input.fasta`
 
 <details><summary>input.fasta</summary>
 
-```
+
 >Scaffold_1_1..100
 CAGGCAAAATGTGGCACAAAAACAACAAATTGTTTAGTAGATACAGGGGCATCCATTTGTTGTATTTCGTCTGCTTTTCTGAGCACAGCTTTTGAAAACC
 >Scaffold_1_101..200
@@ -307,7 +306,7 @@ GGAATTTTCTCAAAGATTCTATGTACTGCCTACACTGCCGAAGGCAGTGATACTAGGTGAGAACTTCCTTAATGACAATG
 TGTCATTCCTTGATACTCAACAACAGCACCTCAGATAGGCAATATATCAATTTCATAGCCAATTCAGTGCATGAGATTAGTGGATTAGCAAAAACACTAG
 >Scaffold_1_401..500
 ATCAGATTTACATCCCCCCTCAGAGTGAAATTCATTTCAAGGTCAGACTATCAGAGACCAAAGAGGATTCCCTCATCCTCATTGAACCCATTGCTTCCCT
-```
+
 </details>
 
 **Create the BLASTDB**
@@ -379,54 +378,54 @@ Now that we have a working nextflow script, lets replace all that we can in the 
 
 The BLAST script inside **main.nf** currently looks like this.
 
-```
-  script:
-  """
-  blastn  -num_threads 2 -db $PWD/DB/blastDB -query $PWD/input.fasta -outfmt 6 -out input.blastout
-  """
-```
+  ```
+    script:
+    """
+    blastn  -num_threads 2 -db $PWD/DB/blastDB -query $PWD/input.fasta -outfmt 6 -out input.blastout
+    """
+  ```
 
 As you recall and can look up in **nextflow.config** these are the current pipeline default parameters we have defined.
 
-```
-params {
-  query = "myquery.fasta"
-  dbDir = "/path/to/my/blastDB/"
-  dbName = "myBlastDB"
-  threads = 16
-  outdir = "out_dir"
-}
-```
+  ```
+  params {
+    query = "myquery.fasta"
+    dbDir = "/path/to/my/blastDB/"
+    dbName = "myBlastDB"
+    threads = 16
+    outdir = "out_dir"
+  }
+  ```
 
 So we can change the BLAST script as follows
 
-```
-  script:
-  """
-  blastn  -num_threads $params.threads -db $params.dbDir/$params.dbName -query $params.query -outfmt 6 -out input.blastout
-  """
-```
+  ```
+    script:
+    """
+    blastn  -num_threads $params.threads -db $params.dbDir/$params.dbName -query $params.query -outfmt 6 -out input.blastout
+    """
+  ```
 
 We should also adjust the defaults in **nextflow.config** to real files.
 
-```
-params {
-  query = "$PWD/input.fasta"
-  dbDir = "$PWD/DB/"
-  dbName = "blastDB"
-  threads = 2
-  outdir = "out_dir"
-}
-```
+  ```
+  params {
+    query = "$PWD/input.fasta"
+    dbDir = "$PWD/DB/"
+    dbName = "blastDB"
+    threads = 2
+    outdir = "out_dir"
+  }
+  ```
 
-## Exercise
+### Exercise
 
-1. Make the changes described above to the **main.nf** and the **nextflow.config** scripts and show that it still works with `nextflow run main.nf`
-2. Test out the pipeline parameters `--query` `--threads`
+  1. Make the changes described above to the **main.nf** and the **nextflow.config** scripts and show that it still works with `nextflow run main.nf`
+  2. Test out the pipeline parameters `--query` `--threads`
 
-```
-nextflow run main.nf --query "$PWD/input.fasta" --threads 6
-```
+  ```
+  nextflow run main.nf --query "$PWD/input.fasta" --threads 6
+  ```
 
 
 
