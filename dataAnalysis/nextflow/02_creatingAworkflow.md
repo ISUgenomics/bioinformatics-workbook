@@ -726,13 +726,61 @@ You can have more than one line in the `output:` section.
 You should now see an `out_dir` directory with a `blastout` subdirectory and the `input.blastout` in side that folder.
 
 
-## nextflow channels and process inputs.
+## Lesson 9: Nextflow channels and process inputs.
 
-Create a channel frompath the params.query
-* input and output
-* publishDir
+Turns out nextflow inputs are intrinsically linked to nextflow channels. So I can't talk about inputs without speaking about channels.  Process inputs are taken from a nextflow channel.
+
+Channels can act as either a [queue or value](https://www.nextflow.io/docs/latest/channel.html#queue-channel).
+* queue channels are consumable.  A channel is loaded with a file and a process will use the file and empty the channel of that file.
+* value channels are not consumed.  A channel is loaded with a value and a process or several processes can use that channel value over and over again.
+
+With Channels, we will start to see more [nextflow operators](https://www.nextflow.io/docs/latest/operator.html) for channels.  In this case, we are going to add the following code above the `runBlast` process which states create a channel from a file path and set the channel name into queryFile_ch.  
+
+**Note:**  Operators may take the method syntax `()` or the closure syntax `{ }`.  We see both in this example.  This is a common source of errors when writing nextflow scripts.
+
+```
+Channel
+    .fromPath(params.query)
+    .into { queryFile_ch }
+```
+
+We can now add an `input:` section to the process like this
+
+```
+input:
+path(queryFile) from queryFile_ch
+```
+
+And we can swap out `$params.query` with `$queryFile`.  Some of you readers may be wondering why we would do this if it does the exactly the same thing?  The answer to this is that with processes that can accept a channel as input we have greater control to parallelize the execution of the process on the data as we will see in the next lesson.
+
+<details><summary>main.nf</summary>
+
+<pre>
+process runBlast {
+
+  publishDir "${params.outdir}/blastout"
+
+  input:
+  path queryFile from queryFile_ch
+
+  output:
+  path(params.outFileName)
+
+  script:
+  """
+  $params.app -num_threads $params.threads -db $params.dbDir/$params.dbName -query $queryFile -outfmt $params.outfmt $params.options -out $params.outFileName
+  """
+
+}
+
+</pre>
+</details>
+
 
 ## nextflow split fasta
+
+
+
 
 ## makeBlastDB process
 
@@ -759,3 +807,8 @@ Create a channel frompath the params.query
 
 
 ## What is **it**?
+
+
+## Resource list
+
+* [nextflow operators](https://www.nextflow.io/docs/latest/operator.html)
