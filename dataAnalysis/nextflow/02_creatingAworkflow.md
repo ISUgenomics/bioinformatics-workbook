@@ -958,44 +958,117 @@ Up to this point you know have a working runBlast workflow that will take in a f
 
 ## Lesson 11: Advanced Nextflow config  
 
+There is quite a bit to learn about the nextflow config file that adds significant functionality and modularity to nextflow. Here are some highlights.
+
 #### timeline
 
-```
-timeline {
-  enabled = true
-  file = "$params.outdir/timeline.html"
-}
-```
+If the following code is added to your nextflow.config file, nextflow will output a detailed timeline report.
+
+* nextflow.config
+
+  ```
+  timeline {
+    enabled = true
+    file = "$params.outdir/timeline.html"
+  }
+  ```
+
+  ![](assets/02_creatingAworkflow-7fa62b55.png)
 
 #### report
 
+If the following code is added to your `nextflow.config` file, nextflow will output a detailed execution report.
+
+* nextflow.config
+
+  ```
+  report {
+    enabled = true
+    file = "$params.outdir/report.html"
+  }
+  ```
+
+  The report has technical detail about cpu and memory usage for each process but this toy example is too small to show anything interesting.
+
+#### [executors](https://www.nextflow.io/docs/latest/config.html)
+
+The executor code block in the `nextflow.config` file can be used to set default executor parameters. In this case, we are setting the queueSize to be no more than 100 jobs and a submission rate of no more than 10 per second.
+
+These parameters are only active if we choose a non-local executor like slurm or torque.
+
+* nextflow.config
+
+  ```
+  executor {
+    queueSize = 100
+    submitRateLimit = '10 sec'
+  }
+  ```
+
+#### [profiles](https://www.nextflow.io/docs/latest/config.html?highlight=profiles)
+
+  We can also add profiles into the nextflow.config file that will load different settings depending on the profile.  This is similar to an include statement in other languages.  
+
+* nextflow.config
+
+  ```
+  profiles {
+    slurm { includeConfig './configs/slurm.config' }
+  }
+  ```
+
+* ./configs/slurm.config
+
+  Make a file named slurm.config in a folder named configs and add the following text.
+
+  ```
+  process {
+    executor = 'slurm'
+    clusterOptions =  '-N 1 -n 16 -t 24:00:00'
+  }
+  ```
+
+With a profile added you can now execute the specific parameters in a profile by using the `-profile` nextflow parameters (again this is a nextflow parameter and not a pipeline parameter so it only has a single `-` just like `-resume`)
+
 ```
-report {
-  enabled = true
-  file = "$params.outdir/report.html"
-}
+nextflow run main.nf -profile slurm
 ```
 
-## nextflow config executor and profiles
-
-## nextflow config manifest
+**Note:** this will fail unless you are on a machine that has sbatch.
 
 
-## nextflow containers
+#### [Manifest](https://www.nextflow.io/docs/latest/config.html?highlight=profiles#scope-manifest)
+
+* nextflow.config
+
+  ```
+  manifest {
+  name = 'isugifNF/tutorial'
+  author = 'Andrew Severin'
+  homePage = 'www.bioinformaticsworkbook.org'
+  description = 'nextflow bash'
+  mainScript = 'main.nf'
+  version = '1.0.0'
+  }
+  ```
+
+You don't actually need this to run from a github repo but you can use it to specify the mainScript.  Default is `main.nf`.
+
+To execute from a repository you can refer to it as follows.
+
+```
+nextflow run isugifNF/tutorial --help
+```
+
+Note: `isugifNF/tutorial` is my organization/githubRepo, that I have been pushing this tutorial to.  It will be different for you.  
 
 
+## Lesson 12: nextflow containers
 
-## What is **it**?
+## Lesson 13: makeBlastDB process
 
+* if else statement
 
 ## Resource list
 
 * [nextflow operators](https://www.nextflow.io/docs/latest/operator.html)
-
-
-
-
-
-## makeBlastDB process
-
-* if else statement
