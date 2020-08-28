@@ -726,23 +726,28 @@ You can have more than one line in the `output:` section.
 You should now see an `out_dir` directory with a `blastout` subdirectory and the `input.blastout` in side that folder.
 
 
+
+
+
+
+
 ## Lesson 9: Nextflow channels and process inputs.
 
-Turns out nextflow inputs are intrinsically linked to nextflow channels. So I can't talk about inputs without speaking about channels.  Process inputs are taken from a nextflow channel.
+  Turns out nextflow inputs are intrinsically linked to nextflow channels. So I can't talk about inputs without speaking about channels.  Process inputs are taken from a nextflow channel.
 
-Channels can act as either a [queue or value](https://www.nextflow.io/docs/latest/channel.html#queue-channel).
-* queue channels are consumable.  A channel is loaded with a file and a process will use the file and empty the channel of that file.
-* value channels are not consumed.  A channel is loaded with a value and a process or several processes can use that channel value over and over again.
+  Channels can act as either a [queue or value](https://www.nextflow.io/docs/latest/channel.html#queue-channel).
+  * queue channels are consumable.  A channel is loaded with a file and a process will use the file and empty the channel of that file.
+  * value channels are not consumed.  A channel is loaded with a value and a process or several processes can use that channel value over and over again.
 
-With Channels, we will start to see more [nextflow operators](https://www.nextflow.io/docs/latest/operator.html) for channels.  In this case, we are going to add the following code above the `runBlast` process which states create a channel from a file path and set the channel name into queryFile_ch.  
+  With Channels, we will start to see more [nextflow operators](https://www.nextflow.io/docs/latest/operator.html) for channels.  In this case, we are going to add the following code above the `runBlast` process which states create a channel from a file path and set the channel name into queryFile_ch.  
 
-**Note:**  Operators may take the method syntax `()` or the closure syntax `{ }`.  We see both in this example.  This is a common source of errors when writing nextflow scripts.
+  **Note:**  Operators may take the method syntax `()` or the closure syntax `{ }`.  We see both in this example.  This is a common source of errors when writing nextflow scripts.
 
-```
-Channel
-    .fromPath(params.query)
-    .into { queryFile_ch }
-```
+  ```
+  Channel
+      .fromPath(params.query)
+      .into { queryFile_ch }
+  ```
 
 We can now add an `input:` section to the process like this
 
@@ -776,11 +781,18 @@ process runBlast {
 </pre>
 </details>
 
-## Run it and verify it works
+### Run it and verify it works
 
-```
-nextflow run main.nf
-```
+  ```
+  nextflow run main.nf
+  ```
+
+
+
+
+
+
+
 
 
 
@@ -847,67 +859,67 @@ If you messed up or need help, this is what your main.nf script should now look 
 
 <details><summary>main.nf</summary><p>
 
-<pre>
-#! /usr/bin/env nextflow
+  <pre>
+  #! /usr/bin/env nextflow
 
-println "\nI want to BLAST $params.query to $params.dbDir/$params.dbName using $params.threads CPUs and output it to $params.outdir\n"
+  println "\nI want to BLAST $params.query to $params.dbDir/$params.dbName using $params.threads CPUs and output it to $params.outdir\n"
 
-def helpMessage() {
-  log.info """
-        Usage:
-        The typical command for running the pipeline is as follows:
-        nextflow run main.nf --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName"
+  def helpMessage() {
+    log.info """
+          Usage:
+          The typical command for running the pipeline is as follows:
+          nextflow run main.nf --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName"
 
-        Mandatory arguments:
-         --query                        Query fasta file of sequences you wish to BLAST
-         --dbDir                        BLAST database directory (full path required)
-         --dbName                       Prefix name of the BLAST database
+          Mandatory arguments:
+           --query                        Query fasta file of sequences you wish to BLAST
+           --dbDir                        BLAST database directory (full path required)
+           --dbName                       Prefix name of the BLAST database
 
-       Optional arguments:
-        --outdir                       Output directory to place final BLAST output
-        --outfmt                       Output format ['6']
-        --options                      Additional options for BLAST command [-evalue 1e-3]
-        --outFileName                  Prefix name for BLAST output [input.blastout]
-        --threads                      Number of CPUs to use during blast job [16]
-        --chunkSize                    Number of fasta records to use when splitting the query fasta file
-        --app                          BLAST program to use [blastn;blastp,tblastn,blastx]
-        --help                         This usage statement.
-        """
-}
+         Optional arguments:
+          --outdir                       Output directory to place final BLAST output
+          --outfmt                       Output format ['6']
+          --options                      Additional options for BLAST command [-evalue 1e-3]
+          --outFileName                  Prefix name for BLAST output [input.blastout]
+          --threads                      Number of CPUs to use during blast job [16]
+          --chunkSize                    Number of fasta records to use when splitting the query fasta file
+          --app                          BLAST program to use [blastn;blastp,tblastn,blastx]
+          --help                         This usage statement.
+          """
+  }
 
-// Show help message
-if (params.help) {
-    helpMessage()
-    exit 0
-}
+  // Show help message
+  if (params.help) {
+      helpMessage()
+      exit 0
+  }
 
-Channel
-    .fromPath(params.query)
-    .splitFasta(by: 1, file:true)
-    .into { queryFile_ch }
+  Channel
+      .fromPath(params.query)
+      .splitFasta(by: 1, file:true)
+      .into { queryFile_ch }
 
-process runBlast {
+  process runBlast {
 
-  publishDir "${params.outdir}/blastout"
+    publishDir "${params.outdir}/blastout"
 
-  input:
-  path queryFile from queryFile_ch
+    input:
+    path queryFile from queryFile_ch
 
-  output:
-  path(params.outFileName) into blast_output_ch
+    output:
+    path(params.outFileName) into blast_output_ch
 
-  script:
-  """
-  $params.app -num_threads $params.threads -db $params.dbDir/$params.dbName -query $queryFile -outfmt $params.outfmt $params.options -out $params.outFileName
-  """
+    script:
+    """
+    $params.app -num_threads $params.threads -db $params.dbDir/$params.dbName -query $queryFile -outfmt $params.outfmt $params.options -out $params.outFileName
+    """
 
-}
+  }
 
 
-blast_output_ch
-  .collectFile(name: 'blast_output_combined.txt', storeDir: params.outdir)
+  blast_output_ch
+    .collectFile(name: 'blast_output_combined.txt', storeDir: params.outdir)
 
-</pre>
+  </pre>
 
 </p>
 </details>
@@ -927,21 +939,42 @@ Up to this point you know have a working runBlast workflow that will take in a f
 2. It is not contained inside `"` so don't use the `$`
 
 </pre>
+
 </details>
-## makeBlastDB process
-
-* if else statement
 
 
-##
-* config
-* main
 
-## nextflow config timeline and report
+
+
+
+
+
+
+
+
+
+
+
+
+## Lesson 11: Advanced Nextflow config  
 
 #### timeline
 
+```
+timeline {
+  enabled = true
+  file = "$params.outdir/timeline.html"
+}
+```
+
 #### report
+
+```
+report {
+  enabled = true
+  file = "$params.outdir/report.html"
+}
+```
 
 ## nextflow config executor and profiles
 
@@ -958,3 +991,11 @@ Up to this point you know have a working runBlast workflow that will take in a f
 ## Resource list
 
 * [nextflow operators](https://www.nextflow.io/docs/latest/operator.html)
+
+
+
+
+
+## makeBlastDB process
+
+* if else statement
