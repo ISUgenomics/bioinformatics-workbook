@@ -591,7 +591,7 @@ def helpMessage() {
 
   <details><summary>main.nf</summary><p>
 
-  ```
+  <pre>
   #! /usr/bin/env nextflow
 
   println "\nI want to BLAST $params.query to $params.dbDir/$params.dbName using $params.threads CPUs and output it to $params.outdir\n"
@@ -627,7 +627,7 @@ def helpMessage() {
     """
 
   }
-  ```
+  </pre>
 
   </p></details>
 
