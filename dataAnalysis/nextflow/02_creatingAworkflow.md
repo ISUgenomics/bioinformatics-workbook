@@ -751,7 +751,7 @@ input:
 path(queryFile) from queryFile_ch
 ```
 
-And we can swap out `$params.query` with `$queryFile`.  Some of you readers may be wondering why we would do this if it does the exactly the same thing?  The answer to this is that with processes that can accept a channel as input we have greater control to parallelize the execution of the process on the data as we will see in the next lesson.
+And we can swap out `$params.query` with `$queryFile`.  Some of the readers may be wondering why we would do this if it does the exactly the same thing?  The answer is that with processes that can accept a channel as input we have greater control to parallelize the execution of the process on the data as we will see in the next lesson.
 
 <details><summary>main.nf</summary>
 
@@ -776,12 +776,158 @@ process runBlast {
 </pre>
 </details>
 
+## Run it and verify it works
 
-## nextflow split fasta
+```
+nextflow run main.nf
+```
 
 
 
+## Lesson 10: Nextflow split fasta
 
+One of the more powerful channel operators is called `.splitFasta`.  This operator can be used to split a fasta file into chunks by a specified chunk size and then we can pass it to the queue and the process will run these chunks in parallel.
+
+To do this, we modify the `queryFile_ch`  Channel.  This code says to create a channel from path `params.query` and splitFasta by chunks of size 1 fasta record and make a file for these chunks in the work process folder and put this into a channel named `queryFile_ch`.  I chose a chunk size of 1 because our example fasta only has 5 fasta records
+
+
+```
+Channel
+    .fromPath(params.query)
+    .splitFasta(by: 1, file:true)
+    .into { queryFile_ch }
+```
+
+When you run this you will now see a different output
+
+```
+nextflow run main.nf
+N E X T F L O W  ~  version 20.07.1
+Launching `main.nf` [suspicious_kare] - revision: df99b16d40
+
+WARN: The `into` operator should be used to connect two or more target channels -- consider to replace it with `.set { queryFile_ch }`
+executor >  local (5)
+[e1/5baaab] process > runBlast (4) [100%] 5 of 5 ✔
+```
+
+The important part of this is that there are now 5 local jobs and 5 runBlast processes that have been performed.  You will also see more folders in your work folder.
+
+#### PublishDir broke
+
+Something that you may have noticed is that the `input.blastout` now only contains a single blast line.  What has happened is that every time the runBlast process runs it replaces the BLAST output of the fasta chunk in publishDir.  To fix this we need to send the output of all these chunks to a new channel and then use a different parameter to collect them before publishing.
+
+So change the `runBlast` process output line to look like this.
+
+```
+output:
+  path(params.outFileName) into blast_output_ch
+```
+
+Notice that you will see the `into` method again and then the name of the channel you are creating.
+
+After the `runBlast` process add the following lines.
+
+```
+blast_output_ch
+  .collectFile(name: 'blast_output_combined.txt', storeDir: params.outdir)
+```
+
+This takes the blast_output_ch that has the blast output from the fasta chunks and collects them (cat) into a new file named `blast_output_combined.txt` in the folder named `params.outdir`.
+
+**Output**
+
+The out_dir now contains the `blast_output_combined.txt` file with all the blast output.
+
+```
+out_dir/
+blast_output_combined.txt blastout
+```
+
+If you messed up or need help, this is what your main.nf script should now look like
+
+<details><summary>main.nf</summary><p>
+
+<pre>
+#! /usr/bin/env nextflow
+
+println "\nI want to BLAST $params.query to $params.dbDir/$params.dbName using $params.threads CPUs and output it to $params.outdir\n"
+
+def helpMessage() {
+  log.info """
+        Usage:
+        The typical command for running the pipeline is as follows:
+        nextflow run main.nf --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName"
+
+        Mandatory arguments:
+         --query                        Query fasta file of sequences you wish to BLAST
+         --dbDir                        BLAST database directory (full path required)
+         --dbName                       Prefix name of the BLAST database
+
+       Optional arguments:
+        --outdir                       Output directory to place final BLAST output
+        --outfmt                       Output format ['6']
+        --options                      Additional options for BLAST command [-evalue 1e-3]
+        --outFileName                  Prefix name for BLAST output [input.blastout]
+        --threads                      Number of CPUs to use during blast job [16]
+        --chunkSize                    Number of fasta records to use when splitting the query fasta file
+        --app                          BLAST program to use [blastn;blastp,tblastn,blastx]
+        --help                         This usage statement.
+        """
+}
+
+// Show help message
+if (params.help) {
+    helpMessage()
+    exit 0
+}
+
+Channel
+    .fromPath(params.query)
+    .splitFasta(by: 1, file:true)
+    .into { queryFile_ch }
+
+process runBlast {
+
+  publishDir "${params.outdir}/blastout"
+
+  input:
+  path queryFile from queryFile_ch
+
+  output:
+  path(params.outFileName) into blast_output_ch
+
+  script:
+  """
+  $params.app -num_threads $params.threads -db $params.dbDir/$params.dbName -query $queryFile -outfmt $params.outfmt $params.options -out $params.outFileName
+  """
+
+}
+
+
+blast_output_ch
+  .collectFile(name: 'blast_output_combined.txt', storeDir: params.outdir)
+
+</pre>
+
+</p>
+</details>
+
+#### Summary
+
+Up to this point you know have a working runBlast workflow that will take in a fasta file split it into chunks of size 1 fasta record and run those blasts in parallel and then collect all the outputs and write it to a single file in the out_dir.
+
+#### Exercise
+
+1. Add a chunkSize parameter that you can set so that you can specify the chunksize.  Be sure to add it to the appropriate places in nextflow.config and main.nf
+
+<details><summary>Hints</summary>
+
+<pre>
+1. params has an s at the end of it
+2. It is not contained inside `"` so don't use the `$`
+
+</pre>
+</details>
 ## makeBlastDB process
 
 * if else statement
