@@ -548,9 +548,11 @@ tblastx -num_threads 2 -db /Users/severin/nextflow/workbook/blast/tutorial/DB//b
 
 ```
 
-## Lesson 7: adding a help param
+## Lesson 7: Adding a help param
 
 With all these pipeline parameters it is getting hard to remember what we can use. So let's make a handy help function and `--help` parameter.
+
+#### Define a function
 
 To define a function in nextflow we use this type of syntax.
 
@@ -589,9 +591,23 @@ def helpMessage() {
 
 ```
 
-* Paste the above helpMessage() function in the `main.nf` file above `process runBlast`.
+#### Run a the function
+Now that the definition has been defined above, we need code that executes it if the params.help parameter is set.
 
-  <details><summary>main.nf</summary><p>
+Comments are specified in groovy with `//`
+
+```
+// Show help message
+if (params.help) {
+    helpMessage()
+    exit 0
+}
+```
+
+
+* Paste the above helpMessage() function and if statement in the `main.nf` file above `process runBlast`.
+
+  <details><summary>main.nf</summary>
 
   <pre>
   #! /usr/bin/env nextflow
@@ -621,6 +637,12 @@ def helpMessage() {
           """
   }
 
+  // Show help message
+  if (params.help) {
+      helpMessage()
+      exit 0
+  }
+
   process runBlast {
 
     script:
@@ -631,7 +653,7 @@ def helpMessage() {
   }
   </pre>
 
-  </p></details>
+  </details>
 
 
 * then add the pipeline parameter `help = false` to your params code block in `nextflow.config`.
@@ -655,23 +677,56 @@ def helpMessage() {
 
   </details>
 
+#### Exercise
+
+1. Try it out and make sure it works.
+
+```
+nextflow run main.nf --help
+```
+
+## Lesson 8: Nextflow process input and output
+
+So far we have written a nextflow script and replaced as much of it as we could with pipeline parameters and learned how to write a function in nextflow to display a usage message.  Now we are going to extend the process to include input and output sections.
+
+#### Current runBlast process
+```
+   process runBlast {
+    script:
+    """
+    $params.app -num_threads $params.threads -db $params.dbDir/$params.dbName -query $params.query -outfmt $params.outfmt $params.options -out $params.outFileName
+    """
+  }
+```
+
+#### Adding nextflow output and publishDir sections
+
+Here we have added a nextflow function called `publishDir` which tells nextflow where to place a symlink of the output files.  Those outputfiles are defined by the `output:` section of the process.
+
+**Note:** the `params.outdir` in the `publishDir` command has a `$` in front of it because it is inside a quotation whereas the `params.outFileName` does not have a `$` because it is not inside a script or a set of quotes.  This is a common source of errors when first scripting in nextflow.  
+
+You can have more than one line in the `output:` section.
+
+```
+   process runBlast {
+
+    publishDir "${params.outdir}/blastout"
+
+    output:
+    path(params.outFileName)
+
+    script:
+    """
+    $params.app -num_threads $params.threads -db $params.dbDir/$params.dbName -query $params.query -outfmt $params.outfmt $params.options -out $params.outFileName
+    """
+  }
+```
+**output**
+
+You should now see an `out_dir` directory with a `blastout` subdirectory and the `input.blastout` in side that folder.
 
 
-
-## nextflow config timeline and report
-
-#### timeline
-
-#### report
-
-## nextflow config executor and profiles
-
-## nextflow config manifest
-
-
-## nextflow containers
-
-## nextflow channels
+## nextflow channels and process inputs.
 
 Create a channel frompath the params.query
 * input and output
@@ -688,6 +743,18 @@ Create a channel frompath the params.query
 * config
 * main
 
+## nextflow config timeline and report
+
+#### timeline
+
+#### report
+
+## nextflow config executor and profiles
+
+## nextflow config manifest
+
+
+## nextflow containers
 
 
 
