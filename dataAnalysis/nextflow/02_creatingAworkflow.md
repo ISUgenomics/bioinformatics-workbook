@@ -72,7 +72,7 @@ ls
 README.md       main.nf         nextflow.config
 ```
 
-## Lesson 1: Nextflow params
+## Lesson 1: Nextflow params and variables
 
 Let's create a simple program that has a parameter to set our query input file that we will use for the BLAST program.
   ```
@@ -278,6 +278,7 @@ params {
   outdir = "out_dir"
 }
 ```
+You will still need to refer to these parameters as `params.X`.
 
 ```
 nextflow run main.nf
@@ -315,6 +316,7 @@ You will need to have BLAST-plus installed on your computer. We will use the `ma
 
 ```
 makeblastdb -in input.fasta -dbtype 'nucl' -out blastDB
+makeblastdb -in input.fasta -dbtype 'prot' -out blastDB
 mkdir DB
 mv blastDB.n* DB
 ```
@@ -426,6 +428,159 @@ We should also adjust the defaults in **nextflow.config** to real files.
   ```
   nextflow run main.nf --query "$PWD/input.fasta" --threads 6
   ```
+
+## Lesson 5: Adding more params
+
+We can add more functionality to this script
+
+```
+  script:
+  """
+  blastn  -num_threads $params.threads -db $params.dbDir/$params.dbName -query $params.query -outfmt 6 -out input.blastout
+  """
+```
+
+We can add the following:
+
+|parameter| description|
+| -- | -- |
+|--outfmt | To change the out format of blast|
+|--outFileName| to change the outfile name|
+|--options | to add additional options like evalue |
+
+This is what the new script will look like.
+
+```
+  script:
+  """
+  blastn  -num_threads $params.threads -db $params.dbDir/$params.dbName -query $params.query -outfmt $params.outfmt $params.options -out $params.outFileName
+  """
+```
+
+Of course if we do that we also need to add it to the nextflow.config file.
+
+```
+params {
+  query = "$PWD/input.fasta"
+  dbDir = "$PWD/DB/"
+  dbName = "blastDB"
+  threads = 2
+  outdir = "out_dir"
+  outFileName = "input.blastout"
+  options = "-evalue 1e-3"
+  outfmt = "'6'"
+}
+```
+
+1. Make the changes described above to the **main.nf** and the **nextflow.config** scripts and show that it still works with `nextflow run main.nf`
+2. Test out the pipeline parameters `--outFileName` `--options` and `--outfmt`
+
+**example**
+
+```
+nextflow run main.nf --outFileName "myBlast" --options "-evalue 1e-10" --outfmt "'6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen frames salltitles qcovs'"
+```
+
+## Lesson 6: How far can we take params?
+
+* adding an app param.
+
+Turns out we can even add a parameter for the BLAST app we want to run.  Right now it only runs blastn but what about blastp,tblastn and blastx?  We could use a series of if statements or we can add a `params.app` that is replaced in the script itself like this.
+
+```
+  script:
+  """
+  $params.app  -num_threads $params.threads -db $params.dbDir/$params.dbName -query $params.query -outfmt $params.outfmt $params.options -out $params.outFileName
+  """
+```
+
+Be sure to add the --app in the `nextflow.config` file.
+
+```
+params {
+  query = "$PWD/input.fasta"
+  dbDir = "$PWD/DB/"
+  dbName = "blastDB"
+  threads = 2
+  outdir = "out_dir"
+  outFileName = "input.blastout"
+  options = "-evalue 1e-3"
+  outfmt = "'6'"
+  app = "blastn"
+}
+```
+
+**test it**
+
+```
+nextflow run main.nf --outFileName "myBlast" --options "-evalue 1e-10" --outfmt "'6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen frames salltitles qcovs'" --app tblastx
+```
+
+#### How do you know if it worked as you expected?  
+
+In the work folder in each of the leaf directories you will find a bunch of `.command.X` files.
+
+```
+-rw-r--r--  1 severin  staff     0B Aug 28 09:25 work/78/1c37092ffb6cd83a4973e8f64bc398/.command.begin
+-rw-r--r--  1 severin  staff     0B Aug 28 09:25 work/78/1c37092ffb6cd83a4973e8f64bc398/.command.err
+-rw-r--r--  1 severin  staff     0B Aug 28 09:25 work/78/1c37092ffb6cd83a4973e8f64bc398/.command.log
+-rw-r--r--  1 severin  staff     0B Aug 28 09:25 work/78/1c37092ffb6cd83a4973e8f64bc398/.command.out
+-rw-r--r--  1 severin  staff   2.5K Aug 28 09:25 work/78/1c37092ffb6cd83a4973e8f64bc398/.command.run
+-rw-r--r--  1 severin  staff   328B Aug 28 09:25 work/78/1c37092ffb6cd83a4973e8f64bc398/.command.sh
+-rw-r--r--  1 severin  staff     1B Aug 28 09:25 work/78/1c37092ffb6cd83a4973e8f64bc398/.exitcode
+```
+
+* The `.command.begin` is the begin script if you have one (we don't in this one)
+* The `.command.err` is useful when it crashes.
+* The `.command.run` is the full nextflow pipeline that was run, this is helpful when trouble shooting a nextflow error rather than the script error.
+* The `.command.sh` shows what was run.
+* The `.exitcode` will have the exit code in it.
+
+
+The `.command.sh` command will have the command that was actually run. As you can see `params.app` was successfully replaced with tblastx.
+
+```
+cat  work/78/1c37092ffb6cd83a4973e8f64bc398/.command.sh
+#!/bin/bash -ue
+tblastx -num_threads 2 -db /Users/severin/nextflow/workbook/blast/tutorial/DB//blastDB -query /Users/severin/nextflow/workbook/blast/tutorial/input.fasta -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen frames salltitles qcovs' -evalue 1e-10 -out myBlast
+
+```
+
+## Lesson 7: adding a help param
+
+With all these pipeline parameters it is getting hard to remember what we can use. So let's make a handy help function and `--help` parameter.
+
+
+## nextflow config timeline and report
+
+#### timeline
+
+#### report
+
+## nextflow config executor and profiles
+
+## nextflow config manifest
+
+
+## nextflow containers
+
+## nextflow channels
+
+Create a channel frompath the params.query
+* input and output
+* publishDir
+
+## nextflow split fasta
+
+## makeBlastDB process
+
+* if else statement
+
+
+##
+* config
+* main
+
 
 
 
