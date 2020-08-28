@@ -550,6 +550,111 @@ tblastx -num_threads 2 -db /Users/severin/nextflow/workbook/blast/tutorial/DB//b
 
 With all these pipeline parameters it is getting hard to remember what we can use. So let's make a handy help function and `--help` parameter.
 
+To define a function in nextflow we use this type of syntax.
+
+
+```
+def helpMessage() {
+
+}
+```
+
+We are going to add a help message. The `log.info` command is not well documented but can be used to print a multiline information using groovy's [logger fuctionality](https://github.com/nextflow-io/nextflow/blob/553c3119cc81012c3c4667ba280f174b0a7c7f8b/modules/nextflow/src/main/java/com/esotericsoftware/minlog/Log.java#L205).  In simple terms put what you want to print out for the help message between the `log.info """` and `"""`
+
+```
+def helpMessage() {
+  log.info """
+        Usage:
+        The typical command for running the pipeline is as follows:
+        nextflow run main.nf --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName"
+
+        Mandatory arguments:
+         --query                        Query fasta file of sequences you wish to BLAST
+         --dbDir                        BLAST database directory (full path required)
+         --dbName                       Prefix name of the BLAST database
+
+       Optional arguments:
+        --outdir                       Output directory to place final BLAST output
+        --outfmt                       Output format ['6']
+        --options                      Additional options for BLAST command [-evalue 1e-3]
+        --outFileName                  Prefix name for BLAST output [input.blastout]
+        --threads                      Number of CPUs to use during blast job [16]
+        --chunkSize                    Number of fasta records to use when splitting the query fasta file
+        --app                          BLAST program to use [blastn;blastp,tblastn,blastx]
+        --help                         This usage statement.
+        """
+}
+
+```
+
+* Paste the above helpMessage() function in the `main.nf` file above `process runBlast`.
+
+  <details><summary>main.nf</summary>
+
+  ```
+  #! /usr/bin/env nextflow
+
+  println "\nI want to BLAST $params.query to $params.dbDir/$params.dbName using $params.threads CPUs and output it to $params.outdir\n"
+
+  def helpMessage() {
+    log.info """
+          Usage:
+          The typical command for running the pipeline is as follows:
+          nextflow run main.nf --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName"
+
+          Mandatory arguments:
+           --query                        Query fasta file of sequences you wish to BLAST
+           --dbDir                        BLAST database directory (full path required)
+           --dbName                       Prefix name of the BLAST database
+
+         Optional arguments:
+          --outdir                       Output directory to place final BLAST output
+          --outfmt                       Output format ['6']
+          --options                      Additional options for BLAST command [-evalue 1e-3]
+          --outFileName                  Prefix name for BLAST output [input.blastout]
+          --threads                      Number of CPUs to use during blast job [16]
+          --chunkSize                    Number of fasta records to use when splitting the query fasta file
+          --app                          BLAST program to use [blastn;blastp,tblastn,blastx]
+          --help                         This usage statement.
+          """
+  }
+
+  process runBlast {
+
+    script:
+    """
+    $params.app -num_threads $params.threads -db $params.dbDir/$params.dbName -query $params.query -outfmt $params.outfmt $params.options -out $params.outFileName
+    """
+
+  }
+  ```
+
+  </details>
+
+
+* then add the pipeline parameter `help = false` to your params code block in `nextflow.config`.
+
+  <details><summary>nextflow.config</summary>
+
+  ```
+  params {
+    query = "$PWD/input.fasta"
+    dbDir = "$PWD/DB/"
+    dbName = "blastDB"
+    threads = 2
+    outdir = "out_dir"
+    outFileName = "input.blastout"
+    options = "-evalue 1e-3"
+    outfmt = "'6'"
+    app = "blastn"
+    help = false
+  }
+  ```
+
+  </details>
+
+
+
 
 ## nextflow config timeline and report
 
