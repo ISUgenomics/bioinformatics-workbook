@@ -589,7 +589,7 @@ def helpMessage() {
 
 * Paste the above helpMessage() function in the `main.nf` file above `process runBlast`.
 
-  <details><summary>main.nf</summary>
+  <details><summary>main.nf</summary><p>
 
   ```
   #! /usr/bin/env nextflow
@@ -629,7 +629,7 @@ def helpMessage() {
   }
   ```
 
-  </details>
+  </p></details>
 
 
 * then add the pipeline parameter `help = false` to your params code block in `nextflow.config`.
