@@ -1065,6 +1065,11 @@ Note: `isugifNF/tutorial` is my organization/githubRepo, that I have been pushin
 
 ## Lesson 12: nextflow containers
 
+#### [Singularity](https://www.nextflow.io/docs/latest/singularity.html#singularity-containers) and [Docker](https://www.nextflow.io/docs/latest/docker.html?highlight=docker#docker-containers)
+
+There are default profiles for singularity `-profile singularity` and docker `-profile docker`.  
+
+
 ## Lesson 13: makeBlastDB process
 
 * if else statement
