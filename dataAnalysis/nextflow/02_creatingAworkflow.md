@@ -296,7 +296,7 @@ Copy and paste the following fasta reads into a file named `input.fasta`
 
 <details><summary>input.fasta</summary>
 
-
+<pre>
 >Scaffold_1_1..100
 CAGGCAAAATGTGGCACAAAAACAACAAATTGTTTAGTAGATACAGGGGCATCCATTTGTTGTATTTCGTCTGCTTTTCTGAGCACAGCTTTTGAAAACC
 >Scaffold_1_101..200
@@ -307,6 +307,8 @@ GGAATTTTCTCAAAGATTCTATGTACTGCCTACACTGCCGAAGGCAGTGATACTAGGTGAGAACTTCCTTAATGACAATG
 TGTCATTCCTTGATACTCAACAACAGCACCTCAGATAGGCAATATATCAATTTCATAGCCAATTCAGTGCATGAGATTAGTGGATTAGCAAAAACACTAG
 >Scaffold_1_401..500
 ATCAGATTTACATCCCCCCTCAGAGTGAAATTCATTTCAAGGTCAGACTATCAGAGACCAAAGAGGATTCCCTCATCCTCATTGAACCCATTGCTTCCCT
+
+</pre>
 
 </details>
 
@@ -591,7 +593,7 @@ def helpMessage() {
 
   <details><summary>main.nf</summary><p>
 
-  <pre>
+  <code>
   #! /usr/bin/env nextflow
 
   println "\nI want to BLAST $params.query to $params.dbDir/$params.dbName using $params.threads CPUs and output it to $params.outdir\n"
@@ -627,7 +629,7 @@ def helpMessage() {
     """
 
   }
-  </pre>
+  </code>
 
   </p></details>
 
@@ -636,7 +638,7 @@ def helpMessage() {
 
   <details><summary>nextflow.config</summary>
 
-  ```
+  <pre>
   params {
     query = "$PWD/input.fasta"
     dbDir = "$PWD/DB/"
@@ -649,7 +651,7 @@ def helpMessage() {
     app = "blastn"
     help = false
   }
-  ```
+  </pre>
 
   </details>
 
