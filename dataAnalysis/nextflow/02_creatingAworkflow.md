@@ -1064,13 +1064,13 @@ Note: `isugifNF/tutorial` is my organization/githubRepo, that I have been pushin
 
 #### [labels](https://www.nextflow.io/docs/latest/config.html#config-process-selectors)
 
-It is possible to add a label to a process.
+It is possible to add a label to a process between the process name and the `input:`.
 
 ```
 label 'blast'
 ```
 
-Which you can define in the `nextflow.config` in your process directive. or in our case in the `Configs/slurm.config`
+The label can define in the `nextflow.config` in your process directive or in our case in the `Configs/slurm.config`.  It can be used like a reusable variable to include additional parameters.
 
 ```
 process {
@@ -1080,7 +1080,26 @@ process {
 }
 
 ```
-In the above example we have provided code that will load the appropriate module.  It would be possible to create several profiles to load the correct modules depending on the super computer you were using, for example.
+
+In the above example we have provided code that will load the appropriate module.  It would be possible to create several profiles to load the correct modules depending on the super computer you were using, for example.  Depending on your super computer you may need to change the name of the module you want to load.
+
+#### [modules](https://www.nextflow.io/docs/latest/process.html?highlight=module%20load#module)
+
+If you want to just load the module directly in the process you can just add the module command like directly where you put the label which is anywhere before the `input:`
+
+
+```
+process runBlast {
+
+  module = 'blast-plus'
+  publishDir "${params.outdir}/blastout"
+
+  input:
+  path queryFile from queryFile_ch
+  .
+  .
+  . // these three dots mean I didn't paste the whole process.
+```
 
 
 
@@ -1115,8 +1134,10 @@ process runBlast {
   path queryFile from queryFile_ch
   .
   .
-  .
+  .  // these three dots mean I didn't paste the whole process.
 ```
+
+**example**
 
 
 
