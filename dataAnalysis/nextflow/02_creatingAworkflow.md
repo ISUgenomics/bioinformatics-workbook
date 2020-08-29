@@ -1107,10 +1107,24 @@ process runBlast {
 
 #### [Singularity](https://www.nextflow.io/docs/latest/singularity.html#singularity-containers) and [Docker](https://www.nextflow.io/docs/latest/docker.html?highlight=docker#docker-containers)
 
-There are default profiles for singularity `-profile singularity` and docker `-profile docker`.  
+There are default profiles for singularity `-profile singularity` and docker `-profile docker` that can be turned on in the `nextflow.config` file by adding these lines to your profile directive.
+
+```
+profiles {
+  slurm { includeConfig './configs/slurm.config' }
+
+  docker { docker.enabled = true }
+
+  singularity {
+    singularity.enabled = true
+    singularity.autoMounts = true
+  }
+}
+
+```
 
 
-To set a container you can do so by adding the following line to the process with the container name as it appears in [docker hub](https://hub.docker.com/search?q=blast&type=image)
+To have a container run for a process when the above profile is specified a line can be added to the process with the container name as it appears in [docker hub](https://hub.docker.com/search?q=blast&type=image)
 
 Docker is the default so you can use this short version.
 ```
@@ -1139,6 +1153,113 @@ process runBlast {
 
 **example**
 
+The first time you run this may take some time to download the container.  After that it should run more quickly.
+
+```
+nextflow run main.nf -profile docker
+```
+
+The above line fails because it can't find the database.  When using containers we will need to explicitly give it the location as it can't find the local location inside the container.  To make it easier for testing purposes, let's create a test profile. Add the following to a `test.config` file in the `configs` folder
+
+```
+params {
+  query = "${projectDir}/input.fasta"
+  outdir = './out_dir'
+  dbDir = "${projectDir}/DB/"
+  chunkSize = 1 //this is the number of fasta
+}
+```
+Note: nextflow has a bunch of [implicit variables](https://www.nextflow.io/docs/latest/script.html?highlight=basedir) one of which is the `projectDir` I use above which is where the main workflow script is located.  It used to be called `baseDir`.
+
+Now add this line to your profiles directive inside `nextflow.config`.
+
+```
+test { includeConfig './configs/test.config' }
+
+```
+
+Actually this fails too because even though we used a profile, it is still pointing to the local file system and not the container filesystem.  We need a way to pass the database file location directly into the runBlast process without the need of the local path. We need to put everything into channels!
+
+```
+// This channel will grab the folder path and set it into a channel named dbDir_ch
+Channel.fromPath(params.dbDir)
+    .set { dbDir_ch }
+
+// this channel will grab the text from params.dbName.  Notice it is just from and not fromPath.  nextflow will complain if you try to grab a path from a bit of text.
+Channel.from(params.dbName)
+    .set { dbName_ch }
+
+process runBlast {
+
+  container = 'ncbi/blast'
+  publishDir "${params.outdir}/blastout"
+
+// The input now requires these two additinal inputs from their respective channels.  Again dbName is a val not a file/folder path.
+  input:
+  path queryFile from queryFile_ch
+  path dbDir from dbDir_ch
+  val dbName from dbName_ch
+
+  output:
+  path(params.outFileName) into blast_output_ch
+
+// the script section requires that we change the $params.dbDir and $params.dbName to correspond to the input from channel which we have aptly named dbDir and dbName.  Since they are inside triple quotes we need to include the dollar sign
+  script:
+  """
+  $params.app -num_threads $params.threads -db $dbDir/$dbName -query $queryFile -outfmt $params.outfmt $params.options -out $params.outFileName
+  """
+
+}
+
+```
+
+This runs but there is a problem.  It only runs the first chunk.
+
+Try it.
+
+```
+nextflow run main.nf -profile docker,test
+
+N E X T F L O W  ~  version 20.07.1
+Launching `main.nf` [agitated_becquerel] - revision: 8fd35ffcca
+
+I want to BLAST /Users/severin/nextflow/workbook/blast/tutorial/input.fasta to /Users/severin/nextflow/workbook/blast/tutorial/DB//blastDB using 2 CPUs and output it to ./out_dir
+
+WARN: The `into` operator should be used to connect two or more target channels -- consider to replace it with `.set { queryFile_ch }`
+executor >  local (1)
+[ec/8bddfe] process > runBlast (1) [100%] 1 of 1 ✔
+```
+
+To fix this we need to make the channels into value channels not queue channels.  We discussed this many lessons ago.  Change these two lines to include the `.val` at the end.
+
+```
+path dbDir from dbDir_ch.val
+val dbName from dbName_ch.val
+```
+
+Now try it again
+
+```
+nextflow run main.nf -profile docker,test
+
+N E X T F L O W  ~  version 20.07.1
+Launching `main.nf` [focused_hamilton] - revision: 26c03ab400
+
+I want to BLAST /Users/severin/nextflow/workbook/blast/tutorial/input.fasta to /Users/severin/nextflow/workbook/blast/tutorial/DB//blastDB using 2 CPUs and output it to ./out_dir
+
+WARN: The `into` operator should be used to connect two or more target channels -- consider to replace it with `.set { queryFile_ch }`
+executor >  local (5)
+[ab/70c53b] process > runBlast (1) [100%] 5 of 5 ✔
+```
+
+#### Fixing Warnings
+The warning is saying we shouldn't have used .into at the beginning to set the first channel.
+
+```
+WARN: The `into` operator should be used to connect two or more target channels -- consider to replace it with `.set { queryFile_ch }`
+```
+
+Go ahead and change it to `.set { queryFile_ch }`.  We use `.into { fastq_reads_qc; fastq_reads_trim }` when we want to make multiple channels for the same input.  This gets around that consuming thing when you have multiple programs that need to consume the same input.
 
 
 ## Lesson 13: makeBlastDB process
@@ -1147,4 +1268,27 @@ process runBlast {
 
 ## Resource list
 
+* [Nextflow getting started](https://www.nextflow.io/docs/latest/getstarted.html)
+* [nextflow patterns section](https://github.com/nextflow-io/patterns)
 * [nextflow operators](https://www.nextflow.io/docs/latest/operator.html)
+* [queue or value channels](https://www.nextflow.io/docs/latest/channel.html#queue-channel)
+* nextflow.config
+  * [nextflow operators](https://www.nextflow.io/docs/latest/operator.html)
+  * [executors](https://www.nextflow.io/docs/latest/config.html)
+  * [profiles](https://www.nextflow.io/docs/latest/config.html?highlight=profiles)
+  * [Manifest](https://www.nextflow.io/docs/latest/config.html?highlight=profiles#scope-manifest)
+  * [labels](https://www.nextflow.io/docs/latest/config.html#config-process-selectors)
+  * [modules](https://www.nextflow.io/docs/latest/process.html?highlight=module%20load#module)
+* Containers
+  * [Docker](https://www.nextflow.io/docs/latest/docker.html?highlight=docker#docker-containers)
+  * [docker hub](https://hub.docker.com/search?q=blast&type=image)
+  * [Red Hat Quay.io](https://quay.io/search?q=blast)
+
+
+
+
+## Groovy Resource List
+
+* [Groovy User Guide](http://groovy-lang.org/documentation.html)
+* [Groovy Cheat Sheet](http://www.cheat-sheets.org/saved-copy/rc015-groovy_online.pdf)
+* [Groovy in Action](http://www.manning.com/koenig2/)
