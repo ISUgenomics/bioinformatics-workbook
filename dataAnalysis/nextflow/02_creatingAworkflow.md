@@ -1062,12 +1062,62 @@ nextflow run isugifNF/tutorial --help
 
 Note: `isugifNF/tutorial` is my organization/githubRepo, that I have been pushing this tutorial to.  It will be different for you.  
 
+#### [labels](https://www.nextflow.io/docs/latest/config.html#config-process-selectors)
+
+It is possible to add a label to a process.
+
+```
+label 'blast'
+```
+
+Which you can define in the `nextflow.config` in your process directive. or in our case in the `Configs/slurm.config`
+
+```
+process {
+  executor = 'slurm'
+  clusterOptions =  '-N 1 -n 16 -t 02:00:00'
+  withLabel: blast { module = 'blast-plus' }
+}
+
+```
+In the above example we have provided code that will load the appropriate module.  It would be possible to create several profiles to load the correct modules depending on the super computer you were using, for example.
+
+
 
 ## Lesson 12: nextflow containers
 
 #### [Singularity](https://www.nextflow.io/docs/latest/singularity.html#singularity-containers) and [Docker](https://www.nextflow.io/docs/latest/docker.html?highlight=docker#docker-containers)
 
 There are default profiles for singularity `-profile singularity` and docker `-profile docker`.  
+
+
+To set a container you can do so by adding the following line to the process with the container name as it appears in [docker hub](https://hub.docker.com/search?q=blast&type=image)
+
+Docker is the default so you can use this short version.
+```
+container = 'ncbi/blast'
+```
+
+Or you can specify a container using its full path from other locations such as [Red Hat Quay.io](https://quay.io/search?q=blast)
+```
+container = `quay.io/biocontainers/blast/2.2.31--pl526he19e7b1_5`
+```
+
+You can place this line anywhere before the `input:` in the process.
+
+```
+process runBlast {
+
+  container = 'ncbi/blast'
+  publishDir "${params.outdir}/blastout"
+
+  input:
+  path queryFile from queryFile_ch
+  .
+  .
+  .
+```
+
 
 
 ## Lesson 13: makeBlastDB process
