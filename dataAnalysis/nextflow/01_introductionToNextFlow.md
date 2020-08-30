@@ -55,7 +55,7 @@ brew cask install adoptopenjdk11
 
 * Linux
 
-  ```
+  * ```
   curl -s https://get.nextflow.io | bash
   ```
 
@@ -63,18 +63,27 @@ brew cask install adoptopenjdk11
   * [Install Xcode from Mac App Store](https://apps.apple.com/us/app/xcode/id497799835?mt=12)
   * [Install Java](https://www.java.com/en/download/)
 
-  ```
+  * ```
   brew install nextflow
   ```
 
 * PC
-  * coming soon
+  * Install the Unix subsystem
+  * Install Java 8 or above
+    * ```sudo apt get install openjdk-8-jdk```
+  * Install Nextflow
+    * ```
+  curl -s https://get.nextflow.io | bash
+  ```
+
 
 
 ## Running a nextflow workflow
 
 
-Nextflow has many commands but we are going to focus on the run command
+Nextflow has many commands but we are going to focus on the run, pull and drop commands
+
+To execute any of these commands, we type `nextflow ` then the command
 
 ```bash
 Commands:
@@ -96,7 +105,7 @@ Commands:
 
 ## nextflow run
 
-`nextflow` run can be used on a nextflow `main.nf` script or can be run directly from github repos.  Let's try this using a nextflow blast script developed by Iowa State's Genome Informatic's Facility (ISUGIF).
+`nextflow run` can be used on a nextflow `main.nf` script or can be run directly from github repository.  Let's try this using a nextflow blast script developed by Iowa State's Genome Informatic's Facility (ISUGIF) by calling it directly from the github repo.
 
 **Command: Showing the usage statement**
 
@@ -114,8 +123,8 @@ Launching `isugifNF/blast` [backstabbing_franklin] - revision: 11f393fd09 [maste
 NOTE: Your local project version looks outdated - a different revision is available in the remote repository [89887cd5b9]
 Usage:
       The typical command for running the pipeline is as follows:
-      nextflow run parallelBLAST.nf -query QUERY.fasta --genome GENOME.fasta -profile local
-      nextflow run parallelBLAST.nf -query QUERY.fasta --dbDir "blastDatabaseDirectory" -dbName "blastPrefixName" -profile local
+      nextflow run parallelBLAST.nf --query QUERY.fasta --genome GENOME.fasta -profile local
+      nextflow run parallelBLAST.nf --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName" -profile local
 
       Mandatory arguments:
        --query                        Query fasta file of sequences you wish to BLAST
@@ -134,7 +143,7 @@ Usage:
        --outfileName                  Prefix name for BLAST output [blastout]
        --threads                      Number of CPUs to use during blast job [16]
        --chunkSize                    Number of fasta records to use when splitting the query fasta file
-       --app                          BLAST program to use [blastn;blastp,tblastx,blastx]
+       --app                          BLAST program to use [blastn;blastp,tblastn,blastx]
        --help                         This usage statement.
 
 ```
@@ -194,9 +203,9 @@ tree
 ```
 
 
-Not all nextflow scripts will have a `--help` function or a `-profile test`.  If they are well written well with the intention of sharing they should.
+Not all nextflow scripts will have a `--help` function or a `-profile test`.  If they are written well with the intention of sharing they should.
 
-## Want to try it on your own dataset?
+### Want to try it on your own dataset?
 
 If you want to give it a go on your own dataset use the examples provided in the `--help` usage statement
 
@@ -216,6 +225,35 @@ Uses the BLAST database specified by `--dbName` and `--dbDir` and then performs 
 nextflow run parallelBLAST.nf -query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName" -profile local
 ```
 
+## nextflow pull command
+
+When you want the latest version of the nextflow script that you pulled from a github repository, you can execute the the `nextflow pull`
+
+```
+nextflow pull isugifNF/blast
+```
+
+## nextflow drop command
+
+Sometimes the local copy of the nextflow github repo will cant `fast forward` and it may be easier to remove the local copy and start fresh.
+
+```
+nextflow drop isugifNF/blast
+```
+Once it is dropped you can start again using
+
+```
+nextflow run isugifNF/blast
+```
+and it will repull the latest version.
+
+Note: if the `nextflow drop` command does not work you can manually remove this repository.  It is located: `~/.nextflow/assets/isugifNF/blast` or more generically `~/.nextflow/assets/OrganisationName/repoName`
+
+## How to resume a nextflow pipeline
+
+If your pipeline doesn't finish or errors at a specific process it can be restarted from where it left off using the `-resume` nextflow parameter.  Note: there is only one `-` (dash) as it is a nextflow parameter and not a pipeline parameter that your nextflow script has defined.
+
+
 ## Further Reading and Resources
 
 * [NextFlow curated list of tutorials](https://nf-co.re/usage/nextflow)
@@ -224,3 +262,11 @@ nextflow run parallelBLAST.nf -query QUERY.fasta --dbDir "blastDatabaseDirectory
 * [Searching for a biocontainer](https://quay.io/search?q=blast)
 * [nf-core](https://github.com/nf-core) github repo of nextflow workflows.
 * [nf-core modules](https://github.com/nf-core/modules)
+
+### Why nextflow?
+
+* [Using rapid prototyping to choose a bioinformatics workflow management system](https://www.biorxiv.org/content/10.1101/2020.08.04.236208v1.full.pdf+html)
+
+
+
+## [Creating Your own workflow](02_creatingAworkflow.md)
