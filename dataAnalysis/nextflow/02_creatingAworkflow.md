@@ -10,12 +10,22 @@ header:
 
 ## Learning Objectives
 
-1. Introduction
-2. nextflow setup
-3. nextflow params
-4. nextflow config file
-5. nextflow process
-6. nextflow channels
+0. Introduction
+1. Lesson 1: Nextflow params and variables
+2. Lesson 2: Nextflow Config file
+3. Lesson 3: Nextflow process
+4. Lesson 4: Integrating params with process
+5. Lesson 5: Adding more params
+6. Lesson 6: How far can we take params?
+7. Lesson 7: Adding a help param
+8. Lesson 8: Nextflow process input and output
+9. Lesson 9: Nextflow channels and process inputs.
+10. Lesson 10: Nextflow split fasta
+11. Lesson 11: Advanced Nextflow config 
+12. Lesson 12: nextflow containers
+13. Lesson 13: makeBlastDB process
+14. Lesson 14: Resources
+
 
 
 ## Introduction
@@ -24,14 +34,16 @@ Presumably, you are here because you want to take your bash scripts and put them
 
 * [Nextflow getting started](https://www.nextflow.io/docs/latest/getstarted.html)
 
-This is a great resource, but it assumes you have had some experience with object oriented programming or even some background in groovy/Java. You will run across methods that aren't part of nextflow but part of the groovy language like [`.trim, .flatten, and the word "it"`].  At first this was hard to separate out when we just wanted to know how to do X.  While they do have examples in their [nextflow patterns section](https://github.com/nextflow-io/patterns), it isn't quite sufficient yet to quickly learn to create a nextflow workflow.  This tutorial is aimed to bridge this gap.
+This is a great resource, but it assumes you have had some experience with object oriented programming or even some background in groovy/Java. You will run across methods that aren't part of nextflow but part of the groovy language like [`.trim, .flatten, and the word "it"`].  At first this was hard to separate out when we just wanted to know how to do X.  While they do have examples in their [nextflow patterns section](https://github.com/nextflow-io/patterns), it isn't quite sufficient yet to quickly learn to create a nextflow workflow.  
+
+Seqera labs just came out with a [very comprehensive set of tutorials](https://seqera.io/training/) and I strongly encourage you to explore it as it covers everything you will need to create nextflow workflows.  However, if you are looking for a shorter, quick start guide type tutorial geared toward biologist turned bioinformatician, this tutorial is for you.
 
 
-## A practical example
+### A practical example
 
 The goal of this tutorial is to introduce you to the concepts of nextflow by building a practical example.  We will journey through the process of making a simple blast workflow that can take in a fasta file as a query and run blast on it. We will then keep extending this example to showcase different features in nextflow that are useful in building a dynamic workflow.
 
-## Prerequisites
+### Prerequisites
 
 This tutorial assumes that you are familiar with bash scripting and [how to run blast locally](https://bioinformaticsworkbook.org/dataAnalysis/blast/blastExample.html#gsc.tab=0).
 
@@ -541,12 +553,12 @@ In the work folder in each of the leaf directories you will find a bunch of `.co
 
 The `.command.sh` command will have the command that was actually run. As you can see `params.app` was successfully replaced with tblastx.
 
-```
-cat  work/78/1c37092ffb6cd83a4973e8f64bc398/.command.sh
-#!/bin/bash -ue
-tblastx -num_threads 2 -db /Users/severin/nextflow/workbook/blast/tutorial/DB//blastDB -query /Users/severin/nextflow/workbook/blast/tutorial/input.fasta -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen frames salltitles qcovs' -evalue 1e-10 -out myBlast
+  ```
+  cat  work/78/1c37092ffb6cd83a4973e8f64bc398/.command.sh
+  #!/bin/bash -ue
+  tblastx -num_threads 2 -db /Users/severin/nextflow/workbook/blast/tutorial/DB//blastDB -query /Users/severin/nextflow/workbook/blast/tutorial/input.fasta -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen frames salltitles qcovs' -evalue 1e-10 -out myBlast
 
-```
+  ```
 
 ## Lesson 7: Adding a help param
 
@@ -1138,7 +1150,7 @@ container = `quay.io/biocontainers/blast/2.2.31--pl526he19e7b1_5`
 
 You can place this line anywhere before the `input:` in the process.
 
-```
+```nextflow
 process runBlast {
 
   container = 'ncbi/blast'
@@ -1159,9 +1171,9 @@ The first time you run this may take some time to download the container.  After
 nextflow run main.nf -profile docker
 ```
 
-The above line fails because it can't find the database.  When using containers we will need to explicitly give it the location as it can't find the local location inside the container.  To make it easier for testing purposes, let's create a test profile. Add the following to a `test.config` file in the `configs` folder
+The above line fails because it can't find the database.  Let's try giving the location explicitly inside a profile. let's create a test profile. Add the following to a `test.config` file in the `configs` folder
 
-```
+```nextflow
 params {
   query = "${projectDir}/input.fasta"
   outdir = './out_dir'
@@ -1169,6 +1181,7 @@ params {
   chunkSize = 1 //this is the number of fasta
 }
 ```
+
 Note: nextflow has a bunch of [implicit variables](https://www.nextflow.io/docs/latest/script.html?highlight=basedir) one of which is the `projectDir` I use above which is where the main workflow script is located.  It used to be called `baseDir`.
 
 Now add this line to your profiles directive inside `nextflow.config`.
@@ -1180,7 +1193,7 @@ test { includeConfig './configs/test.config' }
 
 Actually this fails too because even though we used a profile, it is still pointing to the local file system and not the container filesystem.  We need a way to pass the database file location directly into the runBlast process without the need of the local path. We need to put everything into channels!
 
-```
+```nextflow
 // This channel will grab the folder path and set it into a channel named dbDir_ch
 Channel.fromPath(params.dbDir)
     .set { dbDir_ch }
@@ -1217,7 +1230,7 @@ This runs but there is a problem.  It only runs the first chunk.
 
 Try it.
 
-```
+```nextflow
 nextflow run main.nf -profile docker,test
 
 N E X T F L O W  ~  version 20.07.1
@@ -1232,14 +1245,14 @@ executor >  local (1)
 
 To fix this we need to make the channels into value channels not queue channels.  We discussed this many lessons ago.  Change these two lines to include the `.val` at the end.
 
-```
+```nextflow
 path dbDir from dbDir_ch.val
 val dbName from dbName_ch.val
 ```
 
 Now try it again
 
-```
+```nextflow
 nextflow run main.nf -profile docker,test
 
 N E X T F L O W  ~  version 20.07.1
@@ -1252,7 +1265,7 @@ executor >  local (5)
 [ab/70c53b] process > runBlast (1) [100%] 5 of 5 ✔
 ```
 
-#### Fixing Warnings
+#### Fix Warnings
 The warning is saying we shouldn't have used .into at the beginning to set the first channel.
 
 ```
@@ -1266,7 +1279,19 @@ Go ahead and change it to `.set { queryFile_ch }`.  We use `.into { fastq_reads_
 
 * if else statement
 
-## Resource list
+
+## Lesson 14: Resources
+
+Congratulations, if you made it this far, you have successfully built a nextflow workflow for running BLAST.  You are now at a point where you can easily explore other workflow examples for inspiration on how to create even more complex workflows.
+
+For inspiration, I highly recommend the following sites.
+
+* [github](https://github.com/search?q=nextflow&type=)
+* [awesome-nextflow](https://github.com/nextflow-io/awesome-nextflow)
+* [Add syntax highlighting to your Atom](https://atom.io/packages/language-nextflow)
+* [vim plugin](https://github.com/LukeGoodsell/nextflow-vim)
+
+### Resource list
 
 * [Nextflow getting started](https://www.nextflow.io/docs/latest/getstarted.html)
 * [nextflow patterns section](https://github.com/nextflow-io/patterns)
@@ -1287,7 +1312,7 @@ Go ahead and change it to `.set { queryFile_ch }`.  We use `.into { fastq_reads_
 
 
 
-## Groovy Resource List
+### Groovy Resource List
 
 * [Groovy User Guide](http://groovy-lang.org/documentation.html)
 * [Groovy Cheat Sheet](http://www.cheat-sheets.org/saved-copy/rc015-groovy_online.pdf)
