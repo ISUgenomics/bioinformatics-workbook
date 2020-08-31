@@ -21,7 +21,7 @@ header:
 8. Lesson 8: Nextflow process input and output
 9. Lesson 9: Nextflow channels and process inputs.
 10. Lesson 10: Nextflow split fasta
-11. Lesson 11: Advanced Nextflow config 
+11. Lesson 11: Advanced Nextflow config
 12. Lesson 12: nextflow containers
 13. Lesson 13: makeBlastDB process
 14. Lesson 14: Resources
@@ -1277,7 +1277,183 @@ Go ahead and change it to `.set { queryFile_ch }`.  We use `.into { fastq_reads_
 
 ## Lesson 13: makeBlastDB process
 
-* if else statement
+There is one more feature that would make this simple nextflow workflow awesome.  That feature would be to automatically generate the BLAST databases for us if we provide it with a `--genome` parameter.
+
+To do this, we will need to:
+
+1. Create a `params.genome` parameter
+2. Create if/else statement where if `--genome` is supplied on the command line it will run a process.
+3. Create a process for `makeblastdb`
+4. Connect the channels correctly to pass it on to the `runBlast` process
+5. Add to help usage statement
+
+### 1) Create a `params.genome` parameter
+
+* to `nextflow.config`
+
+add the following to the params directive:
+
+```
+genome = false
+```
+
+### 2) create if/else statement
+
+Add an if statement after the `queryFile_ch` statement
+```
+Channel
+    .fromPath(params.query)
+    .splitFasta(by: params.chunkSize, file:true)
+    .set { queryFile_ch }
+
+if (params.genome) {
+println "It worked"
+exit 0
+}
+
+```
+
+Test it
+
+```
+nextflow run main.nf --genome test.fasta
+N E X T F L O W  ~  version 20.07.1
+Launching `main.nf` [modest_leakey] - revision: 65c14ec981
+
+I want to BLAST /Users/severin/nextflow/workbook/blast/tutorial/input.fasta to /Users/severin/nextflow/workbook/blast/tutorial/DB//blastDB using 2 CPUs and output it to out_dir
+
+It worked
+```
+
+### 3) Create a process for `makeblastdb`
+
+Great, now let's add the process.  We are going to build this up over several section below, wait until the end before you try running it.
+
+The script: part is straight forward as we know how to use `makeblastdb`.
+
+I went ahead and gave the out directory and name the same as what we need for input in the `runBlast` process.  And since, the params.genome parameter is the genome fasta file, I added that for the `-in`
+
+```
+if (params.genome) {
+  process runMakeBlastDB {
+    script:
+    """
+    makeblastdb -in ${params.genome} -dbtype 'nucl' -out $dbDir/$dbName
+    makeblastdb -in ${params.genome} -dbtype 'prot' -out $dbDir/$dbName
+    """
+  }
+
+  println "It worked"
+  exit 0
+}
+```
+
+The problem is that we get the `dbDir` and `dbName` from Channels and the pipeline parameters.  We need another means of capturing this information. We can use a Channel and grab this information from `params.genome`.  In this case, we are using the other method for creating a Channel were we can define the channel name and then an equal sign like a variable.  We use `.fromPath` and the `params.genome` pipeline parameter.  And new to this lesson is the `.map` nextflow function which will take the input (file) and create a tuple (multivariable output) of file.simpleName(file prefix), file.parent(directory path) and file(full file path).
+
+```
+if (params.genome) {
+  genomefile = Channel
+                  .fromPath(params.genome)
+                  .map { file -> tuple(file.simpleName, file.parent, file) }
+
+  process runMakeBlastDB {
+      script:
+      """
+      makeblastdb -in ${params.genome} -dbtype 'nucl' -out $dbDir/$dbName
+      makeblastdb -in ${params.genome} -dbtype 'prot' -out $dbDir/$dbName
+      """
+    }
+
+  println "It worked"
+  exit 0
+}
+```
+
+With that mapping we can now add the input and output.
+
+* Input
+  * from the genomefile_ch we set the (val, path, file) for the tuple (dbName,dbdir,FILE)
+* Output
+  * The output we are just passing the dbName and dbDir into new channels that are read into the `runBlast` process
+
+```
+if (params.genome) {
+  genomefile_ch = Channel
+                  .fromPath(params.genome)
+                  .map { file -> tuple(file.simpleName, file.parent, file) }
+
+  process runMakeBlastDB {
+    input:
+    set val(dbName), path(dbDir), file(FILE) from genomefile_ch
+
+    output:
+    val dbName into dbName_ch
+    path dbDir into dbDir_ch
+
+    script:
+    """
+    makeblastdb -in ${params.genome} -dbtype 'nucl' -out $dbDir/$dbName
+    makeblastdb -in ${params.genome} -dbtype 'prot' -out $dbDir/$dbName
+    """
+  }
+
+}
+```
+
+I went ahead and deleted these two lines as they were only useful for testing above.
+
+```
+println "It worked"
+exit 0
+````
+
+
+### 4) Connect the channels
+
+The last section, creates the BLAST databases but it doesn't pass it on to runBlast but is over written by the following lines
+
+```
+Channel.fromPath(params.dbDir)
+    .set { dbDir_ch }
+
+Channel.from(params.dbName)
+    .set { dbName_ch }`
+```
+
+so what we need to do is enclose this into an `else` clause
+
+```
+} else {
+  Channel.fromPath(params.dbDir)
+      .set { dbDir_ch }
+
+  Channel.from(params.dbName)
+      .set { dbName_ch }`
+}
+```
+
+Now we can test if it works by providing it an input.
+
+```
+nextflow run main.nf --genome input.fasta --query input.fasta
+```
+
+Test it with your own data.  When you do, don't forget to set the `--chunkSize` and `--threads`
+
+### 5) Add `--genome` to help usage statement
+* to `main.nf`
+
+The first thing we see in `main.nf` is the help usage function.  Let's go ahead and add the following line to it so it is complete.
+
+```
+        --genome                       If specified with a genome fasta file, a BLAST database will be generated for the genome
+```
+
+You can see it for yourself with this command
+
+```
+nextflow run main.nf --help
+```
 
 
 ## Lesson 14: Resources
@@ -1288,8 +1464,18 @@ For inspiration, I highly recommend the following sites.
 
 * [github](https://github.com/search?q=nextflow&type=)
 * [awesome-nextflow](https://github.com/nextflow-io/awesome-nextflow)
+
+Also Consider adding syntax highlighting to your vim.
+
 * [Add syntax highlighting to your Atom](https://atom.io/packages/language-nextflow)
 * [vim plugin](https://github.com/LukeGoodsell/nextflow-vim)
+
+```
+vim ~/nextflow-vim;
+mkdir ~/.vim/ftdetect; mkdir ~/.vim/ftplugin;
+cp ~/nextflow-vim/ftdetect/nextflow.vim ~/.vim/ftdetect;
+cp ~/nextflow-vim/syntax/nextflow.vim ~/.vim/ftplugin;
+```
 
 ### Resource list
 
