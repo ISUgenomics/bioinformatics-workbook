@@ -179,6 +179,18 @@ gatk0_index.sh Arabidopsis_halleri.Ahal2.2.dna.toplevel.fa ahalleri
   ```
 </details>
 
+Note: if you do not have `bioawk` module available on your HPC, you can install it in your home directory as follows:
+
+```bash
+ml bison
+git clone https://github.com/lh3/bioawk.git
+cd bioawk
+make
+mkdir -p ~/bin
+mv maketab bioawk ~/bin/
+echo 'export PATH=$PATH:~/bin' >> ~/.bashrc
+source ~/.bashrc
+```
 
 ### Step 2: Preprocessing the fastq files
 
