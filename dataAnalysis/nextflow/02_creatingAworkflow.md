@@ -36,7 +36,7 @@ Presumably, you are here because you want to take your bash scripts and put them
 
 This is a great resource, but it assumes you have had some experience with object oriented programming or even some background in groovy/Java. You will run across methods that aren't part of nextflow but part of the groovy language like [`.trim, .flatten, and the word "it"`].  At first this was hard to separate out when we just wanted to know how to do X.  While they do have examples in their [nextflow patterns section](https://github.com/nextflow-io/patterns), it isn't quite sufficient yet to quickly learn to create a nextflow workflow.  
 
-Seqera labs just came out with a [very comprehensive set of tutorials](https://seqera.io/training/) and I strongly encourage you to explore it as it covers everything you will need to create nextflow workflows.  However, if you are looking for a shorter, quick start guide type tutorial geared toward biologist turned bioinformatician, this tutorial is for you.
+Seqera labs just came out (End of August 2020) with a [very comprehensive set of tutorials](https://seqera.io/training/) and I strongly encourage you to explore it as it covers everything you will need to create nextflow workflows.  However, if you are looking for a shorter, quick start guide type tutorial geared toward biologist turned bioinformatician, this tutorial is for you.
 
 
 ### A practical example
@@ -45,7 +45,7 @@ The goal of this tutorial is to introduce you to the concepts of nextflow by bui
 
 ### Prerequisites
 
-This tutorial assumes that you are familiar with bash scripting and [how to run blast locally](https://bioinformaticsworkbook.org/dataAnalysis/blast/blastExample.html#gsc.tab=0).
+This tutorial assumes that you are familiar with bash scripting and [how to run blast locally](https://bioinformaticsworkbook.org/dataAnalysis/blast/blastExample.html#gsc.tab=0).  And perhaps how to use Github.
 
 
 ## Nextflow setup
@@ -57,7 +57,7 @@ Let's start by setting up our folder.  I usually do this by first creating a git
 
 ![Create New Github Repo](assets/CreateGithubRepo.png#1)
 
-Then pull it to my local machine. Do not pull this repo as it will download the entire finished tutorial.
+Then pull it to my local machine. **Do not pull this repo** as it will download the entire finished tutorial.
 
 ```
 git clone git@github.com:isugifNF/tutorial.git
@@ -153,6 +153,7 @@ The first line is required for all nextflow programs
   Launching `main.nf` [extravagant_pasteur] - revision: f407a6b0e1
   I will BLAST newQuery.fasta against myBlastDatabase
   ```
+
 2. Nextflow script variables cannot be set at the command line
 
   ```
@@ -165,6 +166,7 @@ The first line is required for all nextflow programs
   Launching `main.nf` [loving_borg] - revision: f407a6b0e1
   I will BLAST file.fasta against myBlastDatabase
   ```
+
 3. Try other --param.query inputs on your own.
 
   ```
@@ -358,8 +360,9 @@ process runBlast {
 }
 ```
 
-Note: it is critical that the input files use the **full path**.  This is why we have the `$PWD` (path of working directory Unix variable)
+Place this below the `println` statement in your `main.nf` script.
 
+Note: it is critical that the input files use the **full path**.  This is why we have the `$PWD` (path of working directory Unix variable)
 
 
 **output:**
@@ -376,7 +379,7 @@ executor >  local (1)
 
 ```
 
-the **input.blastout** will be found in the work folder.
+The **input.blastout** will be found in the work folder.
 
 ```
 tree work/
@@ -615,6 +618,8 @@ if (params.help) {
     exit 0
 }
 ```
+
+the `exit 0` tells nextflow to quit running and exit after printing the help message.
 
 
 * Paste the above helpMessage() function and if statement in the `main.nf` file above `process runBlast`.
