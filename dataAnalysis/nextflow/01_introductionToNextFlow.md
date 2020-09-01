@@ -224,7 +224,7 @@ Uses the BLAST database specified by `--dbName` and `--dbDir` and then performs 
 nextflow run isugifNF/blast  --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName" -profile local
 ```
 
-**Note:** you need to define **QUERY.fasta** and **GENOME.fasta.**  Those files do not exist.  Replace those files with files of your own.
+**Note:** you need to define **QUERY.fasta**, **blastDatabaseDirectory** and **GENOME.fasta.**  Those files do not exist.  Replace those files with files of your own.
 
 ## nextflow pull command
 
