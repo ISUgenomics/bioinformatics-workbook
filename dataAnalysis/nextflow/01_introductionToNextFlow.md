@@ -48,6 +48,7 @@ brew cask install adoptopenjdk10
 brew cask install adoptopenjdk11
 ```
 
+**Note:** This will require that you have xcode installed (devtools) and the latest xcode may require that you have the latest operating system.
 
 ### Installation
 
@@ -120,8 +121,8 @@ N E X T F L O W  ~  version 20.07.1
 Launching `isugifNF/blast` [backstabbing_franklin] - revision: 11f393fd09 [master]
 Usage:
       The typical command for running the pipeline is as follows:
-      nextflow run parallelBLAST.nf --query QUERY.fasta --genome GENOME.fasta -profile local
-      nextflow run parallelBLAST.nf --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName" -profile local
+      nextflow run main.nf  --query QUERY.fasta --genome GENOME.fasta -profile local
+      nextflow run main.nf  --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName" -profile local
 
       Mandatory arguments:
        --query                        Query fasta file of sequences you wish to BLAST
@@ -210,7 +211,7 @@ If you want to give it a go on your own dataset use the examples provided in the
 Creates a blast database from the `--genome` file and then performs blast using `--query`
 
 ```
-nextflow run parallelBLAST.nf --query QUERY.fasta --genome GENOME.fasta -profile local
+nextflow run isugifNF/blast  --query QUERY.fasta --genome GENOME.fasta -profile local
 ```
 
 #### 2. How to have the workflow Use the blast database I provide
@@ -218,7 +219,7 @@ nextflow run parallelBLAST.nf --query QUERY.fasta --genome GENOME.fasta -profile
 Uses the BLAST database specified by `--dbName` and `--dbDir` and then performs blast using `--query`
 
 ```
-nextflow run parallelBLAST.nf --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName" -profile local
+nextflow run isugifNF/blast  --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName" -profile local
 ```
 
 ## nextflow pull command
