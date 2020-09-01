@@ -214,6 +214,8 @@ Creates a blast database from the `--genome` file and then performs blast using 
 nextflow run isugifNF/blast  --query QUERY.fasta --genome GENOME.fasta -profile local
 ```
 
+**Note:** you need to define **QUERY.fasta** and **GENOME.fasta.**  Those files do not exist.  Replace those files with files of your own.
+
 #### 2. How to have the workflow Use the blast database I provide
 
 Uses the BLAST database specified by `--dbName` and `--dbDir` and then performs blast using `--query`
@@ -221,6 +223,8 @@ Uses the BLAST database specified by `--dbName` and `--dbDir` and then performs 
 ```
 nextflow run isugifNF/blast  --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName" -profile local
 ```
+
+**Note:** you need to define **QUERY.fasta** and **GENOME.fasta.**  Those files do not exist.  Replace those files with files of your own.
 
 ## nextflow pull command
 
