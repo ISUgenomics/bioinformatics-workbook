@@ -16,9 +16,9 @@ header:
 
 ## Introduction
 
-[Nextflow]() is a workflow framework that can be used by a bioinformatician to integrate all of her/his/their bash/python/perl/other scripts into a one cohesive pipeline that are portable,reproducible, scalable and checkpointed. Nextflow is its own DSL (Domain Specific Language) that extends a language called [groovy](https://groovy-lang.org) which is an extension of Java that has language feature similarity to Python, Ruby and Smalltalk.
+[Nextflow]() is a workflow framework that can be used by a bioinformatician to integrate all of her/his/their bash/python/perl/other scripts into a one cohesive pipeline that are portable, reproducible, scalable and checkpointed. Nextflow is its own DSL (Domain Specific Language) that extends a language called [groovy](https://groovy-lang.org) which is an extension of Java that has language feature similarity to Python, Ruby and Smalltalk.
 
-## Nextflow features
+### Nextflow features
 
 * **Fast protyping** -- let's you write a computational pipeline from smaller tasks
 * **Reproducibility** -- supports Docker and Singularity containers
@@ -27,7 +27,7 @@ header:
 * **Continuous checkpoints** -- each chunk and process it goes through is checkpointed
 * **Stream oriented** -- promotes programming approach extending Unix pipes model.
 
-## Prerequisites
+### Prerequisites
 
 
 * [How to install Java 8 on Mac](https://stackoverflow.com/questions/24342886/how-to-install-java-8-on-mac)
@@ -48,10 +48,8 @@ brew cask install adoptopenjdk10
 brew cask install adoptopenjdk11
 ```
 
-* NextFlow
 
-
-## Installation
+### Installation
 
 * Linux
 
@@ -105,7 +103,7 @@ Commands:
 
 ## nextflow run
 
-`nextflow run` can be used on a nextflow `main.nf` script or can be run directly from github repository.  Let's try this using a nextflow blast script developed by Iowa State's Genome Informatic's Facility (ISUGIF) by calling it directly from the github repo.
+`nextflow run` can be used on a nextflow `main.nf` script or can be run directly from github repository.  Let's try this using a nextflow blast script developed by Iowa State's Genome Informatic's Facility (ISUGIF) by calling it directly from the Github repo.
 
 **Command: Showing the usage statement**
 
@@ -115,12 +113,11 @@ nextflow run isugifNF/blast --help
 
 **Output**
 
-The output is a general usage statement that can be used in place of `--help` to run blast.
+The output is a general usage statement on how to use this workflow to run blast.
 
 ```
 N E X T F L O W  ~  version 20.07.1
 Launching `isugifNF/blast` [backstabbing_franklin] - revision: 11f393fd09 [master]
-NOTE: Your local project version looks outdated - a different revision is available in the remote repository [89887cd5b9]
 Usage:
       The typical command for running the pipeline is as follows:
       nextflow run parallelBLAST.nf --query QUERY.fasta --genome GENOME.fasta -profile local
@@ -155,7 +152,7 @@ Usage:
 This nextflow script happens to have a test dataset to show it is functioning properly and is perfect to show how nextflow operates.
 
 ```
-nextflow run isugifNF/blast -profile test,local
+nextflow run isugifNF/blast -profile test
 ```
 
 **OUTPUT**
@@ -165,7 +162,6 @@ The command will produce the following output which tells us that it was run loc
 ```
 N E X T F L O W  ~  version 20.07.1
 Launching `isugifNF/blast` [spontaneous_hawking] - revision: 11f393fd09 [master]
-NOTE: Your local project version looks outdated - a different revision is available in the remote repository [89887cd5b9]
 executor >  local (2)
 executor >  local (2)
 [f3/9756f3] process > software_check [100%] 1 of 1 ✔
@@ -209,20 +205,20 @@ Not all nextflow scripts will have a `--help` function or a `-profile test`.  If
 
 If you want to give it a go on your own dataset use the examples provided in the `--help` usage statement
 
-#### 1. Create the blast database for me
+#### 1. How to have the workflow create the blast database for me
 
-Creates a blast database from the --genome file and then performs blast using `--query`
+Creates a blast database from the `--genome` file and then performs blast using `--query`
 
 ```
 nextflow run parallelBLAST.nf --query QUERY.fasta --genome GENOME.fasta -profile local
 ```
 
-#### 2. Use the blast database I provide
+#### 2. How to have the workflow Use the blast database I provide
 
 Uses the BLAST database specified by `--dbName` and `--dbDir` and then performs blast using `--query`
 
 ```
-nextflow run parallelBLAST.nf -query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName" -profile local
+nextflow run parallelBLAST.nf --query QUERY.fasta --dbDir "blastDatabaseDirectory" --dbName "blastPrefixName" -profile local
 ```
 
 ## nextflow pull command
@@ -233,9 +229,15 @@ When you want the latest version of the nextflow script that you pulled from a g
 nextflow pull isugifNF/blast
 ```
 
+How do you know you need to pull? You will get a message that looks like this.
+
+```
+NOTE: Your local project version looks outdated - a different revision is available in the remote repository [d1fcc0c445]
+```
+
 ## nextflow drop command
 
-Sometimes the local copy of the nextflow github repo will cant `fast forward` and it may be easier to remove the local copy and start fresh.
+Sometimes the local copy of the nextflow github repo can't `fast forward` and it may be easier to remove the local copy and start fresh.
 
 ```
 nextflow drop isugifNF/blast
