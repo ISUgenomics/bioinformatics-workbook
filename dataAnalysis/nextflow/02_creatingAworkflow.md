@@ -332,7 +332,6 @@ You will need to have BLAST-plus installed on your computer. We will use the `ma
 
 ```
 makeblastdb -in input.fasta -dbtype 'nucl' -out blastDB
-makeblastdb -in input.fasta -dbtype 'prot' -out blastDB
 mkdir DB
 mv blastDB.n* DB
 ```
@@ -741,11 +740,6 @@ You can have more than one line in the `output:` section.
 **output**
 
 You should now see an `out_dir` directory with a `blastout` subdirectory and the `input.blastout` in side that folder.
-
-
-
-
-
 
 
 ## Lesson 9: Nextflow channels and process inputs.
@@ -1344,7 +1338,6 @@ if (params.genome) {
     script:
     """
     makeblastdb -in ${params.genome} -dbtype 'nucl' -out $dbDir/$dbName
-    makeblastdb -in ${params.genome} -dbtype 'prot' -out $dbDir/$dbName
     """
   }
 
@@ -1365,7 +1358,6 @@ if (params.genome) {
       script:
       """
       makeblastdb -in ${params.genome} -dbtype 'nucl' -out $dbDir/$dbName
-      makeblastdb -in ${params.genome} -dbtype 'prot' -out $dbDir/$dbName
       """
     }
 
@@ -1398,7 +1390,6 @@ if (params.genome) {
     script:
     """
     makeblastdb -in ${params.genome} -dbtype 'nucl' -out $dbDir/$dbName
-    makeblastdb -in ${params.genome} -dbtype 'prot' -out $dbDir/$dbName
     """
   }
 
