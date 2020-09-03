@@ -156,17 +156,24 @@ This nextflow script happens to have a test dataset to show it is functioning pr
 nextflow run isugifNF/blast -profile test
 ```
 
+Side note, for users on Ceres HPC (SCINet) you can use the following command which will call `module load blast+` on Ceres.
+
+```
+nextflow run isugifNF/blast -profile test,ceres
+```
+
 **OUTPUT**
 
-The command will produce the following output which tells us that it was run locally and executed two processes `software_check` and `runBlast`.  The processes run were determined by the nextflow script from [isugifNF/blast](www.github.com/isugifNF/blast).
+The command will produce the following output which tells us that it was run locally and executed three processes `software_check`, `runMakeBlastDB`, and `runBlast`.  The processes run were determined by the nextflow script from [isugifNF/blast](www.github.com/isugifNF/blast).
 
 ```
 N E X T F L O W  ~  version 20.07.1
-Launching `isugifNF/blast` [spontaneous_hawking] - revision: 11f393fd09 [master]
-executor >  local (2)
-executor >  local (2)
-[f3/9756f3] process > software_check [100%] 1 of 1 ✔
-[ea/7c08f2] process > runBlast (1)   [100%] 1 of 1 ✔
+Launching `isugifNF/blast` [fabulous_gautier] - revision: ef0477a498 [master]
+executor >  local (12)
+executor >  local (12)
+[62/1e6e19] process > software_check     [100%] 1 of 1 ✔
+[50/6038d9] process > runMakeBlastDB (1) [100%] 1 of 1 ✔
+[32/cba660] process > runBlast (5)       [100%] 10 of 10 ✔
 WARN: Task runtime metrics are not reported when using macOS without a container engine
 ```
 
