@@ -719,7 +719,7 @@ So far we have written a nextflow script and replaced as much of it as we could 
 
 Here we have added a nextflow function called `publishDir` which tells nextflow where to place a symlink of the output files.  Those outputfiles are defined by the `output:` section of the process.
 
-**Note:** the `params.outdir` in the `publishDir` command has a `$` in front of it because it is inside a quotation whereas the `params.outFileName` does not have a `$` because it is not inside a script or a set of quotes.  This is a common source of errors when first scripting in nextflow.  
+**Note:** the `params.outdir` in the `publishDir` command has a `$` in front of it because it is inside a quotation whereas the `params.outFileName` does not have a `$` because it is not inside a script or a set of quotes.  This is a common source of errors when first scripting in nextflow.  Params do not work inside single quote statements as far as I can tell with or without a dollar sign.
 
 You can have more than one line in the `output:` section.
 
@@ -1264,6 +1264,20 @@ executor >  local (5)
 [ab/70c53b] process > runBlast (1) [100%] 5 of 5 ✔
 ```
 
+#### Container Notes
+
+There is a containerOptions variable that can also be passed to pass container options to the container. For example, I needed to bind a directory inside the container so that Augustus would work in the BUSCO container. This is not directly related to the blast workflow we are building but wanted to make a note here for your reference about containerOptions.
+
+```
+process runBUSCO {
+
+container = "$busco_container"
+containerOptions = "--bind $launchDir/$params.outdir/config:/augustus/config"
+.
+.
+.
+```
+
 #### Fix Warnings
 The warning is saying we shouldn't have used .into at the beginning to set the first channel.
 
@@ -1272,6 +1286,7 @@ WARN: The `into` operator should be used to connect two or more target channels 
 ```
 
 Go ahead and change it to `.set { queryFile_ch }`.  We use `.into { fastq_reads_qc; fastq_reads_trim }` when we want to make multiple channels for the same input.  This gets around that consuming thing when you have multiple programs that need to consume the same input.
+
 
 
 ## Lesson 13: makeBlastDB process
