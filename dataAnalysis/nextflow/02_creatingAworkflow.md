@@ -721,14 +721,13 @@ Here we have added a nextflow function called `publishDir` which tells nextflow 
 
 **Note:** the `params.outdir` in the `publishDir` command has a `$` in front of it because it is inside a quotation whereas the `params.outFileName` does not have a `$` because it is not inside a script or a set of quotes.  This is a common source of errors when first scripting in nextflow.  Params do not work inside single quote statements as far as I can tell with or without a dollar sign.
 
-You can have more than one line in the `output:` section.
+You can have more than one line in the `output:` section.  It makes sense to put the publishDir in the output section.
 
 ```
    process runBlast {
 
-    publishDir "${params.outdir}/blastout"
-
     output:
+    publishDir "${params.outdir}/blastout"
     path(params.outFileName)
 
     script:
@@ -740,6 +739,23 @@ You can have more than one line in the `output:` section.
 **output**
 
 You should now see an `out_dir` directory with a `blastout` subdirectory and the `input.blastout` in side that folder.
+
+
+**Note:** it is important that the the files specified in the output match any pattern you specify in publishDir. see More complicated example below.
+
+<details><summary>More complicated example</summary>
+
+<pre>
+This is an output section from a busco workflow I have been working on.  As you can see, I define the output file I want to copy over into the `publishDir` I have to specify the folder `${label}` in both the file output and the publishDir patthern location for it to work properly.
+
+```
+output:
+file("${label}/short_summary.specific.*.txt")
+publishDir "${params.outdir}/BUSCOResults/${label}/", mode: 'copy', pattern: "${label}/short_summary.specific.*.txt"
+```
+</pre>
+</details>
+
 
 
 ## Lesson 9: Nextflow channels and process inputs.
@@ -774,12 +790,12 @@ And we can swap out `$params.query` with `$queryFile`.  Some of the readers may 
 <pre>
 process runBlast {
 
-  publishDir "${params.outdir}/blastout"
 
   input:
   path queryFile from queryFile_ch
 
   output:
+  publishDir "${params.outdir}/blastout"
   path(params.outFileName)
 
   script:
@@ -797,12 +813,6 @@ process runBlast {
   ```
   nextflow run main.nf
   ```
-
-
-
-
-
-
 
 
 
@@ -911,12 +921,11 @@ If you messed up or need help, this is what your main.nf script should now look 
 
   process runBlast {
 
-    publishDir "${params.outdir}/blastout"
-
     input:
     path queryFile from queryFile_ch
 
     output:
+    publishDir "${params.outdir}/blastout"
     path(params.outFileName) into blast_output_ch
 
     script:
