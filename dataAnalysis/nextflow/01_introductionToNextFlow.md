@@ -263,9 +263,30 @@ and it will repull the latest version.
 
 Note: if the `nextflow drop` command does not work you can manually remove this repository.  It is located: `~/.nextflow/assets/isugifNF/blast` or more generically `~/.nextflow/assets/OrganisationName/repoName`
 
+
+## nextflow log command
+
+Nextflow log will display all of the recent runs of nextflow in that directory.  
+
+```
+nextflow log
+```
+
+A rather useful function of nextflow log is that you can use it to display all the actual commands that were run by a given workflow
+
+```
+nextflow log -f script lonely_minsky
+```
+
 ## How to resume a nextflow pipeline
 
 If your pipeline doesn't finish or errors at a specific process it can be restarted from where it left off using the `-resume` nextflow parameter.  Note: there is only one `-` (dash) as it is a nextflow parameter and not a pipeline parameter that your nextflow script has defined.
+
+Note: It is more reliable to use the unique name given for each run.
+
+```
+-resume lonely_minsky
+```
 
 
 ## Further Reading and Resources
