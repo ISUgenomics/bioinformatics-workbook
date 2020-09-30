@@ -170,7 +170,7 @@ The first line is required for all nextflow programs
 3. Try other --param.query inputs on your own.
 
   ```
-  nextflow run main.nf --params.query "changethistext"
+  nextflow run main.nf --query "changethistext"
   ```
 
 #### Github saving and ignoring
