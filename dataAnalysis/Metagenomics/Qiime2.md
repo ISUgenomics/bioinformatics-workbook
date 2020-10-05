@@ -34,6 +34,10 @@ become one of the primary amplicon analysis methods.  For that reason we are
 teaching QIIME 2 while it is still in its pre-release stage (Don't you feel hi-tech?).
 {: .notice--info}
 
+**More Info**
+
+* 2020 Oct 5 - 9th - QIIME2 Virtual Conference Videos - [YouTube Channel](https://www.youtube.com/channel/UCgjZXjHOjV-KbkXsnuMKoUA)
+
 
 # Data sets
 For this tutorial We will be looking at data from this paper:
