@@ -17,7 +17,7 @@ Things you will need to get started.
 2.  Genome
 3.  The restriction enzyme used for your HiC data
 4.  If you want to run hiccups(optional), you'll need a GPU node
-5.  Depending on your genome size and amount of repetitive content, you may want to create a black list to prevent juicer from running forever on the dedup step. The blacklist will remove reads in these highly repetitive areas from the merged_sort.txt output from juicer. Essentially simple repeats are just evil for this step.
+5.  Depending on your genome size and amount of repetitive content, you may want to create a black list to prevent juicer from running forever on the dedup step. The blacklist will remove reads in these highly repetitive areas from the merged_sort.txt output from juicer. 
 
 # Software Dependencies
 Most of these are pretty common among HPC for bioinformatics.  I was lucky and didnt have to install anything.
