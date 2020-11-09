@@ -261,10 +261,10 @@ Check out these videos to discover how to read the HiC maps, spot inversions, an
 
 Juicebox can be a resource hog and crashes occasionally, so be sure to frequently save your modifications by exporting the assembly. Also note, that if juicebox crashes and you need to reload your .hic and .assembly files, be sure to always load .hic, then load the original .assembly file, then load your modified .assembly file.
 
-Before editing with Juicebox
+**Before editing with Juicebox**
 ![](assets/BeforeHiC.png)
 
-After editing with Juicebox
+**After editing with Juicebox**
 ![](assets/AfterHiC.png)
 ## 3d-dna finalize
 
