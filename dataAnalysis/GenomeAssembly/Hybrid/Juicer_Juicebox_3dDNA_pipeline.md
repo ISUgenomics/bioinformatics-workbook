@@ -193,6 +193,8 @@ PATH=$PATH:/02_WhiteMysteryPseudomolecule/03_3D-DNA/3d-dna
 
 #### 3d-dna assembly that deals with uneven repeat coverage in the genome
 ```
+
+
 module load miniconda3/4.3.30-qdauveb;source activate 3d-dna;module load jdk;module load parallel;cd /02_WhiteMysteryPseudomolecule/03_3D-DNA/3d-dna;bash run-asm-pipeline.sh --editor-repeat-coverage 20 /02_WhiteMysteryPseudomolecule/01_JuicerSetup/references/Big.MysteryGenomePilon3.PILON.fasta /02_WhiteMysteryPseudomolecule/01_JuicerSetup/aligned/merged_nodups.txt
 ```
 
