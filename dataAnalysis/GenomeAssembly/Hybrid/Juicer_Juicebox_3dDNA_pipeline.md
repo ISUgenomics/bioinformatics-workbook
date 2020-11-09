@@ -32,13 +32,55 @@ bioawk
 ```
 
 #### Folder structure
+
+This is the folder structure that we are trying to achieve with a few modifications. Juicer was already installed as a module, so the initial setup of recommended for juicer did not apply here.  You are going to a folder with four subfolders containing: HiC reads, bwa index of your genome, predicted restriction enzyme cuts for your genome (if needed), and your fastq files split into appropriate sizes.     
 ```
-#This is the folder you will submit from.
-#/work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/01_JuicerSetup
+├── 01_JuicerSetup
+│   ├── chrom.sizes
+│   ├── fastq
+│   │   ├── hic_R1.fastq
+│   │   └── hic_R2.fastq
+│   ├── references
+│   │   ├── Big.MysteryGenomePilon3.PILON.fasta
+│   │   ├── Big.MysteryGenomePilon3.PILON.fasta.amb
+│   │   ├── Big.MysteryGenomePilon3.PILON.fasta.ann
+│   │   ├── Big.MysteryGenomePilon3.PILON.fasta.bwt
+│   │   ├── Big.MysteryGenomePilon3.PILON.fasta.pac
+│   │   └── Big.MysteryGenomePilon3.PILON.fasta.sa
+│   ├── restriction_sites
+│   |   └── Big.MysteryGenomePilon3.PILON.fasta_DpnII.txt
+|   └── splits/
+|   |   ├── x000_R1.fastq
+|   |   ├── x000_R2.fastq
+|   |   ├── x001_R1.fastq
+|   |   ├── x001_R2.fastq
+|   |   ├── x002_R1.fastq
+|   |   ├── x002_R2.fastq
+|   |   ├── x003_R1.fastq
+|   |   ├── x003_R2.fastq
+|   |   ├── x004_R1.fastq
+|   |   ├── x004_R2.fastq
+|   |   ├── x005_R1.fastq
+|   |   ├── x005_R2.fastq
+|   |   ├── x006_R1.fastq
+|   |   ├── x006_R2.fastq
+|   |   ├── x007_R1.fastq
+|   |   ├── x007_R2.fastq
+|   |   ├── x008_R1.fastq
+|   |   ├── x008_R2.fastq
+|   |   ├── x009_R1.fastq
+|   |   ├── x009_R2.fastq
+|   |   ├── x010_R1.fastq
+|   |   ├── x010_R2.fastq
+|   |   ├── x011_R1.fastq
+|   |   ├── x011_R2.fastq
+|   |   ├── x012_R1.fastq
+|   |   ├── x012_R2.fastq
+|   |   ├── x013_R1.fastq
+|   |   ├── x013_R2.fastq
+|   |   ├── x014_R1.fastq
+|   |   └── x014_R2.fastq
 
-
-#This is the sub folder that will house your reads, genome, and restriction site folders, as well as where your output will be generated (align/, splits/, debug/ and a temp folder).
-#/work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/01_JuicerSetup/Juicysubfolder
 ```
 
 #### softlink and index the genome sequence in the references/ folder
@@ -65,8 +107,8 @@ While juicer does support splitting gzipped files, we had problems getting juice
 
 ```
 mkdir fastq;cd fastq
-ln -s /work/gif/archiveNova/JustJammin/Mystery/whiteMystery/HiC/JustJammin/White_S1_L001_R1_001.fastq
-ln -s /work/gif/archiveNova/JustJammin/Mystery/whiteMystery/HiC/JustJammin/White_S1_L001_R2_001.fastq
+ln -s /work/gif/archiveNova/JustJammin/Mystery/whiteMystery/HiC/JustJammin/White_S1_L001_R1_001.fastq hic_R1.fastq
+ln -s /work/gif/archiveNova/JustJammin/Mystery/whiteMystery/HiC/JustJammin/White_S1_L001_R2_001.fastq hic_R2.fastq
 cd ../
 mkdir splits
 cd splits/
@@ -88,36 +130,33 @@ Move to the submission directory and submit
 The trick here is setting juicer's short, medium, and long queue times, as they will not likely be default for your system.  
 ```
 cd ../
-#/work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/01_JuicerSetup
+#/02_WhiteMysteryPseudomolecule/01_JuicerSetup
 ml jdk/10.0.2_13-fr57jru; ml juicer; juicer.sh -d 01_JuicerSetup -p chrom_sizes -s none -z 01_JuicerSetup/references/Big.MysteryGenomePilon3.PILON.fasta  -q short -Q 2:00:00 -l medium -L 12:00:00 -t 36
-
-
 ```
 
 
 #### Troubleshooting a juicer run
 
-
-Your stdout and stderr will tell you almost nothing about your run.  If at the end of your run, you are seeing a merged_sort.txt and a merged_nodups.txt file, then you likely succeeded.  Note that these files are usually hundreds of MB.
+Your stdout and stderr will tell you almost nothing about your run.  If at the end of your run, you are seeing large merged_sort.txt and a merged_nodups.txt files, then you likely succeeded.  Note that these files are usually hundreds of MB.
 
 If you do not have a merged_sort.txt, the first thing to check is if your split fastq files (in splits/) each aligned and created a sam file.  If you want to know why they failed, then you'll have to investigate the debug folder.   
 
-If you have a merged_sort.txt file, but lack the merged_nodups.txt, then the read deduplication step failed.  In most cases this will be a memory issue that can be fixed by creating a greater number of splits of your fast files.
+If you have a merged_sort.txt file, but lack the merged_nodups.txt, then the read deduplication step failed.  In most cases this will be a memory issue that can be fixed by creating a greater number of splits of your fastq files.
 
-You will need to go into the debug folder, which will be /work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/01_JuicerSetup/debug for me.  
+You will need to go into the debug folder, which will be /02_WhiteMysteryPseudomolecule/01_JuicerSetup/debug for me.  
 
-
+If juicer does not complete, you can restart from the last completed stage using -S with one of the following options "chimeric", "merge", "dedup", "final", "postproc", or "early".
 
 
 ##  Set up and run 3D-DNA assembly
 
 ### Install 3d-dna
-When I install I usually use singularity containers or conda evironments to address my lack of sudo privileges.  LastZ installation isnt necessary, as it is only useful for highly heterozygous genomes.
+When I install I usually use singularity containers or conda evironments to address my lack of sudo privileges. LastZ installation is not necessary, as it is only useful for highly heterozygous genomes.
 
 
 #### Create conda environment for installation
 ```
-#/work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/03_3D-DNA
+#/02_WhiteMysteryPseudomolecule/03_3D-DNA
 
 #create a conda environment, as I am using a remote hpc.
 module load  miniconda3/4.3.30-qdauveb
@@ -145,27 +184,27 @@ pip install matplotlib --user
 
 #### Clone and set path to 3d-dna
 ```
-#/work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/03_3D-DNA
+#/02_WhiteMysteryPseudomolecule/03_3D-DNA
 git clone https://github.com/theaidenlab/3d-dna.git
-PATH=$PATH:/work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/03_3D-DNA/lastz
-PATH=$PATH:/work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/03_3D-DNA/3d-dna
+PATH=$PATH:/02_WhiteMysteryPseudomolecule/03_3D-DNA/lastz
+PATH=$PATH:/02_WhiteMysteryPseudomolecule/03_3D-DNA/3d-dna
 ```
 
 
 #### 3d-dna assembly that deals with uneven repeat coverage in the genome
 ```
-module load miniconda3/4.3.30-qdauveb;source activate 3d-dna;module load jdk;module load parallel;cd /work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/03_3D-DNA/3d-dna;bash run-asm-pipeline.sh --editor-repeat-coverage 20 /work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/01_JuicerSetup/references/Big.MysteryGenomePilon3.PILON.fasta /work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/01_JuicerSetup/aligned/merged_nodups.txt
+module load miniconda3/4.3.30-qdauveb;source activate 3d-dna;module load jdk;module load parallel;cd /02_WhiteMysteryPseudomolecule/03_3D-DNA/3d-dna;bash run-asm-pipeline.sh --editor-repeat-coverage 20 /02_WhiteMysteryPseudomolecule/01_JuicerSetup/references/Big.MysteryGenomePilon3.PILON.fasta /02_WhiteMysteryPseudomolecule/01_JuicerSetup/aligned/merged_nodups.txt
 ```
 
 #### 3d-dna assembly with different ways to modify coverage
 ```
---editor-saturation-centile 5
+module load miniconda3/4.3.30-qdauveb;source activate 3d-dna;module load jdk;module load parallel;cd /02_WhiteMysteryPseudomolecule/03_3D-DNA/3d-dna;bash run-asm-pipeline.sh --editor-saturation-centile 5  /02_WhiteMysteryPseudomolecule/01_JuicerSetup/references/Big.MysteryGenomePilon3.PILON.fasta /02_WhiteMysteryPseudomolecule/01_JuicerSetup/aligned/merged_nodups.txt
 ```
 
 
 #### 3d-dna assembly for an assembly considered highly heterozygous
 ```
- -m diploid
+ module load miniconda3/4.3.30-qdauveb;source activate 3d-dna;module load jdk;module load parallel;cd /02_WhiteMysteryPseudomolecule/03_3D-DNA/3d-dna;bash run-asm-pipeline.sh -m diploid  /02_WhiteMysteryPseudomolecule/01_JuicerSetup/references/Big.MysteryGenomePilon3.PILON.fasta /02_WhiteMysteryPseudomolecule/01_JuicerSetup/aligned/merged_nodups.txt
 ```
 #### 3d-dna assembly with poor quality HiC
 
@@ -176,7 +215,7 @@ If you see an error that is something like this, "Unknown resolution: BP_100000"
 modify the normalization for your HiC reads at this line. Change to NONE, VC, or sqrtVC
 "norm="KR"  
 
-vi /work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/04_3ddnaRepCov20/3d-dna/split/run-asm-splitter.sh
+vi /02_WhiteMysteryPseudomolecule/04_3ddnaRepCov20/3d-dna/split/run-asm-splitter.sh
 ```
 
 If changing normalization doesn't work, then the "ADDITIONAL OPTIONS" in  need to be modified until there is enough coverage for 3d-dna to operate. These are in run-asm-pipeline.sh
@@ -209,7 +248,7 @@ For juicebox, you'll need two files from 3d-dna, your final .hic file and your f
 Big.MysteryGenomePilon3.PILON.final.hic
 Big.MysteryGenomePilon3.PILON.final.assembly
 ```
-Download juicebox for your system
+Download juicebox for your system (1.11.08 currently)
 
  - https://github.com/aidenlab/Juicebox/wiki/Download
 
@@ -218,18 +257,22 @@ Check out these videos to discover how to read the HiC maps, spot inversions, an
 - https://www.youtube.com/watch?v=Nj7RhQZHM18
 - https://www.youtube.com/watch?v=IMmVp8FodmY
 
-Juicebox can be a resource hog and crashes occasionally, so be sure to frequently save your modifications by exporting the assembly. Also note, that if juicebox crashes and you need to reload your .hic and .assembly files, be sure to always load .hic, load the original .assembly file FIRST, then your modified .assembly file.
+Juicebox can be a resource hog and crashes occasionally, so be sure to frequently save your modifications by exporting the assembly. Also note, that if juicebox crashes and you need to reload your .hic and .assembly files, be sure to always load .hic, then load the original .assembly file, then load your modified .assembly file.
 
+Before
+![workflow](assets/beforeHiC.png)
 
+After
+![workflow](assets/afterHiC.png)
 ## 3d-dna finalize
 
 Since the assembly files will be overwritten if we run files will be overwritten in the 3d-dna assembly, I copied the old 3ddna folder and removed all data that was not script related for the final assembly process of 3d-dna.
 
 ```
-/work/gif/Randy/JustJammin/03_White_Mystery/06_3ddna_finalize/3d-dna
+/03_White_Mystery/06_3ddna_finalize/3d-dna
 
 # I use the additional options of -i 500 to force 3d-dna to try to incorporate smaller contigs.
-module load miniconda3/4.3.30-qdauveb;source activate 3d-dna;module load jdk;module load parallel;bash run-asm-pipeline-post-review.sh --sort-output -s seal -i 500 -r Big.MysteryGenomePilon3.PILON.donefinal.review.assembly.assembly /work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/01_JuicerSetup/references/Big.MysteryGenomePilon3.PILON.fasta /work/gif/Randy/JustJammin/02_WhiteMysteryPseudomolecule/01_JuicerSetup/aligned/merged_nodups.txt
+module load miniconda3/4.3.30-qdauveb;source activate 3d-dna;module load jdk;module load parallel;bash run-asm-pipeline-post-review.sh --sort-output -s seal -i 500 -r Big.MysteryGenomePilon3.PILON.donefinal.review.assembly.assembly /02_WhiteMysteryPseudomolecule/01_JuicerSetup/references/Big.MysteryGenomePilon3.PILON.fasta /02_WhiteMysteryPseudomolecule/01_JuicerSetup/aligned/merged_nodups.txt
 ```
 
 #### Assembly results
