@@ -259,11 +259,11 @@ Check out these videos to discover how to read the HiC maps, spot inversions, an
 
 Juicebox can be a resource hog and crashes occasionally, so be sure to frequently save your modifications by exporting the assembly. Also note, that if juicebox crashes and you need to reload your .hic and .assembly files, be sure to always load .hic, then load the original .assembly file, then load your modified .assembly file.
 
-Before
-![workflow](assets/beforeHiC.png)
+Before editing with Juicebox
+![](assets/BeforeHiC.png)
 
-After
-![workflow](assets/afterHiC.png)
+After editing with Juicebox
+![](assets/AfterHiC.png)
 ## 3d-dna finalize
 
 Since the assembly files will be overwritten if we run files will be overwritten in the 3d-dna assembly, I copied the old 3ddna folder and removed all data that was not script related for the final assembly process of 3d-dna.
