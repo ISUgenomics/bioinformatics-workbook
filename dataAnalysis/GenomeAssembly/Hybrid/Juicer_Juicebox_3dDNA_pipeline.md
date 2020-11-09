@@ -277,8 +277,7 @@ module load miniconda3/4.3.30-qdauveb;source activate 3d-dna;module load jdk;mod
 
 #### Assembly results
 
-
-before juicer, juicebox, and 3d- dna
+**Before juicer, juicebox, and 3d-dna**
 ```
 Number of scaffolds      23058
 Total size of scaffolds 1204812274
@@ -295,7 +294,7 @@ N50 scaffold length     444717
 L50 scaffold count        721
 ```
 
-After juicebox and 3ddna seal
+**After juicer, juicebox, and 3d-dna**
 ```
 Number of scaffolds      19758
 Total size of scaffolds 1207942174
