@@ -101,12 +101,12 @@ feature_row:
     url: "Appendix/dataVisualization_index"
     btn_label: "Learn More"
 
-    - title: "Data Visualization"
-      image_path: /assets/images/rna.jpg
-      alt: "fully responsive"
-      title: "Workflow languages"
-      url: "dataAnalysis/nextflow/workflows_index"
-      btn_label: "Learn More"
+  - title: "Workflow languages"
+    image_path: /assets/images/rna.jpg
+    alt: "fully responsive"
+    title: "Workflow languages"
+    url: "dataAnalysis/nextflow/workflows_index"
+    btn_label: "Learn More"
 
 ---
 
