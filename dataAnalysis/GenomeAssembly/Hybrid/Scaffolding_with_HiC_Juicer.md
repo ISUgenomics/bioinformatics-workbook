@@ -1,8 +1,8 @@
 ---
 layout: redirected
 sitemap: false
-permalink: /dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer
-redirect_to: dataAnalysis/GenomeAssembly/Hybrid/Juicer_Juicebox_3dDNA_pipeline
+permalink: /dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md
+redirect_to: dataAnalysis/GenomeAssembly/Hybrid/Juicer_Juicebox_3dDNA_pipeline.md
 ---
 
 
