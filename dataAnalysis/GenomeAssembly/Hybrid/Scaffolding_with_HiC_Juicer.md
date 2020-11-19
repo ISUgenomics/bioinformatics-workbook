@@ -4,15 +4,7 @@ sitemap: false
 permalink: /dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer
 redirect_to: dataAnalysis/GenomeAssembly/Hybrid/Juicer_Juicebox_3dDNA_pipeline
 ---
----
-title: How to analyze Hi-C data with Juicer and scaffold your genome assembly using 3D-DNA
-layout: single
-author: Rick Masonbrink
-author_profile: true
-header:
-  overlay_color: "444444"
-  overlay_image: /assets/images/dna.jpg
----
+
 
 #  Assess your needs
 
