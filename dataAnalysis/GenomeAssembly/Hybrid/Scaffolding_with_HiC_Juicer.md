@@ -1,4 +1,4 @@
-  ---
+---
 layout: redirected
 sitemap: false
 permalink: Scaffolding_with_HiC_Juicer/
