@@ -1,8 +1,8 @@
----
+  ---
 layout: redirected
 sitemap: false
-permalink: Scaffolding_with_HiC_Juicer
-redirect_to: Juicer_Juicebox_3dDNA_pipeline
+permalink: Scaffolding_with_HiC_Juicer/
+redirect_to: Juicer_Juicebox_3dDNA_pipeline/
 ---
 
 ---
