@@ -1,3 +1,15 @@
+---
+title: Genome scaffolding with the Juicer, JuiceBox, 3D-DNA pipeline
+layout: single
+author: Rick Masonbrink
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
+
 # Genome scaffolding with the Juicer, JuiceBox, 3D-DNA pipeline
 
 Here at the ISUGIF, we have used multiple different contig assemblers and had success with this pipeline.  Typically we assemble the genome with long reads and polish (long or illumina reads) prior to running the pipeline.  I do not know if this is something that affects the downstream product, but it is an important consideration, considering that long read assemblies are typically error prone.   
@@ -312,3 +324,6 @@ Median scaffold size       2160
 N50 scaffold length   60392520
 L50 scaffold count          9
 ```
+---
+
+* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
