@@ -35,6 +35,7 @@ header:
 
 ### Tools for Scaffolding assemblies
   * [Hi-C scaffolding](../GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
+  * [Hi-C scaffolding Update](../GenomeAssembly/Hybrid/Juicer_Juicebox_3dDNA_pipeline.md)
   * [Genome Scaffolding Using Synteny with Pyscaf](../GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
 
 ### Genetic Map Construction
