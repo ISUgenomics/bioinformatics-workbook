@@ -64,7 +64,7 @@ This assumes 60-80X coverage per genome run.
 
 PacBio raw data are long (~13,000-20,000bp) with max read lengths around 300,000 bp.
 
-* HiFi = High Fidelity reads which are produced from a high fidelity polymerase making for longer more accurate reads by reading the same molecule multiple times.  
+* HiFi = High Fidelity reads have shorter library insert sizes and the movies are typically longer, resulting in more passes.
 * CLR = Continuous Long Reads, read once but capable of reading much longer reads.
 
 | System | Gb | Millions of Reads|
