@@ -1,5 +1,5 @@
 ---
-title: WGCNA: Gene Correlation Network Analysis
+title: "WGCNA Gene Correlation Network Analysis"
 layout: single
 author: Jennifer Chang
 author1: Siva Chudalayandi
@@ -14,7 +14,7 @@ header:
 
 So you have completed an experiment, collecting RNA-seq data across several biological treatments. You may have perfermed differential gene expression analysis (with DESeq2 or similar software) to identify the up and down expressed genes. But how can you relate these up and down expressed genes into a biological story, or gene regulation model?
 
-Assuming that genes that are positively regulating each other will be co-expressed, we can build a hypothesis of a gene-regulation network from a gene correlation network. Warning, the correlation network does not prove co-regulation. Further biological (such as loss-of-function) experiments are required. However, identifying the possible gene-regulation network can indicate which genes to test for co-regulation. 
+Assuming that genes that are positively regulating each other will be co-expressed, we can build a hypothesis of a gene-regulation network from a gene correlation network. Warning, the correlation network does not prove co-regulation. Further biological (such as loss-of-function) experiments are required. However, identifying the possible gene-regulation network can indicate which genes to test for co-regulation.
 -->
 
 **Last Update**: 2020/12/14 <!--<br/>
@@ -40,7 +40,7 @@ WGCNA continues to be used for many recent papers. Example papers include analyz
 et
 al, 2018](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-018-5072-4#Sec2))
 and development/nutrient/metabolism/stress response ([Ma et
-al, 2017](https://pubmed.ncbi.nlm.nih.gov/28764653/)). 
+al, 2017](https://pubmed.ncbi.nlm.nih.gov/28764653/)).
 -->
 
 **More information**
@@ -95,4 +95,3 @@ unzip FemaleLiver-Data.zip
 ## Export Clusters
 
 ## Export Network
-
