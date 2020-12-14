@@ -15,6 +15,7 @@ R is an interactive scripting language originally designed to teach statistics a
 * [Wikipedia - R (programming language)](https://en.wikipedia.org/wiki/R_(programming_language))
 * [List of R projects on GitHub](https://github.com/topics/r)
 * [YouTube: R in 2 hours Full Course](https://youtu.be/_V8eKsto3Ug)
+* [![YouTube: R in 2 hours Full Course](https://img.youtube.com/vi/_V8eKsto3Ug/0.jpg)](https://youtu.be/_V8eKsto3Ug)
 
 # Getting Started in R
 
