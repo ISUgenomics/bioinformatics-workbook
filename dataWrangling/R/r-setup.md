@@ -27,7 +27,7 @@ First you will need to install R or have access to an R environment. It is highl
 
 ![RStudio Quad Chart](assets/RStudio_quad.png)
 
-When you first open RStudio, you'll notice several panes. Note: To see the Code Editor, you may need to create go to Rstudio's  `File/New File/R Script`.
+When you first open RStudio, you'll notice several panes. Note: To see the Code Editor, you may need to go to Rstudio's  `File/New File/R Script`.
 
 1. **Code Editor** - The top left pane is where you will be editing an R or R markdown script. You can run commands line by line by placing the cursor on a line and hitting `Ctrl+Enter` or `Cmd+Return`. Usually scripts are designed (and debugged) in RStudio but then run from the command line when you are processing multiple files.
 2. **R Console** - R code is run in the bottom left pane. This will display any messages, warnings and error messages. This is useful for copying and pasting the error/warning into a search engine to debug a pipeline.
@@ -123,9 +123,9 @@ Since the home directory may have restricted space, see the SCINet documentation
 
 * SCINet Package Install - [https://scinet.usda.gov/guide/packageinstall/](https://scinet.usda.gov/guide/packageinstall/)
 
-## Using Rstudio Server on SCINet
+## Using RStudio Server on SCINet
 
-Recently, Ceres HPC was configured to run Rstudio Server. This allows you to run an RStudio like interface to the Ceres HPC. See full instructions on the SCINet website: [https://scinet.usda.gov/guide/rstudio/](https://scinet.usda.gov/guide/rstudio/)
+Recently, Ceres HPC was configured to run RStudio Server. This allows you to run an RStudio like interface to the Ceres HPC. See full instructions on the SCINet website: [https://scinet.usda.gov/guide/rstudio/](https://scinet.usda.gov/guide/rstudio/)
 
 <!--
 ## Testing Equations
