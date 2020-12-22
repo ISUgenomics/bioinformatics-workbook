@@ -9,7 +9,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-**Last Update**: 14 Dec 2020 <br/> **R Markdown**:
+**Last Update**: 22 Dec 2020 <br/> **R Markdown**:
 [WGCNA.Rmd](https://bioinformaticsworkbook.org/tutorials/WGCNA.Rmd)
 
 # Network analysis with WGCNA
@@ -553,4 +553,62 @@ plotDendroAndColors(
 
 ``` r
 #                    netwk$colors[netwk$blockGenes[[1]]]
+table(netwk$colors)
+#>
+#>     0     1     2     3     4     5     6     7     8     9    10    11    12
+#>   892 21127  2686  1552   826   755   734   555   316   309   250   226   224
+#>    13    14    15    16    17    18    19    20    21    22    23    24    25
+#>   178   138   120   106    97    93    83    71    70    45    40    37    36
+#>    26
+#>    34
 ```
+
+# Module (cluster) assignments
+
+We can pull out the list of modules
+
+``` r
+module_df <- data.frame(
+  gene_id = names(netwk$colors),
+  colors = labels2colors(netwk$colors)
+)
+
+module_df[1:5,]
+#>          gene_id    colors
+#> 1 Zm00001d027230 turquoise
+#> 2 Zm00001d027231 turquoise
+#> 3 Zm00001d027232 turquoise
+#> 4 Zm00001d027233 turquoise
+#> 5 Zm00001d027236 turquoise
+```
+
+However we need to figure out which modules are associated with each
+trait/treatment group. WGCNA will calcuate an Eigangene (hypothetical
+central gene) for each module, so it easier to determine if modules are
+associated with different treatments.
+
+``` r
+# Get Module Eigengenes per cluster
+MEs0 <- moduleEigengenes(input_mat, mergedColors)$eigengenes
+
+# Reorder modules so similar modules are next to each other
+MEs0 <- orderMEs(MEs0)
+
+# Add treatment names
+MEs0$treatment = row.names(MEs0)
+
+# tidy & plot data
+mME = MEs0 %>%
+  pivot_longer(-treatment) %>%
+  mutate(
+    name = gsub("ME", "", name)
+  )
+
+mME %>% ggplot(., aes(x=treatment, y=name, fill=value)) +
+  geom_tile() +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle=90)) +
+  labs(title = "Module-trait Relationships", y = "Modules", fill="corr")
+```
+
+![](Assets/wgcna_module_trait-1.png)<!-- -->
