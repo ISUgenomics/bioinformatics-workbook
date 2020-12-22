@@ -21,9 +21,8 @@ header:
 
 # Network analysis with WGCNA
 
-<!--
-  While there are multiple ways to build a co-expression network, we will focus on WGCNA to provide the motivation and framework.
--->
+There are many gene correlation network builders but we shall provide an
+example of the WGCNA R Package.
 
 The **WGCNA R package** builds “weighted gene correlation networks for
 analysis” from expression data. It was originally published in 2008 and
@@ -37,10 +36,6 @@ cited as the following:
     gene co-expression network
     analysis](https://pubmed.ncbi.nlm.nih.gov/16646834/). Statistical
     applications in genetics and molecular biology, 4(1).
-
-<!--
-  WGCNA continues to be used for many recent papers. Example papers include analyzing gray leaf disease response ([Yu et al, 2018](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-018-5072-4#Sec2)) and development/nutrient/metabolism/stress response ([Ma et al, 2017](https://pubmed.ncbi.nlm.nih.gov/28764653/)).
--->
 
 **More information**
 
@@ -78,59 +73,43 @@ counts. Usually we need to rotate (transpose) the input data so `rows` =
 The output of **WGCNA** is a list of clustered genes, and weighted gene
 correlation network files.
 
-<!--
-## DESeq2
+# Example Dataset
 
-## Installing DESeq2
+We shall start with an example dataset about ER (Endocrine Reticulum)
+cell death response. \[Add description of data and maybe link to paper
+here\]
 
-
-```r
-# Install BiocManager for installing Bioconductor packages
-install.packages("BiocManager")
-BiocManager::install("DESeq2")
-```
--->
-
-# Dataset
-
-<!--
-
-## Dataset
-
-We'll start with the dataset from the official WGCNA tutorial.
-
-> The data are gene expression measurements from livers of female mouse of a specific F2 intercross. For a detailed description of the data and the biological implications we refer the reader to Ghazalpour et al (2006), Integrating Genetics and Network Analysis to Characterize Genes Related to Mouse Weight. We note that the data set contains 3600 measured expression profiles. These were filtered from the original over 20,000 profiles by keeping only the most variant and most connected probes. In addition to the expression data, several physiological quantitative traits were measured for the mice.
-
-* [FemaleLiver-Data.zip](FemaleLiver-Data.zip)
-
-From command line, you can also use `wget` or `curl`:
+-   [All\_Counts\_ER.txt](data/All_Counts_ER.txt)
 
 ``` bash
-wget https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/Tutorials/FemaleLiver-Data.zip
-unzip FemaleLiver-Data.zip
+wget https://bioinformaticsworkbook.org/tutorials/data/All_Counts_ER.txt
 ```
--->
 
-ER Response, cell death description of data here.
+## Load R Libraries
 
-## Load and Clean Dataset
+This analysis requires the following R libraries. You might need to
+install the library if it’s not already on your system.
 
-Load any R libraries here
+We’re going to conform to the [tidyverse]() ecosystem. For a discussion
+on its benefits see [“Welcome to the Tidyverse” (Wickham et al,
+2019)](https://tidyverse.tidyverse.org/articles/paper.html). This allows
+us to organize the pipeline in the following framework ([Fig. from “R
+for Data Science” (Wickham and Grolemund,
+2017)](https://r4ds.had.co.nz/)):
+
+<img src="https://tidyverse.tidyverse.org/articles/data-science.png" width="400" />
 
 ``` r
-library(tidyverse)
-library(magrittr)
-library(WGCNA)
-#library(devtools)
-#install_github("vqv/ggbiplot")
-library(ggbiplot)
-
-# install.packages("BiocManager")
-# BiocManager::install("DESeq2")
-library(DESeq2)
+# Uncomment and modify the following to install any missing packages
+# install.packages(c("tidyverse", "magrittr", "WGCNA))
+library(tidyverse)     # tidyverse will pull in ggplot2, readr, other useful libraries
+library(magrittr)      # provides the %>% operator
+library(WGCNA)        
 ```
 
-Load and clean the data
+## Tidy the Dataset, and using exploratory graphics
+
+Load and look at the data
 
 ``` r
 # ==== Load and clean data
@@ -143,291 +122,254 @@ data <- readr::read_delim("data/All_Counts_ER.txt", delim="\t")
 #> )
 #> ℹ Use `spec()` for the full column specifications.
 
-col_sel = names(data)[-1]
-mdata <- tidyr::pivot_longer(data,
-                             col=all_of(col_sel)
+data[1:5,1:10]        # Look at first 5 rows and 10 columns
+#> # A tibble: 5 x 10
+#>   Geneid `0I_S3_L006` `0I_S3_L007` `0II_S11_L006` `0II_S11_L007` `0III_S19_L006`
+#>   <chr>         <dbl>        <dbl>          <dbl>          <dbl>           <dbl>
+#> 1 Zm000…          103          135             98            103             187
+#> 2 Zm000…         1280         1370            876            970            1602
+#> 3 Zm000…            0            2              0              0               0
+#> 4 Zm000…            0            6              3              2              18
+#> 5 Zm000…            0            0              0              0               0
+#> # … with 4 more variables: `0III_S19_L007` <dbl>, `3I_S4_L006` <dbl>,
+#> #   `3I_S4_L007` <dbl>, `3II_S12_L006` <dbl>
+
+# str(data)           # str = structure of data, useful for debugging data type mismatch errors
+
+names(data)           # Look at the column names
+#>  [1] "Geneid"           "0I_S3_L006"       "0I_S3_L007"       "0II_S11_L006"    
+#>  [5] "0II_S11_L007"     "0III_S19_L006"    "0III_S19_L007"    "3I_S4_L006"      
+#>  [9] "3I_S4_L007"       "3II_S12_L006"     "3II_S12_L007"     "3III_S20_L006"   
+#> [13] "3III_S20_L007"    "6I_S5_L006"       "6I_S5_L007"       "6II_S13_L006"    
+#> [17] "6II_S13_L007"     "6III_S21_L006"    "6III_S21_L007"    "12I_S6_L006"     
+#> [21] "12I_S6_L007"      "12II_S14_L006"    "12II_S14_L007"    "12III_S22_L006"  
+#> [25] "12III_S22_L007"   "24I_S7_L006"      "24I_S7_L007"      "24II_S15_L006"   
+#> [29] "24II_S15_L007"    "24III_S23_L006"   "24III_S23_L007"   "36I_S8_L006"     
+#> [33] "36I_S8_L007"      "36II_S16_L006"    "36II_S16_L007"    "36III_S24_L006"  
+#> [37] "36III_S24_L007"   "48I_S9_L006"      "48I_S9_L007"      "48II_S17_L006"   
+#> [41] "48II_S17_L007"    "48III_S25_L006"   "48III_S25_L007"   "48mkI_S27_L007"  
+#> [45] "48Imk_S10_L006"   "48mkII_S28_L007"  "48IImk_S18_L006"  "48mkIII_S29_L007"
+#> [49] "48IIImk_S26_L006"
+```
+
+If you are in RStudio, you can also click on the `data` object in the
+Environment tab to see an Excel-like view of the data.
+
+![RStudio View](Assets/RStudio_data.png)
+
+From looking at the data, we can come to the following insights:
+
+-   We see that `rows` = `gene probes` which probably means `columns` =
+    `treatments` which is the opposite of what’s needed in WGCNA (`rows`
+    = `treatment`, `columns` = `gene probes`). This dataset will need to
+    be rotated (transposed) before sending to WGCNA.
+-   This is also wide data, we will convert this to tidy data before
+    visualization. For [Hadley Wickham](http://hadley.nz/)’s tutorial on
+    the what and why to convert to tidy data, see
+    <https://r4ds.had.co.nz/tidy-data.html>.
+-   The column names are prefixed with the hour of treatment
+    (e.g. `0I_S3_L006` is 0 hours, `3I_S4_L006` is 3 hours,
+    `48mkII_S28_L007` is 48 hours mock.)
+
+The following R commands clean and tidy the dataset for exploratory
+graphics.
+
+``` r
+col_sel = names(data)[-1]                                  # Get all but first column name
+mdata <- tidyr::pivot_longer( data,                        # Convert to Tidy Data
+                              col = all_of(col_sel)
                              ) %>%  
   mutate(
-    group = gsub("I.*", "", name) %>% gsub("_.*", "", .),
+    group = gsub("I.*", "", name) %>% gsub("_.*", "", .),  # Add a "Group" column for the hour
   )
 
-mdata$group[grepl("mk", mdata$name)]="48mk"
+mdata$group[grepl("mk", mdata$name)] = "48mk"              # Deal with columns where it's 48mk or 48IIImk,
+
+# This sets the order of the hours in the plot... otherwise 48mk will be between "3" and "6".
 mdata$group = factor(mdata$group,
                      levels = c("0", "3", "6", "12", "24","36","48","48mk"))
 ```
 
-Plot the data to identify outliers
+Think through what kinds of plots may tell you something about the
+dataset. This example plots the data to identify any outliers.
 
 ``` r
 # ==== Plot groups (Sample Groups vs RNA Seq Counts) to identify outliers
 p <- mdata %>%
-    ggplot(., aes(x=name, y=value)) +
-    geom_violin() +
-    geom_point(alpha=0.2) +
+    ggplot(., aes(x=name, y=value)) +     # x = treatment, y = RNA Seq count
+    geom_violin() +                       # violin plot, show distribution
+    geom_point(alpha=0.2) +               # scatter plot
     theme_bw() +
     theme(
-      axis.text.x = element_text(angle=90)
+      axis.text.x = element_text(angle=90)                          # Rotate treatment text
     ) +
-    facet_grid(cols = vars(group), drop=TRUE, scales="free_x")
+    facet_grid(cols = vars(group), drop=TRUE, scales="free_x")      # Facet by hour
 
 p + labs(x="Treatment Groups", y = "RNA Seq Counts")
 ```
 
 ![](Assets/wgcna_group_by_hour-1.png)<!-- -->
 
-## PCA
+From here, we can see there’s something strange in some of the hour 24
+samples. One has very high RNASeq values `24II_S15_L006` with maybe a
+wide range, while another has very low range of RNASeq values
+`24_S15_L007`. We should follow up with the wet lab folks on an
+explanation of those samples, but for now, we’ll remove the 24 hour
+group and maybe the 48 hour group.
 
 ``` r
-# ==== Drop group 24 hours
+keep_cols = names(data) %>% grep("24", .,  invert = T, value = T) %>% grep("48I+_", ., invert=T, value=T)
+cdata = data %>% select(all_of(keep_cols))
 
-# Maybe take average of each hour
-msdata <- mdata %>%
-  subset(group!="24") %>%                # Drop 24 hours
-  dplyr::group_by(Geneid, group) %>%     # Get average value by hour
-  dplyr::summarize(
-    avg_count = mean(value)
-  ) %>%
-  ungroup()
-#> `summarise()` regrouping output by 'Geneid' (override with `.groups` argument)
-
-zero_data <- msdata %>%
-  dplyr::group_by(Geneid) %>%
-  dplyr::summarize(
-    sum_count = sum(avg_count)
-  ) %>%
-  ungroup() %>%
-  subset(sum_count == 0)
-#> `summarise()` ungrouping output (override with `.groups` argument)
-
-zero_genes = zero_data$Geneid
-
-wide_msdata <- msdata %>%
-  subset(., !(Geneid %in% zero_genes)) %>%
-  tidyr::pivot_wider(., names_from=group, values_from = avg_count)
-
-# ==== Run PCA
-# https://bit.ly/362bJHA
-data_pca <- prcomp(wide_msdata[,-1]) #, center = TRUE,scale. = TRUE)
-
-# overplotted plot
-ggbiplot(data_pca)
+temp <- cdata[rowSums(cdata[,-1]) > 0.1, ]      # Remove genes with all 0 values
+row_var <- apply(temp[,-1], 1, var)             # Remove genes with variance below 10
+cdata <- temp[row_var > 10, ]
+#cdata[1:5, 1:10]
 ```
 
-![](Assets/wgcna_pca-1.png)<!-- -->
+You can look at the `cdata` object (click on item in `environment` or
+use `names(cdata)`) to convince yourself that the “24 hour” group is
+gone. The original dataset had 46,430 genes (too many to explore),
+subsetting by variance and other strange artifacts reduced it down to
+28,128 genes. Let’s continue and determine the correlation networks for
+these 28,128 genes.
 
-Attempt two at a nice PCA plot
+## WGCNA
+
+Now let’s transpose the data and prepare the dataset for WGCNA.
 
 ``` r
-# looks a little better
-# https://bit.ly/3o5GIcb
-#install.packages("factoextra")
-library("factoextra")
-#> Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa
-fviz_pca_var(data_pca,
-             col.var = "contrib", # Color by contributions to the PC
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-             repel = TRUE     # Avoid text overlapping
+input_mat = t(as.matrix(cdata[,-1]))
+colnames(input_mat) = cdata$Geneid
+
+input_mat[1:5,1:10]           # Look at first 5 rows and 10 columns
+#>               Zm00001d027230 Zm00001d027231 Zm00001d027233 Zm00001d027236
+#> 0I_S3_L006               103           1280              0              6
+#> 0I_S3_L007               135           1370              6             25
+#> 0II_S11_L006              98            876              3              3
+#> 0II_S11_L007             103            970              2             28
+#> 0III_S19_L006            187           1602             18              6
+#>               Zm00001d027239 Zm00001d027242 Zm00001d027248 Zm00001d027250
+#> 0I_S3_L006               562            432              8              4
+#> 0I_S3_L007               411            548             27             18
+#> 0II_S11_L006             434            337             16              4
+#> 0II_S11_L007             351            404              3              9
+#> 0III_S19_L006           1999           1770             98              2
+#>               Zm00001d027254 Zm00001d027256
+#> 0I_S3_L006                 6             19
+#> 0I_S3_L007                 5             14
+#> 0II_S11_L006               2             14
+#> 0II_S11_L007               4              0
+#> 0III_S19_L006             16             16
+```
+
+We can see now that the `rows` = `treatments` and `columns` =
+`gene probes`. We’re ready to start WGCNA. A correlation network will be
+a complete network (all genes are connected to all other genes). Ergo we
+will need to pick a threshhold value (if correlation is below threshold,
+remove the edge). We assume the true biological network follows a
+scale-free structure (see papers by [Albert
+Barabasi](https://en.wikipedia.org/wiki/Barab%C3%A1si%E2%80%93Albert_model)).
+
+To do that, WGCNA will try a range of soft thresholds and create a
+diagnostic plot. This step will take several minutes so feel free to run
+and get coffee.
+
+``` r
+#library(WGCNA)
+allowWGCNAThreads()          # allow multi-threading (optional)
+#> Allowing multi-threading with up to 4 threads.
+
+# Choose a set of soft-thresholding powers
+powers = c(c(1:10), seq(from = 12, to=20, by=2))
+
+# Call the network topology analysis function
+sft = pickSoftThreshold(input_mat,             # <= Input data
+                        #blockSize = 30,
+                        powerVector = powers,
+                        verbose = 5
+                        )
+#> pickSoftThreshold: will use block size 1590.
+#>  pickSoftThreshold: calculating connectivity for given powers...
+#>    ..working on genes 1 through 1590 of 28128
+#>    ..working on genes 1591 through 3180 of 28128
+#>    ..working on genes 3181 through 4770 of 28128
+#>    ..working on genes 4771 through 6360 of 28128
+#>    ..working on genes 6361 through 7950 of 28128
+#>    ..working on genes 7951 through 9540 of 28128
+#>    ..working on genes 9541 through 11130 of 28128
+#>    ..working on genes 11131 through 12720 of 28128
+#>    ..working on genes 12721 through 14310 of 28128
+#>    ..working on genes 14311 through 15900 of 28128
+#>    ..working on genes 15901 through 17490 of 28128
+#>    ..working on genes 17491 through 19080 of 28128
+#>    ..working on genes 19081 through 20670 of 28128
+#>    ..working on genes 20671 through 22260 of 28128
+#>    ..working on genes 22261 through 23850 of 28128
+#>    ..working on genes 23851 through 25440 of 28128
+#>    ..working on genes 25441 through 27030 of 28128
+#>    ..working on genes 27031 through 28128 of 28128
+#>    Power SFT.R.sq   slope truncated.R.sq mean.k. median.k. max.k.
+#> 1      1   0.9700  1.8900         0.9690   15900     17400  20900
+#> 2      2   0.8390  0.6230         0.8640   10700     11900  16700
+#> 3      3   0.1920  0.1620         0.0549    7760      8550  14000
+#> 4      4   0.0547 -0.0926        -0.2100    5910      6340  12000
+#> 5      5   0.2610 -0.2700         0.0604    4650      4800  10400
+#> 6      6   0.3790 -0.4050         0.2430    3750      3700   9210
+#> 7      7   0.4470 -0.5090         0.3530    3090      2890   8210
+#> 8      8   0.4950 -0.5910         0.4420    2580      2280   7370
+#> 9      9   0.5270 -0.6590         0.5020    2180      1820   6660
+#> 10    10   0.5430 -0.7290         0.5430    1860      1470   6060
+#> 11    12   0.5750 -0.8320         0.6200    1390       979   5090
+#> 12    14   0.5820 -0.9360         0.6600    1070       667   4340
+#> 13    16   0.5970 -1.0100         0.7040     843       466   3740
+#> 14    18   0.6160 -1.0600         0.7440     674       330   3250
+#> 15    20   0.6360 -1.1200         0.7770     546       239   2840
+
+par(mfrow = c(1,2));
+cex1 = 0.9;
+
+plot(sft$fitIndices[, 1],
+     -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
+     xlab = "Soft Threshold (power)", 
+     ylab = "Scale Free Topology Model Fit, signed R^2",
+     main = paste("Scale independence")
 )
-```
-
-![](Assets/wgcna_pca_hours-1.png)<!-- -->
-
-## DESeq
-
-Code contributed by Siva, thank you! Here we’re restricting the groups
-to 0hr, 3hrs and 48 mock.
-
-``` r
-# keep only rows whose sums are greater than 10
-# dim(dat)
-# class(dat)
-dat1 <- (data[rowSums(data[,-1]) > 10,])
-dim(dat1)
-#> [1] 32563    49
-#30231    19
-
-(sub_names = names(data) %>% {
-  zero = grep("0I", ., value = T)
-  three = grep("3I", ., value = T)
-  mk = grep("mk", ., value=T)
-  c(zero, three, mk)
-  }
+text(sft$fitIndices[, 1], 
+     -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
+     labels = powers, cex = cex1, col = "red"
 )
-#>  [1] "0I_S3_L006"       "0I_S3_L007"       "0II_S11_L006"     "0II_S11_L007"    
-#>  [5] "0III_S19_L006"    "0III_S19_L007"    "3I_S4_L006"       "3I_S4_L007"      
-#>  [9] "3II_S12_L006"     "3II_S12_L007"     "3III_S20_L006"    "3III_S20_L007"   
-#> [13] "48mkI_S27_L007"   "48Imk_S10_L006"   "48mkII_S28_L007"  "48IImk_S18_L006" 
-#> [17] "48mkIII_S29_L007" "48IIImk_S26_L006"
-
-sub_data <- data[,c("Geneid", sub_names)]
-
-condition <- factor(c(rep("zero",times=6),
-                      rep("three",times=6),
-                      rep("mock",times=6)))
-
-condition = relevel(condition, ref = "mock")
-## Associating conditions with Samples
-
-Sample.data = data.frame(row.names = colnames(sub_data[,-1]),
-                         condition)
+abline(h = 0.90, col = "red")
+plot(sft$fitIndices[, 1],
+     sft$fitIndices[, 5],
+     xlab = "Soft Threshold (power)",
+     ylab = "Mean Connectivity", type = "n", main = paste("Mean connectivity")
+)
+text(sft$fitIndices[, 1], 
+     sft$fitIndices[, 5], 
+     labels = powers, 
+     cex = cex1, col = "red")
 ```
 
-Start DESeq2 and plot PCA
+![](Assets/wgcna_soft_threshold-1.png)<!-- -->
+
+Pick a soft threshold power near the curve of the plot, so here we could
+pick 7 or 8. We’ll pick 7 but feel free to experiment with other powers
+to see how it affects your results.
 
 ``` r
-dds <- DESeqDataSetFromMatrix(sub_data[,-1],
-                              Sample.data,
-                              design = ~condition)
-#> converting counts to integer mode
-dds <-DESeq(dds)
-#> estimating size factors
-#> estimating dispersions
-#> gene-wise dispersion estimates
-#> mean-dispersion relationship
-#> final dispersion estimates
-#> fitting model and testing
-# Plot Dispersions:
-#png("qc-dispersions.png", 1000, 1000, pointsize=20)
-#plotDispEsts(dds, main="Dispersion plot2")
-#dev.off()
-# Regularized log transformation for clustering/heatmaps, etc
-# rld <- rlogTransformation(dds)
-vsd<-varianceStabilizingTransformation(dds)
-head(assay(vsd))
-#>      0I_S3_L006 0I_S3_L007 0II_S11_L006 0II_S11_L007 0III_S19_L006
-#> [1,]   7.324933   7.339006     7.556410     7.434250      7.388262
-#> [2,]  10.538700  10.274948    10.374993    10.293616     10.103856
-#> [3,]   4.587224   4.974132     4.587224     4.587224      4.587224
-#> [4,]   4.587224   5.253443     5.198798     5.049548      5.579642
-#> [5,]   4.587224   4.587224     4.587224     4.587224      4.587224
-#> [6,]   4.587224   4.587224     4.587224     4.587224      4.587224
-#>      0III_S19_L007 3I_S4_L006 3I_S4_L007 3II_S12_L006 3II_S12_L007
-#> [1,]      7.663647   8.134179   7.569463     7.544055     7.585466
-#> [2,]      9.966643  10.209893  10.216762    10.153604    10.019453
-#> [3,]      4.587224   4.587224   4.587224     4.587224     4.587224
-#> [4,]      4.587224   5.704685   5.430443     5.583609     5.381642
-#> [5,]      4.587224   4.587224   4.587224     4.587224     4.587224
-#> [6,]      4.587224   4.587224   4.587224     4.587224     4.587224
-#>      3III_S20_L006 3III_S20_L007 48mkI_S27_L007 48Imk_S10_L006 48mkII_S28_L007
-#> [1,]      7.841968      7.791609       7.951395       7.236279        7.968322
-#> [2,]     10.238828     10.062651      10.066793       9.929359       10.088653
-#> [3,]      4.587224      5.199272       4.587224       4.587224        5.206554
-#> [4,]      5.811940      5.525887       5.438891       5.375009        5.456616
-#> [5,]      5.031587      4.587224       4.587224       4.587224        4.587224
-#> [6,]      5.031587      4.587224       4.587224       4.587224        4.587224
-#>      48IImk_S18_L006 48mkIII_S29_L007 48IIImk_S26_L006
-#> [1,]        7.956463         7.982343         7.922119
-#> [2,]       10.055192         9.648884         9.734524
-#> [3,]        5.055699         4.587224         5.068207
-#> [4,]        5.204954         5.467159         5.366789
-#> [5,]        4.587224         4.587224         4.587224
-#> [6,]        4.587224         4.587224         4.587224
-hist(assay(vsd))
+netwk <- blockwiseModules(input_mat,                # <= input here
+                          power = 7,                # <= power here
+                          minModuleSize = 30,
+                          reassignThreshold = 0, 
+                          mergeCutHeight = 0.25, 
+                          numericLabels = T,
+                          pamRespectsDendro = F, 
+                          saveTOMs = T, 
+                          saveTOMFileBase = "ER",
+                          verbose = 3, 
+                          maxBlockSize = 40000, 
+                          deepSplit = 2, 
+                          detectCutHeight = 0.5,
+                          networkType = "signed")
 ```
-
-![](Assets/wgcna_deseq_pca-1.png)<!-- -->
-
-``` r
-# Principal Components Analysis
-plotPCA(vsd)
-```
-
-![](Assets/wgcna_deseq_pca-2.png)<!-- -->
-
-Pull out DE genes
-
-``` r
-res1 <- results(dds,contrast = c("condition","zero","three"))  #<=
-table(res1$padj<0.05)
-#> 
-#> FALSE  TRUE 
-#> 19014  8935
-res2 <- results(dds,contrast = c("condition","zero","mock"))
-table(res2$padj<0.05)
-#> 
-#> FALSE  TRUE 
-#> 21690  5600
-## Merge with normalized count data
-temp <- as.data.frame(res1)
-resdata1 <- merge(temp,
-                  as.data.frame(counts(dds, normalized=TRUE)),
-                  by = "row.names",
-                  sort=FALSE)
-#str(resdata1)  # Morloc (data type checking) R= type flexible C+ type strict
-#names(resdata1) <- "gene"
-resdata1$Row.names = sub_data$Geneid
-#str(resdata1)
-#head(resdata1)
-names(resdata1)[1]="Gene_ID"
-#str(resdata1)
-#head(dat[,1])
-resdata1_new<-(resdata1[,c(-2,-4:-6)])
-```
-
-Only focus on the DEseq genes between 0 and 3 hours.
-
-``` r
-# === Subset of genes DE between Zero & Three
-sig_genes = resdata1_new %>%
-  subset(padj < 0.05)
-
-# Only focus on 8K sig DE genes
-row.names(data) = data$Geneid
-#> Warning: Setting row names on a tibble is deprecated.
-head(row.names(data))
-#> [1] "Zm00001d027230" "Zm00001d027231" "Zm00001d027232" "Zm00001d027233"
-#> [5] "Zm00001d027234" "Zm00001d027235"
-new_sub = data [ ,c("Geneid", sub_names)] %>%
-  subset(., Geneid %in% sig_genes$Gene_ID)
-
-(col_sel = names(new_sub)[-1])
-#>  [1] "0I_S3_L006"       "0I_S3_L007"       "0II_S11_L006"     "0II_S11_L007"    
-#>  [5] "0III_S19_L006"    "0III_S19_L007"    "3I_S4_L006"       "3I_S4_L007"      
-#>  [9] "3II_S12_L006"     "3II_S12_L007"     "3III_S20_L006"    "3III_S20_L007"   
-#> [13] "48mkI_S27_L007"   "48Imk_S10_L006"   "48mkII_S28_L007"  "48IImk_S18_L006" 
-#> [17] "48mkIII_S29_L007" "48IIImk_S26_L006"
-mdata <- tidyr::pivot_longer(new_sub,
-                             col=col_sel
-) %>%  
-  mutate(
-    group = gsub("I.*", "", name) %>% gsub("_.*", "", .),
-  )
-#> Note: Using an external vector in selections is ambiguous.
-#> ℹ Use `all_of(col_sel)` instead of `col_sel` to silence this message.
-#> ℹ See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-#> This message is displayed once per session.
-
-mdata$group[grepl("mk", mdata$name)]="48mk"
-mdata$group = factor(mdata$group,
-                     levels = c("0", "3", "6", "12", "24","36","48","48mk"))
-
-  # ==== Plot groups (Sample Groups vs RNA Seq Counts) to identify outliers
-  p <- mdata %>%
-  ggplot(., aes(x=name, y=value)) +
-  geom_violin() +
-  geom_point(alpha=0.2) +
-  theme_bw() +
-  theme(
-    axis.text.x = element_text(angle=90)
-  ) +
-  facet_grid(cols = vars(group), drop=TRUE, scales="free_x")
-
-p + labs(x="Treatment Groups", y = "RNA Seq Counts")
-```
-
-![](Assets/wgcna_er_parallel-1.png)<!-- -->
-
-``` r
-mdata %>% ggplot(., aes(x=name,
-                        y = value,
-                        group = Geneid)
-                 ) +
-  geom_point() +
-  geom_line() +
-  theme_bw() +
-  theme (
-    axis.text.x = element_text(angle=90)
-  )
-```
-
-![](Assets/wgcna_er_parallel-2.png)<!-- -->
