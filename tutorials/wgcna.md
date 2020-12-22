@@ -1,3 +1,9 @@
+wgcna
+================
+Jennifer Chang
+11/24/2020
+
+<!--
 ---
 title: "WGCNA Gene Correlation Network Analysis"
 layout: single
@@ -8,8 +14,9 @@ header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
+-->
 
-**Last Update**: 22 Dec 2020 <br/> **R Markdown**:
+**Last Update**: 14 Dec 2020 <br/> **R Markdown**:
 [WGCNA.Rmd](https://bioinformaticsworkbook.org/tutorials/WGCNA.Rmd)
 
 # Network analysis with WGCNA
@@ -107,7 +114,7 @@ Load and look at the data
 ``` r
 # ==== Load and clean data
 data <- readr::read_delim("data/All_Counts_ER.txt", delim="\t")
-#>
+#> 
 #> ── Column specification ────────────────────────────────────────────────────────
 #> cols(
 #>   .default = col_double(),
@@ -215,8 +222,8 @@ keep_cols = names(data) %>% grep("24", .,  invert = T, value = T) %>% grep("48I+
 cdata = data %>% select(all_of(keep_cols))
 
 temp <- cdata[rowSums(cdata[,-1]) > 0.1, ]      # Remove genes with all 0 values
-row_var <- apply(temp[,-1], 1, var)             # Remove genes with variance below 10
-cdata <- temp[row_var > 10, ]
+row_var <- apply(temp[,-1], 1, var)             # Remove genes with variance below 100
+cdata <- temp[row_var > 1, ]
 #cdata[1:5, 1:10]
 ```
 
@@ -224,8 +231,8 @@ You can look at the `cdata` object (click on item in `environment` or
 use `names(cdata)`) to convince yourself that the “24 hour” group is
 gone. The original dataset had 46,430 genes (too many to explore),
 subsetting by variance and other strange artifacts reduced it down to
-28,128 genes. Let’s continue and determine the correlation networks for
-these 28,128 genes.
+25,088 genes. Let’s continue and determine the correlation networks for
+these 25,088 genes.
 
 ## WGCNA
 
@@ -236,24 +243,24 @@ input_mat = t(as.matrix(cdata[,-1]))
 colnames(input_mat) = cdata$Geneid
 
 input_mat[1:5,1:10]           # Look at first 5 rows and 10 columns
-#>               Zm00001d027230 Zm00001d027231 Zm00001d027233 Zm00001d027236
-#> 0I_S3_L006               103           1280              0              6
-#> 0I_S3_L007               135           1370              6             25
-#> 0II_S11_L006              98            876              3              3
-#> 0II_S11_L007             103            970              2             28
-#> 0III_S19_L006            187           1602             18              6
-#>               Zm00001d027239 Zm00001d027242 Zm00001d027248 Zm00001d027250
-#> 0I_S3_L006               562            432              8              4
-#> 0I_S3_L007               411            548             27             18
-#> 0II_S11_L006             434            337             16              4
-#> 0II_S11_L007             351            404              3              9
-#> 0III_S19_L006           1999           1770             98              2
-#>               Zm00001d027254 Zm00001d027256
-#> 0I_S3_L006                 6             19
-#> 0I_S3_L007                 5             14
-#> 0II_S11_L006               2             14
-#> 0II_S11_L007               4              0
-#> 0III_S19_L006             16             16
+#>               Zm00001d027230 Zm00001d027231 Zm00001d027232 Zm00001d027233
+#> 0I_S3_L006               103           1280              0              0
+#> 0I_S3_L007               135           1370              2              6
+#> 0II_S11_L006              98            876              0              3
+#> 0II_S11_L007             103            970              0              2
+#> 0III_S19_L006            187           1602              0             18
+#>               Zm00001d027236 Zm00001d027239 Zm00001d027242 Zm00001d027244
+#> 0I_S3_L006                 6            562            432              0
+#> 0I_S3_L007                25            411            548              0
+#> 0II_S11_L006               3            434            337              0
+#> 0II_S11_L007              28            351            404              0
+#> 0III_S19_L006              6           1999           1770              0
+#>               Zm00001d027248 Zm00001d027250
+#> 0I_S3_L006                 8              4
+#> 0I_S3_L007                27             18
+#> 0II_S11_L006              16              4
+#> 0II_S11_L007               3              9
+#> 0III_S19_L006             98              2
 ```
 
 We can see now that the `rows` = `treatments` and `columns` =
@@ -282,53 +289,58 @@ sft = pickSoftThreshold(input_mat,             # <= Input data
                         powerVector = powers,
                         verbose = 5
                         )
-#> pickSoftThreshold: will use block size 1590.
+#> pickSoftThreshold: will use block size 1415.
 #>  pickSoftThreshold: calculating connectivity for given powers...
-#>    ..working on genes 1 through 1590 of 28128
-#>    ..working on genes 1591 through 3180 of 28128
-#>    ..working on genes 3181 through 4770 of 28128
-#>    ..working on genes 4771 through 6360 of 28128
-#>    ..working on genes 6361 through 7950 of 28128
-#>    ..working on genes 7951 through 9540 of 28128
-#>    ..working on genes 9541 through 11130 of 28128
-#>    ..working on genes 11131 through 12720 of 28128
-#>    ..working on genes 12721 through 14310 of 28128
-#>    ..working on genes 14311 through 15900 of 28128
-#>    ..working on genes 15901 through 17490 of 28128
-#>    ..working on genes 17491 through 19080 of 28128
-#>    ..working on genes 19081 through 20670 of 28128
-#>    ..working on genes 20671 through 22260 of 28128
-#>    ..working on genes 22261 through 23850 of 28128
-#>    ..working on genes 23851 through 25440 of 28128
-#>    ..working on genes 25441 through 27030 of 28128
-#>    ..working on genes 27031 through 28128 of 28128
+#>    ..working on genes 1 through 1415 of 31600
+#>    ..working on genes 1416 through 2830 of 31600
+#>    ..working on genes 2831 through 4245 of 31600
+#>    ..working on genes 4246 through 5660 of 31600
+#>    ..working on genes 5661 through 7075 of 31600
+#>    ..working on genes 7076 through 8490 of 31600
+#>    ..working on genes 8491 through 9905 of 31600
+#>    ..working on genes 9906 through 11320 of 31600
+#>    ..working on genes 11321 through 12735 of 31600
+#>    ..working on genes 12736 through 14150 of 31600
+#>    ..working on genes 14151 through 15565 of 31600
+#>    ..working on genes 15566 through 16980 of 31600
+#>    ..working on genes 16981 through 18395 of 31600
+#>    ..working on genes 18396 through 19810 of 31600
+#>    ..working on genes 19811 through 21225 of 31600
+#>    ..working on genes 21226 through 22640 of 31600
+#>    ..working on genes 22641 through 24055 of 31600
+#>    ..working on genes 24056 through 25470 of 31600
+#>    ..working on genes 25471 through 26885 of 31600
+#>    ..working on genes 26886 through 28300 of 31600
+#>    ..working on genes 28301 through 29715 of 31600
+#>    ..working on genes 29716 through 31130 of 31600
+#>    ..working on genes 31131 through 31600 of 31600
 #>    Power SFT.R.sq   slope truncated.R.sq mean.k. median.k. max.k.
-#> 1      1   0.9700  1.8900         0.9690   15900     17400  20900
-#> 2      2   0.8390  0.6230         0.8640   10700     11900  16700
-#> 3      3   0.1920  0.1620         0.0549    7760      8550  14000
-#> 4      4   0.0547 -0.0926        -0.2100    5910      6340  12000
-#> 5      5   0.2610 -0.2700         0.0604    4650      4800  10400
-#> 6      6   0.3790 -0.4050         0.2430    3750      3700   9210
-#> 7      7   0.4470 -0.5090         0.3530    3090      2890   8210
-#> 8      8   0.4950 -0.5910         0.4420    2580      2280   7370
-#> 9      9   0.5270 -0.6590         0.5020    2180      1820   6660
-#> 10    10   0.5430 -0.7290         0.5430    1860      1470   6060
-#> 11    12   0.5750 -0.8320         0.6200    1390       979   5090
-#> 12    14   0.5820 -0.9360         0.6600    1070       667   4340
-#> 13    16   0.5970 -1.0100         0.7040     843       466   3740
-#> 14    18   0.6160 -1.0600         0.7440     674       330   3250
-#> 15    20   0.6360 -1.1200         0.7770     546       239   2840
+#> 1      1   0.8330  1.0600          0.923   15600     17500  21800
+#> 2      2   0.2490  0.2150          0.702    9970     11300  17100
+#> 3      3   0.0507 -0.0861          0.179    7090      7770  14100
+#> 4      4   0.3070 -0.2590          0.191    5340      5540  12000
+#> 5      5   0.4420 -0.3860          0.285    4180      4040  10500
+#> 6      6   0.5040 -0.4850          0.370    3360      3010   9230
+#> 7      7   0.5390 -0.5670          0.435    2760      2280   8220
+#> 8      8   0.5670 -0.6330          0.497    2300      1750   7370
+#> 9      9   0.5860 -0.6890          0.543    1940      1360   6660
+#> 10    10   0.5920 -0.7490          0.575    1660      1070   6060
+#> 11    12   0.6120 -0.8400          0.638    1240       670   5090
+#> 12    14   0.6100 -0.9340          0.672     955       435   4340
+#> 13    16   0.6200 -1.0000          0.712     750       290   3740
+#> 14    18   0.6350 -1.0500          0.749     600       197   3250
+#> 15    20   0.6530 -1.1000          0.782     487       144   2840
 
 par(mfrow = c(1,2));
 cex1 = 0.9;
 
 plot(sft$fitIndices[, 1],
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
-     xlab = "Soft Threshold (power)",
+     xlab = "Soft Threshold (power)", 
      ylab = "Scale Free Topology Model Fit, signed R^2",
      main = paste("Scale independence")
 )
-text(sft$fitIndices[, 1],
+text(sft$fitIndices[, 1], 
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
      labels = powers, cex = cex1, col = "red"
 )
@@ -338,31 +350,214 @@ plot(sft$fitIndices[, 1],
      xlab = "Soft Threshold (power)",
      ylab = "Mean Connectivity", type = "n", main = paste("Mean connectivity")
 )
-text(sft$fitIndices[, 1],
-     sft$fitIndices[, 5],
-     labels = powers,
+text(sft$fitIndices[, 1], 
+     sft$fitIndices[, 5], 
+     labels = powers, 
      cex = cex1, col = "red")
 ```
 
 ![](Assets/wgcna_soft_threshold-1.png)<!-- -->
 
 Pick a soft threshold power near the curve of the plot, so here we could
-pick 7 or 8. We’ll pick 7 but feel free to experiment with other powers
-to see how it affects your results.
+pick 9 or 10. We’ll pick 9 but feel free to experiment with other powers
+to see how it affects your results. Now we can create the network using
+the `blockwiseModules` command. See the
+[vignette](https://www.rdocumentation.org/packages/WGCNA/versions/1.69/topics/blockwiseModules)
+for more information on the parameters.
 
 ``` r
 netwk <- blockwiseModules(input_mat,                # <= input here
-                          power = 7,                # <= power here
-                          minModuleSize = 30,
-                          reassignThreshold = 0,
-                          mergeCutHeight = 0.25,
+                          power = 9,                # <= power here
+                          #minModuleSize = 30,
+                          #reassignThreshold = 0, 
+                          #mergeCutHeight = 0.25, 
                           numericLabels = T,
-                          pamRespectsDendro = F,
-                          saveTOMs = T,
+                          pamRespectsDendro = F, 
+                          saveTOMs = T, 
                           saveTOMFileBase = "ER",
-                          verbose = 3,
-                          maxBlockSize = 40000,
-                          deepSplit = 2,
-                          detectCutHeight = 0.5,
+                          verbose = 3, 
+                          #maxBlockSize = 40000, 
+                          deepSplit = 2, 
+                          #detectCutHeight = 0.5,
                           networkType = "signed")
+#>  Calculating module eigengenes block-wise from all genes
+#>    Flagging genes and samples with too many missing values...
+#>     ..step 1
+#>  ....pre-clustering genes to determine blocks..
+#>    Projective K-means:
+#>    ..k-means clustering..
+#>    ..merging smaller clusters...
+#> Block sizes:
+#> gBlocks
+#>    1    2    3    4    5    6    7 
+#> 5000 5000 4999 4998 4995 4978 1630 
+#>  ..Working on block 1 .
+#>     TOM calculation: adjacency..
+#>     ..will use 4 parallel threads.
+#>      Fraction of slow calculations: 0.000000
+#>     ..connectivity..
+#>     ..matrix multiplication (system BLAS)..
+#>     ..normalization..
+#>     ..done.
+#>    ..saving TOM for block 1 into file ER-block.1.RData
+#>  ....clustering..
+#>  ....detecting modules..
+#>  ....calculating module eigengenes..
+#>  ....checking kME in modules..
+#>      ..removing 2 genes from module 2 because their KME is too low.
+#>  ..Working on block 2 .
+#>     TOM calculation: adjacency..
+#>     ..will use 4 parallel threads.
+#>      Fraction of slow calculations: 0.000000
+#>     ..connectivity..
+#>     ..matrix multiplication (system BLAS)..
+#>     ..normalization..
+#>     ..done.
+#>    ..saving TOM for block 2 into file ER-block.2.RData
+#>  ....clustering..
+#>  ....detecting modules..
+#>  ....calculating module eigengenes..
+#>  ....checking kME in modules..
+#>      ..removing 5 genes from module 1 because their KME is too low.
+#>      ..removing 3 genes from module 2 because their KME is too low.
+#>      ..removing 2 genes from module 4 because their KME is too low.
+#>      ..removing 1 genes from module 6 because their KME is too low.
+#>      ..removing 1 genes from module 7 because their KME is too low.
+#>  ..Working on block 3 .
+#>     TOM calculation: adjacency..
+#>     ..will use 4 parallel threads.
+#>      Fraction of slow calculations: 0.000000
+#>     ..connectivity..
+#>     ..matrix multiplication (system BLAS)..
+#>     ..normalization..
+#>     ..done.
+#>    ..saving TOM for block 3 into file ER-block.3.RData
+#>  ....clustering..
+#>  ....detecting modules..
+#>  ....calculating module eigengenes..
+#>  ....checking kME in modules..
+#>      ..removing 1 genes from module 1 because their KME is too low.
+#>  ..Working on block 4 .
+#>     TOM calculation: adjacency..
+#>     ..will use 4 parallel threads.
+#>      Fraction of slow calculations: 0.000000
+#>     ..connectivity..
+#>     ..matrix multiplication (system BLAS)..
+#>     ..normalization..
+#>     ..done.
+#>    ..saving TOM for block 4 into file ER-block.4.RData
+#>  ....clustering..
+#>  ....detecting modules..
+#>  ....calculating module eigengenes..
+#>  ....checking kME in modules..
+#>      ..removing 276 genes from module 1 because their KME is too low.
+#>      ..removing 26 genes from module 2 because their KME is too low.
+#>      ..removing 17 genes from module 3 because their KME is too low.
+#>      ..removing 1 genes from module 4 because their KME is too low.
+#>      ..removing 2 genes from module 5 because their KME is too low.
+#>      ..removing 2 genes from module 6 because their KME is too low.
+#>      ..removing 1 genes from module 7 because their KME is too low.
+#>      ..removing 3 genes from module 8 because their KME is too low.
+#>  ..Working on block 5 .
+#>     TOM calculation: adjacency..
+#>     ..will use 4 parallel threads.
+#>      Fraction of slow calculations: 0.000000
+#>     ..connectivity..
+#>     ..matrix multiplication (system BLAS)..
+#>     ..normalization..
+#>     ..done.
+#>    ..saving TOM for block 5 into file ER-block.5.RData
+#>  ....clustering..
+#>  ....detecting modules..
+#>  ....calculating module eigengenes..
+#>  ....checking kME in modules..
+#>  ..Working on block 6 .
+#>     TOM calculation: adjacency..
+#>     ..will use 4 parallel threads.
+#>      Fraction of slow calculations: 0.000000
+#>     ..connectivity..
+#>     ..matrix multiplication (system BLAS)..
+#>     ..normalization..
+#>     ..done.
+#>    ..saving TOM for block 6 into file ER-block.6.RData
+#>  ....clustering..
+#>  ....detecting modules..
+#>  ....calculating module eigengenes..
+#>  ....checking kME in modules..
+#>      ..removing 18 genes from module 1 because their KME is too low.
+#>      ..removing 73 genes from module 2 because their KME is too low.
+#>      ..removing 5 genes from module 3 because their KME is too low.
+#>      ..removing 6 genes from module 5 because their KME is too low.
+#>      ..removing 1 genes from module 6 because their KME is too low.
+#>      ..removing 4 genes from module 7 because their KME is too low.
+#>  ..Working on block 7 .
+#>     TOM calculation: adjacency..
+#>     ..will use 4 parallel threads.
+#>      Fraction of slow calculations: 0.000000
+#>     ..connectivity..
+#>     ..matrix multiplication (system BLAS)..
+#>     ..normalization..
+#>     ..done.
+#>    ..saving TOM for block 7 into file ER-block.7.RData
+#>  ....clustering..
+#>  ....detecting modules..
+#>  ....calculating module eigengenes..
+#>  ....checking kME in modules..
+#>      ..removing 296 genes from module 1 because their KME is too low.
+#>      ..removing 93 genes from module 2 because their KME is too low.
+#>      ..removing 47 genes from module 3 because their KME is too low.
+#>      ..removing 4 genes from module 4 because their KME is too low.
+#>      ..removing 2 genes from module 5 because their KME is too low.
+#>   ..reassigning 208 genes from module 1 to modules with higher KME.
+#>   ..reassigning 151 genes from module 2 to modules with higher KME.
+#>   ..reassigning 31 genes from module 3 to modules with higher KME.
+#>   ..reassigning 6 genes from module 4 to modules with higher KME.
+#>   ..reassigning 9 genes from module 5 to modules with higher KME.
+#>   ..reassigning 7 genes from module 6 to modules with higher KME.
+#>   ..reassigning 5 genes from module 7 to modules with higher KME.
+#>   ..reassigning 7 genes from module 8 to modules with higher KME.
+#>   ..reassigning 6 genes from module 10 to modules with higher KME.
+#>   ..reassigning 1 genes from module 11 to modules with higher KME.
+#>   ..reassigning 513 genes from module 14 to modules with higher KME.
+#>   ..reassigning 28 genes from module 15 to modules with higher KME.
+#>   ..reassigning 17 genes from module 16 to modules with higher KME.
+#>   ..reassigning 11 genes from module 17 to modules with higher KME.
+#>   ..reassigning 14 genes from module 18 to modules with higher KME.
+#>   ..reassigning 2 genes from module 19 to modules with higher KME.
+#>   ..reassigning 2 genes from module 20 to modules with higher KME.
+#>   ..reassigning 1 genes from module 21 to modules with higher KME.
+#>   ..reassigning 1 genes from module 22 to modules with higher KME.
+#>   ..reassigning 1 genes from module 24 to modules with higher KME.
+#>   ..reassigning 293 genes from module 31 to modules with higher KME.
+#>   ..reassigning 49 genes from module 32 to modules with higher KME.
+#>   ..reassigning 13 genes from module 33 to modules with higher KME.
+#>   ..reassigning 15 genes from module 34 to modules with higher KME.
+#>   ..reassigning 16 genes from module 35 to modules with higher KME.
+#>   ..reassigning 4 genes from module 36 to modules with higher KME.
+#>   ..reassigning 9 genes from module 37 to modules with higher KME.
+#>   ..reassigning 2 genes from module 38 to modules with higher KME.
+#>   ..reassigning 3 genes from module 42 to modules with higher KME.
+#>  ..merging modules that are too close..
+#>      mergeCloseModules: Merging modules whose distance is less than 0.15
+#>        Calculating new MEs...
+```
+
+Let’s take a look at the modules, there
+
+``` r
+# Convert labels to colors for plotting
+mergedColors = labels2colors(netwk$colors)
+# Plot the dendrogram and the module colors underneath
+plotDendroAndColors(
+  netwk$dendrograms[[1]], 
+  mergedColors[netwk$blockGenes[[1]]],
+  "Module colors",
+  dendroLabels = FALSE, hang = 0.03,
+  addGuide = TRUE, guideHang = 0.05)
+```
+
+![](Assets/wgcna_dendro-1.png)<!-- -->
+
+``` r
+#                    netwk$colors[netwk$blockGenes[[1]]]
 ```
