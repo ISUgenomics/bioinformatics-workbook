@@ -1,9 +1,3 @@
-wgcna
-================
-Jennifer Chang
-11/24/2020
-
-<!--
 ---
 title: "WGCNA Gene Correlation Network Analysis"
 layout: single
@@ -14,9 +8,8 @@ header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
--->
 
-**Last Update**: 14 Dec 2020 <br/> **R Markdown**:
+**Last Update**: 22 Dec 2020 <br/> **R Markdown**:
 [WGCNA.Rmd](https://bioinformaticsworkbook.org/tutorials/WGCNA.Rmd)
 
 # Network analysis with WGCNA
@@ -114,7 +107,7 @@ Load and look at the data
 ``` r
 # ==== Load and clean data
 data <- readr::read_delim("data/All_Counts_ER.txt", delim="\t")
-#> 
+#>
 #> ── Column specification ────────────────────────────────────────────────────────
 #> cols(
 #>   .default = col_double(),
@@ -331,11 +324,11 @@ cex1 = 0.9;
 
 plot(sft$fitIndices[, 1],
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
-     xlab = "Soft Threshold (power)", 
+     xlab = "Soft Threshold (power)",
      ylab = "Scale Free Topology Model Fit, signed R^2",
      main = paste("Scale independence")
 )
-text(sft$fitIndices[, 1], 
+text(sft$fitIndices[, 1],
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
      labels = powers, cex = cex1, col = "red"
 )
@@ -345,9 +338,9 @@ plot(sft$fitIndices[, 1],
      xlab = "Soft Threshold (power)",
      ylab = "Mean Connectivity", type = "n", main = paste("Mean connectivity")
 )
-text(sft$fitIndices[, 1], 
-     sft$fitIndices[, 5], 
-     labels = powers, 
+text(sft$fitIndices[, 1],
+     sft$fitIndices[, 5],
+     labels = powers,
      cex = cex1, col = "red")
 ```
 
@@ -361,15 +354,15 @@ to see how it affects your results.
 netwk <- blockwiseModules(input_mat,                # <= input here
                           power = 7,                # <= power here
                           minModuleSize = 30,
-                          reassignThreshold = 0, 
-                          mergeCutHeight = 0.25, 
+                          reassignThreshold = 0,
+                          mergeCutHeight = 0.25,
                           numericLabels = T,
-                          pamRespectsDendro = F, 
-                          saveTOMs = T, 
+                          pamRespectsDendro = F,
+                          saveTOMs = T,
                           saveTOMFileBase = "ER",
-                          verbose = 3, 
-                          maxBlockSize = 40000, 
-                          deepSplit = 2, 
+                          verbose = 3,
+                          maxBlockSize = 40000,
+                          deepSplit = 2,
                           detectCutHeight = 0.5,
                           networkType = "signed")
 ```
