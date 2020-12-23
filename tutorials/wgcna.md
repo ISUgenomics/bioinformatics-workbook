@@ -77,6 +77,11 @@ encompasses the entire pre-ligule, pre-blade and pre-sheath area.
 
 -   [Dataset](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE61333)
 
+``` bash
+wget ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE61nnn/GSE61333/suppl/GSE61333_ligule_count.txt.gz
+gunzip GSE61333_ligule_count.txt.gz
+```
+
 > We shall start with an example dataset about ER (Endocrine Reticulum)
 > cell death response. \[Add description of data and maybe link to paper
 > here\]
@@ -207,110 +212,45 @@ p + labs(x="Treatment Groups", y = "RNA Seq Counts")
 
 ![](Assets/wgcna_group_by_hour-1.png)<!-- -->
 
-From here, we can see there’s something strange in some of the hour 24
-samples. One has very high RNASeq values `24II_S15_L006` with maybe a
-wide range, while another has very low range of RNASeq values
-`24_S15_L007`. We should follow up with the wet lab folks on an
-explanation of those samples, but for now, we’ll remove the 24 hour
-group and maybe the 48 hour group.
-
-``` r
-#keep_cols = names(data) %>% grep("24", .,  invert = T, value = T) %>% grep("48I+_", ., invert=T, value=T)
-#cdata = data %>% select(all_of(keep_cols))
-
-#temp <- data[rowSums(data[,-1]) > 0.1, ]      # Remove genes with all 0 values
-#row_var <- apply(temp[,-1], 1, var)           # Remove genes with variance below 100
-#cdata <- temp[row_var > 1, ]
-#cdata[1:5, 1:10]
-```
-
-You can look at the `cdata` object (click on item in `environment` or
-use `names(cdata)`) to convince yourself that the “24 hour” group is
-gone. The original dataset had 46,430 genes (too many to explore),
-subsetting by variance and other strange artifacts reduced it down to
-25,088 genes. Let’s continue and determine the correlation networks for
-these 25,088 genes.
+> From here, we can see there’s something strange in some of the hour 24
+> samples. One has very high RNASeq values `24II_S15_L006` with maybe a
+> wide range, while another has very low range of RNASeq values
+> `24_S15_L007`. We should follow up with the wet lab folks on an
+> explanation of those samples, but for now, we’ll remove the 24 hour
+> group and maybe the 48 hour group.
+>
+> ``` r
+> #keep_cols = names(data) %>% grep("24", .,  invert = T, value = T) %>% grep("48I+_", ., invert=T, value=T)
+> #cdata = data %>% select(all_of(keep_cols))
+>
+> #temp <- data[rowSums(data[,-1]) > 0.1, ]      # Remove genes with all 0 values
+> #row_var <- apply(temp[,-1], 1, var)           # Remove genes with variance below 100
+> #cdata <- temp[row_var > 1, ]
+> #cdata[1:5, 1:10]
+> ```
+>
+> You can look at the `cdata` object (click on item in `environment` or
+> use `names(cdata)`) to convince yourself that the “24 hour” group is
+> gone. The original dataset had 46,430 genes (too many to explore),
+> subsetting by variance and other strange artifacts reduced it down to
+> 25,088 genes. Let’s continue and determine the correlation networks
+> for these 25,088 genes.
 
 ## Normalize Counts with DESeq
 
+We’ll use DESeq to normalize the counts before sending to WGCNA.
+Optionally you could subset to only genes that are differentially
+expressed between groups. (The smaller the number of genes, the faster
+WGCNA will run. Although there is some online discussion if this breaks
+the scale-free network assumption.)
+
 ``` r
 library(DESeq2)
-#> Loading required package: S4Vectors
-#> Loading required package: stats4
-#> Loading required package: BiocGenerics
-#> Loading required package: parallel
-#> 
-#> Attaching package: 'BiocGenerics'
-#> The following objects are masked from 'package:parallel':
-#> 
-#>     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-#>     clusterExport, clusterMap, parApply, parCapply, parLapply,
-#>     parLapplyLB, parRapply, parSapply, parSapplyLB
-#> The following objects are masked from 'package:dplyr':
-#> 
-#>     combine, intersect, setdiff, union
-#> The following objects are masked from 'package:stats':
-#> 
-#>     IQR, mad, sd, var, xtabs
-#> The following objects are masked from 'package:base':
-#> 
-#>     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-#>     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-#>     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-#>     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-#>     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-#>     union, unique, unsplit, which, which.max, which.min
-#> 
-#> Attaching package: 'S4Vectors'
-#> The following objects are masked from 'package:dplyr':
-#> 
-#>     first, rename
-#> The following object is masked from 'package:tidyr':
-#> 
-#>     expand
-#> The following object is masked from 'package:base':
-#> 
-#>     expand.grid
-#> Loading required package: IRanges
-#> 
-#> Attaching package: 'IRanges'
-#> The following objects are masked from 'package:dplyr':
-#> 
-#>     collapse, desc, slice
-#> The following object is masked from 'package:purrr':
-#> 
-#>     reduce
-#> Loading required package: GenomicRanges
-#> Loading required package: GenomeInfoDb
-#> Loading required package: SummarizedExperiment
-#> Loading required package: Biobase
-#> Welcome to Bioconductor
-#> 
-#>     Vignettes contain introductory material; view with
-#>     'browseVignettes()'. To cite Bioconductor, see
-#>     'citation("Biobase")', and for packages 'citation("pkgname")'.
-#> Loading required package: DelayedArray
-#> Loading required package: matrixStats
-#> 
-#> Attaching package: 'matrixStats'
-#> The following objects are masked from 'package:Biobase':
-#> 
-#>     anyMissing, rowMedians
-#> The following object is masked from 'package:dplyr':
-#> 
-#>     count
-#> 
-#> Attaching package: 'DelayedArray'
-#> The following objects are masked from 'package:matrixStats':
-#> 
-#>     colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges
-#> The following object is masked from 'package:purrr':
-#> 
-#>     simplify
-#> The following objects are masked from 'package:base':
-#> 
-#>     aperm, apply, rowsum
+```
 
+Prepare DESeq input, which is expecting a matrix of integers.
+
+``` r
 de_input = as.matrix(data[,-1])
 row.names(de_input) = data$GeneId
 de_input[1:5,1:10]
@@ -503,7 +443,7 @@ using the `blockwiseModules` command. See the
 for more information on the parameters.
 
 ``` r
-cor <- WGCNA::cor
+cor <- WGCNA::cor       # Force it to use WGCNA cor function
 netwk <- blockwiseModules(input_mat,                # <= input here
                           power = 9,               # <= power here
                           minModuleSize = 30,
@@ -734,6 +674,7 @@ MEs0 <- moduleEigengenes(input_mat, mergedColors)$eigengenes
 
 # Reorder modules so similar modules are next to each other
 MEs0 <- orderMEs(MEs0)
+module_order = names(MEs0) %>% gsub("ME","", .)
 
 # Add treatment names
 MEs0$treatment = row.names(MEs0)
@@ -742,12 +683,19 @@ MEs0$treatment = row.names(MEs0)
 mME = MEs0 %>%
   pivot_longer(-treatment) %>%
   mutate(
-    name = gsub("ME", "", name)
+    name = gsub("ME", "", name),
+    name = factor(name, levels = module_order) 
   )
 
 mME %>% ggplot(., aes(x=treatment, y=name, fill=value)) +
   geom_tile() +
   theme_bw() + 
+  scale_fill_gradient2(
+    low = "blue", 
+    high = "red", 
+    mid = "white", 
+    midpoint = 0, 
+    limit = c(-1,1)) +
   theme(axis.text.x = element_text(angle=90)) +
   labs(title = "Module-trait Relationships", y = "Modules", fill="corr")
 ```
