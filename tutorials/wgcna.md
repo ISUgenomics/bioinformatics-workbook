@@ -1,3 +1,4 @@
+
 ---
 title: "WGCNA Gene Correlation Network Analysis"
 layout: single
@@ -9,7 +10,8 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-**Last Update**: 22 Dec 2020 <br/> **R Markdown**:
+
+**Last Update**: 23 Dec 2020 <br/> **R Markdown**:
 [WGCNA.Rmd](https://bioinformaticsworkbook.org/tutorials/WGCNA.Rmd)
 
 # Network analysis with WGCNA
@@ -443,21 +445,31 @@ using the `blockwiseModules` command. See the
 for more information on the parameters.
 
 ``` r
-cor <- WGCNA::cor       # Force it to use WGCNA cor function
+cor <- WGCNA::cor       # Force it to use WGCNA cor function (fix a namespace conflict issue)
 netwk <- blockwiseModules(input_mat,                # <= input here
-                          power = 9,               # <= power here
+                          
+                          # == Adjacency Function ==
+                          power = 10,                # <= power here
+                          networkType = "signed",
+                          
+                          # == Tree and Block Options ==
+                          deepSplit = 2,
+                          pamRespectsDendro = F,
+                          # detectCutHeight = 0.75,
                           minModuleSize = 30,
-                          #reassignThreshold = 0, 
+                          maxBlockSize = 4000,
+                          
+                          # == Module Adjustments ==
+                          reassignThreshold = 0, 
                           mergeCutHeight = 0.25, 
-                          numericLabels = T,
-                          pamRespectsDendro = F, 
+                          
+                          # == TOM == Archive the run results in TOM file (saves time)
                           saveTOMs = T, 
                           saveTOMFileBase = "ER",
-                          verbose = 3, 
-                          #maxBlockSize = 40000, 
-                          deepSplit = 2, 
-                          #detectCutHeight = 0.5,
-                          networkType = "signed")
+                          
+                          # == Output Options
+                          numericLabels = T,
+                          verbose = 3)
 #>  Calculating module eigengenes block-wise from all genes
 #>    Flagging genes and samples with too many missing values...
 #>     ..step 1
@@ -467,8 +479,8 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>    ..merging smaller clusters...
 #> Block sizes:
 #> gBlocks
-#>    1    2    3    4    5    6 
-#> 4977 4955 4946 4938 4591 3022 
+#>    1    2    3    4    5    6    7    8 
+#> 3992 3991 3948 3745 3695 3580 3453 1025 
 #>  ..Working on block 1 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -482,11 +494,18 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 30 genes from module 1 because their KME is too low.
-#>      ..removing 29 genes from module 2 because their KME is too low.
-#>      ..removing 11 genes from module 3 because their KME is too low.
-#>      ..removing 1 genes from module 4 because their KME is too low.
-#>      ..removing 1 genes from module 5 because their KME is too low.
+#>      ..removing 4 genes from module 1 because their KME is too low.
+#>      ..removing 1 genes from module 2 because their KME is too low.
+#>      ..removing 1 genes from module 3 because their KME is too low.
+#>      ..removing 3 genes from module 4 because their KME is too low.
+#> ... output truncated for brevity
+
+cor<-stats::cor
+```
+
+<details><summary>See full output</summary>
+
+``` r
 #>  ..Working on block 2 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -500,13 +519,16 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 125 genes from module 1 because their KME is too low.
-#>      ..removing 102 genes from module 2 because their KME is too low.
-#>      ..removing 32 genes from module 3 because their KME is too low.
-#>      ..removing 5 genes from module 4 because their KME is too low.
-#>      ..removing 6 genes from module 5 because their KME is too low.
-#>      ..removing 2 genes from module 6 because their KME is too low.
-#>      ..removing 2 genes from module 11 because their KME is too low.
+#>      ..removing 8 genes from module 1 because their KME is too low.
+#>      ..removing 7 genes from module 2 because their KME is too low.
+#>      ..removing 25 genes from module 3 because their KME is too low.
+#>      ..removing 3 genes from module 4 because their KME is too low.
+#>      ..removing 2 genes from module 5 because their KME is too low.
+#>      ..removing 3 genes from module 7 because their KME is too low.
+#>      ..removing 2 genes from module 9 because their KME is too low.
+#>      ..removing 4 genes from module 11 because their KME is too low.
+#>      ..removing 1 genes from module 15 because their KME is too low.
+#>      ..removing 1 genes from module 16 because their KME is too low.
 #>  ..Working on block 3 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -520,28 +542,11 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 25 genes from module 1 because their KME is too low.
-#>      ..removing 31 genes from module 2 because their KME is too low.
-#>      ..removing 17 genes from module 3 because their KME is too low.
-#>      ..removing 1 genes from module 4 because their KME is too low.
+#>      ..removing 50 genes from module 1 because their KME is too low.
+#>      ..removing 34 genes from module 2 because their KME is too low.
+#>      ..removing 10 genes from module 3 because their KME is too low.
+#>      ..removing 7 genes from module 4 because their KME is too low.
 #>      ..removing 1 genes from module 5 because their KME is too low.
-#>      ..removing 6 genes from module 6 because their KME is too low.
-#>      ..removing 3 genes from module 7 because their KME is too low.
-#>      ..removing 1 genes from module 8 because their KME is too low.
-#>      ..removing 1 genes from module 11 because their KME is too low.
-#>      ..removing 1 genes from module 12 because their KME is too low.
-#>      ..removing 1 genes from module 13 because their KME is too low.
-#>      ..removing 6 genes from module 15 because their KME is too low.
-#>      ..removing 1 genes from module 16 because their KME is too low.
-#>      ..removing 3 genes from module 20 because their KME is too low.
-#>      ..removing 3 genes from module 21 because their KME is too low.
-#>      ..removing 3 genes from module 23 because their KME is too low.
-#>      ..removing 1 genes from module 25 because their KME is too low.
-#>      ..removing 1 genes from module 26 because their KME is too low.
-#>      ..removing 1 genes from module 27 because their KME is too low.
-#>      ..removing 1 genes from module 35 because their KME is too low.
-#>      ..removing 1 genes from module 36 because their KME is too low.
-#>      ..removing 2 genes from module 37 because their KME is too low.
 #>  ..Working on block 4 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -555,10 +560,16 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 10 genes from module 1 because their KME is too low.
-#>      ..removing 10 genes from module 2 because their KME is too low.
-#>      ..removing 12 genes from module 3 because their KME is too low.
-#>      ..removing 4 genes from module 4 because their KME is too low.
+#>      ..removing 12 genes from module 1 because their KME is too low.
+#>      ..removing 1 genes from module 2 because their KME is too low.
+#>      ..removing 3 genes from module 3 because their KME is too low.
+#>      ..removing 2 genes from module 4 because their KME is too low.
+#>      ..removing 1 genes from module 5 because their KME is too low.
+#>      ..removing 2 genes from module 7 because their KME is too low.
+#>      ..removing 1 genes from module 8 because their KME is too low.
+#>      ..removing 1 genes from module 9 because their KME is too low.
+#>      ..removing 1 genes from module 18 because their KME is too low.
+#>      ..removing 1 genes from module 31 because their KME is too low.
 #>  ..Working on block 5 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -572,11 +583,17 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 13 genes from module 1 because their KME is too low.
-#>      ..removing 1 genes from module 2 because their KME is too low.
-#>      ..removing 12 genes from module 3 because their KME is too low.
-#>      ..removing 1 genes from module 4 because their KME is too low.
-#>      ..removing 4 genes from module 10 because their KME is too low.
+#>      ..removing 25 genes from module 1 because their KME is too low.
+#>      ..removing 2 genes from module 2 because their KME is too low.
+#>      ..removing 1 genes from module 3 because their KME is too low.
+#>      ..removing 2 genes from module 4 because their KME is too low.
+#>      ..removing 9 genes from module 5 because their KME is too low.
+#>      ..removing 8 genes from module 8 because their KME is too low.
+#>      ..removing 5 genes from module 9 because their KME is too low.
+#>      ..removing 2 genes from module 12 because their KME is too low.
+#>      ..removing 5 genes from module 13 because their KME is too low.
+#>      ..removing 2 genes from module 19 because their KME is too low.
+#>      ..removing 1 genes from module 22 because their KME is too low.
 #>  ..Working on block 6 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -590,38 +607,60 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 40 genes from module 1 because their KME is too low.
-#>      ..removing 6 genes from module 2 because their KME is too low.
-#>      ..removing 5 genes from module 3 because their KME is too low.
-#>      ..removing 17 genes from module 4 because their KME is too low.
-#>      ..removing 21 genes from module 5 because their KME is too low.
-#>      ..removing 10 genes from module 6 because their KME is too low.
-#>      ..removing 3 genes from module 8 because their KME is too low.
+#>      ..removing 69 genes from module 1 because their KME is too low.
+#>      ..removing 41 genes from module 2 because their KME is too low.
+#>      ..removing 7 genes from module 3 because their KME is too low.
+#>      ..removing 4 genes from module 4 because their KME is too low.
+#>      ..removing 8 genes from module 5 because their KME is too low.
+#>      ..removing 2 genes from module 6 because their KME is too low.
+#>      ..removing 1 genes from module 8 because their KME is too low.
 #>      ..removing 1 genes from module 9 because their KME is too low.
 #>      ..removing 1 genes from module 11 because their KME is too low.
-#>   ..reassigning 10 genes from module 1 to modules with higher KME.
-#>   ..reassigning 6 genes from module 2 to modules with higher KME.
-#>   ..reassigning 6 genes from module 3 to modules with higher KME.
-#>   ..reassigning 3 genes from module 7 to modules with higher KME.
-#>   ..reassigning 2 genes from module 8 to modules with higher KME.
-#>   ..reassigning 1 genes from module 11 to modules with higher KME.
-#>   ..reassigning 1 genes from module 13 to modules with higher KME.
-#>   ..reassigning 1 genes from module 29 to modules with higher KME.
-#>   ..reassigning 2 genes from module 31 to modules with higher KME.
-#>   ..reassigning 1 genes from module 38 to modules with higher KME.
-#>   ..reassigning 1 genes from module 44 to modules with higher KME.
-#>   ..reassigning 1 genes from module 53 to modules with higher KME.
-#>   ..reassigning 10 genes from module 71 to modules with higher KME.
-#>   ..reassigning 6 genes from module 72 to modules with higher KME.
-#>   ..reassigning 3 genes from module 73 to modules with higher KME.
-#>   ..reassigning 1 genes from module 74 to modules with higher KME.
-#>   ..reassigning 2 genes from module 75 to modules with higher KME.
+#>      ..removing 1 genes from module 13 because their KME is too low.
+#>      ..removing 1 genes from module 17 because their KME is too low.
+#>  ..Working on block 7 .
+#>     TOM calculation: adjacency..
+#>     ..will use 4 parallel threads.
+#>      Fraction of slow calculations: 0.000000
+#>     ..connectivity..
+#>     ..matrix multiplication (system BLAS)..
+#>     ..normalization..
+#>     ..done.
+#>    ..saving TOM for block 7 into file ER-block.7.RData
+#>  ....clustering..
+#>  ....detecting modules..
+#>  ....calculating module eigengenes..
+#>  ....checking kME in modules..
+#>      ..removing 12 genes from module 1 because their KME is too low.
+#>      ..removing 8 genes from module 2 because their KME is too low.
+#>      ..removing 13 genes from module 3 because their KME is too low.
+#>      ..removing 10 genes from module 4 because their KME is too low.
+#>      ..removing 8 genes from module 5 because their KME is too low.
+#>      ..removing 1 genes from module 6 because their KME is too low.
+#>  ..Working on block 8 .
+#>     TOM calculation: adjacency..
+#>     ..will use 4 parallel threads.
+#>      Fraction of slow calculations: 0.000000
+#>     ..connectivity..
+#>     ..matrix multiplication (system BLAS)..
+#>     ..normalization..
+#>     ..done.
+#>    ..saving TOM for block 8 into file ER-block.8.RData
+#>  ....clustering..
+#>  ....detecting modules..
+#>  ....calculating module eigengenes..
+#>  ....checking kME in modules..
+#>      ..removing 3 genes from module 1 because their KME is too low.
+#>      ..removing 1 genes from module 3 because their KME is too low.
+#>      ..removing 1 genes from module 7 because their KME is too low.
 #>  ..merging modules that are too close..
 #>      mergeCloseModules: Merging modules whose distance is less than 0.25
 #>        Calculating new MEs...
-
-cor<-stats::cor
 ```
+
+</details>
+
+
 
 Let’s take a look at the modules, there
 
@@ -657,10 +696,10 @@ module_df <- data.frame(
 module_df[1:5,]
 #>            gene_id    colors
 #> 1 AC148152.3_FG008 turquoise
-#> 2 AC148167.6_FG001       red
-#> 3 AC149475.2_FG002      blue
-#> 4 AC149475.2_FG003      blue
-#> 5 AC149475.2_FG005      pink
+#> 2 AC148167.6_FG001      blue
+#> 3 AC149475.2_FG002      pink
+#> 4 AC149475.2_FG003      pink
+#> 5 AC149475.2_FG005      cyan
 ```
 
 However we need to figure out which modules are associated with each
