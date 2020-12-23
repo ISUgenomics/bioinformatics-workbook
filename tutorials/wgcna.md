@@ -1,4 +1,3 @@
-
 ---
 title: "WGCNA Gene Correlation Network Analysis"
 layout: single
@@ -9,7 +8,6 @@ header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
-
 
 **Last Update**: 23 Dec 2020 <br/> **R Markdown**:
 [WGCNA.Rmd](https://bioinformaticsworkbook.org/tutorials/WGCNA.Rmd)
@@ -123,16 +121,14 @@ Load and look at the data
 ``` r
 # ==== Load and clean data
 #data <- readr::read_delim("data/All_Counts_ER.txt", delim="\t")
-
 data <- readr::read_delim("data/GSE61333_ligule_count.txt", delim="\t")
-#> 
+#>
 #> ── Column specification ────────────────────────────────────────────────────────
 #> cols(
 #>   .default = col_double(),
 #>   Count = col_character()
 #> )
 #> ℹ Use `spec()` for the full column specifications.
-#data <- readr::read_delim("data/GSE61333_ligule_fpkm.txt", delim="\t")
 
 data[1:5,1:10]        # Look at first 5 rows and 10 columns
 #> # A tibble: 5 x 10
@@ -150,7 +146,7 @@ names(data)[1] = "GeneId"
 names(data)           # Look at the column names
 #>  [1] "GeneId" "B-3"    "B-4"    "B-5"    "L-3"    "L-4"    "L-5"    "S-3"   
 #>  [9] "S-4"    "S-5"    "B_L1.1" "B_L1.2" "B_L1.3" "L_L1.1" "L_L1.2" "L_L1.3"
-#> [17] "S_L1.1" "S_L1.2" "S_L1.3" "wtL-1"  "wtL-2"  "wtL-3"  "lg1-1"  "lg1-2" 
+#> [17] "S_L1.1" "S_L1.2" "S_L1.3" "wtL-1"  "wtL-2"  "wtL-3"  "lg1-1"  "lg1-2"
 #> [25] "lg1-3"
 ```
 
@@ -264,7 +260,7 @@ de_input[1:5,1:10]
 #> AC148152.3_FG006   0   0   0   0   0   0   0   0   0      0
 #str(de_input)
 
-meta_df <- data.frame( Sample = names(data[-1])) %>% 
+meta_df <- data.frame( Sample = names(data[-1])) %>%
   mutate(
     Type = gsub("-.*","", Sample) %>% gsub("[.].*","", .)
   )
@@ -285,24 +281,24 @@ dds <- DESeq(dds)
 #> fitting model and testing
 vsd <-varianceStabilizingTransformation(dds)
 library(genefilter)
-#> 
+#>
 #> Attaching package: 'genefilter'
 #> The following objects are masked from 'package:matrixStats':
-#> 
+#>
 #>     rowSds, rowVars
 #> The following object is masked from 'package:readr':
-#> 
+#>
 #>     spec
 wpn_vsd<-getVarianceStabilizedData(dds)
 rv_wpn <- rowVars(wpn_vsd)
 summary(rv_wpn)
-#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
 #>  0.00000  0.00000  0.00000  0.08044  0.03322 11.14529
 
 q75_wpn <- quantile( rowVars(wpn_vsd), .75)
-wpn_vsd_75 <- wpn_vsd[ rv_wpn > q75_wpn, ]
+expr_normalized <- wpn_vsd[ rv_wpn > q75_wpn, ]
 
-wpn_vsd_75[1:5,1:10]
+expr_normalized[1:5,1:10]
 #>                        B-3       B-4       B-5       L-3       L-4       L-5
 #> AC148152.3_FG008  5.291822  5.193425  5.487940  5.101783  5.295309  5.762176
 #> AC148167.6_FG001 10.360660  9.832517 10.136765 10.186714  9.820377  9.761429
@@ -315,7 +311,29 @@ wpn_vsd_75[1:5,1:10]
 #> AC149475.2_FG002  8.127217  8.547185  8.671973  7.751987
 #> AC149475.2_FG003 10.541429 11.377578 10.684728 10.373376
 #> AC149475.2_FG005  5.488132  5.690347  5.532934  5.453534
+
+expr_normalized_df <- data.frame(expr_normalized) %>%
+  mutate(
+    Gene_id = row.names(expr_normalized)
+  ) %>%
+  pivot_longer(-Gene_id)
+
+expr_normalized_df %>% ggplot(., aes(x = name, y = value)) +
+  geom_violin() +
+  geom_point() +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text( angle = 90)
+  ) +
+  ylim(0, NA) +
+  labs(
+    title = "Normalized and 75 quantile Expression",
+    x = "treatment",
+    y = "normalized expression"
+  )
 ```
+
+![](Assets/wgcna_unnamed-chunk-9-1.png)<!-- -->
 
 ## WGCNA
 
@@ -325,7 +343,7 @@ Now let’s transpose the data and prepare the dataset for WGCNA.
 #input_mat = t(as.matrix(cdata[,-1]))
 #colnames(input_mat) = cdata$Geneid
 
-input_mat = t(wpn_vsd_75)
+input_mat = t(expr_normalized)
 
 input_mat[1:5,1:10]           # Look at first 5 rows and 10 columns
 #>     AC148152.3_FG008 AC148167.6_FG001 AC149475.2_FG002 AC149475.2_FG003
@@ -415,11 +433,11 @@ cex1 = 0.9;
 
 plot(sft$fitIndices[, 1],
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
-     xlab = "Soft Threshold (power)", 
+     xlab = "Soft Threshold (power)",
      ylab = "Scale Free Topology Model Fit, signed R^2",
      main = paste("Scale independence")
 )
-text(sft$fitIndices[, 1], 
+text(sft$fitIndices[, 1],
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
      labels = powers, cex = cex1, col = "red"
 )
@@ -429,9 +447,9 @@ plot(sft$fitIndices[, 1],
      xlab = "Soft Threshold (power)",
      ylab = "Mean Connectivity", type = "n", main = paste("Mean connectivity")
 )
-text(sft$fitIndices[, 1], 
-     sft$fitIndices[, 5], 
-     labels = powers, 
+text(sft$fitIndices[, 1],
+     sft$fitIndices[, 5],
+     labels = powers,
      cex = cex1, col = "red")
 ```
 
@@ -440,33 +458,37 @@ text(sft$fitIndices[, 1],
 Pick a soft threshold power near the curve of the plot, so here we could
 pick 9 or 10. We’ll pick 10 but feel free to experiment with other
 powers to see how it affects your results. Now we can create the network
-using the `blockwiseModules` command. See the
-[vignette](https://www.rdocumentation.org/packages/WGCNA/versions/1.69/topics/blockwiseModules)
-for more information on the parameters.
+using the `blockwiseModules` command. The `blockwiseModule` will take a
+long time to run, since it is constructing the TOM (topological overlap
+matrix) and several other steps. While it runs, take a look at the
+`blockwiseModule` documentation (link to
+[vignette](https://www.rdocumentation.org/packages/WGCNA/versions/1.69/topics/blockwiseModules))
+for more information on the parameters. How might you change the
+parameters to get more or less modules?
 
 ``` r
 cor <- WGCNA::cor       # Force it to use WGCNA cor function (fix a namespace conflict issue)
 netwk <- blockwiseModules(input_mat,                # <= input here
-                          
+
                           # == Adjacency Function ==
                           power = 10,                # <= power here
                           networkType = "signed",
-                          
+
                           # == Tree and Block Options ==
                           deepSplit = 2,
                           pamRespectsDendro = F,
                           # detectCutHeight = 0.75,
                           minModuleSize = 30,
                           maxBlockSize = 4000,
-                          
+
                           # == Module Adjustments ==
-                          reassignThreshold = 0, 
-                          mergeCutHeight = 0.25, 
-                          
+                          reassignThreshold = 0,
+                          mergeCutHeight = 0.25,
+
                           # == TOM == Archive the run results in TOM file (saves time)
-                          saveTOMs = T, 
+                          saveTOMs = T,
                           saveTOMFileBase = "ER",
-                          
+
                           # == Output Options
                           numericLabels = T,
                           verbose = 3)
@@ -479,8 +501,8 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>    ..merging smaller clusters...
 #> Block sizes:
 #> gBlocks
-#>    1    2    3    4    5    6    7    8 
-#> 3992 3991 3948 3745 3695 3580 3453 1025 
+#>    1    2    3    4    5    6    7    8
+#> 3992 3991 3948 3745 3695 3580 3453 1025
 #>  ..Working on block 1 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -496,16 +518,17 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....checking kME in modules..
 #>      ..removing 4 genes from module 1 because their KME is too low.
 #>      ..removing 1 genes from module 2 because their KME is too low.
-#>      ..removing 1 genes from module 3 because their KME is too low.
-#>      ..removing 3 genes from module 4 because their KME is too low.
-#> ... output truncated for brevity
+# ... truncated for ease of reading
 
-cor<-stats::cor
+cor <- stats::cor
+
 ```
 
 <details><summary>See full output</summary>
 
 ``` r
+#>      ..removing 1 genes from module 3 because their KME is too low.
+#>      ..removing 3 genes from module 4 because their KME is too low.
 #>  ..Working on block 2 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -669,7 +692,7 @@ Let’s take a look at the modules, there
 mergedColors = labels2colors(netwk$colors)
 # Plot the dendrogram and the module colors underneath
 plotDendroAndColors(
-  netwk$dendrograms[[1]], 
+  netwk$dendrograms[[1]],
   mergedColors[netwk$blockGenes[[1]]],
   "Module colors",
   dendroLabels = FALSE, hang = 0.03,
@@ -723,20 +746,136 @@ mME = MEs0 %>%
   pivot_longer(-treatment) %>%
   mutate(
     name = gsub("ME", "", name),
-    name = factor(name, levels = module_order) 
+    name = factor(name, levels = module_order)
   )
 
 mME %>% ggplot(., aes(x=treatment, y=name, fill=value)) +
   geom_tile() +
-  theme_bw() + 
+  theme_bw() +
   scale_fill_gradient2(
-    low = "blue", 
-    high = "red", 
-    mid = "white", 
-    midpoint = 0, 
+    low = "blue",
+    high = "red",
+    mid = "white",
+    midpoint = 0,
     limit = c(-1,1)) +
   theme(axis.text.x = element_text(angle=90)) +
   labs(title = "Module-trait Relationships", y = "Modules", fill="corr")
 ```
 
 ![](Assets/wgcna_module_trait-1.png)<!-- -->
+
+# Examine Expression Profiles
+
+We’ll pick out a few modules of interest, and plot their expression
+profiles
+
+``` r
+# pick out a few modules of interest here
+modules_of_interest = c("white", "greenyellow", "salmon")
+
+# Pull out list of genes in that module
+submod = module_df %>%
+  subset(colors %in% modules_of_interest)
+
+row.names(module_df) = module_df$gene_id
+
+# Get normalized expression for those genes
+expr_normalized[1:5,1:10]
+#>                        B-3       B-4       B-5       L-3       L-4       L-5
+#> AC148152.3_FG008  5.291822  5.193425  5.487940  5.101783  5.295309  5.762176
+#> AC148167.6_FG001 10.360660  9.832517 10.136765 10.186714  9.820377  9.761429
+#> AC149475.2_FG002  8.275312  8.537378  8.126494  8.047460  7.903629  8.296347
+#> AC149475.2_FG003 11.068478 10.505163 10.410267 11.132275 10.596864 10.223615
+#> AC149475.2_FG005  5.469075  5.436092  5.771927  5.156298  5.362260  5.627630
+#>                        S-3       S-4       S-5    B_L1.1
+#> AC148152.3_FG008  5.422534  4.858435  5.443877  4.858435
+#> AC148167.6_FG001  9.772424 10.409788  9.889084 10.341011
+#> AC149475.2_FG002  8.127217  8.547185  8.671973  7.751987
+#> AC149475.2_FG003 10.541429 11.377578 10.684728 10.373376
+#> AC149475.2_FG005  5.488132  5.690347  5.532934  5.453534
+subexpr = expr_normalized[submod$gene_id,]
+
+submod_df = data.frame(subexpr) %>%
+  mutate(
+    gene_id = row.names(.)
+  ) %>%
+  pivot_longer(-gene_id) %>%
+  mutate(
+    module = module_df[gene_id,]$colors
+  )
+
+submod_df %>% ggplot(., aes(x=name, y=value, group=gene_id)) +
+  geom_line(aes(color=module), alpha=0.2) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(angle = 90)
+  ) +
+  facet_grid(rows = vars(module)) +
+  labs(x = "treatment",
+       y = "normalized expression")
+```
+
+![](Assets/wgcna_mod_profile-1.png)<!-- --> \[Add discussion here\]
+
+# Generate and Export Network
+
+The network file can be generated for Cytoscape or as an edge/vertices
+file.
+
+``` r
+genes_of_interest = module_df %>%
+  subset(colors %in% modules_of_interest)
+
+expr_of_interest = expr_normalized[genes_of_interest$gene_id,]
+expr_of_interest[1:5,1:5]
+#>                       B-3      B-4      B-5      L-3      L-4
+#> AC177831.3_FG004 5.012164 5.095574 5.391655 5.561766 5.522448
+#> AC203570.4_FG005 5.264020 5.193425 5.272398 5.707513 5.295309
+#> AC206223.3_FG007 5.012164 4.858435 4.858435 5.156298 4.858435
+#> AC211164.5_FG003 6.943132 7.187083 6.832403 6.923727 7.321728
+#> AC214244.4_FG003 5.075739 5.193425 4.858435 5.278936 5.362260
+
+# Only recalculate TOM for modules of interest (faster, altho there's some online discussion if this will be slightly off)
+TOM = TOMsimilarityFromExpr(t(expr_of_interest),
+                            power = 10)
+#> TOM calculation: adjacency..
+#> ..will use 4 parallel threads.
+#>  Fraction of slow calculations: 0.000000
+#> ..connectivity..
+#> ..matrix multiplication (system BLAS)..
+#> ..normalization..
+#> ..done.
+
+# Add gene names to row and columns
+row.names(TOM) = row.names(expr_of_interest)
+colnames(TOM) = row.names(expr_of_interest)
+
+edge_list = data.frame(TOM) %>%
+  mutate(
+    gene1 = row.names(.)
+  ) %>%
+  pivot_longer(-gene1) %>%
+  dplyr::rename(gene2 = name, correlation = value) %>%
+  unique() %>%
+  subset(!(gene1==gene2)) %>%
+  mutate(
+    module1 = module_df[gene1,]$colors,
+    module2 = module_df[gene2,]$colors
+  )
+
+head(edge_list)
+#> # A tibble: 6 x 5
+#>   gene1            gene2             correlation module1 module2    
+#>   <chr>            <chr>                   <dbl> <chr>   <chr>      
+#> 1 AC177831.3_FG004 AC203570.4_FG005 0.00000684   salmon  greenyellow
+#> 2 AC177831.3_FG004 AC206223.3_FG007 0.0000989    salmon  greenyellow
+#> 3 AC177831.3_FG004 AC211164.5_FG003 0.0000190    salmon  greenyellow
+#> 4 AC177831.3_FG004 AC214244.4_FG003 0.0000000896 salmon  greenyellow
+#> 5 AC177831.3_FG004 AC217401.3_FG002 0.0155       salmon  salmon     
+#> 6 AC177831.3_FG004 AC230013.2_FG002 0.00701      salmon  salmon
+
+# Export Network file to be read into Cytoscape, VisANT, etc
+write_delim(edge_list,
+            file = "edgelist.tsv",
+            delim = "\t")
+```
