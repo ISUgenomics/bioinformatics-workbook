@@ -1,4 +1,3 @@
-
 ---
 title: "WGCNA Gene Correlation Network Analysis"
 layout: single
@@ -119,7 +118,7 @@ Load and look at the data
 #data <- readr::read_delim("data/All_Counts_ER.txt", delim="\t")
 
 data <- readr::read_delim("data/GSE61333_ligule_count.txt", delim="\t")
-#>
+#> 
 #> ── Column specification ────────────────────────────────────────────────────────
 #> cols(
 #>   .default = col_double(),
@@ -144,7 +143,7 @@ names(data)[1] = "GeneId"
 names(data)           # Look at the column names
 #>  [1] "GeneId" "B-3"    "B-4"    "B-5"    "L-3"    "L-4"    "L-5"    "S-3"   
 #>  [9] "S-4"    "S-5"    "B_L1.1" "B_L1.2" "B_L1.3" "L_L1.1" "L_L1.2" "L_L1.3"
-#> [17] "S_L1.1" "S_L1.2" "S_L1.3" "wtL-1"  "wtL-2"  "wtL-3"  "lg1-1"  "lg1-2"
+#> [17] "S_L1.1" "S_L1.2" "S_L1.3" "wtL-1"  "wtL-2"  "wtL-3"  "lg1-1"  "lg1-2" 
 #> [25] "lg1-3"
 ```
 
@@ -240,76 +239,76 @@ library(DESeq2)
 #> Loading required package: stats4
 #> Loading required package: BiocGenerics
 #> Loading required package: parallel
-#>
+#> 
 #> Attaching package: 'BiocGenerics'
 #> The following objects are masked from 'package:parallel':
-#>
+#> 
 #>     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
 #>     clusterExport, clusterMap, parApply, parCapply, parLapply,
 #>     parLapplyLB, parRapply, parSapply, parSapplyLB
 #> The following objects are masked from 'package:dplyr':
-#>
+#> 
 #>     combine, intersect, setdiff, union
 #> The following objects are masked from 'package:stats':
-#>
+#> 
 #>     IQR, mad, sd, var, xtabs
 #> The following objects are masked from 'package:base':
-#>
+#> 
 #>     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
 #>     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
 #>     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
 #>     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
 #>     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
 #>     union, unique, unsplit, which, which.max, which.min
-#>
+#> 
 #> Attaching package: 'S4Vectors'
 #> The following objects are masked from 'package:dplyr':
-#>
+#> 
 #>     first, rename
 #> The following object is masked from 'package:tidyr':
-#>
+#> 
 #>     expand
 #> The following object is masked from 'package:base':
-#>
+#> 
 #>     expand.grid
 #> Loading required package: IRanges
-#>
+#> 
 #> Attaching package: 'IRanges'
 #> The following objects are masked from 'package:dplyr':
-#>
+#> 
 #>     collapse, desc, slice
 #> The following object is masked from 'package:purrr':
-#>
+#> 
 #>     reduce
 #> Loading required package: GenomicRanges
 #> Loading required package: GenomeInfoDb
 #> Loading required package: SummarizedExperiment
 #> Loading required package: Biobase
 #> Welcome to Bioconductor
-#>
+#> 
 #>     Vignettes contain introductory material; view with
 #>     'browseVignettes()'. To cite Bioconductor, see
 #>     'citation("Biobase")', and for packages 'citation("pkgname")'.
 #> Loading required package: DelayedArray
 #> Loading required package: matrixStats
-#>
+#> 
 #> Attaching package: 'matrixStats'
 #> The following objects are masked from 'package:Biobase':
-#>
+#> 
 #>     anyMissing, rowMedians
 #> The following object is masked from 'package:dplyr':
-#>
+#> 
 #>     count
-#>
+#> 
 #> Attaching package: 'DelayedArray'
 #> The following objects are masked from 'package:matrixStats':
-#>
+#> 
 #>     colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges
 #> The following object is masked from 'package:purrr':
-#>
+#> 
 #>     simplify
 #> The following objects are masked from 'package:base':
-#>
+#> 
 #>     aperm, apply, rowsum
 
 de_input = as.matrix(data[,-1])
@@ -323,7 +322,7 @@ de_input[1:5,1:10]
 #> AC148152.3_FG006   0   0   0   0   0   0   0   0   0      0
 #str(de_input)
 
-meta_df <- data.frame( Sample = names(data[-1])) %>%
+meta_df <- data.frame( Sample = names(data[-1])) %>% 
   mutate(
     Type = gsub("-.*","", Sample) %>% gsub("[.].*","", .)
   )
@@ -344,18 +343,18 @@ dds <- DESeq(dds)
 #> fitting model and testing
 vsd <-varianceStabilizingTransformation(dds)
 library(genefilter)
-#>
+#> 
 #> Attaching package: 'genefilter'
 #> The following objects are masked from 'package:matrixStats':
-#>
+#> 
 #>     rowSds, rowVars
 #> The following object is masked from 'package:readr':
-#>
+#> 
 #>     spec
 wpn_vsd<-getVarianceStabilizedData(dds)
 rv_wpn <- rowVars(wpn_vsd)
 summary(rv_wpn)
-#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
+#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 #>  0.00000  0.00000  0.00000  0.08044  0.03322 11.14529
 
 q75_wpn <- quantile( rowVars(wpn_vsd), .75)
@@ -474,11 +473,11 @@ cex1 = 0.9;
 
 plot(sft$fitIndices[, 1],
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
-     xlab = "Soft Threshold (power)",
+     xlab = "Soft Threshold (power)", 
      ylab = "Scale Free Topology Model Fit, signed R^2",
      main = paste("Scale independence")
 )
-text(sft$fitIndices[, 1],
+text(sft$fitIndices[, 1], 
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
      labels = powers, cex = cex1, col = "red"
 )
@@ -488,9 +487,9 @@ plot(sft$fitIndices[, 1],
      xlab = "Soft Threshold (power)",
      ylab = "Mean Connectivity", type = "n", main = paste("Mean connectivity")
 )
-text(sft$fitIndices[, 1],
-     sft$fitIndices[, 5],
-     labels = powers,
+text(sft$fitIndices[, 1], 
+     sft$fitIndices[, 5], 
+     labels = powers, 
      cex = cex1, col = "red")
 ```
 
@@ -508,15 +507,15 @@ cor <- WGCNA::cor
 netwk <- blockwiseModules(input_mat,                # <= input here
                           power = 9,               # <= power here
                           minModuleSize = 30,
-                          #reassignThreshold = 0,
-                          #mergeCutHeight = 0.25,
+                          #reassignThreshold = 0, 
+                          mergeCutHeight = 0.25, 
                           numericLabels = T,
-                          #pamRespectsDendro = F,
-                          saveTOMs = T,
+                          pamRespectsDendro = F, 
+                          saveTOMs = T, 
                           saveTOMFileBase = "ER",
-                          verbose = 3,
-                          #maxBlockSize = 40000,
-                          deepSplit = 2,
+                          verbose = 3, 
+                          #maxBlockSize = 40000, 
+                          deepSplit = 2, 
                           #detectCutHeight = 0.5,
                           networkType = "signed")
 #>  Calculating module eigengenes block-wise from all genes
@@ -528,8 +527,8 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>    ..merging smaller clusters...
 #> Block sizes:
 #> gBlocks
-#>    1    2    3    4    5    6
-#> 4977 4955 4946 4938 4591 3022
+#>    1    2    3    4    5    6 
+#> 4977 4955 4946 4938 4591 3022 
 #>  ..Working on block 1 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -543,7 +542,7 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 27 genes from module 1 because their KME is too low.
+#>      ..removing 30 genes from module 1 because their KME is too low.
 #>      ..removing 29 genes from module 2 because their KME is too low.
 #>      ..removing 11 genes from module 3 because their KME is too low.
 #>      ..removing 1 genes from module 4 because their KME is too low.
@@ -561,16 +560,13 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 117 genes from module 1 because their KME is too low.
-#>      ..removing 105 genes from module 2 because their KME is too low.
-#>      ..removing 33 genes from module 3 because their KME is too low.
+#>      ..removing 125 genes from module 1 because their KME is too low.
+#>      ..removing 102 genes from module 2 because their KME is too low.
+#>      ..removing 32 genes from module 3 because their KME is too low.
 #>      ..removing 5 genes from module 4 because their KME is too low.
-#>      ..removing 5 genes from module 5 because their KME is too low.
+#>      ..removing 6 genes from module 5 because their KME is too low.
 #>      ..removing 2 genes from module 6 because their KME is too low.
-#>      ..removing 4 genes from module 7 because their KME is too low.
-#>      ..removing 2 genes from module 8 because their KME is too low.
-#>      ..removing 3 genes from module 9 because their KME is too low.
-#>      ..removing 5 genes from module 11 because their KME is too low.
+#>      ..removing 2 genes from module 11 because their KME is too low.
 #>  ..Working on block 3 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -584,32 +580,28 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 29 genes from module 1 because their KME is too low.
-#>      ..removing 26 genes from module 2 because their KME is too low.
-#>      ..removing 1 genes from module 3 because their KME is too low.
+#>      ..removing 25 genes from module 1 because their KME is too low.
+#>      ..removing 31 genes from module 2 because their KME is too low.
+#>      ..removing 17 genes from module 3 because their KME is too low.
 #>      ..removing 1 genes from module 4 because their KME is too low.
-#>      ..removing 2 genes from module 5 because their KME is too low.
-#>      ..removing 15 genes from module 6 because their KME is too low.
-#>      ..removing 6 genes from module 7 because their KME is too low.
-#>      ..removing 2 genes from module 8 because their KME is too low.
-#>      ..removing 1 genes from module 10 because their KME is too low.
-#>      ..removing 2 genes from module 13 because their KME is too low.
-#>      ..removing 1 genes from module 14 because their KME is too low.
-#>      ..removing 1 genes from module 15 because their KME is too low.
-#>      ..removing 4 genes from module 16 because their KME is too low.
-#>      ..removing 2 genes from module 17 because their KME is too low.
-#>      ..removing 5 genes from module 18 because their KME is too low.
-#>      ..removing 1 genes from module 20 because their KME is too low.
-#>      ..removing 1 genes from module 21 because their KME is too low.
-#>      ..removing 1 genes from module 23 because their KME is too low.
+#>      ..removing 1 genes from module 5 because their KME is too low.
+#>      ..removing 6 genes from module 6 because their KME is too low.
+#>      ..removing 3 genes from module 7 because their KME is too low.
+#>      ..removing 1 genes from module 8 because their KME is too low.
+#>      ..removing 1 genes from module 11 because their KME is too low.
+#>      ..removing 1 genes from module 12 because their KME is too low.
+#>      ..removing 1 genes from module 13 because their KME is too low.
+#>      ..removing 6 genes from module 15 because their KME is too low.
+#>      ..removing 1 genes from module 16 because their KME is too low.
+#>      ..removing 3 genes from module 20 because their KME is too low.
+#>      ..removing 3 genes from module 21 because their KME is too low.
+#>      ..removing 3 genes from module 23 because their KME is too low.
 #>      ..removing 1 genes from module 25 because their KME is too low.
 #>      ..removing 1 genes from module 26 because their KME is too low.
-#>      ..removing 2 genes from module 30 because their KME is too low.
+#>      ..removing 1 genes from module 27 because their KME is too low.
 #>      ..removing 1 genes from module 35 because their KME is too low.
+#>      ..removing 1 genes from module 36 because their KME is too low.
 #>      ..removing 2 genes from module 37 because their KME is too low.
-#>      ..removing 2 genes from module 39 because their KME is too low.
-#>      ..removing 2 genes from module 42 because their KME is too low.
-#>      ..removing 1 genes from module 46 because their KME is too low.
 #>  ..Working on block 4 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -625,7 +617,7 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....checking kME in modules..
 #>      ..removing 10 genes from module 1 because their KME is too low.
 #>      ..removing 10 genes from module 2 because their KME is too low.
-#>      ..removing 13 genes from module 3 because their KME is too low.
+#>      ..removing 12 genes from module 3 because their KME is too low.
 #>      ..removing 4 genes from module 4 because their KME is too low.
 #>  ..Working on block 5 .
 #>     TOM calculation: adjacency..
@@ -640,18 +632,11 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 11 genes from module 1 because their KME is too low.
-#>      ..removing 1 genes from module 3 because their KME is too low.
-#>      ..removing 15 genes from module 5 because their KME is too low.
-#>      ..removing 3 genes from module 6 because their KME is too low.
-#>      ..removing 1 genes from module 7 because their KME is too low.
-#>      ..removing 1 genes from module 8 because their KME is too low.
-#>      ..removing 1 genes from module 11 because their KME is too low.
-#>      ..removing 3 genes from module 12 because their KME is too low.
-#>      ..removing 2 genes from module 14 because their KME is too low.
-#>      ..removing 1 genes from module 23 because their KME is too low.
-#>      ..removing 1 genes from module 36 because their KME is too low.
-#>      ..removing 1 genes from module 38 because their KME is too low.
+#>      ..removing 13 genes from module 1 because their KME is too low.
+#>      ..removing 1 genes from module 2 because their KME is too low.
+#>      ..removing 12 genes from module 3 because their KME is too low.
+#>      ..removing 1 genes from module 4 because their KME is too low.
+#>      ..removing 4 genes from module 10 because their KME is too low.
 #>  ..Working on block 6 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -665,36 +650,34 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 49 genes from module 1 because their KME is too low.
+#>      ..removing 40 genes from module 1 because their KME is too low.
 #>      ..removing 6 genes from module 2 because their KME is too low.
-#>      ..removing 4 genes from module 3 because their KME is too low.
-#>      ..removing 20 genes from module 4 because their KME is too low.
-#>      ..removing 14 genes from module 5 because their KME is too low.
-#>      ..removing 1 genes from module 6 because their KME is too low.
-#>      ..removing 12 genes from module 7 because their KME is too low.
-#>      ..removing 1 genes from module 8 because their KME is too low.
-#>      ..removing 2 genes from module 9 because their KME is too low.
+#>      ..removing 5 genes from module 3 because their KME is too low.
+#>      ..removing 17 genes from module 4 because their KME is too low.
+#>      ..removing 21 genes from module 5 because their KME is too low.
+#>      ..removing 10 genes from module 6 because their KME is too low.
+#>      ..removing 3 genes from module 8 because their KME is too low.
+#>      ..removing 1 genes from module 9 because their KME is too low.
 #>      ..removing 1 genes from module 11 because their KME is too low.
-#>   ..reassigning 9 genes from module 1 to modules with higher KME.
-#>   ..reassigning 4 genes from module 2 to modules with higher KME.
+#>   ..reassigning 10 genes from module 1 to modules with higher KME.
+#>   ..reassigning 6 genes from module 2 to modules with higher KME.
 #>   ..reassigning 6 genes from module 3 to modules with higher KME.
-#>   ..reassigning 2 genes from module 7 to modules with higher KME.
+#>   ..reassigning 3 genes from module 7 to modules with higher KME.
 #>   ..reassigning 2 genes from module 8 to modules with higher KME.
 #>   ..reassigning 1 genes from module 11 to modules with higher KME.
-#>   ..reassigning 1 genes from module 12 to modules with higher KME.
-#>   ..reassigning 1 genes from module 31 to modules with higher KME.
-#>   ..reassigning 2 genes from module 32 to modules with higher KME.
-#>   ..reassigning 1 genes from module 39 to modules with higher KME.
-#>   ..reassigning 1 genes from module 41 to modules with higher KME.
+#>   ..reassigning 1 genes from module 13 to modules with higher KME.
+#>   ..reassigning 1 genes from module 29 to modules with higher KME.
+#>   ..reassigning 2 genes from module 31 to modules with higher KME.
+#>   ..reassigning 1 genes from module 38 to modules with higher KME.
+#>   ..reassigning 1 genes from module 44 to modules with higher KME.
 #>   ..reassigning 1 genes from module 53 to modules with higher KME.
 #>   ..reassigning 10 genes from module 71 to modules with higher KME.
 #>   ..reassigning 6 genes from module 72 to modules with higher KME.
 #>   ..reassigning 3 genes from module 73 to modules with higher KME.
-#>   ..reassigning 2 genes from module 74 to modules with higher KME.
+#>   ..reassigning 1 genes from module 74 to modules with higher KME.
 #>   ..reassigning 2 genes from module 75 to modules with higher KME.
-#>   ..reassigning 1 genes from module 92 to modules with higher KME.
 #>  ..merging modules that are too close..
-#>      mergeCloseModules: Merging modules whose distance is less than 0.15
+#>      mergeCloseModules: Merging modules whose distance is less than 0.25
 #>        Calculating new MEs...
 
 cor<-stats::cor
@@ -707,7 +690,7 @@ Let’s take a look at the modules, there
 mergedColors = labels2colors(netwk$colors)
 # Plot the dendrogram and the module colors underneath
 plotDendroAndColors(
-  netwk$dendrograms[[1]],
+  netwk$dendrograms[[1]], 
   mergedColors[netwk$blockGenes[[1]]],
   "Module colors",
   dendroLabels = FALSE, hang = 0.03,
@@ -734,10 +717,10 @@ module_df <- data.frame(
 module_df[1:5,]
 #>            gene_id    colors
 #> 1 AC148152.3_FG008 turquoise
-#> 2 AC148167.6_FG001     black
-#> 3 AC149475.2_FG002    yellow
-#> 4 AC149475.2_FG003    yellow
-#> 5 AC149475.2_FG005    salmon
+#> 2 AC148167.6_FG001       red
+#> 3 AC149475.2_FG002      blue
+#> 4 AC149475.2_FG003      blue
+#> 5 AC149475.2_FG005      pink
 ```
 
 However we need to figure out which modules are associated with each
@@ -764,7 +747,7 @@ mME = MEs0 %>%
 
 mME %>% ggplot(., aes(x=treatment, y=name, fill=value)) +
   geom_tile() +
-  theme_bw() +
+  theme_bw() + 
   theme(axis.text.x = element_text(angle=90)) +
   labs(title = "Module-trait Relationships", y = "Modules", fill="corr")
 ```
