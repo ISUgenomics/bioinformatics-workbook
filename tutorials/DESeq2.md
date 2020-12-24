@@ -1,9 +1,3 @@
-DESeq
-================
-Siva Chudalayandi
-12/23/2020
-
-<!--
 ---
 title: RNA Sequence Analysis
 layout: single
@@ -13,7 +7,6 @@ header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
--->
 
 **Last Update**: 23 Dec 2020 <br/> **R Markdown**:
 [DESeq2.Rmd](https://bioinformaticsworkbook.org/tutorials/DESeq2.Rmd)
