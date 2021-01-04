@@ -1,6 +1,8 @@
 ---
 title: "Multiplexing High Throughput Sequencing Samples"
 layout: single
+author: Swapna Menon
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg

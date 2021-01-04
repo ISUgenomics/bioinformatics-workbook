@@ -31,7 +31,9 @@ Upon completion of this section on experimental design the learner will be able 
 * [Sequencing Technology](sequencingTechnology.md)
 * [Costs](costs.md)
 * [Generic Examples of Experimental Design](eD_genericExamples.md)
+* [Multiplexing High Throughput Sequencing Samples](Multiplexing.md)
 * [List of Biology exceptions and irregularities](../Appendix/biology_tidbits.md)
+
 
 ----
 

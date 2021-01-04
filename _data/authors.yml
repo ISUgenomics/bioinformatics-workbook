@@ -37,7 +37,7 @@ Siva Chudalayandi:
   twitter     : "csivabioinfo"
   email       : "mailto:csiva@iastate.edu"
   website     : "https://gif.biotech.iastate.edu"
-  
+
 Jennifer Chang:
   name        : "Jennifer Chang"
   bio         : "I am an Iowa State University graduate, with a PhD in Bioinformatics and Computational Biology. I have been programming (in one language or another) since 2006 and have an interest in data visualization and software development. My research focus has been on analyzing and merging networks, monitoring the evolution of influenza A viruses in swine, and writing cross-platform pipelines. In 2020, I joined the Genomics Informatics Facility in the hopes of developing interdisciplinary pipelines and tutorials to meet the needs of the widespread research community."
@@ -45,3 +45,10 @@ Jennifer Chang:
   twitter     : "bcbjen"
   email       : "mailto:jenchang@iastate.edu"
   website     : "https://gif.biotech.iastate.edu"
+
+Swapna Menon:
+  name        : "Swapna Menon"
+  bio         : "Swapna is a bioinformatics freelancer based in India. Her formal qualifications include an M.S. in Molecular Sciences and an M. Phil. in Bioinformatics. She analyzes microarray and NGS data for research groups in academic institutions. She helps clients with experimental design and sequence data issues. Earlier, she taught bioinformatics in universities in Kochi. The sequencing technologies are advancing. Bioinformatics software and analyses methods are keeping pace. Practicing bioinformatics requires knowledge of statistics, information technology and NGS technologies and, biology. Open source software and educational resources are vital for all bioinformatics practitioners."
+  avatar      : "/assets/images/people/SwapnaMenon.png"
+  twitter     : "SwapnaBioinfo"
+  email       : "mailto:swapnamenon.bioinfo@gmail.com"
