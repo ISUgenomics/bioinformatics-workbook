@@ -9,7 +9,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-**Last Update**: 23 Dec 2020 <br/> **R Markdown**:
+**Last Update**: 4 Jan 2021 <br/> **R Markdown**:
 [WGCNA.Rmd](https://bioinformaticsworkbook.org/tutorials/WGCNA.Rmd)
 
 # Network analysis with WGCNA
@@ -70,27 +70,29 @@ correlation network files.
 
 We shall start with an example dataset about Maize and Ligule
 Development. \[Add description of data and maybe link to paper here\]
+For more information, please see the following paper:
+
+-   Johnston, R., Wang, M., Sun, Q., Sylvester, A.W., Hake, S. and
+    Scanlon, M.J., 2014. [Transcriptomic analyses indicate that maize
+    ligule development recapitulates gene expression patterns that occur
+    during lateral organ
+    initiation](https://pubmed.ncbi.nlm.nih.gov/25516601/). The Plant
+    Cell, 26(12), pp.4718-4732.
 
 While the wt and lg1 were from the area marked in purple in plants that
 exhibited either wt or no ligule (liguleless phenotype)… so this
 encompasses the entire pre-ligule, pre-blade and pre-sheath area.
 
--   [Dataset](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE61333)
+-   [Download
+    Dataset](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE61333)
 
 ``` bash
 wget ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE61nnn/GSE61333/suppl/GSE61333_ligule_count.txt.gz
 gunzip GSE61333_ligule_count.txt.gz
-```
 
-> We shall start with an example dataset about ER (Endocrine Reticulum)
-> cell death response. \[Add description of data and maybe link to paper
-> here\]
->
-> -   [All\_Counts\_ER.txt](data/All_Counts_ER.txt)
->
-> ``` bash
-> wget https://bioinformaticsworkbook.org/tutorials/data/All_Counts_ER.txt
-> ```
+ls -ltr *.txt
+#> -rw-r--r--  1 username  staff   7.5M Jan  4 09:48 GSE61333_ligule_count.txt
+```
 
 ## Load R Libraries
 
@@ -120,9 +122,9 @@ Load and look at the data
 
 ``` r
 # ==== Load and clean data
-#data <- readr::read_delim("data/All_Counts_ER.txt", delim="\t")
-data <- readr::read_delim("data/GSE61333_ligule_count.txt", delim="\t")
-#>
+data <- readr::read_delim("data/GSE61333_ligule_count.txt",     # <= path to the data file
+                          delim = "\t")
+#> 
 #> ── Column specification ────────────────────────────────────────────────────────
 #> cols(
 #>   .default = col_double(),
@@ -146,7 +148,7 @@ names(data)[1] = "GeneId"
 names(data)           # Look at the column names
 #>  [1] "GeneId" "B-3"    "B-4"    "B-5"    "L-3"    "L-4"    "L-5"    "S-3"   
 #>  [9] "S-4"    "S-5"    "B_L1.1" "B_L1.2" "B_L1.3" "L_L1.1" "L_L1.2" "L_L1.3"
-#> [17] "S_L1.1" "S_L1.2" "S_L1.3" "wtL-1"  "wtL-2"  "wtL-3"  "lg1-1"  "lg1-2"
+#> [17] "S_L1.1" "S_L1.2" "S_L1.3" "wtL-1"  "wtL-2"  "wtL-3"  "lg1-1"  "lg1-2" 
 #> [25] "lg1-3"
 ```
 
@@ -161,29 +163,31 @@ From looking at the data, we can come to the following insights:
     `treatments` which is the opposite of what’s needed in WGCNA (`rows`
     = `treatment`, `columns` = `gene probes`). This dataset will need to
     be rotated (transposed) before sending to WGCNA.
+
 -   This is also wide data, we will convert this to tidy data before
     visualization. For [Hadley Wickham](http://hadley.nz/)’s tutorial on
     the what and why to convert to tidy data, see
     <https://r4ds.had.co.nz/tidy-data.html>.
 
-> -   The column names are prefixed with the treatment group (e.g. `B-3`
->     is B, `3I_S4_L006` is 3 hours, `48mkII_S28_L007` is 48 hours
->     mock.)
+-   The column names are prefixed with the treatment group (e.g. `B-3`,
+    `B-4`, and `B-5` are three replicates of the treatment “B”).
+
+-   **To Do**: Please add a table describing treatments here mean here.
+    `e.g. B=?, S=?, L=?`
 
 The following R commands clean and tidy the dataset for exploratory
 graphics.
 
 ``` r
 col_sel = names(data)[-1]                                  # Get all but first column name
-mdata <- tidyr::pivot_longer( data,                        # Convert to Tidy Data
-                              col = all_of(col_sel)
-                             ) %>%  
+mdata <- data %>% 
+  tidyr::pivot_longer( 
+    .,                                                     # The dot is the the input data, magrittr tutorial
+    col = all_of(col_sel)
+    ) %>%  
   mutate(
-    group = gsub("-.*","", name) %>% gsub("[.].*","", .)
-#    group = gsub("I.*", "", name) %>% gsub("_.*", "", .),  # Add a "Group" column for the hour
+    group = gsub("-.*","", name) %>% gsub("[.].*","", .)   # Get the shorter treatment names 
   )
-
-# mdata$group[grepl("mk", mdata$name)] = "48mk"              # Deal with columns where it's 48mk or 48IIImk,
 
 # This sets the order of the hours in the plot... otherwise 48mk will be between "3" and "6".
 # mdata$group = factor(mdata$group,
@@ -191,48 +195,39 @@ mdata <- tidyr::pivot_longer( data,                        # Convert to Tidy Dat
 ```
 
 Think through what kinds of plots may tell you something about the
-dataset. This example plots the data to identify any outliers.
+dataset. Below, we have provided an example plot to identify any obvious
+outliers.
 
 ``` r
 # ==== Plot groups (Sample Groups vs RNA Seq Counts) to identify outliers
 p <- mdata %>%
-    ggplot(., aes(x=name, y=value)) +     # x = treatment, y = RNA Seq count
-    geom_violin() +                       # violin plot, show distribution
-    geom_point(alpha=0.2) +               # scatter plot
+    ggplot(., aes(x = name, y = value)) +             # x = treatment, y = RNA Seq count
+    geom_violin() +                                   # violin plot, show distribution
+    geom_point(alpha = 0.2) +                         # scatter plot
     theme_bw() +
     theme(
-      axis.text.x = element_text(angle=90)                          # Rotate treatment text
+      axis.text.x = element_text(angle = 90)          # Rotate treatment text
     ) +
-    facet_grid(cols = vars(group), drop=TRUE, scales="free_x")      # Facet by hour
-
-p + labs(x="Treatment Groups", y = "RNA Seq Counts")
+    labs(x = "Treatment Groups", y = "RNA Seq Counts") +
+    facet_grid(cols = vars(group), drop = TRUE, scales = "free_x")      # Facet by hour
 ```
 
-![](Assets/wgcna_group_by_hour-1.png)<!-- -->
-
-> From here, we can see there’s something strange in some of the hour 24
-> samples. One has very high RNASeq values `24II_S15_L006` with maybe a
-> wide range, while another has very low range of RNASeq values
-> `24_S15_L007`. We should follow up with the wet lab folks on an
-> explanation of those samples, but for now, we’ll remove the 24 hour
-> group and maybe the 48 hour group.
->
-> ``` r
+<!--
+> From here, we can see there's something strange in some of the hour 24 samples. One has very high RNASeq values `24II_S15_L006` with maybe a wide range, while another has very low range of RNASeq values `24_S15_L007`. We should follow up with the wet lab folks on an explanation of those samples, but for now, we'll remove the 24 hour group and maybe the 48 hour group.
+> 
+> 
+> ```r
 > #keep_cols = names(data) %>% grep("24", .,  invert = T, value = T) %>% grep("48I+_", ., invert=T, value=T)
 > #cdata = data %>% select(all_of(keep_cols))
->
+> 
 > #temp <- data[rowSums(data[,-1]) > 0.1, ]      # Remove genes with all 0 values
 > #row_var <- apply(temp[,-1], 1, var)           # Remove genes with variance below 100
 > #cdata <- temp[row_var > 1, ]
 > #cdata[1:5, 1:10]
 > ```
->
-> You can look at the `cdata` object (click on item in `environment` or
-> use `names(cdata)`) to convince yourself that the “24 hour” group is
-> gone. The original dataset had 46,430 genes (too many to explore),
-> subsetting by variance and other strange artifacts reduced it down to
-> 25,088 genes. Let’s continue and determine the correlation networks
-> for these 25,088 genes.
+> 
+> You can look at the `cdata` object (click on item in `environment` or use `names(cdata)`) to convince yourself that the "24 hour" group is gone. The original dataset had 46,430 genes (too many to explore), subsetting by variance and other strange artifacts reduced it down to 25,088 genes. Let's continue and determine the correlation networks for these 25,088 genes.
+-->
 
 ## Normalize Counts with DESeq
 
@@ -260,7 +255,7 @@ de_input[1:5,1:10]
 #> AC148152.3_FG006   0   0   0   0   0   0   0   0   0      0
 #str(de_input)
 
-meta_df <- data.frame( Sample = names(data[-1])) %>%
+meta_df <- data.frame( Sample = names(data[-1])) %>% 
   mutate(
     Type = gsub("-.*","", Sample) %>% gsub("[.].*","", .)
   )
@@ -279,38 +274,41 @@ dds <- DESeq(dds)
 #> mean-dispersion relationship
 #> final dispersion estimates
 #> fitting model and testing
-vsd <-varianceStabilizingTransformation(dds)
-library(genefilter)
-#>
+vsd <- varianceStabilizingTransformation(dds)
+library(genefilter)      # <= why is this here?
+#> 
 #> Attaching package: 'genefilter'
 #> The following objects are masked from 'package:matrixStats':
-#>
+#> 
 #>     rowSds, rowVars
 #> The following object is masked from 'package:readr':
-#>
+#> 
 #>     spec
-wpn_vsd<-getVarianceStabilizedData(dds)
+wpn_vsd <- getVarianceStabilizedData(dds)
 rv_wpn <- rowVars(wpn_vsd)
 summary(rv_wpn)
-#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
+#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 #>  0.00000  0.00000  0.00000  0.08044  0.03322 11.14529
 
-q75_wpn <- quantile( rowVars(wpn_vsd), .75)
-expr_normalized <- wpn_vsd[ rv_wpn > q75_wpn, ]
+q75_wpn <- quantile( rowVars(wpn_vsd), .75)  # <= original
+q95_wpn <- quantile( rowVars(wpn_vsd), .95)  # <= increased to reduce dataset
+expr_normalized <- wpn_vsd[ rv_wpn > q95_wpn, ]
 
 expr_normalized[1:5,1:10]
-#>                        B-3       B-4       B-5       L-3       L-4       L-5
-#> AC148152.3_FG008  5.291822  5.193425  5.487940  5.101783  5.295309  5.762176
-#> AC148167.6_FG001 10.360660  9.832517 10.136765 10.186714  9.820377  9.761429
-#> AC149475.2_FG002  8.275312  8.537378  8.126494  8.047460  7.903629  8.296347
-#> AC149475.2_FG003 11.068478 10.505163 10.410267 11.132275 10.596864 10.223615
-#> AC149475.2_FG005  5.469075  5.436092  5.771927  5.156298  5.362260  5.627630
-#>                        S-3       S-4       S-5    B_L1.1
-#> AC148152.3_FG008  5.422534  4.858435  5.443877  4.858435
-#> AC148167.6_FG001  9.772424 10.409788  9.889084 10.341011
-#> AC149475.2_FG002  8.127217  8.547185  8.671973  7.751987
-#> AC149475.2_FG003 10.541429 11.377578 10.684728 10.373376
-#> AC149475.2_FG005  5.488132  5.690347  5.532934  5.453534
+#>                       B-3      B-4      B-5      L-3      L-4      L-5      S-3
+#> AC149818.2_FG001 7.600901 7.077399 7.803434 7.220840 7.410408 8.028223 7.160846
+#> AC149829.2_FG003 8.782014 8.179876 7.900062 8.299778 7.529891 8.631731 8.055118
+#> AC182617.3_FG001 8.047244 7.120668 6.885533 7.501391 7.279413 7.809565 7.184253
+#> AC186512.3_FG001 6.901539 7.389644 6.975945 6.859593 7.370816 6.633722 7.798843
+#> AC186512.3_FG007 7.919688 7.754506 7.670946 7.417760 7.988427 7.904850 7.484542
+#>                       S-4      S-5   B_L1.1
+#> AC149818.2_FG001 7.401382 7.345322 6.524435
+#> AC149829.2_FG003 8.744502 8.142909 8.240407
+#> AC182617.3_FG001 8.140134 6.972400 7.777347
+#> AC186512.3_FG001 6.949501 6.952659 6.059033
+#> AC186512.3_FG007 8.375664 7.762799 6.335663
+dim(expr_normalized)
+#> [1] 5486   24
 
 expr_normalized_df <- data.frame(expr_normalized) %>%
   mutate(
@@ -327,43 +325,40 @@ expr_normalized_df %>% ggplot(., aes(x = name, y = value)) +
   ) +
   ylim(0, NA) +
   labs(
-    title = "Normalized and 75 quantile Expression",
+    title = "Normalized and 95 quantile Expression",
     x = "treatment",
     y = "normalized expression"
   )
 ```
 
-![](Assets/wgcna_unnamed-chunk-9-1.png)<!-- -->
+![](Assets/wgcna_unnamed-chunk-8-1.png)<!-- -->
 
 ## WGCNA
 
 Now let’s transpose the data and prepare the dataset for WGCNA.
 
 ``` r
-#input_mat = t(as.matrix(cdata[,-1]))
-#colnames(input_mat) = cdata$Geneid
-
 input_mat = t(expr_normalized)
 
 input_mat[1:5,1:10]           # Look at first 5 rows and 10 columns
-#>     AC148152.3_FG008 AC148167.6_FG001 AC149475.2_FG002 AC149475.2_FG003
-#> B-3         5.291822        10.360660         8.275312         11.06848
-#> B-4         5.193425         9.832517         8.537378         10.50516
-#> B-5         5.487940        10.136765         8.126494         10.41027
-#> L-3         5.101783        10.186714         8.047460         11.13227
-#> L-4         5.295309         9.820377         7.903629         10.59686
-#>     AC149475.2_FG005 AC149475.2_FG007 AC149810.2_FG008 AC149818.2_FG001
-#> B-3         5.469075         5.890689         5.825066         7.600901
-#> B-4         5.436092         5.992090         5.763014         7.077399
-#> B-5         5.771927         5.855928         6.025468         7.803434
-#> L-3         5.156298         5.800791         5.451045         7.220840
-#> L-4         5.362260         5.722551         5.522448         7.410408
-#>     AC149818.2_FG004 AC149818.2_FG005
-#> B-3         5.365919         6.979453
-#> B-4         5.436092         7.273319
-#> B-5         5.530658         7.285711
-#> L-3         5.884588         7.518189
-#> L-4         5.609508         7.704308
+#>     AC149818.2_FG001 AC149829.2_FG003 AC182617.3_FG001 AC186512.3_FG001
+#> B-3         7.600901         8.782014         8.047244         6.901539
+#> B-4         7.077399         8.179876         7.120668         7.389644
+#> B-5         7.803434         7.900062         6.885533         6.975945
+#> L-3         7.220840         8.299778         7.501391         6.859593
+#> L-4         7.410408         7.529891         7.279413         7.370816
+#>     AC186512.3_FG007 AC189795.3_FG001 AC190609.3_FG002 AC190623.3_FG001
+#> B-3         7.919688         8.149041         12.64301         6.575155
+#> B-4         7.754506         8.077571         11.99816         7.170788
+#> B-5         7.670946         7.524430         12.12500         7.438024
+#> L-3         7.417760         8.420552         12.36979         8.223261
+#> L-4         7.988427         7.105196         11.64515         8.008850
+#>     AC192451.3_FG001 AC195340.3_FG001
+#> B-3         6.700385         9.104258
+#> B-4         7.325447         9.135480
+#> B-5         7.819142         9.023856
+#> L-3         8.052019         8.908933
+#> L-4         8.528875         8.583982
 ```
 
 We can see now that the `rows` = `treatments` and `columns` =
@@ -384,60 +379,45 @@ allowWGCNAThreads()          # allow multi-threading (optional)
 #> Allowing multi-threading with up to 4 threads.
 
 # Choose a set of soft-thresholding powers
-powers = c(c(1:10), seq(from = 12, to=20, by=2))
+powers = c(c(1:10), seq(from = 12, to = 20, by = 2))
 
 # Call the network topology analysis function
-sft = pickSoftThreshold(input_mat,             # <= Input data
-                        #blockSize = 30,
-                        powerVector = powers,
-                        verbose = 5
-                        )
-#> pickSoftThreshold: will use block size 1631.
+sft = pickSoftThreshold(
+  input_mat,             # <= Input data
+  #blockSize = 30,
+  powerVector = powers,
+  verbose = 5
+  )
+#> pickSoftThreshold: will use block size 5486.
 #>  pickSoftThreshold: calculating connectivity for given powers...
-#>    ..working on genes 1 through 1631 of 27429
-#>    ..working on genes 1632 through 3262 of 27429
-#>    ..working on genes 3263 through 4893 of 27429
-#>    ..working on genes 4894 through 6524 of 27429
-#>    ..working on genes 6525 through 8155 of 27429
-#>    ..working on genes 8156 through 9786 of 27429
-#>    ..working on genes 9787 through 11417 of 27429
-#>    ..working on genes 11418 through 13048 of 27429
-#>    ..working on genes 13049 through 14679 of 27429
-#>    ..working on genes 14680 through 16310 of 27429
-#>    ..working on genes 16311 through 17941 of 27429
-#>    ..working on genes 17942 through 19572 of 27429
-#>    ..working on genes 19573 through 21203 of 27429
-#>    ..working on genes 21204 through 22834 of 27429
-#>    ..working on genes 22835 through 24465 of 27429
-#>    ..working on genes 24466 through 26096 of 27429
-#>    ..working on genes 26097 through 27429 of 27429
+#>    ..working on genes 1 through 5486 of 5486
 #>    Power SFT.R.sq  slope truncated.R.sq mean.k. median.k. max.k.
-#> 1      1   0.1240  1.310          0.968 7190.00   7130.00  10900
-#> 2      2   0.0988 -0.632          0.942 2810.00   2670.00   5970
-#> 3      3   0.4750 -1.300          0.958 1340.00   1190.00   3760
-#> 4      4   0.6680 -1.640          0.964  718.00    594.00   2590
-#> 5      5   0.7670 -1.830          0.973  419.00    319.00   1890
-#> 6      6   0.8170 -1.940          0.977  261.00    182.00   1440
-#> 7      7   0.8510 -1.980          0.983  171.00    109.00   1130
-#> 8      8   0.8730 -2.010          0.987  116.00     67.70    906
-#> 9      9   0.8930 -2.000          0.992   81.70     43.50    743
-#> 10    10   0.9090 -1.970          0.995   59.10     28.50    620
-#> 11    12   0.9210 -1.960          0.996   33.10     13.20    457
-#> 12    14   0.9320 -1.920          0.997   19.90      6.56    352
-#> 13    16   0.9380 -1.880          0.997   12.70      3.47    280
-#> 14    18   0.9400 -1.840          0.994    8.50      1.93    228
-#> 15    20   0.9450 -1.790          0.993    5.91      1.12    189
+#> 1      1   0.5350  2.500          0.960  1940.0    1950.0   2840
+#> 2      2   0.0642  0.331          0.897   964.0     927.0   1860
+#> 3      3   0.1680 -0.444          0.859   560.0     505.0   1340
+#> 4      4   0.5050 -0.822          0.906   358.0     300.0   1030
+#> 5      5   0.6800 -1.070          0.935   243.0     189.0    819
+#> 6      6   0.7770 -1.230          0.954   173.0     125.0    673
+#> 7      7   0.8330 -1.310          0.972   127.0      85.3    564
+#> 8      8   0.8660 -1.390          0.980    96.4      60.2    484
+#> 9      9   0.8810 -1.450          0.981    74.8      43.2    422
+#> 10    10   0.8940 -1.490          0.984    59.1      31.7    371
+#> 11    12   0.9070 -1.540          0.988    38.7      17.6    295
+#> 12    14   0.9150 -1.580          0.988    26.7      10.3    240
+#> 13    16   0.9220 -1.570          0.985    19.1       6.3    200
+#> 14    18   0.9200 -1.570          0.979    14.1       4.0    169
+#> 15    20   0.9240 -1.570          0.982    10.7       2.6    145
 
 par(mfrow = c(1,2));
 cex1 = 0.9;
 
 plot(sft$fitIndices[, 1],
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
-     xlab = "Soft Threshold (power)",
+     xlab = "Soft Threshold (power)", 
      ylab = "Scale Free Topology Model Fit, signed R^2",
      main = paste("Scale independence")
 )
-text(sft$fitIndices[, 1],
+text(sft$fitIndices[, 1], 
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
      labels = powers, cex = cex1, col = "red"
 )
@@ -447,9 +427,9 @@ plot(sft$fitIndices[, 1],
      xlab = "Soft Threshold (power)",
      ylab = "Mean Connectivity", type = "n", main = paste("Mean connectivity")
 )
-text(sft$fitIndices[, 1],
-     sft$fitIndices[, 5],
-     labels = powers,
+text(sft$fitIndices[, 1], 
+     sft$fitIndices[, 5], 
+     labels = powers, 
      cex = cex1, col = "red")
 ```
 
@@ -467,28 +447,30 @@ for more information on the parameters. How might you change the
 parameters to get more or less modules?
 
 ``` r
-cor <- WGCNA::cor       # Force it to use WGCNA cor function (fix a namespace conflict issue)
+picked_power = 9
+temp_cor <- cor       
+cor <- WGCNA::cor         # Force it to use WGCNA cor function (fix a namespace conflict issue)
 netwk <- blockwiseModules(input_mat,                # <= input here
-
+                          
                           # == Adjacency Function ==
-                          power = 10,                # <= power here
+                          power = picked_power,                # <= power here
                           networkType = "signed",
-
+                          
                           # == Tree and Block Options ==
                           deepSplit = 2,
                           pamRespectsDendro = F,
                           # detectCutHeight = 0.75,
                           minModuleSize = 30,
                           maxBlockSize = 4000,
-
+                          
                           # == Module Adjustments ==
-                          reassignThreshold = 0,
-                          mergeCutHeight = 0.25,
-
+                          reassignThreshold = 0, 
+                          mergeCutHeight = 0.25, 
+                          
                           # == TOM == Archive the run results in TOM file (saves time)
-                          saveTOMs = T,
+                          saveTOMs = T, 
                           saveTOMFileBase = "ER",
-
+                          
                           # == Output Options
                           numericLabels = T,
                           verbose = 3)
@@ -501,8 +483,8 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>    ..merging smaller clusters...
 #> Block sizes:
 #> gBlocks
-#>    1    2    3    4    5    6    7    8
-#> 3992 3991 3948 3745 3695 3580 3453 1025
+#>    1    2 
+#> 3489 1997 
 #>  ..Working on block 1 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -516,19 +498,12 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 4 genes from module 1 because their KME is too low.
-#>      ..removing 1 genes from module 2 because their KME is too low.
-# ... truncated for ease of reading
-
-cor <- stats::cor
-
-```
-
-<details><summary>See full output</summary>
-
-``` r
+#>      ..removing 31 genes from module 1 because their KME is too low.
+#>      ..removing 27 genes from module 2 because their KME is too low.
 #>      ..removing 1 genes from module 3 because their KME is too low.
-#>      ..removing 3 genes from module 4 because their KME is too low.
+#>      ..removing 1 genes from module 5 because their KME is too low.
+#>      ..removing 1 genes from module 6 because their KME is too low.
+#>      ..removing 1 genes from module 9 because their KME is too low.
 #>  ..Working on block 2 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -542,148 +517,18 @@ cor <- stats::cor
 #>  ....detecting modules..
 #>  ....calculating module eigengenes..
 #>  ....checking kME in modules..
-#>      ..removing 8 genes from module 1 because their KME is too low.
-#>      ..removing 7 genes from module 2 because their KME is too low.
-#>      ..removing 25 genes from module 3 because their KME is too low.
-#>      ..removing 3 genes from module 4 because their KME is too low.
-#>      ..removing 2 genes from module 5 because their KME is too low.
-#>      ..removing 3 genes from module 7 because their KME is too low.
-#>      ..removing 2 genes from module 9 because their KME is too low.
-#>      ..removing 4 genes from module 11 because their KME is too low.
-#>      ..removing 1 genes from module 15 because their KME is too low.
-#>      ..removing 1 genes from module 16 because their KME is too low.
-#>  ..Working on block 3 .
-#>     TOM calculation: adjacency..
-#>     ..will use 4 parallel threads.
-#>      Fraction of slow calculations: 0.000000
-#>     ..connectivity..
-#>     ..matrix multiplication (system BLAS)..
-#>     ..normalization..
-#>     ..done.
-#>    ..saving TOM for block 3 into file ER-block.3.RData
-#>  ....clustering..
-#>  ....detecting modules..
-#>  ....calculating module eigengenes..
-#>  ....checking kME in modules..
-#>      ..removing 50 genes from module 1 because their KME is too low.
-#>      ..removing 34 genes from module 2 because their KME is too low.
-#>      ..removing 10 genes from module 3 because their KME is too low.
-#>      ..removing 7 genes from module 4 because their KME is too low.
-#>      ..removing 1 genes from module 5 because their KME is too low.
-#>  ..Working on block 4 .
-#>     TOM calculation: adjacency..
-#>     ..will use 4 parallel threads.
-#>      Fraction of slow calculations: 0.000000
-#>     ..connectivity..
-#>     ..matrix multiplication (system BLAS)..
-#>     ..normalization..
-#>     ..done.
-#>    ..saving TOM for block 4 into file ER-block.4.RData
-#>  ....clustering..
-#>  ....detecting modules..
-#>  ....calculating module eigengenes..
-#>  ....checking kME in modules..
-#>      ..removing 12 genes from module 1 because their KME is too low.
-#>      ..removing 1 genes from module 2 because their KME is too low.
+#>      ..removing 25 genes from module 1 because their KME is too low.
+#>      ..removing 5 genes from module 2 because their KME is too low.
 #>      ..removing 3 genes from module 3 because their KME is too low.
 #>      ..removing 2 genes from module 4 because their KME is too low.
-#>      ..removing 1 genes from module 5 because their KME is too low.
-#>      ..removing 2 genes from module 7 because their KME is too low.
+#>      ..removing 3 genes from module 5 because their KME is too low.
 #>      ..removing 1 genes from module 8 because their KME is too low.
-#>      ..removing 1 genes from module 9 because their KME is too low.
-#>      ..removing 1 genes from module 18 because their KME is too low.
-#>      ..removing 1 genes from module 31 because their KME is too low.
-#>  ..Working on block 5 .
-#>     TOM calculation: adjacency..
-#>     ..will use 4 parallel threads.
-#>      Fraction of slow calculations: 0.000000
-#>     ..connectivity..
-#>     ..matrix multiplication (system BLAS)..
-#>     ..normalization..
-#>     ..done.
-#>    ..saving TOM for block 5 into file ER-block.5.RData
-#>  ....clustering..
-#>  ....detecting modules..
-#>  ....calculating module eigengenes..
-#>  ....checking kME in modules..
-#>      ..removing 25 genes from module 1 because their KME is too low.
-#>      ..removing 2 genes from module 2 because their KME is too low.
-#>      ..removing 1 genes from module 3 because their KME is too low.
-#>      ..removing 2 genes from module 4 because their KME is too low.
-#>      ..removing 9 genes from module 5 because their KME is too low.
-#>      ..removing 8 genes from module 8 because their KME is too low.
-#>      ..removing 5 genes from module 9 because their KME is too low.
-#>      ..removing 2 genes from module 12 because their KME is too low.
-#>      ..removing 5 genes from module 13 because their KME is too low.
-#>      ..removing 2 genes from module 19 because their KME is too low.
-#>      ..removing 1 genes from module 22 because their KME is too low.
-#>  ..Working on block 6 .
-#>     TOM calculation: adjacency..
-#>     ..will use 4 parallel threads.
-#>      Fraction of slow calculations: 0.000000
-#>     ..connectivity..
-#>     ..matrix multiplication (system BLAS)..
-#>     ..normalization..
-#>     ..done.
-#>    ..saving TOM for block 6 into file ER-block.6.RData
-#>  ....clustering..
-#>  ....detecting modules..
-#>  ....calculating module eigengenes..
-#>  ....checking kME in modules..
-#>      ..removing 69 genes from module 1 because their KME is too low.
-#>      ..removing 41 genes from module 2 because their KME is too low.
-#>      ..removing 7 genes from module 3 because their KME is too low.
-#>      ..removing 4 genes from module 4 because their KME is too low.
-#>      ..removing 8 genes from module 5 because their KME is too low.
-#>      ..removing 2 genes from module 6 because their KME is too low.
-#>      ..removing 1 genes from module 8 because their KME is too low.
-#>      ..removing 1 genes from module 9 because their KME is too low.
-#>      ..removing 1 genes from module 11 because their KME is too low.
-#>      ..removing 1 genes from module 13 because their KME is too low.
-#>      ..removing 1 genes from module 17 because their KME is too low.
-#>  ..Working on block 7 .
-#>     TOM calculation: adjacency..
-#>     ..will use 4 parallel threads.
-#>      Fraction of slow calculations: 0.000000
-#>     ..connectivity..
-#>     ..matrix multiplication (system BLAS)..
-#>     ..normalization..
-#>     ..done.
-#>    ..saving TOM for block 7 into file ER-block.7.RData
-#>  ....clustering..
-#>  ....detecting modules..
-#>  ....calculating module eigengenes..
-#>  ....checking kME in modules..
-#>      ..removing 12 genes from module 1 because their KME is too low.
-#>      ..removing 8 genes from module 2 because their KME is too low.
-#>      ..removing 13 genes from module 3 because their KME is too low.
-#>      ..removing 10 genes from module 4 because their KME is too low.
-#>      ..removing 8 genes from module 5 because their KME is too low.
-#>      ..removing 1 genes from module 6 because their KME is too low.
-#>  ..Working on block 8 .
-#>     TOM calculation: adjacency..
-#>     ..will use 4 parallel threads.
-#>      Fraction of slow calculations: 0.000000
-#>     ..connectivity..
-#>     ..matrix multiplication (system BLAS)..
-#>     ..normalization..
-#>     ..done.
-#>    ..saving TOM for block 8 into file ER-block.8.RData
-#>  ....clustering..
-#>  ....detecting modules..
-#>  ....calculating module eigengenes..
-#>  ....checking kME in modules..
-#>      ..removing 3 genes from module 1 because their KME is too low.
-#>      ..removing 1 genes from module 3 because their KME is too low.
-#>      ..removing 1 genes from module 7 because their KME is too low.
 #>  ..merging modules that are too close..
 #>      mergeCloseModules: Merging modules whose distance is less than 0.25
 #>        Calculating new MEs...
+
+cor <- temp_cor     # Return cor function to original namespace
 ```
-
-</details>
-
-
 
 Let’s take a look at the modules, there
 
@@ -692,7 +537,7 @@ Let’s take a look at the modules, there
 mergedColors = labels2colors(netwk$colors)
 # Plot the dendrogram and the module colors underneath
 plotDendroAndColors(
-  netwk$dendrograms[[1]],
+  netwk$dendrograms[[1]], 
   mergedColors[netwk$blockGenes[[1]]],
   "Module colors",
   dendroLabels = FALSE, hang = 0.03,
@@ -718,11 +563,11 @@ module_df <- data.frame(
 
 module_df[1:5,]
 #>            gene_id    colors
-#> 1 AC148152.3_FG008 turquoise
-#> 2 AC148167.6_FG001      blue
-#> 3 AC149475.2_FG002      pink
-#> 4 AC149475.2_FG003      pink
-#> 5 AC149475.2_FG005      cyan
+#> 1 AC149818.2_FG001      blue
+#> 2 AC149829.2_FG003      blue
+#> 3 AC182617.3_FG001      blue
+#> 4 AC186512.3_FG001 turquoise
+#> 5 AC186512.3_FG007 turquoise
 ```
 
 However we need to figure out which modules are associated with each
@@ -746,17 +591,17 @@ mME = MEs0 %>%
   pivot_longer(-treatment) %>%
   mutate(
     name = gsub("ME", "", name),
-    name = factor(name, levels = module_order)
+    name = factor(name, levels = module_order) 
   )
 
 mME %>% ggplot(., aes(x=treatment, y=name, fill=value)) +
   geom_tile() +
-  theme_bw() +
+  theme_bw() + 
   scale_fill_gradient2(
-    low = "blue",
-    high = "red",
-    mid = "white",
-    midpoint = 0,
+    low = "blue", 
+    high = "red", 
+    mid = "white", 
+    midpoint = 0, 
     limit = c(-1,1)) +
   theme(axis.text.x = element_text(angle=90)) +
   labs(title = "Module-trait Relationships", y = "Modules", fill="corr")
@@ -764,14 +609,18 @@ mME %>% ggplot(., aes(x=treatment, y=name, fill=value)) +
 
 ![](Assets/wgcna_module_trait-1.png)<!-- -->
 
-# Examine Expression Profiles
+Looking at the heatmap, `Green` is positively associated with the `L`
+groups, `turquoise` module is positive for the `L` but negative for the
+`L_L1` groups, `tan` module is positive in the `S` groups but negative
+elsewhere. There are other patterns **CSiva** feel free to add comments.
+\# Examine Expression Profiles
 
 We’ll pick out a few modules of interest, and plot their expression
 profiles
 
 ``` r
 # pick out a few modules of interest here
-modules_of_interest = c("white", "greenyellow", "salmon")
+modules_of_interest = c("green", "turquoise", "tan")
 
 # Pull out list of genes in that module
 submod = module_df %>%
@@ -781,18 +630,18 @@ row.names(module_df) = module_df$gene_id
 
 # Get normalized expression for those genes
 expr_normalized[1:5,1:10]
-#>                        B-3       B-4       B-5       L-3       L-4       L-5
-#> AC148152.3_FG008  5.291822  5.193425  5.487940  5.101783  5.295309  5.762176
-#> AC148167.6_FG001 10.360660  9.832517 10.136765 10.186714  9.820377  9.761429
-#> AC149475.2_FG002  8.275312  8.537378  8.126494  8.047460  7.903629  8.296347
-#> AC149475.2_FG003 11.068478 10.505163 10.410267 11.132275 10.596864 10.223615
-#> AC149475.2_FG005  5.469075  5.436092  5.771927  5.156298  5.362260  5.627630
-#>                        S-3       S-4       S-5    B_L1.1
-#> AC148152.3_FG008  5.422534  4.858435  5.443877  4.858435
-#> AC148167.6_FG001  9.772424 10.409788  9.889084 10.341011
-#> AC149475.2_FG002  8.127217  8.547185  8.671973  7.751987
-#> AC149475.2_FG003 10.541429 11.377578 10.684728 10.373376
-#> AC149475.2_FG005  5.488132  5.690347  5.532934  5.453534
+#>                       B-3      B-4      B-5      L-3      L-4      L-5      S-3
+#> AC149818.2_FG001 7.600901 7.077399 7.803434 7.220840 7.410408 8.028223 7.160846
+#> AC149829.2_FG003 8.782014 8.179876 7.900062 8.299778 7.529891 8.631731 8.055118
+#> AC182617.3_FG001 8.047244 7.120668 6.885533 7.501391 7.279413 7.809565 7.184253
+#> AC186512.3_FG001 6.901539 7.389644 6.975945 6.859593 7.370816 6.633722 7.798843
+#> AC186512.3_FG007 7.919688 7.754506 7.670946 7.417760 7.988427 7.904850 7.484542
+#>                       S-4      S-5   B_L1.1
+#> AC149818.2_FG001 7.401382 7.345322 6.524435
+#> AC149829.2_FG003 8.744502 8.142909 8.240407
+#> AC182617.3_FG001 8.140134 6.972400 7.777347
+#> AC186512.3_FG001 6.949501 6.952659 6.059033
+#> AC186512.3_FG007 8.375664 7.762799 6.335663
 subexpr = expr_normalized[submod$gene_id,]
 
 submod_df = data.frame(subexpr) %>%
@@ -815,7 +664,11 @@ submod_df %>% ggplot(., aes(x=name, y=value, group=gene_id)) +
        y = "normalized expression")
 ```
 
-![](Assets/wgcna_mod_profile-1.png)<!-- --> \[Add discussion here\]
+![](Assets/wgcna_mod_profile-1.png)<!-- -->
+
+`Green` module genes are higher in the `L` groups. `Tan` genes seem
+higher in the `S` groups, and `Turquoise` genes are low at `L_L1` and
+`S_L1` and maybe `B_L1` groups.
 
 # Generate and Export Network
 
@@ -829,15 +682,15 @@ genes_of_interest = module_df %>%
 expr_of_interest = expr_normalized[genes_of_interest$gene_id,]
 expr_of_interest[1:5,1:5]
 #>                       B-3      B-4      B-5      L-3      L-4
-#> AC177831.3_FG004 5.012164 5.095574 5.391655 5.561766 5.522448
-#> AC203570.4_FG005 5.264020 5.193425 5.272398 5.707513 5.295309
-#> AC206223.3_FG007 5.012164 4.858435 4.858435 5.156298 4.858435
-#> AC211164.5_FG003 6.943132 7.187083 6.832403 6.923727 7.321728
-#> AC214244.4_FG003 5.075739 5.193425 4.858435 5.278936 5.362260
+#> AC186512.3_FG001 6.901539 7.389644 6.975945 6.859593 7.370816
+#> AC186512.3_FG007 7.919688 7.754506 7.670946 7.417760 7.988427
+#> AC190623.3_FG001 6.575155 7.170788 7.438024 8.223261 8.008850
+#> AC196475.3_FG004 6.054319 6.439899 6.424540 5.815344 6.565299
+#> AC196475.3_FG005 6.194406 5.872273 6.207174 6.499828 6.314952
 
 # Only recalculate TOM for modules of interest (faster, altho there's some online discussion if this will be slightly off)
 TOM = TOMsimilarityFromExpr(t(expr_of_interest),
-                            power = 10)
+                            power = picked_power)
 #> TOM calculation: adjacency..
 #> ..will use 4 parallel threads.
 #>  Fraction of slow calculations: 0.000000
@@ -865,17 +718,24 @@ edge_list = data.frame(TOM) %>%
 
 head(edge_list)
 #> # A tibble: 6 x 5
-#>   gene1            gene2             correlation module1 module2    
-#>   <chr>            <chr>                   <dbl> <chr>   <chr>      
-#> 1 AC177831.3_FG004 AC203570.4_FG005 0.00000684   salmon  greenyellow
-#> 2 AC177831.3_FG004 AC206223.3_FG007 0.0000989    salmon  greenyellow
-#> 3 AC177831.3_FG004 AC211164.5_FG003 0.0000190    salmon  greenyellow
-#> 4 AC177831.3_FG004 AC214244.4_FG003 0.0000000896 salmon  greenyellow
-#> 5 AC177831.3_FG004 AC217401.3_FG002 0.0155       salmon  salmon     
-#> 6 AC177831.3_FG004 AC230013.2_FG002 0.00701      salmon  salmon
+#>   gene1            gene2            correlation module1   module2  
+#>   <chr>            <chr>                  <dbl> <chr>     <chr>    
+#> 1 AC186512.3_FG001 AC186512.3_FG007      0.0238 turquoise turquoise
+#> 2 AC186512.3_FG001 AC190623.3_FG001      0.0719 turquoise turquoise
+#> 3 AC186512.3_FG001 AC196475.3_FG004      0.143  turquoise turquoise
+#> 4 AC186512.3_FG001 AC196475.3_FG005      0.0117 turquoise turquoise
+#> 5 AC186512.3_FG001 AC196489.3_FG002      0.0181 turquoise turquoise
+#> 6 AC186512.3_FG001 AC198481.3_FG004      0.0240 turquoise turquoise
 
 # Export Network file to be read into Cytoscape, VisANT, etc
-write_delim(edge_list,
+write_delim(edge_list, 
             file = "edgelist.tsv",
             delim = "\t")
 ```
+
+The `edgelist.txt` exported is the complete correlation network for
+modules `green`, `tan`, and `turquoise`. The network still needs to be
+subsetted down (by weight or minimal spanning) to identify hub genes.
+Steps forward include identifying hub genes and gene ontology
+enrichment. The edgelist can be loaded into igraph (R package) or
+Cytoscape (standalone Java Application) for further network analysis.
