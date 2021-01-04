@@ -61,7 +61,8 @@ The **WGCNA** pipeline is expecting an input matrix of RNA Sequence
 counts. Usually we need to rotate (transpose) the input data so `rows` =
 `treatments` and `columns` = `gene probes`.
 
-![WGCNA Overview](Assets/wgcna_overview.png)
+![WGCNA
+Overview](https://bioinformaticsworkbook.org/tutorials/Assets/wgcna_overview.png)
 
 The output of **WGCNA** is a list of clustered genes, and weighted gene
 correlation network files.
@@ -79,12 +80,13 @@ For more information, please see the following paper:
     initiation](https://pubmed.ncbi.nlm.nih.gov/25516601/). The Plant
     Cell, 26(12), pp.4718-4732.
 
-While the wt and lg1 were from the area marked in purple in plants that
-exhibited either wt or no ligule (liguleless phenotype)… so this
-encompasses the entire pre-ligule, pre-blade and pre-sheath area.
+The dataset can be downloaded from the NCBI entry or using `wget` from
+the bash commandline.
 
--   [Download
-    Dataset](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE61333)
+<!--While the wt and lg1 were from the area marked in purple in plants that exhibited either wt or no ligule (liguleless phenotype)… so this encompasses the entire pre-ligule, pre-blade and pre-sheath area.-->
+
+-   [Download Dataset from NCBI
+    entry](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE61333)
 
 ``` bash
 wget ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE61nnn/GSE61333/suppl/GSE61333_ligule_count.txt.gz
@@ -124,7 +126,7 @@ Load and look at the data
 # ==== Load and clean data
 data <- readr::read_delim("data/GSE61333_ligule_count.txt",     # <= path to the data file
                           delim = "\t")
-#> 
+#>
 #> ── Column specification ────────────────────────────────────────────────────────
 #> cols(
 #>   .default = col_double(),
@@ -148,14 +150,15 @@ names(data)[1] = "GeneId"
 names(data)           # Look at the column names
 #>  [1] "GeneId" "B-3"    "B-4"    "B-5"    "L-3"    "L-4"    "L-5"    "S-3"   
 #>  [9] "S-4"    "S-5"    "B_L1.1" "B_L1.2" "B_L1.3" "L_L1.1" "L_L1.2" "L_L1.3"
-#> [17] "S_L1.1" "S_L1.2" "S_L1.3" "wtL-1"  "wtL-2"  "wtL-3"  "lg1-1"  "lg1-2" 
+#> [17] "S_L1.1" "S_L1.2" "S_L1.3" "wtL-1"  "wtL-2"  "wtL-3"  "lg1-1"  "lg1-2"
 #> [25] "lg1-3"
 ```
 
 If you are in RStudio, you can also click on the `data` object in the
 Environment tab to see an Excel-like view of the data.
 
-![RStudio View](Assets/RStudio_data.png)
+![RStudio
+View](https://bioinformaticsworkbook.org/tutorials/Assets/RStudio_data.png)
 
 From looking at the data, we can come to the following insights:
 
@@ -172,7 +175,7 @@ From looking at the data, we can come to the following insights:
 -   The column names are prefixed with the treatment group (e.g. `B-3`,
     `B-4`, and `B-5` are three replicates of the treatment “B”).
 
--   **To Do**: Please add a table describing treatments here mean here.
+-   **TODO:** Markdown table describing treatments here mean here.
     `e.g. B=?, S=?, L=?`
 
 The following R commands clean and tidy the dataset for exploratory
@@ -180,13 +183,13 @@ graphics.
 
 ``` r
 col_sel = names(data)[-1]                                  # Get all but first column name
-mdata <- data %>% 
-  tidyr::pivot_longer( 
+mdata <- data %>%
+  tidyr::pivot_longer(
     .,                                                     # The dot is the the input data, magrittr tutorial
     col = all_of(col_sel)
     ) %>%  
   mutate(
-    group = gsub("-.*","", name) %>% gsub("[.].*","", .)   # Get the shorter treatment names 
+    group = gsub("-.*","", name) %>% gsub("[.].*","", .)   # Get the shorter treatment names
   )
 
 # This sets the order of the hours in the plot... otherwise 48mk will be between "3" and "6".
@@ -200,7 +203,8 @@ outliers.
 
 ``` r
 # ==== Plot groups (Sample Groups vs RNA Seq Counts) to identify outliers
-p <- mdata %>%
+(
+ p <- mdata %>%
     ggplot(., aes(x = name, y = value)) +             # x = treatment, y = RNA Seq count
     geom_violin() +                                   # violin plot, show distribution
     geom_point(alpha = 0.2) +                         # scatter plot
@@ -210,22 +214,25 @@ p <- mdata %>%
     ) +
     labs(x = "Treatment Groups", y = "RNA Seq Counts") +
     facet_grid(cols = vars(group), drop = TRUE, scales = "free_x")      # Facet by hour
+)
 ```
+
+![](Assets/wgcna_groups-1.png)<!-- -->
 
 <!--
 > From here, we can see there's something strange in some of the hour 24 samples. One has very high RNASeq values `24II_S15_L006` with maybe a wide range, while another has very low range of RNASeq values `24_S15_L007`. We should follow up with the wet lab folks on an explanation of those samples, but for now, we'll remove the 24 hour group and maybe the 48 hour group.
-> 
-> 
+>
+>
 > ```r
 > #keep_cols = names(data) %>% grep("24", .,  invert = T, value = T) %>% grep("48I+_", ., invert=T, value=T)
 > #cdata = data %>% select(all_of(keep_cols))
-> 
+>
 > #temp <- data[rowSums(data[,-1]) > 0.1, ]      # Remove genes with all 0 values
 > #row_var <- apply(temp[,-1], 1, var)           # Remove genes with variance below 100
 > #cdata <- temp[row_var > 1, ]
 > #cdata[1:5, 1:10]
 > ```
-> 
+>
 > You can look at the `cdata` object (click on item in `environment` or use `names(cdata)`) to convince yourself that the "24 hour" group is gone. The original dataset had 46,430 genes (too many to explore), subsetting by variance and other strange artifacts reduced it down to 25,088 genes. Let's continue and determine the correlation networks for these 25,088 genes.
 -->
 
@@ -255,7 +262,7 @@ de_input[1:5,1:10]
 #> AC148152.3_FG006   0   0   0   0   0   0   0   0   0      0
 #str(de_input)
 
-meta_df <- data.frame( Sample = names(data[-1])) %>% 
+meta_df <- data.frame( Sample = names(data[-1])) %>%
   mutate(
     Type = gsub("-.*","", Sample) %>% gsub("[.].*","", .)
   )
@@ -276,22 +283,22 @@ dds <- DESeq(dds)
 #> fitting model and testing
 vsd <- varianceStabilizingTransformation(dds)
 library(genefilter)      # <= why is this here?
-#> 
+#>
 #> Attaching package: 'genefilter'
 #> The following objects are masked from 'package:matrixStats':
-#> 
+#>
 #>     rowSds, rowVars
 #> The following object is masked from 'package:readr':
-#> 
+#>
 #>     spec
 wpn_vsd <- getVarianceStabilizedData(dds)
 rv_wpn <- rowVars(wpn_vsd)
 summary(rv_wpn)
-#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#>     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
 #>  0.00000  0.00000  0.00000  0.08044  0.03322 11.14529
 
 q75_wpn <- quantile( rowVars(wpn_vsd), .75)  # <= original
-q95_wpn <- quantile( rowVars(wpn_vsd), .95)  # <= increased to reduce dataset
+q95_wpn <- quantile( rowVars(wpn_vsd), .95)  # <= changed to 95 quantile to reduce dataset
 expr_normalized <- wpn_vsd[ rv_wpn > q95_wpn, ]
 
 expr_normalized[1:5,1:10]
@@ -331,7 +338,7 @@ expr_normalized_df %>% ggplot(., aes(x = name, y = value)) +
   )
 ```
 
-![](Assets/wgcna_unnamed-chunk-8-1.png)<!-- -->
+![](Assets/wgcna_groups_normq95-1.png)<!-- -->
 
 ## WGCNA
 
@@ -413,11 +420,11 @@ cex1 = 0.9;
 
 plot(sft$fitIndices[, 1],
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
-     xlab = "Soft Threshold (power)", 
+     xlab = "Soft Threshold (power)",
      ylab = "Scale Free Topology Model Fit, signed R^2",
      main = paste("Scale independence")
 )
-text(sft$fitIndices[, 1], 
+text(sft$fitIndices[, 1],
      -sign(sft$fitIndices[, 3]) * sft$fitIndices[, 2],
      labels = powers, cex = cex1, col = "red"
 )
@@ -425,21 +432,23 @@ abline(h = 0.90, col = "red")
 plot(sft$fitIndices[, 1],
      sft$fitIndices[, 5],
      xlab = "Soft Threshold (power)",
-     ylab = "Mean Connectivity", type = "n", main = paste("Mean connectivity")
+     ylab = "Mean Connectivity",
+     type = "n",
+     main = paste("Mean connectivity")
 )
-text(sft$fitIndices[, 1], 
-     sft$fitIndices[, 5], 
-     labels = powers, 
+text(sft$fitIndices[, 1],
+     sft$fitIndices[, 5],
+     labels = powers,
      cex = cex1, col = "red")
 ```
 
 ![](Assets/wgcna_soft_threshold-1.png)<!-- -->
 
 Pick a soft threshold power near the curve of the plot, so here we could
-pick 9 or 10. We’ll pick 10 but feel free to experiment with other
+pick 7, 8 or 9. We’ll pick 9 but feel free to experiment with other
 powers to see how it affects your results. Now we can create the network
-using the `blockwiseModules` command. The `blockwiseModule` will take a
-long time to run, since it is constructing the TOM (topological overlap
+using the `blockwiseModules` command. The `blockwiseModule` may take a
+while to run, since it is constructing the TOM (topological overlap
 matrix) and several other steps. While it runs, take a look at the
 `blockwiseModule` documentation (link to
 [vignette](https://www.rdocumentation.org/packages/WGCNA/versions/1.69/topics/blockwiseModules))
@@ -451,26 +460,26 @@ picked_power = 9
 temp_cor <- cor       
 cor <- WGCNA::cor         # Force it to use WGCNA cor function (fix a namespace conflict issue)
 netwk <- blockwiseModules(input_mat,                # <= input here
-                          
+
                           # == Adjacency Function ==
                           power = picked_power,                # <= power here
                           networkType = "signed",
-                          
+
                           # == Tree and Block Options ==
                           deepSplit = 2,
                           pamRespectsDendro = F,
                           # detectCutHeight = 0.75,
                           minModuleSize = 30,
                           maxBlockSize = 4000,
-                          
+
                           # == Module Adjustments ==
-                          reassignThreshold = 0, 
-                          mergeCutHeight = 0.25, 
-                          
+                          reassignThreshold = 0,
+                          mergeCutHeight = 0.25,
+
                           # == TOM == Archive the run results in TOM file (saves time)
-                          saveTOMs = T, 
+                          saveTOMs = T,
                           saveTOMFileBase = "ER",
-                          
+
                           # == Output Options
                           numericLabels = T,
                           verbose = 3)
@@ -483,8 +492,8 @@ netwk <- blockwiseModules(input_mat,                # <= input here
 #>    ..merging smaller clusters...
 #> Block sizes:
 #> gBlocks
-#>    1    2 
-#> 3489 1997 
+#>    1    2
+#> 3489 1997
 #>  ..Working on block 1 .
 #>     TOM calculation: adjacency..
 #>     ..will use 4 parallel threads.
@@ -537,18 +546,20 @@ Let’s take a look at the modules, there
 mergedColors = labels2colors(netwk$colors)
 # Plot the dendrogram and the module colors underneath
 plotDendroAndColors(
-  netwk$dendrograms[[1]], 
+  netwk$dendrograms[[1]],
   mergedColors[netwk$blockGenes[[1]]],
   "Module colors",
-  dendroLabels = FALSE, hang = 0.03,
-  addGuide = TRUE, guideHang = 0.05)
+  dendroLabels = FALSE,
+  hang = 0.03,
+  addGuide = TRUE,
+  guideHang = 0.05 )
 ```
 
 ![](Assets/wgcna_dendro-1.png)<!-- -->
 
 ``` r
-#                    netwk$colors[netwk$blockGenes[[1]]]
-#table(netwk$colors)
+# netwk$colors[netwk$blockGenes[[1]]]
+# table(netwk$colors)
 ```
 
 # Module (cluster) assignments
@@ -568,12 +579,22 @@ module_df[1:5,]
 #> 3 AC182617.3_FG001      blue
 #> 4 AC186512.3_FG001 turquoise
 #> 5 AC186512.3_FG007 turquoise
+
+write.csv2(
+  module_df,
+  file = "gene_modules.txt",
+  sep = "\t",
+  row.names = F
+)
+#> Warning in write.csv2(module_df, file = "gene_modules.txt", sep = "\t", :
+#> attempt to set 'sep' ignored
 ```
 
-However we need to figure out which modules are associated with each
-trait/treatment group. WGCNA will calcuate an Eigangene (hypothetical
-central gene) for each module, so it easier to determine if modules are
-associated with different treatments.
+We have written out a tab delimited file listing the genes and their
+modules. However, we need to figure out which modules are associated
+with each trait/treatment group. WGCNA will calcuate an Eigangene
+(hypothetical central gene) for each module, so it easier to determine
+if modules are associated with different treatments.
 
 ``` r
 # Get Module Eigengenes per cluster
@@ -591,17 +612,17 @@ mME = MEs0 %>%
   pivot_longer(-treatment) %>%
   mutate(
     name = gsub("ME", "", name),
-    name = factor(name, levels = module_order) 
+    name = factor(name, levels = module_order)
   )
 
 mME %>% ggplot(., aes(x=treatment, y=name, fill=value)) +
   geom_tile() +
-  theme_bw() + 
+  theme_bw() +
   scale_fill_gradient2(
-    low = "blue", 
-    high = "red", 
-    mid = "white", 
-    midpoint = 0, 
+    low = "blue",
+    high = "red",
+    mid = "white",
+    midpoint = 0,
     limit = c(-1,1)) +
   theme(axis.text.x = element_text(angle=90)) +
   labs(title = "Module-trait Relationships", y = "Modules", fill="corr")
@@ -609,11 +630,14 @@ mME %>% ggplot(., aes(x=treatment, y=name, fill=value)) +
 
 ![](Assets/wgcna_module_trait-1.png)<!-- -->
 
-Looking at the heatmap, `Green` is positively associated with the `L`
-groups, `turquoise` module is positive for the `L` but negative for the
-`L_L1` groups, `tan` module is positive in the `S` groups but negative
-elsewhere. There are other patterns **CSiva** feel free to add comments.
-\# Examine Expression Profiles
+Looking at the heatmap, the `green` seems positively associated (red
+shading) with the `L` groups, `turquoise` module is positive for the `L`
+but negative (blue shading) for the `L_L1` groups, and `tan` module is
+positive in the `S` groups but negative elsewhere. There are other
+patterns, think about what the patterns mean. For this tutorial we will
+focus on the `green`, `turquoise`, and `tan` module genes.
+
+# Examine Expression Profiles
 
 We’ll pick out a few modules of interest, and plot their expression
 profiles
@@ -654,7 +678,8 @@ submod_df = data.frame(subexpr) %>%
   )
 
 submod_df %>% ggplot(., aes(x=name, y=value, group=gene_id)) +
-  geom_line(aes(color=module), alpha=0.2) +
+  geom_line(#aes(color = module),
+            alpha = 0.2) +
   theme_bw() +
   theme(
     axis.text.x = element_text(angle = 90)
@@ -666,9 +691,10 @@ submod_df %>% ggplot(., aes(x=name, y=value, group=gene_id)) +
 
 ![](Assets/wgcna_mod_profile-1.png)<!-- -->
 
-`Green` module genes are higher in the `L` groups. `Tan` genes seem
-higher in the `S` groups, and `Turquoise` genes are low at `L_L1` and
-`S_L1` and maybe `B_L1` groups.
+Indeed, the line graph matches the correlation graph where `Green`
+module genes are higher in the `L` groups. `Tan` genes seem higher in
+the `S` groups, and `Turquoise` genes are low at `L_L1` and `S_L1` and
+maybe `B_L1` groups.
 
 # Generate and Export Network
 
@@ -728,7 +754,7 @@ head(edge_list)
 #> 6 AC186512.3_FG001 AC198481.3_FG004      0.0240 turquoise turquoise
 
 # Export Network file to be read into Cytoscape, VisANT, etc
-write_delim(edge_list, 
+write_delim(edge_list,
             file = "edgelist.tsv",
             delim = "\t")
 ```
@@ -739,3 +765,18 @@ subsetted down (by weight or minimal spanning) to identify hub genes.
 Steps forward include identifying hub genes and gene ontology
 enrichment. The edgelist can be loaded into igraph (R package) or
 Cytoscape (standalone Java Application) for further network analysis.
+
+## In Summary
+
+We have taken in RNASeq count information, identified the top (95%
+quantile) differentially expressed genes, sent it to WGCNA to identify
+modules and create the gene correlation network for those modules.
+
+**Input:**
+
+-   `GSE61333_ligule_count.txt` - RNASeq counts
+
+**Output:**
+
+-   `gene_modules.txt` - Lists genes and their WGCNA modules
+-   `edge_list.tsv` - Gene correlation network for modules of interest
