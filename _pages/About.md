@@ -28,5 +28,8 @@ The [human genome was sequenced in 2001](http://science.sciencemag.org/content/2
 Cost to sequence a human genome using a logarithmic scale on the y-axis and year on the x-axis.
 For more information about this figure see [www.genome.gov](https://www.genome.gov/sequencingcostsdata/)
 
+## Acknowledgements
+
+Some of the funding to produce this workbook was provided by a joint collaboration between Iowa State University and resources provided by the SCINet project of the USDA Agricultural Research Service, ARS project number 0500-00093-001-00-D.
 
 [Table of contents](https://isugenomics.github.io/bioinformatics-workbook/)
