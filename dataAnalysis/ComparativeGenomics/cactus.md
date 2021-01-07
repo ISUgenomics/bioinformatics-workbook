@@ -31,7 +31,7 @@ Do you have hundreds of large vertebrate genomes? Are there no high quality refe
 
 ## Singularity
 
-A Progressive Cactus singularity image (`cactus_v1.2.0.sif`) is available and instructions based on the [Harvard FAS Informatics Tutorial](https://informatics.fas.harvard.edu/cactus-on-the-fasrc-cluster.html). 
+A Progressive Cactus singularity image (`cactus_v1.2.0.sif`) is available and instructions based on the [Harvard FAS Informatics Tutorial](https://informatics.fas.harvard.edu/cactus-on-the-fasrc-cluster.html).
 
 ``` bash
 module load singularity
@@ -42,7 +42,7 @@ When using containers (singularity/docker), an input/output folder must be conne
 
 **How to run progressive Cactus faster?**
 
-This method uses persistant overlays, where you mount a writeable drive for the Container. If properly configured (setup overlay on the $TMPDIR), it will speed up the I/O and make it run faster. The downside is that the overlay can only use ext3 format which has the upper bound of 16Tb total size (roughly 25 maize genomes is the max you can run with this size).
+This method uses persistent overlays, where you mount a writeable drive for the Container. If properly configured (setup overlay on the $TMPDIR), it will speed up the I/O and make it run faster. The downside is that the overlay can only use ext3 format which has the upper bound of 16Tb total size (roughly 25 maize genomes is the max you can run with this size).
 
 **See more info here:** https://sylabs.io/guides/3.5/user-guide/persistent_overlays.html
 
@@ -60,7 +60,7 @@ wget -O link_to_genome_two
 
 ## Run Cactus
 
-In general, the cactus takes multiple genomes (fasta files) and generates an alignment (Hal file). 
+In general, the cactus takes multiple genomes (fasta files) and generates an alignment (Hal file).
 
 ```
 (*.fasta) --> cactus --> (all_alignment.hal)
@@ -87,7 +87,7 @@ todo: add the cactus help message here.
 
 ### What is the SEQFILE?
 
-The input file (`${SEQFILE}`) can be either (1) a text file with short name and file location or (2) a tree file. 
+The input file (`${SEQFILE}`) can be either (1) a text file with short name and file location or (2) a tree file.
 
 **Method 1: Create an delimited text file**
 
@@ -219,7 +219,7 @@ srun -n 1 singularity exec --bind $CACTUS_SCRATCH \
                            --bind ${CACTUS_SCRATCH}/tmp:/tmp \
                            ${CACTUS_IMAGE} \
   cactus ${CACTUS_OPTIONS-} ${restart-} --workDir=/cactus/workDir --binariesMode local /cactus/jobStore "${SEQFILE}" "${OUTPUTHAL}"
-  
+
 ```
 
 ### Output Files
@@ -298,7 +298,7 @@ srun -n 1 singularity exec --bind $CACTUS_SCRATCH \
                            --bind ${CACTUS_SCRATCH}/tmp:/tmp \
                            ${CACTUS_IMAGE} \
   cactus ${CACTUS_OPTIONS-} ${restart-} --workDir=/cactus/workDir --binariesMode local /cactus/jobStore "${SEQFILE}" "${OUTPUTHAL}"
-  
+
 the input required is a text file, having location of the genomes and their short name (if you have a tree, it would speed this up).
 
 ```
