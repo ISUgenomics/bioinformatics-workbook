@@ -1,4 +1,12 @@
-#  Call orthologues and create phylogenetic tree
+---
+title: Call orthologues and create phylogenetic tree
+layout: single
+author: Rick Masonbrink
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
 
 
 ### Collect data

@@ -8,6 +8,8 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+{% include toc %}
+
 ## Learning Objectives
 
 0. Introduction

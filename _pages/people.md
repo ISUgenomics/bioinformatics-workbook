@@ -42,3 +42,9 @@ My main interests are in the fields of bioinformatics and evolutionary genomics.
 ### Jennifer Chang
 ![Jennifer](../assets/images/people/JenChangsm.png){: .align-left}
 I am an Iowa State University graduate, with a PhD in Bioinformatics and Computational Biology. I have been programming (in one language or another) since 2006 and have an interest in data visualization and software development. My research focus has been on analyzing and merging networks, monitoring the evolution of influenza A viruses in swine, and writing cross-platform pipelines. In 2020, I joined the Genomics Informatics Facility in the hopes of developing interdisciplinary pipelines and tutorials to meet the needs of the widespread research community.
+
+
+### Swapna Menon
+
+![Swapna](../assets/images/people/SwapnaMenon.png){: .align-left}
+Swapna is a bioinformatics freelancer based in India. Her formal qualifications include an M.S. in Molecular Sciences and an M. Phil. in Bioinformatics. She analyzes microarray and NGS data for research groups in academic institutions. She helps clients with experimental design and sequence data issues. Earlier, she taught bioinformatics in universities in Kochi. The sequencing technologies are advancing. Bioinformatics software and analyses methods are keeping pace. Practicing bioinformatics requires knowledge of statistics, information technology and NGS technologies and, biology. Open source software and educational resources are vital for all bioinformatics practitioners.
