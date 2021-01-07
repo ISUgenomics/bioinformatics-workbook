@@ -1,22 +1,29 @@
 ---
-title: Comparative Genomics
+title: Progressive Cactus
 layout: single
+author: Arun Seetharam
+author1: Jennifer Chang
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
+**Last Update**: 7 Jan 2021
 
 # Efficient multi-genome aligner with Progressive Cactus
 
-Do you have hundreds of large vertebrate genomes? Are there no high quality reference species near any of them? Maybe you need Progressive Cactus! This prickly pipeline can align large vertebrate genomes and has been tested on a large dataset of 600 amniote genomes. 
+Do you have hundreds of large vertebrate genomes? Are there no high quality reference species near any of them? Maybe you need Progressive Cactus! This prickly pipeline can align large vertebrate genomes and has been tested on a large dataset of 600 amniote genomes. Progressive Cactus is usually cited as:
 
-**Publications**
+* Armstrong, J., Hickey, G., Diekhans, M., Fiddes, I.T., Novak, A.M., Deran, A., Fang, Q., Xie, D., Feng, S., Stiller, J. and Genereux, D., 2020. [Progressive Cactus is a multiple-genome aligner for the thousand-genome era](https://www.nature.com/articles/s41586-020-2871-y). Nature, 587(7833), pp.246-251.
+* Paten, B., Earl, D., Nguyen, N., Diekhans, M., Zerbino, D. and Haussler, D., 2011. [Cactus: Algorithms for genome multiple sequence alignment](https://pubmed.ncbi.nlm.nih.gov/21665927/). Genome research, 21(9), pp.1512-1528.
+* Paten, B., Diekhans, M., Earl, D., John, J.S., Ma, J., Suh, B. and Haussler, D., 2011. [Cactus graphs for genome comparisons](https://www.liebertpub.com/doi/10.1089/cmb.2010.0252). Journal of Computational Biology, 18(3), pp.469-481.
 
-* **Armstrong et al, 2020** - [Progressive Cactus is a multiple-genome aligner for the thousand-genome era](https://www.nature.com/articles/s41586-020-2871-y)
-* **Paten et al, 2011** - [Cactus: Algorithms for genome multiple sequence alignment](https://pubmed.ncbi.nlm.nih.gov/21665927/)
-* **PubMed** - [List of papers which cite the Cactus algorithm](https://pubmed.ncbi.nlm.nih.gov/?sort=pubdate&linkname=pubmed_pubmed_citedin&from_uid=21665927)
 
+**More Information**
+
+* [List of PubMed papers which cite the Cactus algorithm](https://pubmed.ncbi.nlm.nih.gov/?sort=pubdate&linkname=pubmed_pubmed_citedin&from_uid=21665927)
+* [GitHub: Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)
 
 **TODO**: Add image of pipeline here.
 
@@ -24,11 +31,11 @@ Do you have hundreds of large vertebrate genomes? Are there no high quality refe
 
 ## Singularity
 
-A Progressive Cactus singularity image (`cactus_v1.0.0.sif`) is available from XXXXX. 
+A Progressive Cactus singularity image (`cactus_v1.2.0.sif`) is available and instructions based on the [Harvard FAS Informatics Tutorial](https://informatics.fas.harvard.edu/cactus-on-the-fasrc-cluster.html). 
 
 ``` bash
 module load singularity
-singularity pull XXXX
+singularity pull docker://quay.io/comparative-genomics-toolkit/cactus_v1.2.0
 ```
 
 When using containers (singularity/docker), an input/output folder must be connected to the container (similar to plugging in a usb stick to a new computer to transfer files).  
