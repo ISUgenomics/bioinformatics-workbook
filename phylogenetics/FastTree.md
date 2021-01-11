@@ -64,6 +64,8 @@ AAAAAAAAAAAAAAAAAAAAAAATTAAAAAAAAAAAAAAAAAAAAAAA
 
 <details><summary>See MAFFT Help Statment</summary>
 
+<code>
+
 ``` bash
 mafft --help
 ------------------------------------------------------------------------------
@@ -92,6 +94,9 @@ If unsure which option to use:
 --thread # :     Number of threads (if unsure, --thread -1)
 --dash :         Add structural information (Rozewicki et al, submitted)
 ```
+
+</code>
+
 </details>
 
 For a quick nucleotide alignment, we can run the following with the automatically (`--auto`) detected parameters. We can save the alignment in a `input_aln.fasta` file. 
