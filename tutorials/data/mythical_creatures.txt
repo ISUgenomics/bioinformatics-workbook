@@ -1,0 +1,41 @@
+Organism	gene_family_1	gene_family_2	gene_family_3	gene_family_4
+Unicorn	263	407	460	519
+Unicorn	269	644	409	904
+Unicorn	705	592	489	831
+Unicorn	501	368	245	1269
+Unicorn	244	520	403	227
+Unicorn	387	275	280	185
+Unicorn	437	93	391	353
+Unicorn	552	612	476	1289
+Unicorn	745	593	347	1453
+Unicorn	751	507	155	820
+Cyclops	583	463	153	1303
+Cyclops	769	329	211	274
+Cyclops	459	452	283	1289
+Cyclops	149	568	210	280
+Cyclops	181	314	412	1333
+Cyclops	693	176	359	361
+Cyclops	208	561	161	842
+Cyclops	202	365	489	259
+Cyclops	336	371	347	168
+Cyclops	334	548	358	419
+Midwestern Dragon	404	76	434	1188
+Midwestern Dragon	325	466	259	1436
+Midwestern Dragon	713	218	277	837
+Midwestern Dragon	485	297	346	1258
+Midwestern Dragon	652	527	325	750
+Midwestern Dragon	632	342	309	1352
+Midwestern Dragon	800	581	497	870
+Midwestern Dragon	623	323	354	206
+Midwestern Dragon	733	123	244	646
+Midwestern Dragon	751	477	474	1390
+Sun Drop Flower	743	100	473	625
+Sun Drop Flower	160	230	164	1207
+Sun Drop Flower	260	569	493	650
+Sun Drop Flower	443	156	340	775
+Sun Drop Flower	366	380	312	167
+Sun Drop Flower	465	201	162	1435
+Sun Drop Flower	576	488	440	1130
+Sun Drop Flower	390	388	199	1171
+Sun Drop Flower	164	115	324	554
+Sun Drop Flower	790	578	449	530

@@ -1,0 +1,296 @@
+---
+title: "Data Visualization"
+author: "Someone"
+date: "12/07/2018"
+output:
+  github_document
+editor_options:
+  chunck_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "Assets/rvizbox_"
+)
+```
+
+<!--
+---
+title: "Data Visualization"
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+-->
+
+**Last Update**: 7 Dec 2018 <br/>
+**RMarkdown**: [generate-boxplots.Rmd](https://bioinformaticsworkbook.org/tutorials/generate-boxplots.Rmd)
+
+## Using R to create boxplots
+
+For datasets that have many observations per sample and you want to visualize their distribution, boxplots are good choice. Here, the example dataset has average values of multiple observations for each sample. 
+
+* [mythical_creatures.txt](https://bioinformaticsworkbook.org/data/mythical_creatures.txt)
+
+```
+wget https://bioinformaticsworkbook.org/tutorials/data/mythical_creatures.txt
+```
+
+
+
+It is organized in this way:
+
+Table 1: Gene length for 4 different gene families and for 3 different organism.
+
+```{r, echo=FALSE, warning=F, message=F}
+data <- readr::read_delim("data/mythical_creatures.txt", delim="\t")
+knitr::kable(data)
+```
+
+ If this table is in excel, we would want to export it as tab-delimited file in order to further manipulate using UNIX commands and then import it in R. For exporting: `File` > `Save As` > choose format `Text (Tab delimited)(*.txt)` and `Save`.
+ Manipulating with UNIX commands: open the Lixnux sub-system (Windows) or Termina (Mac/Linux) and navigate to the directory the file is saved. If you are in Windows, you will need to run `dos2unix` to convert the line endings correctly. To format the above table to just 3 columns i.e,:
+
+ ```
+Organism  family  length
+```
+
+<!-- bash version
+
+following commands were used:
+
+```bash
+awk 'BEGIN{OFS=FS="\t"}{print $1,"fam1",$2}' test.txt | grep -v "Organism" > formatted.txt
+awk 'BEGIN{OFS=FS="\t"}{print $1,"fam2",$3}' test.txt | grep -v "Organism">> formatted.txt
+awk 'BEGIN{OFS=FS="\t"}{print $1,"fam3",$4}' test.txt | grep -v "Organism" >> formatted.txt
+awk 'BEGIN{OFS=FS="\t"}{print $1,"fam4",$5}' test.txt | grep -v "Organism" >> formatted.txt
+```
+-->
+
+Now we are ready to manipulate in R!
+
+First, open the R prompt by typing `R` in the terminal, navigate the working directory, where the <!--`formatted.txt`--> `mythical_creatures.txt` file is saved.
+
+```{bash, eval=FALSE}
+R
+#then
+setwd("path/to/your/directory")
+```
+
+Import data and examine contents, format it if necessary:
+
+```{r}
+file <- "data/mythical_creatures.txt"                      # Path to input file or "formatted.txt"
+input <- read.csv(file, 
+                  sep = "\t", 
+                  quote = '',
+                  stringsAsFactors = TRUE,
+                  header = TRUE)
+#examine
+head(input)
+
+# Check the header and rename the headers to something shorter
+names(input)
+names(input) <- c("Organism","fam1","fam2", "fam3", "fam4")
+head(input)
+```
+
+We will convert the data to tidy data:
+
+```{r}
+# install.packages("tidyr")          # <= in case you need to install tidyr library first
+input <- tidyr::pivot_longer(
+   input,
+   cols = -Organism,
+   names_to = "family",
+   values_to = "length"
+)
+head(input)
+```
+
+
+If your data looks like this below, you're all set:
+
+``` R
+> head(input)
+  Organism family length
+1  Unicorn   fam1    263
+2  Unicorn   fam1    269
+3  Unicorn   fam1    705
+4  Unicorn   fam1    501
+5  Unicorn   fam1    244
+6  Unicorn   fam1    387
+>
+```
+
+First, lets load all the required packages. We will need the `ggplot2` for plotting, `grid` package for making grids of plots/faceting.
+
+```{r, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(grid)
+```
+
+For getting a simple boxplot, you can use the following command:
+
+```{r first_plot, fig.width=5.5, fig.height=4.3}
+ggplot(input, aes(x = Organism, y = length)) + geom_boxplot()
+```
+
+<!--![image](assets/first_plot.png)-->
+
+if you want to color the plots,
+
+```{r second_plot, fig.width=6, fig.height=4.3}
+ggplot(input, aes(x = Organism, y = length, fill = Organism)) + geom_boxplot()
+```
+<!--![image](assets/second_plot.png)-->
+
+but wait, where are the gene families?
+
+```{r third_plot, fig.width=6, fig.height=4.3}
+ggplot(input, aes(x = Organism, y = length, fill = family)) + geom_boxplot()
+```
+
+<!--![image](assets/third_plot.png)-->
+
+That names are all overlapping though?
+
+```{r fourth_plot, fig.width=6, fig.height=4.3}
+ggplot(input, aes(x = Organism, y = length, fill = family)) + 
+   geom_boxplot() + 
+   theme(axis.text.x = element_text(angle = 45, hjust=1))
+```
+<!--![image](assets/fourth_plot.png)-->
+
+Well, it seems like it is difficult to compare as all gene families are together, can we spread them out in to separate plots?
+
+Yes, but first we need to make different subsets that we want to plot
+
+```{r}
+fam1 <- input[which(input$family == "fam1"),]
+fam2 <- input[which(input$family == "fam2"),]
+fam3 <- input[which(input$family == "fam3"),]
+fam4 <- input[which(input$family == "fam4"),]
+```
+
+Let's also make colors to fill in for each family
+
+```{r}
+fill1 <- "olivedrab1"
+lines1 <- "olivedrab4"
+fill2 <- "plum2"
+lines2 <- "purple1"
+fill3 <- "gold"
+lines3 <- "goldenrod3"
+fill4 <- "chartreuse"
+lines4 <- "chartreuse4"
+```
+
+plots for each family can be generated using dataframes for respective families:
+
+```{r sep_plots, eval=FALSE}
+ggplot(fam1, aes(x=Organism,y=length)) + geom_boxplot(colour = lines1, fill = fill1)
+ggplot(fam2, aes(x=Organism,y=length)) + geom_boxplot(colour = lines2, fill = fill2)
+ggplot(fam3, aes(x=Organism,y=length)) + geom_boxplot(colour = lines3, fill = fill3)
+ggplot(fam4, aes(x=Organism,y=length)) + geom_boxplot(colour = lines4, fill = fill4)
+```
+
+Instead of generating individual plots, we can create a combined plots, arranged based on families using `facet_grid`:
+
+Vertically
+
+<!--
+```{r, eval=FALSE}
+ggplot(input, aes(x = Organism, y = length)) + 
+   geom_boxplot() +
+   facet_grid( family ~ .)
+
+#colored
+ggplot(input, aes(x=Organism,y=length, fill=Organism)) +
+   geom_boxplot() +
+   facet_grid( family ~ .)
+
+# accommodate long names
+ggplot(input, aes(x=Organism,y=length, fill=Organism)) +
+  geom_boxplot() +  
+  facet_grid( family ~ .) +
+  theme(axis.text.x = element_text(angle = 90))
+```
+-->
+
+```{r fifthA, fig.width=6, fig.height=6}
+ggplot(input, aes(x = Organism, y = length, fill = Organism)) + 
+   geom_boxplot() + 
+   theme(axis.text.x = element_text(angle = 45, hjust=1)) +
+   facet_grid( family ~.)          # <= facet allows plots to be split by group
+```
+
+<!--![image](assets/fifthA.png)-->
+
+
+Horizontally
+
+```{r fifthB, fig.width=8, fig.height=4.3}
+ggplot(input, aes(x = Organism, y = length, fill = Organism)) + 
+   geom_boxplot() + 
+   theme(axis.text.x = element_text(angle = 45, hjust=1)) +
+   facet_grid( . ~ family)          # <= swap the dot and family to arrange horizontally
+```
+
+<!--
+```python
+ggplot(input, aes(x=Organism,y=length)) + geom_boxplot() +  facet_grid( . ~ family)
+#since names are long ..
+ggplot(input, aes(x=Organism,y=length)) +
+   geom_boxplot() +
+   facet_grid( .~ family) +
+   theme(axis.text.x = element_text(angle = 90))
+# colored
+ggplot(input, aes(x=Organism,y=length)) +
+   geom_boxplot(colour = lines1, fill = fill1) +
+   facet_grid( .~ family) +
+   theme(axis.text.x = element_text(angle = 90))
+```
+![image](assets/fifthB.png)
+-->
+
+To color these gene families, create a color palette:
+
+```{r sixth, fig.width=8, fig.height=4.3}
+# Fill Color
+fam_palette = c(fam1 = "olivedrab1",
+                fam2 = "plum2",
+                fam3 = "gold",
+                fam4 = "chartreuse")
+
+# Line Color
+fam_palette2 = c(fam1 = "olivedrab4",
+                fam2 = "purple1",
+                fam3 = "goldenrod3",
+                fam4 = "chartreuse4")
+
+ggplot(input, aes(x = Organism, y = length, fill = family, color = family)) + 
+   geom_boxplot() + 
+   theme(axis.text.x = element_text(angle = 45, hjust=1)) +
+   facet_grid( . ~ family) +
+   scale_fill_manual(values = fam_palette) +        # <= Add custom color palette here
+   scale_color_manual(values = fam_palette2)
+```
+
+<!--
+```{r, eval=FALSE}
+p1 <- ggplot(input, aes(x=Organism,y=length)) +
++    geom_boxplot(colour = lines1, fill = fill1) +
++    facet_grid( .~ family) +
++    theme(axis.text.x = element_text(angle = 90))
+p2 <- p1 + facet_wrap(~family)
+p2 <- p1 + geom_boxplot(data = fam2, colour = lines2, fill = fill2)
+p3 <- p2 + geom_boxplot(data = fam3, colour = lines3, fill = fill3)
+p4 <- p3 + geom_boxplot(data = fam4, colour = lines4, fill = fill4)
+```
+
+![image](assets/sixth.png)
+-->
