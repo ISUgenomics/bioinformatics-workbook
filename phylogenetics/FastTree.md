@@ -65,8 +65,10 @@ AAAAAAAAAAAAAAAAAAAAAAATTAAAAAAAAAAAAAAAAAAAAAAA
 <details><summary>See MAFFT Help Statment</summary>
 
 <code>
+<pre>
 
 ``` bash
+
 mafft --help
 ------------------------------------------------------------------------------
   MAFFT v7.453 (2019/Nov/8)
@@ -93,8 +95,10 @@ If unsure which option to use:
 --quiet :        Do not report progress
 --thread # :     Number of threads (if unsure, --thread -1)
 --dash :         Add structural information (Rozewicki et al, submitted)
+
 ```
 
+</pre>
 </code>
 
 </details>
