@@ -8,17 +8,15 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+**Last Update:** 11 Jan 2021
+
 # FastTree
 
 A phylogenetic tree is a hypothesis of the evolutionary inheritance of genes across individual taxa. Trees have been used to summarize an organism's pedigree, infer viral host-spillover events ([Zhou et al., 2020](https://pubmed.ncbi.nlm.nih.gov/32015507/)), and determine if the red panda is a bear or a raccoon ([Slattery & O'Brien, 1995](https://pubmed.ncbi.nlm.nih.gov/8568209/))
 
 There are a number of phylogenetic tree building programs including BEAST, MrBayes, PAUP, PhyML, RAxML, IQ-Tree, and FastTree. We are focusing on FastTree because it tends to be a faster tree building program to provide a quick draft tree. We recommend running FastTree to get a general sense of individuals in the tree, subsample down or add references taxa to create a well formed tree, and then move on to the other tree-building programs for more detailed diversity and time-scaled analysis.
 
-## Citations
 
-* Katoh, K., Misawa, K., Kuma, K.I. and Miyata, T., 2002. [MAFFT: a novel method for rapid multiple sequence alignment based on fast Fourier transform](https://pubmed.ncbi.nlm.nih.gov/12136088). Nucleic acids research, 30(14), pp.3059-3066.
-* Price, M.N., Dehal, P.S. and Arkin, A.P., 2009. [FastTree: computing large minimum evolution trees with profiles instead of a distance matrix](https://pubmed.ncbi.nlm.nih.gov/19377059). Molecular biology and evolution, 26(7), pp.1641-1650.
-* Rambaut, A., 2007. [FigTree, a graphical viewer of phylogenetic trees.](http://tree.bio.ed.ac.uk/software/figtree/)
 
 
 ## Software required
@@ -64,11 +62,45 @@ AAAAAAAAAAAAAAAAAAAAAAATTAAAAAAAAAAAAAAAAAAAAAAA
 
 ## Step 1: MAFFT
 
+<details><summary>See MAFFT Help Statment</summary>
+
+``` bash
+mafft --help
+------------------------------------------------------------------------------
+  MAFFT v7.453 (2019/Nov/8)
+  https://mafft.cbrc.jp/alignment/software/
+  MBE 30:772-780 (2013), NAR 30:3059-3066 (2002)
+------------------------------------------------------------------------------
+High speed:
+  % mafft in > out
+  % mafft --retree 1 in > out (fast)
+
+High accuracy (for <~200 sequences x <~2,000 aa/nt):
+  % mafft --maxiterate 1000 --localpair  in > out (% linsi in > out is also ok)
+  % mafft --maxiterate 1000 --genafpair  in > out (% einsi in > out)
+  % mafft --maxiterate 1000 --globalpair in > out (% ginsi in > out)
+
+If unsure which option to use:
+  % mafft --auto in > out
+
+--op # :         Gap opening penalty, default: 1.53
+--ep # :         Offset (works like gap extension penalty), default: 0.0
+--maxiterate # : Maximum number of iterative refinement, default: 0
+--clustalout :   Output: clustal format, default: fasta
+--reorder :      Outorder: aligned, default: input order
+--quiet :        Do not report progress
+--thread # :     Number of threads (if unsure, --thread -1)
+--dash :         Add structural information (Rozewicki et al, submitted)
+```
+</details>
+
+For a quick nucleotide alignment, we can run the following with the automatically (`--auto`) detected parameters. We can save the alignment in a `input_aln.fasta` file. 
+
 ``` bash
 mafft --auto input.fasta > input_aln.fasta
 ```
 
-Looking at the `input_aln.fasta` should look like the following, there are not added gaps since this data was already aligned.
+The `input_aln.fasta` should look like the following. We do not have gaps `-` since this data was mostly aligned already.
 
 ``` text
 >organism_AAAAA
@@ -104,6 +136,10 @@ Looking at the `input.tre`, the organisms are grouped in a newick file format, a
 ``` text
 (organism_AATAA:0.00077,organism_AATTA:0.69589,(organism_AAAAA:2.48515,(organism_AACAA:0.00077,organism_AACGA:0.85100)0.600:0.79602)0.160:0.00077);
 ```
+
+For more information about the NEWICK Tree format:
+
+* [Wikipedia - Newick](https://en.wikipedia.org/wiki/Newick_format)
 
 ## Step 3: FigTree
 
@@ -232,9 +268,26 @@ end;
 
 </details>
 
+For more information about the NEXUS file format:
+
+* [Wikipedia - Nexus File](https://en.wikipedia.org/wiki/Nexus_file)
+
+## Citations
+
+* Katoh, K., Misawa, K., Kuma, K.I. and Miyata, T., 2002. [MAFFT: a novel method for rapid multiple sequence alignment based on fast Fourier transform](https://pubmed.ncbi.nlm.nih.gov/12136088). Nucleic acids research, 30(14), pp.3059-3066.
+* Price, M.N., Dehal, P.S. and Arkin, A.P., 2009. [FastTree: computing large minimum evolution trees with profiles instead of a distance matrix](https://pubmed.ncbi.nlm.nih.gov/19377059). Molecular biology and evolution, 26(7), pp.1641-1650.
+* Rambaut, A., 2007. [FigTree, a graphical viewer of phylogenetic trees.](http://tree.bio.ed.ac.uk/software/figtree/)
+
 # In Summary
 
-We have walked through aligning a nucelotide fasta file with MAFFT, generating a phylogenetic tree from that alignment with FastTree, and visualizing a phylogenetic tree with FigTree. Next steps include changing the nucleotide fasta file (to see how it affects tree structure), changing alignment/tree building parameters, and exploring the visualization features in FigTree.
+We have walked through:
 
-For an example Human Influenza phylogenetic tree, see the next tutorial (in development).
+1. aligning a nucelotide fasta file with **MAFFT**
+2. generating a phylogenetic tree from that alignment with **FastTree** 
+3. and visualizing a phylogenetic tree with **FigTree**. 
+
+Next steps include changing the nucleotide fasta file (to see how it affects tree structure), changing alignment/tree building parameters, and exploring the visualization features in FigTree. Change the input file and see if you can develop an intuition for what the phylogenetic tree means.
+
+We will be providing an example phylogenetic analysis of Human Influenza viruses (in development).
+
 
