@@ -34,20 +34,19 @@ header:
 
 For datasets that have many observations per sample and you want to visualize their distribution, boxplots are good choice. Here, the example dataset has average values of multiple observations for each sample. 
 
-* [mythical_creatures.txt](https://bioinformaticsworkbook.org/data/mythical_creatures.txt)
+* [mythical_creatures.txt](https://bioinformaticsworkbook.org/tutorials/data/mythical_creatures.txt)
 
 ```
 wget https://bioinformaticsworkbook.org/tutorials/data/mythical_creatures.txt
 ```
-
-
 
 It is organized in this way:
 
 Table 1: Gene length for 4 different gene families and for 3 different organism.
 
 ```{r, echo=FALSE, warning=F, message=F}
-data <- readr::read_delim("data/mythical_creatures.txt", delim="\t")
+data <- readr::read_delim("https://bioinformaticsworkbook.org/tutorials/data/mythical_creatures.txt", 
+                          delim="\t")
 knitr::kable(data)
 ```
 
@@ -139,22 +138,17 @@ For getting a simple boxplot, you can use the following command:
 ggplot(input, aes(x = Organism, y = length)) + geom_boxplot()
 ```
 
-<!--![image](assets/first_plot.png)-->
-
 if you want to color the plots,
 
 ```{r second_plot, fig.width=6, fig.height=4.3}
 ggplot(input, aes(x = Organism, y = length, fill = Organism)) + geom_boxplot()
 ```
-<!--![image](assets/second_plot.png)-->
 
 but wait, where are the gene families?
 
 ```{r third_plot, fig.width=6, fig.height=4.3}
 ggplot(input, aes(x = Organism, y = length, fill = family)) + geom_boxplot()
 ```
-
-<!--![image](assets/third_plot.png)-->
 
 That names are all overlapping though?
 
@@ -163,7 +157,6 @@ ggplot(input, aes(x = Organism, y = length, fill = family)) +
    geom_boxplot() + 
    theme(axis.text.x = element_text(angle = 45, hjust=1))
 ```
-<!--![image](assets/fourth_plot.png)-->
 
 Well, it seems like it is difficult to compare as all gene families are together, can we spread them out in to separate plots?
 
@@ -228,9 +221,6 @@ ggplot(input, aes(x = Organism, y = length, fill = Organism)) +
    facet_grid( family ~.)          # <= facet allows plots to be split by group
 ```
 
-<!--![image](assets/fifthA.png)-->
-
-
 Horizontally
 
 ```{r fifthB, fig.width=8, fig.height=4.3}
@@ -254,7 +244,6 @@ ggplot(input, aes(x=Organism,y=length)) +
    facet_grid( .~ family) +
    theme(axis.text.x = element_text(angle = 90))
 ```
-![image](assets/fifthB.png)
 -->
 
 To color these gene families, create a color palette:
@@ -291,6 +280,4 @@ p2 <- p1 + geom_boxplot(data = fam2, colour = lines2, fill = fill2)
 p3 <- p2 + geom_boxplot(data = fam3, colour = lines3, fill = fill3)
 p4 <- p3 + geom_boxplot(data = fam4, colour = lines4, fill = fill4)
 ```
-
-![image](assets/sixth.png)
 -->
