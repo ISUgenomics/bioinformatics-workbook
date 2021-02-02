@@ -94,6 +94,21 @@ If you work on multiple machines and your laptop then create a folder for each m
   * It is cleaner and there are other files we want at the main level
   * More than one person may be working on this project and we want all those files and folders to be separated into the User's notebook.
 
+#### Example Repo
+For every new project, I copy over this starter repo [Repo_skeleton](https://github.com/ISUgenomics/Repo_skeleton).  It has some other markdown file suggestions that include.
+| File | Description|
+| -- | -- | 
+| 00_Files.md | a list of all important files and where they are located|
+|00a_MetaData.md | A description of the metadata for each sample|
+|01_Background.md | a place to put more information about the organism and the project objectives|
+| 02_Methods.md | Write up your methods as you go|
+| 03_Results.md | Place the results here as you go|
+| 04_Introduction.md | Once the Methods and Results are written up start collaborating on an Introduction|
+| 05_Discussion.md | Write a rough draft of the Discussion or put ideas here for later writing of the discussion|
+| 06_AuthorInfo.md | Good to be thinking about authorship early|
+| Notes.md | Other Miscellaneous Notes|
+
+
 #### Atom (text editor)  <- Download this tool
 
 Using the GitHub interface on the web or even a basic text editor is not very efficient. I strongly recommend downloading and installing the [GitHub ATOM](https://atom.io/) markdown editor.  This is a text editor that understands markdown syntax and allows you to preview markdown that you write in an adjacent window.  See [markdown](../Appendix/Markdown.md) tutorial for more information.
