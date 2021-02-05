@@ -747,7 +747,7 @@ You should now see an `out_dir` directory with a `blastout` subdirectory and the
 
 <details><summary>More complicated example</summary>
 
-
+<pre>
 This is an output section from a busco workflow I have been working on.  As you can see, I define the output file I want to copy over into the `publishDir` I have to specify the folder `${label}` in both the file output and the publishDir patthern location for it to work properly.
 
 ```
@@ -755,7 +755,7 @@ output:
 file("${label}/short_summary.specific.*.txt")
 publishDir "${params.outdir}/BUSCOResults/${label}/", mode: 'copy', pattern: "${label}/short_summary.specific.*.txt"
 ```
-
+</pre>
 </details>
 
 
