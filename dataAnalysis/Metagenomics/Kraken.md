@@ -8,7 +8,7 @@ header:
 ---
 
 # Kraken 2 tutorial
-Here I will try to see what kind of bacteria and viruses lie within the RNAseq of a clade of nematodes. The clade is the Tylenchida, a clade with diverse lifestyles, but most interestingly, lot so parasites.  
+Here I will try to see what kind of bacteria and viruses lie within the RNAseq of a clade of nematodes. The clade is the Tylenchida, a clade with diverse lifestyles, but most interestingly, lots of parasites.  
 
 Kraken has a lot of standardized databases that can be downloaded, though the more species/clades you include, the longer it takes to make the kraken database.  
 
