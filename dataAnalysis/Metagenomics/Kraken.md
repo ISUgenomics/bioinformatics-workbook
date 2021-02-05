@@ -163,6 +163,7 @@ I took these files, added the species name to the fifth column, removed those en
 ## Summarized output from all samples
 
 #### Bursaphelenchus xylophilus DRR1414214
+pine wilt nematode
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                            | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|--------------------------------------------------|----------------|------------|
@@ -178,6 +179,7 @@ I took these files, added the species name to the fifth column, removed those en
 | 0.03                | 7195                        | 7195                 | S2        | 1365647 | Xanthomonas euvesicatoria pv. alfalfae CFBP 3836 | B. xylophilus  | DRR1414214 |
 ```
 #### Globodera rostochiensis ERR202487
+yellow potato cyst nematode
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon               | Source Species   | SRA       |
 |---------------------|-----------------------------|----------------------|-----------|---------|---------------------|------------------|-----------|
@@ -191,6 +193,7 @@ I took these files, added the species name to the fifth column, removed those en
 | 0.01                | 4116                        | 151                  | P         | 1224    | Proteobacteria      | G. rostochiensis | ERR202487 |
 ```
 #### Globodera pallida ERR202492
+white potato cyst nematode
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid | Taxon               | Source Species | SRA       |
 |---------------------|-----------------------------|----------------------|-----------|-------|---------------------|----------------|-----------|
@@ -205,7 +208,8 @@ I took these files, added the species name to the fifth column, removed those en
 | 0.01                | 2323                        | 155                  | O         | 80840 | Burkholderiales     | G. pallida     | ERR202492 |
 | 0.01                | 2458                        | 86                   | C         | 28216 | Betaproteobacteria  | G. pallida     | ERR202492 |
 ```
-#### Meloidogyne javanica ERR 790020
+#### Meloidogyne javanica ERR790020
+sugarcane eelworm
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                          | Source Species | SRA       |
 |---------------------|-----------------------------|----------------------|-----------|---------|------------------------------------------------|----------------|-----------|
@@ -251,6 +255,7 @@ I took these files, added the species name to the fifth column, removed those en
 ```
 
 #### Meloidogyne arenaria ERR790021
+peanut root knot nematode
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                          | Source Species | SRA       |
 |---------------------|-----------------------------|----------------------|-----------|---------|------------------------------------------------|----------------|-----------|
@@ -303,6 +308,7 @@ I took these files, added the species name to the fifth column, removed those en
 ```
 
 #### Globodera pallida SRR2389452
+white potato cyst nematode
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                         | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|-----------------------------------------------|----------------|------------|
@@ -418,6 +424,7 @@ I took these files, added the species name to the fifth column, removed those en
 
 
 #### Globodera ellingtonae SRR3162514
+potato cyst nematode
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                            | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|--------------------------------------------------|----------------|------------|
@@ -441,6 +448,7 @@ I took these files, added the species name to the fifth column, removed those en
 ```
 
 #### Heterodera glycines SRR6269844
+soybean cyst nematode
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                 | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|---------------------------------------|----------------|------------|
@@ -501,6 +509,7 @@ I took these files, added the species name to the fifth column, removed those en
 ```
 
 #### Heterodera glycines SRR6269845
+soybean cyst nematode
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                 | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|---------------------------------------|----------------|------------|
@@ -551,6 +560,7 @@ I took these files, added the species name to the fifth column, removed those en
 ```
 
 #### Globodera pallida SRR7775195
+white potato cyst nematode
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                            | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|----------------------------------|----------------|------------|
@@ -586,6 +596,7 @@ I took these files, added the species name to the fifth column, removed those en
 ```
 
 #### Ditylenchus destructor SRR79443144
+potato tuber eelworm and the potato tuber nematode"
 ```
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                           | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|---------------------------------|----------------|------------|
