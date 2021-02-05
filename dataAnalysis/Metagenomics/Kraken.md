@@ -148,34 +148,16 @@ module load perl
 ```
 #generates list of only those with .01% of reads and removed nematodes from the report
 
-for f in *report; do echo "awk '\$1>0 && \$3>10' "$f" |uniq|sort -k1,1nr |grep -v \"Meloidogyne\" |grep -v \"Heterodera\" |grep -v \"Globodera\" |grep -v \"Bursaphelenchus\" |grep -v \"Ditylenchus\" >"$f".summary" ;done >summarizer.sh
+for f in *report; do echo "awk '\$1>0 && \$3>100' "$f" |uniq|sort -k1,1nr |grep -v \"Meloidogyne\" |grep -v \"Heterodera\" |grep -v \"Globodera\" |grep -v \"Bursaphelenchus\" |grep -v \"Ditylenchus\" >"$f".summary" ;done >summarizer.sh
 sh summarizer.sh
 
 #example output from the script above.
 #################################
-awk '$1>0 && $3>10' Ga1-pol-1_S1_L004_R1_001.fastq.gz.report |uniq|sort -k1,1nr|grep -v "Meloidogyne" |grep -v "Heterodera" |grep -v "Globodera" |grep -v "Bursaphelenchus" |grep -v "Ditylenchus"  >Ga1-pol-1_S1_L004_R1_001.fastq.gz.report.summary
+awk '$1>0 && $3>100' Ga1-pol-1_S1_L004_R1_001.fastq.gz.report |uniq|sort -k1,1nr|grep -v "Meloidogyne" |grep -v "Heterodera" |grep -v "Globodera" |grep -v "Bursaphelenchus" |grep -v "Ditylenchus"  >Ga1-pol-1_S1_L004_R1_001.fastq.gz.report.summary
 #################################
 ```
 
-Example of Summarizer output
-```
-Proportion of reads Reads rooted to taxon clade taxon-specific reads  rank  Taxid Taxon Source Species  SRA
-  4.78  1508384 1508384 U       0       unclassified
- 95.22  30058910        338     R       1       root
- 95.11  30023645        4295    R1      131567    cellular organisms
-  0.14  42676   1117    D       2           Bacteria
-  0.08  25152   302     P       1224          Proteobacteria
-  0.04  11866   692     C       28216           Betaproteobacteria
-  0.03  9526    516     O       80840             Burkholderiales
-  0.01  4040    682     F       80864               Comamonadaceae
-  0.01  2668    261     O1      119065              unclassified Burkholderiales
-  0.01  2039    531     O2      224471                Burkholderiales Genera incertae sedis
-  0.02  5424    105     C       28211           Alphaproteobacteria
-  0.01  1661    1661    S       2057741                 Bradyrhizobium sp. SK17
-  0.01  4474    152     C       1760              Actinobacteria
-  0.02  4969    110     P       976               Bacteroidetes
-  0.11  34362   34362   S       1495316           Soybean cyst nematode virus 5
-```
+
 I took these files, added the species name to the fifth column, removed those entries that had fewer than 100 reads allocated, kept only genera, species, and subspecies, and then concatenated all files for a network in cytoscape.
 
 ## Summarized output from all samples
@@ -664,9 +646,14 @@ I took these files, added the species name to the fifth column, removed those en
 ```
 
 #### Network visualization in cytoscape
+Here I summarized the summaries above by creating text files of two columns.  
+```
+for f in *summary; do cut -f 6,7 $f >>${f%.*}.network;done
+```
 
 ![Kraken](../../assets/KrakenNetwork.png)
-Large green hexagons are the source species RNASEQ, red diamonds are viruses, and triangles are bacteria present in two or more species.  
+
+I labeled large green hexagons as the species, red diamonds as viruses, and triangles as bacteria present in two or more species.  
 
 ### Sources
 
