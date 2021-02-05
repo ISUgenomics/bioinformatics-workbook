@@ -425,7 +425,7 @@ white potato cyst nematode
 
 #### Globodera ellingtonae SRR3162514
 potato cyst nematode
-```
+
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                            | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|--------------------------------------------------|----------------|------------|
 | 93.97               | 28073787                    | 1899                 | O2        | 33283   | Tylenchomorpha                                   | G. ellingtonae | SRR3162514 |
@@ -445,7 +445,7 @@ potato cyst nematode
 | 0.01                | 2338                        | 11                   | C         | 91061   | Bacilli                                          | G. ellingtonae | SRR3162514 |
 | 0.01                | 3255                        | 18                   | P         | 1239    | Firmicutes                                       | G. ellingtonae | SRR3162514 |
 | 0.01                | 3462                        | 90                   | C         | 1760    | Actinobacteria                                   | G. ellingtonae | SRR3162514 |
-```
+
 
 #### Heterodera glycines SRR6269844
 soybean cyst nematode
