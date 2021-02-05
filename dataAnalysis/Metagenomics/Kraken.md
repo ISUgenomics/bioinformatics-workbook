@@ -165,9 +165,8 @@ I took these files, added the species name to the fifth column, removed those en
 #### Bursaphelenchus xylophilus DRR1414214
 pine wilt nematode
 
-| Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                            | Source Species | SRA        |
-|---------------------|-----------------------------|----------------------|-----------|---------|--------------------------------------------------|----------------|------------|
-
+| Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                           | Source Species | SRA        |
+|---------------------|-----------------------------|----------------------|-----------|---------|---------------------------------|----------------|------------|
 | 99.18               | 23932404                    | 831                  | O2        | 33283   | Tylenchomorpha                                   | B. xylophilus  | DRR1414214 |
 | 0.69                | 166444                      | 166444               | U         | 0       | unclassified                                     | B. xylophilus  | DRR1414214 |
 | 0.13                | 30825                       | 357                  | D         | 2       | Bacteria                                         | B. xylophilus  | DRR1414214 |
