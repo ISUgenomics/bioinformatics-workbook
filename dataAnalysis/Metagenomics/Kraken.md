@@ -162,7 +162,8 @@ I took these files, added the species name to the fifth column, removed those en
 
 ## Summarized output from all samples
 <details>
-  <summary>Click to expand!</summary>
+  <summary>Bursaphelenchus xylophilus DRR1414214</summary>
+  <pre>
 #### Bursaphelenchus xylophilus DRR1414214
 pine wilt nematode
 
@@ -177,6 +178,7 @@ pine wilt nematode
 | 0.05                | 11743                       | 519                  | P         | 1224    | Proteobacteria                                   | B. xylophilus  | DRR1414214 |
 | 0.04                | 9035                        | 446                  | C         | 1236    | Gammaproteobacteria                              | B. xylophilus  | DRR1414214 |
 | 0.03                | 7195                        | 7195                 | S2        | 1365647 | Xanthomonas euvesicatoria pv. alfalfae CFBP 3836 | B. xylophilus  | DRR1414214 |
+</pre>
 </details>
 #### Globodera rostochiensis ERR202487
 yellow potato cyst nematode
