@@ -142,7 +142,7 @@ header:
 * [Quality control, assembly and mapping](../dataAnalysis/Metagenomics/MetagenomicsP1.md)
 * [Qiime2](../dataAnalysis/Metagenomics/Qiime2.md)
 * [DADA2](../dataAnalysis/Metagenomics/Dada2.md)
-
+* [Kraken2](../dataAnalysis/Metagenomics/Kraken.md)
 ### [Genome Repeat Identification](../dataAnalysis/ComparativeGenomics/Repeats_index.md)
 * [Helitron Identification in a Genome Sequence](../dataAnalysis/ComparativeGenomics/Helitron_Scanner.md)
 * [DNA Transposon Annotation with Inverted-Repeats Finder](../dataAnalysis/ComparativeGenomics/InvertedRepeatsFinderForDNATransposonAnnotation.md)
