@@ -1,6 +1,7 @@
 ---
-title: Kraken2 metagenomics on nematodes
+title: Kraken2 tutorial
 layout: single
+author: Rick Masonbrink
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
@@ -11,8 +12,8 @@ Here I will try to see what kind of bacteria and viruses lie within the RNAseq o
 
 Kraken has a lot of standardized databases that can be downloaded, though the more species/clades you include, the longer it takes to make the kraken database.  
 
-Lots of great information can be had at the Kraken2 wiki
-https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases
+[Lots of great information can be had at the Kraken2 wiki]
+(https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases)
 
 ## Step 1: Build an appropriate kraken2 database
 
@@ -46,7 +47,7 @@ sh download_taxonomy.sh
 ## Prepare the genomes you'd like to add to your kraken database
 You will have to look up the taxonomy ID and add this to each fasta headers as I have done below. i.e. (>sequence"|kraken:taxid|390850)
 
-Taxonomic IDs were found here: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi
+[Taxonomic IDs were found here] (https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi)
 ```
 #this just adds the taxids to the fasta headers, but does not affect sequence
 bioawk -c fastx '{print ">"$name"|kraken:taxid|6326\n"$seq}' B.xylophilus.fa >B.xylophilusTax.fa
@@ -118,9 +119,10 @@ paste <(ls -1 05_Reads/*_1*gz) <(ls -1 05_Reads/*_2*gz) |while read line; do ech
 
 
 ```
-#### kraken.sh content
+<details>
+  <summary>kraken.sh content</summary>
+  <pre>
 ```
-
 kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/DRR141214_2.fastq.gz.report --gzip-compressed --unclassified-out 04_DownloadedRNAseq/DRR141214_2.fastqunclassified#.fq --classified-out 04_DownloadedRNAseq/DRR141214_2.fastqclassified#.fq --paired 04_DownloadedRNAseq/DRR141214_1.fastq.gz 04_DownloadedRNAseq/DRR141214_2.fastq.gz > 04_DownloadedRNAseq/DRR141214_2.fastq.Kraken.out
 kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/ERR202487_2.fastq.gz.report --gzip-compressed --unclassified-out 04_DownloadedRNAseq/ERR202487_2.fastqunclassified#.fq --classified-out 04_DownloadedRNAseq/ERR202487_2.fastqclassified#.fq --paired 04_DownloadedRNAseq/ERR202487_1.fastq.gz 04_DownloadedRNAseq/ERR202487_2.fastq.gz > 04_DownloadedRNAseq/ERR202487_2.fastq.Kraken.out
 kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/ERR202492_2.fastq.gz.report --gzip-compressed --unclassified-out 04_DownloadedRNAseq/ERR202492_2.fastqunclassified#.fq --classified-out 04_DownloadedRNAseq/ERR202492_2.fastqclassified#.fq --paired 04_DownloadedRNAseq/ERR202492_1.fastq.gz 04_DownloadedRNAseq/ERR202492_2.fastq.gz > 04_DownloadedRNAseq/ERR202492_2.fastq.Kraken.out
@@ -138,6 +140,8 @@ kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/SRR7775195_2
 kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/SRR7943144_2.fastq.gz.report --gzip-compressed --unclassified-out 04_DownloadedRNAseq/SRR7943144_2.fastqunclassified#.fq --classified-out 04_DownloadedRNAseq/SRR7943144_2.fastqclassified#.fq --paired 04_DownloadedRNAseq/SRR7943144_1.fastq.gz 04_DownloadedRNAseq/SRR7943144_2.fastq.gz > 04_DownloadedRNAseq/SRR7943144_2.fastq.Kraken.out
 etc...
 ```
+</pre>
+</details>
 ##### load the proper modules and submit to hpc
 ```
 module load GIF/kraken2
@@ -161,14 +165,13 @@ awk '$1>0 && $3>100' Ga1-pol-1_S1_L004_R1_001.fastq.gz.report |uniq|sort -k1,1nr
 I took these files, added the species name to the fifth column, removed those entries that had fewer than 100 reads allocated, kept only genera, species, and subspecies, and then concatenated all files for a network in cytoscape.
 
 ## Summarized output from all samples
-<details>
-  <summary>Bursaphelenchus xylophilus DRR1414214</summary>
-  <pre>
-#### Bursaphelenchus xylophilus DRR1414214
-pine wilt nematode
+Click to see the results of each run below.
 
-| Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                           | Source Species | SRA        |
-|---------------------|-----------------------------|----------------------|-----------|---------|---------------------------------|----------------|------------|
+<details>
+  <summary>Bursaphelenchus xylophilus DRR1414214 "pine wilt nematode"</summary>
+  <pre>
+| Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                           | Source Species    | SRA           |
+|---------------------|-----------------------------|----------------------|-----------|---------|---------------------------------|-------------------|---------------|
 | 99.18               | 23932404                    | 831                  | O2        | 33283   | Tylenchomorpha                                   | B. xylophilus  | DRR1414214 |
 | 0.69                | 166444                      | 166444               | U         | 0       | unclassified                                     | B. xylophilus  | DRR1414214 |
 | 0.13                | 30825                       | 357                  | D         | 2       | Bacteria                                         | B. xylophilus  | DRR1414214 |
@@ -180,9 +183,10 @@ pine wilt nematode
 | 0.03                | 7195                        | 7195                 | S2        | 1365647 | Xanthomonas euvesicatoria pv. alfalfae CFBP 3836 | B. xylophilus  | DRR1414214 |
 </pre>
 </details>
-#### Globodera rostochiensis ERR202487
-yellow potato cyst nematode
 
+<details>
+  <summary>Globodera rostochiensis ERR202487 "yellow potato cyst nematode" </summary>
+  <pre>
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon               | Source Species   | SRA       |
 |---------------------|-----------------------------|----------------------|-----------|---------|---------------------|------------------|-----------|
 | 98.46               | 28153971                    | 832                  | O2        | 33283   | Tylenchomorpha      | G. rostochiensis | ERR202487 |
@@ -193,10 +197,12 @@ yellow potato cyst nematode
 | 0.01                | 1748                        | 38                   | C         | 1236    | Gammaproteobacteria | G. rostochiensis | ERR202487 |
 | 0.01                | 3266                        | 12                   | D1        | 1783272 | Terrabacteria group | G. rostochiensis | ERR202487 |
 | 0.01                | 4116                        | 151                  | P         | 1224    | Proteobacteria      | G. rostochiensis | ERR202487 |
+</pre>
+</details>
 
-#### Globodera pallida ERR202492
-white potato cyst nematode
-
+<details>
+  <summary>Globodera pallida ERR202492 "white potato cyst nematode"</summary>
+  <pre>
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid | Taxon               | Source Species | SRA       |
 |---------------------|-----------------------------|----------------------|-----------|-------|---------------------|----------------|-----------|
 | 99.22               | 30582562                    | 2151                 | O3        | 33284 | Tylenchoidea        | G. pallida     | ERR202492 |
@@ -209,10 +215,12 @@ white potato cyst nematode
 | 0.01                | 1942                        | 115                  | C         | 1236  | Gammaproteobacteria | G. pallida     | ERR202492 |
 | 0.01                | 2323                        | 155                  | O         | 80840 | Burkholderiales     | G. pallida     | ERR202492 |
 | 0.01                | 2458                        | 86                   | C         | 28216 | Betaproteobacteria  | G. pallida     | ERR202492 |
+</pre>
+</details>
 
-#### Meloidogyne javanica ERR790020
-sugarcane eelworm
-
+<details>
+  <summary> Meloidogyne javanica ERR790020 "sugarcane eelworm"</summary>
+  <pre>
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                          | Source Species | SRA       |
 |---------------------|-----------------------------|----------------------|-----------|---------|------------------------------------------------|----------------|-----------|
 | 85.23               | 26295871                    | 631                  | O2        | 33283   | Tylenchomorpha                                 | M. javanica    | ERR790020 |
@@ -254,11 +262,12 @@ sugarcane eelworm
 | 0.01                | 3450                        | 634                  | F         | 543     | Enterobacteriaceae                             | M. javanica    | ERR790020 |
 | 0.01                | 3859                        | 11                   | O         | 186826  | Lactobacillales                                | M. javanica    | ERR790020 |
 | 0.01                | 4358                        | 179                  | G         | 1883    | Streptomyces                                   | M. javanica    | ERR790020 |
+</pre>
+</details>
 
-
-#### Meloidogyne arenaria ERR790021
-peanut root knot nematode
-
+<details>
+  <summary>Meloidogyne arenaria ERR790021 peanut root knot nematode</summary>
+  <pre>
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                          | Source Species | SRA       |
 |---------------------|-----------------------------|----------------------|-----------|---------|------------------------------------------------|----------------|-----------|
 | 83.62               | 30208155                    | 623                  | O2        | 33283   | Tylenchomorpha                                 | M. arenaria    | ERR790021 |
@@ -307,11 +316,12 @@ peanut root knot nematode
 | 0.01                | 5058                        | 35                   | O         | 91347   | Enterobacterales                               | M. arenaria    | ERR790021 |
 | 0.01                | 5197                        | 29                   | F         | 31989   | Rhodobacteraceae                               | M. arenaria    | ERR790021 |
 | 0.01                | 5360                        | 19                   | G         | 194     | Campylobacter                                  | M. arenaria    | ERR790021 |
+</pre>
+</details>
 
-
-#### Globodera pallida SRR2389452
-white potato cyst nematode
-
+<details>
+  <summary>Globodera pallida SRR2389452 "white potato cyst nematode"</summary>
+  <pre>
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                         | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|-----------------------------------------------|----------------|------------|
 | 70.18               | 38275890                    | 323730               | O2        | 33283   | Tylenchomorpha                                | G. pallida     | SRR2389452 |
@@ -422,12 +432,12 @@ white potato cyst nematode
 | 0.01                | 7772                        | 7772                 | S         | 2184519 | Hydrogenophaga sp. NH-16                      | G. pallida     | SRR2389452 |
 | 0.01                | 7823                        | 678                  | G         | 1485    | Clostridium                                   | G. pallida     | SRR2389452 |
 | 0.01                | 8050                        | 25                   | F         | 31979   | Clostridiaceae                                | G. pallida     | SRR2389452 |
+</pre>
+</details>
 
-
-
-#### Globodera ellingtonae SRR3162514
-potato cyst nematode
-
+<details>
+  <summary>Globodera ellingtonae SRR3162514 "potato cyst nematode"</summary>
+  <pre>
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                            | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|--------------------------------------------------|----------------|------------|
 | 93.97               | 28073787                    | 1899                 | O2        | 33283   | Tylenchomorpha                                   | G. ellingtonae | SRR3162514 |
@@ -447,11 +457,12 @@ potato cyst nematode
 | 0.01                | 2338                        | 11                   | C         | 91061   | Bacilli                                          | G. ellingtonae | SRR3162514 |
 | 0.01                | 3255                        | 18                   | P         | 1239    | Firmicutes                                       | G. ellingtonae | SRR3162514 |
 | 0.01                | 3462                        | 90                   | C         | 1760    | Actinobacteria                                   | G. ellingtonae | SRR3162514 |
+</pre>
+</details>
 
-
-#### Heterodera glycines SRR6269844
-soybean cyst nematode
-
+<details>
+  <summary>Heterodera glycines SRR6269844 "soybean cyst nematode"</summary>
+  <pre>
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                 | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|---------------------------------------|----------------|------------|
 | 93.3                | 10730672                    | 79467                | O2        | 33283   | Tylenchomorpha                        | H. glycines    | SRR6269844 |
@@ -508,11 +519,12 @@ soybean cyst nematode
 | 0.01                | 800                         | 800                  | S         | 864051  | Burkholderiales bacterium JOSHI_001   | H. glycines    | SRR6269844 |
 | 0.01                | 857                         | 111                  | G         | 283     | Comamonas                             | H. glycines    | SRR6269844 |
 | 0.01                | 881                         | 881                  | S1        | 390235  | Pseudomonas putida W619               | H. glycines    | SRR6269844 |
+</pre>
+</details>
 
-
-#### Heterodera glycines SRR6269845
-soybean cyst nematode
-
+<details>
+  <summary>Heterodera glycines SRR6269845 "soybean cyst nematode"</summary>
+  <pre>
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                 | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|---------------------------------------|----------------|------------|
 | 92.88               | 11978072                    | 122706               | O2        | 33283   | Tylenchomorpha                        | H. glycines    | SRR6269845 |
@@ -559,11 +571,12 @@ soybean cyst nematode
 | 0.01                | 865                         | 88                   | O         | 356     | Rhizobiales                           | H. glycines    | SRR6269845 |
 | 0.01                | 869                         | 23                   | C         | 1760    | Actinobacteria                        | H. glycines    | SRR6269845 |
 | 0.01                | 933                         | 128                  | G         | 283     | Comamonas                             | H. glycines    | SRR6269845 |
+</pre>
+</details>
 
-
-#### Globodera pallida SRR7775195
-white potato cyst nematode
-
+<details>
+  <summary>Globodera pallida SRR7775195 "white potato cyst nematode" </summary>
+  <pre>
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                            | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|----------------------------------|----------------|------------|
 | 95.93               | 5053142                     | 5435                 | O3        | 33284   | Tylenchoidea                     | G. pallida     | SRR7775195 |
@@ -595,11 +608,12 @@ white potato cyst nematode
 | 0.01                | 375                         | 375                  | G         | 41275   | Brevundimonas                    | G. pallida     | SRR7775195 |
 | 0.01                | 498                         | 498                  | S1        | 365046  | Ramlibacter tataouinensis TTB310 | G. pallida     | SRR7775195 |
 | 0.01                | 527                         | 527                  | S         | 1707785 | Massilia sp. WG5                 | G. pallida     | SRR7775195 |
+</pre>
+</details>
 
-
-#### Ditylenchus destructor SRR79443144
-potato tuber eelworm and the potato tuber nematode"
-
+<details>
+  <summary>Ditylenchus destructor SRR79443144 "potato tuber nematode"</summary>
+  <pre>
 | Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                           | Source Species | SRA        |
 |---------------------|-----------------------------|----------------------|-----------|---------|---------------------------------|----------------|------------|
 | 74.57               | 38244277                    | 20662                | O2        | 33283   | Tylenchomorpha                  | D.destructor   | SRR7943144 |
@@ -656,7 +670,8 @@ potato tuber eelworm and the potato tuber nematode"
 | 0.01                | 6918                        | 571                  | O         | 91347   | Enterobacterales                | D.destructor   | SRR7943144 |
 | 0.01                | 6952                        | 22                   | O         | 186802  | Clostridiales                   | D.destructor   | SRR7943144 |
 | 0.01                | 7644                        | 149                  | O         | 186826  | Lactobacillales                 | D.destructor   | SRR7943144 |
-
+</pre>
+</details>
 
 #### Network visualization in cytoscape
 Here I summarized the summaries above by creating text files of two columns.  
