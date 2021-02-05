@@ -161,7 +161,8 @@ awk '$1>0 && $3>100' Ga1-pol-1_S1_L004_R1_001.fastq.gz.report |uniq|sort -k1,1nr
 I took these files, added the species name to the fifth column, removed those entries that had fewer than 100 reads allocated, kept only genera, species, and subspecies, and then concatenated all files for a network in cytoscape.
 
 ## Summarized output from all samples
-
+<details>
+  <summary>Click to expand!</summary>
 #### Bursaphelenchus xylophilus DRR1414214
 pine wilt nematode
 
@@ -176,7 +177,7 @@ pine wilt nematode
 | 0.05                | 11743                       | 519                  | P         | 1224    | Proteobacteria                                   | B. xylophilus  | DRR1414214 |
 | 0.04                | 9035                        | 446                  | C         | 1236    | Gammaproteobacteria                              | B. xylophilus  | DRR1414214 |
 | 0.03                | 7195                        | 7195                 | S2        | 1365647 | Xanthomonas euvesicatoria pv. alfalfae CFBP 3836 | B. xylophilus  | DRR1414214 |
-
+</details>
 #### Globodera rostochiensis ERR202487
 yellow potato cyst nematode
 
