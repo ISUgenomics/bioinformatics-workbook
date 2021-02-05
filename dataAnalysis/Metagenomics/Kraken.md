@@ -6,22 +6,25 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-#  Here I will try to see what kind of bacteria and viruses lie within the Tylenchida nematode RNAseq using kraken2.
+# Kraken 2 tutorial
+Here I will try to see what kind of bacteria and viruses lie within the RNAseq of a clade of nematodes. The clade is the Tylenchida, a clade with diverse lifestyles, but most interestingly, lot so parasites.  
+
+Kraken has a lot of standardized databases that can be downloaded, though the more species/clades you include, the longer it takes to make the kraken database.  
+
+Lots of great information can be had at the Kraken2 wiki
+https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases
+
+## Step 1: Build an appropriate kraken2 database
+
+Note that this is a slight hack to the normal database build, but allowed the build
 
 
-## Build appropriate kraken2 database
+
+#### Modify download_taxonomy.sh
 ```
-#/work/GIF/remkv6/USDA/21_kraken
-
-#softlink the fastq
-mkdir fastq
-for f in ../../../Baum/05_738NewAnalyses/04_NewRNAseqOnlineAlignment4Jbrowse/01_trim/*fastq.gz; do ln -s $f;done
-
-
-
 #download taxonomy data from ncbi
 module load GIF/kraken2
-#kraken2-build --download-taxonomy --db PlantViral
+#kraken2-build --download-taxonomy --db NematodeViral
 #This should have worked, but NCBI removed a couple files from their ftp site (est and gss)
 Had to modify the download_taxonomy.sh script to skip downloading these files.
 
@@ -39,9 +42,13 @@ if [ -z "Viral" ]
 sh download_taxonomy.sh
 ```
 
-#### To add your genomes to the kraken database, you will have to look up the taxonomy ID and add this to each fasta header. i.e. (>sequence"|kraken:taxid|390850)
+
+## Prepare the genomes you'd like to add to your kraken database
+You will have to look up the taxonomy ID and add this to each fasta headers as I have done below. i.e. (>sequence"|kraken:taxid|390850)
+
+Taxonomic IDs were found here: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi
 ```
-I found the taxids here: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi
+#this just adds the taxids to the fasta headers, but does not affect sequence
 bioawk -c fastx '{print ">"$name"|kraken:taxid|6326\n"$seq}' B.xylophilus.fa >B.xylophilusTax.fa
 bioawk -c fastx '{print ">"$name"|kraken:taxid|166010\n"$seq}' D.destructor.fa >D.destructorTax.fa
 bioawk -c fastx '{print ">"$name"|kraken:taxid|166011\n"$seq}' D.dipsaci.fa >D.dipsaciTax.fa
@@ -59,7 +66,7 @@ bioawk -c fastx '{print ">"$name"kraken:taxid|51029\n"$seq}' H.glycines.fa >H.gl
 
 ```
 
-### We are now ready to set the database to download and build
+## We are now ready to set the database to download and build
 ```
 module use /work/GIF/software/modules
 module load GIF/kraken2
@@ -83,9 +90,10 @@ kraken2-build --add-to-library M.javanicaTax.fa -db NematodeViral
 kraken2-build --build --db NematodeViral --threads 16
 
 #this took 5:26:32 on an hpc with 16 threads and 128GB ram.  
+Note that nematode genomes are small, this takes much longer for larger genomes.
 ```
 
-## Download RNASEQ samples
+## Download RNASEQ samples that you'd like to classify with kraken
 ```
 module load sra-toolkit
 fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files SRR3162514 #Globodera ellingtonae
@@ -99,16 +107,20 @@ fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files SRR8691582 #Meloid
 fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files SRR2389452 #Meloidogyne graminicola
 fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files ERR790021 #Meloidogyne arenaria
 fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files SRR6269845 #Heterodera glycines
-fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files SRR6269844 & #Heterodera glycines
+fastq-dump --outdir 04_DownloadedRNAseq/ --gzip --split-files SRR6269844  #Heterodera glycines
 ```
+
 
 ### Create Kraken scripts
 ```
-paste <(ls -1 05_MattsReads/*_1*gz) <(ls -1 05_MattsReads/*_1*gz) |while read line; do echo "kraken2 -db NematodeViral --threads 16 --report "$line".report --gzip-compressed  --unclassified-out "${line%.*}"unclassified#.fq --classified-out "${line%.*}"classified#.fq --paired "$line" > "${line%.*} ;done |awk '{print $1,$2,$3,$4,$5,$6,$8,$9,$10,$12,$13,$15,$16,$17,$18,$19,$21".Kraken.out"}' >kraken.sh
+#note that you need to have the "#" in the output fastq files or kraken will crash.
+paste <(ls -1 05_Reads/*_1*gz) <(ls -1 05_Reads/*_2*gz) |while read line; do echo "kraken2 -db NematodeViral --threads 16 --report "$line".report --gzip-compressed  --unclassified-out "${line%.*}"unclassified#.fq --classified-out "${line%.*}"classified#.fq --paired "$line" > "${line%.*} ;done |awk '{print $1,$2,$3,$4,$5,$6,$8,$9,$10,$12,$13,$15,$16,$17,$18,$19,$21".Kraken.out"}' >kraken.sh
 
 
-#kraken.sh
-##############################################################################################################################################################################
+```
+#### kraken.sh content
+```
+
 kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/DRR141214_2.fastq.gz.report --gzip-compressed --unclassified-out 04_DownloadedRNAseq/DRR141214_2.fastqunclassified#.fq --classified-out 04_DownloadedRNAseq/DRR141214_2.fastqclassified#.fq --paired 04_DownloadedRNAseq/DRR141214_1.fastq.gz 04_DownloadedRNAseq/DRR141214_2.fastq.gz > 04_DownloadedRNAseq/DRR141214_2.fastq.Kraken.out
 kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/ERR202487_2.fastq.gz.report --gzip-compressed --unclassified-out 04_DownloadedRNAseq/ERR202487_2.fastqunclassified#.fq --classified-out 04_DownloadedRNAseq/ERR202487_2.fastqclassified#.fq --paired 04_DownloadedRNAseq/ERR202487_1.fastq.gz 04_DownloadedRNAseq/ERR202487_2.fastq.gz > 04_DownloadedRNAseq/ERR202487_2.fastq.Kraken.out
 kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/ERR202492_2.fastq.gz.report --gzip-compressed --unclassified-out 04_DownloadedRNAseq/ERR202492_2.fastqunclassified#.fq --classified-out 04_DownloadedRNAseq/ERR202492_2.fastqclassified#.fq --paired 04_DownloadedRNAseq/ERR202492_1.fastq.gz 04_DownloadedRNAseq/ERR202492_2.fastq.gz > 04_DownloadedRNAseq/ERR202492_2.fastq.Kraken.out
@@ -125,9 +137,9 @@ kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/SRR3162514_2
 kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/SRR7775195_2.fastq.gz.report --gzip-compressed --unclassified-out 04_DownloadedRNAseq/SRR7775195_2.fastqunclassified#.fq --classified-out 04_DownloadedRNAseq/SRR7775195_2.fastqclassified#.fq --paired 04_DownloadedRNAseq/SRR7775195_1.fastq.gz 04_DownloadedRNAseq/SRR7775195_2.fastq.gz > 04_DownloadedRNAseq/SRR7775195_2.fastq.Kraken.out
 kraken2 -db NematodeViral --threads 16 --report 04_DownloadedRNAseq/SRR7943144_2.fastq.gz.report --gzip-compressed --unclassified-out 04_DownloadedRNAseq/SRR7943144_2.fastqunclassified#.fq --classified-out 04_DownloadedRNAseq/SRR7943144_2.fastqclassified#.fq --paired 04_DownloadedRNAseq/SRR7943144_1.fastq.gz 04_DownloadedRNAseq/SRR7943144_2.fastq.gz > 04_DownloadedRNAseq/SRR7943144_2.fastq.Kraken.out
 etc...
-################################################################################################################################################################################add the correct modules and submit to hpc node
-
-module use /work/GIF/software/modules
+```
+##### load the proper modules and submit to hpc
+```
 module load GIF/kraken2
 module load perl
 ```
@@ -139,12 +151,35 @@ module load perl
 for f in *report; do echo "awk '\$1>0 && \$3>10' "$f" |uniq|sort -k1,1nr |grep -v \"Meloidogyne\" |grep -v \"Heterodera\" |grep -v \"Globodera\" |grep -v \"Bursaphelenchus\" |grep -v \"Ditylenchus\" >"$f".summary" ;done >summarizer.sh
 sh summarizer.sh
 
+#example output from the script above.
+#################################
+awk '$1>0 && $3>10' Ga1-pol-1_S1_L004_R1_001.fastq.gz.report |uniq|sort -k1,1nr|grep -v "Meloidogyne" |grep -v "Heterodera" |grep -v "Globodera" |grep -v "Bursaphelenchus" |grep -v "Ditylenchus"  >Ga1-pol-1_S1_L004_R1_001.fastq.gz.report.summary
+#################################
+```
 
+Example of Summarizer output
+```
+Proportion of reads Reads rooted to taxon clade taxon-specific reads  rank  Taxid Taxon Source Species  SRA
+  4.78  1508384 1508384 U       0       unclassified
+ 95.22  30058910        338     R       1       root
+ 95.11  30023645        4295    R1      131567    cellular organisms
+  0.14  42676   1117    D       2           Bacteria
+  0.08  25152   302     P       1224          Proteobacteria
+  0.04  11866   692     C       28216           Betaproteobacteria
+  0.03  9526    516     O       80840             Burkholderiales
+  0.01  4040    682     F       80864               Comamonadaceae
+  0.01  2668    261     O1      119065              unclassified Burkholderiales
+  0.01  2039    531     O2      224471                Burkholderiales Genera incertae sedis
+  0.02  5424    105     C       28211           Alphaproteobacteria
+  0.01  1661    1661    S       2057741                 Bradyrhizobium sp. SK17
+  0.01  4474    152     C       1760              Actinobacteria
+  0.02  4969    110     P       976               Bacteroidetes
+  0.11  34362   34362   S       1495316           Soybean cyst nematode virus 5
+```
 I took these files, added the species name to the fifth column, removed those entries that had fewer than 100 reads allocated, kept only genera, species, and subspecies, and then concatenated all files for a network in cytoscape.
 ```
 ### Summarized output from all samples
-| Proportion of reads | Reads rooted to taxon clade | taxon-specific reads | rank code | Taxid   | Taxon                                            | Source Species | SRA        |
-|---------------------|-----------------------------|----------------------|-----------|---------|--------------------------------------------------|----------------|------------|
+
 | 99.18               | 23932404                    | 831                  | O2        | 33283   | Tylenchomorpha                                   | B. xylophilus  | DRR1414214 |
 | 0.69                | 166444                      | 166444               | U         | 0       | unclassified                                     | B. xylophilus  | DRR1414214 |
 | 0.13                | 30825                       | 357                  | D         | 2       | Bacteria                                         | B. xylophilus  | DRR1414214 |
@@ -594,7 +629,7 @@ I took these files, added the species name to the fifth column, removed those en
 | 0.01                | 6918                        | 571                  | O         | 91347   | Enterobacterales                | D.destructor   | SRR7943144 |
 | 0.01                | 6952                        | 22                   | O         | 186802  | Clostridiales                   | D.destructor   | SRR7943144 |
 | 0.01                | 7644                        | 149                  | O         | 186826  | Lactobacillales                 | D.destructor   | SRR7943144 |
-
+```
 
 ![Kraken](../../assets/KrakenNetwork.png)
 Large green hexagons are the source species RNASEQ, red diamonds are viruses, and triangles are bacteria present in two or more species.  
