@@ -12,8 +12,7 @@ Here I will try to see what kind of bacteria and viruses lie within the RNAseq o
 
 Kraken has a lot of standardized databases that can be downloaded, though the more species/clades you include, the longer it takes to make the kraken database.  
 
-[Lots of great information can be had at the Kraken2 wiki]
-(https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases)
+[Lots of great information can be had at the Kraken2 wiki](https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases)
 
 ## Step 1: Build an appropriate kraken2 database
 
@@ -47,7 +46,7 @@ sh download_taxonomy.sh
 ## Prepare the genomes you'd like to add to your kraken database
 You will have to look up the taxonomy ID and add this to each fasta headers as I have done below. i.e. (>sequence"|kraken:taxid|390850)
 
-[Taxonomic IDs were found here] (https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi)
+[Taxonomic IDs were found here](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi)
 ```
 #this just adds the taxids to the fasta headers, but does not affect sequence
 bioawk -c fastx '{print ">"$name"|kraken:taxid|6326\n"$seq}' B.xylophilus.fa >B.xylophilusTax.fa
