@@ -23,9 +23,10 @@ The main components of project management include but may not be limited to:
 
   1. Folders and Files
   2. Notebook record of commands, thought process and related code
-  3. Communication and Discussion
-  4. ToDo list
-  5. Record of your time spent
+  3. Backup of raw data and analysis folders
+  4. Communication and Discussion
+  5. ToDo list
+  6. Record of your time spent
 
 
 The rest of this tutorial steps through the components of project management, how they are related and importantly how the adoption of some very simple rules help integrate these components and do not come with a large learning curve that can be prohibitive to quick adoption by your team.
@@ -45,9 +46,9 @@ Prepend the descriptive folder name that you usually create with a number starti
   * 02_AnalysisStepTwo
   * 03_AnalysisStepThree
 
-The extra 0 from 00 - 09 keeps the folders in numerical order when executing the list ```ls``` command.  The you in 6 months or the next person on the project will thank you as it is easy to numerically follow the steps based on the folder number and the date the folder was generated ```ls -lha```.
+The extra 0 from 00 - 09 keeps the folders in numerical order when executing the list ```ls``` command up to 99 folders.  The you in 6 months or the next person on the project will thank you as it is easy to numerically follow the steps based on the folder number and the date the folder was generated ```ls -lha```.
 
-The name of your project folder should be descriptive of the project, for example, WhiteAbaloneRNA-Seq or SeriolaGWAS.
+The name of your project folder should be descriptive of the project, for example, 2020_Severin_UnicornRNA-Seq or 2020_Severin_SeriolaGWAS.  Since I work with many different researchers, I tend to name my Github Repos and project folders with the Year_ResearcherName_shortProjectDescription.
 
 ## 2. Notebook
 
@@ -58,17 +59,18 @@ In bioinformatics, science is recorded digitally in a digital notebook. We recom
 
 GitHub is often thought of as a tool for programmers to version control code but it can also be used to version control text documents as an online notebook.  If you don't have a GitHub account, you can set one up based on this [GitHub Tutorial](../Appendix/github/introgithub.md) and the free version of GitHub now allows for unlimited free repositories. In addition, as a researcher or educator you can request a free upgrade to get access to [unlimited users in private repos.](https://help.github.com/articles/about-github-education-for-educators-and-researchers/).  
 
-One of the great aspects of GitHub is that you can use [markdown](../Appendix/Markdown.md) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers```# ## ###```, bullet points ```*```, code blocks and insert images very easily.  Markdown can also be easily converted to PDF for sharing.
+One of the great aspects of GitHub is that you can use [markdown](../Appendix/Markdown.md) syntax to very quickly format your notebook.  For example, This tutorial is written in markdown and you can make headers```# ## ###```, bullet points ```*```, code blocks and insert images very easily.  Markdown can also be easily converted to PDF for sharing.  It is also straightforward enough to share the repo itself when passing on a project or collaborating with a student or colleague.
 
-Assuming you now have a GitHub account, create a GitHub repository with the same name you labeled your project folder (ie: WhiteAbaloneRNA-Seq or SeriolaGWAS).  
+Assuming you now have a GitHub account, create a GitHub repository with the same name you labeled your project folder (ie: 2020_Severin_UnicornRNA-Seq or 2020_Severin_SeriolaGWAS).  
 
-Here is the first integration between project components.
+<span style="color:Green">Here is the first integration between project components **(Folder names match file names in your GitHub notebook)**.  This is where the simplicity of this approach gives dividends and returns on such a small investment in time.</span>
 
 **For every subfolder create a markdown file**
 
 For every subfolder you make in your project folder on your remote machine or computer, create a markdown file in your GitHub repository.
 
-* Notebook_LastName
+* **Github Repo**
+  * Notebook_LastName
     * 00_RawData.md
     * 01_AnalysisStepOne.md
     * 02_AnalysisStepTwo.md
@@ -77,7 +79,6 @@ For every subfolder you make in your project folder on your remote machine or co
 After you git clone your repo you can create a folder named Notebook_LastName and then add markdown files corresponding to each new subfolder you add during the analysis pipeline.
 
 If you work on multiple machines and your laptop then create a folder for each machine.
-
 
 * Notebook_LastName
   * remote machine
@@ -89,9 +90,28 @@ If you work on multiple machines and your laptop then create a folder for each m
     * 01_AnalysisStepOne.md
     * 02_AnalysisStepTwo.md
 
-#### Atom (text editor)
+<span style="color:Blue">Why not just put the markdown files on the main level?</span>
+  * It is cleaner and there are other files we want at the main level
+  * More than one person may be working on this project and we want all those files and folders to be separated into the User's notebook.
 
-If you haven't already, download and install [GitHub ATOM](https://atom.io/).  This is a text editor that understands markdown syntax and allows you to preview markdown that you write in an adjacent window.  See [markdown](../Appendix/Markdown.md) tutorial for more information.
+#### Example Repo
+For every new project, I copy over this starter repo [Repo_skeleton](https://github.com/ISUgenomics/Repo_skeleton).  It has some other markdown file suggestions that include.
+| File | Description|
+| -- | -- | 
+| 00_Files.md | a list of all important files and where they are located|
+|00a_MetaData.md | A description of the metadata for each sample|
+|01_Background.md | a place to put more information about the organism and the project objectives|
+| 02_Methods.md | Write up your methods as you go|
+| 03_Results.md | Place the results here as you go|
+| 04_Introduction.md | Once the Methods and Results are written up start collaborating on an Introduction|
+| 05_Discussion.md | Write a rough draft of the Discussion or put ideas here for later writing of the discussion|
+| 06_AuthorInfo.md | Good to be thinking about authorship early|
+| Notes.md | Other Miscellaneous Notes|
+
+
+#### Atom (text editor)  <- Download this tool
+
+Using the GitHub interface on the web or even a basic text editor is not very efficient. I strongly recommend downloading and installing the [GitHub ATOM](https://atom.io/) markdown editor.  This is a text editor that understands markdown syntax and allows you to preview markdown that you write in an adjacent window.  See [markdown](../Appendix/Markdown.md) tutorial for more information.
 
 
 #### What, When, Where, Why, How and the Result
@@ -105,7 +125,133 @@ For every step you perform bioinformatically, record it in your markdown file al
 
 This last step is important as it is a discrete block of notes that is the smallest unit of replicable notes in your notebook.  The Why, How and Result can be replicated multiple times if it is the same day in the same folder.
 
-## 3. Communication and Discussion
+#### <span style="color:Green">Example</span>
+Inside my notebook folder inside my computer folder in a markdown file called 01_QC.md that corresponds to my 01_QC folder where I am performing a Quality Control of raw data I might find. the following
+
+* notebook_Severin
+  * Condo
+    * 01_QC.md
+
+````
+# Quality check on Unicorn RNASeq data             (What)
+
+* Jan 19, 2021                                     (When)
+* /work/GIF/severin/Unicorn_RNASeq/01_QC           (Where)
+                                                   (Why)
+I want to make sure that the quality of my reads obtained from the Illumina Novaseq look good before proceeding.   
+
+
+## FASTQC                                          (How)
+
+```
+module load fastqc/0.11.7-d5mgqc7
+module load parallel/20170322-36gxsog
+
+mkdir fastqcOutput
+  parallel "fastqc {} -o fastqcOutput" ::: ../00_rawdata/*.fastq.gz
+```
+
+## MultiQC                                         (How)
+
+```
+#load python 3.6
+module load python/3.6.3-u4oaxsb
+# multiqc wasn't working so I reinstalled it
+pip uninstall multiqc
+pip install multiqc
+multiqc --version
+multiqc, version 1.8
+multiqc .
+```
+                                                    (Result)
+The output from FASTQC and multiqc look good!  Proceeding to differential expression analysis of unicorn horn between activated and unactivated samples.
+
+````
+As you can see from the example above, when we implement the what, when, where, why, how and result note block, it increases comprehension for anyone including yourself 6 months from now or the new researcher taking over your project.  This note block should be repeated for every analysis, analysis attempt, Error trouble shooting, parameter changes.  For any (How) section that advanced the analysis or may be useful in the future, surround that how with the (What, When, Where,Why)(How)(Result/Discussion).
+
+**Note:** <span style="color:Blue">Always record the version of the software you are using.  All publications now require this information for reproducibility and it can be a pain to find after 6 months and several potential version updates of said software. </span>
+
+I will admit that I am not perfect at this and sometimes forget to add the when or where but I have discovered the closer I follow this note block rubric the easier it is to find information later.
+
+## 3. Analysis folder backup and cleanup
+
+Backup of your raw data and analyses folders is an important part of the life cycle of a project.  When you have as many projects as I see over the course of the year, the amount of storage required tends towards 100 Terabytes.  If my group does not stay on top of backing up and returning completed projects, the available space to perform new projects becomes a limiting factor. Below you will find our general process.
+
+1. After completing a project and sending the data back to the researcher. The folder is cleaned up of any analyses that are safe to delete.
+  a. Failed attempt folders that are no longer needed.
+  b. Alignment intermediates (sam) before bam file generation
+  c. Split files that may have been generated before combining to generate a final combined output.
+  d. and similar types of files or outputs that can get generated.  Watchout for programs like Trinity as they can generate hundreds of thousands<span style="color:Red"> (300,000-1,000,000) </span>files.  Those files should be removed (cleaned up).
+2. Raw data should be backed up to a secondary site.
+  In our case, we have access to cloud services such as Box and Google drive that allow us to backup data and folders.  We also have a Large Scale Storage solution through our University that allows us to purchase affordable hardrive space.  Where you back up your projects will be dependent on your location.  However, it is good practice <span style="color:Red">not</span> to store your raw data and final results on the HPC resource as most HPC resources do not have redundant backup and are replaced every 3-5 years.
+
+3. After 3-6 months or publication of the paper, whichever comes first, the project folders that you haven't touched should be further cleaned with additional intermediates removed. These may include:
+    * alignment files that are no longer needed because you have the vcf file
+    * other files depending on the type of analysis.
+
+It is good to keep the general structure of the analysis and files such as logs and submission scripts.
+
+This process a little thought if you are using cloud storage because many cloud storage solutions have limits on the number of files you can upload to a shared folder.  Google for example has a limit of 400,000 files and the file size has to be less than 5 Terabytes. There is also a daily upload limit of 768 Gb/day which will continue to try until it is uploaded by will slow down your transfer limiting you to the 768 Gb/day.
+
+#### Useful Scripts for folder cleanup
+
+Here are a few helpful commands for getting a folder in shape for saving to a secondary location.
+
+* filecount.sh
+
+This bash script will generate a count of the number of files in each subfolder.
+```
+#!/bin/bash
+
+find . -maxdepth 1 -type d | while read -r dir; do printf "%s:\t" "$dir"; find "$dir" -type f | wc -l; done > fc.txt &  
+```
+
+Any folders that have more than 1000 files should be gzipped before rcloning to a secondary location and finally folders should be removed from the HPC system
+
+Example output
+
+```
+more fc.txt
+.:      45795
+./ProjectA:       93
+./scratch:      62
+./OrthoReD:     122
+./scripts:      6
+./ProjectB:      368
+./Unicorn_RNASeq: 24003
+./L3:   7619
+./mutantDNA:       166
+./SuperPowerStudy: 4226
+./student:    5722
+./facts:     82
+./nr:       3322
+```
+
+* File Size
+
+File sizes for all files and folders in your project folder can be determined with this command
+
+`du -hs * > fileSizes.txt`
+
+* File list
+
+It is often helpful to create a text file that contains all the files that are in the folder.  This is especially true if you end up zipping many of the subfolders.  If you want to look for a file later, you can first search the file list and see if it is there rather than having to download the zipped folder, unzipping and then searching for the file you want.
+
+`find . > files.txt`
+
+#### Summary
+
+These three commands are a great help for cleaning up directories
+
+```
+filecount.sh
+du -hs * > fileSizes.txt
+find . > files.txt
+```
+
+**NOTE:** filecount.sh will need to be in your PATH in order for you to just call it as I do above.
+
+## 4. Communication and Discussion
 
 In a group with multiple active projects, it is helpful to have a running dialogue of progress and discussion for each project that can be easily referred to and searched.  Many times this comes in the form of email exchanges.  
 

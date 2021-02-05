@@ -10,11 +10,14 @@ header:
 
 # Differential Gene Expression analysis #
 
-There are many programs that you can use to perform differential expression Some of the popular ones for RNA-seq are [`DESeq2`](https://bioconductor.org/packages/release/bioc/html/DESeq2.html),[`edgeR`](http://bioconductor.org/packages/release/bioc/html/edgeR.html), or [`QuasiSeq`](https://cran.r-project.org/web/packages/QuasiSeq/index.html). Here we will demonstrate differential expression using DESeq2 using data from
+There are many programs that you can use to perform differential expression Some of the popular ones for RNA-seq are [`DESeq2`](https://bioconductor.org/packages/release/bioc/html/DESeq2.html),[`edgeR`](http://bioconductor.org/packages/release/bioc/html/edgeR.html), or [`QuasiSeq`](https://cran.r-project.org/web/packages/QuasiSeq/index.html). Here we will demonstrate differential expression using DESeq2. <!--using data from-->
+
+![DESeq2 Overview](Assets/deseq2_overview.png)
 
 
 ### Differential Expression with DESeq2 ###
-These steps should be done either on RStudio or in R terminal:
+
+These steps should be done either on RStudio or in R terminal (see tutorial on [setting up an R and RStudio environment](../../../dataWrangling/R/r-setup.md)):
 
 ```
 ## RNA-seq analysis with DESeq2

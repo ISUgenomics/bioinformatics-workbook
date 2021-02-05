@@ -1,4 +1,12 @@
-# Building maximum likelihood phylogenetic tree using BUSCO genes
+---
+title: Building maximum likelihood phylogenetic tree using BUSCO genes
+layout: single
+author: Rick Masonbrink
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
 
 In this guide, we will explain how to get the species phylogenetic tree using just the draft genomes (genomes that still don't have the annotations yet). For data, we will use the sequenced legume genomes. You will need the following programs installed and access to a large cluster (we use Condo in this exercise).
 
