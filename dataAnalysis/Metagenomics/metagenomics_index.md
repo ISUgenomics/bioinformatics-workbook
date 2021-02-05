@@ -13,3 +13,4 @@ MetaGenomics is the study of genetics from the material directly obtained from e
   * [Quality control, assembly and mapping](MetagenomicsP1.md)
   * [Qiime2](Qiime2.md)
   * [DADA2](Dada2.md)
+  * [Kraken2](Kraken.md)
