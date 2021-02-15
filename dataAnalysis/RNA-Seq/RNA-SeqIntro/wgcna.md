@@ -119,7 +119,11 @@ The SRX vs sample relation is given here broadly captured from the full metadata
 |SRX699527      |SRR1573526|B73           |wild-type|adaxial L1 tissue was captured.  sheath; Repeat:2                  |S_L1.2      |
 |SRX699528      |SRR1573527|B73           |wild-type|adaxial L1 tissue was captured.  sheath; Repeat:3                  |S_L1.3      |
 
-For more details refer to the figure below:![figure](/Users/Lab/GitBook/Library/isugenomics/2021_workshop_transcriptomics/Figures/LCM_maize_samples.png) This shows how the various tissue samples were microdissected. This is modified from original Fig 2 in [Johnston et al. 2014](http://www.plantcell.org/content/26/12/4718#sec-9),
+For more details refer to the figure below: 
+
+![figure](Assets/LCM_maize_samples.png) 
+
+This shows how the various tissue samples were microdissected. This is modified from original Fig 2 in [Johnston et al. 2014](http://www.plantcell.org/content/26/12/4718#sec-9),
 
 <!--While the wt and lg1 were from the area marked in purple in plants that exhibited either wt or no ligule (liguleless phenotype)… so this encompasses the entire pre-ligule, pre-blade and pre-sheath area.-->
 
