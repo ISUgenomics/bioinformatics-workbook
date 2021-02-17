@@ -1,5 +1,5 @@
 ---
-title: Kraken2 tutorial
+title: RSeQC tutorial
 layout: single
 author: Rick Masonbrink
 header:
