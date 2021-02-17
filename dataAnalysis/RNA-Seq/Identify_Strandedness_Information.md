@@ -112,7 +112,47 @@ for f in *sorted.bam; do infer_experiment.py --i $f -r maizeGFF.bed12 ;done
 
 ```
 
-### Results
+### Results for unstranded reads
 ```
 
+[E::idx_find_and_load] Could not retrieve index file for 'SRR1573504_1Gene_sorted.bam'
+Reading reference gene model maizeGFF.bed12 ... Done
+Loading SAM/BAM file ...  Total 200000 usable reads were sampled
+
+
+This is PairEnd Data
+Fraction of reads failed to determine: 0.5082
+Fraction of reads explained by "1++,1--,2+-,2-+": 0.2406
+Fraction of reads explained by "1+-,1-+,2++,2--": 0.2512
+[E::idx_find_and_load] Could not retrieve index file for 'SRR1573505_1Gene_sorted.bam'
+Reading reference gene model maizeGFF.bed12 ... Done
+Loading SAM/BAM file ...  Total 200000 usable reads were sampled
+
+
+This is PairEnd Data
+Fraction of reads failed to determine: 0.3724
+Fraction of reads explained by "1++,1--,2+-,2-+": 0.3053
+Fraction of reads explained by "1+-,1-+,2++,2--": 0.3222
+```
+
+### Results for stranded reads
+```
+[E::idx_find_and_load] Could not retrieve index file for 'SRR13332812_1_sorted.bam'
+Reading reference gene model maizeGFF.bed12 ... Done
+Loading SAM/BAM file ...  Total 200000 usable reads were sampled
+
+
+This is PairEnd Data
+Fraction of reads failed to determine: 0.4494
+Fraction of reads explained by "1++,1--,2+-,2-+": 0.0349
+Fraction of reads explained by "1+-,1-+,2++,2--": 0.5157
+[E::idx_find_and_load] Could not retrieve index file for 'SRR13332813_1_sorted.bam'
+Reading reference gene model maizeGFF.bed12 ... Done
+Loading SAM/BAM file ...  Total 200000 usable reads were sampled
+
+
+This is PairEnd Data
+Fraction of reads failed to determine: 0.4496
+Fraction of reads explained by "1++,1--,2+-,2-+": 0.0331
+Fraction of reads explained by "1+-,1-+,2++,2--": 0.5174
 ```
