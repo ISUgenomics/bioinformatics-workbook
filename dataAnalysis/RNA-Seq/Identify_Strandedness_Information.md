@@ -106,8 +106,8 @@ sh runHiSat2bam.sh SRR13332813_1.fastq SRR13332813_2.fastq /work/gif/Transcripto
 sh runHiSat2bam.sh SRR1573504_1.fastq SRR1573504_2.fastq /work/gif/TranscriptomicsWorkshop/remkv6/01_Maize/01_Align Maize.fa
 sh runHiSat2bam.sh SRR1573505_1.fastq SRR1573505_2.fastq /work/gif/TranscriptomicsWorkshop/remkv6/01_Maize/01_Align Maize.fa
 ```
-<pre>
-<details>
+</pre>
+</details>
 
 ### Create bed12 file from genic gff
 ```
@@ -176,8 +176,8 @@ NC_001666.2     13990   14013   id-ZemaCt127-1  .       -       RefSeq  exon    
 NC_001666.2     14497   14707   cds-NP_043012.1 .       -       RefSeq  CDS     0       ID=cds-NP_043012.1;Parent=gene-ZemaCp010;Dbxref=UniProtKB/TrEMBL:Q33301,Genbank:NP_043012.1,GeneID:1466359;Name=NP_043012.1;Note=ORF69;gbkey=CDS;locus_tag=ZemaCp010;product=hyp
 etc...
 ```
-<pre>
-<details>
+</pre>
+</details>
 
 
 
@@ -197,8 +197,8 @@ infer_experiment.py --i SRR13332813_1_sorted.bam -r maizeGFF.bed12
 infer_experiment.py --i SRR1573504_1Gene_sorted.bam -r maizeGFF.bed12
 infer_experiment.py --i SRR1573505_1Gene_sorted.bam -r maizeGFF.bed12
 ```
-<pre>
-<details>
+</pre>
+</details>
 
 ### Results for unstranded reads
 ```
