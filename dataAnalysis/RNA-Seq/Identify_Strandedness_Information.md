@@ -244,3 +244,9 @@ Fraction of reads failed to determine: 0.4496
 Fraction of reads explained by "1++,1--,2+-,2-+": 0.0331
 Fraction of reads explained by "1+-,1-+,2++,2--": 0.5174
 ```
+
+We see that the stranded reads have an RF orientation and can make adjustments in the aligner to align these reads using strand information.  
+
+### References
+
+[RSeQC Sourceforge](http://rseqc.sourceforge.net/#use-pip3-to-install-rseqc-v3-0-0-or-newer)
