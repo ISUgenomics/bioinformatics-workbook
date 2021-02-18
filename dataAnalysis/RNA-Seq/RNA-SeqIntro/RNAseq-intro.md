@@ -26,3 +26,5 @@ RNA-seq experiments are performed with an aim to comprehend transcriptomic chang
 * [Different Expression Analysis:DESeq2](Differential-Expression-Analysis.md)
 
 * [10x genomics single-cell RNAseq analysis from SRA data using Cell Ranger and Seurat](../Single_Cell_RNAseq/Chromium_Cell_Ranger.md)
+
+* [Using RSeQC to identify strand information of RNAseq](../Identify_Strandedness_Information.md)

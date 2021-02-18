@@ -88,7 +88,7 @@ header:
 * [RNA-Seq Example without a Genome Assembly](../dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-without-a-genome.md)
 * [Different Expression Analysis:DESeq2](../dataAnalysis/RNA-Seq/RNA-SeqIntro/Differential-Expression-Analysis.md)
 * [10x genomics single-cell RNAseq analysis from SRA data using Cell Ranger and Seurat](../dataAnalysis/RNA-Seq/Single_Cell_RNAseq/Chromium_Cell_Ranger.md)
-
+* [Using RSeQC to identify strand information of RNAseq](../dataAnalysis/RNA-Seq/Identify_Strandedness_Information.md)
 
 ### [Genome Assembly and Annotation](../dataAnalysis/GenomeAnnotation/annotation_and_assembly_index.md)
 #### <span style="color:lightblue">[Introduction to Genome Assembly](../dataAnalysis/GenomeAssembly/Intro_GenomeAssembly.md)</span>
