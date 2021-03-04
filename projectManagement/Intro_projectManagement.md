@@ -96,8 +96,10 @@ If you work on multiple machines and your laptop then create a folder for each m
 
 #### Example Repo
 For every new project, I copy over this starter repo [Repo_skeleton](https://github.com/ISUgenomics/Repo_skeleton).  It has some other markdown file suggestions that include.
+
+
 | File | Description|
-| -- | -- | 
+| :-- | :-- | 
 | 00_Files.md | a list of all important files and where they are located|
 |00a_MetaData.md | A description of the metadata for each sample|
 |01_Background.md | a place to put more information about the organism and the project objectives|
