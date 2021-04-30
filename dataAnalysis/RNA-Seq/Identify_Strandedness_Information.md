@@ -18,15 +18,15 @@ Now comes the conundrum, what if this RNA-seq is not one you generated?  There i
 ```
 
 #Attempt with miniconda did not succeeed.
-ml miniconda3
+ml miniconda2
 conda create -n rseqc
 source activate rseqc
-#this did not finish, using pip
-conda install -c bioconda rseq
+conda install -c bioconda rseqc
 
-#this works
+# or do this
+conda create -n rseqc
+source activate rseqc
 conda install -c bioconda bedops
-#this worked.
 pip install --user RSeQC
 
 ```
