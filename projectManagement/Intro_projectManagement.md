@@ -96,8 +96,10 @@ If you work on multiple machines and your laptop then create a folder for each m
 
 #### Example Repo
 For every new project, I copy over this starter repo [Repo_skeleton](https://github.com/ISUgenomics/Repo_skeleton).  It has some other markdown file suggestions that include.
+
+
 | File | Description|
-| -- | -- | 
+| :-- | :-- |
 | 00_Files.md | a list of all important files and where they are located|
 |00a_MetaData.md | A description of the metadata for each sample|
 |01_Background.md | a place to put more information about the organism and the project objectives|
@@ -310,3 +312,5 @@ Cool idea right?  But a real-life whiteboard and post-it notes would be very tim
 ## 5. Record of time spent
 
 Bioinformatics projects can be time consuming and frustrating with a lot of trial and error.  It often happens that at the end of a week, it doesn't feel like anything was accomplished.  Keeping track of your time spent on a daily basis can bring peace of mind.  This can be easily accomplished using a Google spreadsheet with days of the month at the top as columns and project names as rows on the left. For each project there should be two rows; hours spent and description of what you did.  The column widths can be relatively short since hours spent in a day is not more than 2 digits and the description can just flow into adjacent cells.  It is also helpful to see where your time is being spent and better manage your work/life balance and provide a tool for those in your group to manage their work/life balance.
+
+Here is an example of a [google sheet](https://docs.google.com/spreadsheets/d/1Lj2xXjnWkx8ww7l23OjRET77J3_jq6Cj61Iu6bebMxw/edit#gid=0) used for keep track of time.

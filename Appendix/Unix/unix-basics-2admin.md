@@ -11,20 +11,23 @@ This exercise will provide you details about some administrative commands with e
 
 ## Changing permissions
 
-All files in the UNIX system will have a set of permissions which define what can be done with that file and by whom. Here, what refers to read (view contents), write (modify) and execute (run as a script) and whom refers to user (owner), group (collection of users that the user belongs to) and others (everyone else).
+All files in the UNIX system will have a set of permissions which define what can be done with that file and by whom. The three permissions are noted below in the table along with the symbol used in each case. `read` indicates view contents, `write` refers to the ability to modify and `execute`  refers to the ability to run as a script.
 
 | Permissions | Symbol    |
 |:-------------|----------:|
 | read         | `r`       |
 | write        | `w`       |
 | execute      | `x`       |
-| all users    | `a`       |
+
+
+The permissions are set for users as follows : `owner` is the person who made the file and is the primary owner, `group` is the collection of users that the user belongs to, `others` refer to users not in the group and `all users` refer to every one that has access to the system.
 
 | Relations | Symbol |
 |:----------|-------:|
 | owner     | `u`    |
 | group     | `g`    |
 | others    | `o`    |
+| all users    | `a`       |
 
 To look at the permissions for any file, you can list the files with `l` option (`ls –l`).
 Permissions	User	Group	Size	Date modified	Name
