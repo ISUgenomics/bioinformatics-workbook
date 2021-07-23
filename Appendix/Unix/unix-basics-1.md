@@ -39,6 +39,18 @@ header:
 
 A terminal is the program that is used to access files on your laptop/computer that is sitting in front of you (local machine) or access to files on a supercomputer in a different location (remote machine).  You can access a terminal on a Mac or Windows machine as described below.
 
+## What is ssh?
+
+* <span style="color:Blue">SSH</span> is short for **S**ecure <span style="color:Blue">SH</span>ell
+
+```
+ssh (SSH client) is a program for logging into a remote machine and for
+     executing commands on a remote machine.  It is intended to provide secure
+     encrypted communications between two untrusted hosts over an insecure
+     network.  X11 connections, arbitrary TCP ports and UNIX-domain sockets
+     can also be forwarded over the secure channel.
+```
+
 ### On a Mac (OS)
 
 1. Use the Finder ![](assets/MagnifyingGlass.png) and search for and open the Terminal program ![](assets/terminal.png).
@@ -230,11 +242,13 @@ ls
 ls .
 ls DIRECTORY
 ```
-Everyone should currently be in their unixTutorial directory that they just created, which is empty so the `ls` command will return you to a new prompt without anything written to standard out. To exit nano you type this series of keys -- hit `ctr x` press `y` for yes to save and hit `enter`.  Nano tells you how to exit along with many of the following shortcuts at the bottom of your screen and will step you through how to exit and save.
+Everyone should currently be in their unixTutorial directory that they just created, which is empty so the `ls` command will return you to a new prompt without anything written to standard out.
 
 ## nano -- Text editor more like a GUI
 
 Nano opens up and will feel like a typical text editor you are familiar with.  Arrow keys can be used navigate the text. Below are some additional shortcuts.
+
+To exit nano you type this series of keys -- hit `ctr x` press `y` for yes to save and hit `enter`.  Nano tells you how to exit along with many of the following shortcuts at the bottom of your screen and will step you through how to exit and save.
 
 |NANO SHORTCUTS| |
 |--|--|
@@ -553,7 +567,7 @@ ls -l myFirstfile.txt mySecondfile.txt
 ```
 
 
-To copy a folder you have to add the `-r` parameter to copy recursively
+To copy a folder you have to add the `-r` parameter to copy recursively (copy all files in a folder and subfolders of subfolders etc)
 
 ```
 cp -r Letters Letters_copy
