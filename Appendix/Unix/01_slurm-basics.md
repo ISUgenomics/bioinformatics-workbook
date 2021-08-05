@@ -60,7 +60,7 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
 | USER | The name of the user who submitted the job |
 | ST | The state of the job, running(R), PenDing(PD)|
 | NODES | number of nodes requested |
-|NODELIST(REASON)| which node(s) is the job running on or the reason why is it not running)
+|NODELIST(REASON)| which node(s) is the job running on (or the reason why is it not running)
 
 This can be a really long list especially if you only want to see your own jobs.  To do that you can specify a user using the '-u' parameter.
 
