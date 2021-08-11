@@ -940,7 +940,7 @@ rsync -avz -e ssh username@remotehostname:/home/andrew.severin/unixTutorial .
 
 # The Unix manual pages and soft links
 ---
-## man -- <span style="color:Blue">man</span>uel
+## man -- <span style="color:Blue">man</span>ual
 
 This command will provide a description of a unix command and list the parameters that can be used to modify its behavior.  To exit the manual for a command you press `q` like you do in the `less` command.
 
