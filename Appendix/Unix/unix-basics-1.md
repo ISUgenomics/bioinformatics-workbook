@@ -255,6 +255,7 @@ To exit nano you type this series of keys -- hit `ctr x` press `y` for yes to sa
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|
 |`ctrl+o`	|save file|
 |`ctrl+x`	|close file|
+|`alt+\`	|go to beginning of the file|
 |`alt+/`	|go to end of the file|
 |`ctrl+a`	|go to start of the line|
 |`ctrl+e`	|go to end of the line|
