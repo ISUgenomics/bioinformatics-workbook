@@ -31,39 +31,72 @@ ln -s /work/gif/archiveNova/lane2/CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz
 #runPilon.sh
 ###############################################################################
 #!/bin/bash
-
-#You must provide the following. Note variable DBDIR does not need a "/" at the end.
-# sh runPilon.sh  /work/GIF/remkv6/files genome.fa ShortReadsR1.fq ShortReadsR2.fq
-
-#create unix variables
+```
+Create unix variables
+```
 DIR="$1"
 GENOME="$2"
 R1_FQ="$3"
 R2_FQ="$4"
+```
 
-# Index the genome and perform short read mapping using Hisat2
+Index the genome and perform short read mapping using Hisat2
+```
 module load hisat2
 hisat2-build ${GENOME} ${GENOME%.*}
 hisat2 -p 36 -x ${GENOME%.*} -1 $R1_FQ -2 $R2_FQ -S ${GENOME%.*}.${R1_FQ%.*}.sam
-
+```
 # Convert your sam to bam, sort, and index.
 # Note that I use only a part of my available threads to ensure I do not run into RAM usage issues.  This is the safest approach when iterating.
+```
 module load samtools
 samtools view --threads 12 -b -o ${GENOME%.*}.${R1_FQ%.*}.bam ${GENOME%.*}.${R1_FQ%.*}.sam
 mkdir Samtemp
 samtools sort  -o ${GENOME%.*}.${R1_FQ%.*}_sorted.bam -T Samtemp --threads 16 ${GENOME%.*}.${R1_FQ%.*}.bam
 samtools index ${GENOME%.*}.${R1_FQ%.*}_sorted.bam
-
-
+```
+I am running pilon here using the max memory available to me, using a temp folder I created above. Pilon can also have issues with RAM usage, so in this case I cut my thread usage to half of those available. My chunk size is also smaller than default, again catering to potential ram issues that would affect iteration
+```
 module load pilon/1.22-s7zrot6
-# I am running pilon here using the max memory available to me, using a temp folder I created above. Pilon can also have issues with RAM usage, so in this case I cut my thread usage to half of those available. My chunk size is also smaller than default, again catering to potential ram issues that would affect iteration
 java -Xmx200g -Djava.io.tmpdir=Samtemp -jar /opt/rit/spack-app/linux-rhel7-x86_64/gcc-4.8.5/pilon-1.22-s7zrot6o5yqjh6oxpdxsxcdiswpjioyy/bin/pilon-1.22.jar  --genome ${GENOME} --frags  ${GENOME%.*}.${R1_FQ%.*}_sorted.bam --output ${GENOME%.*}.pilon --outdir ${DIR} --changes --fix all --threads 18  --chunksize 30000
+```
 
-
-# The mapping files can get out of hand, so when I have the loop working, I delete the sam and bam files after each round.
+The mapping files can get out of hand and use all of your storage, so when I have the loop working, I delete the sam and bam files after each round.
+```
 rm *sam
 rm *bam
 ```
+##### runPilon without comments
+<details>
+  <summary>Click to see content</summary>
+  <pre>
+  #!/bin/bash
+
+  #You must provide the following. Note variable DBDIR does not need a "/" at the end.
+  # sh runPilon.sh  /work/GIF/remkv6/files genome.fa ShortReadsR1.fq ShortReadsR2.fq
+
+  DIR="$1"
+  GENOME="$2"
+  R1_FQ="$3"
+  R2_FQ="$4"
+
+  module load hisat2
+  hisat2-build ${GENOME} ${GENOME%.*}
+  hisat2 -p 36 -x ${GENOME%.*} -1 $R1_FQ -2 $R2_FQ -S ${GENOME%.*}.${R1_FQ%.*}.sam
+
+  module load samtools
+  samtools view --threads 12 -b -o ${GENOME%.*}.${R1_FQ%.*}.bam ${GENOME%.*}.${R1_FQ%.*}.sam
+  mkdir Samtemp
+  samtools sort  -o ${GENOME%.*}.${R1_FQ%.*}_sorted.bam -T Samtemp --threads 16 ${GENOME%.*}.${R1_FQ%.*}.bam
+  samtools index ${GENOME%.*}.${R1_FQ%.*}_sorted.bam
+
+    module load pilon/1.22-s7zrot6
+  java -Xmx200g -Djava.io.tmpdir=Samtemp -jar /opt/rit/spack-app/linux-rhel7-x86_64/gcc-4.8.5/pilon-1.22-s7zrot6o5yqjh6oxpdxsxcdiswpjioyy/bin/pilon-1.22.jar  --genome ${GENOME} --frags  ${GENOME%.*}.${R1_FQ%.*}_sorted.bam --output ${GENOME%.*}.pilon --outdir ${DIR} --changes --fix all --threads 18  --chunksize 30000
+
+  rm *sam
+  rm *bam
+  </pre>
+  </details>
 
 ### How to iterate the runPilon.sh script
 Typically I would run one round of polishing like this
