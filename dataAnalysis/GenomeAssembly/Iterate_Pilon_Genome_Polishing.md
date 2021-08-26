@@ -46,8 +46,8 @@ module load hisat2
 hisat2-build ${GENOME} ${GENOME%.*}
 hisat2 -p 36 -x ${GENOME%.*} -1 $R1_FQ -2 $R2_FQ -S ${GENOME%.*}.${R1_FQ%.*}.sam
 ```
-# Convert your sam to bam, sort, and index.
-# Note that I use only a part of my available threads to ensure I do not run into RAM usage issues.  This is the safest approach when iterating.
+Convert your sam to bam, sort, and index.
+Note that I use only a part of my available threads to ensure I do not run into RAM usage issues.  This is the safest approach when iterating.
 ```
 module load samtools
 samtools view --threads 12 -b -o ${GENOME%.*}.${R1_FQ%.*}.bam ${GENOME%.*}.${R1_FQ%.*}.sam
@@ -71,9 +71,6 @@ rm *bam
   <summary>Click to see content</summary>
   <pre>
   #!/bin/bash
-
-  #You must provide the following. Note variable DBDIR does not need a "/" at the end.
-  # sh runPilon.sh  /work/GIF/remkv6/files genome.fa ShortReadsR1.fq ShortReadsR2.fq
 
   DIR="$1"
   GENOME="$2"
@@ -153,7 +150,7 @@ Since we set the --changes flag in our Pilon runs, we know the number of changes
 
 
 ### Options to convert to gap filling or other types of Pilon fixes
-By making a small change in the runPilon.sh script, you can also create a looping gap filler that will continually build sequence at gap edges until they are complete (in theory).
+By making a small change in the runPilon.sh script, you can also create a looping gap filler that will continually build sequence at gap edges until they are complete (in theory). Other fun options are available.
 
 ```
 --fix fixlist
