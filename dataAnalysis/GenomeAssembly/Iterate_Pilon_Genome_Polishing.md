@@ -10,16 +10,20 @@ After assembling a genome, polishing is usually done to correct small assembly e
 
 
 ### Setting up your directory
+
+My working directory
 ```
-#my working directory
 /work/gif/remkv6/USDA/03_LoopingPolisher
-
-#softlink your genome
+```
+Softlink your genome
+```
 ln -s /work/gif/remkv6/Baum/04_DovetailSCNGenome/49_RenameChromosomes/01_Transfer2Box/SCNgenome.fasta
+```
 
-#softlink the reads
-ln -s /work/gif/archiveNova/Baum/08_GlandEndoreduplicationDNA-seq/lane2/Hg2S-1_S1_L002_R1_001.fastq.gz
-ln -s /work/gif/archiveNova/Baum/08_GlandEndoreduplicationDNA-seq/lane2/Hg2S-1_S1_L002_R2_001.fastq.gz
+Softlink the reads
+```
+ln -s /work/gif/archiveNova/lane2/CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz
+ln -s /work/gif/archiveNova/lane2/CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz
 ```
 
 ### Create a run script for pilon
@@ -62,55 +66,79 @@ rm *bam
 ```
 
 ### How to iterate the runPilon.sh script
+Typically I would run one round of polishing like this
 ```
-Typically I would run one round of polishing  like this
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz
+```
 
 However, to iterate we need to put this into a loop. Lets run 20 rounds of polishing
-for f in {01..20}; do echo "sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome"${f}".fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome"${f}".pilon.fasta" ;done |paste - <(for f in {02..21}; do echo $line" SCNgenome"${f}".fasta";done) |sed 's/\t/ /g' >PolishLoop.sh
-
-
+```
+for f in {01..20}; do echo "sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome"${f}".fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome"${f}".pilon.fasta" ;done |paste - <(for f in {02..21}; do echo $line" SCNgenome"${f}".fasta";done) |sed 's/\t/ /g' >PolishLoop.sh
 ```
 
 ###### PolishLoop.sh
 <details>
-  <summary>PolishLoop.sh content</summary>
+  <summary>Click to see content</summary>
   <pre>
-```
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome01.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome01.pilon.fasta  SCNgenome02.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome02.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome02.pilon.fasta  SCNgenome03.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome03.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome03.pilon.fasta  SCNgenome04.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome04.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome04.pilon.fasta  SCNgenome05.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome05.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome05.pilon.fasta  SCNgenome06.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome06.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome06.pilon.fasta  SCNgenome07.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome07.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome07.pilon.fasta  SCNgenome08.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome08.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome08.pilon.fasta  SCNgenome09.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome09.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome09.pilon.fasta  SCNgenome10.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome10.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome10.pilon.fasta  SCNgenome11.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome11.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome11.pilon.fasta  SCNgenome12.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome12.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome12.pilon.fasta  SCNgenome13.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome13.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome13.pilon.fasta  SCNgenome14.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome14.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome14.pilon.fasta  SCNgenome15.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome15.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome15.pilon.fasta  SCNgenome16.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome16.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome16.pilon.fasta  SCNgenome17.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome17.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome17.pilon.fasta  SCNgenome18.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome18.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome18.pilon.fasta  SCNgenome19.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome19.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome19.pilon.fasta  SCNgenome20.fasta
-sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome20.fasta Hg2S-1_S1_L002_R1_001.fastq.gz Hg2S-1_S1_L002_R2_001.fastq.gz; mv SCNgenome20.pilon.fasta  SCNgenome21.fasta
-```
+
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome01.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome01.pilon.fasta  SCNgenome02.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome02.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome02.pilon.fasta  SCNgenome03.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome03.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome03.pilon.fasta  SCNgenome04.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome04.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome04.pilon.fasta  SCNgenome05.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome05.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome05.pilon.fasta  SCNgenome06.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome06.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome06.pilon.fasta  SCNgenome07.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome07.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome07.pilon.fasta  SCNgenome08.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome08.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome08.pilon.fasta  SCNgenome09.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome09.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome09.pilon.fasta  SCNgenome10.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome10.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome10.pilon.fasta  SCNgenome11.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome11.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome11.pilon.fasta  SCNgenome12.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome12.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome12.pilon.fasta  SCNgenome13.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome13.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome13.pilon.fasta  SCNgenome14.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome14.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome14.pilon.fasta  SCNgenome15.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome15.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome15.pilon.fasta  SCNgenome16.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome16.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome16.pilon.fasta  SCNgenome17.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome17.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome17.pilon.fasta  SCNgenome18.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome18.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome18.pilon.fasta  SCNgenome19.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome19.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome19.pilon.fasta  SCNgenome20.fasta
+sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome20.fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome20.pilon.fasta  SCNgenome21.fasta
+
 </pre>
 </details>
 
 ### Evaluate the results of polishing the genome in a loop
-```
 Since we set the --changes flag in our Pilon runs, we know the number of changes made in each round
-wc -l *changes
-  43577 SCNgenome01.pilon.changes
-   4396 SCNgenome02.pilon.changes
-   1241 SCNgenome03.pilon.changes
-    496 SCNgenome04.pilon.changes
-    308 SCNgenome05.pilon.changes
-    186 SCNgenome06.pilon.changes
-    105 SCNgenome07.pilon.changes
+```
+43577 SCNgenome01.pilon.changes
+ 4396 SCNgenome02.pilon.changes
+ 1241 SCNgenome03.pilon.changes
+  496 SCNgenome04.pilon.changes
+  308 SCNgenome05.pilon.changes
+  186 SCNgenome06.pilon.changes
+  105 SCNgenome07.pilon.changes
+  117 SCNgenome08.pilon.changes
+```
+
+
+### Options to convert to gap filling or other types of Pilon fixes
+By making a small change in the runPilon.sh script, you can also create a looping gap filler that will continually build sequence at gap edges until they are complete (in theory).
 
 ```
+--fix fixlist
+   A comma-separated list of categories of issues to try to fix:
+     "snps": try to fix individual base errors;
+     "indels": try to fix small indels;
+     "gaps": try to fill gaps;
+     "local": try to detect and fix local misassemblies;
+     "all": all of the above (default);
+     "bases": shorthand for "snps" and "indels" (for back compatibility);
+     "none": none of the above; new fasta file will not be written.
+   The following are experimental fix types:
+     "amb": fix ambiguous bases in fasta output (to most likely alternative);
+     "breaks": allow local reassembly to open new gaps (with "local");
+     "circles": try to close circlar elements when used with long corrected reads;
+     "novel": assemble novel sequence from unaligned non-jump reads.
+```
+
+### References
+
+* https://github.com/broadinstitute/pilon/wiki
