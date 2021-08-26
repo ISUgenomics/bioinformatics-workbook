@@ -70,25 +70,23 @@ rm *bam
 <details>
   <summary>Click to see content</summary>
   <pre>
-  #!/bin/bash
+#!/bin/bash
+DIR="$1"
+GENOME="$2"
+R1_FQ="$3"
+R2_FQ="$4"
+module load hisat2
+hisat2-build ${GENOME} ${GENOME%.*}
+hisat2 -p 36 -x ${GENOME%.*} -1 $R1_FQ -2 $R2_FQ -S ${GENOME%.*}.${R1_FQ%.*}.sam
 
-  DIR="$1"
-  GENOME="$2"
-  R1_FQ="$3"
-  R2_FQ="$4"
+module load samtools
+samtools view --threads 12 -b -o ${GENOME%.*}.${R1_FQ%.*}.bam ${GENOME%.*}.${R1_FQ%.*}.sam
+mkdir Samtemp
+samtools sort  -o ${GENOME%.*}.${R1_FQ%.*}_sorted.bam -T Samtemp --threads 16 ${GENOME%.*}.${R1_FQ%.*}.bam
+samtools index ${GENOME%.*}.${R1_FQ%.*}_sorted.bam
 
-  module load hisat2
-  hisat2-build ${GENOME} ${GENOME%.*}
-  hisat2 -p 36 -x ${GENOME%.*} -1 $R1_FQ -2 $R2_FQ -S ${GENOME%.*}.${R1_FQ%.*}.sam
-
-  module load samtools
-  samtools view --threads 12 -b -o ${GENOME%.*}.${R1_FQ%.*}.bam ${GENOME%.*}.${R1_FQ%.*}.sam
-  mkdir Samtemp
-  samtools sort  -o ${GENOME%.*}.${R1_FQ%.*}_sorted.bam -T Samtemp --threads 16 ${GENOME%.*}.${R1_FQ%.*}.bam
-  samtools index ${GENOME%.*}.${R1_FQ%.*}_sorted.bam
-
-    module load pilon/1.22-s7zrot6
-  java -Xmx200g -Djava.io.tmpdir=Samtemp -jar /opt/rit/spack-app/linux-rhel7-x86_64/gcc-4.8.5/pilon-1.22-s7zrot6o5yqjh6oxpdxsxcdiswpjioyy/bin/pilon-1.22.jar  --genome ${GENOME} --frags  ${GENOME%.*}.${R1_FQ%.*}_sorted.bam --output ${GENOME%.*}.pilon --outdir ${DIR} --changes --fix all --threads 18  --chunksize 30000
+module load pilon/1.22-s7zrot6
+java -Xmx200g -Djava.io.tmpdir=Samtemp -jar /opt/rit/spack-app/linux-rhel7-x86_64/gcc-4.8.5/pilon-1.22-s7zrot6o5yqjh6oxpdxsxcdiswpjioyy/bin/pilon-1.22.jar  --genome ${GENOME} --frags  ${GENOME%.*}.${R1_FQ%.*}_sorted.bam --output ${GENOME%.*}.pilon --outdir ${DIR} --changes --fix all --threads 18  --chunksize 30000
 
   rm *sam
   rm *bam
