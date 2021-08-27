@@ -102,6 +102,8 @@ sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome.fasta CrazyWac
 However, to iterate we need to put this into a loop. Lets run 20 rounds of polishing
 ```
 for f in {01..20}; do echo "sh runPilon.sh /work/gif/remkv6/USDA/03_LoopingPolisher SCNgenome"${f}".fasta CrazyWackyScienceDNA-1_S1_L002_R1_001.fastq.gz CrazyWackyScienceDNA-1_S1_L002_R2_001.fastq.gz; mv SCNgenome"${f}".pilon.fasta" ;done |paste - <(for f in {02..21}; do echo $line" SCNgenome"${f}".fasta";done) |sed 's/\t/ /g' >PolishLoop.sh
+
+
 ```
 
 ###### PolishLoop.sh
@@ -144,9 +146,75 @@ Since we set the --changes flag in our Pilon runs, we know the number of changes
   186 SCNgenome06.pilon.changes
   105 SCNgenome07.pilon.changes
   117 SCNgenome08.pilon.changes
+   74 SCNgenome09.pilon.changes
+   41 SCNgenome10.pilon.changes
+   36 SCNgenome11.pilon.changes
+   35 SCNgenome12.pilon.changes
+   30 SCNgenome13.pilon.changes
+   31 SCNgenome14.pilon.changes
+   25 SCNgenome15.pilon.changes
+   21 SCNgenome16.pilon.changes
+   23 SCNgenome17.pilon.changes
+   21 SCNgenome18.pilon.changes
+   22 SCNgenome19.pilon.changes
+   36 SCNgenome20.pilon.changes
+
 ```
+How much has the size of the genome changed?
+About 600kb of sequence was removed from the genome after 20 rounds.
+```
+#using new_Assemblathon.pl script to get info on assemblies.
+for f in *fasta; do ~/common_scripts/new_Assemblathon.pl $f;done >Assemblathons.txt
+paste <(for f in *fasta; do ls $f;done ) <(grep "Total size of scaffolds" Assemblathons.txt) |sed 's/   //g' |less
 
+SCNgenome01.fasta        Total size of scaffolds  157982452
+SCNgenome02.fasta        Total size of scaffolds  157667082
+SCNgenome03.fasta        Total size of scaffolds  157577436
+SCNgenome04.fasta        Total size of scaffolds  157526821
+SCNgenome05.fasta        Total size of scaffolds  157495502
+SCNgenome06.fasta        Total size of scaffolds  157456603
+SCNgenome07.fasta        Total size of scaffolds  157444744
+SCNgenome08.fasta        Total size of scaffolds  157434711
+SCNgenome09.fasta        Total size of scaffolds  157427429
+SCNgenome10.fasta        Total size of scaffolds  157427423
+SCNgenome11.fasta        Total size of scaffolds  157426682
+SCNgenome12.fasta        Total size of scaffolds  157426677
+SCNgenome13.fasta        Total size of scaffolds  157425936
+SCNgenome14.fasta        Total size of scaffolds  157422293
+SCNgenome15.fasta        Total size of scaffolds  157422298
+SCNgenome16.fasta        Total size of scaffolds  157422294
+SCNgenome17.fasta        Total size of scaffolds  157422298
+SCNgenome18.fasta        Total size of scaffolds  157421197
+SCNgenome19.fasta        Total size of scaffolds  157420463
+SCNgenome20.fasta        Total size of scaffolds  157407943
+SCNgenome21.fasta        Total size of scaffolds  157407206
+```
+Has the total N content diminished with each round?
+```
+paste <(ls -l *fasta) <(for f in *fasta; do sed 's/N/\nN/g'  <$f |grep -c "N" ;done)
+SCNgenome01.fasta  1681753
+SCNgenome02.fasta  1674378
+SCNgenome03.fasta  1670502
+SCNgenome04.fasta  1669372
+SCNgenome05.fasta  1668709
+SCNgenome06.fasta  1668603
+SCNgenome07.fasta  1668416
+SCNgenome08.fasta  1668416
+SCNgenome09.fasta  1668367
+SCNgenome10.fasta  1668055
+SCNgenome11.fasta  1668008
+SCNgenome12.fasta  1667816
+SCNgenome13.fasta  1667674
+SCNgenome14.fasta  1667674
+SCNgenome15.fasta  1667620
+SCNgenome16.fasta  1667620
+SCNgenome17.fasta  1667530
+SCNgenome18.fasta  1666495
+SCNgenome19.fasta  1666495
+SCNgenome20.fasta  1666303
+SCNgenome21.fasta  1666303
 
+```
 ### Options to convert to gap filling or other types of Pilon fixes
 By making a small change in the runPilon.sh script, you can also create a looping gap filler that will continually build sequence at gap edges until they are complete (in theory). Other fun options are available.
 
