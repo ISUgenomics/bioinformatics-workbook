@@ -1,6 +1,6 @@
 # How to iterate multiple rounds of Pilon polishing/gap-filling on a genome assembly
 
-After assembling a genome, polishing is usually done to correct small assembly errors. Typically, multiple rounds of polishing is not recommended, due to declining BUSCO scores. However, in certain situations, multiple rounds of polishing may be warranted.  In this case, my reads were obtained from thousands of individuals (population assembly). Exacerbating the problem, soybean cyst nematodes do not like homozygosity, so these individuals were fairly diverse.  
+After assembling a genome, polishing is usually done to correct small assembly errors. Typically, multiple rounds of polishing is not recommended, due to declining BUSCO scores. However, in certain situations, multiple rounds of polishing may be warranted.  In this case, my reads were obtained from thousands of individuals (population assembly). Exacerbating the problem, soybean cyst nematodes do not like homozygosity, so these individuals (and reads)were fairly diverse.  
 
 ### Prerequisite software
 
