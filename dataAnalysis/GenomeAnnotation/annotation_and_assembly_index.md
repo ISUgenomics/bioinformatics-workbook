@@ -26,7 +26,7 @@ header:
   * [Arabidopsis thaliana data set](../GenomeAssembly/Arabidopsis/Arabidopsis_background.md)
     * [MaSuRCA assembly of Arabidopsis thaliana](../GenomeAssembly/Arabidopsis/AT_MaSuRCA.md)
     * [Platanus assembly of Arabidopsis thaliana](../GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
-
+  * [Iteration of Pilon polishing and gap-filling on a genome](../GenomeAssembly/Iterate_Pilon_Genome_Polishing.md)
 ### Tools for assessing the quality of a Genome Assembly
 
   * [GenomeScope to Estimate Genome Size](../GenomeAssembly/genomescope.md)
