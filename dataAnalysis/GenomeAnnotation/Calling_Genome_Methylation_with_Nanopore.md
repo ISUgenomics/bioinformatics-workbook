@@ -182,6 +182,7 @@ This is some testing based on at least 5 aligned reads to a region, and distingu
 less cpgCompare.tsv |awk 'NR>1 &&$2>5 && $4>5 && $3>$5' |sort -k3,3nr -k5,5n |sed 's/:/\t/1' |sed 's/-/\t/1' |tr "\t" " " |sed 's/ /\t/1' |sed 's/ /\t/1' |sed 's/ /\t/1' |bedtools intersect -wo -a - -b genes.2kb.promoters.bed |cut -f 13 |sed 's/ID=//g' |sed 's/;/\t/g' |cut -f 1 |sort|uniq -c |sort -k1,1nr  >Sample_1CPG.tsv
 less cpgCompare.tsv |awk 'NR>1 &&$2>5 && $4>5 && $3<$5' |sort -k3,3nr -k5,5n |sed 's/:/\t/1' |sed 's/-/\t/1' |tr "\t" " " |sed 's/ /\t/1' |sed 's/ /\t/1' |sed 's/ /\t/1' |bedtools intersect -wo -a - -b genes.2kb.promoters.bed |cut -f 13 |sed 's/ID=//g' |sed 's/;/\t/g' |cut -f 1 |sort|uniq -c |sort -k1,1nr  >Sample_2CPG.tsv
 ```
+
 <details>
   <summary>Sample_1CPG.tsv Click to see content</summary>
   <pre>
