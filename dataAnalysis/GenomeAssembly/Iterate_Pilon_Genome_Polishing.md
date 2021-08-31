@@ -10,7 +10,7 @@ header:
 
 # How to iterate multiple rounds of Pilon polishing/gap-filling on a genome assembly
 
-After assembling a genome, polishing is usually done to correct small assembly errors. Typically, multiple rounds of polishing is not recommended, due to declining BUSCO scores. However, in certain situations, multiple rounds of polishing may be warranted.  In this case, my reads were obtained from thousands of individuals (population assembly). Exacerbating the problem, soybean cyst nematodes do not like homozygosity, so these individuals (and reads)were fairly diverse.  
+After assembling a genome, polishing is usually done to correct small assembly errors. Typically, multiple rounds of polishing is not recommended, due to declining BUSCO scores. However, in certain situations, multiple rounds of polishing may be warranted.  In this case, my reads were obtained from thousands of individuals (population assembly). Exacerbating the problem, soybean cyst nematodes do not like homozygosity, so these individuals (and reads) were fairly diverse. The only time I consider multiple rounds of polishing acceptable is when this considerable diversity in reads exists.   
 
 ### Prerequisite software
 
@@ -27,7 +27,7 @@ My working directory
 ```
 Softlink your genome
 ```
-ln -s /work/gif/remkv6/Baum/04_DovetailSCNGenome/49_RenameChromosomes/01_Transfer2Box/SCNgenome.fasta
+ln -s /work/gif/remkv6/04_DovetailSCNGenome/49_RenameChromosomes/01_Transfer2Box/SCNgenome.fasta
 ```
 
 Softlink the reads
