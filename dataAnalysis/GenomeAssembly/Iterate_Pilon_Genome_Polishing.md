@@ -1,3 +1,13 @@
+---
+title: Multiple rounds of Pilon polishing/gap-filling on a genome assembly
+layout: single
+author: Rick Masonbrink
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # How to iterate multiple rounds of Pilon polishing/gap-filling on a genome assembly
 
 After assembling a genome, polishing is usually done to correct small assembly errors. Typically, multiple rounds of polishing is not recommended, due to declining BUSCO scores. However, in certain situations, multiple rounds of polishing may be warranted.  In this case, my reads were obtained from thousands of individuals (population assembly). Exacerbating the problem, soybean cyst nematodes do not like homozygosity, so these individuals (and reads)were fairly diverse.  
@@ -238,3 +248,6 @@ By making a small change in the runPilon.sh script, you can also create a loopin
 ### References
 
 * https://github.com/broadinstitute/pilon/wiki
+
+
+[Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)

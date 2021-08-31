@@ -104,7 +104,7 @@ header:
 * [Arabidopsis thaliana data set](../dataAnalysis/GenomeAssembly/Arabidopsis/Arabidopsis_background.md)
   * [MaSuRCA assembly of Arabidopsis thanliana](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_MaSuRCA.md)
   * [Short read assembly using Platanus](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
-
+  * [Iteration of Pilon polishing and gap-filling on a genome](../dataAnalysis/GenomeAssembly/Iterate_Pilon_Genome_Polishing.md)
 #### <span style="color:lightblue">Tools for assessing the quality of a Genome Assembly</span>
 * [GenomeScope to Estimate Genome Size](../dataAnalysis/GenomeAssembly/genomescope.md)
 * [Checking a genome for contamination from vectors using UniVec](../dataAnalysis/GenomeAssembly/univecContaminationCheck.md)
@@ -120,6 +120,7 @@ header:
 * [Using Genetic Map to create AGPs](../dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
 
 #### <span style="color:lightblue">Introduction to Genome Annotation</span>
+* [Calling Genome Methylation with Nanopolish and Comparing Promoter Methylation among Samples](../dataAnalysis/GenomeAnnotation/Calling_Genome_Methylation_with_Nanopore.md)
 * [Introduction to Maker Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_To_Maker.md)
 * [Introduction to Braker2 Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_to_Braker2.md)
 * [Motif Identification and Finding with MEME and FIMO](../dataAnalysis/GenomeAnnotation/MEME_Motif_Finding_In_Genomes.md)  
@@ -154,7 +155,7 @@ header:
 ### [ATAC-Sequencing](../dataAnalysis/ATAC-seq/ATAC-index.md)
 * [ATAC-seq](../dataAnalysis/ATAC-seq/ATAC_tutorial.md)
 
-### [Data Visuallization](../Appendix/dataVisualization_index.md)
+### [Data Visualization](../Appendix/dataVisualization_index.md)
 * [Viewing Files Remotely without Transferring](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)
 * [Setting up an R and RStudio Environment](../dataWrangling/R/r-setup.md)
 * [Creating Boxplots in R](../dataWrangling/R/generate-boxplots.md)
