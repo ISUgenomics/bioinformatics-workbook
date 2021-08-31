@@ -182,9 +182,8 @@ This is some testing based on at least 5 aligned reads to a region, and distingu
 less cpgCompare.tsv |awk 'NR>1 &&$2>5 && $4>5 && $3>$5' |sort -k3,3nr -k5,5n |sed 's/:/\t/1' |sed 's/-/\t/1' |tr "\t" " " |sed 's/ /\t/1' |sed 's/ /\t/1' |sed 's/ /\t/1' |bedtools intersect -wo -a - -b genes.2kb.promoters.bed |cut -f 13 |sed 's/ID=//g' |sed 's/;/\t/g' |cut -f 1 |sort|uniq -c |sort -k1,1nr  >Sample_1CPG.tsv
 less cpgCompare.tsv |awk 'NR>1 &&$2>5 && $4>5 && $3<$5' |sort -k3,3nr -k5,5n |sed 's/:/\t/1' |sed 's/-/\t/1' |tr "\t" " " |sed 's/ /\t/1' |sed 's/ /\t/1' |sed 's/ /\t/1' |bedtools intersect -wo -a - -b genes.2kb.promoters.bed |cut -f 13 |sed 's/ID=//g' |sed 's/;/\t/g' |cut -f 1 |sort|uniq -c |sort -k1,1nr  >Sample_2CPG.tsv
 ```
-Sample_1CPG.tsv
 <details>
-  <summary>Click to see content</summary>
+  <summary>Sample_1CPG.tsv Click to see content</summary>
   <pre>
   14 BLOB19558
 13 BLOB19559
@@ -217,10 +216,8 @@ Sample_1CPG.tsv
 
 </pre>
 </details>
-
-Sample_2CPG.tsv
   <details>
-    <summary>Click to see content</summary>
+    <summary>Sample_2CPG.tsv Click to see content</summary>
     <pre>
     26 BLOB19557
 23 BLOB14134
@@ -254,14 +251,12 @@ Sample_2CPG.tsv
 </details>
 ##### GPC methylation
 ```
-
 less gpcCompare.tsv |awk 'NR>1 &&$2>5 && $4>5 && $3<$5' |sort -k3,3nr -k5,5n |sed 's/:/\t/1' |sed 's/-/\t/1' |tr "\t" " " |sed 's/ /\t/1' |sed 's/ /\t/1' |sed 's/ /\t/1' |bedtools intersect -wo -a - -b genes.2kb.promoters.bed |cut -f 13 |sed 's/ID=//g' |sed 's/;/\t/g' |cut -f 1 |sort|uniq -c |sort -k1,1nr  >Sample_1GPC.tsv
 
 less gpcCompare.tsv |awk 'NR>1 &&$2>5 && $4>5 && $3>$5' |sort -k3,3nr -k5,5n |sed 's/:/\t/1' |sed 's/-/\t/1' |tr "\t" " " |sed 's/ /\t/1' |sed 's/ /\t/1' |sed 's/ /\t/1' |bedtools intersect -wo -a - -b genes.2kb.promoters.bed |cut -f 13 |sed 's/ID=//g' |sed 's/;/\t/g' |cut -f 1 |sort|uniq -c |sort -k1,1nr  >Sample_2GPC.tsv
 ```
-Sample_1GPC.tsv
 <details>
-  <summary>Click to see content</summary>
+  <summary>Sample_1GPC.tsv Click to see content</summary>
   <pre>
   10 BLOB19569
    7 BLOB19557
@@ -294,9 +289,8 @@ Sample_1GPC.tsv
    1 BLOB21356
 </pre>
 </details>
-Sample_2GPC.tsv
   <details>
-    <summary>Click to see content</summary>
+    <summary>Sample_2GPC.tsv Click to see content</summary>
     <pre>
     27 BLOB19559
 27 BLOB19560
