@@ -34,10 +34,10 @@ for f in *fastq; do mkdir ${f%.*}tmp; done
 ```
 Map the reads to your genome with minimap, sort, convert to bam, and index with samtools
 ```
-ml minimap2;ml samtools;minimap2 -a -x map-ont SCNgenome.fasta male_1_1fastq/male1_1.fastq| samtools sort -T male_1_1fastq/male1_1tmp -o male_1_1fastq/male1_1.sorted.bam ;samtools index male_1_1fastq/male1_1.sorted.bam
-ml minimap2;ml samtools;minimap2 -a -x map-ont SCNgenome.fasta male_1_2fastq/male1_2.fastq| samtools sort -T male_1_2fastq/male1_2tmp -o male_1_2fastq/male1_2.sorted.bam ;samtools index male_1_2fastq/male1_2.sorted.bam
-ml minimap2;ml samtools;minimap2 -a -x map-ont SCNgenome.fasta male_2_1fastq/male2_1.fastq| samtools sort -T male_2_1fastq/male2_1tmp -o male_2_1fastq/male2_1.sorted.bam ;samtools index male_2_1fastq/male2_1.sorted.bam
-ml minimap2;ml samtools;minimap2 -a -x map-ont SCNgenome.fasta male_2_2fastq/male2_2.fastq| samtools sort -T male_2_2fastq/male2_2tmp -o male_2_2fastq/male2_2.sorted.bam ;samtools index male_2_2fastq/male2_2.sorted.bam
+ml minimap2;ml samtools;minimap2 -a -x map-ont MindFlayergenome.fasta EvilPowers_1_1fastq/EvilPowers1_1.fastq| samtools sort -T EvilPowers_1_1fastq/EvilPowers1_1tmp -o EvilPowers_1_1fastq/EvilPowers1_1.sorted.bam ;samtools index EvilPowers_1_1fastq/EvilPowers1_1.sorted.bam
+ml minimap2;ml samtools;minimap2 -a -x map-ont MindFlayergenome.fasta EvilPowers_1_2fastq/EvilPowers1_2.fastq| samtools sort -T EvilPowers_1_2fastq/EvilPowers1_2tmp -o EvilPowers_1_2fastq/EvilPowers1_2.sorted.bam ;samtools index EvilPowers_1_2fastq/EvilPowers1_2.sorted.bam
+ml minimap2;ml samtools;minimap2 -a -x map-ont MindFlayergenome.fasta EvilPowers_2_1fastq/EvilPowers2_1.fastq| samtools sort -T EvilPowers_2_1fastq/EvilPowers2_1tmp -o EvilPowers_2_1fastq/EvilPowers2_1.sorted.bam ;samtools index EvilPowers_2_1fastq/EvilPowers2_1.sorted.bam
+ml minimap2;ml samtools;minimap2 -a -x map-ont MindFlayergenome.fasta EvilPowers_2_2fastq/EvilPowers2_2.fastq| samtools sort -T EvilPowers_2_2fastq/EvilPowers2_2tmp -o EvilPowers_2_2fastq/EvilPowers2_2.sorted.bam ;samtools index EvilPowers_2_2fastq/EvilPowers2_2.sorted.bam
 ```
 
 ### Run SVIM on your mapped reads
@@ -47,15 +47,15 @@ My directory locale
 ```
 Run SVIM
 ```
-for f in *bam; do echo "ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ "$f" SCNgenome.fasta";done >svim.sh
+for f in *bam; do echo "ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ "$f" MindFlayergenome.fasta";done >svim.sh
 ```
 <details>
   <summary>svim.sh -- Click to see content</summary>
   <pre>
-ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ male1_1.sorted.bam SCNgenome.fasta
-ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ male1_2.sorted.bam SCNgenome.fasta
-ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ male2_1.sorted.bam SCNgenome.fasta
-ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ male2_2.sorted.bam SCNgenome.fasta
+ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ EvilPowers1_1.sorted.bam MindFlayergenome.fasta
+ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ EvilPowers1_2.sorted.bam MindFlayergenome.fasta
+ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ EvilPowers2_1.sorted.bam MindFlayergenome.fasta
+ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ EvilPowers2_2.sorted.bam MindFlayergenome.fasta
 </pre>
 </details>
 
@@ -73,7 +73,7 @@ Move to output directory (signatures have a higher confidence than the candidate
 ```
 Softlink the repeat annotation
 ```
-ln -s /work/gif/remkv6/Baum/04_DovetailSCNGenome/49_RenameChromosomes/01_Transfer2Box/RepeatMaskerFormatted.gff3
+ln -s /work/gif/remkv6/04_DovetailMindFlayerGenome/49_RenameChromosomes/01_Transfer2Box/RepeatMaskerFormatted.gff3
 ```
 Identify repeats that overlap with these structural variants. Unless your genome is a model, this takes a little guesswork and manual assessment of duplication associations with TEs. Start by taking a look at overlaps between your SVIM bed files and your transposon annotations.  Ideally I am looking for a complete duplication source and destination overlap with the same type of repeat. This doesnt happen very often with my dataset, so I concatenated all of the bed files.
 
