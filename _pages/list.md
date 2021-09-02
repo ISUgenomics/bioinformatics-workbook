@@ -151,7 +151,7 @@ header:
 * [Repeat Annotation from Next-gen Sequencing Reads Using RepeatExplorer](../dataAnalysis/ComparativeGenomics/RepeatExplorer.md)
 * [De-Novo Repeat Identification and Annotation from Genome Assemblies using RepeatModeler and RepeatMasker](../dataAnalysis/ComparativeGenomics/RepeatModeler_RepeatMasker.md)
 * [Tandem Duplication Annotation in a Genome Assembly Using Mummer and RedTandem](../dataAnalysis/ComparativeGenomics/Tandem_Duplication_Detection.md)
-
+* [How to assess structural variation in your genome, and identify jumping transposons](../dataAnalysis/ComparativeGenomics/How_To_Find_Transposon_Jumps_in_Reads.md)
 ### [ATAC-Sequencing](../dataAnalysis/ATAC-seq/ATAC-index.md)
 * [ATAC-seq](../dataAnalysis/ATAC-seq/ATAC_tutorial.md)
 

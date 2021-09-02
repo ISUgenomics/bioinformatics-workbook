@@ -1,4 +1,10 @@
-# How to assess structural variation in your genome, and identify jumping transposons
+---
+title: How to assess structural variation in your genome, and identify jumping transposons
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
 
 
 ### Prerequisites
@@ -199,3 +205,5 @@ ml tabix; bgzip genes.gff3; tabix -p gff3 genes.gff3.gz
 * https://github.com/lh3/minimap2
 * https://github.com/eldariont/svim
 * https://jbrowse.org/blog/
+
+[Table of contents](Repeats_index.md)

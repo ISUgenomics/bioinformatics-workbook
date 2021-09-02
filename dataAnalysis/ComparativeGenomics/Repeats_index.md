@@ -20,3 +20,4 @@ the proportion of repeats in the genome can differ widely, ranging from a few pe
   * [Repeat Annotation from Next-gen Sequencing Reads Using RepeatExplorer](RepeatExplorer.md)
   * [De-Novo Repeat Identification and Annotation from Genome Assemblies using RepeatModeler and RepeatMasker](RepeatModeler_RepeatMasker.md)
   * [Tandem Duplication Annotation in a Genome Assembly Using Mummer and RedTandem](Tandem_Duplication_Detection.md)
+  * [How to assess structural variation in your genome, and identify jumping transposons](How_To_Find_Transposon_Jumps_in_Reads.md)
