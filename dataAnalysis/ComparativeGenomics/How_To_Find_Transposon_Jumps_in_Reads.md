@@ -201,6 +201,15 @@ ml samtools; samtools faidx genome.fa
 ml tabix; bgzip RepeatMaskerFormatted.gff3; tabix -p gff3 RepeatMaskerFormatted.gff3.gz
 ml tabix; bgzip genes.gff3; tabix -p gff3 genes.gff3.gz
 ```
+
+An example of a putative deletion caused by a transposon (excision in the reads/insertion in the genome). Also demonstrating the utility of having multiple repeat annotations for your genome. While my repeat annotations were generic for Repeatmasker/modeler, EDTA provided some intuitive information, that this deletion is bordered by LTR elements, a retrotransposon. 
+```
+Chromosome_9   2720515 2729040 DEL;1;None;None 1.0     [Chromosome_9|2720515|2729040|DEL;cigar|68340730-b565-45db-9f86-4d2bc128e721]
+```
+![Deletion Borderd by TE_00000734_LTR](../../assets/TEJumps.png)
+
+
+
 ### References
 * https://github.com/lh3/minimap2
 * https://github.com/eldariont/svim
