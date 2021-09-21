@@ -105,7 +105,7 @@ header:
   * [MaSuRCA assembly of Arabidopsis thanliana](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_MaSuRCA.md)
   * [Short read assembly using Platanus](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
   * [Iteration of Pilon polishing and gap-filling on a genome](../dataAnalysis/GenomeAssembly/Iterate_Pilon_Genome_Polishing.md)
-  * [Iterating a long read assembly to get higher contiguity by eliminating contaminant reads](../IteratingGenomeAssemblyWithReadFiltration.md)
+  * [Iterating a long read assembly to get higher contiguity by eliminating contaminant reads](../dataAnalysis/GenomeAssembly/IteratingGenomeAssemblyWithReadFiltration.md)
 #### <span style="color:lightblue">Tools for assessing the quality of a Genome Assembly</span>
 * [GenomeScope to Estimate Genome Size](../dataAnalysis/GenomeAssembly/genomescope.md)
 * [Checking a genome for contamination from vectors using UniVec](../dataAnalysis/GenomeAssembly/univecContaminationCheck.md)
