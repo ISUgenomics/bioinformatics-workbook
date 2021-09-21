@@ -1,4 +1,13 @@
-#Iterate a long read assembly to get higher contiguity by eliminating contaminant reads.
+---
+title: Iterating a long read assembly to get higher contiguity by eliminating contaminant reads
+layout: single
+author: Rick Masonbrink
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 
 Have you ever wanted to figure out which reads are the most useful for creating a more contiguous assembly? Here I assemble a nematode genome, assess contamination using Blobtools2, extract non-contaminant reads, and reassemble.
 
@@ -167,9 +176,9 @@ blobtools view --interactive Mystery
 
 #then paste the link into your personal computer's browser
 ```
-
+##### BlobPlotCircle
 ![SCN Circle Blob Plot](../../assets/SCN.blob.circle.png)
-
+##### BLOBTABLE.CSV
 ![SCN Circle Blob Table (csv file)](../../assets/BlobTable.png)
 
 Yay, you now can filter contigs that are contaminants. The only file needed is the blobtools.csv output, though I grab the circle blob plot also.  With my nematode assembly, I frequently get contigs attributed to arthropoda, as they more highly represented sequences in NT.
@@ -264,3 +273,4 @@ n90 scaffold length      40032
 scaffold %non-ACGTN       0.00
 Number of scaffold non-ACGTN nt          0
 ```
+[Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)
