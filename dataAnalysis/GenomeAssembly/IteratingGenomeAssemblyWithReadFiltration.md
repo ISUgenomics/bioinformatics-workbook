@@ -168,8 +168,9 @@ blobtools view --interactive Mystery
 #then paste the link into your personal computer's browser
 ```
 
-![SCN Circle Blob Plot](../../../assets\SCN.blob.circle.png)
-![SCN Circle Blob Table (csv file)](../../../assets\BlobTable.png)
+![SCN Circle Blob Plot](../../assets\SCN.blob.circle.png)
+
+![SCN Circle Blob Table (csv file)](../../assets\BlobTable.png)
 
 Yay, you now can filter contigs that are contaminants. The only file needed is the blobtools.csv output, though I grab the circle blob plot also.  With my nematode assembly, I frequently get contigs attributed to arthropoda, as they more highly represented sequences in NT.
 
