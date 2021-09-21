@@ -246,7 +246,7 @@ ln -s ../06_BlobtoolsDrafts/01_Mystery/03_blobtools/Long5kCleanedSCNReads.fastq
 
 ml miniconda3; source activate flye;flye  --nano-raw Long2kCleanedSCNReads.fastq -g 140m -o /work/gif/remkv6/USDA/11_Experiment/03_MysteryFlye -t 36
 ```
-Check assembly quality and gaze in awe at the improve contiguity
+Check assembly quality and gaze in awe at the improved contiguity
 ```
 ~/common_scripts/new_Assemblathon.pl
 
