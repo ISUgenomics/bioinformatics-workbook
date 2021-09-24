@@ -97,6 +97,6 @@ cat *out |grep ">>" |sort -k5,5nr |awk 'NR<50000' |sed 's/>>//g' |cat <(echo "Se
 
 ### Final output of Miranda Ascaris suum miRNAS vs Ascaris suum 3' UTR sequences
 
-![Miranda Output (tab file)](../../assets/MirandaOutput.tab)
+[Download Miranda Output (tab file)](https://bioinformaticsworkbook.org/assets/MirandaOutput.tab)
 
 [Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)
