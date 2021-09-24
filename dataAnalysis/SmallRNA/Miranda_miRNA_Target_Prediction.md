@@ -1,3 +1,13 @@
+---
+title: Predict miRNA and mRNA interactions with miranda software
+layout: single
+author: Rick Masonbrink
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 # Predict miRNA and mRNA interactions with miranda software
 
 ### Install
@@ -88,3 +98,5 @@ cat *out |grep ">>" |sort -k5,5nr |awk 'NR<50000' |sed 's/>>//g' |cat <(echo "Se
 ### Final output of Miranda Ascaris suum miRNAS vs Ascaris suum 3' UTR sequences
 
 ![Miranda Output (tab file)](../../assets/MirandaOutput.tab)
+
+[Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)
