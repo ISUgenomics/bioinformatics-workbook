@@ -58,7 +58,7 @@ feature_row:
     alt: "small RNA"
     title: "small RNAs"
     excerpt: "small RNA sequence analysis"
-    url: "/dataAnalysis/SmallRNA/Miranda_miRNA_Target_Prediction"
+    url: "dataAnalysis/SmallRNA/smallRNA_index"
     btn_label: "Learn More"
 
   - image_path: /assets/images/annotation.png
