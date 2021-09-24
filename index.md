@@ -54,6 +54,13 @@ feature_row:
     url: "dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-intro"
     btn_label: "Learn More"
 
+  - image_path: /assets/images/MiRNA.png
+    alt: "small RNA"
+    title: "small RNAs"
+    excerpt: "small RNA sequence analysis"
+    url: "dataAnalysis/SmallRNA/Miranda_miRNA_Target_Prediction.md"
+    btn_label: "Learn More"
+
   - image_path: /assets/images/annotation.png
     alt: "Annotation"
     title: "Genome Assembly and Annotation"
