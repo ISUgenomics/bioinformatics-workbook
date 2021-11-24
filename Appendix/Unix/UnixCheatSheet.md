@@ -16,8 +16,9 @@ header:
 | <span style="color:Green">_Command_</span>|<span style="color:Green">_Function_</span>|<span style="color:Green">_Syntax/example usage_</span> |
 |`ls` 	|list contents	|`ls` <span style="color:Red">[OPTIONS] DIRECTORY</span>|
 |`pwd`	|print working directory	|`pwd`|
-|`cd`|change directory	|`cd` ~ or `cd` 		#home directory|
-| | 			|`cd` .. #previous (parent directory)|
+|`cd`|change directory	|`cd ~` or `cd` 		#home directory|
+| | 			|`cd ..` #"up" a directory (parent directory)|
+| |       |`cd -` # previous directory |
 
 ## File/Directory operations
 
