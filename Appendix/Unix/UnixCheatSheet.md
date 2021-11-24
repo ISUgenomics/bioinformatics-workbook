@@ -148,7 +148,7 @@ header:
 |cmd `>>` <span style="color:Red">file</span>	|append output to file|
 |cmd `2>` <span style="color:Red">stderr</span>	|error output to file|
 |cmd `1>&2` <span style="color:Red">file</span>	|send output and error to file|
-|cmd1 `\|` <span style="color:Red">cmd2</span> 	|send output of cmd1 to cmd2|
+|cmd1 `|` <span style="color:Red">cmd2</span> 	|send output of cmd1 to cmd2|
 
 ## PRE-DECLARED VARIABLES
 
