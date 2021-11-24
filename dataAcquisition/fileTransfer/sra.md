@@ -139,12 +139,12 @@ module load parallel
 
 To get the SRR numbers associated with the project:
 ```
-esearch -db sra -query PRJNA301162 | efetch --format runinfo |cut -d "," -f 1 > SRR.numbers
+esearch -db sra -query PRJNA301162 | efetch -format runinfo |cut -d "," -f 1 | tail -n +2 > SRR.numbers
 ```
 
 To download them all in parallel (limit the number to 3 concurrent downloads)
 ```
-parallel --jobs 3 "fastq-dump --split-files --origfmt --gzip {}" ::: SRR.numbers
+parallel --jobs 3 "fastq-dump --split-files --origfmt --gzip {}" :::: SRR.numbers
 ```
 Make sure you do this on Condoddtn node or as a PBS job
 
