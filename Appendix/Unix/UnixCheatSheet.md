@@ -206,4 +206,4 @@ header:
 |||`module avail`			# lists available modules|
 |||`module unload` <span style="color:Red">PROGRAM</span>	# unloads module|
 
-PS: An A-Z Index of the Bash command line for Linux can be found at found [Here](http://ss64.com/bash/index.html)
+PS: An A-Z Index of the Bash command line for Linux can be found [here](http://ss64.com/bash/index.html)
