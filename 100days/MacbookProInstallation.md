@@ -26,6 +26,16 @@ I got the following error when I tried to install from DMG so don't do that.
 **Error** "R can't be opened because Apple cannot check it for malicious software"
   * [Monterey Arm version 4.2](https://mac.r-project.org/monterey/R-devel/R-GUI-8008-4.2-monterey-arm64-Release.dmg)
 
+#### Check to see R is working
+
+I use plot to quickly test the installation.
+
+```
+plot(1:10)
+```
+
+A window should pop up with a scatter plot along the diagonal.
+
 
 ## R package manager [Renv](https://cran.r-project.org/web/packages/renv/)
 
