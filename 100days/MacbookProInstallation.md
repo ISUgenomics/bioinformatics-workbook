@@ -1,11 +1,25 @@
 # Macbook Pro Installation
 
-
-## Optional programs
+## Optional Software
+### Word Processing
 * Microsoft Office Suite (Word, Excel, Powerpoint, Teams, OneNote)
+* Apple Suite (Keynote, Numbers, Pages)
+
+### Password Manager
 * Password Manager (Dashlane, OnePass, etc)
 
+### Screen Capture/Video Editors
+* [Camtasia](https://www.techsmith.com/download/camtasia/)
+* [Apple Pro Apps bundle for education](https://www.apple.com/us-edu/shop/product/BMGE2Z/A/pro-apps-bundle-for-education)
+ * Final Cut pro
+ * Compressor
+ * Motion
+ * Logic Pro
+ 
 
+
+
+** 
 ## Install Xcode Developer tools
 
 In order to get the most out of your macbook, this developer's toolkit is required.  It is used to gain access to full functionality of github and R.  If you don't install this first, then you will later on as you install R and want to use github.
