@@ -11,10 +11,10 @@
 ### Screen Capture/Video Editors
 * [Camtasia](https://www.techsmith.com/download/camtasia/)
 * [Apple Pro Apps bundle for education](https://www.apple.com/us-edu/shop/product/BMGE2Z/A/pro-apps-bundle-for-education)
- * Final Cut pro
- * Compressor
- * Motion
- * Logic Pro
+  * Final Cut pro
+  * Compressor
+  * Motion
+  * Logic Pro
  
 
 
