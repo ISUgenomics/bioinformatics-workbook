@@ -37,9 +37,13 @@ Run the following command on the terminal
 /usr/sbin/softwareupdate --install-rosetta --agree-to-license
 ```
 
+Restart your computer
+
 ## Install Atom editor 
 
 * https://atom.io
+
+Atom did not open for me the first time when I double clicked on it.
 
 
 ## Install R
