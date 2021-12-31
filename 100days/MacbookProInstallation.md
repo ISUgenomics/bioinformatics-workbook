@@ -79,3 +79,5 @@ pacman?
 R environment manager
 
 mamba conda
+
+update
