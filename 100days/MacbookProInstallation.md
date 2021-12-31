@@ -22,11 +22,25 @@
 ** 
 ## Install Xcode Developer tools
 
-In order to get the most out of your macbook, this developer's toolkit is required.  It is used to gain access to full functionality of github and R.  If you don't install this first, then you will later on as you install R and want to use github.
+In order to get the most out of your macbook, this developer's toolkit is required.  Installing XCode at a minimum also installs git for github commands. 
 
 * The download takes a long time
 * The unzipping takes a long time
 * Move the Xcode App to your applications
+
+## Install Rosetta 2
+For those applications that are still compiled for Intel processors, Apple has Rosetta 2
+
+Run the following command on the terminal
+
+```
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+```
+
+## Install Atom editor 
+
+* https://atom.io
+
 
 ## Install R
 
