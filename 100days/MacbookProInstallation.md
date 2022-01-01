@@ -15,14 +15,17 @@
   * Compressor
   * Motion
   * Logic Pro
- 
+
+## Team communication
+
+* [Slack](https://slack.com/downloads/mac)
+  * The easiest way to reload your teams is to sign in on the slack website and then use your email to sign in for each team you want to be signed in on your desktop application.
 
 
-
-** 
+**
 ## Install Xcode Developer tools
 
-In order to get the most out of your macbook, this developer's toolkit is required.  Installing XCode at a minimum also installs git for github commands. 
+In order to get the most out of your macbook, this developer's toolkit is required.  Installing XCode at a minimum also installs git for github commands.
 
 * The download takes a long time
 * The unzipping takes a long time
@@ -39,12 +42,22 @@ Run the following command on the terminal
 
 Restart your computer
 
-## Install Atom editor 
+## Install Atom editor
 
 * https://atom.io
 
 Atom did not open for me the first time when I double clicked on it.
 
+Here are some recommended packages
+
+* language-swift-89
+* language-r
+* markdownn-folding
+* markdown-pdf
+* minimap
+* wordcount
+* drag-relative-path
+* markdown-scroll-sync
 
 ## Install R
 
@@ -81,3 +94,9 @@ R environment manager
 mamba conda
 
 update
+
+
+```
+.CFUserTextEncoding  .Rapp.history        .atom/               .zsh_sessions/       
+.DS_Store            .Trash/              .zsh_history
+```
