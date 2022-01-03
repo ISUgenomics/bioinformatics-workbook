@@ -1,4 +1,13 @@
-# Macbook Pro Installation
+---
+title: "Macbook Pro Installation"
+layout: single
+author: Andrew Severin
+author_profile: true
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
 
 ## Optional Software
 ### Word Processing
