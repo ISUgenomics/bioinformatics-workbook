@@ -160,6 +160,49 @@ echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/YourNAME/.zprofile
 
 ```
 
+Create a brewfile
+
+```
+tap "homebrew/bundle"
+tap "homebrew/core"
+tap "homebrew/cask"
+brew "zsh-completions"
+brew 'bash-completion'
+brew "gnu-sed"
+brew "gnu-tar"
+brew "gawk"
+brew "gnu-which"
+brew "gzip"
+brew "unzip"
+brew "coreutils"  #Adds a few extra commands typically found in Unix systems
+brew "curl" #Updated curl
+brew "dos2unix" #For those pesky dos line endings
+brew "findutils" #find xargs locate updatedb
+#brew "git" #if you installed XCODE then this is already installed
+brew "go" #programming language
+brew "jq" #https://stedolan.github.io/jq/ #like sed for JSON
+brew "ruby", link: true #programming language
+brew "rust" #programming language
+brew "tree" #see your file structure
+brew "wget" #like curl but better
+cask "docker" #Not singularity but can be useful.
+cask "iterm2" #An advanced Terminal.
+cask "xquartz" #Required for some plotting programs like R
+cask "figtree" #Visualize phylogenic trees
+brew "tcl-tk" #Needed for some programs
+tap "brewsci/bio/"
+brew "brewsci/bio/pymol" #Visualize protein structures
+brew "igv"  #Genome browser
+cask "jbrowse" #A Better Genome browser
+brew "htop"  #A different type of top for your mac
+```
+
+Execute the following command in the same folder as the brewfile defined above and it will install all of the programs.
+
+```
+brew bundle
+```
+
 ## Conda
 
 Install Miniforge3 that emphasizes the arm architecture.
@@ -214,3 +257,5 @@ If you start using Terminal, Mac will now ask you every time if you change direc
 * Settings
   * Security & Privacy
     * Full Disk Access
+
+test
