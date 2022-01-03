@@ -8,6 +8,8 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+{% include toc %}
+
 
 ## Optional Software
 ### Word Processing
