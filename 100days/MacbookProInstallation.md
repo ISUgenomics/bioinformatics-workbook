@@ -258,4 +258,13 @@ If you start using Terminal, Mac will now ask you every time if you change direc
   * Security & Privacy
     * Full Disk Access
 
+#### Git files
+
+You will want to copy over the following files from your old machine to your new machine to make github and Atom work again with pushes and pulls.  Github does not allow username/password pushes/fetches anymore.
+
+* .gitconfig
+* .git-credentials
+
+
+
 test
