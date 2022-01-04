@@ -214,21 +214,122 @@ Execute the following command in the same folder as the brewfile defined above a
 brew bundle
 ```
 
+#### Notes about iterm2
+
+It is a powerful terminal and I haven't utilized its features fully. One feature that I felt was missing was being able to skip by word on the command line but apparently that is a really easy fix since iterm2 is fully configurable.  
+
+[How to skip by word in iterm2](https://coderwall.com/p/h6yfda/use-and-to-jump-forwards-backwards-words-in-iterm-2-on-os-x)
+  * esc + f  
+  * esc + b
+
 ## Conda
 
 Install Miniforge3 that emphasizes the arm architecture.
 
-* [Miniforge3](https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh)
+* https://github.com/conda-forge/miniforge
+  * [Miniforge3](https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh)
+  * [Miniforge3_x86](https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-x86_64.sh)
+
+I installed the x86 version in a folder with `_x86` at the end of it. This will become important later.
+
+```
+                          ~/Software/miniforge3
+base                  *   ~/Software/miniforge3_x86
+```
+
+This now gives us two base conda environments.  One for installations native to the ARM architecture and native to M1 macs and one for all the other programs that haven't made an ARM version. The x86 programs will run using `rosetta2`.
+
+#### How to change between base conda installations
+This website does a really good job explaining that we just need to change the code in the `.zshrc` file: [Changing base conda installs](https://stackoverflow.com/questions/58131555/how-to-change-the-path-of-conda-base).
+
+* .zshrc
+
+This file of course will look slightly different as you will have placed the miniforge3 folder in a different location then on my laptop.
+
+```bash
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/andrewseverin/GIFNew/Software/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/andrewseverin/GIFNew/Software/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/andrewseverin/GIFNew/Software/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/andrewseverin/GIFNew/Software/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+```
+
+The main point that the website above makes is that in order to change the base installation, all we have to do is change the folder name from `miniforge3` to `miniforge3_x86`.  Doing this every time we want to change between base installations would be a real pain so I modified the script to make this a lot easier.
+
+
+```bash
+
+if [[ $x86true -eq 1 ]]
+then
+x86="_x86"
+else
+x86=""
+fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/andrewseverin/GIFNew/Software/miniforge3$x86/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/andrewseverin/GIFNew/Software/miniforge3$x86/etc/profile.d/conda.sh" ]; then
+        . "/Users/andrewseverin/GIFNew/Software/miniforge3$x86/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/andrewseverin/GIFNew/Software/miniforge3$x86/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+```
+
+As you can see I added an if statement that changes a variable `$x86` which I placed at the the end of the folder name to modify the conda location. With this modification, we can create two new functions that will permit us to very quickly change between base conda installations.
+
+
+* condaArm
+
+```
+x86true=0
+source ~/.zshrc
+conda info --envs
+```
+
+* condaX86
+```
+x86true=1
+source ~/.zshrc
+conda info --envs
+```
 
 ## Qiime2
+
+
 
 * [Qiime install directions](https://docs.qiime2.org/2021.11/install/native/#miniconda)
 
 ```
 conda update conda
+wget https://data.qiime2.org/distro/core/qiime2-2020.11-py36-osx-conda.yml
+
+conda install mamba
+mamba env create -n qiime2-2020.11 --file qiime2-2020.11-py36-osx-conda.yml
 ```
 
+To run Qiime just activate the conda environment
 
+```
+conda activate qiime2-2020.11
+```
+
+[conda cheat sheet](https://kapeli.com/cheat_sheets/Conda.docset/Contents/Resources/Documents/index)
 
 ## Other
 
