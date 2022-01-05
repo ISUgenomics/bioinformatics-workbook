@@ -206,6 +206,7 @@ brew "brewsci/bio/pymol" #Visualize protein structures
 brew "igv"  #Genome browser
 cask "jbrowse" #A Better Genome browser
 brew "htop"  #A different type of top for your mac
+brew "pygments" #color syntax
 ```
 
 Execute the following command in the same folder as the brewfile defined above and it will install all of the programs.
@@ -221,6 +222,19 @@ It is a powerful terminal and I haven't utilized its features fully. One feature
 [How to skip by word in iterm2](https://coderwall.com/p/h6yfda/use-and-to-jump-forwards-backwards-words-in-iterm-2-on-os-x)
   * esc + f  
   * esc + b
+
+## Add Oh-My-ZSH to make the terminal more useful.
+
+```
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+```
+
+This generates a new .zshrc file.  Change the line with plugins to the following.  Include what is useful to you.  I don't use sublime or vscode but they are quite popular.
+
+```
+plugins=(git z github history osx pip pyenv pylint python sublime vscode)
+```
+
 
 ## Conda
 
@@ -242,6 +256,8 @@ This now gives us two base conda environments.  One for installations native to 
 #### How to change between base conda installations
 This website does a really good job explaining that we just need to change the code in the `.zshrc` file: [Changing base conda installs](https://stackoverflow.com/questions/58131555/how-to-change-the-path-of-conda-base).
 
+I placed all of the next code at the very end of this file. Oh-My-ZSH has a lot of other text in this file.  Leave that alone.
+
 * .zshrc
 
 This file of course will look slightly different as you will have placed the miniforge3 folder in a different location then on my laptop.
@@ -261,6 +277,9 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# this provides the prompt the conda env name you are in.  OH-My-ZSH doesn't do this automatically unfortunately.
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(anaconda ...ENVS)
 ```
 
 The main point that the website above makes is that in order to change the base installation, all we have to do is change the folder name from `miniforge3` to `miniforge3_x86`.  Doing this every time we want to change between base installations would be a real pain so I modified the script to make this a lot easier.
@@ -289,6 +308,9 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# this provides the prompt the conda env name you are in.  OH-My-ZSH doesn't do this automatically unfortunately.
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(anaconda ...ENVS)
 ```
 
 As you can see I added an if statement that changes a variable `$x86` which I placed at the the end of the folder name to modify the conda location. With this modification, we can create two new functions that will permit us to very quickly change between base conda installations.
@@ -307,6 +329,18 @@ conda info --envs
 x86true=1
 source ~/.zshrc
 conda info --envs
+```
+
+To change between them all you have to do is source the file
+
+```
+source condaX86
+```
+
+or
+
+```
+source condaArm
 ```
 
 ## Qiime2
@@ -344,14 +378,9 @@ conda activate qiime2-2020.11
 * qiime
   * which version am I currently using?
 * camtasia
-* figtree
-* igv
 * juicebox
-* jbrowse desktop
 * latex Editor
-* pymol
 * tassel
-
 * Box Drive
 
 
@@ -377,6 +406,12 @@ You will want to copy over the following files from your old machine to your new
 * .gitconfig
 * .git-credentials
 
+I also had to create a new ssh key in my github account for my new laptop. If you need a refresher on how to do this see this [github tutorial](https://bioinformaticsworkbook.org/Appendix/github/introgithub.html#gsc.tab=0).
 
 
-test
+## .zshrc
+
+```
+# Aliases
+pcat='pygmentize -f terminal256 -O style=native -g'
+```
