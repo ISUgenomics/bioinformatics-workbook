@@ -207,6 +207,8 @@ brew "igv"  #Genome browser
 cask "jbrowse" #A Better Genome browser
 brew "htop"  #A different type of top for your mac
 brew "pygments" #color syntax
+
+brew "fastqc"
 ```
 
 Execute the following command in the same folder as the brewfile defined above and it will install all of the programs.
@@ -214,6 +216,14 @@ Execute the following command in the same folder as the brewfile defined above a
 ```
 brew bundle
 ```
+
+## Install python modules
+
+```
+pip install multiqc
+```
+
+
 
 #### Notes about iterm2
 
@@ -350,17 +360,22 @@ source condaArm
 * [Qiime install directions](https://docs.qiime2.org/2021.11/install/native/#miniconda)
 
 ```
+source ~/condaX86
+
 conda update conda
 wget https://data.qiime2.org/distro/core/qiime2-2020.11-py36-osx-conda.yml
 
-conda install mamba
-mamba env create -n qiime2-2020.11 --file qiime2-2020.11-py36-osx-conda.yml
+conda create --name mambaX86
+conda install -n mambaX86 -c conda-forge mamba
+mamba env create -n qiime2-2021.11 --file qiime2-2021.11-py38-osx-conda.yml
 ```
 
 To run Qiime just activate the conda environment
 
 ```
-conda activate qiime2-2020.11
+# you have to use your full path in this case.
+conda activate /Users/andrewseverin/GIFNew/Software/miniforge3_x86/envs/mambaX86/envs/qiime2-2021.11
+
 ```
 
 [conda cheat sheet](https://kapeli.com/cheat_sheets/Conda.docset/Contents/Resources/Documents/index)
