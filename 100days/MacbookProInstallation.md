@@ -10,16 +10,36 @@ header:
 
 {% include toc %}
 
+## Introduction
+---
+
+This guide is meant for the installation and setup of an M1 Macbook Pro for bioinformatic data analysis. I assume that this is a brand new macbook and that no software has been installed beyond what is installed with IOS Monterey.  A new macbook is not required for the installation of these software but a clean installation of `conda` and `brew` is recommended.   
+
 
 ## Optional Software
-### Word Processing
+
+---
+
+#### Word Processing
+
+Written communication is required in almost every informatics position.  The majority of individuals that we will be communicating results will be using either Microsoft Office word or Apple's Pages.
+
 * Microsoft Office Suite (Word, Excel, Powerpoint, Teams, OneNote)
 * Apple Suite (Keynote, Numbers, Pages)
 
-### Password Manager
+#### Password Manager
+
+A password manager is strongly recommended. We have passwords now for everything from multiple emails (work, home) to University related tasks (workday) to our favorite social media (twitter, facebook, linkedIn) to our favorite way to relax (Apple TV, Netflix, Amazon Prime etc).  Trying to remember all of these passwords is an impossible task unless you start reusing passwords which is a bad idea with the amount of companies getting information hacked. A password manager, keeps everything organized, easy to find and can generate long random passwords that are essentially impossible to break.  
+
 * Password Manager (Dashlane, OnePass, etc)
 
-### Screen Capture/Video Editors
+I personally use Dashlane, but I have heard great things about OnePass as well.
+
+#### Screen Capture/Video Editors
+
+
+If your intent is to generate tutorials or create video content of your results then you will want some kind of screen capture and video editing software.  For very generic screen capture you can use the built in screen capture or download QuickTime.  But if you are planning on generating more professional videos more frequently, I would recommend the following software.
+
 * [Camtasia](https://www.techsmith.com/download/camtasia/)
 * [Apple Pro Apps bundle for education](https://www.apple.com/us-edu/shop/product/BMGE2Z/A/pro-apps-bundle-for-education)
   * Final Cut pro
@@ -29,6 +49,10 @@ header:
 
 ## Team communication
 
+---
+
+Everyone has their preferences when it comes to remote communication with their team.  I have been using Slack with my group since 2016. With a group of experienced bioinformaticians, this form of communication is fantastic as users can very quickly share their knowledge and answer each other's questions.  However, if you are the only expert in the group then it can be counter productive as it becomes a direct conduit to ask you questions.  I encourage the members of my group to try to figure out a problem on their own for an hour or two and if they still can't figure it out then to send a slack message to the group to see if anyone else has a solution.
+
 * [Slack](https://slack.com/downloads/mac)
   * The easiest way to reload your teams is to sign in on the slack website and then use your email to sign in for each team you want to be signed in on your desktop application.
 * [Zoom](https://zoom.us/support/download?os=mac)
@@ -36,7 +60,6 @@ header:
 
 
 
-**
 ## Install Xcode Developer tools
 
 In order to get the most out of your macbook, this developer's toolkit is required.  Installing XCode at a minimum also installs git for github commands.
