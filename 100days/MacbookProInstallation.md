@@ -62,7 +62,7 @@ Everyone has their preferences when it comes to remote communication with their 
 
 ## Install Xcode Developer tools
 
-In order to get the most out of your macbook, this developer's toolkit is required.  Installing XCode at a minimum also installs git for github commands.
+In order to get the most out of your macbook, this developer's toolkit is required.  Installing XCode at a minimum also installs git for github commands. There are probably ways where you don't ever have to install XCode developer tools and still get github and the other functionality but XCode installation seems to work well. You will mostly use the command line tools unless you decide you want to learn swift and ios app development.
 
 * The download takes a long time
 * The unzipping takes a long time
@@ -75,7 +75,7 @@ xcode-select --install
 ```
 
 ## Install Rosetta 2
-For those applications that are still compiled for Intel processors, Apple has Rosetta 2
+For those applications that are still compiled for Intel processors, Apple has Rosetta 2, which is a translation environment for your favorite intel compiled programs.
 
 Run the following command on the terminal
 
@@ -87,9 +87,11 @@ Restart your computer
 
 ## Install Atom editor
 
+Having a great markdown editor to go along with your github repo is a must for documentation of bioinformatic projects.
+
 * https://atom.io
 
-Atom did not open for me the first time when I double clicked on it.
+Atom did not open for me the first time when I double clicked on it. You may have to right click on the applicaton and select open.
 
 Here are some recommended packages
 
@@ -107,7 +109,7 @@ Here are some recommended packages
 
 ## VPN client
 
-If you need a vpn to access your HPC you will need to download that.  For us at Iowa State we use the Cisco Any Connect client
+If you need a vpn to access your HPC you will need to download that.  For us at Iowa State, we use the Cisco Any Connect client
 
 ## Adobe
 
@@ -126,6 +128,8 @@ I use the first three more than InDesign.
 
 # Safari Extensions
 
+Have too many tabs open at once and don't want to close them just in case you decide you will come back sometime later?  Well I have that problem too and it slows down your computer.  Instead install this extension and have it save the entire window of tabs in a list that you can resummon  with a click.
+
 * OneTab (you can download this from App extensions store from Apple)
 
 ## Install R
@@ -138,7 +142,7 @@ Install R from the package from R cran site.
 
 I got the following error when I tried to install from DMG so don't do that.
 **Error** "R can't be opened because Apple cannot check it for malicious software"
-  * [Monterey Arm version 4.2](https://mac.r-project.org/monterey/R-devel/R-GUI-8008-4.2-monterey-arm64-Release.dmg)
+  <!-- * [Monterey Arm version 4.2 <- don't use](https://mac.r-project.org/monterey/R-devel/R-GUI-8008-4.2-monterey-arm64-Release.dmg) -->
 
 ## R Studio
 Up your R desktop game by installing R studio.
@@ -159,16 +163,18 @@ A window should pop up with a scatter plot along the diagonal.
 
 ## R package manager [Renv](https://cran.r-project.org/web/packages/renv/)
 
+I haven't explored this enough yet but it would make sense to have a good package manager for all the potential R packages you might install.  Since some can comflict it can also be good to have separate conda environments for R packages.
+
 * https://cran.r-project.org/web/packages/renv/
 * https://6chaoran.wordpress.com/2020/07/20/introduction-of-renv-package/
 
-
+<!--
 pacman?
 R environment manager
 
 mamba conda
 
-update
+update -->
 
 ## Productivity software
 
@@ -186,16 +192,28 @@ I have found the following programs really useful to streamline my workflows and
 
 ## Install HomeBrew
 
+Homebrew is a package manager that makes installing many useful packages really easy.  
+
+#### Download HomeBrew
+
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+```
+
+Be sure to change YourName to your local username.
+
+```
 
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/YourNAME/.zprofile
    eval "$(/opt/homebrew/bin/brew shellenv)"
 
 ```
 
-Create a brewfile
+#### Create a brewfile
 
+This brew file I update as I add more programs with brew, that way I will always know what I have installed and can quickly install it on a new machine.
+
+Place the following text into a file called `brewfile`
 ```
 tap "homebrew/bundle"
 tap "homebrew/core"
@@ -271,7 +289,9 @@ plugins=(git z github history osx pip pyenv pylint python sublime vscode)
 
 ## Conda
 
-Install Miniforge3 that emphasizes the arm architecture.
+Conda is yet another package manager that is very popular in the bioinformatics community.  Almost every software you want to install can be installed using Conda by creating a conda environment.  The new Macbook Pros with the M1 Arm chips does make installations a little more challenging as not all software has been formatted to run natively on the ARM architecture.  Fortuntely, Apples translation environment software, Rosetta 2, can be used to install and run anything we want that was meant for Intel chips.
+
+Install Miniforge3 for both ARM and Intel chips
 
 * https://github.com/conda-forge/miniforge
   * [Miniforge3](https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh)
@@ -284,7 +304,7 @@ I installed the x86 version in a folder with `_x86` at the end of it. This will 
 base                  *   ~/Software/miniforge3_x86
 ```
 
-This now gives us two base conda environments.  One for installations native to the ARM architecture and native to M1 macs and one for all the other programs that haven't made an ARM version. The x86 programs will run using `rosetta2`.
+This now gives us two base conda environments.  One for installations native to the ARM architecture and native to M1 macs and one for all the other programs that haven't made an ARM version. The x86 programs will run using `Rosetta 2 translation environment`.
 
 #### How to change between base conda installations
 This website does a really good job explaining that we just need to change the code in the `.zshrc` file: [Changing base conda installs](https://stackoverflow.com/questions/58131555/how-to-change-the-path-of-conda-base).
@@ -364,21 +384,23 @@ source ~/.zshrc
 conda info --envs
 ```
 
-To change between them all you have to do is source the file
+I put these in my home directory. To change between them all you have to do is source the file
 
 ```
-source condaX86
+source ~/condaX86
 ```
 
 or
 
 ```
-source condaArm
+source ~/condaArm
 ```
+
+
 
 ## Qiime2
 
-
+We do a lot of metagenomic analyses and Qiime can be one of the more challenging softwares to install.  In this tutorial, I will use it as an example of how to create a conda environment and install it on your local machine.  If you do not run metagenomic analyses yet then you can skip this setup.
 
 * [Qiime install directions](https://docs.qiime2.org/2021.11/install/native/#miniconda)
 
@@ -387,7 +409,12 @@ source ~/condaX86
 
 conda update conda
 wget https://data.qiime2.org/distro/core/qiime2-2020.11-py36-osx-conda.yml
+```
 
+Here I am installing mamba for X86 as an install of mamba will initially run only for the ARM architecture, I had to create a specific environment to install the X86 version of mamba which I change into in order to use it to install X86 programs.  
+
+The only downside to this is that I have to use the full path in order to source active the conda environment.
+```
 conda create --name mambaX86
 conda install -n mambaX86 -c conda-forge mamba
 mamba env create -n qiime2-2021.11 --file qiime2-2021.11-py38-osx-conda.yml
@@ -403,7 +430,7 @@ conda activate /Users/andrewseverin/GIFNew/Software/miniforge3_x86/envs/mambaX86
 
 [conda cheat sheet](https://kapeli.com/cheat_sheets/Conda.docset/Contents/Resources/Documents/index)
 
-## Other
+<!-- ## Other
 
 * Singularity/Docker
 * R packages
@@ -425,7 +452,7 @@ conda activate /Users/andrewseverin/GIFNew/Software/miniforge3_x86/envs/mambaX86
 ```
 .CFUserTextEncoding  .Rapp.history        .atom/               .zsh_sessions/       
 .DS_Store            .Trash/              .zsh_history
-```
+``` -->
 
 
 ## Terminal setup
