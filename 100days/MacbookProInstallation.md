@@ -26,7 +26,7 @@ The **App Store** is an in-built store platform available on your MacBook Pro th
 
 ### Installation with Dialog Box
 
-Some programs are available for download on the distributor's website as an installation package. This is usually a single file with the extension *.dmg* (or *.pkg*, *.zip.download*, etc.), which can be run by double-clicking after downloading. Then a graphical interface appears. The user is asked to accept the license terms through a dialog box, and the installation process runs almost automatically. Often at the end, the user is asked to manually drag the new program into the Applications folder, which is a good thing to do for order and easy access.
+Some programs are available for download on the distributor's website as an installation package. This is usually a single file with the extension *.dmg* (or *.pkg*, *.zip.download*, etc.), which can be run by double-clicking after downloading. Then a graphical interface for the installation appears. The user is asked to accept the license terms through a dialog box, and the installation process runs almost automatically. Often at the end, the user is asked to manually drag the new program into the Applications folder, which is a good thing to do for order and easy access.
 
 ### Installation using Terminal
 
@@ -41,7 +41,7 @@ Once you get familiar with a coding terminal, you can easily install development
 Written communication is required in almost every informatics position. The majority of individuals that we will be communicating results will be using either Microsoft Office Word or Apple's Pages.
 
 * Apple Suite (Keynote, Numbers, Pages) should be pre-installed on your MacBook Pro.
-* Microsoft Office Suite is available at https://softwarekeep.com/office-for-mac. The Iowa State community can download the entire toolkit with a free academic license through Okta Application Dashboard, available at https://web.iastate.edu/signons. Once the package is downloaded, the automatic installer will guide you through the process. New tools will be available in the Applications on your Mac. Along with the MS package you will be equipped with office tools:
+* Microsoft Office Suite is available at [https://softwarekeep.com/office-for-mac](https://softwarekeep.com/office-for-mac). The Iowa State community can download the entire toolkit with a free academic license through Okta Application Dashboard, available at [https://web.iastate.edu/signons](https://web.iastate.edu/signons). Once the package is downloaded, the automatic installer will guide you through the process. New tools will be available in the *Applications* on your Mac. Along with the MS package you will be equipped with office tools:
   * **Word** - a word processing software, which offers DOC/DOCX formats,
   * **Excel** - a spreadsheet creator, which features calculation or computation capabilities, graphing tools, and pivot tables,
   * **Powerpoint** - a presentation and slideshow maker,
@@ -51,7 +51,7 @@ Written communication is required in almost every informatics position. The majo
 
 ### Adobe for Graphic and Design
 
-Adobe Inc. delivers comprehensive solutions for digital media, including Video, Design, Photography, and the Web. The applications can be installed from the Creative Cloud platform. Iowa State has a license for these apps in Okta Application Dashboard, available at https://web.iastate.edu/signons. Otherwise, it is ~$30/month for students/faculty.
+Adobe Inc. delivers comprehensive solutions for digital media, including Video, Design, Photography, and the Web. The applications can be installed from the [Creative Cloud](https://www.adobe.com/creativecloud.html) platform. Iowa State has a license for these apps in Okta Application Dashboard, available at [https://web.iastate.edu/signons](https://web.iastate.edu/signons). Otherwise, it is ~$30/month for students/faculty.
 
 Along with the Adobe package you will be equipped with professional tools dedicated for:
 
@@ -74,7 +74,7 @@ Screenshots can be a quick and effective way to capture important information. F
   * Motion
   * Logic Pro
 * **iScreen Shoter**, screen capture & text scanner - freely available in the App Store
-* and many more available in App Store for free (try searching for *'screen capture', 'video record', etc.*)
+* and many more available in the App Store for free (try searching for *'screen capture', 'video record', etc.*)
 
 
 ### Team communication
@@ -102,7 +102,7 @@ A password manager is strongly recommended. We have passwords now for everything
 
 ### Web Browser Extensions
 
-For Apple devices, Safari is the default built-in browser &nbsp;<img src="https://purepng.com/public/uploads/large/purepng.com-safari-iconsymbolsiconsapple-iosiosios-8-iconsios-8-7215225961106timx.png" alt="Mac App Store" height="22"  width="22">&nbsp;. You can also install other browsers yourself, e.g. here you can find detailed [installation instructions](https://www.techsolutions.support.com/how-to/how-to-download-and-install-google-chrome-on-a-mac-12424) for Google Chrome.
+For Apple devices, Safari is the default built-in browser &nbsp;<img src="https://purepng.com/public/uploads/large/purepng.com-safari-iconsymbolsiconsapple-iosiosios-8-iconsios-8-7215225961106timx.png" alt="Mac App Store" height="22"  width="22">&nbsp;. You can also install other browsers yourself, e.g., here you can find detailed [installation instructions](https://www.techsolutions.support.com/how-to/how-to-download-and-install-google-chrome-on-a-mac-12424) for Google Chrome on your Mac.
 <br>`TIPS:` If you are a web-developer, it is a good idea to have several different browsers to pre-test your implementations.
 
 Have too many tabs open at once and don't want to close them just in case you decide you will come back sometime later? Well, I have that problem too, and it slows down your computer. Instead, install the browser extension and have it save the entire window of tabs in a list that you can resummon with a click.
@@ -124,7 +124,7 @@ For Safari it is useful to add a few extensions:
 ## Install Basic Developer Tools
 
 ### Install Xcode
-Xcode is Apple's integrated development environment for macOS, used to develop software. In order to get the most out of your MacBook, this developer's toolkit is required. Installing XCode at a minimum also installs git for *GitHub* commands. There are probably ways where you don't even have to install XCode developer tools and still get *GitHub* and the other functionality, but XCode installation seems to work well. You will mostly use the command line tools unless you want to learn swift and ios app development.
+Xcode is Apple's integrated development environment for macOS, used to develop software. In order to get the most out of your MacBook, this developer's toolkit is required. Installing XCode at a minimum also installs `git` for *GitHub* commands. There are probably ways where you don't even have to install XCode developer tools and still get *GitHub* and the other functionality, but XCode installation seems to work well. You will mostly use the command line tools unless you want to learn swift and ios app development.
 
 * The download takes a long time
 * The unzipping takes a long time
@@ -152,7 +152,7 @@ Then, restart your computer.
 
 Homebrew is a package manager that makes installing many useful packages really easy. In short, it installs the software you need that Apple didn’t. The tool installs packages into their own directory and then symlinks their files into `path:/usr/local` on macOS.
 
-###### Download HomeBrew:
+**Download HomeBrew:**
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
@@ -164,7 +164,7 @@ echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/YourNAME/.zprofile
 
 ```
 
-###### Create a brew file:
+**Create a brew file:**
 
 I update this brew file as I add more programs with brew. That way, I will always know what I have installed and can quickly install it on a new machine.
 
@@ -216,7 +216,7 @@ brew bundle
 
 ### Install Atom editor
 Having a great markdown editor to go along with your *GitHub* repo is a must for documentation of bioinformatic projects.
-<br>**Atom** is a free and open-source text and source code editor available for download at https://atom.io. This editor should be at the core of every developer’s toolbox. It allows for cross-platform editing, smart autocompletion for multiple programming languages, find-preview-replace actions, browsing file system, editing code in multiple panes, managing built-in packages, and versioning code using Git.
+<br>**Atom** is a free and open-source text and source code editor available for download at [https://atom.io](https://atom.io). This editor should be at the core of every developer’s toolbox. It allows for cross-platform editing, smart autocompletion for multiple programming languages, find-preview-replace actions, browsing file system, editing code in multiple panes, managing built-in packages, and versioning code using `git`.
 
 Start the installation process by double-clicking on the file you downloaded to your Downloads folder.
 <br>`TIPS:` Atom did not open for me the first time when I double-clicked on it. You may have to right-click on the application and select *'Open'*.
@@ -238,7 +238,7 @@ Here are some recommended packages, which can be easily incorporated into the ed
 
 ### Terminal setup
 
-###### *Install iterm2*
+##### *Install iterm2*
 
 It is a powerful terminal. I haven't utilized its features fully. One option I felt was missing was 'skip by the word' on the command line, but apparently, that is a really-easy fix since iterm2 is fully configurable.  
 
@@ -246,7 +246,7 @@ It is a powerful terminal. I haven't utilized its features fully. One option I f
   * esc + f  
   * esc + b
 
-###### *Add Oh-My-ZSH to make the terminal more useful*
+##### *Add Oh-My-ZSH to make the terminal more useful*
 
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -258,7 +258,7 @@ This generates a new .zshrc file.  Change the line with plugins to the following
 plugins=(git z github history osx pip pyenv pylint python sublime vscode)
 ```
 
-###### *Setting up .zshrc / .bashrc / .bash_profile*
+##### *Setting up .zshrc / .bashrc*
 
 ```
 # Aliases
@@ -266,7 +266,7 @@ pcat='pygmentize -f terminal256 -O style=native -g'
 ```
 
 
-###### *Giving Terminal Full Disk Access*
+##### *Giving Terminal Full Disk Access*
 
 If you start using Terminal, Mac will now ask you every time if you change directories permission to change into that directory.  To give Terminal access to all folders:
 
@@ -275,11 +275,11 @@ If you start using Terminal, Mac will now ask you every time if you change direc
     * Full Disk Access
 
 
-###### *Install midnight commander file menager*
+##### *Install midnight commander file menager*
 
 Midnight Commander (**mc**) is a free cross-platform visual file manager that can be used as a primary file manager in a terminal session. By default, it consists of two panels, allowing simultaneous viewing from a terminal of two locations in the file system. That can also be a remote location (e.g., sshfs mounted HPC cluster), which allows you to view graphical files with your favorite programs without downloading the files to your local machine.
 
-Install midnight-commander with brew:
+Install midnight-commander with `brew`:
 ```
 brew install midnight-commander
 ```
@@ -301,7 +301,7 @@ I also had to create a new ssh key in my github account for my new laptop. If yo
 
 Virtual Private Network (VPN) is a technology that encrypts your internet traffic improve your online privacy. This means the data you transfer between your MacBook Pro and the HPC infrastructure is protected. Many computing networks, including SCINet and ISU HPC, require a secure connection via VPN to access resources and schedule your computations.
 
-If you need a VPN to access your HPC you will need to download the software suggested by the administrator of the resource you wish to access. For us at Iowa State University, we use the [Cisco AnyConnect client](https://www.cisco.com/). The details of the installation and your first connection can be found at https://it.engineering.iastate.edu/how-to/install-and-connect-to-vpn-pc/.
+If you need a VPN to access your HPC you will need to download the software suggested by the administrator of the resource you wish to access. For us at Iowa State University, we use the [Cisco AnyConnect client](https://www.cisco.com/). The details of the installation and your first connection can be found at [https://it.engineering.iastate.edu/how-to/install-and-connect-to-vpn-pc](https://it.engineering.iastate.edu/how-to/install-and-connect-to-vpn-pc).
 
 
 ### File Transfer software
@@ -312,9 +312,9 @@ File transfer is the translocation or transport of data, usually stored in the f
 * [Globus](https://www.globus.org/data-transfer)
   * Move, sync, and share large amounts of data between GridFTP server and a user's computer.
 * **sshfs**
-  * Mount a remote filesystem from another server locally on your machine using SFTP. This is very useful for viewing files held on the cluster with your local graphics programs (e.g. charts, text files both .docx and .pdf).
+  * Mount a remote filesystem from another server locally on your machine using SFTP. This is very useful for viewing files held on the cluster with your local graphics programs (e.g., charts, text files both *.docx* and *.pdf*).
 
-###### Install SSHFS
+##### Install SSHFS
 
 Download via terminal both `macfuse` and and `sshfs` from osxfuse GitHub repository.
 
@@ -332,8 +332,8 @@ Then, find the files in your Downloads folder and run the executable files in th
 Install R from the package from R cran site.
 
 * [Install R](https://mirror.las.iastate.edu/CRAN/)
-  * https://mirror.las.iastate.edu/CRAN/
-    * https://mirror.las.iastate.edu/CRAN/bin/macosx/big-sur-arm64/base/R-4.1.2-arm64.pkg
+  * [https://mirror.las.iastate.edu/CRAN/](https://mirror.las.iastate.edu/CRAN/)
+    * [https://mirror.las.iastate.edu/CRAN/bin/macosx/big-sur-arm64/base/R-4.1.2-arm64.pkg](https://mirror.las.iastate.edu/CRAN/bin/macosx/big-sur-arm64/base/R-4.1.2-arm64.pkg)
 
 `TIPS:` I got the following error when I tried to install from DMG so don't do that.
 **Error** "R can't be opened because Apple cannot check it for malicious software"
@@ -342,10 +342,10 @@ Install R from the package from R cran site.
 ### Install R Studio
 Up your R desktop game by installing R studio.
 
-* https://www.rstudio.com/products/rstudio/download/#download
+* [https://www.rstudio.com/products/rstudio/download/#download](https://www.rstudio.com/products/rstudio/download/#download)
 
 
-#### *Check to see R is working*
+***Check to see R is working***
 
 I use plot to quickly test the installation.
 
@@ -376,9 +376,24 @@ update
 ### Install Python Modules
 
 
+Python is an interpreted high-level general-purpose and object-oriented programming language which is one of the most popular coding languages nowadays. With it, you can develop new software, perform quick statistical analyses, create data structures and present results in interactive graphs. There are a lot of python libraries that make it much easier for you to work on Big Data.
+
+Most python libraries can be easily installed using `pip`.
+
 ```
-pip install multiqc
+pip install <module_name>
+
 ```
+Key commonly used modules should be pre-installed on the HPC infrastructure. You can find and load them with the `module` command.
+
+```
+module avail <module_name>
+module load <module_name>
+```
+
+* [NumPy](https://numpy.org) is a Python library supporting operations on large, multi-dimensional arrays and matrices. It also provides a large collection of mathematical functions, random number generators, linear algebra routines, Fourier transforms, and more.
+
+* [Pandas](https://pandas.pydata.org) is a Python library supporting fast and flexible data analysis, including reshaping, merging/joining/grouping, slicing, fancy indexing, and subsetting of large data sets. All operations are highly optimized for performance.
 
 
 ### Install Conda
@@ -389,7 +404,7 @@ Conda is an open-source and cross-platform environment management system. Conda 
 Use the [conda cheat sheet](https://kapeli.com/cheat_sheets/Conda.docset/Contents/Resources/Documents/index) to get an overview of the available functionalities.
 
 
-###### Install Miniforge3 for both ARM and Intel chips.
+***Miniforge3 for both ARM and Intel chips.***
 
 
 * https://github.com/conda-forge/miniforge
@@ -405,10 +420,10 @@ base                  *   ~/Software/miniforge3_x86
 
 This now gives us two base conda environments.  One for installations native to the ARM architecture and native to M1 macs and one for all the other programs that haven't made an ARM version. The x86 programs will run using `rosetta2` translation environment.
 
-###### *How to change between base conda installations*
-This website does a really good job explaining that we just need to change the code in the `.zshrc` file: [Changing base conda installs](https://stackoverflow.com/questions/58131555/how-to-change-the-path-of-conda-base).
+***How to change between base conda installations***
 
-I placed all of the next code at the very end of this file. Oh-My-ZSH has a lot of other text in this file.  Leave that alone.
+This website does a really good job explaining that we just need to change the code in the `.zshrc` file: [Changing base conda installs](https://stackoverflow.com/questions/58131555/how-to-change-the-path-of-conda-base).
+<br>I placed all of the next code at the very end of this file. Oh-My-ZSH has a lot of other text in this file.  Leave that alone.
 
 * .zshrc
 
@@ -477,6 +492,7 @@ conda info --envs
 ```
 
 * condaX86
+
 ```
 x86true=1
 source ~/.zshrc
@@ -497,7 +513,7 @@ source condaArm
 
 
 
-## Install Custom Packages
+## Install Bioinformatics Packages
 
 
 ### Qiime2
@@ -529,4 +545,14 @@ To run Qiime just activate the conda environment.
 # you have to use your full path in this case.
 conda activate /Users/andrewseverin/GIFNew/Software/miniforge3_x86/envs/mambaX86/envs/qiime2-2021.11
 
+```
+
+### MultiQC
+
+[MultiQC](http://multiqc.info) is a Python-based tool to aggregate bioinformatics results across many samples into a single report. The tool searches a given directory for analysis logs and compiles a HTML report. It contains modules for a large number of common bioinformatics tools.
+
+It can be easily installed with `pip`.
+
+```
+pip install multiqc
 ```
