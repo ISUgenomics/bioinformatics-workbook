@@ -112,8 +112,8 @@ There are lots of options that can be tweaked to test for positive selection. Th
 runmode = 0 means I am specifying user trees
 seqtype = 1 means I am using codon sequences
 CodonFreq = 0 means I am assuming equal codon frequencies (codon substitution model)
-model = 1 means I am assuming an independent dn/ds ratio for each branch in my tree
-NSsites = 1 means I am allowing dn/ds to vary among codons/amino acids, several of these can be specified at once.
+model = 0 a single dn/ds ratio for each branch in my tree
+NSsites = 2 3 test for overall selection and discrete values across branches, several of these can be specified at once.
 icode = 0  is specifies that I want to use the universal genetic code
 fix_kappa = 0 -- initial transition/transversion ratio value set to 0
 kappa = 0 -- assumption starting value for expectation of transitions/transversions
@@ -131,7 +131,7 @@ ndata = 1 -- number of separate datasets
 /work/gif/remkv6/Macintosh/01_AphidEffector/20_TestDataset/01_CleanProteins/Results_Feb09/Orthologues_Feb09/Gene_Trees
 
 #generate the control files appropriately named, but on one line
-for f in OG*pal2nal; do echo "seqfile = ../"$f" \t treefile = ../"${f%_*}"\t outfile = "${f%.*}".out \t noisy = 9 \t verbose = 1 \t runmode = 0 \t seqtype = 1 \t CodonFreq = 0 \t model = 1 \t NSsites = 1  \t icode = 0 \t fix_kappa = 0 \t kappa = 0  \t fix_omega = 1 \t omega = 0.001 \t  RateAncestor = 0 \t clock = 0 \t  Small_Diff = 5e-06 \t Malpha = 0 \t method = 0 \t ndata = 1" > ${f%.*}"codeml.ctl";done
+for f in OG*pal2nal; do echo "seqfile = ../"$f" \t treefile = ../"${f%_*}"\t outfile = "${f%.*}".out \t noisy = 9 \t verbose = 1 \t runmode = 0 \t seqtype = 1 \t CodonFreq = 0 \t model = 0 \t NSsites = 0 1 2 3  \t icode = 0 \t fix_kappa = 0 \t kappa = 0  \t fix_omega = 0 \t omega = 0.5 \t  RateAncestor = 0 \t clock = 0 \t  Small_Diff = 5e-06 \t Malpha = 0 \t method = 0 \t ndata = 1" > ${f%.*}"codeml.ctl";done
 
 #move orthgroup named files to new folders, codeml only works on codeml.ctl
 for f in OG*ctl; do mkdir ${f}dir; mv $f ${f}dir/codeml.ctl; done
