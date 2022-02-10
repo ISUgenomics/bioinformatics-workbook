@@ -105,10 +105,10 @@ tar -zxvf pal2nal.v14.tar.gz
 
 for f in *alignment; do echo "pal2nal.v14/pal2nal.pl  "$f" "${f%_*}"_Transcripts.fasta -output paml -nogap >"${f%_*}"_pal2nal" ; done >pal2nal.sh
 ```
+### Understanding Codeml parameters
+```
+There are lots of options that can be tweaked to test for positive selection. There are many more that I did not mention.
 
-### run Codeml
-
-There are lots of options that can be tweaked to test for positive selection.  
 runmode = 0 means I am specifying user trees
 seqtype = 1 means I am using codon sequences
 CodonFreq = 0 means I am assuming equal codon frequencies (codon substitution model)
@@ -126,6 +126,8 @@ Malpha = 0 -- when substitution rates are assumed to vary from site to site, Mal
 method = 0 -- nucleotide substitution model
 ndata = 1 -- number of separate datasets
 ```
+### run Codeml
+```
 /work/gif/remkv6/Macintosh/01_AphidEffector/20_TestDataset/01_CleanProteins/Results_Feb09/Orthologues_Feb09/Gene_Trees
 
 #generate the control files appropriately named, but on one line
@@ -138,7 +140,6 @@ for f in OG*ctl; do mkdir ${f}dir; mv $f ${f}dir/codeml.ctl; done
 sed -i 's/\\t/\n/g' *dir/codeml.ctl
 
 #run codeml -- separate this script and submit to multiple nodes.  
-ml paml/4.9h-m5kkb2e
 for f in *ctldir; do echo "ml paml/4.9h-m5kkb2e; cd "$f"; codeml; cd ../ ";done >IterateCodeml.sh
 ```
 
