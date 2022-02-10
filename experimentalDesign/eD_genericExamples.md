@@ -12,6 +12,19 @@ header:
 
 # **RNA-Seq Analysis Generic Example:** experiments with 192 samples or less
 
+
+
+# Costs circa 2021
+
+Nanopore per flowcell ~$1,150.00
+Nanopore library prep ~$125
+BluePippin ~$200/sample for up to 10 cells
+
+
+
+
+# Costs circa 2017
+
 #### Background
  This example assumes genomic resources already exist for the organism under study.  For example, the genome is assembled, annotated and available.  
 
@@ -20,6 +33,7 @@ header:
  Currently, the max number of samples that can be indexed in a same lane for RNA-Seq is 24 and the max number of lanes in a flow cell is 8 (8x24=192). Therefore, each lane can act as a replicate of the entire experiment.  This has the added advantage of avoiding lane effects and since all samples fit on a single flow cell, chip effects are also avoided.
 
 An average estimate for the size of the genic space in a genome  assumes a genome with ~30,000 genes with an average gene size of 1000 bases.  
+
 
 #### Ideal Experimental Design Elements for $136,000
 * ```Genome Assembled``` Yes
@@ -30,7 +44,7 @@ An average estimate for the size of the genic space in a genome  assumes a genom
 * ```Total Project Cost```: $136,000
 * ```Sequencing Technology```: Illumina HiSeq 3000
 * ```Assumed sequencing output```: 300 million fragments/lane
-* ```Number of lanes```: 8 lanes
+* ```Numbe  r of lanes```: 8 lanes
 * ```Length of read```: 150bp
 * ```Number of Samples```: 192 (4 strains x 2 conditions x 3 time points x 8 replicates)
 * ```Coverage Depth per sample```: 12.5 million fragments per lane and on average ~416 fragments/gene
