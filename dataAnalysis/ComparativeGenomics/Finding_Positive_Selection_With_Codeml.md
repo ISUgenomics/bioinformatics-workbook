@@ -342,7 +342,7 @@ less AllSignificantPositiveTrees.txt |sed 's/(//g' $f |sed 's/,/\n/g' |sed 's/:.
 grep -f  E.coliGenesUnderSignificantPositiveSelection.txt previouslypublished.txt |wc
     23      23     121
 
-All 23 positively selected genes in the previously published table were confirmed here. An addition 103 orthogroups also found to demonstrate positive selection with significance in this analysis. 
+All 23 positively selected genes in the previously published table were confirmed here. An addition 103 orthogroups also found to demonstrate positive selection with significance in this analysis.
 ```
 
 ### Further interpretation
@@ -359,7 +359,7 @@ Next steps would be to survey your significant orthogroups to identify which are
 
 * The PAML manual was tremendously helpful in increasing my understanding -- http://abacus.gene.ucl.ac.uk/software/pamlDOC.pdf
 * An earlier version of the paml manual that has some useful descriptions of input files -- https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.332.818&rep=rep1&type=pdf
-* I endlessly queried biostars to help improve my understanding -- getSE do in codeml site:www.biostars.org
+* I endlessly queried biostars to help improve my understanding --  codeml site:www.biostars.org
 * This tutorial for pairwise comparisons is what got me running initially -- https://www.protocols.io/view/introduction-to-calculating-dn-ds-ratios-with-code-qhwdt7e
 * Here is another set of tutorials that was helpful in understanding the value to the statistical method --  https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjY2ear9IH2AhUnDzQIHc4VBaQQFnoECAIQAQ&url=https%3A%2F%2Fs3-eu-west-1.amazonaws.com%2Fpfigshare-u-files%2F5999646%2Fworked_example.pdf&usg=AOvVaw2fyo5IUrZVUOS5fk0FGr_l
 
