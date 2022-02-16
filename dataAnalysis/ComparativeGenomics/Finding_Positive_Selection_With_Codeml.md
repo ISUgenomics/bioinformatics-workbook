@@ -1,4 +1,4 @@
-# How to Search for Positive/Negative/Neutral Selection with Codeml
+# How to Search for Positive/Negative/Neutral Selection with Codeml using multiple complete genomes
 
 Have you ever wanted to know which genes across a set of genomes are undergoing positive (diversifying), neutral, or negative (purifying) selection? Here is a tutorial that utilizes multiple genomes and gene predictions to assess this phenomenon.  
 
