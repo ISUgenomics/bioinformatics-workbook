@@ -38,7 +38,7 @@ header:
   * [Bioawk Basics](../Appendix/Unix/bioawk-basics.md)
 * <span style="color:black">[Viewing Files In Remote Machine Without Downloading](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)</span>
 
-### [<span style="color:black">Project Management](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/projectManagement_index)</span>
+### [<span style="color:black">Project Management</span>](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/projectManagement_index)
   * [Introduction to Project Management](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/Intro_projectManagement)
   * <span style="color:black">Project Management Tools</span>
     * [Introduction to Slack](../Appendix/slack.md)
