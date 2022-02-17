@@ -317,7 +317,7 @@ Note that this is not an exact comparison, as I used different genome's from the
 
 Create a text list gene names from the linked table above.
 
-####### previouslypublished.txt
+previouslypublished.txt
 ```
 fluA
 eaeH
