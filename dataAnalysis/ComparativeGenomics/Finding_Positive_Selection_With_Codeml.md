@@ -1,4 +1,13 @@
-# How to Search for Positive/Negative/Neutral Selection with Codeml using multiple complete genomes
+---
+title: Positive, Neutral, Negative Selection with Codeml using Multiple Genome Annotations
+layout: single
+header:
+  overlay_color: "444444"
+  overlay_image: /assets/images/dna.jpg
+---
+
+
+# Positive, Neutral, Negative Selection with Codeml using Multiple Genome Annotations
 
 Have you ever wanted to know which genes across a set of genomes are undergoing positive (diversifying), neutral, or negative (purifying) selection? Here is a tutorial that utilizes multiple genomes and gene predictions to assess this phenomenon.  
 
@@ -14,10 +23,11 @@ orthofinder/2.5.2
 diamond/2.0.4
 clustalo/1.2.4
 pal2nal.v14
+paml/4.9h
 ```
 
 
-### Download your datasets
+### Download your datasets -- genomes and annotations
 ```
 20_TestDataset/
 
@@ -370,3 +380,7 @@ Next steps would be to survey your significant orthogroups to identify which are
 
 ### Disclaimer
 I am a biologist with bioinformatics expertise, not a statistician. I do not consider myself an expert in running or interpreting codeml. That being said, I spent lots of time reading to understand this material and feel it is accurate.    
+
+
+---
+[Table of contents](compGenomics_index.md)
