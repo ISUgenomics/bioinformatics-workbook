@@ -9,7 +9,7 @@ header:
 ---
 
 ### [Command Line Basics and Useful Programs](https://isugenomics.github.io/bioinformatics-workbook/Appendix/programs)
-* <span style="color:lightblue">Introduction to Unix</span>
+* <span style="color:black">Introduction to Unix</span>
   * [Unix Basics 1](../Appendix/Unix/unix-basics-1.md)  
   * [Introduction to Job Scheduling: SLURM](../Appendix/Unix/01_slurm-basics.md)
   * [Introduction to GNU parallel](../Appendix/GNUparallel/GNU_parallel_examples.md)
@@ -18,29 +18,29 @@ header:
   * [Grep](../Appendix/Unix/unix-basics-3grep.md)
   * [Sed](../Appendix/Unix/unix-basics-4sed.md)
   * [Introduction to regular expression](../introduction/introduction-to-regular-expressions.md)
-* <span style="color:lightblue">HPC</span>
+* <span style="color:black">HPC</span>
   * [How to Install a Program](../Appendix/HPC/guide-for-installing-various-types-of-programs-in-linux.md)
-  * <span style="color:lightblue">SSH</span>
+  * <span style="color:black">SSH</span>
     * [SSH Shortcuts](../Appendix/HPC/ssh-shortcuts.md)
     * [Password-less SSH](../Appendix/HPC/password-less-ssh-login.md)
-  * <span style="color:lightblue">SLURM</span>
+  * <span style="color:black">SLURM</span>
     * [SLURM Cheatsheet](../Appendix/HPC/SLURM/slurm-cheatsheat.md)
     * [Creating SLURM job submission scripts](../Appendix/HPC/SLURM/creating-slurm-job-submission-scripts-for-condo.md)
     * [Submitting dependency jobs using SLURM](../Appendix/HPC/SLURM/submitting-dependency-jobs-using-slurm.md)
-  * <span style="color:lightblue">XSEDE</span>
+  * <span style="color:black">XSEDE</span>
       * [XSEDE supercomputer](../Appendix/HPC/xsede/xsede.md)
       * [XSEDE supercell storage](../Appendix/HPC/xsede/using-psc-supercell-storage-for-bridges-and-greenfield.md)
-    * <span style="color:lightblue">Containers</span>
+    * <span style="color:black">Containers</span>
       * [Introduction to Containers](../Appendix/HPC/Containers/Intro_Singularity.md)
       * [Creating Containers Using Singularity](../Appendix/HPC/Containers/creatingContainers.md)
       * [Modifying Existing Containers](../Appendix/HPC/Containers/modifyingExistingContainers.md)
-* <span style="color:lightblue">Bioawk</span>
+* <span style="color:black">Bioawk</span>
   * [Bioawk Basics](../Appendix/Unix/bioawk-basics.md)
-* <span style="color:lightblue">[Viewing Files In Remote Machine Without Downloading](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)</span>
+* <span style="color:black">[Viewing Files In Remote Machine Without Downloading](../Appendix/HPC/viewing-files-in-remote-machine-without-downloading-locally.md)</span>
 
 ### [Project Management](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/projectManagement_index)
   * [Introduction to Project Management](https://isugenomics.github.io/bioinformatics-workbook/projectManagement/Intro_projectManagement)
-  * <span style="color:lightblue">Project Management Tools</span>
+  * <span style="color:black">Project Management Tools</span>
     * [Introduction to Slack](../Appendix/slack.md)
     * [Introduction to GitHub](../Appendix/github/introgithub.md)
     * [Introduction to Markdown](../Appendix/Markdown.md)
@@ -59,23 +59,23 @@ header:
 * [List of Biology exceptions and irregularities](../Appendix/biology_tidbits.md)
 
 ### [Data Acquisition and Wrangling](../dataAcquisition/dAc_introduction.md)
-* <span style="color:lightblue">File Transfer</span>
+* <span style="color:black">File Transfer</span>
   * [File Transfer using wget](../dataAcquisition/fileTransfer/downloading-files-via-wget.md)
   * [File Transfer using Globus](../dataAcquisition/fileTransfer/file-transfer-using-globus-connect-personal-gcp.md)
   * [File Transfer using irods](../dataAcquisition/fileTransfer/getting-data-from-iplant-via-irods.md)
   * [File Transfer using SRA toolkit](../dataAcquisition/fileTransfer/sra.md)
 * [Data Sets Used in the tutorials](../dataAcquisition/dataSets.md)
-* <span style="color:lightblue">FASTA manipulation</span>
+* <span style="color:black">FASTA manipulation</span>
   * [Determining Sequence length](../dataWrangling/fastaq-manipulations/calculate-sequence-lengths-in-a-fasta-file.md)
   * [Converting FastQ to FASTA](../dataWrangling/fastaq-manipulations/converting-fastq-format-to-fasta.md)
   * [FASTQ Quality trimming](../dataWrangling/fastaq-manipulations/fastq-quality-trimming.md)
   * [Retrieving FASTA file using sequence ID](../dataWrangling/fastaq-manipulations/retrieve-fasta-sequences-using-sequence-ids.md)
-* <span style="color:lightblue">Manipulating Excel data sheets</span>
+* <span style="color:black">Manipulating Excel data sheets</span>
   * [Create Workbook from Multiple Text Files](../dataWrangling/microsoftExcel/import-multiple-text-files-as-separate-worksheets-in-excel.md)
   * [Export multiple worksheets as separate text files ](../dataWrangling/microsoftExcel/export-multiple-worksheets-as-separate-text-files-in-excel.md)
   * [Create Index for All Worksheets](../dataWrangling/microsoftExcel/generate-index-sheet-linking-all-spreadsheets-in-excel.md)
   * [Merge two spreadsheets using a common column](../dataWrangling/microsoftExcel/Merge_two_spreadsheets_using_a_common_column_in_Excel.md)
-* <span style="color:lightblue">Data Management</span>
+* <span style="color:black">Data Management</span>
   * [Deposition of Data to NCBI SRA](../dataWrangling/NCBI_Data_Submission.md)
 
 ### [Bioinformatics terminology](../introduction/terminology_index.md)
@@ -91,13 +91,13 @@ header:
 * [Using RSeQC to identify strand information of RNAseq](../dataAnalysis/RNA-Seq/Identify_Strandedness_Information.md)
 
 ### [Genome Assembly and Annotation](../dataAnalysis/GenomeAnnotation/annotation_and_assembly_index.md)
-#### <span style="color:lightblue">[Introduction to Genome Assembly](../dataAnalysis/GenomeAssembly/Intro_GenomeAssembly.md)</span>
+#### <span style="color:black">[Introduction to Genome Assembly](../dataAnalysis/GenomeAssembly/Intro_GenomeAssembly.md)</span>
 * [Introduction to Canu](../dataAnalysis/GenomeAssembly/Assemblers/canu.md)
   * [Canu on XSEDE Bridges Super Computer](../dataAnalysis/GenomeAssembly/BT/BT_Canu_bridges.md)
 * [Introduction to SPAdes](../dataAnalysis/GenomeAssembly/Assemblers/spades.md)
 * [Introduction to MaSuRCA](../dataAnalysis/GenomeAssembly/Assemblers/MaSuRCA.md)  
 
-#### <span style="color:lightblue">Genome Assembly Examples</span>
+#### <span style="color:black">Genome Assembly Examples</span>
 * [Bacillus thuringiensis data set](../dataAnalysis/GenomeAssembly/BT/BT_background.md)
   * [Canu Assembly of Bacillus thuringiensis](../dataAnalysis/GenomeAssembly/BT/BT_Canu.md)
   * [SPAdes Assembly of Bacillus thuringiensis](../dataAnalysis/GenomeAssembly/BT/BT_spades.md)
@@ -106,21 +106,21 @@ header:
   * [Short read assembly using Platanus](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
   * [Iteration of Pilon polishing and gap-filling on a genome](../dataAnalysis/GenomeAssembly/Iterate_Pilon_Genome_Polishing.md)
   * [Iterating a long read assembly to get higher contiguity by eliminating contaminant reads](../dataAnalysis/GenomeAssembly/IteratingGenomeAssemblyWithReadFiltration.md)
-#### <span style="color:lightblue">Tools for assessing the quality of a Genome Assembly</span>
+#### <span style="color:black">Tools for assessing the quality of a Genome Assembly</span>
 * [GenomeScope to Estimate Genome Size](../dataAnalysis/GenomeAssembly/genomescope.md)
 * [Checking a genome for contamination from vectors using UniVec](../dataAnalysis/GenomeAssembly/univecContaminationCheck.md)
 * [Check a genome for PhiX contamination](../dataAnalysis/GenomeAssembly/PhiXContaminationCheck.md)
 
-#### <span style="color:lightblue">Tools for Scaffolding assemblies</span>  
+#### <span style="color:black">Tools for Scaffolding assemblies</span>  
 * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md)
 * [Hi-C scaffolding](../dataAnalysis/GenomeAssembly/Hybrid/Scaffolding_with_HiC_Juicer.md)
 
-#### <span style="color:lightblue">Genetic Map Construction</span>
+#### <span style="color:black">Genetic Map Construction</span>
 
 * [Generating Genetic Maps from GBS data](../dataAnalysis/GenomeAssembly/GeneticMaps/creating-genetic-maps.md)
 * [Using Genetic Map to create AGPs](../dataAnalysis/GenomeAssembly/GeneticMaps/scaffolding-using-genetic-maps.md)
 
-#### <span style="color:lightblue">Introduction to Genome Annotation</span>
+#### <span style="color:black">Introduction to Genome Annotation</span>
 * [Calling Genome Methylation with Nanopolish and Comparing Promoter Methylation among Samples](../dataAnalysis/GenomeAnnotation/Calling_Genome_Methylation_with_Nanopore.md)
 * [Introduction to Maker Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_To_Maker.md)
 * [Introduction to Braker2 Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_to_Braker2.md)
@@ -128,11 +128,11 @@ header:
 
 
 ### [Comparative Genomics](../dataAnalysis/ComparativeGenomics/compGenomics_index.md)
-*  <font size="1">[Positive, Neutral, Negative Selection with Codeml using Multiple Genome Annotations](../dataAnalysis/ComparativeGenomics/Finding_Positive_Selection_With_Codeml.md)
+*  [Positive, Neutral, Negative Selection with Codeml using Multiple Genome Annotations](../dataAnalysis/ComparativeGenomics/Finding_Positive_Selection_With_Codeml.md)
 * [Gene Orthology, Synteny, and Visualzation with Opscan, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/Gene_Orthology_And_Synteny.md)
 * [Gene Orthology, Synteny, and Visualzation with Orthofinder, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/OrthofinderSynteny.md)
 * [Gene Overlap Significance Testing with R Gene_overlap Package](../dataAnalysis/ComparativeGenomics/Gene_Category_Overlap_Fishers_exact_testing.md)  
-* [Phylostratiophraphy:Determining the LCA of all Genes in a Genome](../dataAnalysis/ComparativeGenomics/phylostratr.md)<font>
+* [Phylostratiophraphy:Determining the LCA of all Genes in a Genome](../dataAnalysis/ComparativeGenomics/phylostratr.md)
 
 
 ### [Variant Discovery](../dataAnalysis/VariantCalling/variant-calling-index.md)
