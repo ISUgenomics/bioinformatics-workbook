@@ -11,7 +11,7 @@ header:
 
 Have you ever wanted to know which genes across a set of genomes are undergoing positive (diversifying), neutral, or negative (purifying) selection? Here is a tutorial that utilizes multiple genomes and gene predictions to assess this phenomenon.  
 
-I modeled this analysis after a previously published work that demonstrated positive selection among E. coli genes --> https://genome.cshlp.org/content/17/9/1336/T3.expansion.html
+I modeled this analysis after a previously published work that demonstrated positive selection among E. coli genes -->[Original Research](https://genome.cshlp.org/content/17/9/1336/T3.expansion.html)
 
 
 ### Prerequisite software
@@ -356,26 +356,26 @@ All 23 positively selected genes in the previously published table were confirme
 ```
 
 ### Further interpretation
-```
+
 Of the 3,996 orthogroups surveyed, 89 orthogroups were confirmed to have neutral selection with model M1, 101 orthogroups had positive selection with model M2, 106 orthogroups had positive selection with model M8, and 81 were found to have positive selection across the entire orthogroup with model M0.
 
 Next steps would be to survey your significant orthogroups to identify which areas of positive/neutral selection are significant to your project. Do these positively selected proteins play a role in some adaptive function?  Do they correspond to protein-protein binding domains, protein-DNA binding domains, protein-RNA binding domains? Are these proteins anomalous annotation errors or do they have a functional definition?  There are lots of things to explore, your mind is the only limit.
-```
+
 
 
 
 
 ### References
 
-* The PAML manual was tremendously helpful in increasing my understanding -- http://abacus.gene.ucl.ac.uk/software/pamlDOC.pdf
-* An earlier version of the paml manual that has some useful descriptions of input files -- https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.332.818&rep=rep1&type=pdf
-* I endlessly queried biostars to help improve my understanding --  codeml site:www.biostars.org
-* This tutorial for pairwise comparisons is what got me running initially -- https://www.protocols.io/view/introduction-to-calculating-dn-ds-ratios-with-code-qhwdt7e
-* Here is another set of tutorials that was helpful in understanding the value to the statistical method --  https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjY2ear9IH2AhUnDzQIHc4VBaQQFnoECAIQAQ&url=https%3A%2F%2Fs3-eu-west-1.amazonaws.com%2Fpfigshare-u-files%2F5999646%2Fworked_example.pdf&usg=AOvVaw2fyo5IUrZVUOS5fk0FGr_l
+* The PAML manual was tremendously helpful in increasing my understanding --[PAML manual](http://abacus.gene.ucl.ac.uk/software/pamlDOC.pdf)
+* An earlier version of the paml manual that has some useful descriptions of input files --[Earlier PAML manual](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.332.818&rep=rep1&type=pdf)
+* I endlessly queried biostars to help improve my understanding -- [Biostars](codeml site:www.biostars.org)
+* This tutorial for pairwise comparisons is what got me running initially -- [Pairwise codeml tutorial](https://www.protocols.io/view/introduction-to-calculating-dn-ds-ratios-with-code-qhwdt7e)
+* Here is another set of tutorials that was helpful in understanding the value to the statistical method --  [Worked examples of CODEML](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjY2ear9IH2AhUnDzQIHc4VBaQQFnoECAIQAQ&url=https%3A%2F%2Fs3-eu-west-1.amazonaws.com%2Fpfigshare-u-files%2F5999646%2Fworked_example.pdf&usg=AOvVaw2fyo5IUrZVUOS5fk0FGr_l)
 
-* This paper was crucial in my understanding of the log ratio tests https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.5015
+* This paper was crucial in my understanding of the log ratio tests [EasyCodeml Research Publication](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.5015)
 
-* A codeml tutorial that helps in the understanding the output of codeml and a detailed explanation of each model -- https://lorenzogatti.me/2016_FiPS_Tutorials/solutions_tutorial02.html
+* A codeml tutorial that helps in the understanding the output of codeml and a detailed explanation of each model --[Codeml tutorials](https://lorenzogatti.me/2016_FiPS_Tutorials/solutions_tutorial02.html)
 
 
 ### Disclaimer
