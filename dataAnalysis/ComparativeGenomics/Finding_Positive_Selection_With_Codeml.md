@@ -282,22 +282,22 @@ wc PositivelySelectedSitesM2.txt
 ```
 How many orthogroups had significant chi squared tests for log likelihood?
 ```
-less M7M8ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M0M1ChiSquares.tab - |awk '$3>$5' |sed 's/:/\t/g' |cut -f 1 |wc
-   109     109    5123
+less M7M8ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M7M8ChiSquares.tab - |awk '$3>$5' |sed 's/:/\t/g' |cut -f 1 |wc
+1825    1825   85775
 ```
 Positively selected sites -- only 106 comparisons had sites with significance
 ```
-less M7M8ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M0M1ChiSquares.tab - |awk '$3>$5' |sed 's/:/\t/g' |cut -f 1 |while read line; do grep --with-filename -A 500 "M7" $line |grep "\*" - |grep -v "branch" - |grep -v "Positively" - ;done >PositivelySelectedSitesM8.txt
+less M7M8ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M7M8ChiSquares.tab - |awk '$3>$5' |sed 's/:/\t/g' |cut -f 1 |while read line; do grep --with-filename -A 500 "M7" $line |grep "\*" - |grep -v "branch" - |grep -v "Positively" - ;done >PositivelySelectedSitesM8.txt
 ```
 Number of orthgroups with a significant log ratio threshold and Naive Emperical Bayes (NEB) analysis
 ```
 less PositivelySelectedSitesM8.txt |awk '{print $1}' |sort|uniq|wc
-   106     106    5088
+    301     301   14448
 ```
 Number of positively selected sites among the 106 orthogroups
 ```
 wc PositivelySelectedSitesM8.txt
-  1560   8888 131827 PositivelySelectedSitesM8.txt
+ 5227  26547 429691 PositivelySelectedSitesM8.txt
 ```
 
 ### How many of the M0 models show positive selection across the entire orthogroup
@@ -382,12 +382,18 @@ Using grep to adjust for differences in capitalization
 grep -f  E.coliGenesUnderSignificantPositiveSelection.txt previouslypublished.txt |wc
     23      23     121
 ```
-All 23 positively selected genes in the previously published table were confirmed here. An addition 103 orthogroups also found to demonstrate positive selection with significance in this analysis.
+How many orthogroups had positive selection between the M1vsM2 and M7vsM8 tests?
+```
+cat PositivelySelectedSitesM2.txt PositivelySelectedSitesM8.txt |sed 's/_/\t/g' |awk '{print $1}' |sort |uniq|wc
+365     365    3650
+
+```
+All 23 positively selected genes in the previously published table were confirmed here. An addition 342 orthogroups also found to demonstrate positive selection with significance in this analysis.
 
 
 ### Further interpretation
 
-Of the 3,996 orthogroups surveyed, 89 orthogroups were confirmed to have neutral selection with model M1, 101 orthogroups had positive selection with model M2, 106 orthogroups had positive selection with model M8, and 81 were found to have positive selection across the entire orthogroup with model M0.
+Of the 3,996 orthogroups surveyed, 89 orthogroups were confirmed to have neutral selection with model M1, 101 orthogroups had positive selection with model M2, 301 orthogroups had positive selection with model M8, and 81 were found to have positive selection across the entire orthogroup with model M0.
 
 Next steps would be to survey your significant orthogroups to identify which areas of positive/neutral selection are significant to your project. Do these positively selected proteins play a role in some adaptive function?  Do they correspond to protein-protein binding domains, protein-DNA binding domains, protein-RNA binding domains? Are these proteins anomalous annotation errors or do they have a functional definition?  There are lots of things to explore, your mind is the only limit.
 
