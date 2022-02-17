@@ -46,7 +46,7 @@ header:
     * [Introduction to Markdown](../Appendix/Markdown.md)
     * [Zenhub Download](https://www.zenhub.com/extension)
 
-### <a href="../dataAnalysis/blast/blast_index.md" style="color: black;">Introduction to BLAST</a>
+### <a href=../dataAnalysis/blast/blast_index.md style="color: black;">Introduction to BLAST</a>
 ### <span style="color:black">[Introduction to BLAST](../dataAnalysis/blast/blast_index.md)</span>
 * [BLAST example: finding a gene in a genome](../dataAnalysis/blast/blastExample.md)
 * [Running BLAST in parallel](../dataAnalysis/blast/running-blast-jobs-in-parallel.md)
