@@ -196,7 +196,7 @@ OG0000009_treecodeml.ctldir/OG0000009_tree.out:lnL(ntime: 55 -740.121154 56 -719
 ```
 M0 vs M1 -- Support for neutral selection can be identified if M1 provides a better fit than M0
 ```
-grep --with-filename "lnL"  OG*_treecodeml.ctldir/*out |awk '{print $1,$4,$5}' |sed 's/)://g' |tr " " "\t" |awk '{ if (NR % 5 == 0) {print $0"#"} else {print}}'  |tr "\n" "\t" |sed 's/#/\n/g' |awk '{print $1,$2,$3,$5,$6,$8,$9,$11,$12,$14,$15}' |awk '{print  $1,($^C$2),(2*($5+(-1*$3))) }' |  tr " " "\t" >M1M2ChiSquares.tab
+grep --with-filename "lnL"  OG*_treecodeml.ctldir/*out |awk '{print $1,$4,$5}' |sed 's/)://g' |tr " " "\t" |awk '{ if (NR % 5 == 0) {print $0"#"} else {print}}'  |tr "\n" "\t" |sed 's/#/\n/g' |awk '{print $1,$2,$3,$5,$6,$8,$9,$11,$12,$14,$15}' |awk '{print  $1,($4-$2),(2*($5+(-1*$3))) }' |  tr " " "\t" >M0M1ChiSquares.tab
 ```
 M1 vs M2 -- Support for positive selection can be identified if M2 provides a better fit than M1
 ```
