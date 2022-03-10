@@ -238,18 +238,14 @@ Is model M1 better than null(M0)? In how many orthogroups?  --neutral selection
 less M0M1ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M0M1ChiSquares.tab - |awk '$3>$5' |wc
      91     455    6998
 
-less M0M1ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M0M1ChiSquares.tab - |awk '$3>$5' |sed 's/:/\t/g' |cut -f 1 |sed 's/FLIP//g' |while read line; do grep --with-filename -A 200 "Model 1" $line |grep "\*" - |grep -v "branch" - |grep -v "Positively" -;done > NeutralSelectedSitesM1.txt
+less M0M1ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M0M1ChiSquares.tab - |awk '$3>$5' |sed 's/:/\t/g' |cut -f 1 |sed 's/FLIP//g' |while read line; do grep --with-filename -A 100 "Model 1" $line |grep "\*" - |grep -v "branch" - |grep -v "Positively" -;done > NeutralSelectedSitesM1.txt
 ```
 Number of orthogroups with significant log ratio threshold and Naive Empirical Bayes (NEB) analysis
 ```
 less NeutralSelectedSitesM1.txt |awk '{print $1}' |sort|uniq|wc
     89      89    4272
 ```
-Number of neutrally selected sites among the 89 orthogroups
-```
-less NeutralSelectedSitesM1.txt |wc
-       1319    7241  110317
-```
+
 
 
 ### Positive selection tests comparing models M1a and M2a
@@ -261,7 +257,7 @@ How many orthogroups had significant chi squared tests for log likelihood?
 less M1M2ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M1M2ChiSquares.tab - |awk '$3>$5' |wc
 105     525    8500
 
-less M1M2ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M1M2ChiSquares.tab - |awk '$3>$5' |sed 's/:/\t/g' |cut -f 1 |sed 's/FLIP//g' |while read line; do grep --with-filename -A 200 "Model 2" $line |grep "\*" - |grep -v "branch" - |grep -v "Positively" -;done > PositivelySelectedSitesM2.txt
+less M1M2ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M1M2ChiSquares.tab - |awk '$3>$5' |sed 's/:/\t/g' |cut -f 1 |sed 's/FLIP//g' |while read line; do grep --with-filename -A 100 "Model 2" $line |grep "\*" - |grep -v "branch" - |grep -v "Positively" -;done > PositivelySelectedSitesM2.txt
 ```
 Number of orthogroups with significant log ratio threshold and Naive Empirical Bayes (NEB) analysis
 ```
@@ -271,8 +267,8 @@ less PositivelySelectedSitesM2.txt |awk '{print $1}' |sort |uniq|wc
 Number of positively selected sites among the 101 orthogroups
 ```
 wc PositivelySelectedSitesM2.txt
-  1572   8636 131512 PositivelySelectedSitesM2.txt
-```
+ 1133  6089 94230 PositivelySelectedSitesM2.txt
+ ```
 
 
 
@@ -287,7 +283,7 @@ less M7M8ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" c
 ```
 Positively selected sites -- only 106 comparisons had sites with significance
 ```
-less M7M8ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M7M8ChiSquares.tab - |awk '$3>$5' |sed 's/:/\t/g' |cut -f 1 |while read line; do grep --with-filename -A 500 "M7" $line |grep "\*" - |grep -v "branch" - |grep -v "Positively" - ;done >PositivelySelectedSitesM8.txt
+less M7M8ChiSquares.tab |awk '{print $2}' |while read line; do grep -w "$line" chi2lists ;done |paste M7M8ChiSquares.tab - |awk '$3>$5' |sed 's/:/\t/g' |cut -f 1 |while read line; do grep --with-filename -A 500 "Model 8" $line |grep "\*" - |grep -v "branch" - |grep -v "Positively" - ;done >PositivelySelectedSitesM8.txt
 ```
 Number of orthgroups with a significant log ratio threshold and Naive Emperical Bayes (NEB) analysis
 ```
@@ -297,7 +293,8 @@ less PositivelySelectedSitesM8.txt |awk '{print $1}' |sort|uniq|wc
 Number of positively selected sites among the 106 orthogroups
 ```
 wc PositivelySelectedSitesM8.txt
- 5227  26547 429691 PositivelySelectedSitesM8.txt
+  5245  26637 431185 PositivelySelectedSitesM8.txt
+
 ```
 
 ### How many of the M0 models show positive selection across the entire orthogroup
