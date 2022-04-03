@@ -73,7 +73,7 @@ esearch -db sra -query PRJNA348194 | \
   cut -d "," -f 1 | \
   awk 'NF>0' | \
   grep -v "Run" > srr_numbers.txt
-  
+
 while read line; do echo "prefetch --max-size 100G --transport ascp --ascp-path \"/path/to/aspera/.../ascp|/path.../etc/asperaweb_id_dsa.openssh\" ${line}"; done < srr_numbers.txt > prefetch.cmds
 parallel < prefetch.cmds
 ```
@@ -145,7 +145,7 @@ multiqc_sources.txt
 ```
 
 
-You can peruse the complete report or download the plots and view them for example: 
+You can peruse the complete report or download the plots and view them for example:
 
 <img src="https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/Assets/fastqc_adapter_content_plot.png" style="width:300px" /> <img src="https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/Assets/fastqc_per_base_n_content_plot.png" style="width:300px" /> <img src="https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/Assets/fastqc_per_base_sequence_quality_plot.png" style="width:300px" />
 
@@ -293,6 +293,10 @@ SRR4420295.bam
 SRR4420294.bam
 SRR4420293.bam
 ```
+### STAR for mapping ###
+
+#### STAR Index ####
+
 
 # 4. Abundance estimation #
 
