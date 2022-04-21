@@ -11,7 +11,7 @@ header:
 
 # Genetic Maps
 
-Genetic map, as the name suggest is simply knowing the relative positions of specific sequences across the genome. There are various methods to generate them, but most popular method is to use a cross between the know parents and examining their progenies. These kinds of crosses to create specific group of individuals of known ancestry is called as mapping population. Many types of mapping population exist. Here we will use the data collected from a Recombinant Inbred Line (RIL) (through selfing) to create a genetic map.
+Genetic map, as the name suggest is simply knowing the relative positions of specific sequences across the genome. There are various methods to generate them, but most popular method is to use a cross between the known parents and examining their progenies. These kinds of crosses to create specific group of individuals of known ancestry is called as mapping population. Many types of mapping population exist. Here we will use the data collected from a Recombinant Inbred Line (RIL) (through selfing) to create a genetic map.
 
 ## Dataset
 
@@ -20,9 +20,9 @@ Genetic map, as the name suggest is simply knowing the relative positions of spe
 ![NAM figure](assets/NAM-fig1.png)
 *Figure 1: Maize NAM population*
 
-Since each cross here is RIL population, we can use any single cross as an example to construct genetic map, provided we have information about how traits are segregating. Although, you can collect the traits information by phenotyping these individuals, it is tedious and time consuming. But fortunately, if you can overcome this by using the sequences information. GBS (Genotype By Sequencing), can be used for this purpose.
+Since each cross here is RIL population, we can use any single cross as an example to construct genetic map, provided we have information about how traits are segregating. Although, you can collect the traits information by phenotyping these individuals, it is tedious and time consuming. But fortunately, you can overcome this by using the sequences information. GBS (Genotype By Sequencing), can be used for this purpose.
 
-Buckler group ([_Wallace et. al._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004845)) used these NAM lines for GWAS studies and generating SNPs for all these progenies (usig GBS), including parents. These genotypes form all the mapping population can provide information about how these are segregating in the population.  The data in this publication is available on CyVerse [link](https://data.iplantcollaborative.org/dav/iplant/commons/community_released/panzea/genotypes/GBS/v27/)
+Buckler group ([_Wallace et. al._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004845)) used these NAM lines for GWAS studies and generating SNPs for all these progenies (usig GBS), including parents. These genotypes from all the mapping population can provide information about how these are segregating in the population.  The data in this publication is available on CyVerse [link](https://data.iplantcollaborative.org/dav/iplant/commons/community_released/panzea/genotypes/GBS/v27/)
 
 ```
 /iplant/home/shared/panzea/genotypes/GBS/v27
