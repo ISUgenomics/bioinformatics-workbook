@@ -2,6 +2,7 @@
 title: "ENA data submission part 3"
 layout: single
 author: Arun Seetharam
+author1: Margaret Woodhouse
 author_profile: true
 header:
   overlay_color: "444444"

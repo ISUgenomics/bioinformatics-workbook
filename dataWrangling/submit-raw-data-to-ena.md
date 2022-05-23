@@ -10,15 +10,15 @@ header:
 
 # Submitting raw datasets to ENA
 
-This is part 2 of the ENA data submission. Here we demonstrate how to submit raw reads and associated data and connect it to your existing BioProject, BioExperiments and SRA datasets. This assumes that you have already finished the part 1 (BioProject creation) step. 
+This is part 2 of the ENA data submission. Here we demonstrate how to submit raw reads and associated data and connect it to your existing BioProject, BioExperiments and SRA datasets. This assumes that you have already finished the part 1 (BioProject creation) step.
 
 An overview of the reads submission process to ENA can be found here:
 
 https://ena-docs.readthedocs.io/en/latest/submit/reads.html
 
-This section will address two different types of submission: 
+This section will address two different types of submission:
 
-1. Raw read and other data submission for genomes; 
+1. Raw read and other data submission for genomes;
 2. Raw read and other data submission for functional data such as RNA-seq, bisulfite sequencing, and other data types not related to genome sequencing or assembly.
 
 Before beginning, it should be noted that ENA frequently changes its submission protocols,  so that while we will make every attempt to keep this information up to date, there may be times when some of the steps have become modified or obsolete. Be sure to check the link above to see if protocols have changed from what is described here.
@@ -32,7 +32,7 @@ This section explains how to upload files to ENA using a command line FTP client
 
 The below instructions describe how you may upload your files to us through a command line FTP client in Linux or Mac.
 
-    Open a terminal and type 
+    Open a terminal and type
 
 ```
 lftp webin2.ebi.ac.uk -u Webin-xxxxx
@@ -45,7 +45,7 @@ filling in your Webin username that had been created when you created your Biopr
     -Use mput <filename> command to upload files.
     -Use bye command to exit the ftp client.
 
-Note that in your Webin username, the ‘W’ should be upper case. In this section, we will use the fictional Webin-00000 account as our example, and a fictional password PaSSW0rd. 
+Note that in your Webin username, the ‘W’ should be upper case. In this section, we will use the fictional Webin-00000 account as our example, and a fictional password PaSSW0rd.
 
 ```
 lftp webin2.ebi.ac.uk -u Webin-00000
@@ -113,7 +113,7 @@ Once again, an md5 of all the 10xgenomics files were made:
 
 md5sum *.fastq.gz > B104_10x_fastq_md5
 
-However, this time, in the ENA reads submission portal https://www.ebi.ac.uk/ena/submit/webin/read-submission, you will select "Fastq" as the file type instead of bam files. 
+However, this time, in the ENA reads submission portal https://www.ebi.ac.uk/ena/submit/webin/read-submission, you will select "Fastq" as the file type instead of bam files.
 
 To complete the submission of your genome(s), please see Section 3, "Submission Guidelines for Chromosomal level Assemblies to ENA":
 
