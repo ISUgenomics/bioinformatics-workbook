@@ -111,7 +111,9 @@ ascp -QT -l300M -L- B104_S100_L001_R1_001.fastq.gz B104_S201_L001_R1_001.fastq.g
 
 Once again, an md5 of all the 10xgenomics files were made:
 
+```
 md5sum *.fastq.gz > B104_10x_fastq_md5
+```
 
 However, this time, in the ENA reads submission portal https://www.ebi.ac.uk/ena/submit/webin/read-submission, you will select "Fastq" as the file type instead of bam files.
 
