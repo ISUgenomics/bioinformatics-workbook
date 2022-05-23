@@ -38,6 +38,8 @@ Upon completion of this section on experimental design the learner will be able 
   * [Merge two spreadsheets using a common column](../dataWrangling/microsoftExcel/Merge_two_spreadsheets_using_a_common_column_in_Excel.md)
 * <span style="color:lightblue">Data Management</span>
   * [Deposition of Data to NCBI SRA](../dataWrangling/NCBI_Data_Submission.md)
+  * [Deposition of raw data to ENA](../dataWrangling/submit-raw-data-to-ena.md)
+  * [Deposition of Genome to ENA](../dataWrangling/ena-genome-submission.md)
 
 
 ---
