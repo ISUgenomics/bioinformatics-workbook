@@ -48,3 +48,9 @@ I am an Iowa State University graduate, with a PhD in Bioinformatics and Computa
 
 ![Swapna](../assets/images/people/SwapnaMenon.png){: .align-left}
 Swapna is a bioinformatics freelancer based in India. Her formal qualifications include an M.S. in Molecular Sciences and an M. Phil. in Bioinformatics. She analyzes microarray and NGS data for research groups in academic institutions. She helps clients with experimental design and sequence data issues. Earlier, she taught bioinformatics in universities in Kochi. The sequencing technologies are advancing. Bioinformatics software and analyses methods are keeping pace. Practicing bioinformatics requires knowledge of statistics, information technology and NGS technologies and, biology. Open source software and educational resources are vital for all bioinformatics practitioners.
+
+
+### Margaret Woodhouse
+
+![maggie](../assets/images/people/maggie.jpg){: .align-left}
+I am computational biologist for the USDA maize database MaizeGDB. My research interests are in comparative and evolutionary genomics. I have helped to develop MaizeGDB into a multi-genome, pan-genome database.  I also collaborate with various universities and agencies in the United States and around the world to sequence, assemble, analyze, and steward the genomes of maize. My long-term goal is to harness the power of deep learning and the enormous amount of plant genomic and functional data to predict the functions of loci in maize.
