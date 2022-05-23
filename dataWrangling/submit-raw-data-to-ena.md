@@ -23,7 +23,7 @@ This section will address two different types of submission:
 
 Before beginning, it should be noted that ENA frequently changes its submission protocols,  so that while we will make every attempt to keep this information up to date, there may be times when some of the steps have become modified or obsolete. Be sure to check the link above to see if protocols have changed from what is described here.
 
-##Uploading Files Using Command Line FTP Client
+## Uploading Files Using Command Line FTP Client
 
 This section explains how to upload files to ENA using a command line FTP client in Linux or Mac. The built-in FTP tool for Windows command line does not support FTPS so Windows users are recommended to use an alternative:
 
@@ -52,7 +52,7 @@ lftp webin2.ebi.ac.uk -u Webin-00000
 new password: PaSSW0rd #Enter your password here
 ```
 
-##Using Aspera ascp Command Line Program
+## Using Aspera ascp Command Line Program
 
 Aspera is a commercial file transfer protocol that may provide better transfer speeds than FTP.
 
@@ -64,19 +64,19 @@ Your command should look similar to this:
 ascp -QT -l300M -L- <file(s)> <Webin-N>@webin.ebi.ac.uk:.
 ```
 
-The -l300M option sets the upload speed limit to 300MB/s. You may wish to lower this value to increase the reliability of the transfer.
+The `-l300M` option sets the upload speed limit to 300MB/s. You may wish to lower this value to increase the reliability of the transfer.
 
-The -L- option is for printing logs out while transferring,
+The `-L-` option is for printing logs out while transferring,
 
-The <file(s)> can be a file mask (e.g. *.cram), a list of files or a single file.
+The `<file(s)>` can be a file mask (e.g. `*.cram`), a list of files or a single file.
 
-<Webin-N> is your Webin submission account name.
+`<Webin-N>` is your Webin submission account name.
 
 ```
 ascp -QT -l300M -L- <file(s)> Webin-00000@webin.ebi.ac.uk:.
 ```
 
-##1. Submitting raw reads data for genomes
+## 1. Submitting raw reads data for genomes
 
 
 In this example, we will use the submission of PacBio subread bam files to demonstrate the raw read genomic submission process. We are submitting information related to the maize cultivar B104. We are using Aspera ascp (described above) as the mode of submission via the command line.
