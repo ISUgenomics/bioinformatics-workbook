@@ -44,6 +44,15 @@ Note: to exit vim (hit esc then type :wq and hit enter)
 
 ### Make a dna blast database of the genomes
 
+You may need to load a module if you do not have blast locally installed.
+
+```
+module spider blast #this command can be used to find your blast module
+module load blast
+#or 
+module load blast+
+```
+
 ```
 makeblastdb -in GCA_002994505.1_ASM299450v1_genomic.fna -dbtype nucl -input_type fasta -out SerRivdb
 ```
