@@ -10,6 +10,7 @@ header:
 
 # <a href="https://datascience.101workbook.org" target="_blank" style="color: #3f5a8a;">Data Science Workbook</a>
 
+The Data Science Workbook offers a solid introduction to Data Science by providing principles universal across disciplines. This resource summarizes the basics of background knowledge & good practices tips, proposes state-of-the-art tools and methods based on benchmarks & reviews, and provides the user with hands-on tutorials to learn through examples of real-world applications. 
 
 ## <a href="https://datascience.101workbook.org/01-IntroToDataScience/00-IntroToDataScience-LandingPage" target="_blank" style="color: #3f5a8a;">01. Introduction to Data Science</a>
 
