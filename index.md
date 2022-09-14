@@ -7,9 +7,9 @@ header:
 excerpt: 'A tutorial to help scientists design their projects and analyze their data.'
 feature_row:
 
-  - image_path: /assets/images/bioinformatics_gallery_datascience.png
+  - title: "DataScience Workbook Intro to Unix & HPC"
+    image_path: /assets/images/bioinformatics_gallery_datascience.png
     alt: "Data Science"
-    title: "Data Science Workbook"
     url: "dataScienceWorkbook/IndexOfDataScienceWorkbook_landingPage"
     btn_label: "Learn More"
 
