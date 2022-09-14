@@ -7,12 +7,11 @@ header:
 excerpt: 'A tutorial to help scientists design their projects and analyze their data.'
 feature_row:
 
-  - image_path: /assets/images/computer.jpg
-    alt: "Command Line Basics"
-    title: "Command Line Basics and Useful Programs"
-    url: "/Appendix/programs"
+  - image_path: /assets/images/bioinformatics_gallery_datascience.png
+    alt: "Data Science"
+    title: "Data Science Workbook"
+    url: "dataScienceWorkbook/IndexOfDataScienceWorkbook_landingPage"
     btn_label: "Learn More"
-    caption: "photo credit [Arun Seetharam]"
 
   - title: "Introduction to Project Management"
     image_path: /projectManagement/assets/PMatom.png
