@@ -1,5 +1,5 @@
 ---
-title: "Useful Programs and Unix Basics"
+title: "Introduction to large scale computing and data wrangling"
 layout: single
 header:
   overlay_color: "444444"
