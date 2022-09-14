@@ -15,3 +15,9 @@ _book
 *.mobi
 *.pdf
 */.ipynb_checkpoints
+
+# macOS and python related
+__pycache__/
+*.pyc
+.DS_Store
+.env
