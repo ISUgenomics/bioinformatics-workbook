@@ -23,11 +23,11 @@ feature_row:
     url: "/projectManagement/projectManagement_index"
     btn_label: "Learn More"
 
-    - title: "Index of All Workbooks"
-      image_path: /assets/images/bioinformatics_gallery_101workbook.png
-      alt: "101workbook"
-      url: "https://101workbook.org"
-      btn_label: "Learn More"
+  - title: "Index of All Workbooks"
+    image_path: /assets/images/bioinformatics_gallery_101workbook.png
+    alt: "101workbook"
+    url: "https://101workbook.org"
+    btn_label: "Learn More"
 
 feature_row2:
   - title: "Introduction to BLAST"
@@ -131,7 +131,6 @@ feature_row2:
 
 
 {% include feature_row id="intro" type="center" %}
-
 
 ## <span style="color: #798288"><i>Get practical experience with hands-on tutorials of Data Science basics</i></span>
 
