@@ -34,14 +34,12 @@ feature_row2:
   - title: "Bioinformatics Terminology"
     image_path: /assets/images/fasta.jpg
     alt: "Bioinformatics Terminology"
-    excerpt: "Terminology"
     url: "/introduction/terminology_index"
     btn_label: "Learn More"
 
   - title: "Experimental Design"
     image_path: /assets/images/experiment.jpg
     alt: "Basics"
-    excerpt: "Introduction and basics"
     url: "/experimentalDesign/exp_design_index"
     btn_label: "Learn More"
 
@@ -51,17 +49,15 @@ feature_row2:
     url: "dataAnalysis/blast/blast_index"
     btn_label: "Learn More"
 
-  - image_path: /assets/images/rna.jpg
+  - title: "RNA Sequencing"
+    image_path: /assets/images/rna.jpg
     alt: "fully responsive"
-    title: "RNA Sequencing"
-    excerpt: "RNA Sequencing"
     url: "dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-intro"
     btn_label: "Learn More"
 
-  - image_path: /assets/images/MiRNA.png
+  - title: "small RNAs analysis"
+    image_path: /assets/images/MiRNA.png
     alt: "small RNA"
-    title: "small RNAs"
-    excerpt: "small RNA sequence analysis"
     url: "dataAnalysis/SmallRNA/smallRNA_index"
     btn_label: "Learn More"
 
@@ -71,24 +67,21 @@ feature_row2:
     url: "/dataAnalysis/ATAC-seq/ATAC-index"
     btn_label: "Learn More"
 
-  - image_path: /assets/images/annotation.png
+  - title: "Genome Assembly and Annotation"
+    image_path: /assets/images/annotation.png
     alt: "Annotation"
-    title: "Genome Assembly and Annotation"
-    excerpt: "Genome Annotation"
     url: "/dataAnalysis/GenomeAnnotation/annotation_and_assembly_index"
     btn_label: "Learn More"
 
-  - image_path: /assets/images/comp_genomics.jpg
+  - title: "Comparative Genomics"
+    image_path: /assets/images/comp_genomics.jpg
     alt: "fully responsive"
-    title: "Comparative Genomics"
-    excerpt: "Comparative Genomics"
     url: "/dataAnalysis/ComparativeGenomics/compGenomics_index"
     btn_label: "Learn More"
 
-  - image_path: /assets/images/variants.png
+  - title: "Variant Discovery"
+    image_path: /assets/images/variants.png
     alt: "fully responsive"
-    title: "Variant Discovery"
-    excerpt: "Variant Discovery"
     url: "dataAnalysis/VariantCalling/variant-calling-index"
     btn_label: "Learn More"
 
@@ -110,21 +103,18 @@ feature_row3:
   - title: "Data Acquisition and Wrangling"
     image_path: /assets/images/data_management.jpg
     alt: "data management"
-    excerpt: "Introduction and basics"
     url: "/dataAcquisition/dAc_introduction"
     btn_label: "Learn More"
 
   - title: "Workflow languages"
-    image_path: /assets/images/rna.jpg
+    image_path: /assets/images/rna-small.jpg
     alt: "fully responsive"
-    title: "Workflow languages"
     url: "dataAnalysis/nextflow/workflows_index"
     btn_label: "Learn More"
 
   - title: "Data Visualization"
-    image_path: /assets/images/Heatmap.jpg
+    image_path: /assets/images/Heatmap-small.jpg
     alt: "fully responsive"
-    title: "Data Visualization"
     url: "Appendix/dataVisualization_index"
     btn_label: "Learn More"
 
