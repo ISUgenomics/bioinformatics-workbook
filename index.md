@@ -18,7 +18,7 @@ feature_row:
     btn_label: "Learn More"
 
   - title: "Project Management"
-    image_path: /projectManagement/assets/PMatom.png
+    image_path: /projectManagement/assets/PMatom-small.png
     alt: "Project Management"
     url: "/projectManagement/projectManagement_index"
     btn_label: "Learn More"
@@ -50,7 +50,7 @@ feature_row2:
     btn_label: "Learn More"
 
   - title: "RNA Sequencing"
-    image_path: /assets/images/rna.jpg
+    image_path: /assets/images/rna-small.jpg
     alt: "fully responsive"
     url: "dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-intro"
     btn_label: "Learn More"
