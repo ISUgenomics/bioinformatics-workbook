@@ -17,7 +17,7 @@ feature_row:
     url: "dataScienceWorkbook/IndexOfDataScienceWorkbook_landingPage"
     btn_label: "Learn More"
 
-  - title: "Introduction to Project Management"
+  - title: "Project Management"
     image_path: /projectManagement/assets/PMatom.png
     alt: "Project Management"
     url: "/projectManagement/projectManagement_index"
@@ -30,10 +30,12 @@ feature_row:
     btn_label: "Learn More"
 
 feature_row2:
-  - title: "Introduction to BLAST"
-    image_path: dataAnalysis/blast/assets/BLAST.png
-    alt: "BLAST"
-    url: "dataAnalysis/blast/blast_index"
+
+  - title: "Bioinformatics Terminology"
+    image_path: /assets/images/fasta.jpg
+    alt: "Bioinformatics Terminology"
+    excerpt: "Terminology"
+    url: "/introduction/terminology_index"
     btn_label: "Learn More"
 
   - title: "Experimental Design"
@@ -43,18 +45,10 @@ feature_row2:
     url: "/experimentalDesign/exp_design_index"
     btn_label: "Learn More"
 
-  - title: "Data Acquisition and Wrangling"
-    image_path: /assets/images/data_management.jpg
-    alt: "data management"
-    excerpt: "Introduction and basics"
-    url: "/dataAcquisition/dAc_introduction"
-    btn_label: "Learn More"
-
-  - title: "Bioinformatics Terminology"
-    image_path: /assets/images/fasta.jpg
-    alt: "Bioinformatics Terminology"
-    excerpt: "Terminology"
-    url: "/introduction/terminology_index"
+  - title: "Introduction to BLAST"
+    image_path: dataAnalysis/blast/assets/BLAST.png
+    alt: "BLAST"
+    url: "dataAnalysis/blast/blast_index"
     btn_label: "Learn More"
 
   - image_path: /assets/images/rna.jpg
@@ -69,6 +63,12 @@ feature_row2:
     title: "small RNAs"
     excerpt: "small RNA sequence analysis"
     url: "dataAnalysis/SmallRNA/smallRNA_index"
+    btn_label: "Learn More"
+
+  - title: "ATAC-sequencing"
+    image_path: /assets/images/ATAC.jpg
+    alt: "fully responsive"
+    url: "/dataAnalysis/ATAC-seq/ATAC-index"
     btn_label: "Learn More"
 
   - image_path: /assets/images/annotation.png
@@ -92,6 +92,12 @@ feature_row2:
     url: "dataAnalysis/VariantCalling/variant-calling-index"
     btn_label: "Learn More"
 
+  - title: "Genome Repeat Identification"
+    image_path: /assets/images/repeats.png
+    alt: "fully responsive"
+    url: "/dataAnalysis/ComparativeGenomics/Repeats_index"
+    btn_label: "Learn More"
+
   - title: "Metagenomics"
     image_path: /assets/images/metagenomics.jpg
     alt: "fully responsive"
@@ -99,23 +105,13 @@ feature_row2:
     caption: "Photo credit: [Kostas Tsobanoglou](https://commons.wikimedia.org/wiki/File:Diatoms-HCMR.jpg)"
     btn_label: "Learn More"
 
-  - title: "Genome Repeat Identification"
-    image_path: /assets/images/repeats.png
-    alt: "fully responsive"
-    url: "/dataAnalysis/ComparativeGenomics/Repeats_index"
-    btn_label: "Learn More"
+feature_row3:
 
-  - title: "ATAC-sequencing"
-    image_path: /assets/images/ATAC.jpg
-    alt: "fully responsive"
-    url: "/dataAnalysis/ATAC-seq/ATAC-index"
-    btn_label: "Learn More"
-
-  - title: "Data Visualization"
-    image_path: /assets/images/Heatmap.jpg
-    alt: "fully responsive"
-    title: "Data Visualization"
-    url: "Appendix/dataVisualization_index"
+  - title: "Data Acquisition and Wrangling"
+    image_path: /assets/images/data_management.jpg
+    alt: "data management"
+    excerpt: "Introduction and basics"
+    url: "/dataAcquisition/dAc_introduction"
     btn_label: "Learn More"
 
   - title: "Workflow languages"
@@ -125,9 +121,14 @@ feature_row2:
     url: "dataAnalysis/nextflow/workflows_index"
     btn_label: "Learn More"
 
+  - title: "Data Visualization"
+    image_path: /assets/images/Heatmap.jpg
+    alt: "fully responsive"
+    title: "Data Visualization"
+    url: "Appendix/dataVisualization_index"
+    btn_label: "Learn More"
+
 ---
-
-
 
 
 {% include feature_row id="intro" type="center" %}
@@ -136,6 +137,10 @@ feature_row2:
 
 {% include feature_row %}
 
-## <span style="color: #798288"><i>Explore  hands-on tutorials for highly-specialized Bioinformatics analysis</i></span>
+## <span style="color: #798288"><i>Explore hands-on tutorials for highly-specialized Bioinformatics analysis</i></span>
 
 {% include feature_row id="feature_row2" %}
+
+## <span style="color: #798288"><i>Explore hands-on tutorials that increase the efficiency of your Bioinformatics analysis</i></span>
+
+{% include feature_row id="feature_row3" %}
