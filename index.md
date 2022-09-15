@@ -5,9 +5,13 @@ header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 excerpt: 'A tutorial to help scientists design their projects and analyze their data.'
+
 feature_row:
 
-  - title: "DataScience Workbook Intro to Unix & HPC"
+  - title: "<details>
+  <summary><i>DataScience Workbook</i></summary>
+  <H5>#command-line #terminal #unix #bash #bashrc #HOME-dir #computer-setup #installation #text-editors #programming #python #R #scripting #remote-access #HPC #Atlas-Ceres-clusters #job-scheduling #SLURM #containers-singularity #data-transfer #data-manipulation #data-visualization #project-management</H5>
+  </details>"
     image_path: /assets/images/bioinformatics_gallery_datascience.png
     alt: "Data Science"
     url: "dataScienceWorkbook/IndexOfDataScienceWorkbook_landingPage"
@@ -19,6 +23,13 @@ feature_row:
     url: "/projectManagement/projectManagement_index"
     btn_label: "Learn More"
 
+    - title: "Index of All Workbooks"
+      image_path: /assets/images/bioinformatics_gallery_101workbook.png
+      alt: "101workbook"
+      url: "https://101workbook.org"
+      btn_label: "Learn More"
+
+feature_row2:
   - title: "Introduction to BLAST"
     image_path: dataAnalysis/blast/assets/BLAST.png
     alt: "BLAST"
@@ -121,4 +132,11 @@ feature_row:
 
 {% include feature_row id="intro" type="center" %}
 
+
+## <span style="color: #798288"><i>Get practical experience with hands-on tutorials of Data Science basics</i></span>
+
 {% include feature_row %}
+
+## <span style="color: #798288"><i>Explore  hands-on tutorials for highly-specialized Bioinformatics analysis</i></span>
+
+{% include feature_row id="feature_row2" %}
