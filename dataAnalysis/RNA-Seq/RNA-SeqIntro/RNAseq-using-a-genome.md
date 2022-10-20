@@ -14,13 +14,13 @@ header:
 RNA-seq experiments are performed with an aim to comprehend transcriptomic changes in organisms in response to a certain treatment. They are also designed to understand the cause and/or effect of a mutation by measuring the resulting gene expression changes. Thanks to some robust algorithms specifically designed to map short stretches of nucleotide sequences to a genome while being aware of the process of RNA splicing has led to many advances in RNAseq analysis. The overview of RNA-seq analysis is summarized in Fig1.
 
 
-### Overview ###
+### Overview
 ![**Figure 1.**: Overview of the RNAseq workflow](Assets/RNAseq_1.png)
 
 This document will guide you through basic RNAseq analysis, beginning at quality checking of the RNAseq `reads` through to getting the differential gene expression results. We have downloaded an *Arabidopsis* dataset from NCBI for this purpose. Check the <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA348194" target="_blank">BioProject  ⤴</a> page for more information.
 
 
-# Experimental design #
+# Experimental design
 
 This experiment compares WT and *atrx-1* mutant to analyze how the loss of function  of ATRX chaperone results in changes in gene expression. The ATRX chaperone is a histone chaperone known to be an important player in the regulation of gene expression. RNA was isolated from three WT replicates and three mutant replicates using Trizol. The transcriptome was enriched/isolated using the plant RiboMinus kit for obtaining total RNA. RNA-seq was carried out in Illumina Hiseq 2500. The sequencing reads were generated as paired-end data, hence we have 2 files per replicate.
 
@@ -30,12 +30,12 @@ This experiment compares WT and *atrx-1* mutant to analyze how the loss of funct
 | WT | SRR4420293_1.fastq.gz <br> SRR4420293_2.fastq.gz | SRR4420294_1.fastq.gz <br> SRR4420294_2.fastq.gz | SRR4420295_1.fastq.gz <br> SRR4420295_2.fastq.gz |
 | atrx-1 | SRR4420296_1.fastq.gz <br> SRR4420296_2.fastq.gz| SRR4420297_1.fastq.gz <br> SRR4420297_2.fastq.gz| SRR4420298_1.fastq.gz <br> SRR4420298_2.fastq.gz |
 
-# Raw Sequence Data #
+# Raw Sequence Data
 
 Generally, if the data is hosted at your local sequencing center, you could download it through a web interface or using `wget` or `curl` commands. However in this example, we will download data hosted on public repositories. There are several public data repositories that host the data.
 
 
-# 1. Download the data from public repositories #
+# 1. Download the data from public repositories
 
 ## A) EMBL-EBI's European Nucletide Archive (ENA)
 The best option is to download the fastq files directly from the ENA server (e.g., check <a href="https://www.ebi.ac.uk/ena/data/view/PRJNA348194" target="_blank">EBI  ⤴</a>). We can download them directly using `wget` by supplying the download links to each file; for example, in this case:
@@ -111,9 +111,14 @@ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TA
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.gff.gz
 ```
 
-# 2. Quality Check #
+# 2. Quality Check
 
-We use `fastqc`, a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines (<a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/" target="_blank">FastQC  ⤴</a>). It uses various metrics to indicate how your data is. A high-quality Illumina RNAseq file should look something like <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html" target="_blank">this  ⤴</a>. Since there are 6 sets of files (12 files total), we need to run `fastqc` on each one of them. It is convenient to run it in `parallel`.
+We use `fastqc`, a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines (<a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/" target="_blank">FastQC  ⤴</a>).
+
+*Watch the video below to check the quality of high throughput sequence using FastQC* [source: <a href="https://" target="_blank">BabrahamBioinf  ⤴</a> ]
+<iframe width="560" height="315" src="https://www.youtube.com/c/BabrahamBioinf" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+It uses various metrics to indicate how your data is. A high-quality Illumina RNAseq file should look something like <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html" target="_blank">this  ⤴</a>. Since there are 6 sets of files (12 files total), we need to run `fastqc` on each one of them. It is convenient to run it in `parallel`.
 
 ```
 module load fastqc
@@ -189,7 +194,7 @@ Why do we want to align reads to the genome? E.g., to identify their positions i
 
 ### HiSat2 for mapping
 
-#### Hisat2
+#### Hisat2 indexing
 
 For `HiSat2` mapping, you first need to index the genome and then use the read pairs to map the indexed genome (one set at a time). For indexing the genome, we use the `hisat2-build` command as follows in a SLURM script:
 
@@ -220,11 +225,24 @@ GENOME=${GENOME_FNA%.*}                # Drops the .fna extension
 hisat2-build ${GENOME_FNA} ${GENOME}
 
 ```
-Let's go to your working directory, where you downloaded the genome file. Create an empty file using the `touch indexing_hisat2.sh` command, open it using your favorite text editor in the terminal (e.g., `nano` or `vim`) and copy-paste the script from above. Find the `GENOME_FNA=` variable and update the path of the genomic file. Save changes and submit the script into the SLURM queue:
+Let's go to your working directory, where you downloaded the genome file. Create an empty file using the `touch indexing_hisat2.sh` command, open it using your favorite text editor in the terminal (e.g., `nano` or `vim`) and copy-paste the script from above. Find the `GENOME_FNA=` variable and update the path and filename of the genomic file. Save changes and submit the script into the SLURM queue:
 
 ```
 sbatch indexing_hisat2.sh
 ```
+
+<div style="background: mistyrose; padding: 15px; margin-bottom: 20px;">
+<span style="font-weight:800;">WARNING:</span>
+<br><span style="font-style:italic;"> Note to update the path and filename of the reference genome in the <b>GENOME_FNA</b> variable. If the downloaded file is zipped, decompress it before running the script: <br>
+<code>gzip -d {filename}.fna.gz</code>
+</span>
+</div><br>
+
+<div style="background: #cff4fc; padding: 15px;">
+<span style="font-weight:800;">PRO TIP:</span>
+<br><span style="font-style:italic;"> Adjust the <b>#SBATCH --time</b> variable, provided in format hours:minutes:seconds. The provided value allocates the time at the computational node. If your setup is too short, the task will be interrupted prefinal. Otherwise, if it is too long, you will have a long wait in the queue. <br>
+Setting up <b>#SBATCH --time=1:00:00</b> is sufficient for indexing the genome in this example.</span>
+</div><br>
 
 Once complete, you should see several files with the `.ht2` extension. These are the index files.
 
@@ -238,6 +256,11 @@ Once complete, you should see several files with the `.ht2` extension. These are
  GCF_000001735.3_TAIR10_genomic.7.ht2
  GCF_000001735.3_TAIR10_genomic.8.ht2
 ```
+
+<div style="background: #cff4fc; padding: 15px;">
+<span style="font-weight:800;">PRO TIP:</span>
+<br><span style="font-style:italic;"> If outputs were not generated, check the <b>HI_build.{jobID}.err</b> (and HI_build.{jobID}.out) files to detect the reason for the failure. </span>
+</div><br>
 
  At the mapping step, we simply refer to the index using `GCF_000001735.3_TAIR10_genomic` as described in the next step.
 
@@ -275,8 +298,8 @@ hisat2 \
   -x ${GENOME} \
   -1 ${R1_FQ} \
   -2 ${R2_FQ} \
-  -S ${OUTDIR}/${OUTPUT}.sam &> ${OUTPUT}.log
-samtools view --threads ${p} -bS -o ${OUTDIR}/${OUTPUT}.bam ${OUTDIR}/${OUTFILE}.sam
+  -S ${OUTDIR}/${OUTFILE}.sam &> ${OUTFILE}.log
+samtools view --threads ${p} -bS -o ${OUTDIR}/${OUTFILE}.bam ${OUTDIR}/${OUTFILE}.sam
 
 rm ${OUTDIR}/${OUTFILE}.sam
 
@@ -361,7 +384,7 @@ set -o xtrace
 
 cd ${SLURM_SUBMIT_DIR}
 ulimit -s unlimited
-ANNOT_GFF="/PATH/TO/GFF_FILE"
+ANNOT_GFF="/PATH/TO/GFF_FILE"          # file should be decompressed, e.g., gzip -d {filename}.gff.gz
 INDIR="/Path/TO/BAMFILES/DIR"
 OUTDIR=counts
 [[ -d ${OUTDIR} ]] || mkdir -p ${OUTDIR}
@@ -374,6 +397,12 @@ module load parallel
 parallel -j 4 "featureCounts -T 4 -s 2 -p -t gene -g ID -a ${ANNOT_GFF} -o ${OUTDIR}/{/.}.gene.txt {}" ::: ${INDIR}/*.bam
 scontrol show job ${SLURM_JOB_ID}
 
+```
+
+Let's go to your working directory, where you downloaded and decompressed the annotation (GFF) file. Create an empty file using the `touch run_feature_counts.sh` command, open it using your favorite text editor in the terminal (e.g., `nano` or `vim`) and copy-paste the script from above. Find the `ANNOT_GFF=` variable and update the path and filename of the annotation file. Also, update the `INDIR=` variable using path to the directory with BAM files from the previous step. Save changes and submit the script into the SLURM queue:
+
+```
+sbatch run_feature_counts.sh
 ```
 
 This creates the following set of files in the specified output folder:
