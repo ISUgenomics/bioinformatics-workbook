@@ -350,6 +350,27 @@ You can review the list of files hosted in your database online at `https://{acc
 
 ### *Open ideogram in JupyterLab*
 
+**Requirements**
+
+* `jupyterlab` - web-based programming environment
+* `dash`       - library of widgets for web-based applications
+* `dash_bio`   - library of interactive graphs for biology tasks
+
+The **Dash-Bio graphing library** has incorporated the original Ideogram module, written in JavaScript. That made it possible to call the diagram within web applications that uses **efficient Python data wrangling** in the back-end and **user-friendly Dash widgets** (options components) in the interactive front-end interface. My application is developed within the **JupyterLab environment**, making it robust, transferable, and easy to daily use across operating systems and web browsers.
+
+<div style="background: #cff4fc; padding: 15px;">
+<span style="font-weight:800;">PRO TIP:</span>
+<br><span style="font-style:italic;"> If you are not familiar with JupyterLab yet, please follow the tutorial <a href="https://datascience.101workbook.org/04-DevelopmentEnvironment/02A-jupyter-basics" target="_blank">Jupyter: Web-Based Programming Interface  ⤴</a> available in the <a href="https://datascience.101workbook.org" target="_blank">Data Science Workbook  ⤴</a></span>.<br><br>
+You can <b>install jupyterlab</b> using <b>pip</b>: <br>
+$ <code>pip install jypyterlab</code> <br><br>
+Then, you can launch the web-based interface from the command line: <br>
+$ <code>jupyter lab</code> <br><br>
+That will open your Jupyter session in a web browser on localhost with a default URL: <i><b>http://localhost:8889/lab</b></i>.
+</div><br>
+
+You can also install the remaining requirements with `pip` directly in the terminal, making them available to the entire system. However, using the **Conda environment manager** will be a neater solution.
+
+
 ### B. Use plotly variant (PY)
 
 ### *Convert data structure*
