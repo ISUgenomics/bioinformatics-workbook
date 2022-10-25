@@ -116,7 +116,7 @@ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TA
 We use `fastqc`, a tool that provides a simple way to do quality control checks on raw sequence data coming from high throughput sequencing pipelines (<a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/" target="_blank">FastQC  ⤴</a>).
 
 *Watch the video below to check the quality of high throughput sequence using FastQC* [source: <a href="https://" target="_blank">BabrahamBioinf  ⤴</a> ]
-<iframe width="560" height="315" src="https://www.youtube.com/c/BabrahamBioinf" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bz93ReOv87Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 It uses various metrics to indicate how your data is. A high-quality Illumina RNAseq file should look something like <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html" target="_blank">this  ⤴</a>. Since there are 6 sets of files (12 files total), we need to run `fastqc` on each one of them. It is convenient to run it in `parallel`.
 
