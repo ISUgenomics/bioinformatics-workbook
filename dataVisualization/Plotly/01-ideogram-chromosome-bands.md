@@ -53,7 +53,7 @@ Thus, we will take all rows whose indexes match the increment range for every sl
 
 In this practical tutorial we will use the bioinformatic data representing genetic features of species X detected in the chromosomes of newly discovered organism Y.
 
-## Raw data
+## **Raw data**
 
 The data collected is a matrix indexed by a chromosome ID (*first column*) and positions along it (*second column*). The following numerical columns correspond to several traits. They contain a detection score given per position in the chromosome.
 
@@ -91,7 +91,7 @@ for i in `cat scaffold_list | awk '{print $1}'`; do grep $i"\t" < raw_data.txt >
 
 The resulting file `input_data.txt` will be used as a direct input for the data aggregation step.
 
-## Bin Data app
+## **Bin Data app**
 
 To process the `input_data.txt` file we use a ready-made Python application <b><a href="https://github.com/ISUgenomics/data_wrangling/bin_data" target="_blank">bin_data ⤴</a></b>, available in the <a href="https://github.com/ISUgenomics/" target="_blank"> ISUgenomics </a>/<a href="https://github.com/ISUgenomics/data_wrangling" target="_blank">data_wranglig ⤴</a> repository.
 
@@ -102,7 +102,7 @@ You can learn more about the <a href="https://github.com/ISUgenomics/data_wrangl
 * examples of generic <a href="https://datascience.101workbook.org/07-DataParsing/03-DATA-WRANGLING-APPS/02-slice-or-bin-data-py#usage-generic" target="_blank">Usage ⤴</a>
 * <a href="https://datascience.101workbook.org/07-DataParsing/03-DATA-WRANGLING-APPS/02-slice-or-bin-data-py#hands-on-tutorial" target="_blank">Hands-on tutorial ⤴</a>, including 6 detailed case studies
 
-### Approach
+### ❖ *General Approach*
 
 Before we aggregate data over data slices, first, we need to split it into **chromosome-based data chunks**. To do so, we can use the column with chromosome IDs, referred further to as `label-col`. Then, each data chunk will split into **custom-size slices using the increment** of values of the column storing positions, referred further to as `ranges-col`. Finally, numerical `data-cols` (columns of different traits) will aggregate for every slice by calculating the `sum` or `mean`.
 
@@ -119,7 +119,7 @@ The optimal data structure requires:<br>
 
 <span style="color: #ff3870;font-weight: 500;">This step is implemented in the <b>bin_data.py</b> Python app.</span>
 
-### *Aggregate observations over value increment*
+### ❖ *Aggregate observations over value increment*
 
 When you look closely at the data, you notice that **some positions** along the chromosomes **are missing** in the matrix.
 
@@ -158,7 +158,7 @@ HiC_scaffold_1,60982-70982,1.580,1.008,0.204,0.288,0.776,1.593,0.455,0.195,1768
 ```
 
 
-## Visualize using ideogram
+## **Visualize using ideogram**
 
 Once the data is aggregated to different coarseness, it is time to **adjust the format for visualization on the ideogram.** <br>
 An ideogram is a diagram in which we have only one dimension for a numerical variable. This is the index or position along the bar. <br>
@@ -174,17 +174,17 @@ First, you need to find the minimum, maximum, mean, and standard deviation value
 
 **Luckily, you do NOT have to implement the algorithm that will do it yourself.** <br>
 <span style="color: #ff3870;font-weight: 500;">Use a ready-made <a href="https://raw.githubusercontent.com/ISUgenomics/data_wrangling/main/bin_data/convert_for_ideogram.py" target="_blank">convert_for_ideogram.py ⤴</a> application in Python</span>, moving to subsection: <br>
-<b>A.</b> (<i>dash-bio ideogram</i>) or <br>
-<b>B.</b> (<i>customizable plotly ideogram</i>) <br>
+<b>A.</b> [dash-bio ideogram](https://bioinformaticsworkbook.org/dataVisualization/Plotly/01-ideogram-chromosome-bands.html#a-use-dash-bio-variant-js) or <br>
+<b>B.</b> [customizable plotly ideogram](https://bioinformaticsworkbook.org/dataVisualization/Plotly/01-ideogram-chromosome-bands.html#b-use-plotly-variant-py) <br>
 to follow detailed instructions for converting data for visualization on an ideogram.
 
-### A. Use dash-bio variant (JS)
+### ***A. Use dash-bio variant (JS)***
 
 An <a href="https://dash.plotly.com/dash-bio/ideogram" target="_blank">Ideogram ⤴</a> visualization is available among components in the <a href="https://dash.plotly.com/dash-bio" target="_blank">Dash Bio ⤴</a> module of the <a href="https://dash.plotly.com/introduction" target="_blank">Dash ⤴</a> framework. The <a href="https://github.com/eweitz/ideogram" target="_blank">Ideogram ⤴</a> was originally developed in JavaScript by <a href="https://github.com/eweitz" target="_blank">Eric Weitz ⤴</a> to provide chromosome visualization for the web. Further, it was encapsulated into the Dash framework for easy use by importing from the dash-bio library.
 
 An ideogram imported from the dash-bio library makes it easy to visualize the pattern of bands on chromosomes. The application allows **visualizing chromosomes for standard organisms** available in an online <a href="https://unpkg.com/browse/ideogram@1.37.0/dist/data/" target="_blank">UNPKG database ⤴</a>. For these organisms, you can use your own annotation file. However, the approach is browser-based, and both bands and annotations **data are loaded exclusively through the URL**. That is a <u>huge limitation</u> for individual users who would like <u>to load input directly from the file system</u> on the local machine. To visualize your own data for a customized organism, you need to create an online database (*using GitHub Pages as the simplest solution*) or add files to the existing one to load data from it via URL. Another complication is the **strictly defined format** of the bands and annotations data files. Also, there are very **limited options for coloring bands**, which provides only 7 built-in gray shades (including white and black) and 2 additional colors (pink, and purple). Still, this variant of the ideogram allows for a nice interactive transition between **horizontal or vertical orientation** and **adjusting the dimensions** of the bars.
 
-![Ideogram JS](../assets/images/ideogram_orientation.gif)
+![Ideogram JS](../assets/images/ideogram_overview.gif)
 
 To facilitate visualizations using the JavaScript variant of the Ideogram, I built a web application using the Dash-Bio ideogram component and Dash framework. The app runs within Jupyter Notebook, and a single click opens the Ideogram interface in the separate browser tab. Then, you can select inputs and adjust visualization options using Dash widgets without the necessity of any changes in the source code. <br>
 Following the steps in this section, you will learn how to: <br>
@@ -195,7 +195,7 @@ Following the steps in this section, you will learn how to: <br>
 
 <span style="color: #ff3870;font-weight: 500;">If you want to load customized files directly from the local file system, go to section B. <a href="https://" >Customizable Plotly-based Ideogram</a>.</span>
 
-### *Convert data structure*
+### ❖ *Convert data structure*
 
 **Chromosome bands data**
 
@@ -266,7 +266,7 @@ As the output, you will get separate JSON files for all traits (*8 in this examp
 }
 ```
 
-### *Upload data into the database*
+### ❖ *Upload data into the database*
 
 The next step is to upload JSON files into the online database, to access them via URL. You can add files to any website/server that provides online visibility. For individual users, the simplest solution is to create <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank">GitHub Pages  ⤴</a> from your personal account and create indexed file struture, that will display content online.
 
@@ -348,7 +348,7 @@ git push
 
 You can review the list of files hosted in your database online at `https://{account}.github.io/ideogram/database/bands/`.
 
-### *Open ideogram in JupyterLab*
+### ❖ *Open ideogram in JupyterLab*
 
 **Requirements**
 
@@ -450,7 +450,7 @@ https://aedawid.github.io/ideogram/database/annotations/
 **Now it's your turn to try your own data!**
 
 
-### B. Use plotly variant (PY)
+### ***B. Use plotly variant (PY)***
 
 <span style="color: #ff3870;font-weight: 500;">Section under development...</span>
 
