@@ -178,7 +178,7 @@ First, you need to find the minimum, maximum, mean, and standard deviation value
 <b>B.</b> [customizable plotly ideogram](https://bioinformaticsworkbook.org/dataVisualization/Plotly/01-ideogram-chromosome-bands.html#b-use-plotly-variant-py) <br>
 to follow detailed instructions for converting data for visualization on an ideogram.
 
-### ***A. Use dash-bio variant (JS)***
+### ***A. Use dash-bio variant***
 
 An <a href="https://dash.plotly.com/dash-bio/ideogram" target="_blank">Ideogram ⤴</a> visualization is available among components in the <a href="https://dash.plotly.com/dash-bio" target="_blank">Dash Bio ⤴</a> module of the <a href="https://dash.plotly.com/introduction" target="_blank">Dash ⤴</a> framework. The <a href="https://github.com/eweitz/ideogram" target="_blank">Ideogram ⤴</a> was originally developed in JavaScript by <a href="https://github.com/eweitz" target="_blank">Eric Weitz ⤴</a> to provide chromosome visualization for the web. Further, it was encapsulated into the Dash framework for easy use by importing from the dash-bio library.
 
@@ -450,7 +450,7 @@ https://aedawid.github.io/ideogram/database/annotations/
 **Now it's your turn to try your own data!**
 
 
-### ***B. Use plotly variant (PY)***
+### ***B. Use plotly variant***
 
 <span style="color: #ff3870;font-weight: 500;">Section under development...</span>
 
