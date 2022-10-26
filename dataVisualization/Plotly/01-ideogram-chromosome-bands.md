@@ -356,7 +356,7 @@ You can review the list of files hosted in your database online at `https://{acc
 * `dash`       - library of widgets for web-based applications
 * `dash_bio`   - library of interactive graphs for biology tasks
 
-The **Dash-Bio graphing library** has incorporated the original Ideogram module, written in JavaScript. That made it possible to call the diagram within web applications that uses **efficient Python data wrangling** in the back-end and **user-friendly Dash widgets** (options components) in the interactive front-end interface. My application is developed within the **JupyterLab environment**, making it robust, transferable, and easy to daily use across operating systems and web browsers.
+The **Dash-Bio graphing library** has incorporated the original Ideogram module, written in JavaScript. That made it possible to call the diagram within web applications that uses **efficient Python data wrangling** in the back-end and **user-friendly Dash widgets** (options components) in the interactive front-end interface. My application is developed within the **JupyterLab environment**, making it robust, transferable, and easy to use daily across operating systems and web browsers.
 
 <div style="background: #cff4fc; padding: 15px;">
 <span style="font-weight:800;">PRO TIP:</span>
@@ -368,11 +368,95 @@ $ <code>jupyter lab</code> <br><br>
 That will open your Jupyter session in a web browser on localhost with a default URL: <i><b>http://localhost:8889/lab</b></i>.
 </div><br>
 
-You can also install the remaining requirements with `pip` directly in the terminal, making them available to the entire system. However, using the **Conda environment manager** will be a neater solution.
+You can also install the remaining requirements (*dash, dash_bio*) with `pip` directly in the terminal, making them available to the entire system. However, using the **Conda environment manager** will be a neater solution.
+
+<div style="background: #cff4fc; padding: 15px;">
+<span style="font-weight:800;">PRO TIP:</span>
+<br><span style="font-style:italic;"> If you are not familiar with Conda yet, please follow the tutorial <a href="https://datascience.101workbook.org/03-SetUpComputingMachine/02C-basic-developer-libraries#conda" target="_blank">Basic Developer Libraries: Conda  ⤴</a> available in the <a href="https://datascience.101workbook.org" target="_blank">Data Science Workbook  ⤴</a></span>.<br><br>
+You can <b>install conda</b> following the instructions for regular installation on your operating system: <br>
+<b><a href="https://conda.io/projects/conda/en/latest/user-guide/install/windows.html" target="_blank">Windows  ⤴</a></b><br>
+<b><a href="https://conda.io/projects/conda/en/latest/user-guide/install/linux.html" target="_blank">Linux  ⤴</a></b><br>
+<b><a href="https://conda.io/projects/conda/en/latest/user-guide/install/macos.html" target="_blank">macOS  ⤴</a></b><br>
+<i>* If you need a double installation for both ARM and Intel chips on your macOS, please follow the instructions in the tutorial <a href="https://datascience.101workbook.org/03-SetUpComputingMachine/03A-tutorial-installations-on-mac#-install-conda" target="_blank">Installations on MacBook Pro: Install Conda  ⤴</a> available in the <a href="https://datascience.101workbook.org" target="_blank">Data Science Workbook  ⤴</a>.</i><br><br>
+Then, you can <b>create a new virtual environment</b> for interactive graphing in the command line: <br>
+$ <code>conda create -n graphing python=3.9</code> <br>
+activate it:<br>
+$ <code>conda activate graphing</code> <br>
+and install required libraries:<br>
+$ <code>pip install dash</code> <br>
+$ <code>pip install dash_bio</code> <br><br>
+
+Once created, the environment can be found using command <code>conda info -e</code> and activated  when needed. Once activated, the additional dependencies can be further installed. To learn more about setting up the environment for interactive graphing, follow the tutorial <a href="https://datascience.101workbook.org/08-DataVisualization/02-GRAPHS/02-PYTHON/01-interactive-graphing-with-python" target="_blank">Interactive Plotting with Python  ⤴</a> available in the <a href="https://datascience.101workbook.org" target="_blank">Data Science Workbook  ⤴</a>.
+</div><br>
+
+
+**Getting started**
+
+First, activate your <a href="https://conda.io/projects/conda/en/latest/user-guide/install/index.html" target="_blank">Conda  ⤴</a> environment dedicated to <a href="https://datascience.101workbook.org/08-DataVisualization/02-GRAPHS/02-PYTHON/01-interactive-graphing-with-python" target="_blank">Interactive Plotting with Python  ⤴</a>:
+
+```
+conda activate graphing
+```
+
+![Conda activate](../assets/images/ideogram_conda_activate.png)
+
+Then navigate the file system to the `ideogram` directory in your `{user}.github.io` repository.
+
+```
+cd path_to/{user}.github.io/ideogram/
+```
+
+![](../assets/images/ideogram_jupyter.png)
+
+
+Finally, launch `jupyter lab` from the command line and go to the web browser searching for the URL: <a href="http://localhost:8889/lab" target="_blank">http://localhost:8889/lab  ⤴</a>, unless it opens automatically.
+
+```
+jupyter lab
+```
+
+![Launch Ideogram](../assets/images/ideogram_jupyter.gif)
+
+By default, Jupyter Lab shows on the browser the local file system from the level of the current directory (*where it was started in the terminal*). If the `ideogram-dash.ipynb` notebook does not start automatically in the right-hand panel, click on it twice (*in the browser on the left-hand side*). Then, from the top menu bar, select `Kernel` followed by `Restart kernel and run all cells...`. Scroll down the script and wait until the calculations are complete. Once the output cell appears on the screen, click on the link *http://127.0.0.1:8050/*. In the new tab in your browser, it will open the interactive interface of the Ideogram application. Switch the web tab and adjust options for your inputs and diagram dimensions. Hovering on the options' labels displays the extended instructions and descriptions.
+
+![Ideogram options](../assets/images/ideogram_options.png)
+
+**Use custom bands and annotations**
+
+The `ideogram-dash` application provided in the <a href="https:https://github.com/ISUgenomics" target="_blank">ISUgenomics</a>/<a href="https:https://github.com/ISUgenomics/ideogram_db" target="_blank">ideogram_db  ⤴</a> repository allows you to display a diagram for data stored in any online database. By default, it uses the original **UNPKG** database, available at <a href="https://unpkg.com/ideogram/dist/data/" target="_blank">https://unpkg.com/ideogram/dist/data/  ⤴</a>. There are **bands** and **annotations** subdirectories, respectively. Instead, you can provide a URL to your custom inputs stored in the database hosted on your `{user}.github.io`, created previously in step <a href="https://" target="_blank">X  ⤴</a> of this tutorial.
+
+As example, I've created the `aedawid.github.io` repository, available at <a href="https://github.com/aedawid/aedawid.github.io" target="_blank">https://github.com/aedawid/aedawid.github.io  ⤴</a>, which is hosted online via GitHub Pages at <a href="https://aedawid.github.io/" target="_blank">https://aedawid.github.io/  ⤴</a>. The page's index allows entering the `ideogram/database` and displaying the example inputs for bands and annotations.
+
+Let's try to use this data in the interactive `ideogram-dash` web application:
+
+For the option ***Provide URL to online bands*** use:
+```
+https://aedawid.github.io/ideogram/database/bands/
+```
+
+![Select input bands](../assets/images/ideogram_select_bands.png)
+
+*Note that the list of available inputs is updated when a new database is indicated. And when you select a file from that drop-down menu, the list of available chromosomes is updated too.*
+
+For the option ***Provide URL to online annotations*** use:
+
+```
+https://aedawid.github.io/ideogram/database/annotations/
+```
+
+![Select input annotations](../assets/images/ideogram_select_annots.png)
+
+
+**Now it's your turn to try your own data!**
 
 
 ### B. Use plotly variant (PY)
 
+<span style="color: #ff3870;font-weight: 500;">Section under development...</span>
+
+<!--
 ### *Convert data structure*
 
 ### *Open ideogram in JupyterLab*
+
+-->
