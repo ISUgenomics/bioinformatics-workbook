@@ -55,7 +55,7 @@ In this practical tutorial we will use the bioinformatic data representing genet
 
 ## **Raw data**
 
-The data collected is a matrix indexed by a chromosome ID (*first column*) and positions along it (*second column*). The following numerical columns correspond to several traits. They contain a detection score given per position in the chromosome.
+The data collected is a matrix indexed by a chromosome ID (*first column*) and positions along it (*second column*). The following numerical columns correspond to several (8) traits. They contain a detection score given per position in the chromosome.
 
 *Preview of `raw_data.txt`* file
 ```
