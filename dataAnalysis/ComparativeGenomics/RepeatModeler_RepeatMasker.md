@@ -225,7 +225,45 @@ RepeatModeler -version
 If you have realized already that there is a **newer release available** and wonder how to get it from the command line, follow the instructions in the next section, [Upgrade RepeatModeler](#upgrade-repeatmodeler).
 
 
-### Upgrade RepeatModeler
+### Upgrade RepeatModeler (optional)
+
+In my case, the default `conda install -c bioconda repeatmodeler` installation recipe resulted in getting the **RepeatModeler** in version 1.0.8 instead of the latest release 2.0.3, which provides many more options, such as LTR structural discovery pipeline (*-LTRStruct*). Thus, let's upgrade it following scenario A or B!
+
+**A. Select from Conda labels**
+
+Add the conda-forge channel first to increase the chance of finding all the required dependencies:
+
+```
+conda config --add channels conda-forge
+```
+
+Then try to install using the selected **label** (here: *main*) and software **version** (here: *2*).
+
+```
+conda install -c "bioconda/label/main" repeatmodeler=2
+```
+
+Now, let's confirm we have upgraded the version of RepeatModeler already:
+```
+RepeatModeler -version
+```
+**OUTPUT:** *RepeatModeler version 2.0.3*
+
+<div style="background: #cff4fc; padding: 15px;">
+<span style="font-weight:800;">PRO TIP:</span>
+<br><span style="font-style:italic;">
+This approach is more robust compared to provided below <b><i>B. Select from Conda files</i></b> because all dependencies required by the upgraded RepeatModeler are found and installed automatically.
+</span>
+</div><br>
+
+**B. Select from Conda files**
+
+<div style="background: mistyrose; padding: 15px; margin-bottom: 20px;">
+<span style="font-weight:800;">WARNING:</span>
+<br><span style="font-style:italic;">
+Note that upgrading the software using a downloaded file may disrupt the other dependencies in your Conda environment. Then you will need to manually find and fix them (e.g., install the required version). However, it is useful when you need a very specific release (e.g., to repeat the analysis with the same settings).
+</span>
+</div><br>
 
 Go to the **Files** tab at [https://anaconda.org/bioconda/repeatmodeler/files](https://anaconda.org/bioconda/repeatmodeler/files) (in a web browser) and select desired downloadable file, here `repeatmodeler-2.0.3` variant. Using right-mouse, click `Copy Link` and return to your terminal window.
 
@@ -258,16 +296,10 @@ conda install repeatmodeler-2.0.3-pl5321h9ee0642_0.tar.bz2
 Also, to install new dependencies within the Conda environment, you first need to <code>load module {conda_variant}</code> and <code>source activate {conda_env}</code>. <br>
 You can display all the available Conda environments using the <code>conda info -e</code> command.
  </span>
-</div><br>
-
-Now, let's confirm we have upgraded the version of RepeatModeler already:
-```
-RepeatModeler -version
-```
-**OUTPUT:** *RepeatModeler version 2.0.3*
+</div>
 
 
-### Upgrade **blast+**
+### Upgrade **blast+** (optional)
 
 The newer *BuildDatabase* coming with *RepeatMasker-2.0.3* uses the `-blastdb_version version` option of the `makeblastdb` program in the **blast+** package. This option was introduced with the 2.10.0 release. So, to prevent the *Unknown argument: "blastdb_version"* error, first check your installed version of blast using the `conda list` command or `makeblastdb -version` or display available options with `makeblastdb -h`. If you do not see the `-blastdb_version` among the options, or the version is older than 2.10, or you simply want to use the latest release, upgrade the blast+ package to 2.10 or newer (check availability at <a href="https://anaconda.org/bioconda/blast" target="_blank">https://anaconda.org/bioconda/blast  ⤴</a>):
 
@@ -358,6 +390,7 @@ gunzip -d TAIR10_chr_all.fas.gz
 
 <i><p style="text-align: right; color: lightgray"> source: program's help message </p></i>
 
+**The BuildDatabase step is quick (a few minutes at most).**
 
 Usage syntax:
 ```
@@ -463,7 +496,7 @@ Usage syntax:
 RepeatMasker -pa 36 -gff -lib {consensi_classified} -dir {dir_name} {genome_in_fasta}
 
 e.g.,
-RepeatMasker -pa 36 -gff -lib consensi.fa.classified -dir MaskerOutput Genome.FINAL.fasta
+RepeatMasker -pa 36 -gff -lib consensi.fa.classified -dir MaskerOutput TAIR10_chr_all.fas
 ```
 
 Use the `RepeatMasker -h` command to display a full list of options.
@@ -504,18 +537,56 @@ source activate repeatmodeler
 
 ###-UPDATE YOUR INPUTS
 INPUT=TAIR10_chr_all.fas                                # provide filename of the genome in FASTA format
-DB=Arabidopsis                                          # custom database name
+DB=Arabidopsis                                          # make up a customized name for your database
 
 ###-SETUP DETECTION OF REPEATS
 #echo "Build database ..."
 #time BuildDatabase -name $DB $INPUT
 
 echo "Run RepeatModeler ..."
-time RepeatModeler -database $DB -pa 36 -LTRStruct
+time RepeatModeler -database $DB -pa 36
 
 echo "Run RepeatMasker ..."
-time RepeatMasker -pa 36 -gff -lib consensi.fa.classified -dir MaskerOutput Genome.FINAL.fasta
+time RepeatMasker -pa 36 -gff -lib consensi.fa.classified -dir MaskerOutput TAIR10_chr_all.fas
 ```
+
+Submit the script in the queueing system:
+
+```
+sbatch repeats_detection.sh
+```
+
+Check status of your job in the queue:
+
+```
+squeue -u {your_username}
+```
+
+Once the calculations start, the ` slurm-{JOBID}.out` file will be created in your working directory. You can look into the file to browse the standard output and check if any errors were thrown.
+
+<div style="background: mistyrose; padding: 15px; margin-bottom: 20px;">
+<span style="font-weight:800;">WARNING:</span>
+<br><span style="font-style:italic;">
+Use the tips provided below in case your analysis crashes with errors. <br><br>
+<b>ERROR 1</b><br>
+<b>Can't locate File/Which.pm</b> in @INC (you may need to install the File::Which module) (@INC contains: ... ) <b>at</b> /work/gif/Alex/abadacz_notebook/.conda/envs/repeat3/bin/<b>filter-stage-1.prl line 14.</b><br><br>
+
+<details><summary> Try solutions:</summary>
+
+The error results from the <b>perl5</b> package. You can follow one of the two solutions: <br><br>
+Solution 1: <br>
+open the file indicated after "at": <br>
+<code> nano /work/gif/Alex/abadacz_notebook/.conda/envs/repeat3/bin/filter-stage-1.prl</code><br>
+and comment with <b>#</b> character the line shown: <br>
+<code><i>14</i> <b>#</b>use File::Which qw(which where);</code>  <br><br>
+Solution 2: <br>
+install/upgrade the missing dependency of perl package: <br>
+<code>conda install perl-File-Which</code>
+
+</details>
+
+</span>
+</div><br>
 
 <!--
 The RepeatModeler step can take longer than 96 hours on one node with 16 threads if the genome is larger than 1GB.  For Arabidopsis it took 9.5 hours.
