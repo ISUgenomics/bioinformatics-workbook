@@ -1,6 +1,8 @@
 ---
 title: Genome Repeats Identification
 layout: single
+author: Aleksandra Badaczewska
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
@@ -48,6 +50,7 @@ There are several ways to get the **RepeatModeler** and **RepeatMasker** install
 
 * install both with **Conda** (*it also installs all prerequisites*):
   * `conda install -c bioconda repeatmodeler` (*installs version=1.0.8 in 2022*)
+  * `conda install -c "bioconda/label/main" repeatmodeler=2` (*installs version=2.0.3 in 2022*)
   * browse other versions at <a href="https://anaconda.org/bioconda/repeatmodeler/files" target="_blank">https://anaconda.org/bioconda/repeatmodeler/files  ⤴</a>
 <br><br>
 * run using **containers** (<i>see detailed <a href="https://github.com/Dfam-consortium/TETools#using-the-container" target="_blank">instructions  ⤴</a></i>):
@@ -380,7 +383,7 @@ gunzip -d TAIR10_chr_all.fas.gz
 ```
 
 
-## Repeats identification
+## Repeats identification pipeline
 
 ### 1. BuildDatabase
 
@@ -390,7 +393,7 @@ gunzip -d TAIR10_chr_all.fas.gz
 
 <i><p style="text-align: right; color: lightgray"> source: program's help message </p></i>
 
-**The BuildDatabase step is quick (a few minutes at most).**
+**The BuildDatabase step is quick (several seconds at most).**
 
 Usage syntax:
 ```
@@ -546,8 +549,10 @@ DB=Arabidopsis                                          # make up a customized n
 echo "Run RepeatModeler ..."
 time RepeatModeler -database $DB -pa 36
 
+ln -s RM_*/consensi.fa.classified ./
+
 echo "Run RepeatMasker ..."
-time RepeatMasker -pa 36 -gff -lib consensi.fa.classified -dir MaskerOutput TAIR10_chr_all.fas
+time RepeatMasker -pa 36 -gff -lib consensi.fa.classified -dir MaskerOutput $INPUT
 ```
 
 Submit the script in the queueing system:
@@ -588,6 +593,49 @@ install/upgrade the missing dependency of perl package: <br>
 </span>
 </div><br>
 
+
+### Processing times
+
+The table contains the processing times for each step of the repeats identification pipeline for two genomes that differ by order of magnitude in size (~100 MB vs. 1 GB). The calculations were performed on a single node with 36 cores (<a href="https://www.hpc.iastate.edu/guides/nova" target="_blank">Nova cluster @ISU HPC  ⤴</a>). As you can see, for the 1 GB genome, the complete pipeline requires about 25 hours in the clock when employing 36 cores (*real-time*). The time summed over the cores used reaches 300 hours (over 12 days). So that's roughly how much computation would take if only one thread is available.
+
+You can use the data from the table to estimate the resources needed for your analysis. If you have fewer cores available, request a longer wall time. Always add a 10-20% time reserve.
+
+
+|genome| genome size | bp number | time [real/user]  | time [real/user] | time [real/user] |
+|------|-------------|-----------|-------------------|------------------|------------------|
+|      |             |           | **BuildDatabase** | **RepeatModeler**| **RepeatMasker** |
+|Arabidopsis| 116 MB | 120 M     | 8s / 1s           |                  |                  |
+|Abalone    | 1.1 GB | 1130 M    | 22s / 9s          | 20h27m / 258h    | 2.5h / 30h       |
+
+
+## Results interpretation
+
+### Outputs overview
+
+* assuming the database name is *Arabidopsis*
+
+| **BuildDatabase**          | **RepeatModeler**        | **RepeatMasker**      |
+|----------------------------|--------------------------|-----------------------|
+| Arabidopsis.DB.nhr         | **RM_{ID}.{date_stamp}** | Arabidopsis.tbl       |
+| Arabidopsis.DB.nin         | - **round-{N}**          | Arabidopsis.masked    |
+| Arabidopsis.DB.nnd         | - consesi.fa             | Arabidopsis.out       |
+| Arabidopsis.DB.nni         | - consesi.fa.classified  | Arabidopsis.out.gff   |
+| Arabidopsis.DB.nog         | - families.stk           | |
+| Arabidopsis.DB.nsq         | - families-classified.stk| |
+| Arabidopsis.DB.translation | - rmod.log               | |
+
+**1. BuildDatabase** produces the database files.
+
+**2. RepeatModeler** returns the `consesi.fa.classified` required by the **RepeatMasker** step. The file is located within the automatically created directory with the name starting in **"RM_"**.
+
+**3. RepeatMasker** generates the final outputs:
+* **.tbl** - a text file containing the summary table of the detected repeats
+* **.gff** - a General Feature Format file containing information about repeats' annotations
+* **.masked** - the genome FASTA file with bases of the detected repeats masked by the *"N"* letter
+
+You can use the data from these files depending on the purpose of your further analysis.
+
+
 <!--
 The RepeatModeler step can take longer than 96 hours on one node with 16 threads if the genome is larger than 1GB.  For Arabidopsis it took 9.5 hours.
 ```
@@ -612,8 +660,11 @@ RepeatMasker -pa 16 -gff -lib consensi.fa.classified TAIR10_chr_all.fas
 ```
 -->
 
+### Summary table
 
-This is what I find in Arabidopsis.
+**Let's look into the results obtained for the Arabidopsis...**
+
+`Arabidopsis.tbl`
 ```
 ==================================================
 file name: TAIR10_chr_all.fas
