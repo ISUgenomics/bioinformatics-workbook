@@ -94,3 +94,12 @@ lrwxrwxrwx. 1 root proj-isu_gif_vrsc   39 Feb 20 05:16 SQ_hifiasm -> /project/tg
 # got kicked out of the job around 2 pm.
 
 ```
+
+#### Nov 15/16 2022
+
+Ecoli data for Genome Assembly:
+
+Publication: https://www.tandfonline.com/doi/full/10.1080/19490976.2021.2014772
+Bioproject: PRJNA725420
+Details: https://ncbi.nlm.nih.gov/bioproject/?term=PRJNA725420
+Data: ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR144/043/SRR14417043/SRR14417043_subreads.fastq.gz
