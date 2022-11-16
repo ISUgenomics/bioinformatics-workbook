@@ -22,3 +22,5 @@ header:
 * [Creating Heatmaps in R](../dataWrangling/R/generate_heatmaps.md)
 
 * [Visulaize Gaps in Genome assemblies](../dataWrangling/R/visualize-gaps-in-genomes.md)
+
+* [Visulaize Chromosome Bands using Ideogram](../dataVisualization/Plotly/01-ideogram-chromosome-bands.md)

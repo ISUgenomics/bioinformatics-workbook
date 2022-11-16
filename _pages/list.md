@@ -165,3 +165,4 @@ header:
 * [Creating Boxplots in R](../dataWrangling/R/generate-boxplots.md)
 * [Creating Heatmaps in R](../dataWrangling/R/generate_heatmaps.md)
 * [Visulaize Gaps in the Genome assemblies](../dataWrangling/R/visualize-gaps-in-genomes.md)
+* [Visulaize Chromosome Bands using Ideogram](../dataVisualization/Plotly/01-ideogram-chromosome-bands.md)
