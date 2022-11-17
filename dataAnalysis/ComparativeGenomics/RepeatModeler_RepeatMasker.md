@@ -552,7 +552,7 @@ time RepeatModeler -database $DB -pa 36
 ln -s RM_*/consensi.fa.classified ./
 
 echo "Run RepeatMasker ..."
-time RepeatMasker -pa 36 -gff -lib consensi.fa.classified -dir MaskerOutput $INPUT
+time RepeatMasker -pa 36 -gff -lib consensi.fa.classified $INPUT
 ```
 
 Submit the script in the queueing system:
@@ -596,16 +596,18 @@ install/upgrade the missing dependency of perl package: <br>
 
 ### Processing times
 
-The table contains the processing times for each step of the repeats identification pipeline for two genomes that differ by order of magnitude in size (~100 MB vs. 1 GB). The calculations were performed on a single node with 36 cores (<a href="https://www.hpc.iastate.edu/guides/nova" target="_blank">Nova cluster @ISU HPC  ⤴</a>). As you can see, for the 1 GB genome, the complete pipeline requires about 25 hours in the clock when employing 36 cores (*real-time*). The time summed over the cores used reaches 300 hours (over 12 days). So that's roughly how much computation would take if only one thread is available.
+The table contains the processing times for each step of the repeats identification pipeline for two genomes that differ by order of magnitude in size (~100 MB vs. 1 GB). The calculations were performed on a single node with <u>36 cores</u> (<a href="https://www.hpc.iastate.edu/guides/nova" target="_blank">Nova cluster @ISU HPC  ⤴</a>). As you can see, for the 1 GB genome, the complete pipeline requires about 25 hours in the clock when employing 36 cores (*real-time*). The time summed over the cores used reaches 300 hours (over 12 days). So that's roughly how much computation would take if only one thread is available.
 
 You can use the data from the table to estimate the resources needed for your analysis. If you have fewer cores available, request a longer wall time. Always add a 10-20% time reserve.
 
 
-|genome| genome size | bp number | time [real/user]  | time [real/user] | time [real/user] |
-|------|-------------|-----------|-------------------|------------------|------------------|
-|      |             |           | **BuildDatabase** | **RepeatModeler**| **RepeatMasker** |
-|Arabidopsis| 116 MB | 120 M     | 8s / 1s           |                  |                  |
-|Abalone    | 1.1 GB | 1130 M    | 22s / 9s          | 20h27m / 258h    | 2.5h / 30h       |
+|genome| genome size | bp number | time [real/user]  | time [real/user] | time [real/user] | cores |
+|------|-------------|-----------|-------------------|------------------|------------------|-------|
+|      |             |           | **BuildDatabase** | **RepeatModeler**| **RepeatMasker** |       |
+|Arabidopsis| 116 MB | 120 M     | 8s / 1s           | 4h23m / 67h      | 5m / 1h21m       | 36    |
+|           |        |           |                   | *9h30m* / -      | *14m* / -        | *(16)*|
+|Abalone    | 1.1 GB | 1130 M    | 22s / 9s          | 20h27m / 258h    | 2.5h / 30h       | 36    |
+|           |        |           |                   | ~*96h* / -       | *24-48h* / -     | *(16)*|
 
 
 ## Results interpretation
@@ -626,155 +628,132 @@ You can use the data from the table to estimate the resources needed for your an
 
 **1. BuildDatabase** produces the database files.
 
-**2. RepeatModeler** returns the `consesi.fa.classified` required by the **RepeatMasker** step. The file is located within the automatically created directory with the name starting in **"RM_"**.
+**2. RepeatModeler** returns the `consesi.fa.classified` required by the **RepeatMasker** step. The file is located within the automatically created directory with the name starting in **"RM_"**.  <br>
+*Make sure you softlink the classified file to the RepeatMasker workdir, otherwise you will not get a table of classified elements after the run.*
 
 **3. RepeatMasker** generates the final outputs:
 * **.tbl** - a text file containing the summary table of the detected repeats
 * **.gff** - a General Feature Format file containing information about repeats' annotations
-* **.masked** - the genome FASTA file with bases of the detected repeats masked by the *"N"* letter
+* **.masked** - the genome FASTA file with bases of the detected repeats masked by the "*N*" letter
 
-You can use the data from these files depending on the purpose of your further analysis.
-
-
-<!--
-The RepeatModeler step can take longer than 96 hours on one node with 16 threads if the genome is larger than 1GB.  For Arabidopsis it took 9.5 hours.
-```
-# make up a name for your database, choose your search engine, the number of threads, and the genome file
-module load GIF2/repeatmodeler/1.0.8
-BuildDatabase -name TAIR10_chr_all.DB -engine rmblast TAIR10_chr_all.fas
-RepeatModeler -database TAIR10_chr_all.DB -engine ncbi -pa 16
-```
-
-
-The RepeatMasker step can take about 24-48 hours to finish on a genome over 1GB.  However the Arabidopsis run below took 14 minutes with 16 threads.
-```
-#I moved to a different directory, so I softlinked my classified file.  Make sure you use the consensi.fa.classified file, or your repeats will just be masked by repeatmasker, but unannotated.
-
-#make sure you softlink the classified file, otherwise you will not get a table of classified elements after the run.
-ln -s RM_3245.WedMay21605262018/consensi.fa.classified
-
-
-#This will produce a gff for the repeat mapping, a masked fasta file, and a table summarizing the repeats found in the genome.
-module load GIF2/repeatmasker/4.0.6
-RepeatMasker -pa 16 -gff -lib consensi.fa.classified TAIR10_chr_all.fas
-```
--->
-
-### Summary table
-
+You can use the data from these files depending on the purpose of your further analysis. <br>
 **Let's look into the results obtained for the Arabidopsis...**
+
+### Repeats summary table
+
+The file contains a brief of the detected repeats, providing details of the classified families and some statistics.
 
 `Arabidopsis.tbl`
 ```
 ==================================================
-file name: TAIR10_chr_all.fas
+file name: TAIR10_chr_all.fas       
 sequences:             7
-total length:  119667750 bp  (119482146 bp excl N/X-runs)
+total length:  119668634 bp  (119483030 bp excl N/X-runs)
 GC level:         36.06 %
-bases masked:   17878420 bp ( 14.94 %)
+bases masked:   19074485 bp ( 15.94 %)
 ==================================================
                number of      length   percentage
                elements*    occupied  of sequence
 --------------------------------------------------
-SINEs:              381        91996 bp    0.08 %
+SINEs:                0            0 bp    0.00 %
       ALUs            0            0 bp    0.00 %
       MIRs            0            0 bp    0.00 %
 
-LINEs:             2505      1306247 bp    1.09 %
-      LINE1        2407      1277415 bp    1.07 %
+LINEs:             2556      1369351 bp    1.14 %
+      LINE1        2556      1369351 bp    1.14 %
       LINE2           0            0 bp    0.00 %
       L3/CR1          0            0 bp    0.00 %
 
-LTR elements:      6875      7287909 bp    6.09 %
+LTR elements:      5178      5977887 bp    5.00 %
       ERVL            0            0 bp    0.00 %
       ERVL-MaLRs      0            0 bp    0.00 %
       ERV_classI      0            0 bp    0.00 %
       ERV_classII     0            0 bp    0.00 %
 
-DNA elements:      5916      2718611 bp    2.27 %
-     hAT-Charlie    435       163286 bp    0.14 %
+DNA elements:      2921      1940376 bp    1.62 %
+     hAT-Charlie      0            0 bp    0.00 %
      TcMar-Tigger     0            0 bp    0.00 %
 
-Unclassified:      7261      3594123 bp    3.00 %
+Unclassified:     24344      7754373 bp    6.48 %
 
-Total interspersed repeats: 14998886 bp   12.53 %
+Total interspersed repeats: 17041987 bp   14.24 %
 
 
-Small RNA:          442       115046 bp    0.10 %
+Small RNA:            0            0 bp    0.00 %
 
-Satellites:        1064       981082 bp    0.82 %
-Simple repeats:   35831      1435203 bp    1.20 %
-Low complexity:    9032       443907 bp    0.37 %
+Satellites:           0            0 bp    0.00 %
+Simple repeats:   35185      1555134 bp    1.30 %
+Low complexity:    9206       507160 bp    0.42 %
 ==================================================
 
 * most repeats fragmented by insertions or deletions
   have been counted as one element
 
 
-The query species was assumed to be homo
+The query species was assumed to be homo          
 RepeatMasker version open-4.0.6 , default mode
 
-run with rmblastn version 2.2.27+
+run with rmblastn version 2.11.0+
 The query was compared to classified sequences in "consensi.fa.classified"
-RepBase Update 20160829, RM database version 20160829
+RepBase Update 20110419-min, RM database version 20110419-min
 
 ```
-Now there is also a GFF that can be used for many other genomic comparisons.
+
+### Repeats' annotations in the GFF file
+
+Now, there is also a GFF that can be used for many other genomic comparisons, e.g., you can use start-end positions of the detected motif to display repeats on the ideogram (see tutorial in the <a href="https://bioinformaticsworkbook.org/Appendix/dataVisualization_index" target="_blank">Data Visualization  ⤴</a> section: <a href="https://bioinformaticsworkbook.org/dataVisualization/Plotly/01-ideogram-chromosome-bands.html" target="_blank">Visulaize Chromosome Bands using Ideogram  ⤴</a>).
+
+Encoding the columns:
+* 1 - chromosome id
+* 4 - **start** position of the detected repeat
+* 5 - **end** position of the detected repeat
+* 6 - score of the detected repeat (confidence for feature)
+* 7 - strand (+,-, .)
+* 9 - name/attributes of the detected repeat
+
+`Arabidopsis.gff`
 ```
 ##gff-version 2
-##date 2018-05-03
+##date 2022-11-17
 ##sequence-region TAIR10_chr_all.fas
-1       RepeatMasker    similarity      1       115     13.1    +       .       Target "Motif:A-rich" 1 107
-1       RepeatMasker    similarity      1066    1097    10.0    +       .       Target "Motif:(C)n" 1 32
-1       RepeatMasker    similarity      1155    1187    17.1    +       .       Target "Motif:(TTTCTT)n" 1 33
-1       RepeatMasker    similarity      4291    4328     8.4    +       .       Target "Motif:(AT)n" 1 38
-1       RepeatMasker    similarity      5680    5702     9.3    +       .       Target "Motif:(T)n" 1 23
-1       RepeatMasker    similarity      8669    8699     0.0    +       .       Target "Motif:(CT)n" 1 31
-1       RepeatMasker    similarity      9961    10030   20.7    +       .       Target "Motif:(AT)n" 1 70
-1       RepeatMasker    similarity      10814   10885   28.7    +       .       Target "Motif:(AT)n" 1 71
-1       RepeatMasker    similarity      11915   11960   12.0    +       .       Target "Motif:(ATC)n" 1 46
-1       RepeatMasker    similarity      11985   12001    0.0    +       .       Target "Motif:(GAA)n" 1 17
-1       RepeatMasker    similarity      12875   12917   16.5    +       .       Target "Motif:(TTCTTG)n" 1 44
-1       RepeatMasker    similarity      12985   12997   21.8    +       .       Target "Motif:(TGGTTTT)n" 1 36
-1       RepeatMasker    similarity      12998   13021    8.9    +       .       Target "Motif:(T)n" 1 24
-1       RepeatMasker    similarity      13346   13368    4.5    +       .       Target "Motif:(AG)n" 1 23
-1       RepeatMasker    similarity      15436   15469   10.8    +       .       Target "Motif:(ATT)n" 1 32
-1       RepeatMasker    similarity      15872   15895    4.3    +       .       Target "Motif:(TA)n" 1 25
-1       RepeatMasker    similarity      16804   16838    0.0    +       .       Target "Motif:(TTG)n" 1 31
-1       RepeatMasker    similarity      17009   17256    7.3    +       .       Target "Motif:rnd-5_family-1313" 1203 1449
-1       RepeatMasker    similarity      17256   17735    6.9    +       .       Target "Motif:rnd-5_family-1313" 1230 1808
-1       RepeatMasker    similarity      17817   18078   17.5    +       .       Target "Motif:rnd-4_family-1372" 2109 2389
-1       RepeatMasker    similarity      18100   18642    3.0    +       .       Target "Motif:rnd-5_family-843" 1 549
-1       RepeatMasker    similarity      18661   18731    2.8    +       .       Target "Motif:rnd-5_family-843" 1156 1226
-1       RepeatMasker    similarity      20510   20557   19.0    +       .       Target "Motif:(AT)n" 1 50
-1       RepeatMasker    similarity      23109   23167   17.3    +       .       Target "Motif:GA-rich" 1 52
-1       RepeatMasker    similarity      34438   34456    5.6    +       .       Target "Motif:(TTG)n" 1 19
-1       RepeatMasker    similarity      37736   37777    0.0    +       .       Target "Motif:(GAA)n" 1 41
-1       RepeatMasker    similarity      37790   37825    6.9    +       .       Target "Motif:GA-rich" 1 34
-1       RepeatMasker    similarity      41361   41385    0.0    +       .       Target "Motif:(TA)n" 1 25
-1       RepeatMasker    similarity      41549   41567    5.5    +       .       Target "Motif:(TA)n" 1 19
-1       RepeatMasker    similarity      41716   41760   30.0    +       .       Target "Motif:A-rich" 1 45
-1       RepeatMasker    similarity      42444   42488   18.2    +       .       Target "Motif:(T)n" 1 45
-1       RepeatMasker    similarity      43659   43713   30.3    +       .       Target "Motif:(AATTTT)n" 1 54
-1       RepeatMasker    similarity      46523   46564   22.0    +       .       Target "Motif:(TTC)n" 1 42
-1       RepeatMasker    similarity      46832   46864   18.1    +       .       Target "Motif:A-rich" 1 32
-1       RepeatMasker    similarity      47067   47290   17.8    -       .       Target "Motif:rnd-5_family-3415" 1427 1673
-1       RepeatMasker    similarity      49387   49415   15.3    +       .       Target "Motif:(TTCTT)n" 1 30
-1       RepeatMasker    similarity      50433   50515   29.6    +       .       Target "Motif:(CAG)n" 1 83
-1       RepeatMasker    similarity      53368   53434   20.4    +       .       Target "Motif:(TAATTTG)n" 1 69
-1       RepeatMasker    similarity      55677   55919    7.9    +       .       Target "Motif:rnd-5_family-7947" 1 242
-1       RepeatMasker    similarity      55880   56020   20.0    +       .       Target "Motif:rnd-5_family-2172" 1 117
-1       RepeatMasker    similarity      56021   56236   14.9    +       .       Target "Motif:rnd-5_family-1066" 747 946
-1       RepeatMasker    similarity      56237   56293   20.0    +       .       Target "Motif:rnd-5_family-2172" 118 165
-1       RepeatMasker    similarity      56311   56576    6.8    +       .       Target "Motif:rnd-5_family-4425" 1129 1398
-1       RepeatMasker    similarity      59061   59095   19.6    +       .       Target "Motif:A-rich" 1 35
-1       RepeatMasker    similarity      61867   61893   16.6    +       .       Target "Motif:(T)n" 1 27
-1       RepeatMasker    similarity      62347   62372    0.0    +       .       Target "Motif:(AAG)n" 1 26
-1       RepeatMasker    similarity      62392   62803   16.2    +       .       Target "Motif:rnd-5_family-2965" 1 531
-1       RepeatMasker    similarity      63507   63531    0.0    +       .       Target "Motif:(TCTTTC)n" 1 25
-1       RepeatMasker    similarity      64859   64872   27.7    +       .       Target "Motif:A-rich" 1 37
-#truncated file for visualization of gff
+Chr1    RepeatMasker    similarity      1       115     13.1    +       .       Target "Motif:A-rich" 1 107
+Chr1    RepeatMasker    similarity      1066    1097    10.0    +       .       Target "Motif:(C)n" 1 32
+Chr1    RepeatMasker    similarity      1155    1187    17.1    +       .       Target "Motif:(TTTCTT)n" 1 33
+Chr1    RepeatMasker    similarity      3775    3920    25.8    -       .       Target "Motif:rnd-4_family-633" 434 573
+Chr1    RepeatMasker    similarity      4291    4328     8.4    +       .       Target "Motif:(AT)n" 1 38
+Chr1    RepeatMasker    similarity      5680    5702     9.3    +       .       Target "Motif:(T)n" 1 23
+Chr1    RepeatMasker    similarity      8669    8699     0.0    +       .       Target "Motif:(CT)n" 1 31
+Chr1    RepeatMasker    similarity      9961    10030   20.7    +       .       Target "Motif:(AT)n" 1 70
+Chr1    RepeatMasker    similarity      10814   10885   28.7    +       .       Target "Motif:(AT)n" 1 71
+Chr1    RepeatMasker    similarity      11889   11960   12.9    +       .       Target "Motif:rnd-1_family-191" 48 131
+...
 ```
+*^ truncated file for visualization; the complete gff file contains 83285 hits*
+
+### Genome with masked repeats in FASTA file
+
+By default, the RepeatMasker also generates the FASTA file of the input genome, in which all bases of the detected repeats are replaced (masked) with the "*N*" letter.
+
+`Arabidopsis.masked`
+```
+>Chr1 CHROMOSOME dumped from ADB: Feb/3/09 16:9; last updated: 2009-02-02
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNGGTTTCTCTGGTTGAAAATCATTGTGTATATAATG
+ATAATTTTATCGTTTTTATGTAATTGCTTATTGTTGTGTGTAGATTTTTT
+...
+CAGAAAGTGGCAACANNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNAAA
+TTGAGAAGTCAATTTTATATAATTTAATCAAATAAATAAGTTTATGGTTA
+AGAGNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNGAGACATACTGAA
+...
+TCTTATTCTTAATTAGTTACCATGTCTTGANNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNN
+>Chr2 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+...
+```
+*^ truncated file for visualization;*
 
 ---
 [Table of contents](Repeats_index.md)
