@@ -29,6 +29,10 @@ My expertise is in the field of molecular biology, genetics and computational bi
 ![Rick](../assets/images/people/Rick.jpg){: .align-left}
 Currently, I am an associate scientist in the Genome Informatics Facility at Iowa State University, working with a group of amazing people. Here, I work on a multitude of projects, including a continuation of my previous research. Some of these projects involve:  characterizing the genomes of endangered abalone species, assessing the cellular roles of small RNAs in nematodes, creating user-friendly bioinformatics tutorials, assessing transposition in irradiated maize, trans-splicing in nematodes, etc.  With the huge variation of collaborative projects that come into the Genome Informatics Facility, the constant influx of novel ideas creates an environment conducive to my development as a contributing member of the scientific community.
 
+### Aleksandra Badaczewska
+![Alex](../assets/images/people/Alex.png){: .align-left}
+Alex is a Research Scientist IV at the Genome Informatics Facility at Iowa State University. Her academic background is in Chemistry and Biotechnology, with a Ph.D. in Computational Biology and broad experience in programming and designing web applications. She develops a comprehensive collection of highly customizable visualization solutions for Bioinformatics and supports software optimization for the USDA Geospatial analyses.
+<br>
 
 ### Maryam Sayadi
 ![Maryam](../assets/images/people/Maryam.jpg){: .align-left}
