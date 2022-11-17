@@ -30,9 +30,101 @@ Although the mentioned are the most common applications of the ideogram, you can
 The **direction** can be an observation index, position, time, or any unitary variable. The difference between the highest and smallest value will **determine the length of the bar**.
 Ranges or **bands** along the bar **visualize the pattern** of the analyzed feature. Different **colors** may correspond to labels, categories, or **feature types**. *For example, they can depict the species of grains crop that has given the highest yields over the decades in the last century.* But also, different **colors** can refer to the **intensity of a feature**. *For example, they can show how the amount of corn produced has changed over the decades in the last century.*
 
+**Table.** The yields *[in 1000 MT]* of grain crops in the United States, aggregated over decades using <a href="https://github.com/ISUgenomics/data_wrangling" target="_blank">ISUgenomics/data_wrangling </a>/ <a href="https://github.com/ISUgenomics/data_wrangling/tree/main/bin_data" target="_blank">bin_data  ⤴</a> mini python application *(usage explained in this tutorial)*.
+
+.
+
+```
+     year barley    corn   oats  rice  rye  wheat
+-------------------------------------------------
+1960-1969  87962 1038452 136986 25047 7645 359652
+1970-1979  88053 1513440  98472 34732 6345 496421
+1980-1989 106060 1817012  63564 46367 5089 637308
+1990-1999  83818 2192185  30834 56466 2626 644425
+2000-2009  52666 2795878  16296 66408 1899 570611
+2010-2019  40055 3425655   9309 64921 2265 557878
+```
+
+<details><summary> The raw data taken from source: <a href="https://www.indexmundi.com/agriculture/?country=us&commodity=milled-rice&graph=production" target="_blank">Index Mundi: Agriculture  ⤴</a> <i>[here: example <b>rice</b> data]</i> </summary><br>
+
+```
+Year    Production    Unit_of_Measure Growth_Rate
+1960    1756    (1000 MT)       NA
+1961    1763    (1000 MT)       0.40%
+1962    2133    (1000 MT)       20.99%
+1963    2295    (1000 MT)       7.59%
+1964    2386    (1000 MT)       3.97%
+1965    2497    (1000 MT)       4.65%
+1966    2805    (1000 MT)       12.33%
+1967    2950    (1000 MT)       5.17%
+1968    3459    (1000 MT)       17.25%
+1969    3003    (1000 MT)       -13.18%
+1970    2796    (1000 MT)       -6.89%
+1971    2838    (1000 MT)       1.50%
+1972    2828    (1000 MT)       -0.35%
+1973    3034    (1000 MT)       7.28%
+1974    3667    (1000 MT)       20.86%
+1975    4099    (1000 MT)       11.78%
+1976    3781    (1000 MT)       -7.76%
+1977    3120    (1000 MT)       -17.48%
+1978    4271    (1000 MT)       36.89%
+1979    4298    (1000 MT)       0.63%
+1980    4810    (1000 MT)       11.91%
+1981    5979    (1000 MT)       24.30%
+1982    4960    (1000 MT)       -17.04%
+1983    3215    (1000 MT)       -35.18%
+1984    4382    (1000 MT)       36.30%
+1985    4332    (1000 MT)       -1.14%
+1986    4307    (1000 MT)       -0.58%
+1987    4109    (1000 MT)       -4.60%
+1988    5186    (1000 MT)       26.21%
+1989    5087    (1000 MT)       -1.91%
+1990    5098    (1000 MT)       0.22%
+1991    5096    (1000 MT)       -0.04%
+1992    5704    (1000 MT)       11.93%
+1993    5053    (1000 MT)       -11.41%
+1994    6384    (1000 MT)       26.34%
+1995    5628    (1000 MT)       -11.84%
+1996    5453    (1000 MT)       -3.11%
+1997    5750    (1000 MT)       5.45%
+1998    5798    (1000 MT)       0.83%
+1999    6502    (1000 MT)       12.14%
+2000    5941    (1000 MT)       -8.63%
+2001    6714    (1000 MT)       13.01%
+2002    6536    (1000 MT)       -2.65%
+2003    6420    (1000 MT)       -1.77%
+2004    7462    (1000 MT)       16.23%
+2005    7101    (1000 MT)       -4.84%
+2006    6267    (1000 MT)       -11.74%
+2007    6288    (1000 MT)       0.34%
+2008    6546    (1000 MT)       4.10%
+2009    7133    (1000 MT)       8.97%
+2010    7593    (1000 MT)       6.45%
+2011    5866    (1000 MT)       -22.74%
+2012    6348    (1000 MT)       8.22%
+2013    6117    (1000 MT)       -3.64%
+2014    7106    (1000 MT)       16.17%
+2015    6131    (1000 MT)       -13.72%
+2016    7117    (1000 MT)       16.08%
+2017    5659    (1000 MT)       -20.49%
+2018    7107    (1000 MT)       25.59%
+2019    5877    (1000 MT)       -17.31%
+2020    7224    (1000 MT)       22.92%
+2021    6090    (1000 MT)       -15.70%
+2022    5589    (1000 MT)       -8.23%
+```
+
+</details>
+
+
+![Grain crops](../assets/images/ideogram-crops.png)
+
+
 # Case study
 
 Let's assume the corn yield **data at daily frequency was collected** (*^365 times a year at most*) for a hundred years with continuing indexing of days. Now, we are interested in **identifying general periods of shortages**. A change in the data structure is required before visualization to get an informative output. To begin with, we need to **aggregate the data to make a more coarse-grained unit of time**.
+
+![Data aggregation](../assets/images/ideogram-data-aggregation.png)
 
 ***How will we aggregate the data?*** <br>
 Most simply by summing or averaging the data from the selected period.
@@ -44,9 +136,15 @@ Most simply by summing or averaging the data from the selected period.
 
 **However, let's suppose that data from some random days over the years are missing**. <br>
 In this case, dividing the data into **chunks based on a fixed number of rows or slices will lose the reference to time**. (*In the first scenario, the last period will be much smaller, while in the second scenario, all periods will be equal but still smaller than 365 days, and some days can drop into the wrong year*). <br>
+
+![Data slicing](../assets/images/ideogram-data-slices.png)
+
 So, to solve this issue, we should **create data slices based on the increment** of the day counter, where days from the first year to the 100th year were indexed continually, including days of missing data. <br>
 Thus, we will take all rows whose indexes match the increment range for every slice. The value increment should be 365 to create annual periods. (So, 1-365 are days indexes for the first year, 366 - 730 for the second year, etc.). <br>
-**Note that in the slices where missing yields occurred, the count of the rows is smaller but known.** Thus, since the number of observations in periods varies, **data aggregation by averaging** over the data slice seems a more robust solution.
+
+![](../assets/images/ideogram-data-slices-good.png)
+
+**Note that in the slices where missing yields occurred, the count of the rows (days) is smaller but known.** Thus, since the number of observations in periods varies, **data aggregation by averaging** over the data slice seems a more robust solution.
 
 
 # Hands-on tutorial
