@@ -32,8 +32,6 @@ Ranges or **bands** along the bar **visualize the pattern** of the analyzed feat
 
 **Table.** The yields *[in 1000 MT]* of grain crops in the United States, aggregated over decades using <a href="https://github.com/ISUgenomics/data_wrangling" target="_blank">ISUgenomics/data_wrangling </a>/ <a href="https://github.com/ISUgenomics/data_wrangling/tree/main/bin_data" target="_blank">bin_data  ⤴</a> mini python application *(usage explained in this tutorial)*.
 
-.
-
 ```
      year barley    corn   oats  rice  rye  wheat
 -------------------------------------------------
@@ -45,7 +43,7 @@ Ranges or **bands** along the bar **visualize the pattern** of the analyzed feat
 2010-2019  40055 3425655   9309 64921 2265 557878
 ```
 
-<details><summary> The raw data taken from source: <a href="https://www.indexmundi.com/agriculture/?country=us&commodity=milled-rice&graph=production" target="_blank">Index Mundi: Agriculture  ⤴</a> <i>[here: example <b>rice</b> data]</i> </summary><br>
+<details><summary> The raw data taken from source: <a href="https://www.indexmundi.com/agriculture/?country=us&commodity=milled-rice&graph=production" target="_blank">Index Mundi: Agriculture  ⤴</a> <i>[here: example <b>rice</b> data]</i> </summary>
 
 ```
 Year    Production    Unit_of_Measure Growth_Rate
@@ -114,7 +112,7 @@ Year    Production    Unit_of_Measure Growth_Rate
 2022    5589    (1000 MT)       -8.23%
 ```
 
-</details>
+</details><br>
 
 
 ![Grain crops](../assets/images/ideogram-crops.png)
