@@ -147,7 +147,7 @@ This step may take several minutes because not only the is <code>RepeatModeler</
 
 <details><summary>Expand list of installed libraries...</summary>
 
-<pre>
+```
   packages in environment at ~/.conda/envs/repeatmodeler:
   _libgcc_mutex        0.1                        main
   _openmp_mutex        5.1                       1_gnu
@@ -206,7 +206,7 @@ This step may take several minutes because not only the is <code>RepeatModeler</
   wheel                0.37.1             pyhd3eb1b0_0
   xz                   5.2.6                h5eee18b_0
   zlib                 1.2.13               h5eee18b_0
-</pre>
+```
 </details>
 
 
