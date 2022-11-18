@@ -43,74 +43,73 @@ Ranges or **bands** along the bar **visualize the pattern** of the analyzed feat
 2010-2019  40055 3425655   9309 64921 2265 557878
 ```
 
-<details><summary> The raw data taken from source: <a href="https://www.indexmundi.com/agriculture/?country=us&commodity=milled-rice&graph=production" target="_blank">Index Mundi: Agriculture  ⤴</a> <i>[here: example <b>rice</b> data]</i> </summary>
+<details><summary> The raw data taken from the source of: <a href="https://www.indexmundi.com/agriculture/?country=us&commodity=milled-rice&graph=production" target="_blank">Index Mundi: Agriculture  ⤴</a> <i>[here: example <b>rice</b> data]</i> </summary>
 
-```
-Year    Production    Unit_of_Measure Growth_Rate
-1960    1756    (1000 MT)       NA
-1961    1763    (1000 MT)       0.40%
-1962    2133    (1000 MT)       20.99%
-1963    2295    (1000 MT)       7.59%
-1964    2386    (1000 MT)       3.97%
-1965    2497    (1000 MT)       4.65%
-1966    2805    (1000 MT)       12.33%
-1967    2950    (1000 MT)       5.17%
-1968    3459    (1000 MT)       17.25%
-1969    3003    (1000 MT)       -13.18%
-1970    2796    (1000 MT)       -6.89%
-1971    2838    (1000 MT)       1.50%
-1972    2828    (1000 MT)       -0.35%
-1973    3034    (1000 MT)       7.28%
-1974    3667    (1000 MT)       20.86%
-1975    4099    (1000 MT)       11.78%
-1976    3781    (1000 MT)       -7.76%
-1977    3120    (1000 MT)       -17.48%
-1978    4271    (1000 MT)       36.89%
-1979    4298    (1000 MT)       0.63%
-1980    4810    (1000 MT)       11.91%
-1981    5979    (1000 MT)       24.30%
-1982    4960    (1000 MT)       -17.04%
-1983    3215    (1000 MT)       -35.18%
-1984    4382    (1000 MT)       36.30%
-1985    4332    (1000 MT)       -1.14%
-1986    4307    (1000 MT)       -0.58%
-1987    4109    (1000 MT)       -4.60%
-1988    5186    (1000 MT)       26.21%
-1989    5087    (1000 MT)       -1.91%
-1990    5098    (1000 MT)       0.22%
-1991    5096    (1000 MT)       -0.04%
-1992    5704    (1000 MT)       11.93%
-1993    5053    (1000 MT)       -11.41%
-1994    6384    (1000 MT)       26.34%
-1995    5628    (1000 MT)       -11.84%
-1996    5453    (1000 MT)       -3.11%
-1997    5750    (1000 MT)       5.45%
-1998    5798    (1000 MT)       0.83%
-1999    6502    (1000 MT)       12.14%
-2000    5941    (1000 MT)       -8.63%
-2001    6714    (1000 MT)       13.01%
-2002    6536    (1000 MT)       -2.65%
-2003    6420    (1000 MT)       -1.77%
-2004    7462    (1000 MT)       16.23%
-2005    7101    (1000 MT)       -4.84%
-2006    6267    (1000 MT)       -11.74%
-2007    6288    (1000 MT)       0.34%
-2008    6546    (1000 MT)       4.10%
-2009    7133    (1000 MT)       8.97%
-2010    7593    (1000 MT)       6.45%
-2011    5866    (1000 MT)       -22.74%
-2012    6348    (1000 MT)       8.22%
-2013    6117    (1000 MT)       -3.64%
-2014    7106    (1000 MT)       16.17%
-2015    6131    (1000 MT)       -13.72%
-2016    7117    (1000 MT)       16.08%
-2017    5659    (1000 MT)       -20.49%
-2018    7107    (1000 MT)       25.59%
-2019    5877    (1000 MT)       -17.31%
-2020    7224    (1000 MT)       22.92%
-2021    6090    (1000 MT)       -15.70%
+
+Year    Production    Unit_of_Measure Growth_Rate <br>
+1960    1756    (1000 MT)       NA      <br>
+1961    1763    (1000 MT)       0.40%   <br>
+1962    2133    (1000 MT)       20.99%  <br>
+1963    2295    (1000 MT)       7.59%   <br>
+1964    2386    (1000 MT)       3.97%   <br>
+1965    2497    (1000 MT)       4.65%   <br>
+1966    2805    (1000 MT)       12.33%  <br>
+1967    2950    (1000 MT)       5.17%   <br>
+1968    3459    (1000 MT)       17.25%  <br>
+1969    3003    (1000 MT)       -13.18% <br>
+1970    2796    (1000 MT)       -6.89%  <br>
+1971    2838    (1000 MT)       1.50%   <br>
+1972    2828    (1000 MT)       -0.35%  <br>
+1973    3034    (1000 MT)       7.28%   <br>
+1974    3667    (1000 MT)       20.86%  <br>
+1975    4099    (1000 MT)       11.78%  <br>
+1976    3781    (1000 MT)       -7.76%  <br>
+1977    3120    (1000 MT)       -17.48% <br>
+1978    4271    (1000 MT)       36.89%  <br>
+1979    4298    (1000 MT)       0.63%   <br>
+1980    4810    (1000 MT)       11.91%  <br>
+1981    5979    (1000 MT)       24.30%  <br>
+1982    4960    (1000 MT)       -17.04% <br>
+1983    3215    (1000 MT)       -35.18% <br>
+1984    4382    (1000 MT)       36.30%  <br>
+1985    4332    (1000 MT)       -1.14%  <br>
+1986    4307    (1000 MT)       -0.58%  <br>
+1987    4109    (1000 MT)       -4.60%  <br>
+1988    5186    (1000 MT)       26.21%  <br>
+1989    5087    (1000 MT)       -1.91%  <br>
+1990    5098    (1000 MT)       0.22%   <br>
+1991    5096    (1000 MT)       -0.04%  <br>
+1992    5704    (1000 MT)       11.93%  <br>
+1993    5053    (1000 MT)       -11.41% <br>
+1994    6384    (1000 MT)       26.34%  <br>
+1995    5628    (1000 MT)       -11.84% <br>
+1996    5453    (1000 MT)       -3.11%  <br>
+1997    5750    (1000 MT)       5.45%   <br>
+1998    5798    (1000 MT)       0.83%   <br>
+1999    6502    (1000 MT)       12.14%  <br>
+2000    5941    (1000 MT)       -8.63%  <br>
+2001    6714    (1000 MT)       13.01%  <br>
+2002    6536    (1000 MT)       -2.65%  <br>
+2003    6420    (1000 MT)       -1.77%  <br>
+2004    7462    (1000 MT)       16.23%  <br>
+2005    7101    (1000 MT)       -4.84%  <br>
+2006    6267    (1000 MT)       -11.74% <br>
+2007    6288    (1000 MT)       0.34%   <br>
+2008    6546    (1000 MT)       4.10%   <br>
+2009    7133    (1000 MT)       8.97%   <br>
+2010    7593    (1000 MT)       6.45%   <br>
+2011    5866    (1000 MT)       -22.74% <br>
+2012    6348    (1000 MT)       8.22%   <br>
+2013    6117    (1000 MT)       -3.64%  <br>
+2014    7106    (1000 MT)       16.17%  <br>
+2015    6131    (1000 MT)       -13.72% <br>
+2016    7117    (1000 MT)       16.08%  <br>
+2017    5659    (1000 MT)       -20.49% <br>
+2018    7107    (1000 MT)       25.59%  <br>
+2019    5877    (1000 MT)       -17.31% <br>
+2020    7224    (1000 MT)       22.92%  <br>
+2021    6090    (1000 MT)       -15.70% <br>
 2022    5589    (1000 MT)       -8.23%
-```
 
 </details><br>
 
@@ -138,7 +137,7 @@ In this case, dividing the data into **chunks based on a fixed number of rows or
 ![Data slicing](../assets/images/ideogram-data-slices.png)
 
 So, to solve this issue, we should **create data slices based on the increment** of the day counter, where days from the first year to the 100th year were indexed continually, including days of missing data. <br>
-Thus, we will take all rows whose indexes match the increment range for every slice. The value increment should be 365 to create annual periods. (So, 1-365 are days indexes for the first year, 366 - 730 for the second year, etc.). <br>
+Thus, we will take all rows whose indexes match the increment range for every slice. The value increment should be 365 to create annual periods. *(So, 1-365 are days indexes for the first year, 366 - 730 for the second year, etc.).* <br>
 
 ![](../assets/images/ideogram-data-slices-good.png)
 
