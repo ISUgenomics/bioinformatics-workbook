@@ -45,7 +45,7 @@ Ranges or **bands** along the bar **visualize the pattern** of the analyzed feat
 
 <details><summary> The raw data taken from the source of: <a href="https://www.indexmundi.com/agriculture/?country=us&commodity=milled-rice&graph=production" target="_blank">Index Mundi: Agriculture  ⤴</a> <i>[here: example <b>rice</b> data]</i> </summary>
 
-
+<br>
 Year    Production    Unit_of_Measure Growth_Rate <br>
 1960    1756    (1000 MT)       NA      <br>
 1961    1763    (1000 MT)       0.40%   <br>
@@ -116,7 +116,7 @@ Year    Production    Unit_of_Measure Growth_Rate <br>
 
 ![Grain crops](../assets/images/ideogram-crops.png)
 
-
+<br><br>
 # Case study
 
 Let's assume the corn yield **data at daily frequency was collected** (*^365 times a year at most*) for a hundred years with continuing indexing of days. Now, we are interested in **identifying general periods of shortages**. A change in the data structure is required before visualization to get an informative output. To begin with, we need to **aggregate the data to make a more coarse-grained unit of time**.
@@ -150,9 +150,13 @@ In this practical tutorial we will use the bioinformatic data representing genet
 
 ## **Raw data**
 
-The data collected is a matrix indexed by a chromosome ID (*first column*) and positions along it (*second column*). The following numerical columns correspond to several (8) traits. They contain a detection score given per position in the chromosome.
+The data collected is a matrix indexed by a chromosome ID (*first column*) and positions along it (*second column*). The following numerical columns correspond to several (8) individuals of Y species. They contain an alignment depth given per position in the chromosome.
 
 *Preview of `raw_data.txt`* file
+<a href="https://github.com/ISUgenomics/bioinformatics-workbook/raw/master/dataVisualization/Plotly/01-ideogram/raw_data.txt" target="_blank"><input type="button" value="Download ⤵" style="background-color: #e7e7e7; color: black;" /></a>
+<a href="https://raw.githubusercontent.com/ISUgenomics/bioinformatics-workbook/master/dataVisualization/Plotly/01-ideogram/raw_data.txt" target="_blank"><input type="button" value="Open raw ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+<a id="raw-url" href="https://github.com/ISUgenomics/bioinformatics-workbook/tree/master/dataVisualization/Plotly/01-ideogram" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+
 ```
 HiC_scaffold_1  982     0       0       0       0       0       1       0       0
 HiC_scaffold_1  983     0       0       0       0       0       1       0       0
@@ -160,23 +164,25 @@ HiC_scaffold_1  984     0       0       0       0       0       1       0       
 HiC_scaffold_1  985     0       0       0       0       0       1       0       0
 HiC_scaffold_1  986     0       0       0       0       0       1       0       0
 ...
-
 ```
 
 Ten chromosomes are of interest to us in total, each of the lengths (*number of positions*) specified in the second column.
 
 *Preview of `scaffold_list`* file
+<a href="https://raw.githubusercontent.com/ISUgenomics/bioinformatics-workbook/master/dataVisualization/Plotly/01-ideogram/scaffold_list" target="_blank"><input type="button" value="Open raw ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+<a id="raw-url" href="https://github.com/ISUgenomics/bioinformatics-workbook/blob/master/dataVisualization/Plotly/01-ideogram/scaffold_list" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+
 ```
-HiC_scaffold_1 85794387
-HiC_scaffold_2 78354714
-HiC_scaffold_3 73667959
-HiC_scaffold_4 72347313
-HiC_scaffold_5 68914408
-HiC_scaffold_6 68448654
-HiC_scaffold_7 68188873
-HiC_scaffold_9 62184626
-HiC_scaffold_8 62148448
-HiC_scaffold_10 59711964
+HiC_scaffold_1 73700
+HiC_scaffold_2 46643
+HiC_scaffold_3 39042
+HiC_scaffold_4 17063
+HiC_scaffold_5 47495
+HiC_scaffold_6 44324
+HiC_scaffold_7 114593
+HiC_scaffold_9 13668
+HiC_scaffold_8 22968
+HiC_scaffold_10 41740
 ```
 
 Assuming the raw file comes contaminated with results for other scaffolds, we will keep only the rows that match the chromosome list for the Y organism.
@@ -189,6 +195,11 @@ The resulting file `input_data.txt` will be used as a direct input for the data 
 ## **Bin Data app**
 
 To process the `input_data.txt` file we use a ready-made Python application <b><a href="https://github.com/ISUgenomics/data_wrangling/bin_data" target="_blank">bin_data ⤴</a></b>, available in the <a href="https://github.com/ISUgenomics/" target="_blank"> ISUgenomics </a>/<a href="https://github.com/ISUgenomics/data_wrangling" target="_blank">data_wrangling ⤴</a> repository.
+
+Get `bin_data.py` script directly
+<a href="https://downgit.github.io/#/home?url=https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Download ⤵" style="background-color: #e7e7e7; color: black;" /></a>
+<a href="https://raw.githubusercontent.com/ISUgenomics/data_wrangling/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Open raw ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+<a id="raw-url" href="https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
 
 You can learn more about the <a href="https://github.com/ISUgenomics/data_wrangling/tree/main/bin_data" target="_blank">bin_data.py ⤴</a> app from the comprehensive tutorial <a href="https://datascience.101workbook.org/07-DataParsing/03-DATA-WRANGLING-APPS/02-slice-or-bin-data-py" target="_blank">Aggregate data over slicing variations ⤴</a> published in the <a href="https://datascience.101workbook" target="_blank">Data Science Workbook ⤴</a>. You will find there:
 * the application <a href="https://datascience.101workbook.org/07-DataParsing/03-DATA-WRANGLING-APPS/02-slice-or-bin-data-py#app-overview" target="_blank">Overview ⤴</a>
@@ -221,25 +232,36 @@ When you look closely at the data, you notice that **some positions** along the 
 ![Missing data](../assets/images/bin_data_missing.png)
 
 Because of that, aggregating data over <u>a constant number of rows</u> `[-t 'step']` or splitting data into <u>a fixed number of slices</u> `[-t 'bin']` will lose the reference to exact positions along the chromosome. Thus for such a dataset, we **aggregate observations over value increment** `[-t 'value']`, where the value is the positions column. <br>
-In this case, we request to aggregate data with increment X `[-n X]` of position values. *For example, with increment X=1000, the first data slice is created from position 1 to 1000, the second from position 1001 to 2000, etc.* To detect the most **optimal slicing increment**, we should consider a few variants of X. Note the average length of the chromosomes in the input file is several tens of millions, so a good choice is setting X to 10k, 100k, 1M, and 10M. <br>
+In this case, we request to aggregate data with increment X `[-n X]` of position values. *For example, with increment X=1000, the first data slice is created from position 1 to 1000, the second from position 1001 to 2000, etc.* To detect the most **optimal slicing increment**, we should consider a few variants of X. Note the average length of the chromosomes in the input file (*significantly truncated*) is several tens of thousand, so a good choice is setting X to 100, 1k, and 10k (*would be millions for a full-length chromosome*). <br>
 Considering data for some indexes are missing, the number of input rows **(counts) may vary among slices**. Since the lack of data is random, we can not be sure if these positions would be significant in detecting the trait. Therefore, it makes more sense to **average data over slices** `[-c 'ave']` instead of summing it `[-c 'sum']`. To make sure numerical results round to a meaningful number, let us keep three decimal places `[-d 3]`.
 
 ***Run `bin_data.py` app in the command line:***
 
+Get `bin_data.py` script:
+<a href="https://downgit.github.io/#/home?url=https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Download ⤵" style="background-color: #e7e7e7; color: black;" /></a>
+<a href="https://raw.githubusercontent.com/ISUgenomics/data_wrangling/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Open raw ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+<a id="raw-url" href="https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+on your local machine.
+
+Run the program following the command:
 ```
-python3 bin_data.py -i input_data.txt -l 0 -r 1 -t 'value' -n 10000 -c 'ave' -d 3 -o 'output-value_ave_10k'
+python3 bin_data.py -i input_data.txt -l 0 -r 1 -t 'value' -n 100 -c 'ave' -d 3 -o 'output-value_ave_100'
 ```
 
-In addition to the aggregated data output (*output-value_ave_10k.csv*), the application will generate a `CHUNKS` directory where it writes **chromosome-based chunks of raw data**. You can use these files as input in the repetitions of the analysis, such as in the X-increment optimization. That will definitely speed up the processing of Big Data inputs.
+In addition to the aggregated data output (*output-value_ave_100.csv*), the application will generate a `CHUNKS` directory where it writes **chromosome-based chunks of raw data**. You can use these files as input in the repetitions of the analysis, such as in the X-increment optimization. That will definitely speed up the processing of Big Data inputs.
+
+*Preview or get the `CHUNKS`* folder
+<a href="https://downgit.github.io/#/home?url=https://github.com/ISUgenomics/bioinformatics-workbook/tree/master/dataVisualization/Plotly/01-ideogram/CHUNKS" target="_blank"><input type="button" value="Download .zip ⤵" style="background-color: #e7e7e7; color: black;" /></a>
+<a id="raw-url" href="https://github.com/ISUgenomics/bioinformatics-workbook/tree/master/dataVisualization/Plotly/01-ideogram/CHUNKS" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
 
 ```
-for X in 100000 1000000 10000000
+for X in 1000 10000
 do
-    python3 bin_data.py -i ./CHUNKS -l 0 -r 1 -t 'value' -n X -c 'ave' -d 3 -o 'output-value_ave_$X'
+    python3 bin_data.py -i ./CHUNKS -l 0 -r 1 -t 'value' -n $X -c 'ave' -d 3 -o 'output-value_ave_$X'
 done
 ```
 
-*Preview of the `output-value_ave_10k` with data aggregated over slices cut with X=10k units in the 'position' column. The trait's values were averaged for rows in every data slice, and the number of rows is given in the 'counts' column.*
+*Preview of the `output-value_ave_10000` with data aggregated over slices cut with X=10k units in the 'position' column. The trait's values were averaged for rows in every data slice, and the number of rows is given in the 'counts' column.*
 
 ```
          label,   position,val-2,val-3,val-4,val-5,val-6,val-7,val-8,val-9,count
