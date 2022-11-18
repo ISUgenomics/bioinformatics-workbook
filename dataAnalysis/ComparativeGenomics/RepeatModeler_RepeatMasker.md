@@ -8,6 +8,8 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+{% include toc %}
+
 # Software overview
 
 <b><u>RepeatModeler</u> is a repeat-identifying software that can provide a list of repeat family sequences to mask repeats in a genome with <u>RepeatMasker</u>.</b>
@@ -146,8 +148,8 @@ This step may take several minutes because not only the is <code>RepeatModeler</
 <details><summary>Expand list of installed libraries...</summary>
 
 <div>
-# packages in environment at ~/.conda/envs/repeatmodeler:
-#
+'# packages in environment at ~/.conda/envs/repeatmodeler:'
+
 _libgcc_mutex             0.1                        main  
 _openmp_mutex             5.1                       1_gnu  
 blas                      1.0                         mkl  
@@ -205,9 +207,10 @@ tzdata                    2022f                h04d1e81_0
 wheel                     0.37.1             pyhd3eb1b0_0  
 xz                        5.2.6                h5eee18b_0  
 zlib                      1.2.13               h5eee18b_0
+
 </div>
 </details>
-<br>
+
 
 
 Type `Repeat` and press `tab` to display available programs:
