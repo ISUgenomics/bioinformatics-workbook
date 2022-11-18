@@ -205,8 +205,7 @@ This step may take several minutes because not only the is <code>RepeatModeler</
   tzdata                    2022f                h04d1e81_0  
   wheel                     0.37.1             pyhd3eb1b0_0  
   xz                        5.2.6                h5eee18b_0  
-  zlib                      1.2.13               h5eee18b_0
-</pre>
+  zlib                      1.2.13               h5eee18b_0  </pre>
 </details>
 
 
@@ -230,7 +229,7 @@ RepeatModeler -version
 If you have realized already that there is a **newer release available** and wonder how to get it from the command line, follow the instructions in the next section, [Upgrade RepeatModeler](#upgrade-repeatmodeler).
 
 
-### Upgrade RepeatModeler (optional)
+### Upgrade **RepeatModeler** (optional)
 
 In my case, the default `conda install -c bioconda repeatmodeler` installation recipe resulted in getting the **RepeatModeler** in version 1.0.8 instead of the latest release 2.0.3, which provides many more options, such as LTR structural discovery pipeline (*-LTRStruct*). Thus, let's upgrade it following scenario A or B!
 
@@ -319,6 +318,7 @@ makeblastdb -version
 **OUTPUT:** *makeblastdb: 2.12.0+*
 
 
+# Repeats identification pipeline
 
 ## Get your genome ready
 
@@ -360,7 +360,6 @@ If you do **NOT** have any genome data, there are several publicly available res
 Let's use the Arabidopsis thaliana genome from the TAIR10 release as an example of DNA data in which the RepeatModeler will detect various families of repeats.
 
 
-
 ```
 wget https://www.arabidopsis.org/download_files/Genes/TAIR10_genome_release/TAIR10_chromosome_files/TAIR10_chr_all.fas.gz
 ```
@@ -384,8 +383,6 @@ Note that the downloaded file is compressed (*.gz*) and the `BuildDatabase` prog
 gunzip -d TAIR10_chr_all.fas.gz
 ```
 
-
-## Repeats identification pipeline
 
 ### 1. BuildDatabase
 
@@ -614,9 +611,9 @@ You can use the data from the table to estimate the resources needed for your an
 |           |        |           |                   | ~*96h* / -       | *24-48h* / -     | *(16)*|
 
 
-## Results interpretation
+# Results interpretation
 
-### Outputs overview
+## Outputs overview
 
 * assuming the database name is *Arabidopsis*
 
@@ -643,7 +640,7 @@ You can use the data from the table to estimate the resources needed for your an
 You can use the data from these files depending on the purpose of your further analysis. <br>
 **Let's look into the results obtained for the Arabidopsis...**
 
-### Repeats summary table
+### *Repeats summary table*
 
 The file contains a brief of the detected repeats, providing details of the classified families and some statistics.
 
@@ -703,7 +700,7 @@ RepBase Update 20110419-min, RM database version 20110419-min
 
 ```
 
-### Repeats' annotations in the GFF file
+### *Repeats' annotations in the GFF file*
 
 Now, there is also a GFF that can be used for many other genomic comparisons, e.g., you can use start-end positions of the detected motif to display repeats on the ideogram (see tutorial in the <a href="https://bioinformaticsworkbook.org/Appendix/dataVisualization_index" target="_blank">Data Visualization  ⤴</a> section: <a href="https://bioinformaticsworkbook.org/dataVisualization/Plotly/01-ideogram-chromosome-bands.html" target="_blank">Visulaize Chromosome Bands using Ideogram  ⤴</a>).
 
@@ -734,7 +731,7 @@ Chr1    RepeatMasker    similarity      11889   11960   12.9    +       .       
 ```
 *^ truncated file for visualization; the complete gff file contains 83285 hits*
 
-### Genome with masked repeats in FASTA file
+### *Genome with masked repeats in FASTA file*
 
 By default, the RepeatMasker also generates the FASTA file of the input genome, in which all bases of the detected repeats are replaced (masked) with the "*N*" letter.
 
