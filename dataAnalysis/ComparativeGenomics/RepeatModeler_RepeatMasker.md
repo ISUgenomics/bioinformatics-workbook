@@ -57,8 +57,8 @@ There are several ways to get the **RepeatModeler** and **RepeatMasker** install
 <br><br>
 * run using **containers** (<i>see detailed <a href="https://github.com/Dfam-consortium/TETools#using-the-container" target="_blank">instructions  ⤴</a></i>):
   * docker: `docker run -it --rm dfam/tetools:latest`
-  * singularity: `singularity pull dfam-tetools-latest.sif docker://dfam/tetools:latest` and then `singularity run dfam-tetools-latest.sif`
-  * wrapper: `curl -sSLO https://github.com/Dfam-consortium/TETools/raw/master/dfam-tetools.sh` and then `. ./dfam-tetools.sh`
+  * singularity: `singularity pull dfam-tetools-latest.sif docker://dfam/tetools:latest` <br>and then `singularity run dfam-tetools-latest.sif`
+  * wrapper: `curl -sSLO https://github.com/Dfam-consortium/TETools/raw/master/dfam-tetools.sh` <br>and then `. ./dfam-tetools.sh`
 <br><br>
 * download **source** distribution:
   * <a href="http://www.repeatmasker.org/RepeatModeler/RepeatModeler-2.0.3.tar.gz" target="_blank">RepeatModeler-2.0.3.tar.gz  ⤴</a> (*latest release in 2022*) <br> `wget http://www.repeatmasker.org/RepeatModeler/RepeatModeler-2.0.3.tar.gz`
@@ -144,7 +144,7 @@ This step may take several minutes because not only the is <code>RepeatModeler</
 </span>
 </div>
 
-
+<!--
 <details><summary>Expand list of installed libraries...</summary>
 
 <div>
@@ -210,7 +210,7 @@ zlib                      1.2.13               h5eee18b_0
 
 </div>
 </details>
-
+-->
 
 
 Type `Repeat` and press `tab` to display available programs:
@@ -406,7 +406,7 @@ BuildDatabase -name {database_name} {genome_file-in_fasta_format}
 e.g.,
 BuildDatabase -name arabidopsis TAIR10_chr_all.fas
 ```
-
+<!--
 <details> <summary>Preview options using <code>BuildDatabase -h</code></summary>
 
 ```
@@ -431,7 +431,7 @@ BuildDatabase [-options] -name "mydb.fasta"
 ```
 
 </details>
-
+-->
 
 ### 2. RepeatModeler
 
@@ -451,7 +451,7 @@ e.g.,
 RepeatModeler -database arabidopsis -pa 36 -LTRStruct > out.log
 ```
 
-
+<!--
 <details> <summary>Preview options using <code>RepeatModeler -h</code></summary>
 
 ```
@@ -483,7 +483,7 @@ RepeatModeler [-options] -database <XDF Database>
 ```
 
 </details>
-
+-->
 
 ### 3. RepeatMasker
 
@@ -580,6 +580,7 @@ Use the tips provided below in case your analysis crashes with errors. <br><br>
 <b>ERROR 1</b><br>
 <b>Can't locate File/Which.pm</b> in @INC (you may need to install the File::Which module) (@INC contains: ... ) <b>at</b> /work/gif/Alex/abadacz_notebook/.conda/envs/repeat3/bin/<b>filter-stage-1.prl line 14.</b><br><br>
 
+<!--
 <details><summary> Try solutions:</summary>
 
 The error results from the <b>perl5</b> package. You can follow one of the two solutions: <br><br>
@@ -593,6 +594,7 @@ install/upgrade the missing dependency of perl package: <br>
 <code>conda install perl-File-Which</code>
 
 </details>
+-->
 
 </span>
 </div><br>
