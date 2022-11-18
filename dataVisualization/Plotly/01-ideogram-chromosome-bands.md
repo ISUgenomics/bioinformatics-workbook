@@ -143,7 +143,7 @@ Thus, we will take all rows whose indexes match the increment range for every sl
 
 **Note that in the slices where missing yields occurred, the count of the rows (days) is smaller but known.** Thus, since the number of observations in periods varies, **data aggregation by averaging** over the data slice seems a more robust solution.
 
-
+<br><br>
 # Hands-on tutorial
 
 In this practical tutorial we will use the bioinformatic data representing genetic features of species X detected in the chromosomes of newly discovered organism Y.
@@ -153,7 +153,7 @@ In this practical tutorial we will use the bioinformatic data representing genet
 The data collected is a matrix indexed by a chromosome ID (*first column*) and positions along it (*second column*). The following numerical columns correspond to several (8) individuals of Y species. They contain an alignment depth given per position in the chromosome.
 
 *Preview of `raw_data.txt`* file
-<a href="https://github.com/ISUgenomics/bioinformatics-workbook/raw/master/dataVisualization/Plotly/01-ideogram/raw_data.txt" target="_blank"><input type="button" value="Download ⤵" style="background-color: #e7e7e7; color: black;" /></a>
+<a href="https://downgit.github.io/#/home?url=https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Download .zip ⤵" style="background-color: #e7e7e7; color: black;" /></a>
 <a href="https://raw.githubusercontent.com/ISUgenomics/bioinformatics-workbook/master/dataVisualization/Plotly/01-ideogram/raw_data.txt" target="_blank"><input type="button" value="Open raw ⤴" style="background-color: #e7e7e7; color: black;" /></a>
 <a id="raw-url" href="https://github.com/ISUgenomics/bioinformatics-workbook/tree/master/dataVisualization/Plotly/01-ideogram" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
 
@@ -197,7 +197,7 @@ The resulting file `input_data.txt` will be used as a direct input for the data 
 To process the `input_data.txt` file we use a ready-made Python application <b><a href="https://github.com/ISUgenomics/data_wrangling/bin_data" target="_blank">bin_data ⤴</a></b>, available in the <a href="https://github.com/ISUgenomics/" target="_blank"> ISUgenomics </a>/<a href="https://github.com/ISUgenomics/data_wrangling" target="_blank">data_wrangling ⤴</a> repository.
 
 Get `bin_data.py` script directly
-<a href="https://downgit.github.io/#/home?url=https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Download ⤵" style="background-color: #e7e7e7; color: black;" /></a>
+<a href="https://downgit.github.io/#/home?url=https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Download .zip ⤵" style="background-color: #e7e7e7; color: black;" /></a>
 <a href="https://raw.githubusercontent.com/ISUgenomics/data_wrangling/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Open raw ⤴" style="background-color: #e7e7e7; color: black;" /></a>
 <a id="raw-url" href="https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
 
@@ -290,9 +290,9 @@ First, you need to find the minimum, maximum, mean, and standard deviation value
 *The figure shows the values to colors mapping.*
 
 **Luckily, you do NOT have to implement the algorithm that will do it yourself.** <br>
-<span style="color: #ff3870;font-weight: 500;">Use a ready-made <a href="https://raw.githubusercontent.com/ISUgenomics/data_wrangling/main/bin_data/convert_for_ideogram.py" target="_blank">convert_for_ideogram.py ⤴</a> application in Python</span>, moving to subsection: <br>
+<span style="color: #ff3870;font-weight: 500;">Use a ready-made <a href="https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/convert_for_ideogram.py" target="_blank">convert_for_ideogram.py ⤴</a> application in Python</span>, moving to subsection: <br>
 <b>A.</b> [dash-bio ideogram](https://bioinformaticsworkbook.org/dataVisualization/Plotly/01-ideogram-chromosome-bands.html#a-use-dash-bio-variant-js) or <br>
-<b>B.</b> [customizable plotly ideogram](https://bioinformaticsworkbook.org/dataVisualization/Plotly/01-ideogram-chromosome-bands.html#b-use-plotly-variant-py) <br>
+<b>B.</b> [customizable plotly ideogram](https://bioinformaticsworkbook.org/dataVisualization/Plotly/01-ideogram-chromosome-bands.html#b-use-plotly-variant) <br>
 to follow detailed instructions for converting data for visualization on an ideogram.
 
 ### ***A. Use dash-bio variant***
@@ -310,7 +310,7 @@ Following the steps in this section, you will learn how to: <br>
 (3) run the app in the JupyterLab <br>
 (4) adjust visualization using the Ideogram
 
-<span style="color: #ff3870;font-weight: 500;">If you want to load customized files directly from the local file system, go to section B. <a href="https://" >Customizable Plotly-based Ideogram</a>.</span>
+<span style="color: #ff3870;font-weight: 500;">If you want to load customized files directly from the local file system, go to section B. <a href="https://bioinformaticsworkbook.org/dataVisualization/Plotly/01-ideogram-chromosome-bands.html#b-use-plotly-variant" >Customizable Plotly-based Ideogram</a>.</span>
 
 ### ❖ *Convert data structure*
 
@@ -338,7 +338,7 @@ Every band is defined as a string of 8 fields separated by a single space. Subse
 
 **Convert bands data for ideogram**
 
-Use <a href="https://" target="_blank">convert_for_ideogram.py ⤴</a> Python mini app to assign colors for value ranges. Implemented options make the application flexible to user needs. You can learn more from the documentation available in the <a href="https://github.com/ISUgenomics/data_wrangling" target="_blank">data_wrangling</a>/<a href="https://" target="_blank">assign_colors</a> repo and the <a href="https://" target="_blank">X</a> tutorial in the <a href="https://" target="_blank">Data Science</a> workbook.
+Use <a href="https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/convert_for_ideogram.py" target="_blank">convert_for_ideogram.py ⤴</a> Python mini app to assign colors for value ranges. Implemented options make the application flexible to user needs. You can learn more from the documentation available in the <a href="https://github.com/ISUgenomics/data_wrangling" target="_blank">data_wrangling</a>/<a href="https://" target="_blank">assign_colors</a> repo and the <a href="https://" target="_blank">X</a> tutorial in the <a href="https://" target="_blank">Data Science</a> workbook.
 
 *available options of `convert_for_ideogram.py`:*
 
