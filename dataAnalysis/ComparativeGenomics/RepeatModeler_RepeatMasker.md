@@ -145,7 +145,7 @@ This step may take several minutes because not only the is <code>RepeatModeler</
 
 <details><summary>Expand list of installed libraries...</summary>
 
-<code>
+<div>
 # packages in environment at ~/.conda/envs/repeatmodeler:
 #
 _libgcc_mutex             0.1                        main  
@@ -205,8 +205,9 @@ tzdata                    2022f                h04d1e81_0
 wheel                     0.37.1             pyhd3eb1b0_0  
 xz                        5.2.6                h5eee18b_0  
 zlib                      1.2.13               h5eee18b_0
-</code>
-</details><br>
+</div>
+</details>
+<br>
 
 
 Type `Repeat` and press `tab` to display available programs:
