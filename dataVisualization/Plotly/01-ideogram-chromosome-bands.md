@@ -197,9 +197,9 @@ The resulting file `input_data.txt` will be used as a direct input for the data 
 To process the `input_data.txt` file we use a ready-made Python application <b><a href="https://github.com/ISUgenomics/data_wrangling/bin_data" target="_blank">bin_data ⤴</a></b>, available in the <a href="https://github.com/ISUgenomics/" target="_blank"> ISUgenomics </a>/<a href="https://github.com/ISUgenomics/data_wrangling" target="_blank">data_wrangling ⤴</a> repository.
 
 Get `bin_data.py` script directly
-<a href="https://downgit.github.io/#/home?url=https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Download .zip ⤵" style="background-color: #e7e7e7; color: black;" /></a>
-<a href="https://raw.githubusercontent.com/ISUgenomics/data_wrangling/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Open raw ⤴" style="background-color: #e7e7e7; color: black;" /></a>
-<a id="raw-url" href="https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+<a href="https://downgit.github.io/#/home?url=https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/app/bin_data.py" target="_blank"><input type="button" value="Download .zip ⤵" style="background-color: #e7e7e7; color: black;" /></a>
+<a href="https://raw.githubusercontent.com/ISUgenomics/data_wrangling/main/bin_data/app/bin_data.py" target="_blank"><input type="button" value="Open raw ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+<a id="raw-url" href="https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/app/bin_data.py" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
 
 You can learn more about the <a href="https://github.com/ISUgenomics/data_wrangling/tree/main/bin_data" target="_blank">bin_data.py ⤴</a> app from the comprehensive tutorial <a href="https://datascience.101workbook.org/07-DataParsing/03-DATA-WRANGLING-APPS/02-slice-or-bin-data-py" target="_blank">Aggregate data over slicing variations ⤴</a> published in the <a href="https://datascience.101workbook" target="_blank">Data Science Workbook ⤴</a>. You will find there:
 * the application <a href="https://datascience.101workbook.org/07-DataParsing/03-DATA-WRANGLING-APPS/02-slice-or-bin-data-py#app-overview" target="_blank">Overview ⤴</a>
@@ -238,9 +238,9 @@ Considering data for some indexes are missing, the number of input rows **(count
 ***Run `bin_data.py` app in the command line:***
 
 Get `bin_data.py` script:
-<a href="https://downgit.github.io/#/home?url=https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Download ⤵" style="background-color: #e7e7e7; color: black;" /></a>
-<a href="https://raw.githubusercontent.com/ISUgenomics/data_wrangling/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Open raw ⤴" style="background-color: #e7e7e7; color: black;" /></a>
-<a id="raw-url" href="https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/bin_data.py" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+<a href="https://downgit.github.io/#/home?url=https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/app/bin_data.py" target="_blank"><input type="button" value="Download .zip ⤵" style="background-color: #e7e7e7; color: black;" /></a>
+<a href="https://raw.githubusercontent.com/ISUgenomics/data_wrangling/main/bin_data/app/bin_data.py" target="_blank"><input type="button" value="Open raw ⤴" style="background-color: #e7e7e7; color: black;" /></a>
+<a id="raw-url" href="https://github.com/ISUgenomics/data_wrangling/blob/main/bin_data/app/bin_data.py" target="_blank"><input type="button" value="Open at GitHub ⤴" style="background-color: #e7e7e7; color: black;" /></a>
 on your local machine.
 
 Run the program following the command:
