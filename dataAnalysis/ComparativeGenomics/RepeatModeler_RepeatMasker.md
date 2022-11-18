@@ -144,73 +144,71 @@ This step may take several minutes because not only the is <code>RepeatModeler</
 </span>
 </div>
 
-<!--
+
 <details><summary>Expand list of installed libraries...</summary>
 
-<div>
-'# packages in environment at ~/.conda/envs/repeatmodeler:'
-
-_libgcc_mutex             0.1                        main  
-_openmp_mutex             5.1                       1_gnu  
-blas                      1.0                         mkl  
-blast                     2.5.0                hc0b0e79_3    bioconda
-boost                     1.57.0                        4  
-bzip2                     1.0.8                h7b6447c_0  
-ca-certificates           2022.10.11           h06a4308_0  
-certifi                   2022.9.24                 <pip>
-certifi                   2022.9.24       py310h06a4308_0  
-h5py                      3.7.0                     <pip>
-h5py                      3.7.0           py310he06866b_0  
-hdf5                      1.10.6               h3ffc7dd_1  
-hmmer                     3.3.2                h87f3376_2    bioconda
-icu                       68.1                 h2531618_0  
-intel-openmp              2021.4.0          h06a4308_3561  
-ld_impl_linux-64          2.38                 h1181459_1  
-libffi                    3.3                  he6710b0_2  
-libgcc-ng                 11.2.0               h1234567_1  
-libgfortran-ng            11.2.0               h00389a5_1  
-libgfortran5              11.2.0               h1234567_1  
-libgomp                   11.2.0               h1234567_1  
-libnsl                    2.0.0                h5eee18b_0  
-libstdcxx-ng              11.2.0               h1234567_1  
-libuuid                   1.0.3                h7f8727e_2  
-mkl                       2021.4.0           h06a4308_640  
-mkl-fft                   1.3.1                     <pip>
-mkl-random                1.2.2                     <pip>
-mkl-service               2.4.0                     <pip>
-mkl-service               2.4.0           py310h7f8727e_0  
-mkl_fft                   1.3.1           py310hd6ae3a3_0  
-mkl_random                1.2.2           py310h00e6091_0  
-ncurses                   6.3                  h5eee18b_3  
-numpy                     1.23.3                    <pip>
-numpy                     1.23.3          py310hd5efca6_1  
-numpy-base                1.23.3          py310h8e6c178_1  
-openssl                   1.1.1s               h7f8727e_0  
-perl                      5.32.1          0_h5eee18b_perl5  
-perl-threaded             5.32.1               hdfd78af_1    bioconda
-pip                       22.2.2                    <pip>
-pip                       22.2.2          py310h06a4308_0  
-python                    3.10.6               haa1d7c7_1  
-readline                  8.2                  h5eee18b_0  
-recon                     1.08                 hec16e2b_4    bioconda
-repeatmasker              4.1.2.p1        pl5321hdfd78af_1    bioconda
-repeatmodeler             1.0.8                         0    bioconda
-repeatscout               1.0.5                h516909a_2    bioconda
-rmblast                   2.2.28               h21aa3a5_4    bioconda
-setuptools                65.5.0          py310h06a4308_0  
-setuptools                65.5.0                    <pip>
-six                       1.16.0             pyhd3eb1b0_1  
-sqlite                    3.39.3               h5082296_0  
-tk                        8.6.12               h1ccaba5_0  
-trf                       4.09.1               hec16e2b_2    bioconda
-tzdata                    2022f                h04d1e81_0  
-wheel                     0.37.1             pyhd3eb1b0_0  
-xz                        5.2.6                h5eee18b_0  
-zlib                      1.2.13               h5eee18b_0
-
-</div>
+<pre>
+<!--# packages in environment at ~/.conda/envs/repeatmodeler:-->
+  _libgcc_mutex             0.1                        main  
+  _openmp_mutex             5.1                       1_gnu  
+  blas                      1.0                         mkl  
+  blast                     2.5.0                hc0b0e79_3    bioconda
+  boost                     1.57.0                        4  
+  bzip2                     1.0.8                h7b6447c_0  
+  ca-certificates           2022.10.11           h06a4308_0  
+  certifi                   2022.9.24                 <pip>
+  certifi                   2022.9.24       py310h06a4308_0  
+  h5py                      3.7.0                     <pip>
+  h5py                      3.7.0           py310he06866b_0  
+  hdf5                      1.10.6               h3ffc7dd_1  
+  hmmer                     3.3.2                h87f3376_2    bioconda
+  icu                       68.1                 h2531618_0  
+  intel-openmp              2021.4.0          h06a4308_3561  
+  ld_impl_linux-64          2.38                 h1181459_1  
+  libffi                    3.3                  he6710b0_2  
+  libgcc-ng                 11.2.0               h1234567_1  
+  libgfortran-ng            11.2.0               h00389a5_1  
+  libgfortran5              11.2.0               h1234567_1  
+  libgomp                   11.2.0               h1234567_1  
+  libnsl                    2.0.0                h5eee18b_0  
+  libstdcxx-ng              11.2.0               h1234567_1  
+  libuuid                   1.0.3                h7f8727e_2  
+  mkl                       2021.4.0           h06a4308_640  
+  mkl-fft                   1.3.1                     <pip>
+  mkl-random                1.2.2                     <pip>
+  mkl-service               2.4.0                     <pip>
+  mkl-service               2.4.0           py310h7f8727e_0  
+  mkl_fft                   1.3.1           py310hd6ae3a3_0  
+  mkl_random                1.2.2           py310h00e6091_0  
+  ncurses                   6.3                  h5eee18b_3  
+  numpy                     1.23.3                    <pip>
+  numpy                     1.23.3          py310hd5efca6_1  
+  numpy-base                1.23.3          py310h8e6c178_1  
+  openssl                   1.1.1s               h7f8727e_0  
+  perl                      5.32.1          0_h5eee18b_perl5  
+  perl-threaded             5.32.1               hdfd78af_1    bioconda
+  pip                       22.2.2                    <pip>
+  pip                       22.2.2          py310h06a4308_0  
+  python                    3.10.6               haa1d7c7_1  
+  readline                  8.2                  h5eee18b_0  
+  recon                     1.08                 hec16e2b_4    bioconda
+  repeatmasker              4.1.2.p1        pl5321hdfd78af_1    bioconda
+  repeatmodeler             1.0.8                         0    bioconda
+  repeatscout               1.0.5                h516909a_2    bioconda
+  rmblast                   2.2.28               h21aa3a5_4    bioconda
+  setuptools                65.5.0          py310h06a4308_0  
+  setuptools                65.5.0                    <pip>
+  six                       1.16.0             pyhd3eb1b0_1  
+  sqlite                    3.39.3               h5082296_0  
+  tk                        8.6.12               h1ccaba5_0  
+  trf                       4.09.1               hec16e2b_2    bioconda
+  tzdata                    2022f                h04d1e81_0  
+  wheel                     0.37.1             pyhd3eb1b0_0  
+  xz                        5.2.6                h5eee18b_0  
+  zlib                      1.2.13               h5eee18b_0
+</pre>
 </details>
--->
+
 
 
 Type `Repeat` and press `tab` to display available programs:
