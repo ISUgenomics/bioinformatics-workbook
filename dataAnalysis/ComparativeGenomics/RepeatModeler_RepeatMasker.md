@@ -147,7 +147,7 @@ This step may take several minutes because not only the is <code>RepeatModeler</
 
 <details><summary>Expand list of installed libraries...</summary>
 
-```
+<pre>
   packages in environment at ~/.conda/envs/repeatmodeler:
   _libgcc_mutex        0.1                        main
   _openmp_mutex        5.1                       1_gnu
@@ -206,11 +206,11 @@ This step may take several minutes because not only the is <code>RepeatModeler</
   wheel                0.37.1             pyhd3eb1b0_0
   xz                   5.2.6                h5eee18b_0
   zlib                 1.2.13               h5eee18b_0
-```
+</pre>
 </details>
 
 
-
+<br>
 Type `Repeat` and press `tab` to display available programs:
 
 ![Repeat programs](assets/images/find_programs.png)
@@ -218,7 +218,7 @@ Type `Repeat` and press `tab` to display available programs:
 There is also: `BuildDatabase` available.
 
 Call any program by its name: <br>
-`BuildDatabase`, `RepeatModeler`, `RepeatMasker`, `RepeatClassifier`, `RepeatProteinMask`, `RepeatScout` <br>
+`BuildDatabase`, `RepeatModeler`, `RepeatMasker`, <br>`RepeatClassifier`, `RepeatProteinMask`, `RepeatScout` <br>
 
 followed by the `-h` flag to display the help message or the `-version` flag to return the current version in use.
 
@@ -402,32 +402,31 @@ BuildDatabase -name {database_name} {genome_file-in_fasta_format}
 e.g.,
 BuildDatabase -name arabidopsis TAIR10_chr_all.fas
 ```
-<!--
+
 <details> <summary>Preview options using <code>BuildDatabase -h</code></summary>
 
-```
+<pre>
 BuildDatabase [-options] -name "mydb.fasta"
 
--name <database name>
+-name {database name}
     The name of the database to create.
 
--engine <engine name>
+-engine {engine name}
     The name of the search engine we are using. I.e abblast/wublast or
     ncbi (rmblast version).
 
--dir <directory>
+-dir {directory}
     The name of a directory containing fasta files to be processed. The
     files are recognized by their suffix. Only *.fa and *.fasta files
     are processed.
 
--batch <file>
+-batch {file}
     The name of a file which contains the names of fasta files to
     process. The files names are listed one per line and should be fully
     qualified.
-```
-
+</pre>
 </details>
--->
+
 
 ### 2. RepeatModeler
 
@@ -447,11 +446,11 @@ e.g.,
 RepeatModeler -database arabidopsis -pa 36 -LTRStruct > out.log
 ```
 
-<!--
+
 <details> <summary>Preview options using <code>RepeatModeler -h</code></summary>
 
-```
-RepeatModeler [-options] -database <XDF Database>
+<pre>
+RepeatModeler [-options] -database {XDF Database}
 
 -database
     The prefix name of a XDF formatted sequence database containing the
@@ -459,7 +458,7 @@ RepeatModeler [-options] -database <XDF Database>
     may be created with the WUBlast "xdformat" utility or with the
     RepeatModeler wrapper script "BuildXDFDatabase".
 
--engine <abblast|wublast|ncbi>
+-engine {abblast|wublast|ncbi}
     The name of the search engine we are using. I.e abblast/wublast or
     ncbi (rmblast version).
 
@@ -470,16 +469,15 @@ RepeatModeler [-options] -database <XDF Database>
     the script and 9 cores for the BLAST searches by running with "-pa
     9".
 
--recoverDir <Previous Output Directory>
+-recoverDir {Previous Output Directory}
     If a run fails in the middle of processing, it may be possible
     recover some results and continue where the previous run left off.
     Simply supply the output directory where the results of the failed
     run were saved and the program will attempt to recover and continue
     the run.
-```
-
+</pre>
 </details>
--->
+
 
 ### 3. RepeatMasker
 
@@ -576,9 +574,10 @@ Use the tips provided below in case your analysis crashes with errors. <br><br>
 <b>ERROR 1</b><br>
 <b>Can't locate File/Which.pm</b> in @INC (you may need to install the File::Which module) (@INC contains: ... ) <b>at</b> /work/gif/Alex/abadacz_notebook/.conda/envs/repeat3/bin/<b>filter-stage-1.prl line 14.</b><br><br>
 
-<!--
+
 <details><summary> Try solutions:</summary>
 
+<pre>
 The error results from the <b>perl5</b> package. You can follow one of the two solutions: <br><br>
 Solution 1: <br>
 open the file indicated after "at": <br>
@@ -588,9 +587,9 @@ and comment with <b>#</b> character the line shown: <br>
 Solution 2: <br>
 install/upgrade the missing dependency of perl package: <br>
 <code>conda install perl-File-Which</code>
-
+</pre>
 </details>
--->
+
 
 </span>
 </div><br>
