@@ -153,6 +153,7 @@ This step may take several minutes because not only the is <code>RepeatModeler</
 
 <pre style="padding: 1em; font-size: 0.7em; background-color: #f1f2f3;">
   packages in environment at ~/.conda/envs/repeatmodeler:
+  
   _libgcc_mutex        0.1                        main
   _openmp_mutex        5.1                       1_gnu
   blas                 1.0                         mkl
@@ -343,7 +344,7 @@ AGAATTAATTCATGTTTTAAGATATGTATGAAGTATTAAATAGTTAAATAGATGTTCTTAATAATTGAATACCTTTCCAT
 ...
 ```
 
-### *Resources of genome data*
+## *Resources of genome data*
 
 **A. Custom genome data**
 
