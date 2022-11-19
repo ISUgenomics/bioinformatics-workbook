@@ -28,6 +28,8 @@ Consider browsing the software resources to get the most up-to-date news. You ca
   * <a href="http://www.repeatmasker.org/webrepeatmaskerhelp.html#sensitivity" target="_blank">Sensitivity  ⤴</a>
   * <a href="http://www.repeatmasker.org/webrepeatmaskerhelp.html#selectivity" target="_blank">Selectivity  ⤴</a>
 
+<br>
+---
 
 # Single Use - online service
 
@@ -43,6 +45,8 @@ There is a <a href="http://www.repeatmasker.org/cgi-bin/WEBRepeatMasker" target=
 |• two separate sections for basic and advanced options |• manual submission of every task |
 |• on request e-mail notification or HTML report        |
 
+<br>
+---
 
 # Regular Use - get it locally
 
@@ -268,7 +272,7 @@ This approach is more robust compared to provided below <b><i>B. Select from Con
 <br><span style="font-style:italic;">
 Note that upgrading the software using a downloaded file may disrupt the other dependencies in your Conda environment. Then you will need to manually find and fix them (e.g., install the required version). However, it is useful when you need a very specific release (e.g., to repeat the analysis with the same settings).
 </span>
-</div><br>
+</div>
 
 Go to the **Files** tab at [https://anaconda.org/bioconda/repeatmodeler/files](https://anaconda.org/bioconda/repeatmodeler/files) (in a web browser) and select desired downloadable file, here `repeatmodeler-2.0.3` variant. Using right-mouse, click `Copy Link` and return to your terminal window.
 
@@ -318,7 +322,8 @@ makeblastdb -version
 ```
 **OUTPUT:** *makeblastdb: 2.12.0+*
 
-<br><hr>
+<br>
+---
 
 # Repeats identification pipeline
 
@@ -614,7 +619,8 @@ You can use the data from the table to estimate the resources needed for your an
 |           |        |           |                   | ~*96h* / -       | *24-48h* / -     | *(16)*|
 
 
-<br><hr>
+<br>
+---
 
 # Results interpretation
 
