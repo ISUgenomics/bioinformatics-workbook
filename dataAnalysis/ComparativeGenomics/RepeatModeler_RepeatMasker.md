@@ -111,7 +111,7 @@ Select `conda` or `miniconda` version (from available on your HPC infrastructure
 module load miniconda3/4.3.30-qdauveb
 ```
 
-### Create new environment
+### *Create new environment*
 
 (only once)
 
@@ -147,7 +147,7 @@ This step may take several minutes because not only the is <code>RepeatModeler</
 
 <details><summary>Expand list of installed libraries...</summary>
 
-<pre>
+<pre style="font-size: 1.2em; background-color: #f1f2f3;">
   packages in environment at ~/.conda/envs/repeatmodeler:
   _libgcc_mutex        0.1                        main
   _openmp_mutex        5.1                       1_gnu
@@ -230,7 +230,7 @@ RepeatModeler -version
 If you have realized already that there is a **newer release available** and wonder how to get it from the command line, follow the instructions in the next section, [Upgrade RepeatModeler](#upgrade-repeatmodeler).
 
 
-### Upgrade **RepeatModeler** (optional)
+## Upgrade **RepeatModeler** (optional)
 
 In my case, the default `conda install -c bioconda repeatmodeler` installation recipe resulted in getting the **RepeatModeler** in version 1.0.8 instead of the latest release 2.0.3, which provides many more options, such as LTR structural discovery pipeline (*-LTRStruct*). Thus, let's upgrade it following scenario A or B!
 
@@ -304,7 +304,7 @@ You can display all the available Conda environments using the <code>conda info 
 </div>
 
 
-### Upgrade **blast+** (optional)
+## Upgrade **blast+** (optional)
 
 The newer *BuildDatabase* coming with *RepeatMasker-2.0.3* uses the `-blastdb_version version` option of the `makeblastdb` program in the **blast+** package. This option was introduced with the 2.10.0 release. So, to prevent the *Unknown argument: "blastdb_version"* error, first check your installed version of blast using the `conda list` command or `makeblastdb -version` or display available options with `makeblastdb -h`. If you do not see the `-blastdb_version` among the options, or the version is older than 2.10, or you simply want to use the latest release, upgrade the blast+ package to 2.10 or newer (check availability at <a href="https://anaconda.org/bioconda/blast" target="_blank">https://anaconda.org/bioconda/blast  ⤴</a>):
 
@@ -318,10 +318,10 @@ makeblastdb -version
 ```
 **OUTPUT:** *makeblastdb: 2.12.0+*
 
-
+<br><br>
 # Repeats identification pipeline
 
-## Get your genome ready
+## 0. Get your genome ready
 
 The only input required to start the repeats identification is a genome, i.e., the set of DNA sequences provided in one-letter notation (A,T,C,G) compliant with the FASTA format (<i>learn more in the <a href="https://bioinformaticsworkbook.org/introduction/fileFormats.html#gsc.tab=0" target="_blank">Bioinformatics File Formats  ⤴</a></i> tutorial). The most common (and acceptable by a program) file extensions include: *.fa, .fasta, .fast, .FA, .FASTA, .FAST, .dna,* and *.DNA*.
 
@@ -337,11 +337,13 @@ AGAATTAATTCATGTTTTAAGATATGTATGAAGTATTAAATAGTTAAATAGATGTTCTTAATAATTGAATACCTTTCCAT
 ...
 ```
 
-**Resources of genome data**
+### *Resources of genome data*
 
 **A. Custom genome data**
 
 If you have your preferred genome data to detect repeats within, note that <i>"RepeatModeler is designed to run on assemblies rather than genome reads"</i> and <i>"should be run on a single machine per-assembly"</i>. Please also familiarize yourself with other caveats listed by developers at <a href="http://www.repeatmasker.org/RepeatModeler/#caveats" target="_blank">http://www.repeatmasker.org/RepeatModeler/#caveats  ⤴</a>.
+
+**B. Genome from public repository**
 
 If you do **NOT** have any genome data, there are several publicly available resources to explore:
 
@@ -376,7 +378,7 @@ In case the link provided is obsolete, please follow the instructions provided b
 5. Once you see the page from the screenshot above, apply right-mouse-click on the <b>TAIR10_chr_all.fas.gz</b> file and select <b>Copy Link</b> from the pop-up menu. <br>
 6. Go to the terminal and use the <code>wget</code> command followed by a copy-pasted link.
 </span>
-</div><br>
+</div>
 
 Note that the downloaded file is compressed (*.gz*) and the `BuildDatabase` program is unable to process such files. You can extract the file using the `gunzip` command with the `-d` flag:
 
@@ -391,7 +393,7 @@ gunzip -d TAIR10_chr_all.fas.gz
 > This is basically a wrapper around AB-Blast's and NCBI Blast's DB formatting programs.  It assists in aggregating files for processing into a single database.
 >
 
-<i><p style="text-align: right; color: lightgray"> source: program's help message </p></i>
+<i><div style="margin:0; float:right; color: lightgray"> source: program's help message </div></i><br>
 
 **The BuildDatabase step is quick (several seconds at most).**
 
@@ -434,7 +436,7 @@ BuildDatabase [-options] -name "mydb.fasta"
 > RepeatModeler is a de novo transposable element (TE) family identification and modeling package.
 >
 
-<i><p style="text-align: right; color: lightgray"> source: program's documentation </p></i>
+<i><div style="margin:0; float:right; color: lightgray"> source: program's documentation </div></i><br>
 
 **The RepeatModeler step can take longer than 96 hours on one node with 16 threads if the genome is larger than 1GB.**
 
@@ -488,7 +490,7 @@ RepeatModeler [-options] -database {XDF Database}
 > Default settings are for masking all type of repeats in a primate sequence.
 >
 
-<i><p style="text-align: right; color: lightgray"> source: program's documentation </p></i>
+<i><div style="margin:0; float:right; color: lightgray"> source: program's documentation </div></i><br>
 
 **The RepeatMasker step can take about 24-48 hours to finish on a genome over 1GB.**
 
@@ -503,7 +505,7 @@ RepeatMasker -pa 36 -gff -lib consensi.fa.classified -dir MaskerOutput TAIR10_ch
 Use the `RepeatMasker -h` command to display a full list of options.
 
 
-### Create SLURM script
+## Create SLURM script
 
 The complete analysis for the 1GB genome may exceed a hundred hours on one node with 16 threads. That is today's upper limit of laptop capacity. Thus, having access to the HPC infrastructure can definitely increase the efficiency of your analysis. That requires preparing a script that informs the queuing system of the requirements for a given computational task.
 
@@ -590,9 +592,8 @@ install/upgrade the missing dependency of perl package: <br>
 </pre>
 </details>
 
-
 </span>
-</div><br>
+</div>
 
 
 ### Processing times
@@ -611,11 +612,12 @@ You can use the data from the table to estimate the resources needed for your an
 |           |        |           |                   | ~*96h* / -       | *24-48h* / -     | *(16)*|
 
 
+<br><br>
 # Results interpretation
 
 ## Outputs overview
 
-* assuming the database name is *Arabidopsis*
+*^assuming the database name is `Arabidopsis`*
 
 | **BuildDatabase**          | **RepeatModeler**        | **RepeatMasker**      |
 |----------------------------|--------------------------|-----------------------|
@@ -627,6 +629,7 @@ You can use the data from the table to estimate the resources needed for your an
 | Arabidopsis.DB.nsq         | - families-classified.stk| |
 | Arabidopsis.DB.translation | - rmod.log               | |
 
+<br>
 **1. BuildDatabase** produces the database files.
 
 **2. RepeatModeler** returns the `consesi.fa.classified` required by the **RepeatMasker** step. The file is located within the automatically created directory with the name starting in **"RM_"**.  <br>
@@ -640,7 +643,7 @@ You can use the data from the table to estimate the resources needed for your an
 You can use the data from these files depending on the purpose of your further analysis. <br>
 **Let's look into the results obtained for the Arabidopsis...**
 
-### *Repeats summary table*
+### *A. Repeats summary table*
 
 The file contains a brief of the detected repeats, providing details of the classified families and some statistics.
 
@@ -700,7 +703,7 @@ RepBase Update 20110419-min, RM database version 20110419-min
 
 ```
 
-### *Repeats' annotations in the GFF file*
+### *B. Repeats' annotations in the GFF file*
 
 Now, there is also a GFF that can be used for many other genomic comparisons, e.g., you can use start-end positions of the detected motif to display repeats on the ideogram (see tutorial in the <a href="https://bioinformaticsworkbook.org/Appendix/dataVisualization_index" target="_blank">Data Visualization  ⤴</a> section: <a href="https://bioinformaticsworkbook.org/dataVisualization/Plotly/01-ideogram-chromosome-bands.html" target="_blank">Visulaize Chromosome Bands using Ideogram  ⤴</a>).
 
@@ -731,7 +734,7 @@ Chr1    RepeatMasker    similarity      11889   11960   12.9    +       .       
 ```
 *^ truncated file for visualization; the complete gff file contains 83285 hits*
 
-### *Genome with masked repeats in FASTA file*
+### *C. Genome with masked repeats in FASTA file*
 
 By default, the RepeatMasker also generates the FASTA file of the input genome, in which all bases of the detected repeats are replaced (masked) with the "*N*" letter.
 
