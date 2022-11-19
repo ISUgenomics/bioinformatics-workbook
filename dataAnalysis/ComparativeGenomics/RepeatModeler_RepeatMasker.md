@@ -147,7 +147,7 @@ This step may take several minutes because not only the is <code>RepeatModeler</
 
 <details><summary>Expand list of installed libraries...</summary>
 
-<pre style="font-size: 0.7em; background-color: #f1f2f3;">
+<pre style="padding: 1em; font-size: 0.7em; background-color: #f1f2f3;">
   packages in environment at ~/.conda/envs/repeatmodeler:
   _libgcc_mutex        0.1                        main
   _openmp_mutex        5.1                       1_gnu
@@ -318,7 +318,8 @@ makeblastdb -version
 ```
 **OUTPUT:** *makeblastdb: 2.12.0+*
 
-<br><br>
+<br><hr>
+
 # Repeats identification pipeline
 
 ## 0. Get your genome ready
@@ -407,7 +408,7 @@ BuildDatabase -name arabidopsis TAIR10_chr_all.fas
 
 <details> <summary>Preview options using <code>BuildDatabase -h</code></summary>
 
-<pre style="font-size: 0.7em; background-color: #f1f2f3;">
+<pre style="padding: 1em; font-size: 0.7em; background-color: #f1f2f3;">
 BuildDatabase [-options] -name "mydb.fasta"
 
 -name {database name}
@@ -451,7 +452,7 @@ RepeatModeler -database arabidopsis -pa 36 -LTRStruct > out.log
 
 <details> <summary>Preview options using <code>RepeatModeler -h</code></summary>
 
-<pre style="font-size: 0.7em; background-color: #f1f2f3;">
+<pre style="padding: 1em; font-size: 0.7em; background-color: #f1f2f3;">
 RepeatModeler [-options] -database {XDF Database}
 
 -database
@@ -583,12 +584,12 @@ Use the tips provided below in case your analysis crashes with errors. <br><br>
 The error results from the <b>perl5</b> package.
 You can follow one of the two solutions: <br>
 <b>Solution 1:</b> <br>
-open the file indicated after "at": <br>
+open the file indicated after "at":
 <code style="background-color: #f1f2f3;"> nano /work/gif/Alex/abadacz_notebook/.conda/envs/repeat3/bin/filter-stage-1.prl</code><br>
-and comment with <b>#</b> character the line shown: <br>
+and comment with <b>#</b> character the line shown:
 <code style="background-color: #f1f2f3;"><i>14</i> <b>#</b>use File::Which qw(which where);</code>  <br>
 <b>Solution 2:</b> <br>
-install/upgrade the missing dependency of perl package: <br>
+install/upgrade the missing dependency of perl package:
 <code  style="background-color: #f1f2f3;">conda install perl-File-Which</code>
 </pre>
 </details>
@@ -613,7 +614,8 @@ You can use the data from the table to estimate the resources needed for your an
 |           |        |           |                   | ~*96h* / -       | *24-48h* / -     | *(16)*|
 
 
-<br><br>
+<br><hr>
+
 # Results interpretation
 
 ## Outputs overview
