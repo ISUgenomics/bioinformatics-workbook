@@ -388,7 +388,7 @@ gunzip -d TAIR10_chr_all.fas.gz
 ```
 
 
-### 1. BuildDatabase
+### 1. Build Database
 
 >
 > This is basically a wrapper around AB-Blast's and NCBI Blast's DB formatting programs.  It assists in aggregating files for processing into a single database.
@@ -431,7 +431,7 @@ BuildDatabase [-options] -name "mydb.fasta"
 </details>
 
 
-### 2. RepeatModeler
+### 2. Repeat Modeler
 
 >
 > RepeatModeler is a de novo transposable element (TE) family identification and modeling package.
@@ -482,7 +482,7 @@ RepeatModeler [-options] -database {XDF Database}
 </details>
 
 
-### 3. RepeatMasker
+### 3. Repeat Masker
 
 >
 > RepeatMasker screens DNA sequences for interspersed repeats and low complexity DNA sequences.
