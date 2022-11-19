@@ -71,7 +71,7 @@ There are several ways to get the **RepeatModeler** and **RepeatMasker** install
 
 Among those, the **installation within the Conda** environment seems the most straightforward, hassle-free, and robust. This one is also universally good, regardless of using a local machine or remote HPC infrastructure.
 
-## Install with Conda
+## Install with Conda (once)
 
 <a href="https://docs.conda.io/en/latest/" target="_blank">Conda  ⤴</a> is an environment management system that runs on all: Windows, macOS, and Linux. Using simple `conda`-based commands you can create a virtual environment and within it install all required dependencies for a specific pipeline or analytic workflow.
 
@@ -147,7 +147,7 @@ This step may take several minutes because not only the is <code>RepeatModeler</
 
 <details><summary>Expand list of installed libraries...</summary>
 
-<pre style="font-size: 1.2em; background-color: #f1f2f3;">
+<pre style="font-size: 0.7em; background-color: #f1f2f3;">
   packages in environment at ~/.conda/envs/repeatmodeler:
   _libgcc_mutex        0.1                        main
   _openmp_mutex        5.1                       1_gnu
@@ -407,7 +407,7 @@ BuildDatabase -name arabidopsis TAIR10_chr_all.fas
 
 <details> <summary>Preview options using <code>BuildDatabase -h</code></summary>
 
-<pre>
+<pre style="font-size: 0.7em; background-color: #f1f2f3;">
 BuildDatabase [-options] -name "mydb.fasta"
 
 -name {database name}
@@ -451,7 +451,7 @@ RepeatModeler -database arabidopsis -pa 36 -LTRStruct > out.log
 
 <details> <summary>Preview options using <code>RepeatModeler -h</code></summary>
 
-<pre>
+<pre style="font-size: 0.7em; background-color: #f1f2f3;">
 RepeatModeler [-options] -database {XDF Database}
 
 -database
@@ -579,16 +579,17 @@ Use the tips provided below in case your analysis crashes with errors. <br><br>
 
 <details><summary> Try solutions:</summary>
 
-<pre>
-The error results from the <b>perl5</b> package. You can follow one of the two solutions: <br><br>
-Solution 1: <br>
+<pre style="font-size: 0.8em;">
+The error results from the <b>perl5</b> package.
+You can follow one of the two solutions: <br>
+<b>Solution 1:</b> <br>
 open the file indicated after "at": <br>
-<code> nano /work/gif/Alex/abadacz_notebook/.conda/envs/repeat3/bin/filter-stage-1.prl</code><br>
+<code style="background-color: #f1f2f3;"> nano /work/gif/Alex/abadacz_notebook/.conda/envs/repeat3/bin/filter-stage-1.prl</code><br>
 and comment with <b>#</b> character the line shown: <br>
-<code><i>14</i> <b>#</b>use File::Which qw(which where);</code>  <br><br>
-Solution 2: <br>
+<code style="background-color: #f1f2f3;"><i>14</i> <b>#</b>use File::Which qw(which where);</code>  <br>
+<b>Solution 2:</b> <br>
 install/upgrade the missing dependency of perl package: <br>
-<code>conda install perl-File-Which</code>
+<code  style="background-color: #f1f2f3;">conda install perl-File-Which</code>
 </pre>
 </details>
 
@@ -596,7 +597,7 @@ install/upgrade the missing dependency of perl package: <br>
 </div>
 
 
-### Processing times
+### *Processing times*
 
 The table contains the processing times for each step of the repeats identification pipeline for two genomes that differ by order of magnitude in size (~100 MB vs. 1 GB). The calculations were performed on a single node with <u>36 cores</u> (<a href="https://www.hpc.iastate.edu/guides/nova" target="_blank">Nova cluster @ISU HPC  ⤴</a>). As you can see, for the 1 GB genome, the complete pipeline requires about 25 hours in the clock when employing 36 cores (*real-time*). The time summed over the cores used reaches 300 hours (over 12 days). So that's roughly how much computation would take if only one thread is available.
 
