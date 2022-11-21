@@ -397,7 +397,7 @@ gunzip -d TAIR10_chr_all.fas.gz
 > This is basically a wrapper around AB-Blast's and NCBI Blast's DB formatting programs.  It assists in aggregating files for processing into a single database.
 >
 
-<i><div style="margin:0; float:right; color: lightgray;"> source: program's help message </div></i><br>
+<i><span style="margin: 0; float: right; color: lightgray;"> source: program's help message </span></i><br>
 
 **The BuildDatabase step is quick (several seconds at most).**
 
@@ -440,7 +440,7 @@ BuildDatabase [-options] -name "mydb.fasta"
 > RepeatModeler is a de novo transposable element (TE) family identification and modeling package.
 >
 
-<i><div style="margin:0; float:right; color: lightgray;"> source: program's documentation </div></i><br>
+<i><span style="margin: 0; float: right; color: lightgray;"> source: program's documentation </span></i><br>
 
 **The RepeatModeler step can take longer than 96 hours on one node with 16 threads if the genome is larger than 1GB.**
 
@@ -494,7 +494,7 @@ RepeatModeler [-options] -database {XDF Database}
 > Default settings are for masking all type of repeats in a primate sequence.
 >
 
-<i><div style="margin:0; float:right; color: lightgray;"> source: program's documentation </div></i><br>
+<i><span style="margin: 0; float: right; color: lightgray;"> source: program's documentation </span></i><br>
 
 **The RepeatMasker step can take about 24-48 hours to finish on a genome over 1GB.**
 
