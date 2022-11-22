@@ -34,6 +34,11 @@ Currently, I am an associate scientist in the Genome Informatics Facility at Iow
 Alex is a Research Scientist IV at the Genome Informatics Facility at Iowa State University. Her academic background is in Chemistry and Biotechnology, with a Ph.D. in Computational Biology and broad experience in programming and designing web applications. She develops a comprehensive collection of highly customizable visualization solutions for Bioinformatics and supports software optimization for the USDA Geospatial analyses.
 <br>
 
+### Sharu Paul
+
+![Sharu](../assets/images/people/Sharu.jpg){: .align-left}
+Sharu is a Visiting Scientist at the Genome Informatics Facility at Iowa State University. His background is in Biotechnology with a Ph.D. in Genetics and Genomics. He is using a diverse array of bioinformatic analyses to solve big data problems and contribute to developing workshops and tutorials for USDA scientists.
+
 ### Maryam Sayadi
 ![Maryam](../assets/images/people/Maryam.jpg){: .align-left}
 I have recently joined the Genome Informatics Facility at Iowa State University. I am mostly involved in generating and updating bioinformatics tutorials. My background is protein structure and function through molecular modeling simulations. My goal is a multidisciplinary approach involving protein interaction and structure and gene regulation.
@@ -58,8 +63,3 @@ Swapna is a bioinformatics freelancer based in India. Her formal qualifications 
 
 ![maggie](../assets/images/people/maggie.jpg){: .align-left}
 I am computational biologist for the USDA maize database MaizeGDB. My research interests are in comparative and evolutionary genomics. I have helped to develop MaizeGDB into a multi-genome, pan-genome database.  I also collaborate with various universities and agencies in the United States and around the world to sequence, assemble, analyze, and steward the genomes of maize. My long-term goal is to harness the power of deep learning and the enormous amount of plant genomic and functional data to predict the functions of loci in maize.
-
-### Sharu Paul
-
-![Sharu](../assets/images/people/Sharu.png){: .align-left}
-Sharu is a Visiting Scientist at the Genome Informatics Facility at Iowa State University. His background is in Biotechnology with a Ph.D. in Genetics and Genomics. He is using a diverse array of bioinformatic analyses to solve big data problems and contribute to developing workshops and tutorials for USDA scientists.
