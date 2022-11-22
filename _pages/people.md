@@ -58,3 +58,8 @@ Swapna is a bioinformatics freelancer based in India. Her formal qualifications 
 
 ![maggie](../assets/images/people/maggie.jpg){: .align-left}
 I am computational biologist for the USDA maize database MaizeGDB. My research interests are in comparative and evolutionary genomics. I have helped to develop MaizeGDB into a multi-genome, pan-genome database.  I also collaborate with various universities and agencies in the United States and around the world to sequence, assemble, analyze, and steward the genomes of maize. My long-term goal is to harness the power of deep learning and the enormous amount of plant genomic and functional data to predict the functions of loci in maize.
+
+### Sharu Paul
+
+![Sharu](../assets/images/people/Sharu.png){: .align-left}
+Sharu is a Visiting Scientist at the Genome Informatics Facility at Iowa State University. His background is in Biotechnology with a Ph.D. in Genetics and Genomics. He is using a diverse array of bioinformatic analyses to solve big data problems and contribute to developing workshops and tutorials for USDA scientists.
