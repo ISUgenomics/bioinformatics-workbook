@@ -59,4 +59,5 @@ header:
   * [Calling Genome Methylation with Nanopolish and Comparing Promoter Methylation among Samples](Calling_Genome_Methylation_with_Nanopore.md)
   * [Introduction to Maker Gene Prediction](Intro_To_Maker.md)
   * [Introduction to Braker2 Gene Prediction](Intro_to_Braker2.md)
+  * [Tutorial for NCBI PGAP](PGAP_tutorial.md)
   * [Motif Identification and Finding with MEME and FIMO](MEME_Motif_Finding_In_Genomes.md)  
