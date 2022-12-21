@@ -104,7 +104,7 @@ The Data Science Workbook offers a solid introduction to Data Science by providi
 <details><summary><b>See the detailed section index</b></summary>
 
 <br>&emsp; <a href="https://datascience.101workbook.org/04-DevelopmentEnvironment/01-integrated-development-environment" target="_blank" style="color: #3f5a8a;"><b>1. Integrated Development Environment (IDE)</b></a><br>
-&emsp; ⦿ &ensp;  <a href="https://datascience.101workbook.org/04-DevelopmentEnvironment/01A-tutorial-atom-editor" target="_blank" style="color: #3f5a8a;"><i>1.1 Tutorial: Atom Editor</i></a><br>
+&emsp; ⦿ &ensp;  <a href="https://datascience.101workbook.org/04-DevelopmentEnvironment/01A-tutorial-VSCode" target="_blank" style="color: #3f5a8a;"><i>1.1 Tutorial: Visual Studio Code</i></a><br>
 <br>&emsp; <a href="https://datascience.101workbook.org/04-DevelopmentEnvironment/02-python-programming-environment" target="_blank" style="color: #3f5a8a;"><b>2. Python programming environment</b></a><br>
 &emsp; ⦿ &ensp;  <a href="https://datascience.101workbook.org/04-DevelopmentEnvironment/02A-jupyter-basics" target="_blank" style="color: #3f5a8a;"><i>2.1 Jupyter: Interactive Web-Based Multi-Kernel Programming Interface</i></a><br>
 &emsp; &emsp;&ensp; ⦾ &ensp;  <a href="https://datascience.101workbook.org/04-DevelopmentEnvironment/02B-tutorial-jupyter-lab" target="_blank" style="color: #3f5a8a;"><i>Tutorial: Getting Started with JupyterLab</i></a><br>
@@ -272,6 +272,7 @@ The Data Science Workbook offers a solid introduction to Data Science by providi
 &emsp; &emsp;&ensp; ⦾ &ensp;  <a href="https://datascience.101workbook.org/08-DataVisualization/02-GRAPHS/03-R/02-setting-up-rstudio" target="_blank" style="color: #3f5a8a;"><i>Setting Up an RStudio Environment</i></a><br>
 &emsp; &emsp;&ensp; ⦾ &ensp;  <a href="https://datascience.101workbook.org/08-DataVisualization/02-GRAPHS/03-R/03-rstudio-tutorial-box-plot" target="_blank" style="color: #3f5a8a;"><i>Tutorial: Creating Boxplots in R</i></a><br>
 &emsp; &emsp;&ensp; ⦾ &ensp;  <a href="https://datascience.101workbook.org/08-DataVisualization/02-GRAPHS/03-R/04-rstudio-tutorial-heatmap-plot" target="_blank" style="color: #3f5a8a;"><i>Tutorial: Creating Heatmaps in R</i></a><br>
+&emsp; &emsp;&ensp; ⦾ &ensp;  <a href="https://datascience.101workbook.org/08-DataVisualization/02-GRAPHS/03-R/05-rstudio-tutorial-ComplexHeatmap" target="_blank" style="color: #3f5a8a;"><i>Tutorial: Creating Complex Heatmaps in R</i></a><br>
 </details>
 </div>
 
