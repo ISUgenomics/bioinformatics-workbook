@@ -155,7 +155,7 @@ Usage:
 This nextflow script happens to have a test dataset to show it is functioning properly and is perfect to show how nextflow operates.
 
 ```
-nextflow run isugifNF/blast -profile test
+nextflow run isugifNF/blast -profile test,singularity
 ```
 
 Side note, for users on Ceres HPC (SCINet) you can use the following command which will call `module load blast+` on Ceres.
