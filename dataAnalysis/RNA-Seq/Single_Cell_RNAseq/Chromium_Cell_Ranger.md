@@ -6,14 +6,22 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+## Introduction 
+Cell Ranger is a popular software package developed by 10x Genomics for the analysis of single-cell RNA sequencing (scRNA-seq) data. It provides a suite of tools for processing raw sequencing data, mapping reads to a reference genome, and quantifying gene expression at the level of individual cells. Here is a brief overview of the Cell Ranger pipeline:
 
+* Demultiplexing: The first step in the pipeline involves demultiplexing the sequencing data, which separates reads from different samples or cell barcodes. This step also includes the identification of the unique molecular identifiers (UMIs) that are used to distinguish between different mRNA molecules from the same gene within a single cell.
+*    Read alignment: The demultiplexed reads are then aligned to a reference genome using the STAR aligner. This step allows the identification of the genomic location of each read and its associated UMI.
+*    Barcode processing: The next step involves the processing of the cell barcodes and UMIs. This includes the removal of potential sources of error such as low-quality barcodes, sequencing errors, and PCR duplicates.
+*    Gene expression quantification: The final step involves the quantification of gene expression at the level of individual cells. This is done by counting the number of UMIs associated with each gene in each cell, and normalizing the counts based on the total number of UMIs in each cell.
+
+After the pipeline is complete, Cell Ranger provides several outputs, including gene expression matrices, quality control metrics, and visualization tools for exploring the data. Researchers can use these outputs to identify cell types, infer developmental trajectories, and analyze the heterogeneity of gene expression within and between cell populations.
 
 ## Software Installation
 
 * Cellranger from 10xgenomics. Install is unnecessary, as it is essentially a container <br/>
 ```
-wget http://cf.10xgenomics.com/supp/cell-exp/refdata-cellranger-GRCh38-1.2.0.tar.gz
-tar -zxvf refdata-cellranger-GRCh38-1.2.0.tar.gz
+wget https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest
+tar -zxvf cellranger-7.1.0.tar.gz
 ```
 * The only dependency for Cellranger is bcl2fastq. Mine was already installed on my HPC.  Here is a link to the website <br/>
 [bcl2fastq](https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html)
@@ -119,6 +127,7 @@ You'll need to gunzip each file and rename features.tsv to genes.tsv.
 
 
 ```
+
 
 ### Begin secondary analysis with Suerat
 ```
