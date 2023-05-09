@@ -110,7 +110,7 @@ The Advanced Search Builder includes various fields and filters that users can c
 <span style="color: #ff3870;font-weight: 500;">To get started with Advanced Search Builder please follow the instructions provided in the <a href="https://www.ncbi.nlm.nih.gov/sra/docs/srasearch/#advanced-search-in-the-sra-advan" target="_blank">official SRA docs  ⤴</a>.</span>
 
 
-## **Obtain run accessions** `SRR#`
+## **Obtain run accessions** `SRR#` identifiers
 
 
 In the SRA database, a `Run` or `Run accession` refers to a unique identifier assigned to a specific sequencing run results within a dataset. Each sequencing run corresponds to a set of raw data files generated from a single sequencing library. <br>
@@ -123,7 +123,7 @@ You can obtain run accessions in a few ways:
 
 ![databases_sra_get_accessions.png](assets/databases_sra_get_accessions.png)
 
-### A. manually from SRA search results
+### A. manually from SRA `Search results`
 
 Once you refined your SRA search online (see section [Search for data online](#search-for-data-online)) and see the list of results, explore search results and get run accessions.
 
@@ -149,7 +149,7 @@ SRR14567208
 ```
 
 
-### B. manually from SRA **RunSelector**
+### B. manually from SRA `Run Selector`
 
 Alternatively, once you refined your SRA search online (see section [Search for data online](#search-for-data-online)) and see the list of results, you can easily switch to the `SRA Run Selector` view. This online SRA tool provides a powerful and interactive interface that allows users to filter and sort the sequencing runs based on their preferences.
 
@@ -247,8 +247,8 @@ SRR14567207
 please follow the instructions for the approach of your choice:
 * **command line approaches:**
   * [A. using SRA Toolkit](#a-using-sra-toolkit)
-  * [B. using Linux Commands](#b-sing-linux-commands)
-  * [C. using Aspera Connect](#c-sing-aspera-connect)
+  * [B. using Linux Commands](#b-using-linux-commands)
+  * [C. using Aspera Connect](#c-using-aspera-connect)
 
 ## A. using SRA Toolkit
 
@@ -339,7 +339,7 @@ The `fastq-dump` is also capable of doing:
 <br><span style="font-style:italic;">
 The NCBI Team, on October 17, 2019, announced the decommission of the SRA Fuse/FTP site and encouraged the users to try the SRA Toolkit as the recommended method of downloading the data from SRA. [<a href="https://ncbiinsights.ncbi.nlm.nih.gov/2019/10/17/users-of-the-sra-ftp-site-try-the-sra-toolkit/" target="_blank">source  ⤴</a>]
 </span>
-</div><br>
+</div>
 
 **In relation to the above warning, we encourage you to choose an approach based on the use of the SRA Toolkit.** See section [A. using SRA Toolkit]().
 
@@ -351,7 +351,7 @@ In cases were you cannot run the SRA toolkit or any other programs to download t
 Note that downloading files from the SRA database using this approach is very slow (~1MB/s). <br>
 Also, the files larger than 5 Gbases are not available to download using this method.
 </span>
-</div><br>
+</div>
 
 The standard web link for downloading the SRA files is: <br>
 `https://trace.ncbi.nlm.nih.gov/Traces/sra-reads-be/fastq?acc=SRRNNNNNN`
@@ -362,8 +362,7 @@ The standard web link for downloading the SRA files is: <br>
 In the past the working link was also this one: <br>
 http://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=dload&run_list=SRRNNNNNN&format=fastq
 </span>
-</div><br>
-
+</div>
 
 
 You need to replace the `SRRNNNNNN` with the actual SRR number for it to work.
@@ -389,7 +388,7 @@ done < list_of_ids
 <br><span style="font-style:italic;">
 The datasets can also be downloaded from DDBJ or EMBL using the FTP links, but the transfer speeds might be affected if you're not near their servers.
 </span>
-</div><br>
+</div>
 
 
 ## C. using Aspera Connect
@@ -421,6 +420,7 @@ for sra file in ~/ncbi/public/sra/*; do
 fastq-dump --split-files --origfmt --gzip ${sra};
 done
 ```
+<br><br>
 
 # ready-made examples
 
@@ -444,7 +444,7 @@ If you are working on the HPC cluster, make sure to encapsulate the following co
 <li>for SLURM use: <code>salloc -N 1 -n 4 -t 01:00:00</code></li>
 <li>for PBS use: <code>qsub -I</code></li>
 </span>
-</div><br>
+</div>
 
 In the next step, load the modules that are needed:
 ```
