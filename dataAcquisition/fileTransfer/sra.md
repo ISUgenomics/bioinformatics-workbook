@@ -8,6 +8,8 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+{% include toc %}
+
 # Introduction to **S**equence **R**ead **A**rchive
 
 <div style="background: #dff5b3; padding: 15px;">
