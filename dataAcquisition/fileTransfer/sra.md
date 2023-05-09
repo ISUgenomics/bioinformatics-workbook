@@ -341,15 +341,14 @@ The NCBI Team, on October 17, 2019, announced the decommission of the SRA Fuse/F
 </span>
 </div>
 
-**In relation to the above warning, we encourage you to choose an approach based on the use of the SRA Toolkit.** See section [A. using SRA Toolkit]().
+**In relation to the above warning, we encourage you to choose an approach based on the use of the SRA Toolkit.** See section [A. using SRA Toolkit](#a-using-sra-toolkit).
 
 In cases were you cannot run the SRA toolkit or any other programs to download the file, you can still try to use the built-in commands of Linux such as `wget` and `curl`.
 
 <div style="background: mistyrose; padding: 15px; margin-bottom: 20px;">
 <span style="font-weight:800;">WARNING:</span>
 <br><span style="font-style:italic;">
-Note that downloading files from the SRA database using this approach is very slow (~1MB/s). <br>
-Also, the files larger than 5 Gbases are not available to download using this method.
+Note that downloading files from the SRA database using this approach is very slow (~1MB/s). Also, the files larger than 5 Gbases are not available to download using this method.
 </span>
 </div>
 
