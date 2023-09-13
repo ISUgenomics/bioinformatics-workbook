@@ -100,11 +100,15 @@ social:
   links: # An array of links to social media profiles
 
 # Analytics
+#analytics:
+#  provider               : google # false (default), "google", "google-universal", "custom"
+#  google:
+#    tracking_id          : UA-112020868-1
+#    anonymize_ip         : # true, false (default)
 analytics:
-  provider               : google # false (default), "google", "google-universal", "custom"
+  provider               : "google-gtag" # false (default), "google", "google-universal", "custom"
   google:
-    tracking_id          : UA-112020868-1
-    anonymize_ip         : # true, false (default)
+    measurement_id       : G-F7V5M89YML
 
 
 # Site Author
