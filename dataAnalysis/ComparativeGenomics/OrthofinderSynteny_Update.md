@@ -555,7 +555,7 @@ circos -conf circos.conf
 
 
 
-![Circos](../../assets/BlackVGreen.png)
+![Black versus Green AbaloneSynteny](../assets/BlackVGreen.png)
 
 
 
