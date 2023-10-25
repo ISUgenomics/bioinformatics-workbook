@@ -453,7 +453,7 @@ ls Deleteme3
 
 ### Warning about deleting files and directories
 
-In Unix there is no undo command.  If you delete a file it is gone.  There is no trash bin.  The next two commands are very powerful commands and cna lead to unfortunate losses if not used with care. With that said you can only delete files you have created.  So it is impossible to delete someone else files without permission.
+In Unix there is no undo command.  If you delete a file it is gone.  There is no trash bin.  The next two commands are very powerful commands and can lead to unfortunate losses if not used with care. With that said you can only delete files you have created.  So it is impossible to delete someone else files without permission.
 
 ## `rmdir` -- <span style="color:Blue">R</span>e<span style="color:Blue">m</span>ove <span style="color:Blue">Dir</span>ectory
 This command can remove an empty directory
