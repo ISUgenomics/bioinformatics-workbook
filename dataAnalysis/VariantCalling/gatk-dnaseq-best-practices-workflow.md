@@ -119,7 +119,6 @@ if [ $# -ne 2 ] ; then
 fi
 
 module load samtools
-module load picard
 module load bwa
 module load bedtools2
 module load bioawk
@@ -127,7 +126,7 @@ ref="$1"
 name="$2"
 window=10000000
 bioawk -c fastx '{print}' $ref | sort -k1,1V | awk '{print ">"$1;print $2}' | fold > ${name}.fasta
-picard CreateSequenceDictionary REFERENCE=${name}.fasta OUTPUT=${name}.dict
+gatk CreateSequenceDictionary --REFERENCE ${name}.fasta --OUTPUT ${name}.dict
 bwa index -a bwtsw ${name}.fasta
 bioawk -c fastx '{print $name"\t"length($seq)}' ${name}.fasta > ${name}.length
 bedtools makewindows -w $window -g ${name}.length |\
@@ -235,7 +234,6 @@ if [ $# -ne 3 ] ; then
    echo ""
    exit 0
 fi
-module load picard
 module load bwa
 module load samtools
 ulimit -c unlimited
@@ -244,8 +242,7 @@ R1=$2
 R2=$3
 # adjust this to suit your input file name
 OUT=$(echo $R1 |cut -f 1-3 -d "_")
-PICARD_HOME=$(dirname $(which picard))
-PICARD_CMD="java -Xmx100g -Djava.io.tmpdir=$TMPDIR -jar ${PICARD_HOME}/picard.jar"
+JAVA_OPTIONS="-Xmx100g -Djava.io.tmpdir=$TMPDIR"
 
 # platform id from fastq file
 if [ ${R1: -3} == ".gz" ]; then
@@ -267,36 +264,38 @@ RGPL="ILLUMINA"
 # genotype name, this will appear in VCF file header
 RGSM="$RGID"
 # convert fastq to sam and add readgroups
-$PICARD_CMD FastqToSam \
-   FASTQ=${R1} \
-   FASTQ2=${R2} \
-   OUTPUT=${OUT}_fastqtosam.bam \
-   READ_GROUP_NAME=${OUT} \
-   SAMPLE_NAME=${OUT}_name \
-   LIBRARY_NAME=${OUT}_lib \
-   PLATFORM_UNIT=${PLT} \
-   PLATFORM=illumina \
-   SEQUENCING_CENTER=ISU \
-   RUN_DATE=${TDATE}  || {
+gatk --java-options ${JAVA_OPTIONS} FastqToSam \
+   --FASTQ ${R1} \
+   --FASTQ2 ${R2} \
+   --OUTPUT ${OUT}_fastqtosam.bam \
+   --READ_GROUP_NAME ${OUT} \
+   --SAMPLE_NAME ${OUT}_name \
+   --LIBRARY_NAME ${OUT}_lib \
+   --PLATFORM_UNIT ${PLT} \
+   --PLATFORM illumina \
+   --SEQUENCING_CENTER ISU \
+   --RUN_DATE ${TDATE}  || {
 echo >&2 ERROR: FastqToSam failed for $OUT
 exit 1
 }
 # marking adapters
-$PICARD_CMD MarkIlluminaAdapters \
-   I=${OUT}_fastqtosam.bam \
-   O=${OUT}_markilluminaadapters.bam \
-   M=${OUT}_markilluminaadapters_metrics.txt \
-   TMP_DIR=${TMPDIR}  || {
+gatk --java-options ${JAVA_OPTIONS} MarkIlluminaAdapters \
+   --INPUT ${OUT}_fastqtosam.bam \
+   --OUTPUT ${OUT}_markilluminaadapters.bam \
+   --METRICS ${OUT}_markilluminaadapters_metrics.txt \
+   --TMP_DIR ${TMPDIR}  || {
 echo >&2 ERROR: MarkIlluminaAdapters failed for $OUT
 exit 1
 }
 # convert bam back to fastq for mapping
-$PICARD_CMD SamToFastq \
-   I=${OUT}_markilluminaadapters.bam \
-   FASTQ=${OUT}_samtofastq_interleaved.fq \
-   CLIPPING_ATTRIBUTE=XT \
-   CLIPPING_ACTION=2 \
-   INTERLEAVE=true NON_PF=true TMP_DIR=${TMPDIR} || {
+gatk --java-options ${JAVA_OPTIONS} SamToFastq \
+   --INPUT ${OUT}_markilluminaadapters.bam \
+   --FASTQ ${OUT}_samtofastq_interleaved.fq \
+   --CLIPPING_ATTRIBUTE XT \
+   --CLIPPING_ACTION 2 \
+   --INTERLEAVE true \
+   --INCLUDE_NON_PF_READS true \
+   --TMP_DIR ${TMPDIR} || {
 echo >&2 ERROR: SamToFastq failed for $OUT
 exit 1
 }
@@ -311,44 +310,44 @@ echo >&2 ERROR: BWA failed for $OUT
 exit 1
 }
 # merging alignments
-$PICARD_CMD MergeBamAlignment \
-   R=$REF \
-   UNMAPPED_BAM=${OUT}_fastqtosam.bam \
-   ALIGNED_BAM=${OUT}_bwa_mem.bam \
-   O=${OUT}_snippet_mergebamalignment.bam \
-   CREATE_INDEX=true \
-   ADD_MATE_CIGAR=true CLIP_ADAPTERS=false \
-   CLIP_OVERLAPPING_READS=true \
-   INCLUDE_SECONDARY_ALIGNMENTS=true \
-   MAX_INSERTIONS_OR_DELETIONS=-1 \
-   PRIMARY_ALIGNMENT_STRATEGY=MostDistant \
-   ATTRIBUTES_TO_RETAIN=XS \
-   TMP_DIR="${TMPDIR}" || {
+gatk --java-options ${JAVA_OPTIONS} MergeBamAlignment \
+   --REFERENCE $REF \
+   --UNMAPPED_BAM ${OUT}_fastqtosam.bam \
+   --ALIGNED_BAM ${OUT}_bwa_mem.bam \
+   --OUTPUT ${OUT}_snippet_mergebamalignment.bam \
+   --CREATE_INDEX true \
+   --ADD_MATE_CIGAR true --CLIP_ADAPTERS false \
+   --CLIP_OVERLAPPING_READS true \
+   --INCLUDE_SECONDARY_ALIGNMENTS true \
+   --MAX_INSERTIONS_OR_DELETIONS -1 \
+   --PRIMARY_ALIGNMENT_STRATEGY MostDistant \
+   --ATTRIBUTES_TO_RETAIN XS \
+   --TMP_DIR "${TMPDIR}" || {
 echo >&2 ERROR: MergeBamAlignment failed for $OUT
 exit 1
 }
 # mark duplicates
-$PICARD_CMD MarkDuplicates \
-  INPUT=${OUT}_snippet_mergebamalignment.bam \
-  OUTPUT=${OUT}_prefinal.bam \
-  METRICS_FILE=${OUT}_mergebamalignment_markduplicates_metrics.txt \
-  OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500 \
-  CREATE_INDEX=true \
-  TMP_DIR=$TMPDIR || {
+gatk --java-options ${JAVA_OPTIONS} MarkDuplicates \
+  --INPUT ${OUT}_snippet_mergebamalignment.bam \
+  --OUTPUT ${OUT}_prefinal.bam \
+  --METRICS_FILE ${OUT}_mergebamalignment_markduplicates_metrics.txt \
+  --OPTICAL_DUPLICATE_PIXEL_DISTANCE 2500 \
+  --CREATE_INDEX true \
+  --TMP_DIR $TMPDIR || {
 echo >&2 ERROR: MarkDuplicates failed for $OUT
 exit 1
 }
 # add read groups
-$PICARD_CMD AddOrReplaceReadGroups \
-  INPUT=${OUT}_prefinal.bam \
-  OUTPUT=${OUT}_final.bam \
-  RGID=${RGID} \
-  RGLB=${RGLB} \
-  RGPL=${RGPL} \
-  RGPU=${RGPU} \
-  RGSM=${RGSM} \
-  CREATE_INDEX=true \
-  TMP_DIR=$TMPDIR || {
+gatk --java-options ${JAVA_OPTIONS} AddOrReplaceReadGroups \
+  --INPUT ${OUT}_prefinal.bam \
+  --OUTPUT ${OUT}_final.bam \
+  --RGID ${RGID} \
+  --RGLB ${RGLB} \
+  --RGPL ${RGPL} \
+  --RGPU ${RGPU} \
+  --RGSM ${RGSM} \
+  --CREATE_INDEX true \
+  --TMP_DIR $TMPDIR || {
 echo >&2 ERROR: Adding read groups failed for $OUT
 exit 1
 }
@@ -414,10 +413,10 @@ done > CombinedBAM_temp
 
 while read line; do
 if ! [[ $line == @* ]]; then
-g2=$(echo $line | awk '{print $1":"$2"-"$3}'); \
-g1=$(echo $line | awk '{print $1"_"$2"_"$3}'); \
-CWD=$(pwd)
-echo "gatk --java-options \"-Xmx80g -XX:+UseParallelGC\" HaplotypeCaller -R ${REF} $(cat CombinedBAM_temp) -L "${g2}" --output "${g1}".vcf;";
+  g2=$(echo $line | awk '{print $1":"$2"-"$3}'); \
+  g1=$(echo $line | awk '{print $1"_"$2"_"$3}'); \
+  CWD=$(pwd)
+  echo "gatk --java-options \"-Xmx80g -XX:+UseParallelGC\" HaplotypeCaller -R ${REF} $(cat CombinedBAM_temp) -L "${g2}" --output "${g1}".vcf;";
 fi
 done<${list}
 ```
