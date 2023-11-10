@@ -330,7 +330,7 @@ Green_100 subject/Green_100.lst
 Green_1011 subject/Green_1011.lst
 etc.
 
-NOTE THAT YOU NEED TO REMOVE ALL COMMENTS FROM iadhore.ini, IF YOU ARE TO USE IT. 
+NOTE THAT YOU NEED TO REMOVE ALL COMMENTS FROM iadhore.ini, IF YOU ARE TO USE IT. I MEAN THE STUFF BELOW THIS COMMENT.
 
 #Our ortholog list made above
 blast_table=BlackGreenOrthologues.list
@@ -348,7 +348,7 @@ level_2_only=true
 #Best alignment method is greedy graph 2
 alignment_method=gg2
 
-#These are the settings I usually start with, but also require optimization. Optimization involves rerunning iadhore multiple times until you get the syntenic bands.  
+#These are the settings I usually start with, but also require optimization. Optimization involves rerunning iadhore multiple times until you get the syntenic bands that are not erroneous. i.e. too many gene gaps, too few anchors, synteny that is 1mb in one genome but is syntenic to 20mb in the other genome is usually wrong.   
 prob_cutoff=0.001
 anchor_points=3
 gap_size=15
@@ -361,7 +361,7 @@ module load iadhore
 i-adhore iadhore.ini
 
 
-If you get a gene missing from blast table error, most likely you either have a gene naming scheme that does not match your files in the query and subject folders, or your blast table (Orthologues.list) space separated, when it should be tab separated. Do not put comments in the iadhore.ini file.
+If you get a gene missing from blast table error, most likely you either have a gene naming scheme that does not match your files in the query and subject folders, or your blast table (Orthologues.list) is space separated, when it should be tab separated. Do not put comments in the iadhore.ini file that I have listed above.
 
 If iadhore is successful, you will generate an output folder with some informative files like "multiplicons.txt" and "segments.txt"
 
@@ -439,7 +439,7 @@ chromosomes_order = Green_6,Black_7,Black_13,Black_119,Black_158,Black_127,Black
 ### Paste in the remaining Circos files and run Circos!
 ```
 
-#Essentially you can copy and paste the four files listed below: circos.conf, ticks.conf, bands.conf, and ideogram.conf. However, not every genome is the same size as an E.coli genome, so a few things can be changed.
+#Essentially you can copy and paste the four files listed below: circos.conf, ticks.conf, bands.conf, and ideogram.conf. However, not every genome is the same size as an abalone genome, so a few things can be changed.
 1. In ideogram.conf you can change "radius           = 0.84r".  This will alter how far out your scaffold names will display
 2. In circos.conf you can change "chromosomes_units = 100000" to a larger or smaller number to shrink or enlarge how the chromosomes display
 3.  In ticks.conf you can change "multiplier       = 1e-5" to decide how often to label your ticks in your circos chart.
@@ -561,208 +561,6 @@ circos -conf circos.conf
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Time to put it into circos! Black vs White
-Circos is just a good visualization tool for synteny, which I find to be more informative than dot plots. Circos can go much further than dot plots by allowing other features to be plotted alongside the synteny, for example: gene density, repeat density, snp density, etc)
-```
-
-/work/gif3/masonbrink/USDA/01_OrthofinderSynteny/05_Circos/02_Black_White
-
-#Softlink all relevant files:(genome, GFF, segments.txt)
-ln -s ../../03_iadhore/01_Black_Green/output/segments.txt
-ln -s ../../01_GenomicResources/PrimaryWhiteAbGeneAnnots.gff3
-ln -s ../../01_GenomicResources/PrimaryBlackAbGeneAnnots.gff3
-ln -s ../../01_GenomicResources/RenamedBlackAbGenome.fasta
-ln -s ../../01_GenomicResources/RenamedAbGenome.fasta
-
-
-# The five scripts below will just work if you change 3 things.  1.  change "GreenAbalone" to whatever you named your second genome in your iadhore.ini file.  2.  change PrimaryGreenAbGeneAnnots.gff3 to the gff that is associated with the second genome name in your iadhore.ini file.  3. change the PrimaryBlackAbGeneAnnots.gff3 to the gff you created that is associated with the first genome name in your iadhore.ini file.
-Essentially what is happening below is that you swapping columns in segments.txt until you get pathogenic all on one side.  Then I extract the 5' position for the 5' syntenic gene and the 3' position for the 3' syntenic gene for each genome
-
-less segments.txt  |awk  'NR>1{print $2,$5,$6}' |awk '{if(NR%2) {print "#"$1,$2,$3}else {print $1,$2,$3}}'  |tr "\n" "\t" |sed 's/\t#/\n/g' |awk '{print $2,$3,$5,$6}' |awk '{if(substr($1,1,5)=="Black") {print $1,$2,$3,$4} else{print $3,$4,$1,$2}}' |awk 'substr($1,1,5)!=substr($3,1,5) {print $1}' |xargs -I xx awk '$9=="'xx'"' PrimaryBlackAbGeneAnnots.gff3|awk '{if($7=="+") {print $1,$4} else {print $1,$5}}' >Col1.list
-less segments.txt  |awk  'NR>1{print $2,$5,$6}' |awk '{if(NR%2) {print "#"$1,$2,$3}else {print $1,$2,$3}}'  |tr "\n" "\t" |sed 's/\t#/\n/g' |awk '{print $2,$3,$5,$6}' |awk '{if(substr($1,1,5)=="Black") {print $1,$2,$3,$4} else {print $3,$4,$1,$2}}' |awk 'substr($1,1,5)!=substr($3,1,5){print $2}' |xargs -I xx awk '$9=="'xx'"' PrimaryBlackAbGeneAnnots.gff3|awk '{if($7=="+") {print $4} else {print $5}}' >Col2.list
-less segments.txt  |awk  'NR>1{print $2,$5,$6}' |awk '{if(NR%2) {print "#"$1,$2,$3}else {print $1,$2,$3}}'  |tr "\n" "\t" |sed 's/\t#/\n/g' |awk '{print $2,$3,$5,$6}' |awk '{if(substr($1,1,5)=="Black") {print $1,$2,$3,$4} else {print $3,$4,$1,$2}}' |awk 'substr($1,1,5)!=substr($3,1,5){print $3}' |xargs -I xx awk '$9=="'xx'"' PrimaryGreenAbGeneAnnots.gff3|awk '{if($7=="+") {print $1,$4} else {print $1,$5}}' >Col3.list
-less segments.txt  |awk  'NR>1{print $2,$5,$6}' |awk '{if(NR%2) {print "#"$1,$2,$3}else {print $1,$2,$3}}'  |tr "\n" "\t" |sed 's/\t#/\n/g' |awk '{print $2,$3,$5,$6}' |awk '{if(substr($1,1,5)=="Black") {print $1,$2,$3,$4} else {print $3,$4,$1,$2}}' |awk 'substr($1,1,5)!=substr($3,1,5){print $4}' |xargs -I xx awk '$9=="'xx'"' PrimaryGreenAbGeneAnnots.gff3|awk '{if($7=="+") {print $4} else {print $5}}' >Col4.list
-
-#This concatenates each of the locations and places them so the start is always before the end.
-paste Col1.list Col2.list Col3.list Col4.list |awk '{if ($2>$3) {print $1,$3,$2,$4,$5,$6} else {print $0}}' |awk '{if ($5>$6) {print $1,$2,$3,$4,$6,$5} else {print $0}}' |tr "\t" " " >SyntenicRibbons.conf
-
-
-#Here is the SyntenicRibbons.conf file #scaffold position position,scaffold, position, position
-#These two commands are essentially extracting the scaffold lengths in your genome and putting them in the proper format.
-bioawk -c fastx '{print $name,length($seq)}' RenamedBlackAbGenome.fasta  |awk '{print "chr","-",$1,$1,"0",$2,"blue"}'  >RenamedBlackAbKaryotype.conf
-
-bioawk -c fastx '{print $name,length($seq)}' RenamedGreenAbGenome.fasta  |awk '{print "chr","-",$1,$1,"0",$2,"green"}' >RenamedGreenAbKaryotype.conf
-
-
-
-#The next six scripts below are essentially extracting the scaffolds that have some synteny. You dont want to display those scaffolds that do not have any information, right?.  Make sure you have the proper column for each extraction.  Remember column 1 is one species' scaffolds, and column 4 is the other species' scaffolds
-awk '{print $1}' SyntenicRibbons.conf|while read line; do echo "awk '\$3==\""$line"\"' RenamedBlackAbKaryotype.conf >>tmpKaryotype.conf1";done >RenamedBlackAbKaryotype.sh
-sh RenamedBlackAbKaryotype.sh
-
-awk '{print $4}' SyntenicRibbons.conf|while read line; do echo "awk '\$3==\""$line"\"' RenamedGreenAbKaryotype.conf >>tmpKaryotype.conf2";done >RenamedGreenAbKaryotype.sh
-sh RenamedGreenAbKaryotype.sh
-cat <(sort tmpKaryotype.conf1 |uniq) <(sort tmpKaryotype.conf2 |uniq) >karyotype.conf
-
-
-#Now lets reduce the number of times the circos synteny plot lines overlap, so it is more pleasing to the eye.  
-#I just download this tool everytime because it is small and easier than finding the original circos installation directory
-
-wget http://circos.ca/distribution/circos-tools-0.22.tgz
- tar -zxvf circos-tools-0.22.tgz
-
- #We will use the tmpKaryotype.conf1 file to get the scaffold names that we want grouped together.  You can also use tmpKaryotype.conf2 to do this.  I would suggest using the file that is the smallest.
- #the below script generates the command.
- sort tmpKaryotype.conf1 |uniq|awk '{print $3}' |tr "\n" "," |sed 's/.$//' |awk '{print "circos-tools-0.22/tools/orderchr/bin/orderchr -links SyntenicRibbons.conf -karyotype karyotype.conf - "$0" -static_rx "$0 }' |less
-
-
- #it runs something like this
-circos-tools-0.22/tools/orderchr/bin/orderchr -links SyntenicRibbons.conf -karyotype karyotype.conf - Black_1022,Black_1074,Black_1076,Black_10,Black_119,Black_11,Black_127,Black_12,Black_1327,Black_137,Black_13,Black_144,Black_1468,Black_1469,Black_14,Black_154,Black_158,Black_15,Black_16,Black_175,Black_17,Black_18,Black_195,Black_19,Black_1,Black_213,Black_22,Black_239,Black_25,Black_2,Black_300,Black_302,Black_328,Black_335,Black_350,Black_36,Black_372,Black_373,Black_381,Black_387,Black_393,Black_3,Black_427,Black_476,Black_488,Black_496,Black_4,Black_544,Black_546,Black_564,Black_573,Black_5,Black_60,Black_628,Black_654,Black_662,Black_6,Black_713,Black_72,Black_760,Black_7,Black_834,Black_879,Black_8,Black_967,Black_9 -static_rx Black_1022,Black_1074,Black_1076,Black_10,Black_119,Black_11,Black_127,Black_12,Black_1327,Black_137,Black_13,Black_144,Black_1468,Black_1469,Black_14,Black_154,Black_158,Black_15,Black_16,Black_175,Black_17,Black_18,Black_195,Black_19,Black_1,Black_213,Black_22,Black_239,Black_25,Black_2,Black_300,Black_302,Black_328,Black_335,Black_350,Black_36,Black_372,Black_373,Black_381,Black_387,Black_393,Black_3,Black_427,Black_476,Black_488,Black_496,Black_4,Black_544,Black_546,Black_564,Black_573,Black_5,Black_60,Black_628,Black_654,Black_662,Black_6,Black_713,Black_72,Black_760,Black_7,Black_834,Black_879,Black_8,Black_967,Black_9
-calculating round 0
-report round 0 minimize init 141285 final 26320 change 81.37%
-calculating round 1
-report round 1 minimize init 26320 final 9978 change 62.09%
-calculating round 2
-report round 2 minimize init 9978 final 8770 change 12.11%
-calculating round 3
-report round 3 minimize init 8770 final 8770 change 0.00%
-scorereport init 141285 final 8770 change 93.79%
-chromosomes_order = Green_6,Black_7,Black_13,Black_119,Black_158,Black_127,Black_6,Green_7,Green_8,Green_10,Black_14,Black_628,Black_19,Black_654,Black_239,Black_573,Black_662,Black_25,Black_302,Green_9,Black_9,Black_8,Black_1076,Black_1,Black_17,Black_1074,Black_36,Green_17,Black_3,Black_300,Black_335,Black_328,Black_387,Black_381,Black_496,Black_1469,Black_350,Black_5,Green_5,Black_879,Black_18,Green_18,Green_13,Black_11,Black_4,Black_213,Black_427,Black_12,Black_373,Black_175,Black_488,Black_476,Green_14,Black_1022,Black_60,Black_760,Black_72,Black_834,Black_22,Black_195,Black_154,Green_4,Green_3,Green_454,Black_1327,Green_719,Black_546,Black_544,Green_1,Green_2,Green_11,Black_137,Black_15,Green_15,Black_10,Black_393,Black_967,Black_372,Black_16,Green_16,Black_144,Black_2,Black_713,Black_1468,Black_564,Green_12
-
-
-
- #the last bit is what we want chromosomes_order = .....
-```
-### Paste in the remaining Circos files and run Circos!
-```
-
-#Essentially you can copy and paste the four files listed below: circos.conf, ticks.conf, bands.conf, and ideogram.conf. However, not every genome is the same size as an E.coli genome, so a few things can be changed.
-1. In ideogram.conf you can change "radius           = 0.84r".  This will alter how far out your scaffold names will display
-2. In circos.conf you can change "chromosomes_units = 100000" to a larger or smaller number to shrink or enlarge how the chromosomes display
-3.  In ticks.conf you can change "multiplier       = 1e-5" to decide how often to label your ticks in your circos chart.
-
-#circos.conf
-#############################################################################
-karyotype = ./karyotype.conf
-chromosomes_units = 100000
-  <<include ideogram.conf>>
-  <<include ticks.conf>>
-  <<include bands.conf>>
-
-  <links>
-  <link>
-    file=SyntenicRibbons.conf
-    radius = 0.94r
-    bezier_radius = 0.1r
-    thickness = 1
-    ribbon = yes
-  </link>
-  </links>
-
-
-
-<image>
-  <<include /opt/rit/el9/20230413/app/linux-rhel9-x86_64_v3/gcc-11.2.1/circos-0.69-6-learnz7tfqrflpcu57fbdtzxc47cii2a/lib/circos/etc/image.conf>>
-angle_offset* = -46
-</image>
-<<include /opt/rit/el9/20230413/app/linux-rhel9-x86_64_v3/gcc-11.2.1/circos-0.69-6-learnz7tfqrflpcu57fbdtzxc47cii2a/lib/circos/etc/patterns.conf>>
- <<include ./housekeeping.conf>>
-chromosomes_order = Green_6,Black_7,Black_13,Black_119,Black_158,Black_127,Black_6,Green_7,Green_8,Green_10,Black_14,Black_628,Black_19,Black_654,Black_239,Black_573,Black_662,Black_25,Black_302,Green_9,Black_9,Black_8,Black_1076,Black_1,Black_17,Black_1074,Black_36,Green_17,Black_3,Black_300,Black_335,Black_328,Black_387,Black_381,Black_496,Black_1469,Black_350,Black_5,Green_5,Black_879,Black_18,Green_18,Green_13,Black_11,Black_4,Black_213,Black_427,Black_12,Black_373,Black_175,Black_488,Black_476,Green_14,Black_1022,Black_60,Black_760,Black_72,Black_834,Black_22,Black_195,Black_154,Green_4,Green_3,Green_454,Black_1327,Green_719,Black_546,Black_544,Green_1,Green_2,Green_11,Black_137,Black_15,Green_15,Black_10,Black_393,Black_967,Black_372,Black_16,Green_16,Black_144,Black_2,Black_713,Black_1468,Black_564,Green_12
-
-
-#############################################################################
-
-ticks.conf
-###############################################################################
-show_ticks          = yes
-show_tick_labels    = no
-<ticks>
-   radius           = 1r
-   color            = black
-   thickness        = 10p
-   multiplier       = 1e-7
-   format           = %d
-<tick>
-   spacing        = 100u
-   size           = 25p
-   show_label     = yes
-   label_size     = 25p
-   label_offset   = 10p
-   format         = %d
- </tick>
-
-</ticks>
-
-###############################################################################
-
-bands.conf
-###############################################################################
-<bands>
-   show_bands = yes
-   fill_bands = yes
-   band_transparency = 4
-</bands>
-###############################################################################
-
-ideogram.conf
-###############################################################################
-<ideogram>
- <spacing>
-   default = 0.006r
-   break   = 30u
-   axis_break_at_edge = yes
-   axis_break         = yes
-   axis_break_style   = 2
-   <break_style 1>
-         stroke_color     = black
-         thickness        = 0.45r
-         stroke_thickness = 2p
-   </break>
-   <break_style 2>
-         stroke_color     = black
-         stroke_thickness = 5p
-         thickness        = 4r
-   </break>
- </spacing>
- radius           = 0.74r
- thickness        = 80p
- fill             = yes
- stroke_color     = white
- stroke_thickness = 4p
- fill_color       = black
- show_label       = yes
- label_font       = bold
- label_size       = 16
- label_parallel   = no
-
- label_radius = dims(ideogram,radius_outer) + 0.06r
-</ideogram>
-###############################################################################
-
-#This last file I always copy to the working directory, just in case I have more than 200 chromosomes I want to display.
-If so, change this line
-"max_ideograms        = 200"
-
- cp /opt/rit/el9/20230413/app/linux-rhel9-x86_64_v3/gcc-11.2.1/circos-0.69-6-learnz7tfqrflpcu57fbdtzxc47cii2a/lib/circos/etc/housekeeping.conf .
-
-
-#All that is left is to run circos!
-
-circos -conf circos.conf
-```
 
 
 ---
