@@ -12,10 +12,6 @@ header:
 
 # GATK Best Practices Workflow for DNA-Seq
 
-## Introduction
-
-Link Andrew's GATK introduction here or borrow his text.
-
 ## Dataset
 
 For this tutorial we will use the dataset from BioProject [PRJEB18647](https://www.ncbi.nlm.nih.gov/bioproject/PRJEB18647). This dataset has Illumina short reads for four different populations of _Arabidopsis halleri_ subsp. _halleri_ (Aha18, AhaN1, AhaN3, AhaN4) and was originally used for estimating genomic diversity and population differentiation for these 4 populations ([Fischer _et. al_.,](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3459-7)).
