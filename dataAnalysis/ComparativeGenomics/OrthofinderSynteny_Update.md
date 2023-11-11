@@ -15,9 +15,7 @@ Orthofinder is a robust software that can find orthologs very quickly and with v
 
 ### iadhore installation
 ```
-module load miniconda3
-conda create -n iadhore
-source activate iadhore
+
 
 #Download the source from the Vandepeer lab site
 https://www.vandepeerlab.org/?q=tools/i-adhore30
