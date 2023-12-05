@@ -375,7 +375,7 @@ cd 3_pre-processing
 for fq in *_R1.fastq; do
   echo "./gatk2_preprocess.sh /work/LAS/mhufford-lab/arnstrm/ler/0_index/ahalleri.fasta $fq $(echo $fq |sed 's/_R1/_R2/g')"
 done > process.cmds
-makeSLURMs.py 1 process.cmds
+./makeSLURMs.py 1 process.cmds
 for sub in *.sub; do
   sbatch $sub;
 done
@@ -583,18 +583,21 @@ if ! [[ $line == @* ]]; then
 fi
 done<${list}
 ```
-
+Make the script executable.
+```
+chmod +x gatk3_cmdsgen.sh
+```
 Run this script as:
 
 ```bash
-gatk3_cmdsgen.sh ../0_index/ahalleri_coords.bed ../0_index/ahalleri.fasta *final.bam > gatk.cmds
+./gatk3_cmdsgen.sh ../0_index/ahalleri_coords.bed ../0_index/ahalleri.fasta *final.bam > gatk.cmds
 ```
 This will generate `2239` commands (one gatk command per interval). Since the GATK 4 cannot use multiple threads, you can run one job per thread and thus fit multiple jobs in a single node. Using multiple nodes, you can run these commands much faster than running a single command on a bigger interval or a whole genome.
 
 Before, you ran `makeSLURMs.py` script. This job runs the commands serially. Another script `makeSLURMp.py` also does the same thing, but instead it runs the command in parallel. We will use that and specify how many jobs we want to run. To split them
 
 ```bash
-makeSLURMp.py 220 gatk.cmds
+../3_pre-processing/makeSLURMp.py 220 gatk.cmds
 # some fixing is needed to make sure that it runs the right number of jobs
 # and then submit
 for sub in *.sub; do
