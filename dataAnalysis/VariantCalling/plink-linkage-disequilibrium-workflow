@@ -2,7 +2,7 @@
 title: "Using PLINK to calculate linkage disequilibrium"
 layout: single
 author: Kayla Pennerman
-author_profile: false
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
