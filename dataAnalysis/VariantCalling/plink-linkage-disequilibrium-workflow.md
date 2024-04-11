@@ -18,22 +18,25 @@ header:
 
 ## Dataset
 
-For this tutorial, we will use a variant call format (VCF) file containing allelic data for _Saccharomyces eubayanus_ (https://figshare.com/articles/dataset/VCF_files_of_industrial_yeasts/12673250). This dataset is from Walter Pfliegler and  Hanna Rácz and is the result of GATK genomic analyses. Sequencing reads from five individuals were mapped to the _Saccharomyces cerevisiae_ S288C reference genome and single nucleotide polymorphisms (SNPs) were called and filtered. After decompressing the downloaded folder, you will find a VCF file titled "eubayanus_filtered.vcf"
+For this tutorial, we will use a variant call format (VCF) file containing allelic data for _Saccharomyces eubayanus_ (https://figshare.com/articles/dataset/VCF_files_of_industrial_yeasts/12673250). This dataset is from Walter Pfliegler and  Hanna Rácz and is the result of GATK genomic analyses. Sequencing reads from five individuals were mapped to the _Saccharomyces cerevisiae_ S288C reference genome and single nucleotide polymorphisms (SNPs) were called and filtered. After decompressing the downloaded folder, you will find a VCF file titled "eubayanus_filtered.vcf" (to uncompress: unrar x <filename>).
 
 [`The VCF version 4.2 specification`](https://samtools.github.io/hts-specs/VCFv4.2.pdf) explains how VCF files are formatted. If you need to learn how to generate your own VCFs, [`check out other tutorials`](https://bioinformaticsworkbook.org/dataAnalysis/VariantCalling/variant-calling-index#gsc.tab=0) in this workbook.
 
 ## Required software
 
-Python version 3 (the re module is built-in)
-VCFtools version 0.1.16
-PLINK version 1.9
-R version 4 (the ggplot library is built-in)
+Python version 3 (the re module is built-in; https://www.python.org)
+VCFtools version 0.1.16 (https://vcftools.github.io/index.html)
+PLINK version 1.9 (https://www.cog-genomics.org/plink/)
+R version 4 (the ggplot library is built-in; https://www.r-project.org/)
+
+Software installation/set-up may vary depending on your environment.
+
 
 ## Workflow
 
 ### Quality check the file
 
-A simple script can be used to check that each locus only describes a single nucleotide variation. In our VCF file, there are variations that are ambiguous or involve more than just a single nucleotide change. We'll just remove those with a quick Python script, ending up removing 370 loci and giving each locus a name:
+A simple script used in the command line can be used to check that each locus only describes a single nucleotide variation. In our VCF file, there are variations that are ambiguous or involve more than just a single nucleotide change. We'll just remove those with a quick Python script, ending up removing 370 loci and giving each locus a name:
 
 ```
 import re
@@ -60,6 +63,7 @@ snp_only('eubayanus_filtered.vcf', 'eubayanus_snps.vcf')
 It is possible that individuals aren't genotyped at different loci. To check that, run the following:
 
 ```
+#depending on your environment, you may need to use "./plink" instead of "plink"
 plink --missing --allow-extra-chr --vcf eubayanus_snps.vcf
 ```
 
@@ -121,7 +125,7 @@ The resulting "eubayanus_pruned.ld" and "eubayanus_full.ld" files can be directl
 library(ggplot2)
 
 #import the data
-ldf <- read.table("eubayanus_all.ld", header=T)
+ldf <- read.table("eubayanus_full.ld", header=T)
 ldp <- read.table("eubayanus_pruned.ld", header=T)
 
 #calculate average correlations
