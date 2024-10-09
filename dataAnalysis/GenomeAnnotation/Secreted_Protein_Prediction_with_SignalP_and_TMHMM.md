@@ -16,6 +16,7 @@ Here we will be using a set of predicted proteins from a plant parasitic nematod
 - Samtools 1.16.1 [Li et al., 2009](https://pubmed.ncbi.nlm.nih.gov/19505943/)
 - Localizer 1.0.5 [Sperschneider et al., 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5353544/)
 - DeepLoc 2.0 [Thumuluri et al., 2022](https://academic.oup.com/nar/article/50/W1/W228/6576357)
+- EMBOSS [Rice et a., 2000](http://emboss.open-bio.org/html/use/pr02s04.html)
 
 # Secretion
 ### Signalp 6.0
