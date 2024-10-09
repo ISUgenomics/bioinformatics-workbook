@@ -49,7 +49,8 @@ SIGNALP_DIR=$(python3 -c "import signalp; import os; print(os.path.dirname(signa
 echo "source signalp6_env/bin/activate; signalp6 --fastafile YourSpecies_proteins.fasta --organism euk --output_dir Signalp6_out  --format txt --mode fast --model_dir signalp6_fast/signalp-6-package/models/" >signalp.sh
 ```
 
-Excerpt of results from Signalp 6.0. We want to get the fasta names that are secreted and the last position of the cleavage site.  
+**Excerpt of results from Signalp 6.0** 
+We want to get the fasta names that are secreted and the last position of the cleavage site.  
 ```
 # SignalP-6.0   Organism: Eukarya       Timestamp: 20241007151909
 # ID    Prediction      OTHER   SP(Sec/SPI)     CS Position
@@ -88,7 +89,7 @@ continued ...
 # create a faidx index of our proteins to subtract the signal peptide from the fasta of secreted proteins
 ml samtools;samtools faidx YourSpecies_proteins.fasta
 
-# this gets the signalp results file and the protein lengths in the same order 
+#creates a small script to extract each secreted protein with the signal peptide truncated from the sequnce.  
 awk '$2=="SP"{print $1"\t"$7}'  Signalp6_out/prediction_results.txt|sed -e 's/\.//g' -e 's/-/\t/g' |awk -F"\t" '{print "samtools faidx YourSpecies_proteins.fasta "$1":"$3"- >>SignalPeptidesSubtracted6.fasta"}' >ExtractSignalPContainingProts6.sh
 
 sh ExtractSignalPContainingProts6.sh
@@ -208,7 +209,7 @@ cd ../
 unzip weka-3-6-12.zip
 
 # added this to my ~/.bashrc
-#export PATH="/work/gif3/masonbrink/Baum/01_ReannotateAllSCNGenomes/39_localizer/LOCALIZER/Scripts/:$PATH"
+#export PATH="/path/to/your/software/LOCALIZER/Scripts/:$PATH"
 ```
 ### Run Localizer 1.0.5
 ```
