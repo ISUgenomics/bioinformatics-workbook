@@ -286,6 +286,7 @@ cat Signap6Accurate/results_20240910-133321.csv Signap5Accurate/results_20240910
 #subcellular localization Deeploc non-secreted proteins
 cat AllProteins/results_20240910-142450.csv Signap5Accurate/results_20240910-133354.csv  |sed 's/,/\t/g'  |cut -f 1,2,3 |sed 's/:/\t/g' |cut -f 1,3,4,5 |sed 's/\t/#/1' |sed 's/\t/ /g' |sed 's/#/\t/g' >AllOtherProteinsDeepLoc.tab
 ```
+
 | mRNA_Names              | Gene_Names              | SignalPv6.0_Scores | Transmembrane_Domain_Counts| Localizer 1.0.5  | DeepLoc2.0 Secreted                     | DeepLoc2.0 All Proteins                              |
 |-------------------------|-------------------------|-------------------|-------------------------------------------------------|------------------|------------------------------------------|-------------------------------------------------------|
 | Hg_chrom1_TN10mRNA_1     | Hg_chrom1_TN10gene_1     | 0.000             | #N/A                                                  | #N/A             | #N/A                                     | Nuclear localization signal                           |
