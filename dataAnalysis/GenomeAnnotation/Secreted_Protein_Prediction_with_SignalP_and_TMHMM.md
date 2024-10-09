@@ -11,15 +11,17 @@ header:
 Here we will be using a set of predicted proteins from a plant parasitic nematode genome to predict secretion, transmembrane domains, and subcellular localization.
 
 **Software used in this tutorial**
-1.  Signalp 6.0
-2.  Tmhmm 2.0c
-3.  Samtools 1.16.1
-4.  Localizer 1.0.5
-5.  DeepLoc 2.0
+- SignalP 6.0 [Teufel et al., 2022](https://www.nature.com/articles/s41587-021-01156-3)
+- TMHMM 2.0c [Krogh et al., 2001](https://pubmed.ncbi.nlm.nih.gov/11152613/)
+- Samtools 1.16.1 [Li et al., 2009](https://pubmed.ncbi.nlm.nih.gov/19505943/)
+- Localizer 1.0.5 [Sperschneider et al., 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5353544/)
+- DeepLoc 2.0 [Thumuluri et al., 2022](https://academic.oup.com/nar/article/50/W1/W228/6576357)
 
+# Secretion
+### Signalp 6.0
+SignalP 6.0 leverages deep neural networks to predict the presence, location, and cleavage sites of signal peptides in protein sequences. 
 
-
-### Installation of SignalP 6.0
+**Installation of SignalP 6.0**
 ```
 # create and activate a python virtual environment
 python -m venv signalp6_env
@@ -125,8 +127,11 @@ AILGGVCVDTEEQLGPPLTHLVHTFIGVGGANREAVHLCRLFEWAMPCNPVNGMRCHSQF
 LYDINSNVGYEATTRIFVIRSMDDGTVGTRDCEGRSVSAIDGQNDEIVLRNYSHQMVIFG
 TGEQQLKLLTF.
 ```
+# Transmembrane domains 
+### TMHMM 2.0
+TMHMM 2.0 uses a hidden Markov model (HMM) to predict transmembrane helices in protein sequences. \
 
-# Install and run Tmhmm to identify transmembrane domains
+**Install and run TMHMM** 
 ```
 #Download and extract tmhmm from here. 
 https://services.healthtech.dtu.dk/services/TMHMM-2.0/
@@ -138,7 +143,7 @@ add this to your ~/.bashrc
 tmhmm SignalPeptidesSubtracted6.fasta >SignalPeptidesSubtracted6.tmhmmout
 ```
 
-**Excerpt of the results from Tmhmm**
+**Excerpt of the results from TMHMM**
 ```
 # mRNA_11:20- Length: 571
 # mRNA_11:20- Number of predicted TMHs:  0
@@ -167,7 +172,7 @@ continued ...
 ```
 
 # Subcellular Localization
-Here we are using two distinct subcellular localization predictors.  Each of these two software's uses a different approach to identifying the cellular compartment localization. 
+We are using two distinct subcellular localization prediction tools, each of which employs a different method to determine the cellular compartment.
 
 
 | Feature                  | Localizer                                  | DeepLoc                                  |
@@ -179,7 +184,6 @@ Here we are using two distinct subcellular localization predictors.  Each of the
 | **Prediction accuracy**   | Focuses on high accuracy for three compartments. | Predicts across a broad range of compartments using neural networks. |
 | **Ease of interpretation**| Results are interpretable based on known localization signals. | Predictions from a neural network may be harder to interpret. |
 | **Input format**          | Protein sequences (FASTA).                 | Protein sequences (FASTA). |
-| **Publication**           | Sperschneider et al. (2017).               | Almagro Armenteros et al. (2017). |
 
 
 ### Localizer
@@ -268,9 +272,9 @@ Continued ...
 ```
 
 ### Create feature lists for each mRNA
-I always create a excel chart for each feature of a gene, so it is nice to have a tabular list of gene name "\t" feature.  In this case I have the Signalp 6 secretion score and the number of transmembrane domains after the signal peptide is cleaved from the protein. 
+I always create a excel chart for each feature of a gene, so it is nice to have a tabular list of gene name "\t" feature.  
 ```
-#Signalp scores for those that are secreted
+#Signalp scores for proteins that are secreted
  less Signalp6_out/prediction_results.txt |awk '$2=="SP" {print $2"\t"$4}' >signalp6Scores.tab
 
 #Number of transmembrane domains in each secreted protein 
@@ -279,10 +283,10 @@ grep "Number of predicted" SignalPeptidesSubtracted6.tmhmmout |sed 's/:/\t/g' |a
 #subcellular localization Localizer for secreted proteins
 less SP6Out/Results.txt |awk 'NR>4' |awk -F"\t" '{if(substr($2,1,1)=="Y") {print $1"\tChloroplast",$2} else if(substr($3,1,1)=="Y" ) {print $1"\tMitochondria",$3} else if(substr($4,1,1)=="Y") {print $1"\tNucleus",$4} else {next;}}' |sed 's/:/\t/g' |awk '{print $1"\t"$3}' >LocalizerSP6.tab
 
-#subcellular localization Deeploc secreted proteins
+#subcellular localization Deeploc using secreted proteins only
 cat Signap6Accurate/results_20240910-133321.csv Signap5Accurate/results_20240910-133354.csv  |sed 's/,/\t/g'  |cut -f 1,2,3 |sed 's/:/\t/g' |cut -f 1,3,4,5 |sed 's/\t/#/1' |sed 's/\t/ /g' |sed 's/#/\t/g' >SecretedProteinsDeepLoc.tab
 
-#subcellular localization Deeploc non-secreted proteins
+#subcellular localization Deeploc all proteins
 cat AllProteins/results_20240910-142450.csv Signap5Accurate/results_20240910-133354.csv  |sed 's/,/\t/g'  |cut -f 1,2,3 |sed 's/:/\t/g' |cut -f 1,3,4,5 |sed 's/\t/#/1' |sed 's/\t/ /g' |sed 's/#/\t/g' >AllOtherProteinsDeepLoc.tab
 ```
 
