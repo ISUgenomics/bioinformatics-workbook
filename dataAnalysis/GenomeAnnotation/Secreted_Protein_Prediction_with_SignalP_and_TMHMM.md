@@ -1,7 +1,7 @@
 ---
 title: Identify secreted proteins and predict subcellular localization
 layout: single
-author: Rick Masonbrink
+author: Sharu Paul
 author_profile: true
 header:
   overlay_color: "444444"
