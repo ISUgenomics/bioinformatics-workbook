@@ -61,4 +61,4 @@ header:
   * [Introduction to Braker2 Gene Prediction](Intro_to_Braker2.md)
   * [Tutorial for NCBI PGAP](PGAP_tutorial.md)
   * [Motif Identification and Finding with MEME and FIMO](MEME_Motif_Finding_In_Genomes.md)  
-  * [How to identify the secreted protein from an annotation and predict subcellular localization](dataAnalysis/GenomeAnnotation/Secreted_Protein_Prediction_with_SignalP_and_TMHMM.md)
+  * [How to identify the secreted protein from an annotation and predict subcellular localization](Secreted_Protein_Prediction_with_SignalP_and_TMHMM.md)
