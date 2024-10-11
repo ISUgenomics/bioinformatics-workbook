@@ -34,11 +34,42 @@ ERS1475238
 ERS1475240
 ERS1475241
 ```
+
+# Satheesh
+`srr.ids`
+```
+ERR1760144
+ERR1760145
+ERR1760146
+ERR1760147
+```
+
 ```bash
-module load sra-toolkit
+module load sratoolkit
 module load parallel
 parallel -a srr.ids prefetch --max-size 50GB
 parallel -a srr.ids fastq-dump --split-files --origfmt --gzip
+```
+
+# Satheesh
+```
+$ time parallel -a srr.ids fasterq-dump --split-files
+spots read      : 110,922,136
+reads read      : 221,844,272
+reads written   : 221,844,272
+spots read      : 155,356,667
+reads read      : 310,713,334
+reads written   : 310,713,334
+spots read      : 158,000,000
+reads read      : 316,000,000
+reads written   : 316,000,000
+spots read      : 163,313,360
+reads read      : 326,626,720
+reads written   : 326,626,720
+
+real    145m50.662s
+user    95m25.524s
+sys     35m11.418s
 ```
 
 Since reference genome for this species of _Arabidopsis_ is [available](https://www.ncbi.nlm.nih.gov/pubmed/27671113), we will use it as reference. We will have to download the genome from the database
@@ -49,6 +80,130 @@ gunzip Arabidopsis_halleri.Ahal2.2.dna.toplevel.fa.gz
 ```
 
 These datasets are all we need to get started. Although, the SRA download through `prefetch` is faster, it takes long time for converting `sra` file to `fastq` using `fastq-dump`. Alternatively, you can obtain and download `fastq` files directly form [European Nucleotide Archive (ENA)](https://www.ebi.ac.uk/ena/data/view/PRJEB18647). The links are saved [here](assets/ena-links.txt) if you want to use them instead (note the IDs are different, but they are from the same study and the results will be identical regardless of what data you use)
+
+```
+ time wget -i download_files.txt
+--2023-11-15 16:23:50--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/004/ERR1760144/ERR1760144_1.fastq.gz
+           => ‘ERR1760144_1.fastq.gz’
+Resolving ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)... 193.62.193.165
+Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/004/ERR1760144 ... done.
+==> SIZE ERR1760144_1.fastq.gz ... 10249479884
+==> PASV ... done.    ==> RETR ERR1760144_1.fastq.gz ... done.
+Length: 10249479884 (9.5G) (unauthoritative)
+
+ERR1760144_1.fastq.gz             100%[=============================================================>]   9.54G  25.4MB/s    in 7m 30s
+
+2023-11-15 16:31:23 (21.7 MB/s) - ‘ERR1760144_1.fastq.gz’ saved [10249479884]
+
+--2023-11-15 16:31:23--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/004/ERR1760144/ERR1760144_2.fastq.gz
+           => ‘ERR1760144_2.fastq.gz’
+Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/004/ERR1760144 ... done.
+==> SIZE ERR1760144_2.fastq.gz ... 10521965694
+==> PASV ... done.    ==> RETR ERR1760144_2.fastq.gz ... done.
+Length: 10521965694 (9.8G) (unauthoritative)
+
+ERR1760144_2.fastq.gz             100%[=============================================================>]   9.80G  25.5MB/s    in 7m 12s
+
+2023-11-15 16:38:37 (23.2 MB/s) - ‘ERR1760144_2.fastq.gz’ saved [10521965694]
+
+--2023-11-15 16:38:37--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/005/ERR1760145/ERR1760145_1.fastq.gz
+           => ‘ERR1760145_1.fastq.gz’
+Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/005/ERR1760145 ... done.
+==> SIZE ERR1760145_1.fastq.gz ... 14942927166
+==> PASV ... done.    ==> RETR ERR1760145_1.fastq.gz ... done.
+Length: 14942927166 (14G) (unauthoritative)
+
+ERR1760145_1.fastq.gz             100%[=============================================================>]  13.92G  9.85MB/s    in 15m 45s
+
+2023-11-15 16:54:24 (15.1 MB/s) - ‘ERR1760145_1.fastq.gz’ saved [14942927166]
+
+--2023-11-15 16:54:24--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/005/ERR1760145/ERR1760145_2.fastq.gz
+           => ‘ERR1760145_2.fastq.gz’
+Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/005/ERR1760145 ... done.
+==> SIZE ERR1760145_2.fastq.gz ... 15281008374
+==> PASV ... done.    ==> RETR ERR1760145_2.fastq.gz ... done.
+Length: 15281008374 (14G) (unauthoritative)
+
+ERR1760145_2.fastq.gz             100%[=============================================================>]  14.23G  25.1MB/s    in 12m 12s
+
+2023-11-15 17:06:40 (19.9 MB/s) - ‘ERR1760145_2.fastq.gz’ saved [15281008374]
+
+--2023-11-15 17:06:40--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/006/ERR1760146/ERR1760146_1.fastq.gz
+           => ‘ERR1760146_1.fastq.gz’
+Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/006/ERR1760146 ... done.
+==> SIZE ERR1760146_1.fastq.gz ... 13490616555
+==> PASV ... done.    ==> RETR ERR1760146_1.fastq.gz ... done.
+Length: 13490616555 (13G) (unauthoritative)
+
+ERR1760146_1.fastq.gz             100%[=============================================================>]  12.56G  24.2MB/s    in 9m 33s
+
+2023-11-15 17:16:16 (22.4 MB/s) - ‘ERR1760146_1.fastq.gz’ saved [13490616555]
+
+--2023-11-15 17:16:16--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/006/ERR1760146/ERR1760146_2.fastq.gz
+           => ‘ERR1760146_2.fastq.gz’
+Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/006/ERR1760146 ... done.
+==> SIZE ERR1760146_2.fastq.gz ... 13811779435
+==> PASV ... done.    ==> RETR ERR1760146_2.fastq.gz ... done.
+Length: 13811779435 (13G) (unauthoritative)
+
+ERR1760146_2.fastq.gz             100%[=============================================================>]  12.86G  21.7MB/s    in 9m 59s
+
+2023-11-15 17:26:17 (22.0 MB/s) - ‘ERR1760146_2.fastq.gz’ saved [13811779435]
+
+--2023-11-15 17:26:17--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/007/ERR1760147/ERR1760147_1.fastq.gz
+           => ‘ERR1760147_1.fastq.gz’
+Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/007/ERR1760147 ... done.
+==> SIZE ERR1760147_1.fastq.gz ... 13145459292
+==> PASV ... done.    ==> RETR ERR1760147_1.fastq.gz ... done.
+Length: 13145459292 (12G) (unauthoritative)
+
+ERR1760147_1.fastq.gz             100%[=============================================================>]  12.24G  25.2MB/s    in 8m 49s
+
+2023-11-15 17:35:08 (23.7 MB/s) - ‘ERR1760147_1.fastq.gz’ saved [13145459292]
+
+--2023-11-15 17:35:08--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/007/ERR1760147/ERR1760147_2.fastq.gz
+           => ‘ERR1760147_2.fastq.gz’
+Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/007/ERR1760147 ... done.
+==> SIZE ERR1760147_2.fastq.gz ... 13505753599
+==> PASV ... done.    ==> RETR ERR1760147_2.fastq.gz ... done.
+Length: 13505753599 (13G) (unauthoritative)
+
+ERR1760147_2.fastq.gz             100%[=============================================================>]  12.58G  20.1MB/s    in 9m 55s
+
+2023-11-15 17:45:05 (21.6 MB/s) - ‘ERR1760147_2.fastq.gz’ saved [13505753599]
+
+FINISHED --2023-11-15 17:45:05--
+Total wall clock time: 1h 21m 15s
+Downloaded: 8 files, 98G in 1h 20m 58s (20.6 MB/s)
+
+real    81m16.087s
+user    0m29.558s
+sys     3m51.530s
+```
 
 ## Organization
 
@@ -88,10 +243,12 @@ Soft link the fastq files and run FASTQC on them:
 ```bash
 cd 2_fastqc
 for fq in ../1_data/*.fastq; do
-  ln -s $fastq
+  ln -s $fq
 done
 module load parallel
-parallel "fastqc {}"" ::: *.fastq
+module load fastqc
+parallel "fastqc {}" ::: *.fastq
+cd ../
 ```
 you can examine the results by opening each html page or you can merge them to a single report using multiqc. The data seems [satisfactory](assets/fastqc), so we will proceed to next step.
 
@@ -102,6 +259,7 @@ We will need the `bwa` index files and windows for processing small chunks of th
 `gatk0_index.sh`
 
 ```bash
+cd 0_index
 #!/bin/bash
 # script to prepare reference genome for GATK snp calling
 # indexes for BWA mapping porgram
@@ -119,7 +277,7 @@ if [ $# -ne 2 ] ; then
 fi
 
 module load samtools
-module load picard
+module load gatk
 module load bwa
 module load bedtools2
 module load bioawk
@@ -127,7 +285,7 @@ ref="$1"
 name="$2"
 window=10000000
 bioawk -c fastx '{print}' $ref | sort -k1,1V | awk '{print ">"$1;print $2}' | fold > ${name}.fasta
-picard CreateSequenceDictionary REFERENCE=${name}.fasta OUTPUT=${name}.dict
+gatk CreateSequenceDictionary --REFERENCE ${name}.fasta --OUTPUT ${name}.dict
 bwa index -a bwtsw ${name}.fasta
 bioawk -c fastx '{print $name"\t"length($seq)}' ${name}.fasta > ${name}.length
 bedtools makewindows -w $window -g ${name}.length |\
@@ -139,19 +297,23 @@ bedtools makewindows -w $window -g ${name}.length |\
 run this as:
 
 ```bash
-gatk0_index.sh Arabidopsis_halleri.Ahal2.2.dna.toplevel.fa ahalleri
+chmod +x gatk0_index.sh
+./gatk0_index.sh Arabidopsis_halleri.Ahal2.2.dna.toplevel.fa ahalleri
+cd ../
 ```
 
 <details>
   <summary>stdout for index step</summary>
 
   ```
-  13:18:02.958 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/opt/rit/spack-app/linux-rhel7-x86_64/gcc-4.8.5/picard-2.17.0-ft5qztzntoymuxiqt3b6yi6uqcmgzmds/bin/picard.jar!/com/intel/gkl/native/libgkl_compression.so
-  [Thu May 16 13:18:03 CDT 2019] CreateSequenceDictionary OUTPUT=ahalleri.dict REFERENCE=ahalleri.fasta    TRUNCATE_NAMES_AT_WHITESPACE=true NUM_SEQUENCES=2147483647 VERBOSITY=INFO QUIET=false VALIDATION_STRINGENCY=STRICT COMPRESSION_LEVEL=5 MAX_RECORDS_IN_RAM=500000 CREATE_INDEX=false CREATE_MD5_FILE=false GA4GH_CLIENT_SECRETS=client_secrets.json USE_JDK_DEFLATER=false USE_JDK_INFLATER=false
-  [Thu May 16 13:18:03 CDT 2019] Executing as arnstrm@novadtn.its.iastate.edu on Linux 3.10.0-957.1.3.el7.x86_64 amd64; Java HotSpot(TM) 64-Bit Server VM 1.8.0_141-b15; Deflater: Intel; Inflater: Intel; Picard version: 2.17.0-SNAPSHOT
-  [Thu May 16 13:18:05 CDT 2019] picard.sam.CreateSequenceDictionary done. Elapsed time: 0.05 minutes.
-  Runtime.totalMemory()=2058354688
-  [bwa_index] Pack FASTA... 1.56 sec
+  13:28:19.862 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/opt/rit/el9/20230413/app/linux-rhel9-x86_64_v3/gcc-11.2.1/gatk-4.3.0.0-qlpdiofa4jimy66vt2bn45pz3y5nmwea/bin/gatk-package-4.3.0.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+  [Thu Nov 16 13:28:19 CST 2023] CreateSequenceDictionary OUTPUT=ahalleri.dict REFERENCE=ahalleri.fasta    TRUNCATE_NAMES_AT_WHITESPACE=true NUM_SEQUENCES=2147483647 VERBOSITY=INFO QUIET=false VALIDATION_STRINGENCY=STRICT COMPRESSION_LEVEL=2 MAX_RECORDS_IN_RAM=500000 CREATE_INDEX=false CREATE_MD5_FILE=false GA4GH_CLIENT_SECRETS=client_secrets.json USE_JDK_DEFLATER=false USE_JDK_INFLATER=false
+  [Thu Nov 16 13:28:19 CST 2023] Executing as satheesh@nova18-5 on Linux 5.14.0-284.25.1.el9_2.x86_64 amd64; OpenJDK 64-Bit Server VM 11.0.17+8; Deflater: Intel; Inflater: Intel; Provider GCS is available; Picard version: 4.3.0.0
+  [Thu Nov 16 13:28:21 CST 2023] picard.sam.CreateSequenceDictionary done. Elapsed time: 0.03 minutes.
+  Runtime.totalMemory()=2579496960
+  Tool returned:
+  0
+  [bwa_index] Pack FASTA... 1.18 sec
   [bwa_index] Construct BWT for the packed sequence...
   [BWTIncCreate] textLength=392486396, availableWord=39616672
   [BWTIncConstructFromPacked] 10 iterations done. 65350012 characters processed.
@@ -165,13 +327,13 @@ gatk0_index.sh Arabidopsis_halleri.Ahal2.2.dna.toplevel.fa ahalleri
   [BWTIncConstructFromPacked] 90 iterations done. 369338156 characters processed.
   [BWTIncConstructFromPacked] 100 iterations done. 390883356 characters processed.
   [bwt_gen] Finished constructing BWT in 101 iterations.
-  [bwa_index] 111.44 seconds elapse.
-  [bwa_index] Update BWT... 1.14 sec
-  [bwa_index] Pack forward-only FASTA... 0.99 sec
-  [bwa_index] Construct SA from BWT and Occ... 53.53 sec
+  [bwa_index] 96.04 seconds elapse.
+  [bwa_index] Update BWT... 0.73 sec
+  [bwa_index] Pack forward-only FASTA... 0.77 sec
+  [bwa_index] Construct SA from BWT and Occ... 43.17 sec
   [main] Version: 0.7.17-r1188
   [main] CMD: bwa index -a bwtsw ahalleri.fasta
-  [main] Real time: 169.534 sec; CPU: 168.677 sec
+  [main] Real time: 147.423 sec; CPU: 141.898 sec
   ```
 </details>
 
@@ -201,9 +363,9 @@ AhaN4	ERR1760147
 ```
 
 ```bash
-While read a b; do
+while read a b; do
   ln -s $(pwd)/1_data/${b}_1.fastq 3_pre-processing/${a}_R1.fastq
-  ln -s $(pwd)/1_data/${b}_1.fastq 3_pre-processing/${a}_R1.fastq
+  ln -s $(pwd)/1_data/${b}_2.fastq 3_pre-processing/${a}_R2.fastq
 done<id-names.txt
 ```
 generate commands and run the `gatk2_preprocess.sh` script
@@ -213,7 +375,7 @@ cd 3_pre-processing
 for fq in *_R1.fastq; do
   echo "./gatk2_preprocess.sh /work/LAS/mhufford-lab/arnstrm/ler/0_index/ahalleri.fasta $fq $(echo $fq |sed 's/_R1/_R2/g')"
 done > process.cmds
-makeSLURMs.py 1 process.cmds
+./makeSLURMs.py 1 process.cmds
 for sub in *.sub; do
   sbatch $sub;
 done
@@ -235,7 +397,6 @@ if [ $# -ne 3 ] ; then
    echo ""
    exit 0
 fi
-module load picard
 module load bwa
 module load samtools
 ulimit -c unlimited
@@ -244,8 +405,7 @@ R1=$2
 R2=$3
 # adjust this to suit your input file name
 OUT=$(echo $R1 |cut -f 1-3 -d "_")
-PICARD_HOME=$(dirname $(which picard))
-PICARD_CMD="java -Xmx100g -Djava.io.tmpdir=$TMPDIR -jar ${PICARD_HOME}/picard.jar"
+JAVA_OPTIONS="-Xmx100g -Djava.io.tmpdir=$TMPDIR"
 
 # platform id from fastq file
 if [ ${R1: -3} == ".gz" ]; then
@@ -267,36 +427,38 @@ RGPL="ILLUMINA"
 # genotype name, this will appear in VCF file header
 RGSM="$RGID"
 # convert fastq to sam and add readgroups
-$PICARD_CMD FastqToSam \
-   FASTQ=${R1} \
-   FASTQ2=${R2} \
-   OUTPUT=${OUT}_fastqtosam.bam \
-   READ_GROUP_NAME=${OUT} \
-   SAMPLE_NAME=${OUT}_name \
-   LIBRARY_NAME=${OUT}_lib \
-   PLATFORM_UNIT=${PLT} \
-   PLATFORM=illumina \
-   SEQUENCING_CENTER=ISU \
-   RUN_DATE=${TDATE}  || {
+gatk --java-options ${JAVA_OPTIONS} FastqToSam \
+   --FASTQ ${R1} \
+   --FASTQ2 ${R2} \
+   --OUTPUT ${OUT}_fastqtosam.bam \
+   --READ_GROUP_NAME ${OUT} \
+   --SAMPLE_NAME ${OUT}_name \
+   --LIBRARY_NAME ${OUT}_lib \
+   --PLATFORM_UNIT ${PLT} \
+   --PLATFORM illumina \
+   --SEQUENCING_CENTER ISU \
+   --RUN_DATE ${TDATE}  || {
 echo >&2 ERROR: FastqToSam failed for $OUT
 exit 1
 }
 # marking adapters
-$PICARD_CMD MarkIlluminaAdapters \
-   I=${OUT}_fastqtosam.bam \
-   O=${OUT}_markilluminaadapters.bam \
-   M=${OUT}_markilluminaadapters_metrics.txt \
-   TMP_DIR=${TMPDIR}  || {
+gatk --java-options ${JAVA_OPTIONS} MarkIlluminaAdapters \
+   --INPUT ${OUT}_fastqtosam.bam \
+   --OUTPUT ${OUT}_markilluminaadapters.bam \
+   --METRICS ${OUT}_markilluminaadapters_metrics.txt \
+   --TMP_DIR ${TMPDIR}  || {
 echo >&2 ERROR: MarkIlluminaAdapters failed for $OUT
 exit 1
 }
 # convert bam back to fastq for mapping
-$PICARD_CMD SamToFastq \
-   I=${OUT}_markilluminaadapters.bam \
-   FASTQ=${OUT}_samtofastq_interleaved.fq \
-   CLIPPING_ATTRIBUTE=XT \
-   CLIPPING_ACTION=2 \
-   INTERLEAVE=true NON_PF=true TMP_DIR=${TMPDIR} || {
+gatk --java-options ${JAVA_OPTIONS} SamToFastq \
+   --INPUT ${OUT}_markilluminaadapters.bam \
+   --FASTQ ${OUT}_samtofastq_interleaved.fq \
+   --CLIPPING_ATTRIBUTE XT \
+   --CLIPPING_ACTION 2 \
+   --INTERLEAVE true \
+   --INCLUDE_NON_PF_READS true \
+   --TMP_DIR ${TMPDIR} || {
 echo >&2 ERROR: SamToFastq failed for $OUT
 exit 1
 }
@@ -311,44 +473,44 @@ echo >&2 ERROR: BWA failed for $OUT
 exit 1
 }
 # merging alignments
-$PICARD_CMD MergeBamAlignment \
-   R=$REF \
-   UNMAPPED_BAM=${OUT}_fastqtosam.bam \
-   ALIGNED_BAM=${OUT}_bwa_mem.bam \
-   O=${OUT}_snippet_mergebamalignment.bam \
-   CREATE_INDEX=true \
-   ADD_MATE_CIGAR=true CLIP_ADAPTERS=false \
-   CLIP_OVERLAPPING_READS=true \
-   INCLUDE_SECONDARY_ALIGNMENTS=true \
-   MAX_INSERTIONS_OR_DELETIONS=-1 \
-   PRIMARY_ALIGNMENT_STRATEGY=MostDistant \
-   ATTRIBUTES_TO_RETAIN=XS \
-   TMP_DIR="${TMPDIR}" || {
+gatk --java-options ${JAVA_OPTIONS} MergeBamAlignment \
+   --REFERENCE $REF \
+   --UNMAPPED_BAM ${OUT}_fastqtosam.bam \
+   --ALIGNED_BAM ${OUT}_bwa_mem.bam \
+   --OUTPUT ${OUT}_snippet_mergebamalignment.bam \
+   --CREATE_INDEX true \
+   --ADD_MATE_CIGAR true --CLIP_ADAPTERS false \
+   --CLIP_OVERLAPPING_READS true \
+   --INCLUDE_SECONDARY_ALIGNMENTS true \
+   --MAX_INSERTIONS_OR_DELETIONS -1 \
+   --PRIMARY_ALIGNMENT_STRATEGY MostDistant \
+   --ATTRIBUTES_TO_RETAIN XS \
+   --TMP_DIR "${TMPDIR}" || {
 echo >&2 ERROR: MergeBamAlignment failed for $OUT
 exit 1
 }
 # mark duplicates
-$PICARD_CMD MarkDuplicates \
-  INPUT=${OUT}_snippet_mergebamalignment.bam \
-  OUTPUT=${OUT}_prefinal.bam \
-  METRICS_FILE=${OUT}_mergebamalignment_markduplicates_metrics.txt \
-  OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500 \
-  CREATE_INDEX=true \
-  TMP_DIR=$TMPDIR || {
+gatk --java-options ${JAVA_OPTIONS} MarkDuplicates \
+  --INPUT ${OUT}_snippet_mergebamalignment.bam \
+  --OUTPUT ${OUT}_prefinal.bam \
+  --METRICS_FILE ${OUT}_mergebamalignment_markduplicates_metrics.txt \
+  --OPTICAL_DUPLICATE_PIXEL_DISTANCE 2500 \
+  --CREATE_INDEX true \
+  --TMP_DIR $TMPDIR || {
 echo >&2 ERROR: MarkDuplicates failed for $OUT
 exit 1
 }
 # add read groups
-$PICARD_CMD AddOrReplaceReadGroups \
-  INPUT=${OUT}_prefinal.bam \
-  OUTPUT=${OUT}_final.bam \
-  RGID=${RGID} \
-  RGLB=${RGLB} \
-  RGPL=${RGPL} \
-  RGPU=${RGPU} \
-  RGSM=${RGSM} \
-  CREATE_INDEX=true \
-  TMP_DIR=$TMPDIR || {
+gatk --java-options ${JAVA_OPTIONS} AddOrReplaceReadGroups \
+  --INPUT ${OUT}_prefinal.bam \
+  --OUTPUT ${OUT}_final.bam \
+  --RGID ${RGID} \
+  --RGLB ${RGLB} \
+  --RGPL ${RGPL} \
+  --RGPU ${RGPU} \
+  --RGSM ${RGSM} \
+  --CREATE_INDEX true \
+  --TMP_DIR $TMPDIR || {
 echo >&2 ERROR: Adding read groups failed for $OUT
 exit 1
 }
@@ -414,25 +576,28 @@ done > CombinedBAM_temp
 
 while read line; do
 if ! [[ $line == @* ]]; then
-g2=$(echo $line | awk '{print $1":"$2"-"$3}'); \
-g1=$(echo $line | awk '{print $1"_"$2"_"$3}'); \
-CWD=$(pwd)
-echo "gatk --java-options \"-Xmx80g -XX:+UseParallelGC\" HaplotypeCaller -R ${REF} $(cat CombinedBAM_temp) -L "${g2}" --output "${g1}".vcf;";
+  g2=$(echo $line | awk '{print $1":"$2"-"$3}'); \
+  g1=$(echo $line | awk '{print $1"_"$2"_"$3}'); \
+  CWD=$(pwd)
+  echo "gatk --java-options \"-Xmx80g -XX:+UseParallelGC\" HaplotypeCaller -R ${REF} $(cat CombinedBAM_temp) -L "${g2}" --output "${g1}".vcf;";
 fi
 done<${list}
 ```
-
+Make the script executable.
+```
+chmod +x gatk3_cmdsgen.sh
+```
 Run this script as:
 
 ```bash
-gatk3_cmdsgen.sh ../0_index/ahalleri_coords.bed ../0_index/ahalleri.fasta *final.bam > gatk.cmds
+./gatk3_cmdsgen.sh ../0_index/ahalleri_coords.bed ../0_index/ahalleri.fasta *final.bam > gatk.cmds
 ```
 This will generate `2239` commands (one gatk command per interval). Since the GATK 4 cannot use multiple threads, you can run one job per thread and thus fit multiple jobs in a single node. Using multiple nodes, you can run these commands much faster than running a single command on a bigger interval or a whole genome.
 
 Before, you ran `makeSLURMs.py` script. This job runs the commands serially. Another script `makeSLURMp.py` also does the same thing, but instead it runs the command in parallel. We will use that and specify how many jobs we want to run. To split them
 
 ```bash
-makeSLURMp.py 220 gatk.cmds
+../3_pre-processing/makeSLURMp.py 220 gatk.cmds
 # some fixing is needed to make sure that it runs the right number of jobs
 # and then submit
 for sub in *.sub; do
