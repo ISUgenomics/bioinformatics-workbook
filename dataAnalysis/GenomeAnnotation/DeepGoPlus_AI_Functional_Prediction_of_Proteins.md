@@ -10,6 +10,14 @@ header:
 
 DeepGOPlus is a bioinformatics tool designed for protein function prediction using deep learning. It combines convolutional neural networks with sequence-based features to predict Gene Ontology (GO) terms for proteins. This tool is particularly useful for large-scale genome annotation and proteome analysis, though a webserver is currently availble for smaller requests: https://deepgo.cbrc.kaust.edu.sa/ . Frequently genome annotation projects will produce tens of thousands of genes, and depending upon the model status of your chosen species, many of these genes may lack significant homology to anything availabe in current databases. This software is not a replacement for identifying ontology terms using interproscan, but an alternative for novel gene candidates. 
 
+
+**Software used in this tutorial**
+* Kulmanov, M., & Hoehndorf, R. (2020). DeepGOPlus: Improved protein function prediction from sequence. *Bioinformatics*, 36(2), 422–429. https://doi.org/10.1093/bioinformatics/btz595
+* Buchfink, B., Xie, C., & Huson, D. H. (2015). Fast and sensitive protein alignment using DIAMOND. *Nature Methods*, 12(1), 59–60. https://doi.org/10.1038/nmeth.3176
+
+
+
+
 ### Installation
 
 **Installation of DeepGOPlus**
