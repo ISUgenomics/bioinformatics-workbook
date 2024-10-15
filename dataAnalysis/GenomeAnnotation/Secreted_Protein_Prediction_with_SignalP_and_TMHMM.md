@@ -8,7 +8,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-Here we will be using a set of predicted proteins from a plant parasitic nematode genome to predict secretion, transmembrane domains, and subcellular localization.
+Here we will be using a set of predicted proteins from a plant parasitic nematode genome to predict protein secretion, transmembrane domains, and subcellular localization.
 
 **Software used in this tutorial**
 - SignalP 6.0 [Teufel et al., 2022](https://www.nature.com/articles/s41587-021-01156-3)
@@ -131,7 +131,7 @@ TGEQQLKLLTF.
 ```
 # Transmembrane domains 
 ### TMHMM 2.0
-TMHMM 2.0 uses a hidden Markov model (HMM) to predict transmembrane helices in protein sequences. \
+TMHMM 2.0 uses a hidden Markov model (HMM) to predict transmembrane helices in protein sequences. 
 
 **Install and run TMHMM** 
 ```
