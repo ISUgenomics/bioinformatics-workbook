@@ -61,4 +61,6 @@ header:
   * [Introduction to Braker2 Gene Prediction](Intro_to_Braker2.md)
   * [Tutorial for NCBI PGAP](PGAP_tutorial.md)
   * [Motif Identification and Finding with MEME and FIMO](MEME_Motif_Finding_In_Genomes.md)  
-  * [How to identify the secreted protein from an annotation and predict subcellular localization](Secreted_Protein_Prediction_with_SignalP_and_TMHMM.md)
+  * [Assign GO Terms to Proteins using Deep Learning with DeepGoPlus](DeepGoPlus_AI_Functional_Prediction_of_Proteins.md)
+  * [How to Identify the Secreted Protein from an Annotation and Predict Subcellular Localization](Secreted_Protein_Prediction_with_SignalP_and_TMHMM.md)
+  * [How to Functionally Classify Proteins using ProtTrans, a Kinase Example ](Protein_Classification_with_ProtTrans)

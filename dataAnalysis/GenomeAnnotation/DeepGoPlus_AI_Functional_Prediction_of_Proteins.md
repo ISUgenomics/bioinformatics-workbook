@@ -67,7 +67,11 @@ export PATH="/work/gif3/masonbrink/Software/:$PATH"
 
 **I had to modify the update.py script to get around the check for the uniprot header. This header must not exist anymore.** 
 ```
-vi update.py
+# Release information
+Current version is 1.0.21. The model in the current release was trained using the Gene Ontology
+released on 2024-09-08 and the SwissProt data with version 2024_05.
+
+python update.py
 
 #allow check for header to pass
 if last_release_version == new_release_version:
