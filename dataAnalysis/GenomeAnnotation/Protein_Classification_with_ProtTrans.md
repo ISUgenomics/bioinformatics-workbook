@@ -9,7 +9,7 @@ header:
 ---
 
 
-# Create a ProtTrans pipeline to differentiate kinases from other proteins
+# A ProtTrans pipeline to differentiate kinases from other proteins
 ### Introduction to ProtTrans for Bioinformatics Applications
 
 ProtTrans is a powerful tool that combines cutting-edge artificial intelligence (AI) with protein sequence analysis. ProtTrans enables bioinformaticians to analyze and predict protein functions, structures, and classifications in ways that were previously unattainable. Whether you're working with kinases, functional domains, or even evolutionary questions, ProtTrans opens up new possibilities.
@@ -87,15 +87,22 @@ source ProtTrans_pyenv/bin/activate
 
 
 #install these three packages
-pip install -q transformers
 pip install --upgrade pip
 pip install -q transformers
+pip install torch
+pip install sentencepiece
+pip install protobuf
+pip install h5py
+pip install pandas
+pip install sklearn
+pip install scikit-learn
 ```
 
 ### Create a dataset for training
-```
+
 Here I just went to Uniprot.org to find proteins that were representative kinases from UniRef (manually reviewed). Since we have been working with Arabidopsis, I have kept with that lineage by extracting only proteins from the Brassicaceae. To avoid biasing the model, we want to keep both protein types at an equal representation. 
-```
+<br>
+
 *  Since kinases are a minute fraction of all proteins, I only extracted proteins that were in groups with at least 8 sequences with a cluster. 
 ```
 #number of kinase sequences
@@ -108,7 +115,7 @@ grep -c ">" KinasesTax3700Uniprot.fasta
 grep -c ">" CleanNamesNonKinasesTax3700Uniprot.fasta
 77216
 ```
-* Gets rid of the extra header information in the fasta files, which can drastically affect the time to embed the proteins
+* Gets rid of the extra header information in the fasta files, which can affect the time to embed the proteins
 ```
 awk '{print $1}'  uniref_NOT_name_kinase_AND_count_8_T_2024_11_11.fasta >CleanNamesNonKinasesTax3700Uniprot.fasta
 awk '{print $1}'  uniref_taxonomy_id_3700_AND_name_kin_2024_11_08.fasta >CleanNamesKinasesTax3700Uniprot.fasta
@@ -117,12 +124,10 @@ cat CleanNames*fasta >ProteinDataset.fasta
 ```
 
 
-
+# Embedding Protein Sequences
 
 ### Prepare sequences for embedding the best protein model provided
-
-
-generate_embeddings.py
+**Copy this script to a file named: generate_embeddings.py**
 ```
 import torch
 from transformers import AutoTokenizer, AutoModel
@@ -167,28 +172,32 @@ def generate_embeddings(input_fasta, output_pkl):
 generate_embeddings(args.input, args.output)
 ```
 
+**Run the embedding script**
 
-
-
-**Run generate_embeddings.py**
+Embed the fasta files of the kinases and nonkinases. This is the most time consuming step of the pipeline, and can take >24 hours for 100k proteins. 
 ```
-#embed the training dataset.  This is the most time consuming step of the pipeline, and can take >24 hours for 100k proteins.   Thus I will provide this output. 
 python generate_embeddings.py --input ProteinDataset.fasta --output embeddings.pkl
+```
 
-
-#embed the dataset you want to identify kinases.  These need to be small,maybe 100 proteins, so embedding doesnt take too long for the workshop. 
+Embed the fasta files of your unknown set of fasta files you plan to screen for kinases. 
+```
 python generate_embeddings.py --input HeadCleanTN10FinalManualAnnotation_proteins.fasta --output embeddings4PredictionHead.pkl
 ```
+
+# Classification of Training Proteins
 
 ### Create labels for classification 
 ```
 #creates header
 echo -e "Protein_ID\tLabel" >labels.tsv
+
+#grabs the fasta header and appends a print of fasta header name tab kinase to labels.tsv
 grep ">" KinasesTax3700Uniprot.fasta |awk '{print $1"\tkinase"}' |sed 's/>//g' >>labels.tsv
+
+#grabs the fasta header and appends 'fasta_header_name tab non-kinase' to labels.tsv
 grep ">" NonKinasesTax3700Uniprot.fasta |awk '{print $1"\tnon-kinase"}' |sed 's/>//g' >>labels.tsv
 ```
-
-**train_classifier.py**
+**Copy this script to a file named: train_classifier.py**
 ```
 import pickle
 import pandas as pd
@@ -275,9 +284,9 @@ print(confusion_matrix(y_test, y_pred))
 python train_classifier.py --embeddings embeddings4PredictionDataset.pkl --labels labels4PredictionDataset.tsv --output logistic_regression_model.pkl --scaler_output scaler.pkl
 ```
 
-### Predict kinases from your dataset
+### Predict kinases from your dataset of unknowns
 
-**predict_kinases.py**
+**Copy this script to a file named: predict_kinases.py**
 ```
 import pickle
 import argparse
@@ -339,5 +348,7 @@ print(f"Predictions saved to {args.output}")
 ```
 python predict_kinases.py --embeddings SmallTrainingembeddings.pkl --model logistic_regression_model.pkl --output predictions.tsv
 ```
+
+
 
 [Back to the Assembly and Annotation Index page](annotation_and_assembly_index.md)
