@@ -8,6 +8,8 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
+# CURRENTLY UNDER DEVELOPMENT 11/14/24
+
 # A ProtTrans pipeline to differentiate kinases from other proteins
 ### Introduction to ProtTrans for Bioinformatics Applications
 
@@ -104,7 +106,6 @@ Here I just went to Uniprot.org to find proteins that were representative kinase
 
 *  Since kinases are a minute fraction of all proteins, I only extracted proteins that were in groups with at least 8 sequences with a cluster. 
 ```
-
 #number of kinase sequences
 grep -c ">" KinasesTax3700Uniprot.fasta
 58918
@@ -310,7 +311,6 @@ python train_classifier.py --embeddings embeddings4PredictionDataset.pkl --label
               precision    recall  f1-score   support
 
            0       0.98      1.00      0.99       558
-           0       0.98      1.00      0.99       558
            1       0.00      0.00      0.00        13
 
     accuracy                           0.98       571
@@ -329,9 +329,14 @@ Non-kinase correctly identified, Non-kinase misclassified
 Kinase correctly identified, Kinase misclassified
 [[558   0]
  [ 13   0]]
-
-In your stdout you should have this output from the small model. We are looking for high F1 scores, coefficients that are further away from zero are better, and you'd like to have a higher number for Mean and Variance.  At the bottom is the 20% training data that we split being tested.  558 nonkinases were correct and 13 kinases were correct, without any misclassifications. 
 ```
+In your stdout you should have this output from the small model. The classification report provides metrics on: <br>
+*  Precision: Fraction of positive predictions that are correct.
+*  Recall: Fraction of true positives that are correctly predicted.
+*  F1-Score: Harmonic mean of precision and recall.
+*  Support: Number of actual occurrences of each class. <br>
+The zero and 1 in our table represent our classes (non-kinase 0) and (kinase 1). We have a high accuracy, but that is misleading as we have far too many kinases imbalancing the model. Ideally we would have high scores for all classes. Coefficients that are further away from zero are better, and you'd like to have a higher number for Mean and Variance.  At the bottom is the 20% training data that we split being tested. 558 nonkinases were correct and 13 kinases were correct.  
+
 
 ### Predict kinases from your dataset of unknowns
 
@@ -398,5 +403,6 @@ print(f"Predictions saved to {args.output}")
 python predict_kinases.py --embeddings SmallTrainingembeddings.pkl --model logistic_regression_model.pkl --output predictions.tsv
 ```
 # Evaluate your Results
-
+Based upon the threshold you set in your predict_kinases.py script, (0.6) in this case, you can determine if the protein was called a kinase or non-kinase. This setting is directly proportional to the probability output in the third column of predictions.tsv.
+ 
 [Back to the Assembly and Annotation Index page](annotation_and_assembly_index.md)
