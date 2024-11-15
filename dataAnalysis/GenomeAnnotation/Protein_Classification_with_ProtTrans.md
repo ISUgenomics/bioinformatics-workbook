@@ -105,6 +105,7 @@ Here I just went to Uniprot.org to find proteins that were representative kinase
 
 *  Since kinases are a minute fraction of all proteins, I only extracted proteins that were in groups with at least 8 sequences with a cluster. 
 ```
+
 #number of kinase sequences
 grep -c ">" KinasesTax3700Uniprot.fasta
 58918
@@ -113,7 +114,7 @@ grep -c ">" KinasesTax3700Uniprot.fasta
 ```
 #number of nonkinases
 grep -c ">" CleanNamesNonKinasesTax3700Uniprot.fasta
-77216
+20627 non-kinases
 ```
 * Gets rid of the extra header information in the fasta files, which can affect the time to embed the proteins
 ```
@@ -122,7 +123,20 @@ awk '{print $1}'  uniref_taxonomy_id_3700_AND_name_kin_2024_11_08.fasta >CleanNa
 
 cat CleanNames*fasta >ProteinDataset.fasta
 ```
+### Create a dataset of proteins to test your trained model
 
+```
+#A small sample of kinases to test, note these kinases than what was used in training
+head -n 1002 CleanNamesKinases2Tax3700Uniprot.fasta >SmallKinases.fasta
+#A small sample of non-kinases, note that these non-kinases were not used in training 
+head -n 19998 CleanNamesNonKinases2Tax3700Uniprot.fasta >SmallNonKinases.fasta
+
+grep -c ">" Small*
+SmallKinases2.fasta:84
+SmallNonKinases2.fasta:2769
+
+cat SmallKinases2.fasta SmallNonKinases2.fasta >SmallTrainingDataset.fasta
+```
 
 # Embedding Protein Sequences
 
@@ -179,9 +193,17 @@ Embed the fasta files of the kinases and nonkinases. This is the most time consu
 python generate_embeddings.py --input ProteinDataset.fasta --output embeddings.pkl
 ```
 
-Embed the fasta files of your unknown set of fasta files you plan to screen for kinases. 
+Embed the fasta files of your unknown set of fasta sequences you plan to screen for kinases. 
 ```
-python generate_embeddings.py --input HeadCleanTN10FinalManualAnnotation_proteins.fasta --output embeddings4PredictionHead.pkl
+python generate_embeddings.py --input SmallTrainingDataset.fasta --output SmallTrainingembeddings.pkl
+```
+
+### Assess embedding output
+Did you get a pickle file? 
+```
+ls -lrth *.pkl
+-rw-r--r--. 1 remkv6 its-hpc-nova-gif 12M Nov 12 12:57 SmallTrainingembeddings.pkl
+-rw-r--r--. 1 remkv6 its-hpc-nova-gif 316M Nov  9 08:05 embeddings.pkl
 ```
 
 # Classification of Training Proteins
@@ -284,6 +306,34 @@ print(confusion_matrix(y_test, y_pred))
 python train_classifier.py --embeddings embeddings4PredictionDataset.pkl --labels labels4PredictionDataset.tsv --output logistic_regression_model.pkl --scaler_output scaler.pkl
 ```
 
+### Evaluate your model
+```
+              precision    recall  f1-score   support
+
+           0       0.98      1.00      0.99       558
+           0       0.98      1.00      0.99       558
+           1       0.00      0.00      0.00        13
+
+    accuracy                           0.98       571
+   macro avg       0.49      0.50      0.49       571
+weighted avg       0.95      0.98      0.97       571
+
+Classifier saved as logistic_regression_modelSmall.pkl
+Scaler saved as scalerSmall.pkl
+Model coefficients (weights):
+[[-0.01420174 -0.00063592 -0.00290767 ... -0.00020602  0.00301244
+  -0.00229889]]
+Feature matrix stats:
+Mean: -0.0016713655786588788, Variance: 0.009751115925610065
+Confusion Matrix
+Non-kinase correctly identified, Non-kinase misclassified
+Kinase correctly identified, Kinase misclassified
+[[558   0]
+ [ 13   0]]
+
+In your stdout you should have this output from the small model. We are looking for high F1 scores, coefficients that are further away from zero are better, and you'd like to have a higher number for Mean and Variance.  At the bottom is the 20% training data that we split being tested.  558 nonkinases were correct and 13 kinases were correct, without any misclassifications. 
+```
+
 ### Predict kinases from your dataset of unknowns
 
 **Copy this script to a file named: predict_kinases.py**
@@ -348,7 +398,6 @@ print(f"Predictions saved to {args.output}")
 ```
 python predict_kinases.py --embeddings SmallTrainingembeddings.pkl --model logistic_regression_model.pkl --output predictions.tsv
 ```
-
-
+# Evaluate your Results
 
 [Back to the Assembly and Annotation Index page](annotation_and_assembly_index.md)
