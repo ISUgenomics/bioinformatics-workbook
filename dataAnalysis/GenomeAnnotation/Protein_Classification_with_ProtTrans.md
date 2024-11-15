@@ -1,5 +1,5 @@
 ---
-title: DeepGoPlus: Using AI to classify proteins
+title: DeepGoPlus Using AI to Classify Proteins
 layout: single
 author: Rick Masonbrink
 author_profile: true
