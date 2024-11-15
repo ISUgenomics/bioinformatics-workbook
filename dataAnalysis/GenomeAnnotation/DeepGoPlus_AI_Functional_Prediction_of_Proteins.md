@@ -1,5 +1,5 @@
 ---
-title: DeepGoPlus: Using AI to associate GO terms with novel proteins 
+title: DeepGoPlus Using AI to associate GO terms with novel proteins 
 layout: single
 author: Rick Masonbrink
 author_profile: true
