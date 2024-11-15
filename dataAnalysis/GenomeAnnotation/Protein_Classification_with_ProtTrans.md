@@ -1,5 +1,5 @@
 ---
-title: DeepGoPlus Using AI to Classify Proteins
+title: A ProtTrans Pipeline to Differentiate Kinases from Other Proteins
 layout: single
 author: Rick Masonbrink
 author_profile: true
@@ -7,7 +7,6 @@ header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
-
 
 # A ProtTrans pipeline to differentiate kinases from other proteins
 ### Introduction to ProtTrans for Bioinformatics Applications
