@@ -472,10 +472,10 @@ print(f"Predictions saved to {args.output}")
 
 **Run the prediction**
 ```
-python predict_transmembranes.py --embeddings SignalPDataset.pkl --model logistic_regression_model.pkl --output predictions.tsv
+python ../predict_transmembranes.py --embeddings SignalPDataset.pkl --model logistic_regression_model.pkl --output predictions.tsv
 ```
 # Evaluate your Results
-Based upon the threshold you set in your predict_transmembranes.py script, (0.6) in this case, you can determine if the protein was called a transmembrane-containing protein or non-transmembrane . This setting is directly proportional to the probability output in the third column of predictions.tsv.
+Based upon the threshold you set in your predict_transmembranes.py script, (0.43) in this case, you can determine if the protein was called a transmembrane-containing protein or non-transmembrane . This setting is directly proportional to the probability output in the third column of predictions.tsv.
 
 
 
