@@ -79,7 +79,7 @@ mRNA_22   OTHER   1.000000        0.000004
 mRNA_23   OTHER   0.999822        0.000190
 mRNA_24   OTHER   0.999777        0.000249
 mRNA_25   SP      0.005658        0.994305        CS pos: 22-23. Pr: 0.5986
-mRNA_26   SP      0.000441        0.999528        CS pos: 22-23. Pr: 0.7915
+mRNA_26   SP      0.000441        0.999528        CS pos: 22-23. Pr: 0.7915less re
 continued ...
 ```
 
@@ -259,8 +259,10 @@ pip install . --user
 ```
 ### Run deeploc2 -- 2 runs: one on subtracted SP proteins, and one on unmodified proteins.
 ```
-deeploc2 -f SignalPeptidesSubtracted6.fasta -o Signap6Accurate -m Accurate -d cuda
-deeploc2 -f YourSpecies_proteins.fasta -o AllProteins -m Accurate -d cuda
+deeploc2 -f SignalPeptidesSubtracted6.fasta -o Signap6Accurate -m Fast
+deeploc2 -f YourSpecies_proteins.fasta -o AllProteins -m Fast
+
+
 ```
 **Excerpt of results from Deeploc 2.0**
 ```
