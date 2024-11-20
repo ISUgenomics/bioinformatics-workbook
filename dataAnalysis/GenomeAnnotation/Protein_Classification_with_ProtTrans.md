@@ -124,8 +124,12 @@ grep "Number of predicted TMHs" CleanNonTransmembrane3700.tmhmmout |awk '$7==0 {
 grep "Number of predicted TMHs" CleanTransmembrane3700.tmhmmout |awk '$7!=0 {print $2}' |cdbyank CleanTransmembrane3700.fasta.cidx |awk '{print $1}' >ActualTransmembranePositive.fasta
 
 
+# the distribution of proteins from each class for training
+grep -c ">" *fasta
+ActualTransmembraneNegative.fasta:14997
+ActualTransmembranePositive.fasta:15352
 
-
+cat ActualTransmembranePositive.fasta ActualTransmembraneNegative.fasta >TMProteinDataset.fasta 
 ```
 
 
@@ -185,15 +189,15 @@ python generate_embeddings.py --input TMProteinDataset.fasta --output TMembeddin
 
 Embed the fasta files of your unknown set of fasta sequences you plan to screen for transmembrane domains. 
 ```
-python generate_embeddings.py --input SignalPDataset.fasta --output SmallTrainingembeddings.pkl ?????????????
+python generate_embeddings.py --input SignalPDataset.fasta --output SignalPDataset.pkl
 ```
 
 ### Assess embedding output
-Did you get a pickle file???????????????????????
+Did you get a pickle file?
 ```
 ls -lrth *.pkl
 -rw-r----- 1 rick.masonbrink proj-scinet_workshop1 4.0M Nov 20 10:25 SignalPDataset.pkl
--rw-r--r--. 1 remkv6 its-hpc-nova-gif 316M Nov  9 08:05 embeddings.pkl
+-rw-r--r--. 1 remkv6 its-hpc-nova-gif 316M Nov  9 08:05 TMembeddings.pkl
 ```
 
 # Classification of Training Proteins
@@ -205,7 +209,6 @@ echo -e "Protein_ID\tLabel" >TMLabels.tsv
 grep ">" ActualTransmembranePositive.fasta |awk '{print $0"\ttransmembrane"}' |sed 's/>//g' >>TMLabels.tsv
 grep ">" ActualTransmembraneNegative.fasta |awk '{print $0"\tnon-transmembrane"}' |sed 's/>//g' >>TMLabels.tsv
 
-cat ActualTransmembranePositive.fasta ActualTransmembraneNegative.fasta >TMProteinDataset.fasta 
 ```
 **Copy this script to a file named: train_classifier.py**
 ```
@@ -323,7 +326,7 @@ In your stdout you should have this output from the small model. The classificat
 *  Recall: Fraction of true positives that are correctly predicted.
 *  F1-Score: Harmonic mean of precision and recall.
 *  Support: Number of actual occurrences of each class. <br>
-The zero and 1 in our table represent our classes (non-transmembrane 0) and (transmembrane 1). Ideally we would have high scores for all classes. Coefficients that are further away from zero are better, and you'd like to have a higher number for Mean and Variance. At the bottom is the 20% training data that we split being tested. 31 tramsmembrane domain containing proteins accurately identified and 3042 transmembrane containing proteins incorrectly identified, 41 nontransmembrane domain containing proteins were correct and 2956 were correct.  
+The zero and 1 in our table represent our classes (non-transmembrane 0) and (transmembrane 1). Ideally we would have high scores for all classes. Coefficients that are further away from zero are better, and you'd like to have a higher number for Mean and Variance. At the bottom is the 20% training data that we split being tested. 31 tramsmembrane domain containing proteins accurately identified and 3042 transmembrane containing proteins incorrectly classified, 41 nontransmembrane domain containing proteins were correct and 2956 were not correct.  
 
 ### Not good results?  Lets try a random forest model 
 ```
@@ -337,8 +340,8 @@ from sklearn.decomposition import PCA
 from imblearn.combine import SMOTETomek
 
 # Load embeddings and labels
-embeddings = pickle.load(open("embeddings.pkl", "rb"))
-labels_df = pd.read_csv("labels.tsv", sep="\t")
+embeddings = pickle.load(open("TMembeddings.pkl", "rb"))
+labels_df = pd.read_csv("TMLabels.tsv", sep="\t")
 labels_df = labels_df[labels_df["Protein_ID"].isin(embeddings.keys())]
 
 # Prepare input features and labels
