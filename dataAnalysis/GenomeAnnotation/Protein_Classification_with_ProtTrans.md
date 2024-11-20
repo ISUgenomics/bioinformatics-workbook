@@ -8,7 +8,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-# CURRENTLY UNDER DEVELOPMENT 11/14/24
+
 
 # A ProtTrans pipeline to differentiate transmembrane domains containing proteins from others
 ### Introduction to ProtTrans for Bioinformatics Applications
