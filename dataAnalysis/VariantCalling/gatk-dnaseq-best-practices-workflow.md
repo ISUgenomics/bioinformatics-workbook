@@ -35,41 +35,13 @@ ERS1475240
 ERS1475241
 ```
 
-# Satheesh
-`srr.ids`
-```
-ERR1760144
-ERR1760145
-ERR1760146
-ERR1760147
-```
+To do so:
 
 ```bash
 module load sratoolkit
 module load parallel
 parallel -a srr.ids prefetch --max-size 50GB
 parallel -a srr.ids fastq-dump --split-files --origfmt --gzip
-```
-
-# Satheesh
-```
-$ time parallel -a srr.ids fasterq-dump --split-files
-spots read      : 110,922,136
-reads read      : 221,844,272
-reads written   : 221,844,272
-spots read      : 155,356,667
-reads read      : 310,713,334
-reads written   : 310,713,334
-spots read      : 158,000,000
-reads read      : 316,000,000
-reads written   : 316,000,000
-spots read      : 163,313,360
-reads read      : 326,626,720
-reads written   : 326,626,720
-
-real    145m50.662s
-user    95m25.524s
-sys     35m11.418s
 ```
 
 Since reference genome for this species of _Arabidopsis_ is [available](https://www.ncbi.nlm.nih.gov/pubmed/27671113), we will use it as reference. We will have to download the genome from the database
@@ -81,129 +53,6 @@ gunzip Arabidopsis_halleri.Ahal2.2.dna.toplevel.fa.gz
 
 These datasets are all we need to get started. Although, the SRA download through `prefetch` is faster, it takes long time for converting `sra` file to `fastq` using `fastq-dump`. Alternatively, you can obtain and download `fastq` files directly form [European Nucleotide Archive (ENA)](https://www.ebi.ac.uk/ena/data/view/PRJEB18647). The links are saved [here](assets/ena-links.txt) if you want to use them instead (note the IDs are different, but they are from the same study and the results will be identical regardless of what data you use)
 
-```
- time wget -i download_files.txt
---2023-11-15 16:23:50--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/004/ERR1760144/ERR1760144_1.fastq.gz
-           => ‘ERR1760144_1.fastq.gz’
-Resolving ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)... 193.62.193.165
-Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
-Logging in as anonymous ... Logged in!
-==> SYST ... done.    ==> PWD ... done.
-==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/004/ERR1760144 ... done.
-==> SIZE ERR1760144_1.fastq.gz ... 10249479884
-==> PASV ... done.    ==> RETR ERR1760144_1.fastq.gz ... done.
-Length: 10249479884 (9.5G) (unauthoritative)
-
-ERR1760144_1.fastq.gz             100%[=============================================================>]   9.54G  25.4MB/s    in 7m 30s
-
-2023-11-15 16:31:23 (21.7 MB/s) - ‘ERR1760144_1.fastq.gz’ saved [10249479884]
-
---2023-11-15 16:31:23--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/004/ERR1760144/ERR1760144_2.fastq.gz
-           => ‘ERR1760144_2.fastq.gz’
-Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
-Logging in as anonymous ... Logged in!
-==> SYST ... done.    ==> PWD ... done.
-==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/004/ERR1760144 ... done.
-==> SIZE ERR1760144_2.fastq.gz ... 10521965694
-==> PASV ... done.    ==> RETR ERR1760144_2.fastq.gz ... done.
-Length: 10521965694 (9.8G) (unauthoritative)
-
-ERR1760144_2.fastq.gz             100%[=============================================================>]   9.80G  25.5MB/s    in 7m 12s
-
-2023-11-15 16:38:37 (23.2 MB/s) - ‘ERR1760144_2.fastq.gz’ saved [10521965694]
-
---2023-11-15 16:38:37--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/005/ERR1760145/ERR1760145_1.fastq.gz
-           => ‘ERR1760145_1.fastq.gz’
-Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
-Logging in as anonymous ... Logged in!
-==> SYST ... done.    ==> PWD ... done.
-==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/005/ERR1760145 ... done.
-==> SIZE ERR1760145_1.fastq.gz ... 14942927166
-==> PASV ... done.    ==> RETR ERR1760145_1.fastq.gz ... done.
-Length: 14942927166 (14G) (unauthoritative)
-
-ERR1760145_1.fastq.gz             100%[=============================================================>]  13.92G  9.85MB/s    in 15m 45s
-
-2023-11-15 16:54:24 (15.1 MB/s) - ‘ERR1760145_1.fastq.gz’ saved [14942927166]
-
---2023-11-15 16:54:24--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/005/ERR1760145/ERR1760145_2.fastq.gz
-           => ‘ERR1760145_2.fastq.gz’
-Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
-Logging in as anonymous ... Logged in!
-==> SYST ... done.    ==> PWD ... done.
-==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/005/ERR1760145 ... done.
-==> SIZE ERR1760145_2.fastq.gz ... 15281008374
-==> PASV ... done.    ==> RETR ERR1760145_2.fastq.gz ... done.
-Length: 15281008374 (14G) (unauthoritative)
-
-ERR1760145_2.fastq.gz             100%[=============================================================>]  14.23G  25.1MB/s    in 12m 12s
-
-2023-11-15 17:06:40 (19.9 MB/s) - ‘ERR1760145_2.fastq.gz’ saved [15281008374]
-
---2023-11-15 17:06:40--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/006/ERR1760146/ERR1760146_1.fastq.gz
-           => ‘ERR1760146_1.fastq.gz’
-Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
-Logging in as anonymous ... Logged in!
-==> SYST ... done.    ==> PWD ... done.
-==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/006/ERR1760146 ... done.
-==> SIZE ERR1760146_1.fastq.gz ... 13490616555
-==> PASV ... done.    ==> RETR ERR1760146_1.fastq.gz ... done.
-Length: 13490616555 (13G) (unauthoritative)
-
-ERR1760146_1.fastq.gz             100%[=============================================================>]  12.56G  24.2MB/s    in 9m 33s
-
-2023-11-15 17:16:16 (22.4 MB/s) - ‘ERR1760146_1.fastq.gz’ saved [13490616555]
-
---2023-11-15 17:16:16--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/006/ERR1760146/ERR1760146_2.fastq.gz
-           => ‘ERR1760146_2.fastq.gz’
-Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
-Logging in as anonymous ... Logged in!
-==> SYST ... done.    ==> PWD ... done.
-==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/006/ERR1760146 ... done.
-==> SIZE ERR1760146_2.fastq.gz ... 13811779435
-==> PASV ... done.    ==> RETR ERR1760146_2.fastq.gz ... done.
-Length: 13811779435 (13G) (unauthoritative)
-
-ERR1760146_2.fastq.gz             100%[=============================================================>]  12.86G  21.7MB/s    in 9m 59s
-
-2023-11-15 17:26:17 (22.0 MB/s) - ‘ERR1760146_2.fastq.gz’ saved [13811779435]
-
---2023-11-15 17:26:17--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/007/ERR1760147/ERR1760147_1.fastq.gz
-           => ‘ERR1760147_1.fastq.gz’
-Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
-Logging in as anonymous ... Logged in!
-==> SYST ... done.    ==> PWD ... done.
-==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/007/ERR1760147 ... done.
-==> SIZE ERR1760147_1.fastq.gz ... 13145459292
-==> PASV ... done.    ==> RETR ERR1760147_1.fastq.gz ... done.
-Length: 13145459292 (12G) (unauthoritative)
-
-ERR1760147_1.fastq.gz             100%[=============================================================>]  12.24G  25.2MB/s    in 8m 49s
-
-2023-11-15 17:35:08 (23.7 MB/s) - ‘ERR1760147_1.fastq.gz’ saved [13145459292]
-
---2023-11-15 17:35:08--  ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR176/007/ERR1760147/ERR1760147_2.fastq.gz
-           => ‘ERR1760147_2.fastq.gz’
-Connecting to ftp.sra.ebi.ac.uk (ftp.sra.ebi.ac.uk)|193.62.193.165|:21... connected.
-Logging in as anonymous ... Logged in!
-==> SYST ... done.    ==> PWD ... done.
-==> TYPE I ... done.  ==> CWD (1) /vol1/fastq/ERR176/007/ERR1760147 ... done.
-==> SIZE ERR1760147_2.fastq.gz ... 13505753599
-==> PASV ... done.    ==> RETR ERR1760147_2.fastq.gz ... done.
-Length: 13505753599 (13G) (unauthoritative)
-
-ERR1760147_2.fastq.gz             100%[=============================================================>]  12.58G  20.1MB/s    in 9m 55s
-
-2023-11-15 17:45:05 (21.6 MB/s) - ‘ERR1760147_2.fastq.gz’ saved [13505753599]
-
-FINISHED --2023-11-15 17:45:05--
-Total wall clock time: 1h 21m 15s
-Downloaded: 8 files, 98G in 1h 20m 58s (20.6 MB/s)
-
-real    81m16.087s
-user    0m29.558s
-sys     3m51.530s
-```
 
 ## Organization
 
