@@ -8,7 +8,7 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-Here we will be using a set of predicted proteins from a plant parasitic nematode genome to predict protein secretion, transmembrane domains, and subcellular localization.
+Here we will be using a set of predicted proteins from a plant parasitic nematode genome to predict protein secretion, transmembrane domains, and subcellular localization. The examples below should be useful for any set of proteins. 
 
 **Software used in this tutorial**
 - SignalP 6.0 [Teufel et al., 2022](https://www.nature.com/articles/s41587-021-01156-3)
@@ -46,7 +46,7 @@ SIGNALP_DIR=$(python3 -c "import signalp; import os; print(os.path.dirname(signa
 ### Run Signalp 6.0
 ```
 #run signalp 6 in a compute node
-echo "source signalp6_env/bin/activate; signalp6 --fastafile YourSpecies_proteins.fasta --organism euk --output_dir Signalp6_out  --format txt --mode fast --model_dir signalp6_fast/signalp-6-package/models/" >signalp.sh
+echo "source ../signalp6_env/bin/activate; signalp6 --fastafile YourSpecies_proteins.fasta --organism euk --output_dir Signalp6_out  --format txt --mode fast --model_dir signalp-6-package/models/" >signalp.sh
 ```
 
 **Excerpt of results from Signalp 6.0** 
@@ -89,7 +89,7 @@ continued ...
 # create a faidx index of our proteins to subtract the signal peptide from the fasta of secreted proteins
 ml samtools;samtools faidx YourSpecies_proteins.fasta
 
-#creates a small script to extract each secreted protein with the signal peptide truncated from the sequnce.  
+#creates a small script to extract each secreted protein with the signal peptide truncated from the sequnce, if your fasta header was only one string.   
 awk '$2=="SP"{print $1"\t"$7}'  Signalp6_out/prediction_results.txt|sed -e 's/\.//g' -e 's/-/\t/g' |awk -F"\t" '{print "samtools faidx YourSpecies_proteins.fasta "$1":"$3"- >>SignalPeptidesSubtracted6.fasta"}' >ExtractSignalPContainingProts6.sh
 
 sh ExtractSignalPContainingProts6.sh
@@ -194,12 +194,12 @@ Localizer is a highly specialized software for plants and only predicts chlorpla
 **Install Localizer**
 ```
 git clone https://github.com/JanaSperschneider/LOCALIZER.git
-tar -xvf LOCALIZER-1.0.5.tar.gz
-cd LOCALIZER-1.0.5/Scripts
+cd LOCALIZER/Scripts
 
-
+#make a virtual python environment to install to.
 python -m venv localizer
 source localizer/bin/activate
+
 
 tar xvf emboss-latest.tar.gz
 cd EMBOSS-6.5.7/
@@ -213,6 +213,9 @@ unzip weka-3-6-12.zip
 ```
 ### Run Localizer 1.0.5
 ```
+#softlink the trimmed proteins
+ln -s ../../SignalPeptidesSubtracted6.fasta
+
 echo "source localizer/bin/activate; LOCALIZER.py -e -M -o SP6Out -i SignalPeptidesSubtracted6.fasta ">localizerSP6.sh
 ```
 
@@ -257,13 +260,13 @@ cd deeploc2_package
 pip install . --user
 
 ```
-### Run deeploc2 -- 2 runs: one on subtracted SP proteins, and one on unmodified proteins.
+### Run Deeploc2 -- 2 runs: one with a fast analysis one with am more accurate analysis.
 ```
-deeploc2 -f SignalPeptidesSubtracted6.fasta -o Signap6Accurate -m Fast
-deeploc2 -f YourSpecies_proteins.fasta -o AllProteins -m Fast
-
-
+#note that this is only going to run on proteins that are secreted, if you want to localize non-secreted proteins then use your entire protein fasta file to run with Deeploc2.
+deeploc2 -f SignalPeptidesSubtracted6.fasta -o Signalp6Accurate -m Accurate
+deeploc2 -f SignalPeptidesSubtracted6.fasta -o Signalp6Fast -m Fast
 ```
+
 **Excerpt of results from Deeploc 2.0**
 ```
 Protein_ID,Localizations,Signals,Cytoplasm,Nucleus,Extracellular,Cell membrane,Mitochondrion,Plastid,Endoplasmic reticulum,Lysosome/Vacuole,Golgi apparatus,Peroxisome
