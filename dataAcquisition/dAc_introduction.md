@@ -19,6 +19,7 @@ Upon completion of this section on experimental design the learner will be able 
 
 
 ## Index
+* <span style="color:lightblue">Edirect tool</span>
 
 * <span style="color:lightblue">File Transfer</span>
   * [File Transfer using wget](/fileTransfer/downloading-files-via-wget.md)
