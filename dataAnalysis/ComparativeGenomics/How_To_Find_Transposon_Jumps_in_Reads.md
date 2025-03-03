@@ -1,58 +1,61 @@
 ---
 title: How to assess structural variation in your genome, and identify jumping transposons
 layout: single
+author: Rick Masonbrink
+author_profile: true
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
+### Introduction
+Genomic structural variation plays a major role in genome evolution and function, influencing genetic diversity, disease susceptibility, and adaptation. Among this variation, transposable elements (TEs) are particularly intriguing due to their ability to transpose and duplicate within a genome, potentially disrupting genes or regulatory regions. This tutorial provides a step-by-step guide to assessing structural variation in your genome using SVIM and identifying transposons that have recently jumped. You will learn how to:
+
+* Prepare input data for SVIM analysis.
+* Map long reads to your genome.
+* Run SVIM to detect structural variants.
+* Compare SVIM output with repeat annotations to identify TE activity.
 
 ### Prerequisites
-Data
-* An annotated genome
-* Long reads
-* Repeat annotation
 
-Software
-* minimap2
-* samtools
-* bedtools -- for comparisons only
-* tabix -- for visualization only
+**Data Requirements**
+* An annotated genome
+* Long read sequencing data
+* A repeat annotation for your genome
+
+**Software**
+* minimap2 for read mapping
+* samtools for sorting and indexing BAM files
+* bedtools for comparisons of genomic coordinates
+* tabix for visualization
 
 
 ### Installation
-```
+```sh
 /work/gif/remkv6/USDA/04_TEJumper
 conda create -n svim_env --channel bioconda svim
 source activate svim_env
 ```
 
-### Map your long reads to your genome with minimap
+### Mapping Long Reads to the Genome
 
-My directory locale
-```
-/work/gif/remkv6/USDA/04_TEJumper
-```
-
-Create the temp folders for samtools
-```
+Before mapping, create the temp folders for samtools
+```bash
 for f in *fastq; do mkdir ${f%.*}tmp; done
 ```
-Map the reads to your genome with minimap, sort, convert to bam, and index with samtools
-```
-ml minimap2;ml samtools;minimap2 -a -x map-ont MindFlayergenome.fasta EvilPowers_1_1fastq/EvilPowers1_1.fastq| samtools sort -T EvilPowers_1_1fastq/EvilPowers1_1tmp -o EvilPowers_1_1fastq/EvilPowers1_1.sorted.bam ;samtools index EvilPowers_1_1fastq/EvilPowers1_1.sorted.bam
-ml minimap2;ml samtools;minimap2 -a -x map-ont MindFlayergenome.fasta EvilPowers_1_2fastq/EvilPowers1_2.fastq| samtools sort -T EvilPowers_1_2fastq/EvilPowers1_2tmp -o EvilPowers_1_2fastq/EvilPowers1_2.sorted.bam ;samtools index EvilPowers_1_2fastq/EvilPowers1_2.sorted.bam
-ml minimap2;ml samtools;minimap2 -a -x map-ont MindFlayergenome.fasta EvilPowers_2_1fastq/EvilPowers2_1.fastq| samtools sort -T EvilPowers_2_1fastq/EvilPowers2_1tmp -o EvilPowers_2_1fastq/EvilPowers2_1.sorted.bam ;samtools index EvilPowers_2_1fastq/EvilPowers2_1.sorted.bam
-ml minimap2;ml samtools;minimap2 -a -x map-ont MindFlayergenome.fasta EvilPowers_2_2fastq/EvilPowers2_2.fastq| samtools sort -T EvilPowers_2_2fastq/EvilPowers2_2tmp -o EvilPowers_2_2fastq/EvilPowers2_2.sorted.bam ;samtools index EvilPowers_2_2fastq/EvilPowers2_2.sorted.bam
+**Mapping Reads with minimap2 and processing with samtools**
+The following command maps reads to the genome, converts the files to bam, and indexes them. 
+```sh
+minimap2 -a -x map-ont MindFlayergenome.fasta EvilPowers_1_1fastq/EvilPowers1_1.fastq | samtools sort -T EvilPowers_1_1fastq/EvilPowers1_1tmp -o EvilPowers_1_1fastq/EvilPowers1_1.sorted.bam; samtools index EvilPowers_1_1fastq/EvilPowers1_1.sorted.bam
 ```
 
 ### Run SVIM on your mapped reads
-My directory locale
-```
+Navigate to your working directory
+```bash
 /work/gif/remkv6/USDA/04_TEJumper
 ```
 Run SVIM
-```
+```bash
 for f in *bam; do echo "ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04_Pseudogenome/ "$f" MindFlayergenome.fasta";done >svim.sh
 ```
 <details>
@@ -68,40 +71,55 @@ ml miniconda3; source activate svim_env; svim alignment /work/gif/remkv6/USDA/04
 ### Understanding SVIM output
 ![SVIM Structural Variation Classes](../../assets/SVclasses.png)
 
-This is a fantastic illustration of SVIM output [source](https://github.com/eldariont/svim) . Within your candidates/ and signatures/ folders you will have bed files corresponding to each of these different types. While transposons may be associated with insertions and deletions, the other four categories can provide a clearer picture of genome source and destination for these jumping genes.
+This is a fantastic illustration of SVIM output [source](https://github.com/eldariont/svim). Within your candidates/ and signatures/ folders you will have bed files corresponding to each of these different types. While transposons may be associated with insertions and deletions, the other four categories can provide a clearer picture of genome source and destination for these jumping genes.
 
 
-### Compare SVIM output with Repeat annotation and build TE jumping candidates
+### Identifying TE Activity
+**Here we will compare SVIM output with the genomic repeat annotation to build TE jumping candidates**
 
 Move to output directory (signatures have a higher confidence than the candidates)
-```
+
+```bash
 /work/gif/remkv6/USDA/04_TEJumper/signatures
 ```
-Softlink the repeat annotation
-```
+
+Softlink the repeat annotation. I used an existing RepeatModeler/RepeatMasker gff3. 
+```bash
 ln -s /work/gif/remkv6/04_DovetailMindFlayerGenome/49_RenameChromosomes/01_Transfer2Box/RepeatMaskerFormatted.gff3
 ```
-Identify repeats that overlap with these structural variants. Unless your genome is a model, this takes a little guesswork and manual assessment of duplication associations with TEs. Start by taking a look at overlaps between your SVIM bed files and your transposon annotations.  Ideally I am looking for a complete duplication source and destination overlap with the same type of repeat. This doesnt happen very often with my dataset, so I concatenated all of the bed files.
 
-I can look directly at interspersed duplication overlaps with repeats
-```
+Identify repeats that overlap with these structural variants. Unless your genome is a model, this takes a little guesswork and manual assessment of duplication associations with TEs. Start by taking a look at overlaps between your SVIM bed files and your transposon annotations.  Ideally you are looking for a complete duplication source and destination overlap with the same type of repeat. This doesnt happen very often with this dataset, so I concatenated all of the SVIM bed files.
+
+Here use bedtools to find overlaps between structural variants and transposons.
+```sh
 ml bedtools2
 bedtools intersect -wo -f .2 -a dup_int.bed -b RepeatMaskerFormatted.gff3 |less -S
-````
-In my dataset, TE jumps were not that plentiful, so I concatenated all bed files in attempt to find the goal I mention above (complete duplication source and destination overlap). I remove variant events that are associated with supplemental alignments and remove most of the short structural variants to limit the noisiness of the data.
-
-Filter the bed files
 ```
+In my dataset, TE jumps were not that plentiful, so I concatenated all bed files in attempt to find the goal I mention above (complete duplication source and destination overlap). Here, I remove variant events that are associated with supplemental alignments and remove most of the short structural variants to limit the data noise.
+
+Filter the bed files for size of duplication and remove supplemental alignments. 
+```bash
 cat *bed |grep -v "suppl" |awk '($3-$2)>1000' >LargeEverythingNoSuppl.bed
 ```
 Examine variant and repeat overlaps with at least 20% overlap. Varients only from non-supplmental alignments and above 1kb.
-```
+```sh
 bedtools intersect -wo -f .2 -a LargeEverythingNoSuppl.bed -b RepeatMaskerFormatted.gff3|less -S
 ```
-What is my most actively modified transposon/repeat?
-```
+
+##### What is my most actively modified transposon/repeat?
+To determine which transposon family exhibits the most structural modifications:
+```sh
 ml bedtools2
-bedtools intersect -wo -f .2 -a LargeEverythingNoSuppl.bed -b RepeatMaskerFormatted.gff3 |sort -k1,1V -k2,3nr |cut -f 15 |sed 's/:/\t/g' |sed 's/\.\./\t/g' |cut -f 2 |sort|uniq -c |sort -k1,1nr  |less
+bedtools intersect -wo -f .2 -a LargeEverythingNoSuppl.bed -b RepeatMaskerFormatted.gff3 \
+  | sort -k1,1V -k2,3nr \
+  | cut -f 15 \
+  | sed 's/:/\t/g' \
+  | sed 's/\.\./\t/g' \
+  | cut -f 2 \
+  | sort \
+  | uniq -c \
+  | sort -k1,1nr \
+  | less
 ```
 
 <details>
@@ -159,9 +177,12 @@ bedtools intersect -wo -f .2 -a LargeEverythingNoSuppl.bed -b RepeatMaskerFormat
 </details>
 
 Since rnd-5_family-3824 is the most abundantly modified, lets look at all possible modified areas with this repeat.
-```
-bedtools intersect -wo -f .2 -a LargeEverythingNoSuppl.bed -b RepeatMaskerFormatted.gff3 |grep "rnd-5_family-3824" |sort|uniq|less -S
-rnd-5_family-3824
+```sh
+bedtools intersect -wo -f .2 -a LargeEverythingNoSuppl.bed -b RepeatMaskerFormatted.gff3 \
+  | grep "rnd-5_family-3824" \
+  | sort \
+  | uniq \
+  | less -S
 ```
 
 <details>
@@ -187,7 +208,7 @@ Create sorted Tabix indices of each bed file.
 ml tabix; for f in *bed; do sort -k1,1V -k2,3n $f >${f%.*}sorted.bed;bgzip ${f%.*}sorted.bed; tabix -p bed ${f%.*}sorted.bed.gz; done
 ```
 
-Viewing your best candidates visually is probably the best way to determine if your TE jump is real. There are a few options to do this.  If your genome is hosted online in JBrowse. Go there, select the appropriate genome from "Genome", then select "Track" and "open track file or URL".  There you should select files and upload your bed.gz files and your .tbi indices. If you do not have your genome in an online browser, you can still view by downloading JBrowse desktop [here](https://jbrowse.org/blog/).
+Viewing your best candidates visually is probably the best way to determine if your TE jump is real. There are a few options to do this.  If your genome is hosted online in JBrowse. Go there, select the appropriate genome from "Genome", then select "Track" and "open track file or URL".  There you should select files and upload your bed.gz files and your .tbi indices. If you do not have your genome in an online browser, you can still view by downloading JBrowse desktop [here](https://jbrowse.org/blog/) or with Integrated Genomics Viewer (https://igv.org/doc/desktop/)
 
 To use JBrowse desktop with your custom genome, you will have to create all of the proper indices. Note: getting the sorting right on gene.gff files can be difficult
 * .fai index of genome
@@ -207,6 +228,10 @@ An example of a putative deletion caused by a transposon (excision in the reads/
 Chromosome_9   2720515 2729040 DEL;1;None;None 1.0     [Chromosome_9|2720515|2729040|DEL;cigar|68340730-b565-45db-9f86-4d2bc128e721]
 ```
 ![Deletion Borderd by TE_00000734_LTR](../../assets/TEJumps.png)
+
+### Conclusion 
+
+By following this workflow, you can effectively analyze structural variation in your genome and identify actively jumping transposons. This approach combines SVIM’s powerful variant detection with repeat annotation data to highlight regions of potential TE activity, providing valuable insights into genome evolution and modification. 
 
 
 
