@@ -133,6 +133,8 @@ header:
 * [Gene Orthology, Synteny, and Visualzation with Orthofinder, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/OrthofinderSynteny.md)
 * [Gene Overlap Significance Testing with R Gene_overlap Package](../dataAnalysis/ComparativeGenomics/Gene_Category_Overlap_Fishers_exact_testing.md)  
 * [Phylostratiophraphy:Determining the LCA of all Genes in a Genome](../dataAnalysis/ComparativeGenomics/phylostratr.md)
+* [Functional Gene Enrichment Using ClusterProfiler v4.14.4](dataAnalysis/ComparativeGenomics/Gene_enrichment_using_ClusterProfiler.md)
+
 
 
 # [<span style="color:black">Variant Discovery</span>](../dataAnalysis/VariantCalling/variant-calling-index.md)
@@ -164,5 +166,5 @@ header:
 * [Setting up an R and RStudio Environment](../dataWrangling/R/r-setup.md)
 * [Creating Boxplots in R](../dataWrangling/R/generate-boxplots.md)
 * [Creating Heatmaps in R](../dataWrangling/R/generate_heatmaps.md)
-* [Visulaize Gaps in the Genome assemblies](../dataWrangling/R/visualize-gaps-in-genomes.md)
-* [Visulaize Chromosome Bands using Ideogram](../dataVisualization/Plotly/01-ideogram-chromosome-bands.md)
+* [Visualize Gaps in the Genome assemblies](../dataWrangling/R/visualize-gaps-in-genomes.md)
+* [Visualize Chromosome Bands using Ideogram](../dataVisualization/Plotly/01-ideogram-chromosome-bands.md)
