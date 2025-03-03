@@ -133,7 +133,7 @@ header:
 * [Gene Orthology, Synteny, and Visualzation with Orthofinder, Iadhore and Circos](../dataAnalysis/ComparativeGenomics/OrthofinderSynteny.md)
 * [Gene Overlap Significance Testing with R Gene_overlap Package](../dataAnalysis/ComparativeGenomics/Gene_Category_Overlap_Fishers_exact_testing.md)  
 * [Phylostratiophraphy:Determining the LCA of all Genes in a Genome](../dataAnalysis/ComparativeGenomics/phylostratr.md)
-* [Functional Gene Enrichment Using ClusterProfiler v4.14.4](dataAnalysis/ComparativeGenomics/Gene_enrichment_using_ClusterProfiler.md)
+* [Functional Gene Enrichment Using ClusterProfiler v4.14.4](../dataAnalysis/ComparativeGenomics/Gene_enrichment_using_ClusterProfiler.md)
 
 
 
