@@ -20,5 +20,5 @@ In [comparative genomics](https://www.nature.com/scitable/knowledge/library/comp
 * [Gene Orthology, Synteny, and Visualization with Orthofinder, Iadhore, and Circos using a large genome](OrthofinderSynteny_Update.md)
 * [Gene Overlap Significance Testing with R Gene_overlap Package](Gene_Category_Overlap_Fishers_exact_testing.md)
 * [Phylostratiography: determining the LCA of all genes in a genome](phylostratr.md)
-* [Functional Gene Enrichment Using ClusterProfiler v4.14.4](dataAnalysis/ComparativeGenomics/Gene_enrichment_using_ClusterProfiler.md)
+* [Functional Gene Enrichment Using ClusterProfiler v4.14.4](Gene_enrichment_using_ClusterProfiler.md)
 
