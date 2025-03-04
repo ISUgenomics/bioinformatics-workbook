@@ -101,7 +101,7 @@ Filter the bed files for size of duplication and remove supplemental alignments.
 ```bash
 cat *bed |grep -v "suppl" |awk '($3-$2)>1000' >LargeEverythingNoSuppl.bed
 ```
-Examine variant and repeat overlaps with at least 20% overlap. Varients only from non-supplmental alignments and above 1kb.
+Examine variant and repeat overlaps with at least 20% overlap. Variants only from non-supplemental alignments and variants above 1kb.
 ```sh
 bedtools intersect -wo -f .2 -a LargeEverythingNoSuppl.bed -b RepeatMaskerFormatted.gff3|less -S
 ```
