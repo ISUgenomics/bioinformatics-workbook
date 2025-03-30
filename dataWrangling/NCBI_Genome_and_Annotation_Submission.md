@@ -16,73 +16,91 @@ Depositing a genome and its gene annotation into NCBI ensures that it is accessi
 3. Submit sequencing to SRA - Each independent sequencing sample that is not a technical replicate will need to be deposited as a separate file. 
 4. Submit genome and annotation - Once the information for the previous submissions is complete, you should have all of the information you need to deposit your genome, annotation,assembled organellar genomes, and plasmids (if any).
 
+# Outline of NCBI submissions described here
+1. Bioproject creation
+2. Biosample creation 
+3. Genome-only submission (no gene annotation)
+4. Genome and gene annotation submission
+
 # Bioproject submission
 
-If you do not have one yet, you will need to create an account with NCBI for the submission.  Once that is accomplished you can go to "My submissions" and click on Bioproject at the top left of the window. 
+If you do not have an account with NCBI yet, you will need to create one for the submission. Once that is accomplished you can go to "My submissions" and click on Bioproject at the top left of the window. Then click the 'New submission' at the top left.
 
-The first tab to fill out is the "Submitter tab"
+The first tab to fill out is the 'SUBMITTER' tab
 
-![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BioprojectSubmitter.png)
+![](assets/NCBI_Genome_and_Annotation_Submission_Assets/SubmitterNoName.png)
 
 Since I created this genome and am submitting it, my submitter information is simple. This may become more complex if submitting for a group. 
 
-Then you will need to choose the type of data you will be submitting. Here we assembled a genome, so checking this box will give us the required options needed for later genome submission steps later. Then the scope of your sample, which often times for genome submissions the option checked is Monoisolate. We will also be needing locus tag prefixes to submit our annotation in a later step, so check this box.
+Then you will need to choose the type of data you will be submitting. Here we assembled a genome, so checking this box will give us the required options needed for later genome submission steps. Then you need to choose the scope of your sample, which is often a monoisolate for genome submissions. We will also be needing locus tag prefixes to submit our annotation in a later step, so check this box.
 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BioprojectProjectType.png)
 
-This takes you to the Target tab, where you will list the genus species of your organism and fill out one of the five options in the second line of boxes. The description is entirely optional, but including as much information as possible will help future users utilize your data in subsequent analyses. 
+This takes you to the 'TARGET' tab, where you will list the scientific name of your organism and fill out one of the five options in the second line of boxes. The description is entirely optional, but including as much information as possible will help future users utilize your data in subsequent analyses. 
 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BioprojectTarget.png)
 
-Then you will be taken to the General Info tab, where you will specify the release date of your data, add a public description, and the relevance of your genome. You'll have to answer a few questions about external links to your data, grants that funded your genome assembly/annotation, consortium associations and if you are using a data provider. 
+Then you will be taken to the 'GENERAL INFO' tab, where you will specify the release date of your data, add a public description, and select the relevance of your genome. You'll have to answer a few questions about external links to your data, grants that funded your genome assembly/annotation, consortium associations and if you are using a data provider. 
 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BioprojectGeneralInfo.png)
 
-The next tab is BIOSAMPLE, which is where you will list the previously created biosample accessions that are associated with your sequencing data used to assemble the genome. In this case, I have not created my Biosample yet, so I leave the area blank. 
+The next tab is BIOSAMPLE, where you will list the previously created biosample accessions that are associated with the sequencing data used to assemble the genome. In this case, I have not created my Biosample yet, so I leave the area blank. If you do have previously submitted Biosamples, then add them here. 
 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BioprojectBiosample.png)
 
-The next tab is PUBLICATIONS, where you would list any composition associated with this genome and annotation.
+The next tab is PUBLICATIONS, where you would list any published composition associated with this genome and annotation.
 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BioprojectPublications.png)
 
-The last tab is REVIEW & SUBMIT. This is your last opportunity to change any of the information in your submission, as after it is accepted you will have to email NCBI to make changes. 
+The last tab is 'REVIEW & SUBMIT'. This is your last opportunity to change any of the information in your submission, as after it is accepted you will have to email NCBI to make changes. 
 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BioprojectReviewAndSubmit.png)
+
 
 # Biosample
 
 Creating a Biosample is the standard next step, essentially to describe the organism/organisms that were sequenced. The Biosample exists to link this description with your unique Bioproject, sequence read archive(SRA), genome, etc.
 
-Starting at 'My submissions' you should click Biosample in the top left box. Then select 'New submission' at the top left. Once there you will have to fill out the SUBMITTER information if it is different from your bioproject submission. 
+Starting at 'My submissions' you should click Biosample in the top left box. Then select 'New submission' at the top left. Once there you will have to fill out the 'SUBMITTER' information if it is different from your bioproject submission. 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/SubmitterNoName.png)
 
-Then, in the GENERAL INFO tab, you will need to choose a release date and whether you want to submit a single biosample or multiple.
+Then, in the 'GENERAL INFO' tab, you will need to choose a release date and whether you want to submit a single biosample or multiple.
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BiosampleGeneralInformation.png)
-Then you get to the SAMPLE TYPE tab, which gives you lots of options for packages to submit your genome. Choosing a package that best represents your sample will require reading about each package, but here I will be using Invertebrate as an example. 
+
+Then you get to the SAMPLE TYPE tab, which gives you lots of options for packages to submit your genome. Choosing a package that best represents your sample will require reading about each package, but here I will be using the Invertebrate package as an example. 
+
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BiosampleSampleType.png)
+
 Pressing continue will move you to the 'ATTRIBUTES' tab, where you will be given the option to use a built-in editor to enter your data one at a time, or download a TSV or Excel file for editing multiple samples simultaneously. 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BiosampleAttributes.png)
+
 I submitted multiple biosamples for this project using the Excel file download. 
+
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BiosampleExcel.png)
 
-Then you will be given one final time to review the biosample related information before it cannot be changed, short of an email to NCBI. If the input fits the expected format, your submission should be accepted in a few minutes to at most an hour. 
+Then you will be given one final time to review the biosample related information before it cannot be changed, short of an email to NCBI. In my experience, if the input fits the expected format, your submission should be accepted in a few minutes. 
 
 # Genome Only
 
-To deposit a genome you will need to go back to 'My Submissions' and then click Genome in the top left corner. After that, you will see a blue 'New Submission' that allow you to start your submission.   
-You will start with the familiar Submitter tab that you've previously seen. 
+A genome-only submission is commonly used when a gene annotation is not yet available or is to remain private. Uploading your genome-only sequence is easier than uploading a genome and gene annotation. The benefits of a genome-only submission is that if your assembly is in pseudomolecules/chromosomes then NCBI to annotate your assembly, with chromosome-level assemblies being prioritized.  
+
+To deposit a genome you will need to go back to 'My Submissions' and then click Genome in the box at the top left corner. After that, you will see a blue 'New Submission' that allow you to start your Genome submission.   
+You start with the familiar Submitter tab that you've seen previously. 
+
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/SubmitterNoName.png)
 
 Next is the GENERAL INFO tab, where you will be asked a lot of information about your assembly and how it associates with your Bioproject and Biosamples. Since we have already submitted our Bioproject and Biosample, we can move forward by adding these accessions.
+
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/GenomeGeneralInfo.png)
+
 PRJNA1153013 is the assigned Bioproject accession and SAMN43384812 is the assigned Biosample accession.
 
 
-Next you have to choose the release date, which I always put as the furthest out I can (four years). This way my data will stay private long enough for me publish the research it is used in. Once the bioproject is published in a paper, all of the associated data is released.\
+Next you have to choose the release date, which I always put as the furthest out I can (four years). This way my data will stay private long enough for me publish the research it is used in. Once the bioproject is published in a paper, all of the associated data is released.
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/GenomeReleaseDate.png)
 
-Then you move to the Genome info tab, where you will need to know the various details of your data and assembly methods. I have an approximate date that the assembly was done put in the software title and version for my assembly method.  I named my genome assembly, as this is the third update to this genome. You need to compute the coverage of your reads to your genome size.  I used nanopore reads to assemble the genome, so I will need to get the entire length of those reads used for assembly.
+Then you move to the 'GENOME INFO' tab, where you will need to input the various details of your data and assembly methods. I have an approximate date that the assembly was done, put in the software title, and version for my assembly method. I named my genome assembly, as this is the third update to this genome. 
+Then you will need to compute the coverage of your reads to your genome size. I used nanopore and pacbio reads to assemble the genome, so I will need to get the entire length of those reads used for assembly.
 
 **Compute genome coverage**
 One of the first questions is to estimate the coverage of your reads to your genome assembly. This can be calculated by summing the total length of your input sequence reads and dividing by total genome size.
@@ -101,10 +119,10 @@ I then fill out the sequencing technology of the reads used for assembly of the 
 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/GenomeGenomeInfo.png)
 
-There are now some follow-up questions that apply to a select number of genomes
+There are now some follow-up questions that apply to a select number of genomes:
 
-* Did you include the entire genome in your submission?
-* Is this the final version? So, will you be updating this genome any time in the near future? I will be updating this genome again, so I selected "no" here.
+* Did you attempt to include the entire genome in your submission? Or is it only partial coverage of the genome?
+* Is this the final version of your genome? So, will you be updating this genome any time in the near future? I will be updating this genome again, so I selected "no" here.
 * Is it a de novo assembly? Did you assemble the genome from reads, or were these reference guided assemblies, etc? 
 * Is this genome submission an update of an existing genome submission? There are older versions of this genome that this genome will replace, so I selected yes here. 
 
