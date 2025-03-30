@@ -79,7 +79,7 @@ The last tab is 'REVIEW & SUBMIT'. This is your last opportunity to change any o
 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/BioprojectReviewAndSubmit.png)
 
-For detailed guidelines, refer to the [NCBI BioProject Submission Guide](https://www.ncbi.nlm.nih.gov/bioproject/docs/submission/)
+For detailed guidelines, refer to the [NCBI BioProject Submission Guide](https://www.ncbi.nlm.nih.gov/sra/docs/submitbio/#bioproject-submissions-guideline)
 
 # Biosample
 
@@ -120,7 +120,7 @@ I submitted multiple biosamples for this project using the Excel file download.I
 
 Then you will be given one final time to review the biosample related information before it cannot be changed, short of an email to NCBI. In my experience, if the input fits the expected format, your submission should be accepted in a few minutes. 
 
-For more information, visit the [NCBI BioSample Submission Guide](https://www.ncbi.nlm.nih.gov/biosample/docs/submission/)
+For more information, visit the [NCBI BioSample Submission Guide](https://www.ncbi.nlm.nih.gov/sra/docs/submitbio/#biosample-submissions-guidelines)
 
 # Genome Only
 
@@ -235,7 +235,7 @@ In my case all of my gaps were 500bp.
 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/GenomeGapsAnalysis2.png)
 
-If they are not an estimated size then put no and proceed. If your assembly was an all-in-one software from reads to pseudomolecule, then you will likely have estimated gap sizes. 
+If they are not an estimated size then put no and proceed. If your assembly was an all-in-one software from reads to pseudomolecule, then you will likely have estimated gap sizes. Note that if your gaps are many different sizes, then you likely have estimated gap sizes.
 
 ![](assets/NCBI_Genome_and_Annotation_Submission_Assets/GenomeGapsAnalysis3.png)
 
@@ -274,7 +274,7 @@ For comprehensive guidance, refer to the [NCBI Genome Submission Guide](https://
 
 To deposit an annotation with a genome the process is more complex and requires modification of your genome fasta file and genome gff3 file. 
 
-There is software specifically designed to convert your genome and gff3 into the file format NCBI require for submitting an annotation. The next step is converting your gff3 and annotation into the desired format (.sqn), which involves using the NCBI software table2asn. Table2asn is an executable file that you can download from NCBI. There is some explanation on how it works and the download link here:  https://www.ncbi.nlm.nih.gov/genbank/table2asn/?utm_source=ncbi_insights&utm_medium=referral&utm_campaign=table2asn-updated-20230706
+There is software specifically designed to convert your genome and gff3 into the file format NCBI requires for submitting an annotation. The next step is converting your gff3 annotation and genome into the desired format (.sqn), which involves using the NCBI software table2asn. Table2asn is an executable file that you can download from NCBI. There is some explanation on how it works and the download link is on this page:  https://www.ncbi.nlm.nih.gov/genbank/table2asn/?utm_source=ncbi_insights&utm_medium=referral&utm_campaign=table2asn-updated-20230706
 
 In order to use this software you will need to make a template with the metadata for your genome here:  https://submit.ncbi.nlm.nih.gov/genbank/template/submission/
 
@@ -338,6 +338,17 @@ Once you've made your template and the received the locus tag from your Bioproje
 
 ./table2asn -t template.sbt -i TN10GenomeSNPFixedFinal.fasta -f SortedTN10FinalManualAnnotation.gff3 -gaps-unknown 500 -M n -o annotation.sqn -locus-tag-prefix ACNJWR -Z -usemt many -N 51029 -y "This is a consensus annotation using long and short RNA sequence reads"
 ```
+-t is the template file you made online earlier
+-i is the genome
+-f is the gff3 annotation
+-gaps-unknown is to designate that my gaps are not estimated sizes and not the usual 100bp gap space that NCBI expects.
+-M  is to designate your submission as a genome (n) or a transcriptome (t).
+-o is the name of the .sqn output
+-locus-tag-prefix is the assigned bioproject locus tag from creating a bioproject
+-Z add a discrepancy report to the output, annotating errors in the conversion
+-usemt tells the computer to use one or many threads
+-N is the taxonID for your species' genome
+-y is a comment to add more detail to your submission
 
 This script will produce four files. 
 * annotation.stats -- overview of errors in annotation
