@@ -143,7 +143,10 @@ for f in ../WhiteAbalone_wild/*gz; do ln -s $f; done
 #copy and paste aspera key to  file
 vi aspera.openssh
 
-module load aspera/3.7.7
+#At Iowa State we have aspera installed into our HPC data transfer nodes. Loading a module is necessary to run aspera in NOVADTN for example.   If you need to see if aspera is installed, run 
+
+which ascp 
+
 #transfer my data to ncbi with aspera
 ascp -i /work/GIF/archive1/Purcell/abalone/aspera.openssh -QT -l100m -k1 -d /work/GIF/archive1/Purcell/abalone/AbaloneWhiteWildUpload/ subasp@upload.ncbi.nlm.nih.gov:uploads/arnstrm@iastate.edu_EkuCUDRN
 ```
