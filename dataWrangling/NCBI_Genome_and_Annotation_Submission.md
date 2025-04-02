@@ -7,6 +7,9 @@ header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
+
+Depositing a genome and its gene annotation into NCBI ensures that it is accessible to the scientific community, is properly archived, and links the relative metadata. Submission typically involves preparing the sequence data, genome, gene annotation, and assembled organelle genomes. This tutorial combines multiple genomes, Biosamples, and Bioprojects from different species to illustrate a variety of steps.  Not every dataset will require all of these steps, but they are included here to provide a comprehensive guide. 
+
 - [Bioproject submission](#bioproject-submission)
     - [Bioproject - SUBMITTER](#bioproject---submitter)
     - [Bioproject - PROJECT TYPE](#bioproject---project-type)
@@ -46,7 +49,6 @@ header:
     - [Genome and Annotation - SUBMIT \& REVIEW](#genome-and-annotation---submit--review)
 - [Additional Resources](#additional-resources)
   
-Depositing a genome and its gene annotation into NCBI ensures that it is accessible to the scientific community, is properly archived, and links the relative metadata. Submission typically involves preparing the sequence data, genome, gene annotation, and assembled organelle genomes. This tutorial combines multiple genomes, Biosamples, and Bioprojects from different species to illustrate a variety of steps.  Not every dataset will require all of these steps, but they are included here to provide a comprehensive guide. 
 
 ### Prerequisites
 
