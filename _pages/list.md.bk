@@ -36,7 +36,7 @@ header:
     * [Create Index for All Worksheets](../dataWrangling/microsoftExcel/generate-index-sheet-linking-all-spreadsheets-in-excel.md)
  * Data Management
     * [Deposition of Data to NCBI SRA](../dataWrangling/NCBI_Data_Submission.md)
-
+    * [NCBI Deposition of Bioproject, Biosample, SRA, Genome, and Annotation](../dataWrangling/NCBI_Genome_and_Annotation_Submission.md)
 ### Data Analysis
   * Alignment
     * [Blast Command Line Basic Example](../dataAnalysis/blast/blastExample.md)

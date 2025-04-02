@@ -77,7 +77,7 @@ header:
   * [Merge two spreadsheets using a common column](../dataWrangling/microsoftExcel/Merge_two_spreadsheets_using_a_common_column_in_Excel.md)
 * <span style="color:black">Data Management</span>
   * [Deposition of Data to NCBI SRA](../dataWrangling/NCBI_Data_Submission.md)
-
+  * [NCBI Bioproject, Biosample, SRA, Genome and Annotation Submission](../dataWrangling/NCBI_Genome_and_Annotation_Submission.md)
 # [<span style="color:black">Bioinformatics Terminology</span>](../introduction/terminology_index.md)
 * [Reads, Contigs, Scaffolds and Chromosome](../introduction/dataTerminology.md)
 * [File Formats](../introduction/fileFormats.md)
