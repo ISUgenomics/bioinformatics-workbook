@@ -9,15 +9,25 @@ header:
 ---
 
 In this tutorial, we'll walk through extracting and assembling the mitochondrial genome of Dodonaea viscosa using Oxford Nanopore reads.
-We'll perform quality filtering, subset the reads, assemble multiple draft assemblies, then circularize and polish the best assembly.
+Measures are always taken to remove organelles prior to sequencing, though there are usually enough long reads to create single-contig, complete assemblies. To avoid confounding our assemblies, we will be first employ strategies to remove NUMTs (nuclear mitochondrial DNA segments) and NUMPTs (nuclear plastid DNA segments) from our reads.
+What Are NUMTs and NUPTs?
 
+* NUMTs (Nuclear Mitochondrial DNA) are segments of mitochondrial DNA that have been inserted into the nuclear genome and can vary greatly across species. These can be present in multiple copies with varying degrees of sequence divergence from the functional mitochondrial genome.
+* NUPTs (Nuclear Plastid DNA) are the plastid equivalent.
 
+Then I will show you how to install and assemble these reads with five different assemblers.
+- **Unicycler** – Works best with hybrid data, but in long-read-only mode may struggle with noisy reads and NUMTs when assembling small organellar genomes.
+- **Miniasm** – Assembles quickly but without error correction, so mitochondrial contigs may be fragmented or inaccurate without correction.
+- **Flye** – Probably the best at recovering circular mitochondrial genomes from whole-genome reads, even in the presence of NUMTs, due to good repeat handling and built-in polishing.
+- **Canu** – Accurate but much slower; assembles mitochondrial genomes well if coverage is high, can struggle with NUMTs.
+- **Raven** – Fast and memory-efficient; often produces clean mitochondrial contigs even from mixed read sets, though may miss complex repeats or low coverage regions.
+- 
 # Setup: Organize your workspace
 
-Where are your nuclear-targeted or other long reads?
+Where are your nuclear-targeted or other long reads? <br>
+I have a set of reads I have already been trimmed for adapters, sequence quality, and a minimum of 5kb in length.
 ```
-#both nanopore runs filtered for quality, adapters trimmed, and 5k length cutoff
-ln -s /work/gif3/sharu/viscosa/03_Porechop/trimmed_5kplus.fq
+/work/gif3/sharu/viscosa/03_Porechop/trimmed_5kplus.fq
 ```
 Where is your nuclear genome?
 ```
@@ -31,7 +41,7 @@ In what location is this analyis being performed?
 
 # Find related species with an assembled mitochondrial genome
 
-To aid in assembly and annotation, find mitochondrial genomes from related species:
+To aid in assembly and annotation, find mitochondrial genomes from related species.If not from the same genus, then the same family, etc.
 
   1. Search the NCBI Nucleotide database for "Sapindaceae mitochondrion genome."
 
@@ -52,12 +62,13 @@ https://www.ncbi.nlm.nih.gov/Taxonomy/CommonTree/wwwcmt.cgi
 # Identifying organellar genomic reads from nuclear-targeted reads
 
 ##### Install Minimap2
-
+<details>
 Creates environment named minimap2, and calls bioconda to install minimap2. Activate environment to access minimap.
 ```
 micromamba create -n minimap2 -c bioconda minimap2
 micromamba activate minimap2
 ```
+</details>
 
 ### Map reads to related species' mitochondrial genome
 ```
@@ -76,17 +87,20 @@ minimap2 -x map-ont -t 36 $target $query > ${outname}
 ```
 
 ##### Install Seqtk
+<details>
 
 We will be using Seqtk to extract fastq sequences. This code creates an environment named seqtk, and calls bioconda to install seqtk. Activate environment to access seqtk.
 ```
 micromamba create -n seqtk -c bioconda seqtk
 micromamba activate seqtk
 ```
+</details>
 
 ### Extract reads from mapping with at least 2kb alignment length using Seqtk
 
 The length of the alignment filter is to get rid of any nuclear integrated mitochondrial genomic fragments. If your genome assembly has very few or small NUMTs or NUMPs then, this is likley the easiest way to obtain an organelle-targeted set of reads from a nuclear-targeted set of reads.
-```
+
+```bash
 less trimmed_5kplus.fq_RelatedNCBIMitochondrialGenomeSequences_minimap2.paf |awk -F"\t" '($4-$3)>2000 {print $1}' |uniq |seqtk subseq trimmed_5kplus.fq.gz - >MitoNanopore2k.fastq
 ```
 
@@ -111,13 +125,11 @@ seqtk subseq trimmed_5kplus.fq OrganelleReads.list >OrganelleReads.fastq
 ### As an alternative to the previous two steps, we can identify reads that have mitochondrial genes using miniprot and assemble those reads.
 
 ```
-ml micromamba; micromamba activate miniprot
-
 #convert fastq to fasta
 micromamba activate seqtk; seqtk seq -a trimmed_5kplus.fq >trimmed_5kplus.fasta
 
 # map proteins to the reads
-echo "miniprot -t 64 -S trimmed_5kplus.fasta NamedSmukorossiProteins.fasta >SmukrossiProteins2OrganelleReads.paf " >miniprotToTrimmed5kplus.sh
+echo "ml micromamba; micromamba activate miniprot;miniprot -t 64 -S trimmed_5kplus.fasta NamedSmukorossiProteins.fasta >SmukrossiProteins2OrganelleReads.paf " >miniprotToTrimmed5kplus.sh
 
 #Grab all read names that have a mitochondrial protein alignment
 less SmukrossiProteins2OrganelleReads.paf |cut -f 6 |sort |uniq >MiniprotOrganelleReads.list
@@ -127,6 +139,7 @@ seqtk subseq trimmed_5kplus.fq MiniprotOrganelleReads.list >MiniprotOrganelleRea
 
 #note that this generated a very small number of reads that I could not split to sufficient depth. I ran this example without splitting before assembly.
 ```
+
 ##### Install Trycycler
 
 Trycycler provides positional splitting of a fastq file, leading to a higher-quality assembly consensus.
@@ -145,16 +158,20 @@ trycycler subsample --reads MitoNanopore2k.fastq --out_dir read_subsets -t 36
 Alternatively generate random subsets with Seqtk by changing the seed number.
 ```
 # By modifying '-s' and your output filename, you can generate different subsets of 10% of the reads.   
-seqtk sample -s100 MitoNanopore2k.fastq 0.1 > subset.fastq
+seqtk sample -s100 MitoNanopore2k.fastq 0.1 > subset_00.fastq
+seqtk sample -s101 MitoNanopore2k.fastq 0.1 > subset_01.fastq
+etc
+
 ```
 
 # Installing software for creating assemblies from read subsets
 
-After choosing your method to split the fastq files, we will need to use these to generate multiple independent assemblies.  Here I will be using Unicycler, Miniasm, Raven, CANU, and FLYE to generate different assemblies.
+After choosing your method to split the fastq files, we will need to use these to generate multiple independent assemblies.  Here I will be using Unicycler, Miniasm, Raven, CANU, and FLYE to generate different assemblies. One or a few may be fine for your purposes.
 
 ##### Install Unicycler assembler
+<details>
 
-```
+```bash
 git clone https://github.com/rrwick/Unicycler.git
 
 #create environment
@@ -165,40 +182,59 @@ source Unicycler/bin/activate
 python3 setup.py install --prefix=/work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly
 ```
 
+</details>
+
 ##### Install FLYE assembler
+
+<details>
 
 ```
 micromamba -n flye -c bioconda::flye
 micromamba activate flye
 ```
 
+</details>
+
 ##### Install Miniasm assembler 
 
+<details>
 ```
  micromamba -n miniasm -c bioconda::miniasm
  micrombamba activate miniasm
 ```
+</details>
 
 ##### Install Raven assembler
+
+<details>
 ```
 micromamba create -n raven -c bioconda -c conda-forge raven-assembler
 micromamba activate raven
 ```
+</details>
 
 ##### Install CANU
+
+<details>
 ```
 micromamba create -n canu-env -c bioconda -c conda-forge canu
 micromamba activate canu-env
 ```
+</details>
 
 ##### Install Circlator to circularize assemblies at the origin for better comparison
+
+<details>
 ```
 micromamba create -n circlator-env python=3.7 -y
 micromamba activate circlator-env
 micromamba install -c bioconda -c conda-forge circlator
 ```
+</details>
 
-# Generate assemblies of read subsets
+# Use multiple assemblers to generate genome assemblies of each read subset
+
+To prepare this tutorial I created >100 assemblies, though you may achieve good results with just one run of it. Sometimes the filtered fastq file is too small to split, and was thus used as a whole. You also do not need to install all of these assemblers, one or a few may be fine. 
 
 **Generate FLYE Assemblies**
 ```
@@ -211,6 +247,8 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
 ```
 
 AssembleMitoMiniasm.sh
+<details>
+
 ```bash
 #############################################################################################################################
 #!/bin/bash
@@ -258,6 +296,8 @@ echo "Assembly complete! Output files are in $OUTDIR"
 #################################################################################################################################
 ```
 
+</details>
+
 **Generate CANU 2.2 assemblies**
 ```
 for f in sample*fastq; do echo "ml micromamba; micromamba activate canu-env; canu -p mito -d "${f%.*}"CanuOut genomeSize=550k -nanopore-raw "$f ;done >canu.sh
@@ -278,7 +318,7 @@ source bin/activate
 for f in *fastq; do echo "unicycler -l "$f" -t 36 --mode bold -o "${f%.*}"Unicycler --threads 36 --racon_path /work/gif3/masonbrink/Heuther/09_Unicycler/Unicycler/racon/build/bin/racon" ;done >UnicyclerRuns.sh
 ```
 
-# Evaluation of Assemblies -- find largest scaffold in each assembly with close to the expected number of genes
+# Evaluation of Assemblies 
 
 ### Acquire sapindaceae mitochondrial genes
 ```
@@ -290,9 +330,12 @@ grep -c ">" SmukorossiProteins.fasta
 #Rename proteins by protein name, not accession
 awk '{if(NF>1) {print ">"$2} else {print $0}}' SmukorossiProteins.fasta >NamedSmukorossiProteins.fasta
 ```
-**Get all of the genomes into one folder with unique file names -- Reads mapped to related mitochondrial assembly**
+
+### Create a folder of uniquely named genome assemblies
+Get all of the genomes into one folder with unique file names so that we can rerun the same scripts to evaluate them. This is not an essential step, but just makes the evaluation easier when you have so many different attempts. Here I use the "/" as a string separator to rename the files in a softlink. Note that I had three different read subsets, so I had to make sure the names were unique or the softlink would fail.
+
 ```
-#grabs all the unicycler assemblies and renames them by folder name
+#grabs all the unicycler assemblies and renames them by folder name, essentially by using the "/" as a separator to change the name. 
  for f in ../sample*Unicycler/assembly.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 2| awk '{print $1".fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkUnicycler.sh
 sh SoftlinkUnicycler.sh
 
@@ -307,18 +350,16 @@ for f in ../read_subsets/*CanuOut/mito.contigs.fasta; do echo "ln -s "$f ; echo 
 
 #softlinks and renames all Raven assemblies, which already have unique names
 for f in ../read_subsets/*Raven/*Assembly.fasta ;do ln -s $f;done
-```
-**Get all of the genomes into one folder with unique file names -- Reads that could not map to an organelle-less nuclear genome**
-```
+
 #grabs all the unicycler assemblies and renames them by folder name
- for f in ../read_subsetNuclearClean/*Unicycler/assembly.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk '{print $1"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkUnicycler2.sh
+for f in ../read_subsetNuclearClean/*Unicycler/assembly.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk '{print $1"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkUnicycler2.sh
 sh SoftlinkUnicycler.sh
 
 #grabs all flye assemblies and renames by folder name
 for f in ../read_subsetNuclearClean/*FlyeOut/assembly.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk -F"\t" '{print $0"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkFlye2.sh
 
 #softlinks all the miniasm assemblies which do not have unique names, and needed renamed this time
- for f in ../read_subsetNuclearClean/*MiniasmOut_output/*final.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk -F"\t" '{print $0"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkMiniasm2.sh
+for f in ../read_subsetNuclearClean/*MiniasmOut_output/*final.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk -F"\t" '{print $0"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkMiniasm2.sh
 
 #softlinks and renames all canu assemblies # all of these failed due to memory exhaustion
 for f in ../read_subsetsNuclearClean/*CanuOut/mito.contigs.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk -F"\t" '{print $0"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' |less
@@ -329,11 +370,12 @@ for f in ../read_subsets/*Raven/*Assembly.fasta ;do ln -s $f ${f%.*}NuclearClean
 
 ### Align mitochondrial proteins to assemblies
 
+Align proteins to the genomes.
 ```
-#Align proteins to the genomes.
 for f in *.fasta; do miniprot $f NamedSmukorossiProteins.fasta >${f%.*}.genes; done
-
-#how many of these 109 assemblies (not all shown here) had most of the genes on how many contigs and how large was the longest contig with mapping genes? Note I forced only assemblies with at least 35 unique mitochondrial gene alignments to print below
+```
+How many of these 109 assemblies (assemblies for which are not shown) had most of the genes on how many contigs and how large was the longest contig with mapping genes? Note I only printed assemblies with at least 35 unique mitochondrial gene alignments
+```
 for f in *genes; do paste <(ls -1 $f) <(cut -f 1 $f |sort|uniq|wc -l) <(cut -f 6 $f|sort|uniq|wc -l)  <(cut -f 7 $f |sort -k1,1nr |awk '{print $1}' ) ;done |awk '$2>35' |less                                     
 
 1kClean60qualAssembly.genes     38      3       339819
@@ -370,7 +412,8 @@ sample_12Assembly.genes 40      6       412414
 sample_12FlyeOut.genes  36      5       252031
 UCManualInterventionRemoveNUMTReads.genes       38      2       462795
 ```
-So it looks like I commonly find 38-39 genes in these assemblies, but only two had the expected 40 genes. I ran a few assemblies with varying levels of filtering using all of the reads too, so those are included and some happen to be really good assemblies. The fewest contigs with the most genes seems to occur with assembly.fasta, which is an assembly using all trimmed reads that were able to get a 3kb alignment to the related Smukorossi mitochondrial genome. However, thee are a couple assemblies that have all 40 genes, which we may use to incorporate into the singular contig at a later step. 
+
+So it looks like I commonly find 38-39 genes in these assemblies, but only two had the expected 40 genes. I ran a few assemblies with varying levels of filtering using all of the reads too, so those are included and some happen to be really good assemblies. The fewest contigs with the most genes seems to occur with assembly.fasta, which is an assembly using all trimmed reads that were able to get a 3kb alignment to the related Smukorossi mitochondrial genome. However, there are a couple assemblies that have all 40 genes, which we may use to incorporate into the singular contig at a later step. 
 
 ### Best Mitochondrial assembly refinement
 
@@ -404,7 +447,7 @@ So there are three duplicate regions that can be condensed to two regions. Since
  1-2501, 2832-46555, 503771-535683
 ```
 
-**Trim regions from the end of the assembly that are duplicate**
+**Trim regions from the end of the assembly that are duplicated**
 ```
 ml samtools
 #indexes the fasta file
@@ -432,7 +475,7 @@ So there are two genes that were recognized as missing from the assembly
 orf119
 rps1
 
-However, these genes map to two different 90kb scaffolds in both of the assemblies that were able to align these genes.  Aligning these 90kb scaffolds to the TrimmedCleanMito.fasta assembly and the Sapindus mukrossi mitochondrial genome did not provide any hits, suggesting that these two genes may be NUMT genes integrated into the nuclear genome and can safely be ignored.
+However, these genes map to two different 90kb scaffolds in both of the assemblies that were able to align these genes. Aligning these 90kb scaffolds to the TrimmedCleanMito.fasta assembly and the Sapindus mukrossi mitochondrial genome did not provide any hits, suggesting that these two genes may be NUMT genes integrated into the nuclear genome and can safely be ignored.
 ```
 
 **Circularize with circlator**
@@ -442,7 +485,7 @@ micromamba activate circlator
 circlator fixstart TrimmedCleanMito.fasta ReOriented
 ```
 
-**Align reads to the circularized mitochondrial assembly** 
+**Align reads to this circularized mitochondrial assembly** 
 ```
 /work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly/Unicycler
 
@@ -498,53 +541,60 @@ echo " ml pilon ; java -Xmx190g -Djava.io.tmpdir=TEMP -jar  /opt/rit/el9/2023041
 
 # Find the chloroplast assemblies in our mitochondrial assemblies
 
-### Best Chloroplast assembly
-
-With all of the assemblies you we've made trying to assemble the mitochondria, we most likely assembled a chloroplast genome too, as they are much simpler than plant mitochondria. Lets align the previously published chloroplast genome to the assemblies. 
+With all of the assemblies you we've made trying to assemble the mitochondria, we most likely assembled a chloroplast genome too, as they are much simpler than plant mitochondria. Lets align the previously published chloroplast genome to the assemblies to see if we have some assembled. 
 
 ### Find the chloroplast assembly
 
-```
-#download the chloroplast genome 
+Download the chloroplast genome 
+```bash
 NC_036099.1 Dodonaea viscosa chloroplast, complete genome -- 159,375bp
-
-#map the published chloroplast assembly to the assemblies we've made
+```
+Map the published chloroplast assembly to the assemblies we've made
+```bash
 for f in *fasta; do sh runMinimap.sh DviscosaChloroplast.fasta $f;done
-
+```
 Here we can see which contigs were of the appropriate size and complete via how much genome they aligned
+```bash
 cat *minimap2.paf |awk '$7>150000 && $7<200000'|less
-
-This will grab only those minimap alignments that are in the same orientation as the published assembly. There were way too many, so filtered for even better assemblies
+```
+There were way too many, so filtered for even better assemblies. This will grab only those minimap alignments that are in the same orientation as the published assembly.
+```bash
 cat *minimap2.paf |awk '$4>157000 && $3<20'|less 
-
+```
 In my case, I had 46 likely complete chloroplast assemblies, but only four were in the same orientation and started near the same base
+```
 NC_036099.1     159375  5       159366  -       tig00000001     194930  8636    167738  139848  159617  60      tp:A:P  cm:i:25896      s1:i:139710     s2:i:80342      dv:f:0.0081     rl:i:0
 NC_036099.1     159375  5       158489  +       Utg177960       268827  56996   215246  138870  158751  60      tp:A:P  cm:i:25672      s1:i:138733     s2:i:108725     dv:f:0.0090     rl:i:962
 NC_036099.1     159375  5       159366  +       tig00000001     190469  30999   190097  139817  159615  60      tp:A:P  cm:i:25895      s1:i:139681     s2:i:72177      dv:f:0.0081     rl:i:0
 NC_036099.1     159375  5       159366  -       Utg177424       252033  5114    147499  140664  159651  60      tp:A:P  cm:i:25994      s1:i:138502     s2:i:71811      dv:f:0.0086     rl:i:960
+```
+In the PAF file column 7 tells us the length of the contig the chloroplast genome hit, and it appears that either this genome is much larger than the published version or it contains a false amount of duplication. The easiest way to identify if the contig is too big then perform a self-blastn on the contig.
 
-Column 7 tells us the length of the contig the chloroplast genome hit to, and it appears that either this genome is much larger than the published version or it contains a false amount of duplication.  The easiest way to identify if this is the case is to do a self-blastn to the contig
-```
 **BLASTn of Utg177960 to Utg177960**
+Index and extract the chloroplast contig
 ```
-#index and extract the chloroplast contig
 cdbfasta sample_06Assembly.fasta
 echo "Utg177960" |cdbyank sample_06Assembly.fasta.cidx >MyChloroplast.fasta
-
-#create the blast database
+```
+Create the blast database
+```
 makeblastdb -in MyChloroplast.fasta -dbtype nucl
-#run the self blast
+```
+run the self blast
+```
 blastn -db MyChloroplast.fasta -query MyChloroplast.fasta -outfmt 6 -out Mychloroplast2mychloroplast.blastout
-
-#How much of the assembly is identical? This shows the top best hit which is everything and then the next best hits which are reciprocal best hits
+```
+How much of the assembly is identical? This shows the top best hit which is everything and then the next best hits which are reciprocal best hits
+```
 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore
 Utg177960       Utg177960       100.000 268827  0       0       1       268827  1       268827  0.0     4.964e+05
 Utg177960       Utg177960       99.980  56113   0       7       159146  215251  1       56109   0.0     1.036e+05
 Utg177960       Utg177960       99.980  56113   0       7       1       56109   159146  215251  0.0     1.036e+05
 Utg177960       Utg177960       99.983  52625   1       7       215252  267872  144613  197233  0.0     97123
 Utg177960       Utg177960       99.983  52625   1       7       144613  197233  215252  267872  0.0     97123
-
+```
 So there are two duplicate regions from 1-56109 and 215252-267872, lets extract the remaining sequence
+```
 echo "Utg177960 56109 215252" |cdbyank sample_06Assembly.fasta.cidx -R |bioawk -c fastx '{print $name,length($seq)}' >UnpolishedMyChloroplastDeduplicated.fasta
 ```
 **Circularize with circlator**
