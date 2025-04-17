@@ -90,7 +90,7 @@ The length of the alignment filter is to get rid of any nuclear integrated mitoc
 less trimmed_5kplus.fq_RelatedNCBIMitochondrialGenomeSequences_minimap2.paf |awk -F"\t" '($4-$3)>2000 {print $1}' |uniq |seqtk subseq trimmed_5kplus.fq.gz - >MitoNanopore2k.fastq
 ```
 
-### As an alternative to the step above, we can map reads to the nuclear genome and extract only those that did not map to use for organelle assembly
+### As an alternative to the step above, we can map the reads to the nuclear genome and extract only those that did not map. The thought here is that if there is not too contamination in the reads, we will be able to eliminate all reads that are nuclear and keep only low-quality reads, organelle reads, and contamination reads to use for organelle genome assembly.
 
 ```
 #softlink genome, reads and mapping script
@@ -108,13 +108,13 @@ cat AllTrimmedReadNamesFormatted.list <(awk -F"\t" '$12==60 && $10>500' {print $
 seqtk subseq trimmed_5kplus.fq OrganelleReads.list >OrganelleReads.fastq
 ```
 
-### As an alternative to the previous two steps, we can identify reads that have mitochondrial genes using miniprot and assemble those reads
+### As an alternative to the previous two steps, we can identify reads that have mitochondrial genes using miniprot and assemble those reads.
 
 ```
 ml micromamba; micromamba activate miniprot
 
 #convert fastq to fasta
-ml seqtk; seqtk seq -a trimmed_5kplus.fq >trimmed_5kplus.fasta
+micromamba activate seqtk; seqtk seq -a trimmed_5kplus.fq >trimmed_5kplus.fasta
 
 # map proteins to the reads
 echo "miniprot -t 64 -S trimmed_5kplus.fasta NamedSmukorossiProteins.fasta >SmukrossiProteins2OrganelleReads.paf " >miniprotToTrimmed5kplus.sh
@@ -127,7 +127,7 @@ seqtk subseq trimmed_5kplus.fq MiniprotOrganelleReads.list >MiniprotOrganelleRea
 
 #note that this generated a very small number of reads that I could not split to sufficient depth. I ran this example without splitting before assembly.
 ```
-### Install Trycycler
+##### Install Trycycler
 
 Trycycler provides positional splitting of a fastq file, leading to a higher-quality assembly consensus.
 ```
@@ -137,7 +137,7 @@ micromamba activate trycycler
 
 ### Create subsets of reads from different positions in the fastq file using Trycycler
 
-Here trycycler will generate 12 fastq files in the read_subsets folder that are close to equal in size and without any read overlap between samples
+Here trycycler will generate 12 fastq files in the read_subsetNuclearClean and read_subsets folders, that are close to equal in size and without any read overlap between samples
 ```
 trycycler subsample --reads OrganelleReads.fastq --out_dir read_subsetNuclearClean  -t 36
 trycycler subsample --reads MitoNanopore2k.fastq --out_dir read_subsets -t 36
@@ -260,7 +260,7 @@ echo "Assembly complete! Output files are in $OUTDIR"
 
 **Generate CANU 2.2 assemblies**
 ```
-for f in sample*fastq; do echo "ml canu; canu -p mito -d "${f%.*}"CanuOut genomeSize=550k -nanopore-raw "$f ;done >canu.sh
+for f in sample*fastq; do echo "ml micromamba; micromamba activate canu-env; canu -p mito -d "${f%.*}"CanuOut genomeSize=550k -nanopore-raw "$f ;done >canu.sh
 ```
 
 **Generate Raven assemblies**
@@ -305,7 +305,7 @@ for f in ../read_subsets/*MiniasmOut_output/*final.fasta ; do ln -s $f;done
 #softlinks and renames all canu assemblies 
 for f in ../read_subsets/*CanuOut/mito.contigs.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk -F"\t" '{print $0".fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >CanuSoftlink.sh
 
-#softlinks and renames all Raven assemblies
+#softlinks and renames all Raven assemblies, which already have unique names
 for f in ../read_subsets/*Raven/*Assembly.fasta ;do ln -s $f;done
 ```
 **Get all of the genomes into one folder with unique file names -- Reads that could not map to an organelle-less nuclear genome**
@@ -323,7 +323,7 @@ for f in ../read_subsetNuclearClean/*FlyeOut/assembly.fasta; do echo "ln -s "$f 
 #softlinks and renames all canu assemblies # all of these failed due to memory exhaustion
 for f in ../read_subsetsNuclearClean/*CanuOut/mito.contigs.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk -F"\t" '{print $0"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' |less
 
-#softlinks and renames all Raven assemblies
+#softlinks and renames all Raven assemblies so they do not overwrite the ones above
 for f in ../read_subsets/*Raven/*Assembly.fasta ;do ln -s $f ${f%.*}NuclearClean.fasta;done
 ```
 
@@ -335,6 +335,7 @@ for f in *.fasta; do miniprot $f NamedSmukorossiProteins.fasta >${f%.*}.genes; d
 
 #how many of these 109 assemblies (not all shown here) had most of the genes on how many contigs and how large was the longest contig with mapping genes? Note I forced only assemblies with at least 35 unique mitochondrial gene alignments to print below
 for f in *genes; do paste <(ls -1 $f) <(cut -f 1 $f |sort|uniq|wc -l) <(cut -f 6 $f|sort|uniq|wc -l)  <(cut -f 7 $f |sort -k1,1nr |awk '{print $1}' ) ;done |awk '$2>35' |less                                     
+
 1kClean60qualAssembly.genes     38      3       339819
 2kRawAssembly.genes     38      1       536045
 3kRawAssembly.genes     38      1       536052
