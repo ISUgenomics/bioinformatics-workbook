@@ -57,6 +57,7 @@ Once you find a few assemblies of related species, you can visualize how they ar
 
 https://www.ncbi.nlm.nih.gov/Taxonomy/CommonTree/wwwcmt.cgi 
 
+![Common Taxonomy Tree for Sapindaceae](../../assets/commonTaxonomy.png)
 
 # Identifying organellar genomic reads from nuclear-targeted reads
 
@@ -142,8 +143,8 @@ seqtk subseq trimmed_5kplus.fq OrganelleReads.list >OrganelleReads.fastq
 ```
 
 ### 3. Or we can identify reads that have mitochondrial genes using miniprot and assemble those reads.
-Here we will use the predicted proteins from tje Sapindus mukorossi mitchondrial genome to identify mitochondrial reads among D. viscosa's nuclear-targeted fastq file. <br>
-Note that in my case this generated a small number of reads that wre not of sufficient depth to split, so I ran assemblies on this subset of reads without splitting the fastq files.<br>
+Here we will use the predicted proteins from the *Sapindus mukorossi* mitchondrial genome to identify mitochondrial reads among D. viscosa's nuclear-targeted fastq file. <br>
+Note that in my case this generated a small number of reads that were not of sufficient depth to split, so I ran assemblies on this subset of reads without splitting the fastq files.<br>
 Convert fastq to fasta
 ```bash
 micromamba activate seqtk; seqtk seq -a trimmed_5kplus.fq >trimmed_5kplus.fasta
@@ -175,13 +176,13 @@ micromamba activate trycycler
 
 </details>
 
-Here trycycler will generate 12 fastq files in the read_subsetNuclearClean and read_subsets folders, that are close to equal in size and without any read overlap between samples
-```
+Here trycycler will generate 12 fastq files in the read_subsetNuclearClean and read_subsets folders, that are close to equal in size. If depth is sufficient, then you will get split files without any redundant read overlap.
+```bash
 trycycler subsample --reads OrganelleReads.fastq --out_dir read_subsetNuclearClean  -t 36
 trycycler subsample --reads MitoNanopore2k.fastq --out_dir read_subsets -t 36
 ```
 Alternatively generate random subsets with Seqtk by changing the seed number (-s) and proportion.
-```
+```bash
 # By modifying '-s' and your output filename, you can generate different subsets of 10% of the reads.   
 seqtk sample -s100 MitoNanopore2k.fastq 0.1 > subset_00.fastq
 seqtk sample -s101 MitoNanopore2k.fastq 0.1 > subset_01.fastq
@@ -190,7 +191,7 @@ etc...
 
 # Installing software for creating assemblies from read subsets
 
-After choosing your method to split the fastq files, we will use these to generate multiple independent assemblies. Here I will be using Unicycler, Miniasm, Raven, CANU, and FLYE to generate different assemblies. One or a few may be fine for your purposes.
+After choosing your method to split the fastq files, we will use these to generate multiple independent assemblies. Here I will be using Unicycler, Miniasm, Raven, CANU, and FLYE to generate different assemblies. One or a few assemblers may be fine for your purposes.
 
 **Install Unicycler assembler**
 
@@ -223,19 +224,23 @@ micromamba activate flye
 **Install Miniasm assembler**
 
 <details>
+
 ```bash
  micromamba -n miniasm -c bioconda::miniasm
  micrombamba activate miniasm
 ```
+
 </details>
 
 **Install Raven assembler**
 
 <details>
+
 ```bash
 micromamba create -n raven -c bioconda -c conda-forge raven-assembler
 micromamba activate raven
 ```
+
 </details>
 
 **Install CANU assembler**
@@ -329,8 +334,8 @@ echo "Assembly complete! Output files are in $OUTDIR"
 
 </details>
 
-**Generate CANU 2.2 assemblies**
-Note here that you will have to estimate your mitochondrial genome's size. Mine is too large, as I expected to get reads for the chloroplast genome as well.
+**Generate CANU 2.2 assemblies** <br>
+Note here that you will have to estimate your mitochondrial genome's size. Mine is too large, as I expected to get reads for the chloroplast genome as well. <br>
 ```bash
 for f in sample*fastq; do echo "ml micromamba; micromamba activate canu-env; canu -p mito -d "${f%.*}"CanuOut genomeSize=550k -nanopore-raw "$f ;done >canu.sh
 ```
@@ -447,92 +452,101 @@ for f in *genes; do paste <(ls -1 $f) <(cut -f 1 $f |sort|uniq|wc -l) <(cut -f 6
 | sample_12FlyeOut.genes                         | 36        | 5              | 252031     |
 | UCManualInterventionRemoveNUMTReads.genes      | 38        | 2              | 462795     |
 
-
-
-
-```
-
 So it looks like I commonly find 38-39 genes in these assemblies, but only two had the expected 40 genes. I ran a few assemblies with varying levels of filtering using all of the reads too, so those are included and some happen to be really good assemblies. The fewest contigs with the most genes seems to occur with assembly.fasta, which is an assembly using all trimmed reads that were able to get a 3kb alignment to the related Smukorossi mitochondrial genome. However, there are a couple assemblies that have all 40 genes, which we may use to incorporate into the singular contig at a later step. 
 
-### Best Mitochondrial assembly refinement
+### Refining the best mitochondrial assembly
 
-```
+```bash
 /work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly/Unicycler/assemblies
-
 #rename the assembly so I do not lose it
 cp ../MitoNanopore3kRawUnicycler/assembly.fasta MitoNanopore3kRawUnicyclerassembly.fasta
+```
 
-#just a standard blast to self
+This is a standard blast of my mitochondrial genome to itself.
+```bash
 makeblastdb -in MitoNanopore3kRawUnicyclerassembly.fasta -dbtype nucl
 blastn -query MitoNanopore3kRawUnicyclerassembly.fasta -db MitoNanopore3kRawUnicyclerassembly.fasta -outfmt 6 -num_threads 36 -out MitoNanopore3kRawUnicyclerassembly.blastout
 ```
 
-**Blast Results: truncated to show the regions that are large and identical**
-```
-qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore
-1       1       100.000 535684  0       0       1       535684  1       535684  0.0     9.892e+05
-1       1       99.851  43743   25      21      298590  342311  46555   2832    0.0     80382
-1       1       99.851  43743   25      21      2832    46555   342311  298590  0.0     80382
-1       1       99.969  31916   0       5       503771  535683  427604  459512  0.0     58874
-1       1       99.969  31916   0       5       427604  459512  503771  535683  0.0     58874
-1       1       99.984  6318    0       1       450654  456971  170106  163790  0.0     11660
-1       1       99.984  6318    0       1       163790  170106  456971  450654  0.0     11660
-1       1       99.968  6318    0       2       526823  533139  170106  163790  0.0     11655
-1       1       99.968  6318    0       2       163790  170106  533139  526823  0.0     11655
-1       1       99.640  2502    3       5       343015  345511  2501    1       0.0     4566
-1       1       99.640  2502    3       5       1       2501    345511  343015  0.0     4566
+**Blast Results: truncated to show the regions that are large and identical** <br>
 
+| qseqid | sseqid | pident  | length | mismatch | gapopen | qstart | qend   | sstart | send   | evalue | bitscore |
+|--------|--------|---------|--------|----------|---------|--------|--------|--------|--------|--------|----------|
+| 1      | 1      | 100.000 | 535684 | 0        | 0       | 1      | 535684 | 1      | 535684 | 0.0    | 9.892e+05 |
+| 1      | 1      | 99.851  | 43743  | 25       | 21      | 298590 | 342311 | 46555  | 2832   | 0.0    | 80382     |
+| 1      | 1      | 99.851  | 43743  | 25       | 21      | 2832   | 46555  | 342311 | 298590 | 0.0    | 80382     |
+| 1      | 1      | 99.969  | 31916  | 0        | 5       | 503771 | 535683 | 427604 | 459512 | 0.0    | 58874     |
+| 1      | 1      | 99.969  | 31916  | 0        | 5       | 427604 | 459512 | 503771 | 535683 | 0.0    | 58874     |
+| 1      | 1      | 99.984  | 6318   | 0        | 1       | 450654 | 456971 | 170106 | 163790 | 0.0    | 11660     |
+| 1      | 1      | 99.984  | 6318   | 0        | 1       | 163790 | 170106 | 456971 | 450654 | 0.0    | 11660     |
+| 1      | 1      | 99.968  | 6318   | 0        | 2       | 526823 | 533139 | 170106 | 163790 | 0.0    | 11655     |
+| 1      | 1      | 99.968  | 6318   | 0        | 2       | 163790 | 170106 | 533139 | 526823 | 0.0    | 11655     |
+| 1      | 1      | 99.640  | 2502   | 3        | 5       | 343015 | 345511 | 2501   | 1      | 0.0    | 4566      |
+| 1      | 1      | 99.640  | 2502   | 3        | 5       | 1      | 2501   | 345511 | 343015 | 0.0    | 4566      |
+
+<br>
 So there are three duplicate regions that can be condensed to two regions. Since two are very close, I will just merge them
  1-2501, 2832-46555, 503771-535683
-```
 
-**Trim regions from the end of the assembly that are duplicated**
+
+**Trim regions from the end of the assembly that are duplicated** <br>
+Samtools is a pretty commonly used tool, so I will assume you have it available. <br>
+Indexes the fasta file
+```bash
+ml samtools;samtools faidx MitoNanopore3kRawUnicyclerassembly.fasta
 ```
-ml samtools
-#indexes the fasta file
-samtools faidx MitoNanopore3kRawUnicyclerassembly.fasta
-#These coordinates were used to extract the fasta from a blast to self identifying duplicated regions of the genome
+These coordinates were used to extract the fasta from a blast to self identifying duplicated regions of the genome
+```bash
 echo "1:46555-503771" |samtools faidx MitoNanopore3kRawUnicyclerassembly.fasta -r - >TrimmedCleanMito.fasta
 ```
 
-**Check for the presence of all genes in the trimmed assembly**
-```
-#map the proteins without 
+**Check for the presence of all mitochondrial genes in the trimmed assembly** <br>
+Map the proteins to your trimmed mitochondria
+```bash
 miniprot -S -j 0 TrimmedCleanMito.fasta NamedSmukorossiProteins.fasta >GenesInTrimmedCleanMito.paf
+```
+How many miniprot gene aligments are in this assembly out of the 38 it started with?
+```bash
+awk '{print $1}' GenesInTrimmedCleanMito.paf |sort|uniq|wc
+     38      38     205
 ```
 
 **Can we add the missing two genes that were found in other assemblies?**
-```
-This concatenates the names of the genes in each assembly, finds the ones that are only in one assembly, and extracts those scaffolds
+This concatenates the names of the genes in my trimmed assembly with genes from a assembly with 40 miniprot gene alignments, finds the protein names that are only in one assembly, and extracts scaffolds with those protein alignments.
+```bash
 cat <(less ../assemblies/GenesInTrimmedCleanMito.paf |cut -f 1|sort|uniq ) <(cut -f 1 sample_08Assembly.genes |cut -f 1|sort|uniq) |sort|uniq -c |awk '$1==1{print $2}' |grep -w -f - sample_08Assembly.genes |cut -f 6 |cdbyank sample_08Assembly.fasta.cidx >MissingMitoScaffolds.fasta
-
-#create database and run a standard self BLASTn
+```
+Create a BLASTn database and run a standard self BLASTn
+```bash
 makeblastdb -in TrimmedCleanMito.fasta -dbtype nucl
 blastn -db TrimmedCleanMito.fasta -query ../Assemblies/MissingMitoScaffolds.fasta -outfmt 6 -num_threads 8 -out MissingMitoScaffolds2TrimmedCleanMito.blastout                                                    
-
-So there are two genes that were recognized as missing from the assembly
-orf119
-rps1
-
-However, these genes map to two different 90kb scaffolds in both of the assemblies that were able to align these genes. Aligning these 90kb scaffolds to the TrimmedCleanMito.fasta assembly and the Sapindus mukrossi mitochondrial genome did not provide any hits, suggesting that these two genes may be NUMT genes integrated into the nuclear genome and can safely be ignored.
 ```
+So there are two genes that were recognized as missing from my trimmed mitochondrial assembly <br>
+* *orf119* 
+* *rps1*
+<br>
+My first approach is to see if these contigs can align to my mitochondrial genome, if not then I evaluate the contigs with BLASTn to NCBI nucleotide database to see if they are more likely to be nuclear. <br>
+However, these genes map to two different 90kb scaffolds in both of the assemblies that were able to align these genes. Aligning these 90kb scaffolds to the TrimmedCleanMito.fasta assembly and the Sapindus mukrossi mitochondrial genome did not provide any hits, suggesting that these two genes may be NUMT genes integrated into the nuclear genome and can safely be ignored. If you suspect that you may have NUMTs in your assembly, then the best way to check this is to align your long reads to your mitochonrial genome (contaminated with NUMTs), and check to find large coverage gaps. Because mitochondrial reads should be at a much higher depth than nuclear NUMT reads, low coverage regions are likely to be NUMTs. This will allow you to find the NUMT regions in your assembly, and thus the NUMT reads, which you can remove with seqtk as above. 
 
-**Circularize with circlator**
+**Circularize with circlator** <br>
+This rotates the circular genome assembly so that it starts at a standard gene (*dnaA*), ensuring consistent start coordinates across species.
 ```
-#This reorients the fasta to start at the origin
 micromamba activate circlator
 circlator fixstart TrimmedCleanMito.fasta ReOriented
 ```
 
-**Align reads to this circularized mitochondrial assembly** 
-```
-/work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly/Unicycler
+# Polish the mitochondrial genome
 
+**Align reads to this circularized mitochondrial assembly** <br>
+Softlink the run script to run minimap pipeline to create a sorted bam. *see below for script*
+```
 ln -s ../../runMinimapNbamSort.sh
-#use minimap to align reads to the genome to produce a sorted bam file.
+```
+Use minimap to align reads to the genome to produce a sorted bam file.
+```
 sh runMinimapNbamSort.sh MitoNanopore3kRaw.fastq ReOriented.fasta
 ```
-runMinimapNbamSort.sh
+**runMinimapNbamSort.sh**
 
 <details>
 
@@ -553,12 +567,28 @@ samtools index ${outname%.*}_sorted.bam
 
 </details>
 
-**Run Pilon on the genome with the aligned reads**
+<details>
+
+**Install Pilon**<br>
 ```
-#run pilon with the sorted bam file and the genome to ensure the assembly is of high quality
-echo " ml pilon ; java -Xmx190g -Djava.io.tmpdir=TEMP -jar  /opt/rit/el9/20230413/app/linux-rhel9-x86_64_v3/gcc-11.2.1/pilon-1.22-iojt4j5x62smcab6j4mjn77ejfqimebo/bin/pilon-1.22.jar --genome ReOriented.fasta --unpaired MitoNanopore3kRaw_ReOriented_minimap2_sorted.bam --outdir /work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly/Unicycler/assemblies/  --changes --fix all --threads 36   ">pilon.sh 
+micromamba create -y -n pilon-env pilon=1.24 openjdk=8 -c bioconda -c conda-forge
+micromamba activate pilon-env
 ```
+
+</details>
+
+**Polish the mitochondria with Pilon to improve assembly quality**
+```
+echo "ml pilon ; java -Xmx190g -Djava.io.tmpdir=TEMP -jar  /opt/rit/el9/20230413/app/linux-rhel9-x86_64_v3/gcc-11.2.1/pilon-1.22-iojt4j5x62smcab6j4mjn77ejfqimebo/bin/pilon-1.22.jar --genome ReOriented.fasta --unpaired MitoNanopore3kRaw_ReOriented_minimap2_sorted.bam --outdir /work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly/Unicycler/assemblies/  --changes --fix all --threads 36   ">pilon.sh 
+```
+
 **Results of assembly and polishing**
+
+The new_Assemblathon.pl script is freely available here: https://github.com/ISUgenomics/common_scripts/blob/master/new_Assemblathon.pl <br>
+```bash
+new_Assemblathon.pl pilon.fasta
+```
+Results
 ```
                                          Number of scaffolds          1
                                      Total size of scaffolds     457217
@@ -586,80 +616,95 @@ echo " ml pilon ; java -Xmx190g -Djava.io.tmpdir=TEMP -jar  /opt/rit/el9/2023041
 
 # Find the chloroplast assemblies in our mitochondrial assemblies
 
-With all of the assemblies you we've made trying to assemble the mitochondria, we most likely assembled a chloroplast genome too, as they are much simpler than plant mitochondria. Lets align the previously published chloroplast genome to the assemblies to see if we have some assembled. 
+With all of the assemblies you we've made trying to assemble the mitochondria, we most likely assembled a chloroplast genome too, as they are much simpler than plant mitochondria. Let's align the previously published chloroplast genome to the assemblies to see if we have some assembled. Note if you do not have a published version of your chloroplast assembly, you can use the same approach as what we did for the mitochondrial genome. 
 
 ### Find the chloroplast assembly
 
-Download the chloroplast genome 
+Download the chloroplast genome <br>
 ```bash
 NC_036099.1 Dodonaea viscosa chloroplast, complete genome -- 159,375bp
 ```
-Map the published chloroplast assembly to the assemblies we've made
+Map the published chloroplast assembly to our assemblies <br>
 ```bash
 for f in *fasta; do sh runMinimap.sh DviscosaChloroplast.fasta $f;done
 ```
-Here we can see which contigs were of the appropriate size and complete via how much genome they aligned
+Here we can see which contigs were of the appropriate size and complete via how much genome they aligned to <br>
 ```bash
 cat *minimap2.paf |awk '$7>150000 && $7<200000'|less
-```
-There were way too many, so filtered for even better assemblies. This will grab only those minimap alignments that are in the same orientation as the published assembly.
+``` 
+There were way too many, so filtered for even better assemblies. This will grab only those minimap alignments that are in the same orientation as the published assembly. <br>
 ```bash
 cat *minimap2.paf |awk '$4>157000 && $3<20'|less 
 ```
-In my case, I had 46 likely complete chloroplast assemblies, but only four were in the same orientation and started near the same base
-```
-NC_036099.1     159375  5       159366  -       tig00000001     194930  8636    167738  139848  159617  60      tp:A:P  cm:i:25896      s1:i:139710     s2:i:80342      dv:f:0.0081     rl:i:0
-NC_036099.1     159375  5       158489  +       Utg177960       268827  56996   215246  138870  158751  60      tp:A:P  cm:i:25672      s1:i:138733     s2:i:108725     dv:f:0.0090     rl:i:962
-NC_036099.1     159375  5       159366  +       tig00000001     190469  30999   190097  139817  159615  60      tp:A:P  cm:i:25895      s1:i:139681     s2:i:72177      dv:f:0.0081     rl:i:0
-NC_036099.1     159375  5       159366  -       Utg177424       252033  5114    147499  140664  159651  60      tp:A:P  cm:i:25994      s1:i:138502     s2:i:71811      dv:f:0.0086     rl:i:960
-```
-In the PAF file column 7 tells us the length of the contig the chloroplast genome hit, and it appears that either this genome is much larger than the published version or it contains a false amount of duplication. The easiest way to identify if the contig is too big then perform a self-blastn on the contig.
+In my case, I had 46 likely complete chloroplast assemblies, but only four were in the same orientation and started near the same base.
 
-**BLASTn of Utg177960 to Utg177960**
-Index and extract the chloroplast contig
-```
+| Query Name   | Query Length | Query Start | Query End | Strand | Target Name  | Target Length | Target Start | Target End | Residue Matches | Alignment Block Length | Mapping Quality | tp     | cm        | s1         | s2         | dv        | rl    |
+|--------------|--------------|-------------|-----------|--------|---------------|----------------|---------------|-------------|------------------|--------------------------|------------------|--------|-----------|------------|------------|-----------|--------|
+| NC_036099.1  | 159375       | 5           | 159366    | -      | tig00000001   | 194930         | 8636          | 167738      | 139848           | 159617                   | 60               | tp:A:P | cm:i:25896 | s1:i:139710 | s2:i:80342  | dv:f:0.0081 | rl:i:0 |
+| NC_036099.1  | 159375       | 5           | 158489    | +      | Utg177960     | 268827         | 56996         | 215246      | 138870           | 158751                   | 60               | tp:A:P | cm:i:25672 | s1:i:138733 | s2:i:108725 | dv:f:0.0090 | rl:i:962 |
+| NC_036099.1  | 159375       | 5           | 159366    | +      | tig00000001   | 190469         | 30999         | 190097      | 139817           | 159615                   | 60               | tp:A:P | cm:i:25895 | s1:i:139681 | s2:i:72177  | dv:f:0.0081 | rl:i:0 |
+| NC_036099.1  | 159375       | 5           | 159366    | -      | Utg177424     | 252033         | 5114          | 147499      | 140664           | 159651                   | 60               | tp:A:P | cm:i:25994 | s1:i:138502 | s2:i:71811  | dv:f:0.0086 | rl:i:960 |
+
+Column 7 tells us the length of the contig that the chloroplast genome aligned to, and it appears that either this genome is much larger than the published version or it contains a false amount of duplication. The easiest way to identify if the contig is too big then perform a self-blastn on the contig. <br>
+
+**BLASTn of Utg177960 to Utg177960** <br>
+Index and extract the chloroplast contig for BLAST <br> 
+```bash
 cdbfasta sample_06Assembly.fasta
 echo "Utg177960" |cdbyank sample_06Assembly.fasta.cidx >MyChloroplast.fasta
 ```
-Create the blast database
-```
+Create the blast database <br>
+```bash
 makeblastdb -in MyChloroplast.fasta -dbtype nucl
 ```
-run the self blast
-```
+Run the self blast <br>
+```bash
 blastn -db MyChloroplast.fasta -query MyChloroplast.fasta -outfmt 6 -out Mychloroplast2mychloroplast.blastout
 ```
-How much of the assembly is identical? This shows the top best hit which is everything and then the next best hits which are reciprocal best hits
-```
-qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore
-Utg177960       Utg177960       100.000 268827  0       0       1       268827  1       268827  0.0     4.964e+05
-Utg177960       Utg177960       99.980  56113   0       7       159146  215251  1       56109   0.0     1.036e+05
-Utg177960       Utg177960       99.980  56113   0       7       1       56109   159146  215251  0.0     1.036e+05
-Utg177960       Utg177960       99.983  52625   1       7       215252  267872  144613  197233  0.0     97123
-Utg177960       Utg177960       99.983  52625   1       7       144613  197233  215252  267872  0.0     97123
-```
-So there are two duplicate regions from 1-56109 and 215252-267872, lets extract the remaining sequence
-```
+How much of the assembly is identical? The top line will always be the whole assembly, but the next best hits which are reciprocal best hits that will tell us the positions of duplication. <br>
+
+| qseqid     | sseqid     | pident  | length | mismatch | gapopen | qstart  | qend    | sstart  | send    | evalue | bitscore  |
+|------------|------------|---------|--------|----------|---------|---------|---------|---------|---------|--------|-----------|
+| Utg177960  | Utg177960  | 100.000 | 268827 | 0        | 0       | 1       | 268827  | 1       | 268827  | 0.0    | 4.964e+05 |
+| Utg177960  | Utg177960  | 99.980  | 56113  | 0        | 7       | 159146  | 215251  | 1       | 56109   | 0.0    | 1.036e+05 |
+| Utg177960  | Utg177960  | 99.980  | 56113  | 0        | 7       | 1       | 56109   | 159146  | 215251  | 0.0    | 1.036e+05 |
+| Utg177960  | Utg177960  | 99.983  | 52625  | 1        | 7       | 215252  | 267872  | 144613  | 197233  | 0.0    | 97123     |
+| Utg177960  | Utg177960  | 99.983  | 52625  | 1        | 7       | 144613  | 197233  | 215252  | 267872  | 0.0    | 97123     |
+<br>
+
+So there are two duplicate regions from 1-56109 and 215252-267872, lets extract the remaining sequence. <br> 
+```bash
 echo "Utg177960 56109 215252" |cdbyank sample_06Assembly.fasta.cidx -R |bioawk -c fastx '{print $name,length($seq)}' >UnpolishedMyChloroplastDeduplicated.fasta
 ```
-**Circularize with circlator**
+**Circularize with circlator** <br>
+This rotates the circular genome assembly so that it starts at a standard gene (*dnaA*), ensuring consistent start coordinates across species. <br>
 ```
 ml micromamba; micromamba activate circlator
 circlator fixstart UnpolishedMyChloroplastDeduplicated.fasta MyReOrientedChloroplastGenome
 ```
-**Polish chloroplast assembly**
-```
-/work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly/Unicycler/ChloroHuge
-
+**Polish chloroplast assembly** <br>
+Softlink the Minimap to sorted bam script *see above* <br>
+```bash
 ln -s ../runMinimapNbamSort.sh
+```
+Align the reads, sort and index <br>
+```bash
 sh runMinimapNbamSort.sh MitoNanopore3kRaw.fastq ReOrientedChloroplastGenome.fasta
+```
+Polish the chloroplast genome<br>
+```
 echo " ml pilon ; java -Xmx190g -Djava.io.tmpdir=TEMP -jar  /opt/rit/el9/20230413/app/linux-rhel9-x86_64_v3/gcc-11.2.1/pilon-1.22-iojt4j5x62smcab6j4mjn77ejfqimebo/bin/pilon-1.22.jar --genome MyReOrientedChloroplastGenome.fasta --unpaired MitoNanopore3kRaw_ReOrientedChloro_minimap2_sorted.bam --outdir /work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly/Unicycler/  --changes --fix all --threads 36  ">pilonAllChloro.sh
 ```
 
-**Results of assembly and polishing**
-```
-new_Assemblathon.pl MyReOrientedChloroplastGenomePilon.fasta
+**Results of assembly and polishing** <br>
 
+The new_Assemblathon.pl script is freely available here: https://github.com/ISUgenomics/common_scripts/blob/master/new_Assemblathon.pl <br>
+
+```bash
+new_Assemblathon.pl MyReOrientedChloroplastGenomePilon.fasta
+```
+Results
+```
 ---------------- Information for assembly 'MyReOrientedChloroplastGenome.fasta' ----------------
 
 
@@ -686,4 +731,5 @@ new_Assemblathon.pl MyReOrientedChloroplastGenomePilon.fasta
                                          scaffold %non-ACGTN       0.00
                              Number of scaffold non-ACGTN nt          0
 ```
+
 
