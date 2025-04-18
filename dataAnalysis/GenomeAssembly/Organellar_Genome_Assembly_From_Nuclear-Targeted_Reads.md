@@ -280,7 +280,7 @@ To prepare this tutorial I created >100 assemblies, though you may achieve good 
 for f in *fastq; do echo "ml micromamba; micromamba activate flye; flye --nano-raw $f --threads 36 --out-dir ${f%.*}FlyeOut --genome-size 800000 --meta --scaffold" -m 2000 ; done >flye.sh
 ```
 
-**Generate Miniasm Assemblies**
+**Generate Miniasm Assemblies** 
 ```bash
 for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";done >miniasmAssemblies.sh
 ```
@@ -571,9 +571,10 @@ samtools index ${outname%.*}_sorted.bam
 
 </details>
 
+**Install Pilon**<br>
+
 <details>
 
-**Install Pilon**<br>
 ```
 micromamba create -y -n pilon-env pilon=1.24 openjdk=8 -c bioconda -c conda-forge
 micromamba activate pilon-env
@@ -618,7 +619,7 @@ Results
                              Number of scaffold non-ACGTN nt          0
 ```
 
-# Find the chloroplast assemblies in our mitochondrial assemblies
+# Find the chloroplast genome within our assembled sequences
 
 With all of the assemblies you we've made trying to assemble the mitochondria, we most likely assembled a chloroplast genome too, as they are much simpler than plant mitochondria. Let's align the previously published chloroplast genome to the assemblies to see if we have some assembled. Note if you do not have a published version of your chloroplast assembly, you can use the same approach as what we did for the mitochondrial genome. 
 
