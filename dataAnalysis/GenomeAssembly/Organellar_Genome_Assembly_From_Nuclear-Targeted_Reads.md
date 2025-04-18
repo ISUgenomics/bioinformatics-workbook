@@ -287,7 +287,7 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
 
 AssembleMitoMiniasm.sh
 
-<details><summary></summary>
+<details><summary>Details</summary>
 
 ```bash
 #!/bin/bash
