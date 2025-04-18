@@ -287,7 +287,7 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
 
 * AssembleMitoMiniasm.sh
 
-<details>
+<details><summary></summary>
 
 ```bash
 
@@ -333,7 +333,6 @@ echo "Converting GFA to FASTA..."
 awk '/^S/{print ">"$2"\n"$3}' "$OUTDIR/${PREFIX}.gfa" > "$OUTDIR/${PREFIX}.final.fasta"
 
 echo "Assembly complete! Output files are in $OUTDIR"
-
 ```
 
 </details>
