@@ -338,8 +338,10 @@ echo "Assembly complete! Output files are in $OUTDIR"
 
 </details>
 
-**Generate CANU 2.2 assemblies** <br>
-Note here that you will have to estimate your mitochondrial genome's size. Mine is too large, as I expected to get reads for the chloroplast genome as well. <br>
+**Generate CANU 2.2 assemblies** 
+
+Note here that you will have to estimate your mitochondrial genome's size. Mine is too large, as I expected to get reads for the chloroplast genome as well.
+
 ```bash
 for f in sample*fastq; do echo "ml micromamba; micromamba activate canu-env; canu -p mito -d "${f%.*}"CanuOut genomeSize=550k -nanopore-raw "$f ;done >canu.sh
 ```
