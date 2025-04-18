@@ -1,5 +1,5 @@
 ---
-title: Extracting and Assemble the Mitochondrial Genome from Nuclear-targeted Nanopore Reads 
+title: Extracting and Assembling a Mitochondrial and Chloroplast Genome from Nuclear-targeted Nanopore Reads 
 layout: single
 author: Rick Masonbrink
 author_profile: true
@@ -110,7 +110,7 @@ micromamba activate seqtk
 
 ### 1. Extract reads from related mitochondrial genome mapping with at least 2kb alignment length to the using Seqtk
 
-The length of the alignment filter is to get rid of any nuclear integrated mitochondrial genomic fragments. If your genome assembly has very few or small NUMTs or NUMPs then, this is likley the easiest way to obtain an organelle-targeted set of reads from a nuclear-targeted set of reads.
+The length of the alignment filter is to get rid of any nuclear integrated mitochondrial genomic fragments. If your genome assembly has very few or small NUMTs or NUMPs then, this is likely the easiest way to obtain an organelle-targeted set of reads from a nuclear-targeted set of reads.
 
 ```bash
 less trimmed_5kplus.fq_RelatedNCBIMitochondrialGenomeSequences_minimap2.paf |awk -F"\t" '($4-$3)>2000 {print $1}' |sort|uniq |seqtk subseq trimmed_5kplus.fq.gz - >MitoNanopore2k.fastq
@@ -213,7 +213,7 @@ python3 setup.py install --prefix=/work/gif3/masonbrink/USDA/04_MitochondrialIso
 
 </details>
 
-**Install FLYE assembler** <br>
+**Install Flye assembler** <br>
 
 <details>
 
@@ -230,7 +230,7 @@ micromamba activate flye
 
 ```bash
  micromamba -n miniasm -c bioconda::miniasm
- micrombamba activate miniasm
+ micromamba activate miniasm
 ```
 
 </details>
@@ -275,7 +275,7 @@ micromamba install -c bioconda -c conda-forge circlator
 
 To prepare this tutorial I created >100 assemblies, though you may achieve good results with just one run of it. Sometimes the filtered fastq file is too small to split, and was thus used as a whole. You also do not need to install all of these assemblers, one or a few may be fine. 
 
-**Generate FLYE Assemblies**
+**Generate Flye Assemblies**
 ```bash
 for f in *fastq; do echo "ml micromamba; micromamba activate flye; flye --nano-raw $f --threads 36 --out-dir ${f%.*}FlyeOut --genome-size 800000 --meta --scaffold" -m 2000 ; done >flye.sh
 ```
@@ -362,7 +362,7 @@ for f in *fastq; do echo "unicycler -l "$f" -t 36 --mode bold -o "${f%.*}"Unicyc
 # Evaluation of Assemblies 
 
 ### Acquire sapindaceae mitochondrial genes
-Downloaded protein sequences from annotated Sapindus mukorossi mitochondrion
+Downloaded protein sequences from annotated Sapindus mukorossi mitochondrion <br>
 ```bash
 vi SmukorossiProteins.fasta
 grep -c ">" SmukorossiProteins.fasta
