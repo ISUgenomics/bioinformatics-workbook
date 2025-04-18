@@ -64,6 +64,7 @@ https://www.ncbi.nlm.nih.gov/Taxonomy/CommonTree/wwwcmt.cgi
 ##### Install Minimap2
 
 <details>
+
 Creates environment named minimap2, and calls bioconda to install minimap2. Activate your environment to access minimap.
 
 ```bash
@@ -116,7 +117,7 @@ less trimmed_5kplus.fq_RelatedNCBIMitochondrialGenomeSequences_minimap2.paf |awk
 ```
 
 ### 2. Or we can map the reads to the nuclear genome and extract only those that did not map. 
-The thought here is that if there is not too contamination in the reads, we will be able to eliminate all reads that are nuclear and keep only low-quality reads, organelle reads, and contamination reads to use for organelle genome assembly.
+The thought here is that if there is not too much contamination in the reads, we will be able to eliminate all reads that are nuclear and keep only low-quality reads, organelle reads, and contamination reads to use for organelle genome assembly.
 
 
 Softlink genome, reads and mapping script
@@ -145,6 +146,7 @@ seqtk subseq trimmed_5kplus.fq OrganelleReads.list >OrganelleReads.fastq
 ### 3. Or we can identify reads that have mitochondrial genes using miniprot and assemble those reads.
 Here we will use the predicted proteins from the *Sapindus mukorossi* mitchondrial genome to identify mitochondrial reads among D. viscosa's nuclear-targeted fastq file. <br>
 Note that in my case this generated a small number of reads that were not of sufficient depth to split, so I ran assemblies on this subset of reads without splitting the fastq files.<br>
+
 Convert fastq to fasta
 ```bash
 micromamba activate seqtk; seqtk seq -a trimmed_5kplus.fq >trimmed_5kplus.fasta
@@ -168,7 +170,8 @@ seqtk subseq trimmed_5kplus.fq MiniprotOrganelleReads.list >MiniprotOrganelleRea
 
 <details>
 
-Trycycler provides positional splitting of a fastq file, leading to a higher-quality assembly consensus.
+Trycycler provides positional splitting of a fastq file, leading to a higher-quality assembly consensus. <br>
+
 ```
 micromamba create -c bioconda -c conda-forge -n trycycler trycycler
 micromamba activate trycycler
@@ -176,7 +179,7 @@ micromamba activate trycycler
 
 </details>
 
-Here trycycler will generate 12 fastq files in the read_subsetNuclearClean and read_subsets folders, that are close to equal in size. If depth is sufficient, then you will get split files without any redundant read overlap.
+Here trycycler will generate 12 fastq files in the read_subsetNuclearClean and read_subsets folders, that are close to equal in size. If depth is sufficient, then you will get split files without any redundant read overlap. <br>
 ```bash
 trycycler subsample --reads OrganelleReads.fastq --out_dir read_subsetNuclearClean  -t 36
 trycycler subsample --reads MitoNanopore2k.fastq --out_dir read_subsets -t 36
@@ -193,7 +196,7 @@ etc...
 
 After choosing your method to split the fastq files, we will use these to generate multiple independent assemblies. Here I will be using Unicycler, Miniasm, Raven, CANU, and FLYE to generate different assemblies. One or a few assemblers may be fine for your purposes.
 
-**Install Unicycler assembler**
+**Install Unicycler assembler** <br>
 
 <details>
 
@@ -210,7 +213,7 @@ python3 setup.py install --prefix=/work/gif3/masonbrink/USDA/04_MitochondrialIso
 
 </details>
 
-**Install FLYE assembler**
+**Install FLYE assembler** <br>
 
 <details>
 
@@ -221,7 +224,7 @@ micromamba activate flye
 
 </details>
 
-**Install Miniasm assembler**
+**Install Miniasm assembler** <br>
 
 <details>
 
@@ -232,7 +235,7 @@ micromamba activate flye
 
 </details>
 
-**Install Raven assembler**
+**Install Raven assembler** <br>
 
 <details>
 
@@ -243,7 +246,7 @@ micromamba activate raven
 
 </details>
 
-**Install CANU assembler**
+**Install CANU assembler** <br>
 
 <details>
 
@@ -256,7 +259,8 @@ micromamba activate canu-env
 
 **Install Circlator**
 
-Circlator will circularize assemblies at the origin for better comparisons to published assemblies.
+Circlator will rotate circular assemblies so that the genome starts at a standard gene (*dnaA* usually ) for better comparisons to published assemblies. <br>
+
 <details>
 
 ```bash
@@ -732,4 +736,31 @@ Results
                              Number of scaffold non-ACGTN nt          0
 ```
 
+# Conclusion
 
+This tutorial has outlined a comprehensive workflow for assembling mitochondrial and chloroplast genomes with nuclear-targeted sequencing reads. Researchers can now effectively isolate, assemble, and refine organellar genomes even if they were not the focus of the original research. Key steps include the selection of appropriate assemblers based on read types, deduplication of circular assemblies, circularization of the genome, and polishing to correct errors and improve accuracy. This tutorial facilitates the generation of high-quality mitochondrial genome assemblies, enabling better downstream comparative genomics analyses.
+
+### Software Citations and Resources
+
+| Tool       | Citation                                                                                                                                  | GitHub Repository                                                    |
+|------------|-------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| Unicycler  | Wick RR, Judd LM, Gorrie CL, Holt KE. *Unicycler: Resolving bacterial genome assemblies from short and long sequencing reads*. PLoS Comput Biol. 2017;13(6):e1005595. doi:[10.1371/journal.pcbi.1005595](https://doi.org/10.1371/journal.pcbi.1005595) | [Unicycler GitHub](https://github.com/rrwick/Unicycler) |
+| Miniasm    | Li H. *Minimap and miniasm: fast mapping and de novo assembly for noisy long sequences*. Bioinformatics. 2016;32(14):2103–2110. doi:[10.1093/bioinformatics/btw152](https://doi.org/10.1093/bioinformatics/btw152) | [Miniasm GitHub](https://github.com/lh3/miniasm) |
+| Flye       | Kolmogorov M, Yuan J, Lin Y, Pevzner PA. *Assembly of long, error-prone reads using repeat graphs*. Nat Biotechnol. 2019;37(5):540–546. doi:[10.1038/s41587-019-0072-8](https://doi.org/10.1038/s41587-019-0072-8) | [Flye GitHub](https://github.com/mikolmogorov/Flye) |
+| Canu       | Koren S, Walenz BP, Berlin K, Miller JR, Phillippy AM. *Canu: scalable and accurate long-read assembly via adaptive k-mer weighting and repeat separation*. Genome Res. 2017;27(5):722–736. doi:[10.1101/gr.215087.116](https://doi.org/10.1101/gr.215087.116) | [Canu GitHub](https://github.com/marbl/canu) |
+| Raven      | Vaser R, Šikić M. *Raven: a de novo genome assembler for long reads*. bioRxiv. 2020. doi:[10.1101/2020.08.07.242461](https://doi.org/10.1101/2020.08.07.242461) | [Raven GitHub](https://github.com/lbcb-sci/raven) |
+| Circlator  | Hunt M, Silva ND, Otto TD, Parkhill J, Keane JA, Harris SR. *Circlator: automated circularization of genome assemblies using long sequencing reads*. Genome Biol. 2015;16:294. doi:[10.1186/s13059-015-0849-0](https://doi.org/10.1186/s13059-015-0849-0) | [Circlator GitHub](https://github.com/sanger-pathogens/circlator) |
+| Pilon      | Walker BJ, Abeel T, Shea T, et al. *Pilon: an integrated tool for comprehensive microbial variant detection and genome assembly improvement*. PLoS One. 2014;9(11):e112963. doi:[10.1371/journal.pone.0112963](https://doi.org/10.1371/journal.pone.0112963) | [Pilon GitHub](https://github.com/broadinstitute/pilon) |
+
+
+### Additional Resources
+
+I purposefully made this tutorial with generic assemblers so that specific software is not needed for organelle assembly. However, there are tools specifically designed for mitochondrial genome assembly.
+
+* **MitoZ**: [https://github.com/linzhi2013/MitoZ](https://github.com/linzhi2013/MitoZ)
+* **GetOrganelle**: [https://github.com/Kinggerm/GetOrganelle](https://github.com/Kinggerm/GetOrganelle)
+* **NOVOPlasty**: [https://github.com/ndierckx/NOVOPlasty](https://github.com/ndierckx/NOVOPlasty)
+
+
+
+[Back to the Assembly and Annotation Index page](../GenomeAnnotation/annotation_and_assembly_index.md)
