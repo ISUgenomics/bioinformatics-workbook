@@ -289,7 +289,50 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
 
 <details><summary>Details</summary>
 
+<pre><code>
+#!/bin/bash
 
+#Ensure script stops on errors
+set -e
+
+#Check if correct number of arguments are provided
+if [[ $# -ne 2 ]]; then
+    echo "Usage: sh assemble_mito.sh <reads.fastq> <output_prefix>"
+    exit 1
+fi
+
+#Assign command-line arguments to variables
+READS="$1"
+PREFIX="$2"
+
+#Create an output directory
+OUTDIR="${PREFIX}_output"
+mkdir -p "$OUTDIR"
+
+#Check if input file exists
+if [[ ! -f "$READS" ]]; then
+    echo "Error: File '$READS' not found!"
+    exit 1
+fi
+
+#Convert FASTQ to FASTA and save in the output directory
+echo "Converting FASTQ to FASTA..."
+awk 'NR%4==1 {print ">" substr($0,2)} NR%4==2 {print}' "$READS" > "$OUTDIR/${PREFIX}_reads.fasta"
+
+#Run minimap2 for read overlap
+echo "Running minimap2..."
+ml micromamba;micromamba activate minimap2;minimap2 -x ava-ont -t 36 -k 19 -w5  "$OUTDIR/${PREFIX}_reads.fasta" "$OUTDIR/${PREFIX}_reads.fasta" > "$OUTDIR/${PREFIX}.paf"
+
+#Run miniasm
+echo "Running miniasm..."
+ml micromamba; micromamba activate miniasm;miniasm;miniasm -f "$OUTDIR/${PREFIX}_reads.fasta" "$OUTDIR/${PREFIX}.paf" -s 500 > "$OUTDIR/${PREFIX}.gfa"
+
+#Convert GFA to FASTA
+echo "Converting GFA to FASTA..."
+awk '/^S/{print ">"$2"\n"$3}' "$OUTDIR/${PREFIX}.gfa" > "$OUTDIR/${PREFIX}.final.fasta"
+
+echo "Assembly complete! Output files are in $OUTDIR"
+</code></pre>
 
 </details>
 
