@@ -290,7 +290,7 @@ AssembleMitoMiniasm.sh
 <details>
 
 ```bash
-#############################################################################################################################
+
 #!/bin/bash
 
 # Ensure script stops on errors
@@ -333,7 +333,7 @@ echo "Converting GFA to FASTA..."
 awk '/^S/{print ">"$2"\n"$3}' "$OUTDIR/${PREFIX}.gfa" > "$OUTDIR/${PREFIX}.final.fasta"
 
 echo "Assembly complete! Output files are in $OUTDIR"
-#################################################################################################################################
+
 ```
 
 </details>
