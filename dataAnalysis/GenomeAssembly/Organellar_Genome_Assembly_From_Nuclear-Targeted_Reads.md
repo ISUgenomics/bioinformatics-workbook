@@ -8,9 +8,9 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-In this tutorial, we'll walk through extracting and assembling the mitochondrial genome of Dodonaea viscosa using Oxford Nanopore reads.
-Measures are always taken to remove organelles prior to sequencing, though there are usually enough long reads to create single-contig, complete assemblies. To avoid confounding our assemblies, we will be first employ strategies to remove NUMTs (nuclear mitochondrial DNA segments) and NUMPTs (nuclear plastid DNA segments) from our reads.
-What Are NUMTs and NUPTs?
+In this tutorial, we'll walk through extracting and assembling the mitochondrial genome of *Dodonaea viscosa* using Oxford Nanopore reads.
+Measures are always taken to remove organelles prior to sequencing, though there are usually enough long reads to create single-contig, complete assemblies. To avoid confounding our assemblies, we will be first employ strategies to remove NUMTs (nuclear mitochondrial DNA segments) and NUPTs (nuclear plastid DNA segments) from our reads.
+What are NUMTs and NUPTs?
 
 * NUMTs (Nuclear Mitochondrial DNA) are segments of mitochondrial DNA that have been inserted into the nuclear genome and can vary greatly across species. These can be present in multiple copies with varying degrees of sequence divergence from the functional mitochondrial genome.
 * NUPTs (Nuclear Plastid DNA) are the plastid equivalent.
@@ -21,11 +21,11 @@ Then I will show you how to install and assemble these reads with five different
 - **Flye** – Probably the best at recovering circular mitochondrial genomes from whole-genome reads, even in the presence of NUMTs, due to good repeat handling and built-in polishing.
 - **Canu** – Accurate but much slower; assembles mitochondrial genomes well if coverage is high, can struggle with NUMTs.
 - **Raven** – Fast and memory-efficient; often produces clean mitochondrial contigs even from mixed read sets, though may miss complex repeats or low coverage regions.
-- 
+
 # Setup: Organize your workspace
 
 Where are your nuclear-targeted or other long reads? <br>
-I have a set of reads I have already been trimmed for adapters, sequence quality, and a minimum of 5kb in length.
+I have a set of reads I have already been trimmed for adapters, sequence quality, and a minimum of 5kb in length. Keeping your input files at the top of your repo is good practice. 
 ```
 /work/gif3/sharu/viscosa/03_Porechop/trimmed_5kplus.fq
 ```
@@ -33,15 +33,14 @@ Where is your nuclear genome?
 ```
 MitoRemovedpolished_3.fasta
 ```
-
-In what location is this analyis being performed?
+Where on the HPC are you storing these files for future reference?
 ```
 /work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly
 ```
 
 # Find related species with an assembled mitochondrial genome
 
-To aid in assembly and annotation, find mitochondrial genomes from related species.If not from the same genus, then the same family, etc.
+To aid in assembly and annotation, find mitochondrial genomes from related species.If not from the same genus, then the same family, etc. My reads are from *Dodonaea viscosa*, a plant species in the sapindaceae.
 
   1. Search the NCBI Nucleotide database for "Sapindaceae mitochondrion genome."
 
@@ -49,10 +48,10 @@ To aid in assembly and annotation, find mitochondrial genomes from related speci
 
   3. Download sequences for related species. Some examples in my case:
 
-* Xanthoceras sorbifolium
-* Nephelium lappaceum
-* Litchi chinensis
-* Sapindus mukorossi 
+* *Xanthoceras sorbifolium*
+* *Nephelium lappaceum*
+* *Litchi chinensis*
+* *Sapindus mukorossi* 
   
 Once you find a few assemblies of related species, you can visualize how they are related by plotting 'genus species' names into the NCBI Taxonomy Browser tool: Common Tree
 
@@ -62,20 +61,27 @@ https://www.ncbi.nlm.nih.gov/Taxonomy/CommonTree/wwwcmt.cgi
 # Identifying organellar genomic reads from nuclear-targeted reads
 
 ##### Install Minimap2
+
 <details>
-Creates environment named minimap2, and calls bioconda to install minimap2. Activate environment to access minimap.
-```
+Creates environment named minimap2, and calls bioconda to install minimap2. Activate your environment to access minimap.
+
+```bash
 micromamba create -n minimap2 -c bioconda minimap2
 micromamba activate minimap2
 ```
+
 </details>
 
 ### Map reads to related species' mitochondrial genome
-```
+
+```bash
 sh runMinimap.sh trimmed_5kplus.fq RelatedNCBIMitochondrialGenomeSequences.fasta
 ```
 runMinimap.sh
-```
+
+<details>
+
+```bash
 ##############################################################################
 #!/bin/bash
 query=$1
@@ -86,61 +92,80 @@ minimap2 -x map-ont -t 36 $target $query > ${outname}
 ##############################################################################
 ```
 
+</details>
+
 ##### Install Seqtk
+
 <details>
 
 We will be using Seqtk to extract fastq sequences. This code creates an environment named seqtk, and calls bioconda to install seqtk. Activate environment to access seqtk.
-```
+```bash
 micromamba create -n seqtk -c bioconda seqtk
 micromamba activate seqtk
 ```
+
 </details>
 
-### Extract reads from mapping with at least 2kb alignment length using Seqtk
+### 1. Extract reads from related mitochondrial genome mapping with at least 2kb alignment length to the using Seqtk
 
 The length of the alignment filter is to get rid of any nuclear integrated mitochondrial genomic fragments. If your genome assembly has very few or small NUMTs or NUMPs then, this is likley the easiest way to obtain an organelle-targeted set of reads from a nuclear-targeted set of reads.
 
 ```bash
-less trimmed_5kplus.fq_RelatedNCBIMitochondrialGenomeSequences_minimap2.paf |awk -F"\t" '($4-$3)>2000 {print $1}' |uniq |seqtk subseq trimmed_5kplus.fq.gz - >MitoNanopore2k.fastq
+less trimmed_5kplus.fq_RelatedNCBIMitochondrialGenomeSequences_minimap2.paf |awk -F"\t" '($4-$3)>2000 {print $1}' |sort|uniq |seqtk subseq trimmed_5kplus.fq.gz - >MitoNanopore2k.fastq
 ```
 
-### As an alternative to the step above, we can map the reads to the nuclear genome and extract only those that did not map. The thought here is that if there is not too contamination in the reads, we will be able to eliminate all reads that are nuclear and keep only low-quality reads, organelle reads, and contamination reads to use for organelle genome assembly.
+### 2. Or we can map the reads to the nuclear genome and extract only those that did not map. 
+The thought here is that if there is not too contamination in the reads, we will be able to eliminate all reads that are nuclear and keep only low-quality reads, organelle reads, and contamination reads to use for organelle genome assembly.
 
-```
-#softlink genome, reads and mapping script
+
+Softlink genome, reads and mapping script
+```bash
 ln -s ../../03_DononeaViscosaDeposition/MitoRemovedpolished_3.fasta
 ln -s ../trimmed_5kplus.fq
 ln -s ../runMinimap.sh
-
-#map reads to nuclear genome
+```
+Map reads to nuclear genome
+```bash
 echo "sh runMinimap.sh trimmed_5kplus.fq MitoRemovedpolished_3.fasta" >Map2Nucleus.sh
-
-#get names of all reads in the dataset
+```
+Get names of all reads in the dataset
+```bash
 awk 'NR % 4 == 1' trimmed_5kplus.fq |sed 's/^@//g'  |awk '{print $1}' >AllTrimmedReadNamesFormatted.list
-
+```
+Get the names of the reads that are not mapping to the nuclear genome 
+```bash
 cat AllTrimmedReadNamesFormatted.list <(awk -F"\t" '$12==60 && $10>500' {print $1}' trimmed_5kplus_MitoRemovedpolished_3_minimap2.paf|uniq ) |sort |uniq -c |awk '$1==1 {print $2}' >OrganelleReads.list
+```
+Extract those reads that did not map
+```bash
 seqtk subseq trimmed_5kplus.fq OrganelleReads.list >OrganelleReads.fastq
 ```
 
-### As an alternative to the previous two steps, we can identify reads that have mitochondrial genes using miniprot and assemble those reads.
-
-```
-#convert fastq to fasta
+### 3. Or we can identify reads that have mitochondrial genes using miniprot and assemble those reads.
+Here we will use the predicted proteins from tje Sapindus mukorossi mitchondrial genome to identify mitochondrial reads among D. viscosa's nuclear-targeted fastq file. <br>
+Note that in my case this generated a small number of reads that wre not of sufficient depth to split, so I ran assemblies on this subset of reads without splitting the fastq files.<br>
+Convert fastq to fasta
+```bash
 micromamba activate seqtk; seqtk seq -a trimmed_5kplus.fq >trimmed_5kplus.fasta
-
-# map proteins to the reads
-echo "ml micromamba; micromamba activate miniprot;miniprot -t 64 -S trimmed_5kplus.fasta NamedSmukorossiProteins.fasta >SmukrossiProteins2OrganelleReads.paf " >miniprotToTrimmed5kplus.sh
-
-#Grab all read names that have a mitochondrial protein alignment
-less SmukrossiProteins2OrganelleReads.paf |cut -f 6 |sort |uniq >MiniprotOrganelleReads.list
-
-#extract the reads with seqtk
-seqtk subseq trimmed_5kplus.fq MiniprotOrganelleReads.list >MiniprotOrganelleReads.fastq
-
-#note that this generated a very small number of reads that I could not split to sufficient depth. I ran this example without splitting before assembly.
 ```
+Map proteins to the reads
+```bash
+echo "ml micromamba; micromamba activate miniprot;miniprot -t 64 -S trimmed_5kplus.fasta NamedSmukorossiProteins.fasta >SmukrossiProteins2OrganelleReads.paf " >miniprotToTrimmed5kplus.sh
+```
+Grab all read names that have a mitochondrial protein alignment
+```bash
+less SmukrossiProteins2OrganelleReads.paf |cut -f 6 |sort |uniq >MiniprotOrganelleReads.list
+```
+Extract the reads with seqtk
+```bash
+seqtk subseq trimmed_5kplus.fq MiniprotOrganelleReads.list >MiniprotOrganelleReads.fastq
+```
+### Create subsets of reads from different positions in the fastq file using Trycycler
 
-##### Install Trycycler
+
+**Install Trycycler**
+
+<details>
 
 Trycycler provides positional splitting of a fastq file, leading to a higher-quality assembly consensus.
 ```
@@ -148,27 +173,27 @@ micromamba create -c bioconda -c conda-forge -n trycycler trycycler
 micromamba activate trycycler
 ```
 
-### Create subsets of reads from different positions in the fastq file using Trycycler
+</details>
 
 Here trycycler will generate 12 fastq files in the read_subsetNuclearClean and read_subsets folders, that are close to equal in size and without any read overlap between samples
 ```
 trycycler subsample --reads OrganelleReads.fastq --out_dir read_subsetNuclearClean  -t 36
 trycycler subsample --reads MitoNanopore2k.fastq --out_dir read_subsets -t 36
 ```
-Alternatively generate random subsets with Seqtk by changing the seed number.
+Alternatively generate random subsets with Seqtk by changing the seed number (-s) and proportion.
 ```
 # By modifying '-s' and your output filename, you can generate different subsets of 10% of the reads.   
 seqtk sample -s100 MitoNanopore2k.fastq 0.1 > subset_00.fastq
 seqtk sample -s101 MitoNanopore2k.fastq 0.1 > subset_01.fastq
-etc
-
+etc...
 ```
 
 # Installing software for creating assemblies from read subsets
 
-After choosing your method to split the fastq files, we will need to use these to generate multiple independent assemblies.  Here I will be using Unicycler, Miniasm, Raven, CANU, and FLYE to generate different assemblies. One or a few may be fine for your purposes.
+After choosing your method to split the fastq files, we will use these to generate multiple independent assemblies. Here I will be using Unicycler, Miniasm, Raven, CANU, and FLYE to generate different assemblies. One or a few may be fine for your purposes.
 
-##### Install Unicycler assembler
+**Install Unicycler assembler**
+
 <details>
 
 ```bash
@@ -184,52 +209,57 @@ python3 setup.py install --prefix=/work/gif3/masonbrink/USDA/04_MitochondrialIso
 
 </details>
 
-##### Install FLYE assembler
+**Install FLYE assembler**
 
 <details>
 
-```
+```bash
 micromamba -n flye -c bioconda::flye
 micromamba activate flye
 ```
 
 </details>
 
-##### Install Miniasm assembler 
+**Install Miniasm assembler**
 
 <details>
-```
+```bash
  micromamba -n miniasm -c bioconda::miniasm
  micrombamba activate miniasm
 ```
 </details>
 
-##### Install Raven assembler
+**Install Raven assembler**
 
 <details>
-```
+```bash
 micromamba create -n raven -c bioconda -c conda-forge raven-assembler
 micromamba activate raven
 ```
 </details>
 
-##### Install CANU
+**Install CANU assembler**
 
 <details>
-```
+
+```bash
 micromamba create -n canu-env -c bioconda -c conda-forge canu
 micromamba activate canu-env
 ```
+
 </details>
 
-##### Install Circlator to circularize assemblies at the origin for better comparison
+**Install Circlator**
 
+Circlator will circularize assemblies at the origin for better comparisons to published assemblies.
 <details>
-```
+
+```bash
 micromamba create -n circlator-env python=3.7 -y
 micromamba activate circlator-env
 micromamba install -c bioconda -c conda-forge circlator
 ```
+
 </details>
 
 # Use multiple assemblers to generate genome assemblies of each read subset
@@ -237,16 +267,17 @@ micromamba install -c bioconda -c conda-forge circlator
 To prepare this tutorial I created >100 assemblies, though you may achieve good results with just one run of it. Sometimes the filtered fastq file is too small to split, and was thus used as a whole. You also do not need to install all of these assemblers, one or a few may be fine. 
 
 **Generate FLYE Assemblies**
-```
+```bash
 for f in *fastq; do echo "ml micromamba; micromamba activate flye; flye --nano-raw $f --threads 36 --out-dir ${f%.*}FlyeOut --genome-size 800000 --meta --scaffold" -m 2000 ; done >flye.sh
 ```
 
 **Generate Miniasm Assemblies**
-```
+```bash
 for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";done >miniasmAssemblies.sh
 ```
 
 AssembleMitoMiniasm.sh
+
 <details>
 
 ```bash
@@ -299,17 +330,18 @@ echo "Assembly complete! Output files are in $OUTDIR"
 </details>
 
 **Generate CANU 2.2 assemblies**
-```
+Note here that you will have to estimate your mitochondrial genome's size. Mine is too large, as I expected to get reads for the chloroplast genome as well.
+```bash
 for f in sample*fastq; do echo "ml micromamba; micromamba activate canu-env; canu -p mito -d "${f%.*}"CanuOut genomeSize=550k -nanopore-raw "$f ;done >canu.sh
 ```
 
 **Generate Raven assemblies**
-```
+```bash
  for f in sample*fastq; do echo "ml micromamba; micromamba activate raven;mkdir "${f%.*}"Raven ; cd "${f%.*}"Raven ; ln -s ../"$f"; raven "$f" >"${f%.*}"Assembly.fasta" ;done  >raven.sh   
 ```
 
 **Generate Unicycler Assemblies**
-```
+```bash
 # current location
 /work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly/Unicycler/
 source bin/activate
@@ -321,8 +353,8 @@ for f in *fastq; do echo "unicycler -l "$f" -t 36 --mode bold -o "${f%.*}"Unicyc
 # Evaluation of Assemblies 
 
 ### Acquire sapindaceae mitochondrial genes
-```
-#Downloaded protein sequences from annotated Sapindus mukorossi mitochondrion
+Downloaded protein sequences from annotated Sapindus mukorossi mitochondrion
+```bash
 vi SmukorossiProteins.fasta
 grep -c ">" SmukorossiProteins.fasta
 41
@@ -334,9 +366,9 @@ awk '{if(NF>1) {print ">"$2} else {print $0}}' SmukorossiProteins.fasta >NamedSm
 ### Create a folder of uniquely named genome assemblies
 Get all of the genomes into one folder with unique file names so that we can rerun the same scripts to evaluate them. This is not an essential step, but just makes the evaluation easier when you have so many different attempts. Here I use the "/" as a string separator to rename the files in a softlink. Note that I had three different read subsets, so I had to make sure the names were unique or the softlink would fail.
 
-```
+```bash
 #grabs all the unicycler assemblies and renames them by folder name, essentially by using the "/" as a separator to change the name. 
- for f in ../sample*Unicycler/assembly.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 2| awk '{print $1".fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkUnicycler.sh
+for f in ../sample*Unicycler/assembly.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 2| awk '{print $1".fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkUnicycler.sh
 sh SoftlinkUnicycler.sh
 
 #grabs all flye assemblies and renames by folder name
@@ -353,7 +385,7 @@ for f in ../read_subsets/*Raven/*Assembly.fasta ;do ln -s $f;done
 
 #grabs all the unicycler assemblies and renames them by folder name
 for f in ../read_subsetNuclearClean/*Unicycler/assembly.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk '{print $1"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkUnicycler2.sh
-sh SoftlinkUnicycler.sh
+sh SoftlinkUnicycler2.sh
 
 #grabs all flye assemblies and renames by folder name
 for f in ../read_subsetNuclearClean/*FlyeOut/assembly.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk -F"\t" '{print $0"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkFlye2.sh
@@ -362,55 +394,62 @@ for f in ../read_subsetNuclearClean/*FlyeOut/assembly.fasta; do echo "ln -s "$f 
 for f in ../read_subsetNuclearClean/*MiniasmOut_output/*final.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk -F"\t" '{print $0"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >SoftlinkMiniasm2.sh
 
 #softlinks and renames all canu assemblies # all of these failed due to memory exhaustion
-for f in ../read_subsetsNuclearClean/*CanuOut/mito.contigs.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk -F"\t" '{print $0"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' |less
+for f in ../read_subsetsNuclearClean/*CanuOut/mito.contigs.fasta; do echo "ln -s "$f ; echo $f |sed 's|/|\t|g' |cut -f 3| awk -F"\t" '{print $0"NuclearClean.fasta"}' ;done |tr "\n" " " |sed 's/ln -s/\nln -s/g' >CanuSoftlink2.sh
 
 #softlinks and renames all Raven assemblies so they do not overwrite the ones above
-for f in ../read_subsets/*Raven/*Assembly.fasta ;do ln -s $f ${f%.*}NuclearClean.fasta;done
+for f in ../read_subsets/*Raven/*Assembly.fasta ;do ln -s $f ${f%.*}NuclearClean.fasta;done 
 ```
 
 ### Align mitochondrial proteins to assemblies
 
 Align proteins to the genomes.
-```
+```bash
 for f in *.fasta; do miniprot $f NamedSmukorossiProteins.fasta >${f%.*}.genes; done
 ```
-How many of these 109 assemblies (assemblies for which are not shown) had most of the genes on how many contigs and how large was the longest contig with mapping genes? Note I only printed assemblies with at least 35 unique mitochondrial gene alignments
-```
+How many of these 109 assemblies (all assemblies are not shown) had most of the genes on how many contigs and how large was the longest contig with mapping genes? Note I only printed assemblies with at least 35 unique mitochondrial gene alignments
+```bash
 for f in *genes; do paste <(ls -1 $f) <(cut -f 1 $f |sort|uniq|wc -l) <(cut -f 6 $f|sort|uniq|wc -l)  <(cut -f 7 $f |sort -k1,1nr |awk '{print $1}' ) ;done |awk '$2>35' |less                                     
+```
 
-1kClean60qualAssembly.genes     38      3       339819
-2kRawAssembly.genes     38      1       536045
-3kRawAssembly.genes     38      1       536052
-5kCleanAssembly.genes   38      2       463238
-assembly.genes  38      1       535684
-CleanReads3kAssembly.genes      38      1       535684
-CleanReads5kAssembly.genes      38      2       462995
-Flye5kRawAssembly.genes 38      4       251593
-FlyeMiniprotAssembly.genes      38      4       275765
-RawReads5kAssembly.genes        37      2       372648
-sample_01FlyeOut.genes  36      2       347764
-sample_02Assembly.genes 39      4       470606
-sample_02FlyeOut.genes  38      4       180048
-sample_03Assembly.genes 39      3       463133
-sample_04Assembly.genes 39      4       449804
-sample_04FlyeOut.genes  38      5       257488
-sample_05Assembly.genes 39      5       412423
-sample_05FlyeOut.genes  37      4       205704
-sample_06Assembly.genes 39      4       412399
-sample_06FlyeOut.genes  37      3       225437
-sample_07Assembly.genes 39      3       528267
-sample_07FlyeOut.genes  38      2       381058
-sample_08Assembly.genes 40      6       316564
-sample_08FlyeOut.genes  38      5       123612
-sample_09Assembly.genes 39      4       522057
-sample_09FlyeOut.genes  38      5       229821
-sample_10Assembly.genes 39      5       463042
-sample_10FlyeOut.genes  36      4       128482
-sample_11Assembly.genes 39      6       277342
-sample_11FlyeOut.genes  38      6       163011
-sample_12Assembly.genes 40      6       412414
-sample_12FlyeOut.genes  36      5       252031
-UCManualInterventionRemoveNUMTReads.genes       38      2       462795
+| Assembly Name                                  | Gene Count | Contig Count | Largest Contig |
+|------------------------------------------------|-----------|----------------|------------|
+| 1kClean60qualAssembly.genes                    | 38        | 3              | 339819     |
+| 2kRawAssembly.genes                            | 38        | 1              | 536045     |
+| 3kRawAssembly.genes                            | 38        | 1              | 536052     |
+| 5kCleanAssembly.genes                          | 38        | 2              | 463238     |
+| assembly.genes                                 | 38        | 1              | 535684     |
+| CleanReads3kAssembly.genes                     | 38        | 1              | 535684     |
+| CleanReads5kAssembly.genes                     | 38        | 2              | 462995     |
+| Flye5kRawAssembly.genes                        | 38        | 4              | 251593     |
+| FlyeMiniprotAssembly.genes                     | 38        | 4              | 275765     |
+| RawReads5kAssembly.genes                       | 37        | 2              | 372648     |
+| sample_01FlyeOut.genes                         | 36        | 2              | 347764     |
+| sample_02Assembly.genes                        | 39        | 4              | 470606     |
+| sample_02FlyeOut.genes                         | 38        | 4              | 180048     |
+| sample_03Assembly.genes                        | 39        | 3              | 463133     |
+| sample_04Assembly.genes                        | 39        | 4              | 449804     |
+| sample_04FlyeOut.genes                         | 38        | 5              | 257488     |
+| sample_05Assembly.genes                        | 39        | 5              | 412423     |
+| sample_05FlyeOut.genes                         | 37        | 4              | 205704     |
+| sample_06Assembly.genes                        | 39        | 4              | 412399     |
+| sample_06FlyeOut.genes                         | 37        | 3              | 225437     |
+| sample_07Assembly.genes                        | 39        | 3              | 528267     |
+| sample_07FlyeOut.genes                         | 38        | 2              | 381058     |
+| sample_08Assembly.genes                        | 40        | 6              | 316564     |
+| sample_08FlyeOut.genes                         | 38        | 5              | 123612     |
+| sample_09Assembly.genes                        | 39        | 4              | 522057     |
+| sample_09FlyeOut.genes                         | 38        | 5              | 229821     |
+| sample_10Assembly.genes                        | 39        | 5              | 463042     |
+| sample_10FlyeOut.genes                         | 36        | 4              | 128482     |
+| sample_11Assembly.genes                        | 39        | 6              | 277342     |
+| sample_11FlyeOut.genes                         | 38        | 6              | 163011     |
+| sample_12Assembly.genes                        | 40        | 6              | 412414     |
+| sample_12FlyeOut.genes                         | 36        | 5              | 252031     |
+| UCManualInterventionRemoveNUMTReads.genes      | 38        | 2              | 462795     |
+
+
+
+
 ```
 
 So it looks like I commonly find 38-39 genes in these assemblies, but only two had the expected 40 genes. I ran a few assemblies with varying levels of filtering using all of the reads too, so those are included and some happen to be really good assemblies. The fewest contigs with the most genes seems to occur with assembly.fasta, which is an assembly using all trimmed reads that were able to get a 3kb alignment to the related Smukorossi mitochondrial genome. However, there are a couple assemblies that have all 40 genes, which we may use to incorporate into the singular contig at a later step. 
@@ -492,8 +531,12 @@ circlator fixstart TrimmedCleanMito.fasta ReOriented
 ln -s ../../runMinimapNbamSort.sh
 #use minimap to align reads to the genome to produce a sorted bam file.
 sh runMinimapNbamSort.sh MitoNanopore3kRaw.fastq ReOriented.fasta
+```
+runMinimapNbamSort.sh
 
-#runMinimap.sh
+<details>
+
+```
 ##############################################################################
 #!/bin/bash
 query=$1
@@ -507,6 +550,8 @@ samtools sort  -o ${outname%.*}_sorted.bam -T TEMP --threads 36 ${outname%.*}.ba
 samtools index ${outname%.*}_sorted.bam
 ##############################################################################
 ```
+
+</details>
 
 **Run Pilon on the genome with the aligned reads**
 ```
