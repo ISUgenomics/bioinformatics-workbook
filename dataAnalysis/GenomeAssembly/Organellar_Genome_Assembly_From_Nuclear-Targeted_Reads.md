@@ -285,7 +285,7 @@ for f in *fastq; do echo "ml micromamba; micromamba activate flye; flye --nano-r
 for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";done >miniasmAssemblies.sh
 ```
 
-AssembleMitoMiniasm.sh
+* AssembleMitoMiniasm.sh
 
 <details>
 
