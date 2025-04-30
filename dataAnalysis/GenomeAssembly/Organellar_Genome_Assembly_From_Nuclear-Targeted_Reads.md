@@ -289,10 +289,11 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
 
 <details>
   <summary>Details</summary>
-
+  test2
   <pre><code>
-  test
   
+
+  ```bash
   #!/bin/bash
 
   #Ensure script stops on errors
@@ -336,7 +337,7 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
 
   echo "Assembly complete! Output files are in $OUTDIR"
 
-  
+  ```
 
   </code></pre>
 
