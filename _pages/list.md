@@ -106,6 +106,7 @@ header:
   * [Short read assembly using Platanus](../dataAnalysis/GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
   * [Iteration of Pilon polishing and gap-filling on a genome](../dataAnalysis/GenomeAssembly/Iterate_Pilon_Genome_Polishing.md)
   * [Iterating a long read assembly to get higher contiguity by eliminating contaminant reads](../dataAnalysis/GenomeAssembly/IteratingGenomeAssemblyWithReadFiltration.md)
+  * [Extracting and Assembling a Mitochondrial and Chloroplast Genome from Nuclear-targeted Nanopore](../dataAnalysis/GenomeAssembly/Organellar_Genome_Assembly_From_Nuclear-Targeted_Reads.md) 
 
 ## <span style="color:black">Tools for Assessing the Quality of a Genome Assembly</span>
 * [GenomeScope to Estimate Genome Size](../dataAnalysis/GenomeAssembly/genomescope.md)
