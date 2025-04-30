@@ -60,6 +60,8 @@ header:
     * [Canu for Long Read Assembly](../dataAnalysis/GenomeAssembly/LongRead/Canu.md)
       * [Canu on XSEDE Bridges Machine](../dataAnalysis/GenomeAssembly/LongRead/Canu_bridges.md)
     * [Genome Scaffolding Using Synteny with Pyscaf](../dataAnalysis/GenomeAssembly/Pyscaf_Synteny_Scaffolding.md): E. coli and Arabidopsis Genome Scaffolding
+    * [Extracting and Assembling a Mitochondrial and Chloroplast Genome from Nuclear-targeted Nanopore](../dataAnalysis/GenomeAssembly/Organellar_Genome_Assembly_From_Nuclear-Targeted_Reads.md) 
+
   * Gene Annotation
     * [Intro to Maker Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_To_Maker.md)
     * [Intro to Braker2 Gene Prediction](../dataAnalysis/GenomeAnnotation/Intro_to_Braker2.md)
