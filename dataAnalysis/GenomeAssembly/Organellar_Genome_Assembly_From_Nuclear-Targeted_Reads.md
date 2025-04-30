@@ -285,11 +285,13 @@ for f in *fastq; do echo "ml micromamba; micromamba activate flye; flye --nano-r
 for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";done >miniasmAssemblies.sh
 ```
 
-** AssembleMitoMiniasm.sh
+**AssembleMitoMiniasm.sh**
 
 <details><summary>Details</summary>
 
 <pre><code>
+
+```
 #!/bin/bash
 
 #Ensure script stops on errors
@@ -332,6 +334,9 @@ echo "Converting GFA to FASTA..."
 awk '/^S/{print ">"$2"\n"$3}' "$OUTDIR/${PREFIX}.gfa" > "$OUTDIR/${PREFIX}.final.fasta"
 
 echo "Assembly complete! Output files are in $OUTDIR"
+
+```
+
 </code></pre>
 
 </details>
