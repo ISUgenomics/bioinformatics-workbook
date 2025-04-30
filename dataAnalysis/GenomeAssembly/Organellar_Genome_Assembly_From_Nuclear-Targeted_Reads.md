@@ -268,9 +268,9 @@ Circlator will rotate circular assemblies so that the genome starts at a standar
 micromamba create -n circlator-env python=3.7 -y
 micromamba activate circlator-env
 micromamba install -c bioconda -c conda-forge circlator
-```
 
-</details>
+
+</details>```
 
 # Use multiple assemblers to generate genome assemblies of each read subset
 
@@ -333,7 +333,7 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
     awk '/^S/{print ">"$2"\n"$3}' "$OUTDIR/${PREFIX}.gfa" > "$OUTDIR/${PREFIX}.final.fasta"
 
     echo "Assembly complete! Output files are in $OUTDIR"
-</summary>
+</details>```
 
 
 **Generate CANU 2.2 assemblies** 
