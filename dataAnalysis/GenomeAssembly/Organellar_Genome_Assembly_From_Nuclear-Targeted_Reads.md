@@ -284,17 +284,12 @@ for f in *fastq; do echo "ml micromamba; micromamba activate flye; flye --nano-r
 **Generate Miniasm Assemblies** 
 ```bash
 for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";done >miniasmAssemblies.sh
-```
+
 
 **AssembleMitoMiniasm.sh**
 
-<details>
-  <summary>Details</summary>
-  test2
-    <pre><code>
-    
+<details> <summary>Details</summary>
 
-    ```bash
     #!/bin/bash
 
     #Ensure script stops on errors
@@ -338,13 +333,11 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
 
     echo "Assembly complete! Output files are in $OUTDIR"
 
-    ```
 
-   </code></pre>
 
 </details>
-<br>
-<br>
+
+
 **Generate CANU 2.2 assemblies** 
 
 Note here that you will have to estimate your mitochondrial genome's size. Mine is too large, as I expected to get reads for the chloroplast genome as well.
