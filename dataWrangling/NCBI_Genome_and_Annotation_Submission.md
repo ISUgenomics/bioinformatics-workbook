@@ -406,6 +406,11 @@ There is software specifically designed to convert your genome and gff3 into the
 
 In order to use this software you will need to make a template with the metadata for your genome here:  https://submit.ncbi.nlm.nih.gov/genbank/template/submission/
 
+
+The hidden text here shows how to create a 5 column feature table for your annotation. NCBI no longer wants this table file, but here is a reference if you've already used this tutorial 05/06/2025
+
+<details>
+
 The next step is to create a 5 column feature table for your annotation. Here I use gffread to convert to gtf and then use my own script to convert the .gtf file into a .tbl file.
 ```bash
 ml micromamba; micromamba activate cufflinks
@@ -437,7 +442,13 @@ gtf_to_tbl('braker.gtf', 'output.tbl')
 #########################################################################################################
 ```
 
-As of March 1, 2025, an .agp (a golden path) file is no longer needed to submit a genome, though they can be included. There is a script in Juicebox software that can create this .agp file, though it does not make it perfectly. The Juicebox script uses 0 based numbering, while NCBI expects 1 based numbering.
+</details>
+
+THe hidden text below here is how to create an .agp file (a golden path). As of March 1, 2025, this file should no longer be used to submit a genome annotation.
+
+<details>
+
+There is a script in Juicebox software that can create this .agp file, though it does not make it perfectly. The Juicebox script uses 0 based numbering, while NCBI expects 1 based numbering.
 
 ```bash
 #download juicebox script
@@ -461,6 +472,9 @@ Hg_chrom7_TN10  1       0       9570593 1       W       Hg_chrom7_TN10  1       
 Hg_chrom8_TN10  1       0       9426334 1       W       Hg_chrom8_TN10  1       9426334 +
 Hg_chrom9_TN10  1       0       8609792 1       W       Hg_chrom9_TN10  1       8609792 +
 ```
+
+</details>
+
 Once you've made your template and the received the locus tag from your Bioproject, you can start using the table2asn script to create your .sqn files (ASN.1 format). 
 
 The download and more detailed inforamtion on table2asn is here: https://www.ncbi.nlm.nih.gov/genbank/table2asn/
