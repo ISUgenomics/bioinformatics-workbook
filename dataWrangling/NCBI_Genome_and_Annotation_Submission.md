@@ -410,6 +410,7 @@ In order to use this software you will need to make a template with the metadata
 The hidden text here shows how to create a 5 column feature table for your annotation. NCBI no longer wants this table file, but here is a reference if you've already used this tutorial 05/06/2025
 
 <details>
+<summary>Click to Expand</summary>
 
 The next step is to create a 5 column feature table for your annotation. Here I use gffread to convert to gtf and then use my own script to convert the .gtf file into a .tbl file.
 ```bash
@@ -440,11 +441,12 @@ def gtf_to_tbl(gtf_file, tbl_file):
 
 gtf_to_tbl('braker.gtf', 'output.tbl')
 #########################################################################################################
-```
 
-</details>
 
-THe hidden text below here is how to create an .agp file (a golden path). As of March 1, 2025, this file should no longer be used to submit a genome annotation.
+</details> ```
+
+
+The hidden text below here is how to create an .agp file (a golden path). As of March 1, 2025, this file should no longer be used to submit a genome annotation.
 
 <details>
 
@@ -506,7 +508,7 @@ The column 9 format should end up similar to below, though there are other ontol
 Much more detailed information can be had here: https://www.ncbi.nlm.nih.gov/genbank/genomes_gff/
 
 This is an example of one of my annotated genes with a functional description on mRNA and CDS
-```
+```text
 Hg_chrom1_TN10  .       gene    103500  115395  .       +       .       ID=Hg_chrom1_TN10gene_4;Note=NRBLAST_KAI1716751.1 nuclear migration and anchoring protein unc-84 [Ditylenchus destructor]#SPBLAST_Q20745.2 Nuclear migration and anchoring protein unc-84 [Caenorhabditis elegans]
 Hg_chrom1_TN10  .       mRNA    103500  115395  .       +       .       ID=Hg_chrom1_TN10mRNA_4;Parent=Hg_chrom1_TN10gene_4;product=nuclear migration and anchoring protein unc-84;Dbxref=Genbank:CAK5048742.1,UniProtKB/Swiss-Prot:Q20745
 Hg_chrom1_TN10  .       exon    103500  103656  .       +       .       Parent=Hg_chrom1_TN10mRNA_4;
