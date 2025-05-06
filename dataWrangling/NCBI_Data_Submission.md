@@ -1,5 +1,5 @@
 ---
-title: "How to submit your sequencing data to NCBI"
+title: "How to submit your sequencing data to NCBI SRA (sequence read archive)"
 layout: single
 author: Rick Masonbrink
 author_profile: true
@@ -8,13 +8,13 @@ header:
   overlay_image: /assets/images/dna.jpg
 ---
 
-Submitting sequencing data is a requirement for nearly every journal, and thus getting it in order as soon as your sequencing is received  will make this process go much faster.  This is mostly because the details of your sequencing will be fresh in your mind, and with the variability in BioSample/metadata submissions by type, you may not record sufficient enough detail to submit at a later date.  
+Submitting sequencing data is a requirement for nearly every journal, and thus getting it in order as soon as your sequencing is received will make this process easier and faster. This is mostly because the details of your sequencing will be fresh in your mind, and with the variability in BioSample/metadata submissions by type, you may not record sufficient enough detail to submit at a later date.  Thus, getting it done immediately is the easiest and fastest choice
 
-First you'll have to create an account on ncbi before submission.  Here is a current link --10/04/2018
+First you'll have to create an account on ncbi before submission.  Here is a current link --04/02/2025
 
 [A link to create an NCBI account](https://www.ncbi.nlm.nih.gov/account/register/?back_url=https%3A%2F%2Fwww.ncbi.nlm.nih.gov%2F&partners-uri=cms:/account/partners)
 
-Now the next step is finding the submission link, which I always have trouble with.  You can find a link at the bottom left of the ncbi homepage (https://www.ncbi.nlm.nih.gov/) that says "Submit Data".
+Now the next step is finding the submission link, which I always have trouble with. You can find a link at the bottom left of the ncbi homepage (https://www.ncbi.nlm.nih.gov/) that says "Submit Data".
 
 If you are not sure about what type of data you have, then you can use the submission wizard in the bottom right of the page.  Otherwise the giant blue picture is a hyperlink to get started on a submission.
 ![](assets/SubmitFig1.png)
@@ -45,7 +45,7 @@ The next form's purpose is to add details about the organism of the study.
 
 ![](assets/Bioprojectfig3target.png)
 
-Then you'll be taken to a page to add information about your project, data release date (up to 4 years holding time), the project's grants pertinent to the data, links to your data, etc. Your data is only released at the date you set, or at first publication that cites the accessions in the submission.
+Then you'll be taken to a page to add information about your project, the data release date (up to 4 years holding time), the project's grants pertinent to the data, links to your data, etc. Your data is will be released at the date you set, or earlier if a publication cites any accession linked to this submission.
 
 ![](assets/Bioprojectfig4generalinfo.png)
 
@@ -57,13 +57,13 @@ Usually journals do not publish without prior data deposition, but if your work 
 
 ![](assets/Bioprojectfig5publications.png)
 
-Then submit your Bioproject to be done with the first required submission.
+Then submit your Bioproject to be done with the first required step to submission.
 
 ![](assets/BioProjectfig7Overview.png)
 
 # BioSample submission
 
-If you click "My submissions" on the top of the screen, you'll be redirected to your submission screen.  Here you can choose Biosample.
+If you click "My submissions" on the top of the screen, you'll be redirected to your submission screen.  Choose Biosample.
 
 ![](assets/SubmitFig2.png)
 
@@ -78,13 +78,13 @@ For this example I am submitting DNA-seq from an invertebrate.
 
 ![](assets/biosamplefig2SampleType.png)
 
-Now the real work starts, which is highly dependent on the collections of your organisms attributes.
+Now the real work starts, which is highly dependent on the collection of your organisms attributes.
 
 ![](assets/Biosampleattributes.png)
 
 When many samples are to be deposited, the easiest method is to download and fill in the excel template. As is explained in the text at the top of the Biosample excel sheet: green columns are required, yellow are optional, and blue colors need info in at least one field. If you run your cursor over each colored header then you can get more information on what is acceptable.
 
-Here I added a "sample name" that was unique to each specimen, a "sample title", the "bioproject accession" that we created previously, the organism (*Genus species*), the isolate/breed, the host/isolation source, collection date, the geographic location in a specific format (Country:city state) and the tissue source. Save your excel file and attach to the attribute screen.
+Here I added a "sample name" that was unique to each specimen, a "sample title", the "bioproject accession" that we created previously, the organism (*Genus species*), the isolate/breed, the host/isolation source, collection date, the geographic location in a specific format (Country:city state) and the tissue source. Save your excel file and attach at the attribute screen.
 ![](assets/BiosampleAttributesExcelSheet.png)
 
 Once NCBI agrees that you've entered all the information in correctly, you can move to the submit screen.
@@ -92,7 +92,7 @@ Once NCBI agrees that you've entered all the information in correctly, you can m
 ![](assets/submitBiosample.png)
 
 
-# Short read archive submission
+# Sequence read archive submission
 
 If you click "My submissions" on the top of the screen, you'll be redirected to your submission screen.  Because I am uploading sequencing data, I will click "Sequence Read Archive".
 
@@ -143,7 +143,7 @@ for f in ../WhiteAbalone_wild/*gz; do ln -s $f; done
 #copy and paste aspera key to  file
 vi aspera.openssh
 
-#At Iowa State we have aspera installed into our HPC data transfer nodes. Loading a module is necessary to run aspera in NOVADTN for example.   If you need to see if aspera is installed, run 
+#At Iowa State we have aspera installed into our HPC data transfer nodes. Loading a module is not necessary to run aspera in NOVADTN for example. If you need to see if aspera is installed, run 
 
 which ascp 
 
