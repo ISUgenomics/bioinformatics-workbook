@@ -441,7 +441,7 @@ The hidden text here shows how to create a 5 column feature table for your annot
                 tbl.write(f"{start}\t{end}\t{feature}\t{gene_id}\t{gene_name}\n")
     
     gtf_to_tbl('braker.gtf', 'output.tbl')
-    ######################################################################################################## </pre></code>
+    ######################################################################################################## 
 </code></pre>
 
 </details>
