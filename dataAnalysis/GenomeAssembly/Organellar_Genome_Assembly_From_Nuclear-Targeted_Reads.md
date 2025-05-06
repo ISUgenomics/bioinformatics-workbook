@@ -64,13 +64,14 @@ https://www.ncbi.nlm.nih.gov/Taxonomy/CommonTree/wwwcmt.cgi
 ##### Install Minimap2
 
 <details>
+<summary>Click to Expand</summary>
 
 Creates environment named minimap2, and calls bioconda to install minimap2. Activate your environment to access minimap.
 
-```bash
+<pre><code>
 micromamba create -n minimap2 -c bioconda minimap2
 micromamba activate minimap2
-```
+</code></pre>
 
 </details>
 
@@ -82,8 +83,8 @@ sh runMinimap.sh trimmed_5kplus.fq RelatedNCBIMitochondrialGenomeSequences.fasta
 runMinimap.sh
 
 <details>
-
-```bash
+<summary>Click to Expand</summary>
+<pre><code>
 ##############################################################################
 #!/bin/bash
 query=$1
@@ -92,19 +93,21 @@ outname="${query%.*}_${target%.*}_minimap2.paf"
 module load minimap2
 minimap2 -x map-ont -t 36 $target $query > ${outname}
 ##############################################################################
-```
+
+</code></pre>
 
 </details>
 
 ##### Install Seqtk
 
 <details>
+<summary>Click to Expand</summary>
 
 We will be using Seqtk to extract fastq sequences. This code creates an environment named seqtk, and calls bioconda to install seqtk. Activate environment to access seqtk.
-```bash
+<pre><code>
 micromamba create -n seqtk -c bioconda seqtk
 micromamba activate seqtk
-```
+</code></pre>
 
 </details>
 
@@ -169,13 +172,13 @@ seqtk subseq trimmed_5kplus.fq MiniprotOrganelleReads.list >MiniprotOrganelleRea
 **Install Trycycler**
 
 <details>
+<summary>Click to Expand</summary>
 
 Trycycler provides positional splitting of a fastq file, leading to a higher-quality assembly consensus. <br>
-
-```
+<pre><code>
 micromamba create -c bioconda -c conda-forge -n trycycler trycycler
 micromamba activate trycycler
-```
+</code></pre>
 
 </details>
 
@@ -199,8 +202,9 @@ After choosing your method to split the fastq files, we will use these to genera
 **Install Unicycler assembler** <br>
 
 <details>
+<summary>Click to Expand</summary>
 
-```bash
+<pre><code>
 git clone https://github.com/rrwick/Unicycler.git
 
 #create environment
@@ -209,52 +213,56 @@ python -m venv Unicycler
 source Unicycler/bin/activate
 # install Unicycler
 python3 setup.py install --prefix=/work/gif3/masonbrink/USDA/04_MitochondrialIsolationAndAssembly
-```
+</code></pre>
 
 </details>
 
 **Install Flye assembler** <br>
 
 <details>
+<summary>Click to Expand</summary>
 
-```bash
+<pre><code>
 micromamba -n flye -c bioconda::flye
 micromamba activate flye
-```
+</code></pre>
 
 </details>
 
 **Install Miniasm assembler** <br>
 
 <details>
+<summary>Click to Expand</summary>
 
-```bash
+<pre><code>
  micromamba -n miniasm -c bioconda::miniasm
  micromamba activate miniasm
-```
+</code></pre>
 
 </details>
 
 **Install Raven assembler** <br>
 
 <details>
-test
+<summary>Click to Expand</summary>
 
-```bash
+<pre><code>
+
 micromamba create -n raven -c bioconda -c conda-forge raven-assembler
 micromamba activate raven
-```
+</code></pre>
 
 </details>
 
 **Install CANU assembler** <br>
 
 <details>
+<summary>Click to Expand</summary>
 
-```bash
+<pre><code>
 micromamba create -n canu-env -c bioconda -c conda-forge canu
 micromamba activate canu-env
-```
+</code></pre>
 
 </details>
 
@@ -263,14 +271,15 @@ micromamba activate canu-env
 Circlator will rotate circular assemblies so that the genome starts at a standard gene (*dnaA* usually ) for better comparisons to published assemblies. <br>
 
 <details>
+<summary>Click to Expand</summary>
 
-```bash
+<pre><code>
 micromamba create -n circlator-env python=3.7 -y
 micromamba activate circlator-env
 micromamba install -c bioconda -c conda-forge circlator
+</code></pre>
 
-
-</details>```
+</details>
 
 # Use multiple assemblers to generate genome assemblies of each read subset
 
@@ -284,13 +293,16 @@ for f in *fastq; do echo "ml micromamba; micromamba activate flye; flye --nano-r
 **Generate Miniasm Assemblies** 
 ```bash
 for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";done >miniasmAssemblies.sh
-
+```
 
 
 **AssembleMitoMiniasm.sh**
 
-<details> <summary>Details</summary>
+<details> 
+<summary>Click to Expand</summary>
 
+
+<pre><code>
     #!/bin/bash
 
     #Ensure script stops on errors
@@ -333,7 +345,11 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
     awk '/^S/{print ">"$2"\n"$3}' "$OUTDIR/${PREFIX}.gfa" > "$OUTDIR/${PREFIX}.final.fasta"
 
     echo "Assembly complete! Output files are in $OUTDIR"
-</details>```
+</code></pre>
+
+</details>
+
+
 
 
 **Generate CANU 2.2 assemblies** 
@@ -553,8 +569,10 @@ sh runMinimapNbamSort.sh MitoNanopore3kRaw.fastq ReOriented.fasta
 **runMinimapNbamSort.sh**
 
 <details>
+<summary>Click to Expand</summary>
 
-```
+<pre><code>
+
 ##############################################################################
 #!/bin/bash
 query=$1
@@ -567,18 +585,20 @@ ml samtools;samtools view --threads 36 -b -o ${outname%.*}.bam ${outname}
 samtools sort  -o ${outname%.*}_sorted.bam -T TEMP --threads 36 ${outname%.*}.bam
 samtools index ${outname%.*}_sorted.bam
 ##############################################################################
-```
+</code></pre>
 
 </details>
 
 **Install Pilon**<br>
 
 <details>
+<summary>Click to Expand</summary>
 
-```
+<pre><code>
+
 micromamba create -y -n pilon-env pilon=1.24 openjdk=8 -c bioconda -c conda-forge
 micromamba activate pilon-env
-```
+</code></pre>
 
 </details>
 
