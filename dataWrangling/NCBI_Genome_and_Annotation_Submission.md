@@ -412,6 +412,7 @@ The hidden text here shows how to create a 5 column feature table for your annot
 <details>
 <summary>Click to Expand</summary>
 
+<pre><code>
     The next step is to create a 5 column feature table for your annotation. Here I use gffread to convert to gtf and then use my own script to convert the .gtf file into a .tbl file.
 
     ml micromamba; micromamba activate cufflinks
@@ -440,7 +441,8 @@ The hidden text here shows how to create a 5 column feature table for your annot
                 tbl.write(f"{start}\t{end}\t{feature}\t{gene_id}\t{gene_name}\n")
     
     gtf_to_tbl('braker.gtf', 'output.tbl')
-    ########################################################################################################
+    ######################################################################################################## </pre></code>
+
 </details>
 
 
@@ -449,10 +451,12 @@ The hidden text below here is how to create an .agp file (a golden path). As of 
 <details>
 <summary>Click to Expand</summary>
 
-```
+
 
 There is a script in Juicebox software that can create this .agp file, though it does not make it perfectly. The Juicebox script uses 0 based numbering, while NCBI expects 1 based numbering. <br>
-    
+
+<pre><code>
+
     #download juicebox script
     https://github.com/phasegenomics/juicebox_scripts/blob/master/juicebox_scripts/makeAgpFromFasta.py
     
@@ -462,12 +466,12 @@ There is a script in Juicebox software that can create this .agp file, though it
     #Fix column 2 so it is 1 based, not zero based coordinates
     awk -F"\t" '$2=="0" {print $1,"1",$2,$3,$4,$5,$6,$7,$8,$9} SCNGenome.agp >FixedSCNGenome.agp
 
-```
+</pre></code>
 
 <br>
 For my 9 chromosomes, this is an example of a complete .agp file with the expected input for the 9 scaffolds. Note that it is tab delimited <br>
 
-```
+<pre><code>
 
     Hg_chrom1_TN10  1       0       18797431        1       W       Hg_chrom1_TN10  1       18797431        +
     Hg_chrom2_TN10  1       0       15597796        1       W       Hg_chrom2_TN10  1       15597796        +
@@ -479,7 +483,7 @@ For my 9 chromosomes, this is an example of a complete .agp file with the expect
     Hg_chrom8_TN10  1       0       9426334 1       W       Hg_chrom8_TN10  1       9426334 +
     Hg_chrom9_TN10  1       0       8609792 1       W       Hg_chrom9_TN10  1       8609792 +
 
-```
+</pre></code>
 
 </details>
 
