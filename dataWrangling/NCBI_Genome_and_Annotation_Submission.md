@@ -448,6 +448,9 @@ The hidden text below here is how to create an .agp file (a golden path). As of 
 
 <details>
 <summary>Click to Expand</summary>
+
+```
+
 There is a script in Juicebox software that can create this .agp file, though it does not make it perfectly. The Juicebox script uses 0 based numbering, while NCBI expects 1 based numbering. <br>
     
     #download juicebox script
@@ -458,8 +461,14 @@ There is a script in Juicebox software that can create this .agp file, though it
     
     #Fix column 2 so it is 1 based, not zero based coordinates
     awk -F"\t" '$2=="0" {print $1,"1",$2,$3,$4,$5,$6,$7,$8,$9} SCNGenome.agp >FixedSCNGenome.agp
+
+```
+
 <br>
 For my 9 chromosomes, this is an example of a complete .agp file with the expected input for the 9 scaffolds. Note that it is tab delimited <br>
+
+```
+
     Hg_chrom1_TN10  1       0       18797431        1       W       Hg_chrom1_TN10  1       18797431        +
     Hg_chrom2_TN10  1       0       15597796        1       W       Hg_chrom2_TN10  1       15597796        +
     Hg_chrom3_TN10  1       0       15542751        1       W       Hg_chrom3_TN10  1       15542751        +
@@ -469,6 +478,9 @@ For my 9 chromosomes, this is an example of a complete .agp file with the expect
     Hg_chrom7_TN10  1       0       9570593 1       W       Hg_chrom7_TN10  1       9570593 +
     Hg_chrom8_TN10  1       0       9426334 1       W       Hg_chrom8_TN10  1       9426334 +
     Hg_chrom9_TN10  1       0       8609792 1       W       Hg_chrom9_TN10  1       8609792 +
+
+```
+
 </details>
 
 Once you've made your template and the received the locus tag from your Bioproject, you can start using the table2asn script to create your .sqn files (ASN.1 format). 
