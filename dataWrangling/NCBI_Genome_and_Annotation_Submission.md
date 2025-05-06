@@ -442,6 +442,7 @@ The hidden text here shows how to create a 5 column feature table for your annot
     
     gtf_to_tbl('braker.gtf', 'output.tbl')
     ######################################################################################################## </pre></code>
+</code></pre>
 
 </details>
 
@@ -466,7 +467,7 @@ There is a script in Juicebox software that can create this .agp file, though it
     #Fix column 2 so it is 1 based, not zero based coordinates
     awk -F"\t" '$2=="0" {print $1,"1",$2,$3,$4,$5,$6,$7,$8,$9} SCNGenome.agp >FixedSCNGenome.agp
 
-</pre></code>
+</code></pre>
 
 <br>
 For my 9 chromosomes, this is an example of a complete .agp file with the expected input for the 9 scaffolds. Note that it is tab delimited <br>
@@ -483,7 +484,7 @@ For my 9 chromosomes, this is an example of a complete .agp file with the expect
     Hg_chrom8_TN10  1       0       9426334 1       W       Hg_chrom8_TN10  1       9426334 +
     Hg_chrom9_TN10  1       0       8609792 1       W       Hg_chrom9_TN10  1       8609792 +
 
-</pre></code>
+</code></pre>
 
 </details>
 

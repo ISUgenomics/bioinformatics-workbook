@@ -28,6 +28,8 @@ header:
     * [Platanus assembly of Arabidopsis thaliana](../GenomeAssembly/Arabidopsis/AT_platanus-genome-assembly.md)
   * [Iteration of Pilon polishing and gap-filling on a genome](../GenomeAssembly/Iterate_Pilon_Genome_Polishing.md)
   * [Iterating a long read assembly to get higher contiguity by eliminating contaminant reads](../GenomeAssembly/IteratingGenomeAssemblyWithReadFiltration.md)
+  * [Extracting and Assembling a Mitochondrial and Chloroplast Genome from Nuclear-targeted Nanopore](../GenomeAssembly/Organellar_Genome_Assembly_From_Nuclear-Targeted_Reads.md) 
+
 ### Tools for assessing the quality of a Genome Assembly
 
   * [GenomeScope to Estimate Genome Size](../GenomeAssembly/genomescope.md)
