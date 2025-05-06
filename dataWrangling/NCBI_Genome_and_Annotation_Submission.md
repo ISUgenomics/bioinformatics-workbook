@@ -412,69 +412,63 @@ The hidden text here shows how to create a 5 column feature table for your annot
 <details>
 <summary>Click to Expand</summary>
 
-The next step is to create a 5 column feature table for your annotation. Here I use gffread to convert to gtf and then use my own script to convert the .gtf file into a .tbl file.
-```bash
-ml micromamba; micromamba activate cufflinks
-gffread SortedTN10FinalManualAnnotation.gff3 -T -o SortedTN10FinalManualAnnotation.gtf
+    The next step is to create a 5 column feature table for your annotation. Here I use gffread to convert to gtf and then use my own script to convert the .gtf file into a .tbl file.
 
-#modify the text at the bottom to modify the input and output file names. Currently it expects a braker.gtf, but you can modify to any other name.
-vi gtf_to_tbl.py
-python gtf_to_tbl.py
+    ml micromamba; micromamba activate cufflinks
+    gffread SortedTN10FinalManualAnnotation.gff3 -T -o SortedTN10FinalManualAnnotation.gtf
 
-gtf_to_tbl.py 
-########################################################################################################
-import re
+    #modify the text at the bottom to modify the input and output file names. Currently it expects a braker.gtf, but you can modify to any other name.
+    vi gtf_to_tbl.py
+    python gtf_to_tbl.py
+    
+    gtf_to_tbl.py 
+    ########################################################################################################
+    import re
 
-def gtf_to_tbl(gtf_file, tbl_file):
-    with open(gtf_file, 'r') as gtf, open(tbl_file, 'w') as tbl:
-        for line in gtf:
-            if line.startswith('#'):
-                continue
-            fields = line.strip().split('\t')
-            if len(fields) < 9:
-                continue
-            seqname, source, feature, start, end, score, strand, frame, attributes = fields
-            attributes_dict = {k: v.strip('"') for k, v in re.findall(r'(\S+)\s+"([^"]+)"', attributes)}
-            gene_id = attributes_dict.get('gene_id', '.')
-            gene_name = attributes_dict.get('gene_name', '.')
-            tbl.write(f"{start}\t{end}\t{feature}\t{gene_id}\t{gene_name}\n")
-
-gtf_to_tbl('braker.gtf', 'output.tbl')
-#########################################################################################################
-
-
-</details> ```
+    def gtf_to_tbl(gtf_file, tbl_file):
+        with open(gtf_file, 'r') as gtf, open(tbl_file, 'w') as tbl:
+            for line in gtf:
+                if line.startswith('#'):
+                    continue
+                fields = line.strip().split('\t')
+                if len(fields) < 9:
+                    continue
+                seqname, source, feature, start, end, score, strand, frame, attributes = fields
+                attributes_dict = {k: v.strip('"') for k, v in re.findall(r'(\S+)\s+"([^"]+)"', attributes)}
+                gene_id = attributes_dict.get('gene_id', '.')
+                gene_name = attributes_dict.get('gene_name', '.')
+                tbl.write(f"{start}\t{end}\t{feature}\t{gene_id}\t{gene_name}\n")
+    
+    gtf_to_tbl('braker.gtf', 'output.tbl')
+    ########################################################################################################
+</details>
 
 
 The hidden text below here is how to create an .agp file (a golden path). As of March 1, 2025, this file should no longer be used to submit a genome annotation.
 
 <details>
-
-There is a script in Juicebox software that can create this .agp file, though it does not make it perfectly. The Juicebox script uses 0 based numbering, while NCBI expects 1 based numbering.
-
-```bash
-#download juicebox script
-https://github.com/phasegenomics/juicebox_scripts/blob/master/juicebox_scripts/makeAgpFromFasta.py
-
-#create .agp file from genome
-python makeAgpFromFasta.py TN10GenomeSNPFixedFinal.fasta SCNGenome.agp
-
-#Fix column 2 so it is 1 based, not zero based coordinates
-awk -F"\t" '$2=="0" {print $1,"1",$2,$3,$4,$5,$6,$7,$8,$9} SCNGenome.agp >FixedSCNGenome.agp
-```
-For my 9 chromosomes, this is an example of a complete .agp file with the expected input for the 9 scaffolds. Note that it is tab delimited
-```
-Hg_chrom1_TN10  1       0       18797431        1       W       Hg_chrom1_TN10  1       18797431        +
-Hg_chrom2_TN10  1       0       15597796        1       W       Hg_chrom2_TN10  1       15597796        +
-Hg_chrom3_TN10  1       0       15542751        1       W       Hg_chrom3_TN10  1       15542751        +
-Hg_chrom4_TN10  1       0       12669965        1       W       Hg_chrom4_TN10  1       12669965        +
-Hg_chrom5_TN10  1       0       12547523        1       W       Hg_chrom5_TN10  1       12547523        +
-Hg_chrom6_TN10  1       0       12233239        1       W       Hg_chrom6_TN10  1       12233239        +
-Hg_chrom7_TN10  1       0       9570593 1       W       Hg_chrom7_TN10  1       9570593 +
-Hg_chrom8_TN10  1       0       9426334 1       W       Hg_chrom8_TN10  1       9426334 +
-Hg_chrom9_TN10  1       0       8609792 1       W       Hg_chrom9_TN10  1       8609792 +
-```
-
+<summary>Click to Expand</summary>
+There is a script in Juicebox software that can create this .agp file, though it does not make it perfectly. The Juicebox script uses 0 based numbering, while NCBI expects 1 based numbering. <br>
+    
+    #download juicebox script
+    https://github.com/phasegenomics/juicebox_scripts/blob/master/juicebox_scripts/makeAgpFromFasta.py
+    
+    #create .agp file from genome
+    python makeAgpFromFasta.py TN10GenomeSNPFixedFinal.fasta SCNGenome.agp
+    
+    #Fix column 2 so it is 1 based, not zero based coordinates
+    awk -F"\t" '$2=="0" {print $1,"1",$2,$3,$4,$5,$6,$7,$8,$9} SCNGenome.agp >FixedSCNGenome.agp
+<br>
+For my 9 chromosomes, this is an example of a complete .agp file with the expected input for the 9 scaffolds. Note that it is tab delimited <br>
+    Hg_chrom1_TN10  1       0       18797431        1       W       Hg_chrom1_TN10  1       18797431        +
+    Hg_chrom2_TN10  1       0       15597796        1       W       Hg_chrom2_TN10  1       15597796        +
+    Hg_chrom3_TN10  1       0       15542751        1       W       Hg_chrom3_TN10  1       15542751        +
+    Hg_chrom4_TN10  1       0       12669965        1       W       Hg_chrom4_TN10  1       12669965        +
+    Hg_chrom5_TN10  1       0       12547523        1       W       Hg_chrom5_TN10  1       12547523        +
+    Hg_chrom6_TN10  1       0       12233239        1       W       Hg_chrom6_TN10  1       12233239        +
+    Hg_chrom7_TN10  1       0       9570593 1       W       Hg_chrom7_TN10  1       9570593 +
+    Hg_chrom8_TN10  1       0       9426334 1       W       Hg_chrom8_TN10  1       9426334 +
+    Hg_chrom9_TN10  1       0       8609792 1       W       Hg_chrom9_TN10  1       8609792 +
 </details>
 
 Once you've made your template and the received the locus tag from your Bioproject, you can start using the table2asn script to create your .sqn files (ASN.1 format). 
