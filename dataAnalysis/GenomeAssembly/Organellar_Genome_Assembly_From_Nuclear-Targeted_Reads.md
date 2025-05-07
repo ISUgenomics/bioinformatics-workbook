@@ -303,6 +303,7 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
 
 
 <pre><code>
+
     #!/bin/bash
 
     #Ensure script stops on errors
@@ -345,6 +346,7 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
     awk '/^S/{print ">"$2"\n"$3}' "$OUTDIR/${PREFIX}.gfa" > "$OUTDIR/${PREFIX}.final.fasta"
 
     echo "Assembly complete! Output files are in $OUTDIR"
+
 </code></pre>
 
 </details>
