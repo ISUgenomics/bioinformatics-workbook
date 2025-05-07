@@ -293,16 +293,11 @@ for f in *fastq; do echo "ml micromamba; micromamba activate flye; flye --nano-r
 **Generate Miniasm Assemblies** 
 ```bash
 for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";done >miniasmAssemblies.sh
-
+```
 
 
 **AssembleMitoMiniasm.sh**
-
-<details> 
-<summary>Click to Expand</summary>
-
 ```
-
     #!/bin/bash
 
     #Ensure script stops on errors
@@ -346,11 +341,6 @@ for f in *fastq; do echo "sh AssembleMitoMiniasm.sh "$f" "${f%.*}"_MiniasmOut";d
 
     echo "Assembly complete! Output files are in $OUTDIR"
 ```
-
-</details>
-
-
-
 
 **Generate CANU 2.2 assemblies** 
 
