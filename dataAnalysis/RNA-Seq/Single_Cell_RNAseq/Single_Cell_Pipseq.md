@@ -1,6 +1,6 @@
 # Introduction
 
-Single-cell RNA sequencing (scRNA-seq) has revolutionized our ability to study cellular heterogeneity during development and differentiation. One prominent use case is examining how human embryonic stem cells (hESCs) differentiate into specific neuronal subtypes, such as midbrain floorplate progenitors. A key marker of midbrain identity is Sonic Hedgehog (SHH), a signaling molecule critical for patterning and neural differentiation.
+Single-cell RNA sequencing (scRNA-seq) has enhanced our ability to study cellular heterogeneity during development and differentiation. One prominent use case is examining how human embryonic stem cells (hESCs) differentiate into specific neuronal subtypes, such as midbrain floorplate progenitors. 
 
 In this tutorial, we will walk through a practical PiPseq pipeline using a real-world scRNA-seq dataset derived from differentiated hESCs. PiPseq (Pronuclei in Profile sequencing) is a general-purpose pipeline for processing single-nuclei or single-cell RNA-seq data. Specifically, we will focus on how to:
 
@@ -25,40 +25,62 @@ This sample is derived from the study:
 | **Technology**          | 10x Genomics Chromium single-cell RNA sequencing                             |
 | **Expected Markers**    | High expression of **SHH**, **FOXA2**, **LMX1A**; moderate **OTX2**, **EN1** |
 | **Sequencing Layout**   | Paired-end (R1: barcodes/UMI; R2: transcript reads)                          |
+| **Chemistry**           | 10x Genomics v2 (CB=16bp, UMI=10bp)                                          |
 
 
 # File Setup 
 
+### Download and extract single cell RNAseq data
 ```bash
 /work/gif3/masonbrink/USDA/05_PipseqTutorial
 
 module load sratoolkit/3.0.0-6ikpzzj
 fasterq-dump --split-files ERR14876813
-fasterq-dump --split-files SRR9942129
-```
+``` 
 
-#Download and extract the cell ranger precomputed human reference if 
-you have the matching version of STAR.
+### Generate Genomic index
+**Option 1**
+Download and extract the cell ranger precomputed human reference if you have the matching version of STAR.
 ```bash
+#Ensembl GRCh38 release-95 including 10x Genomics GRCh38-2020-A prebuilt reference
 wget -c https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2020-A.tar.gz
 tar -xzvf refdata-gex-GRCh38-2020-A.tar.gz 
 ```
-#Create your own STAR index from the human genome.fa and genes.gtf downloaded in the above. 
+
+**Option 2**
+We do not have the same star version as the precomputed reference, so we are creating a STAR index from the above downloaded files "genome.fa" and "genes.gtf". 
 ```bash
 ml micromamba; micromamba activate star_env
-#Generate genome index with STAR (including introns for snRNA-seq)
-# Adjust --sjdbOverhang to (read length - 1)
+#Generate genome index with STAR (including introns for snRNA-seq) and adjust --sjdbOverhang to (read length - 1). My reads were 151bp.
 STAR --runThreadN 36 --genomeSAindexNbases 14 --runMode genomeGenerate --genomeDir STAR_index --genomeFastaFiles fasta/genome.fa --sjdbGTFfile genes/genes.gtf --sjdbOverhang 150
 ```
 
-| **Component**       | **Recommended Source**                                                                                     |
-|----------------------|----------------------------------------------------------------------------------------------------------|
-| **Genome FASTA**     | [Ensembl GRCh38 release-95 FASTA](https://ftp.ensembl.org/pub/release-95/fasta/homo_sapiens/dna/)        |
-| **Annotation GTF**   | [Ensembl GRCh38 release-95 GTF](https://ftp.ensembl.org/pub/release-95/gtf/homo_sapiens/)               |
-| **Prebuilt Reference** | [10x Genomics GRCh38-2020-A](https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest) |
-| **Chemistry**        | 10x Genomics v2 (CB=16bp, UMI=10bp)                                                                      |
 
-# Run star solo to align reads to the genome and allocate reads to cells
+# Alignment and Cell Allocation
+
+### Align reads to genome and assign reads to individual cells
+
+Use the sample metadata to find out which read and the length of UMI and cell barcode sequences. These are typical settings with the transcript-containing paired read listed first (R2 in this case). I set '--soloBarcodeReadLength 0' to avoid the automatic check of read length for R1, as my reads were 151bp for both R1 and R2.The white list is something better described in detail below. 
+
+The whitelist is the set of barcodes attributed to your cells, which can differ based on the technology you used to produce your single cell RNA-seq. With 10x kits there are a set of designated barcodes and STARsolo will automatically recogize these with '--soloType CB_UMI_Simple --soloCBwhitelist 10x_v3', etc. For PiPseq, the cell barcodes are custom and thus so is the whitelist. You can align without using a whitelist '--soloCBwhitelist None', but you will lose a percent of reads that have almost-perfect cell barcodes due to sequencding error. So you should always try to supply a whitelist if possible.
+
+**10x_v2 settings**
+```bash
+STAR --genomeDir STAR_index_human \
+  --runThreadN 36 \
+  --readFilesIn ERR14876813_2.fastq.gz ERR14876813_1.fastq.gz \
+  --soloBarcodeReadLength 0 \
+  --readFilesCommand zcat \
+  --soloType CB_UMI_Simple \
+  --soloCBstart 1 --soloCBlen 16 \
+  --soloUMIstart 17 --soloUMIlen 12 \
+  --soloFeatures Gene \
+  --soloOutFileNames ERR14876813_out/ \
+  --soloCBwhitelist 10x_v2
+```
+
+**PiPseq settings**
+This will assign read counts to every cell barcode present in the R1 read, as long as its second pair (transcript read) aligns to a gene in the genome. Due to sequencing error you will get many cells with very few counts, and these reads will be lost (Unless we use the umi_tools below). 
 ```bash
 #Note that R2 is has the cell barcode + UMI (unique molecular identifier).
 STAR --genomeDir STAR_index_human \
@@ -75,7 +97,7 @@ STAR --genomeDir STAR_index_human \
 ```
 
 
-**Alignment results in Log.final.out**
+**Alignment results in Log.final.out using PiPseq settings**
 ```
                           Number of input reads |       157039478
                       Average input read length |       151
@@ -138,7 +160,9 @@ A key output to assess is the ERR14876813_out/Gene/Summary.csv
 | **Median Gene per Cell**                            | 1,967       | Median number of genes detected per cell.                                   |
 | **Total Gene Detected**                             | 20,481      | Total number of genes detected across all cells.                            |
 
-### Filter and fix the reads -- also makes obvious which read carries cell barcodes
+### Filter and fix the reads for improved alignment
+
+
 ```bash
 umi_tools whitelist  --stdin=ERR14876813_1.fastq --bc-pattern=CCCCCCCCCCCCNNNNNNNN  --log2stderr > whitelist.txt
 2025-07-23 16:26:29,101 INFO Top 79 cell barcodes passed the selected threshold
@@ -150,7 +174,7 @@ umi_tools whitelist  --stdin=ERR14876813_1.fastq --bc-pattern=CCCCCCCCCCCCNNNNNN
 2025-07-23 16:26:29,103 INFO Found 5124646 total reads which can be error corrected to the selected cell barcodes
 ```
 
-## Filter out reades without a cell barcode, fix seq errors in barcodes, and add barcodes to header.
+## Filter out reads without a cell barcode, fix seq errors in barcodes, and add barcodes to header.
 ```bash
 umi_tools extract --stdin=ERR14876813_1.fastq  --bc-pattern=CCCCCCCCCCCCNNNNNNNN --whitelist=whitelist.txt  --stdout=ERR14876813_1_extracted.fastq.gz --read2-in=ERR14876813_2.fastq --read2-out=ERR14876813_2_extracted.fastq.gz
 
@@ -181,6 +205,10 @@ STAR --genomeDir refdata-gex-GRCh38-2020-A/STAR_index \
 ```
 
 ### Alignment rates 
+
+You see that my number of uniquely aligned reads has decreased, which gives a false impression of what umi_tools has done. We know that umi_tools has removed all R1 reads and their mates (R2) that do not have any similarity to a cell barcode, thereby removing all ambient RNA not assigned to a cell. 
+
+#  Here there appears to be an issue with assignment that was not present above. 
 ```
 
                                  Started job on |       Jul 24 15:49:22
@@ -287,6 +315,12 @@ dev.off()
 
 saveRDS(seurat_obj, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/03_Clustered.rds")
 ```
+
+![UMAP_Clusters](Assets/PipseqTut_UMAP_Clusters.png)
+![UMAP_Clusters_HedghogGeneScore](Assets/PipseqTut_UMAP_HedgehogScore.png)
+
+
+
 
 The clusters were not highly distinct in the first attempt, so increased resolution to reflect what was done in their publication. <brk>
 <Brk>
@@ -401,6 +435,48 @@ write.csv(top_markers_per_cluster, "/work/gif3/masonbrink/USDA/05_PipseqTutorial
 <brk>
 These were informative, though there were only ~5 genes for cluster 3 and 0 for cluster 2.  Going to rerun the framework with these top 30 genes. 
 
+
+|Adjusted P value|Cluster | Gene |
+|----------------|--------|------|
+| 8.57608955772113e-17	| 0 |	FUNDC1    |
+| 3.9005065420351e-17	  | 0 |	FAM71D |
+| 6.93791486146789e-17	| 0 |	PMPCA |
+| 8.18478413137096e-19	| 0 |	DCAF7 |
+| 4.26263193913731e-16	| 0 |	SKP2 |
+| 1.05083504411023e-19	| 0 |	SFT2D1 |
+| 8.02207384641925e-18	| 0 |	GPR19 |
+| 6.88098317829902e-22	| 0 |	RPL26L1 |
+| 2.54509437268097e-16	| 0 |	ADK |
+| 3.26949281361046e-22	| 0 |	GANAB |
+|1.97144178975535e-200	| 1 |	RPL35A |
+|4.46639715924085e-205	| 1 |	RPS17 |
+|2.58131811268766e-203	| 1 |	RPS4X |
+|4.60614229184367e-198	| 1 |	RPL31 |
+|4.96350956258184e-196	| 1 |	RPS18 |
+|2.02820222796243e-198	| 1 |	RPS6 |
+|1.25012770813508e-198	| 1 |	RPL41 |
+|4.31012976148348e-202	| 1 |	RPS14 |
+|1.31393523012029e-182	| 1 |	RPL23 |
+|5.68364220904455e-188	| 1 |	RPL8 |
+|4.59597239276741e-06	  | 2 |	DCAF7 |
+|2.7547688511436e-07	  | 2 |	FAM104B |
+|5.76505764746112e-07	  | 2 |	WDYHV1 |
+|1.12550825024702e-08	  | 2 |	DUSP6 |
+|2.39645541234559e-09	  | 2 |	SPC24 |
+|1.05382469300279e-06	  | 2 |	YEATS4 |
+|1.92923018698408e-07	  | 2 |	MYH9 |
+|1.71575660154685e-10	  | 2 |	LMNB1 |
+|9.49329175273712e-09	  | 2 |	WBP11 |
+|1.56061397079898e-09	  | 2 |	CDCA8 |
+|1.2943813041741e-09	  | 2 |	CPSF3 |
+|2.10333896368509e-08	  | 2 |	COMMD1 |
+|2.78368486676784e-19	  | 3 |	NCL |
+|8.41139937914575e-30	  | 3 |	MALAT1 |
+|2.46050422193597e-16	  | 3 |	ANP32E |
+|1.8645555634698e-07	  | 3 |	TAF15 |
+|3.93674111668568e-30	  | 3 |	SMC1A |
+
+
 # Rerun the above framework with these top 30 genes in use. 
 ```bash
 ml  seurat/develop20210621
@@ -457,6 +533,9 @@ DotPlot(seu, features = matched) +
   ggtitle("Marker Expression by Cluster") & RotatedAxis()
 ```
 
+![Expression of Top 10 genes by cluster](Assets/DotplotRevisedGenes2.png)
+
+
 ### Display Expression of Cluster 0
 ```R
 # Load libraries
@@ -505,8 +584,9 @@ p2 <- FeaturePlot(seurat_obj, features = "Cluster0Score1") + ggtitle("Cluster_0 
 png("Combine_Cluster0_Expression_Scores.png", width = 800, height = 600)
 print(p1 + p2)
 dev.off()
-
 ```
+
+![Cluster 0](Assets/Combine_Cluster0_Expression_Scores.png)
 ### Display Expression of Cluster 1
 ```R
 # Load libraries
@@ -555,8 +635,8 @@ p2 <- FeaturePlot(seurat_obj, features = "Cluster1Score1") + ggtitle("Cluster_1 
 png("Combine_Cluster1_Expression_Scores.png", width = 800, height = 600)
 print(p1 + p2)
 dev.off()
-
 ```
+![Cluster 1](Assets/Combine_Cluster1_Expression_Scores.png)
 
 ### Display Expression of Cluster 3
 ```R
@@ -608,65 +688,112 @@ print(p1 + p2)
 dev.off()
 ```
 
+![Cluster 3](Assets/Combine_Cluster3_Expression_Scores.png)
+
 ### Use existing human single cell dataset 
-```bash 
+``` 
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-3929
 
 I used ebi's arrayExpress to find a counts matrix for "Single-cell RNA-seq reveal lineage formation and X-chromosome dosage compensation in human preimplantation embryos". 
-
-
 ```
 
-
-counts <- read.delim(gzfile("GSE76381_EmbryoMoleculeCounts.cef.txt.gz"), row.names = 1, check.names = FALSE)
-counts <- as.matrix(counts)
-ref_seurat <- CreateSeuratObject(counts = counts, project = "GSE76381")
-
-
-
-
+### Apply reference labels to my dataset
 ```R
 library(Seurat)
 library(dplyr)
-
-# Load counts and create Seurat object
 ref_counts <- read.delim("counts.txt", row.names = 1, check.names = FALSE)
 ref_seurat <- CreateSeuratObject(counts = ref_counts, project = "GSE76381")
-
-# Load and clean metadata
 metadata <- read.delim("E-MTAB-3929.sdrf.txt", check.names = FALSE)
 metadata <- metadata %>%
   select(`Source Name`, `Characteristics[inferred lineage]`) %>%
   rename(cell_id = `Source Name`, cell_type = `Characteristics[inferred lineage]`) %>%
   filter(cell_id %in% colnames(ref_seurat)) %>%
   distinct(cell_id, .keep_all = TRUE)
-
-# Ensure ordering matches
 metadata <- metadata[match(colnames(ref_seurat), metadata$cell_id), ]
-
-# Attach metadata to Seurat object
 ref_seurat <- AddMetaData(ref_seurat, metadata = metadata$cell_type, col.name = "cell_type")
-
-# Convert to factor (now that it's attached)
 ref_seurat$cell_type <- factor(ref_seurat$cell_type)
+ref_seurat <- NormalizeData(ref_seurat)
+ref_seurat <- FindVariableFeatures(ref_seurat)
+ref_seurat <- ScaleData(ref_seurat)
+ref_seurat <- RunPCA(ref_seurat)
+ref_seurat <- RunUMAP(ref_seurat, dims = 1:20)
+query <- readRDS("/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/03_Clustered.rds")
+query <- NormalizeData(query)
+query <- FindVariableFeatures(query)
+query <- ScaleData(query)
+query <- RunPCA(query)
+anchors <- FindTransferAnchors(reference = ref_seurat, query = query, dims = 1:20)
+predictions <- TransferData(
+  anchorset = anchors,
+  refdata = ref_seurat$cell_type,
+  dims = 1:20
+)
+query[["predicted.id"]] <- predictions$predicted.id
+query[["prediction.score.max"]] <- predictions$prediction.score.max
+Idents(query) <- as.character(query$predicted.id)
+p1 <- DimPlot(query, label = TRUE, repel = TRUE, group.by = "predicted.id") +
+  ggplot2::ggtitle("Cell Type Predictions")
+p2 <- VlnPlot(query) +
+  ggplot2::ggtitle("Prediction Confidence Scores")
+png("AtlasLabelsHescUmap.png", width = 800, height = 600)
+print(p1)
+dev.off()
+png("ViolinPredictionScores.png", width = 800, height = 600)
+print(p2)
+dev.off()
+print(table(query$predicted.id))
+```
+![Cell Type Predictions](Assets/AtlasLabelsHesc.png)
+![Cell Type Prediction Scores](Assets/AtlasPredictionScores.png)
 
-# Normalize and reduce reference
+### Add reference labels to umap plot using the correct reference dataset
+
+Download the reference data 
+```bash
+/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered
+
+https://www.ebi.ac.uk/biostudies/ArrayExpress/studies/E-MTAB-15075?query=%20E-MTAB-15075
+
+unzip E-MTAB-15075.zip
+```
+
+
+run seurat with new reference data
+```R
+library(Seurat)
+library(dplyr)
+
+# Load preprocessed Seurat object as reference
+ref_seurat <- readRDS("2025.01.13_CH_synNotch_seurat_object.RDS")
+
+# Confirm what metadata column holds cell type labels
+# Uncomment to explore:
+# head(ref_seurat@meta.data)
+
+# Replace "cell_type_column" with the correct column name for cell types
+# Common column names might be: "cell_type", "CellType", "labels", or "predicted.id"
+# For now, assuming it's "cell_type"
+ref_seurat$cell_type <- factor(ref_seurat$base_annotation)
+
+# Optional: normalize/scale again only if not already done
+# If the reference object is already normalized and embedded (check with `ref_seurat@reductions`),
+# you may skip these steps:
 ref_seurat <- NormalizeData(ref_seurat)
 ref_seurat <- FindVariableFeatures(ref_seurat)
 ref_seurat <- ScaleData(ref_seurat)
 ref_seurat <- RunPCA(ref_seurat)
 ref_seurat <- RunUMAP(ref_seurat, dims = 1:20)
 
-# Load query object
+# Load query object (your sample)
 query <- readRDS("/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/03_Clustered.rds")
 
-# Normalize and reduce query
+# Preprocess the query object
 query <- NormalizeData(query)
 query <- FindVariableFeatures(query)
 query <- ScaleData(query)
 query <- RunPCA(query)
 
-# Transfer labels
+# Find anchors and transfer labels
 anchors <- FindTransferAnchors(reference = ref_seurat, query = query, dims = 1:20)
 predictions <- TransferData(
   anchorset = anchors,
@@ -674,29 +801,32 @@ predictions <- TransferData(
   dims = 1:20
 )
 
-# Add predicted labels
+# Add predictions to query object
 query[["predicted.id"]] <- predictions$predicted.id
 query[["prediction.score.max"]] <- predictions$prediction.score.max
-Idents(query) <- query$predicted.id
+Idents(query) <- as.character(query$predicted.id)
 
-# Plotting
-p1 <- DimPlot(query, label = TRUE, repel = TRUE, group.by = "predicted.id")
-p2 <- VlnPlot(query, features = "prediction.score.max")
+# Plot results
+p1 <- DimPlot(query, label = TRUE, repel = TRUE, group.by = "predicted.id") +
+  ggplot2::ggtitle("Cell Type Predictions")
+p2 <- VlnPlot(query, features = "prediction.score.max") +
+  ggplot2::ggtitle("Prediction Confidence Scores")
 
 # Save plots
-png("AtlasLabelsHesc.png", width = 800, height = 600)
+png("AtlasLabelsHescUmap.png", width = 800, height = 600)
 print(p1)
 dev.off()
 
-png("AtlasPredictionScores.png", width = 800, height = 600)
+png("ViolinPredictionScores.png", width = 800, height = 600)
 print(p2)
 dev.off()
 
-# Table of predicted labels
+# Summary
 print(table(query$predicted.id))
 
-DimPlot(query, group.by = "predicted.id", label = TRUE, repel = TRUE) +
-  ggtitle("Predicted Cell Types")
+```
+![Cell Type Predictions](Assets/AtlasLabelsHescUmap.png)
+![Cell Type Prediction Scores](Assets/ViolinPredictionScores.png)
 
 
-I've got plots, and the print table statement is giving the cell types, but the plots are still referencing numbers as the cell types. 
+This worked, but the labels were not of very high confidence for the ventral tuberal hypothalamic progenitors.
