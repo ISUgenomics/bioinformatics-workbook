@@ -62,21 +62,24 @@ STAR --runThreadN 36 --genomeSAindexNbases 14 --runMode genomeGenerate --genomeD
 
 Use the sample metadata to find out which read and the length of UMI and cell barcode sequences. These are typical settings with the transcript-containing paired read listed first (R2 in this case). I set '--soloBarcodeReadLength 0' to avoid the automatic check of read length for R1, as my reads were 151bp for both R1 and R2.The white list is something better described in detail below. 
 
-The whitelist is the set of barcodes attributed to your cells, which can differ based on the technology you used to produce your single cell RNA-seq. With 10x kits there are a set of designated barcodes and STARsolo will automatically recogize these with '--soloType CB_UMI_Simple --soloCBwhitelist 10x_v3', etc. For PiPseq, the cell barcodes are custom and thus so is the whitelist. You can align without using a whitelist '--soloCBwhitelist None', but you will lose a percent of reads that have almost-perfect cell barcodes due to sequencding error. So you should always try to supply a whitelist if possible.
+The whitelist is the set of barcodes attributed to your cells, which can differ based on the technology you used to produce your single cell RNA-seq. With 10x kits there are a set of designated barcodes and STARsolo will automatically recogize these with '--soloType CB_UMI_Simple --soloCBwhitelist 10x_v3', etc. For PiPseq, the cell barcodes are custom and thus so is the whitelist. You can align without using a whitelist '--soloCBwhitelist None', but you will lose a percent of reads that have almost-perfect cell barcodes due to sequencing error. So you should always try to supply a whitelist if possible.
 
 **10x_v2 settings**
 ```bash
-STAR --genomeDir STAR_index_human \
+
+#Download this list of barcodes for 10x_v2 
+https://github.com/10XGenomics/supernova/blame/master/tenkit/lib/python/tenkit/barcodes/737K-august-2016.txt
+
+STAR --genomeDir refdata-gex-GRCh38-2020-A/STAR_index 
   --runThreadN 36 \
-  --readFilesIn ERR14876813_2.fastq.gz ERR14876813_1.fastq.gz \
+  --readFilesIn ERR14876813_2.fastq ERR14876813_1.fastq \
   --soloBarcodeReadLength 0 \
-  --readFilesCommand zcat \
   --soloType CB_UMI_Simple \
   --soloCBstart 1 --soloCBlen 16 \
   --soloUMIstart 17 --soloUMIlen 12 \
   --soloFeatures Gene \
-  --soloOutFileNames ERR14876813_out/ \
-  --soloCBwhitelist 10x_v2
+  --soloOutFileNames ERR14876813_10x_v2_out/ \
+  --soloCBwhitelist 737K-august-2016.txt
 ```
 
 **PiPseq settings**
@@ -137,34 +140,35 @@ We a got a decent proportion of the reads to align uniquely, which will likely g
 <brk>
 A key output to assess is the ERR14876813_out/Gene/Summary.csv
 
-| Metric                                              | Value       | Description                                                                 |
-|-----------------------------------------------------|-------------|-----------------------------------------------------------------------------|
-| **Number of Reads**                                 | 157,039,478 | Total number of sequenced read pairs.                                       |
-| **Reads With Valid Barcodes**                       | 1           | Number of reads with valid cell barcodes. (Likely placeholder or parsing error) |
-| **Sequencing Saturation**                           | 0.682587    | Fraction of redundant reads; higher = more deeply sequenced.                |
-| **Q30 Bases in CB+UMI**                             | -nan        | Fraction of barcode/UMI bases with Q ≥ 30; `-nan` indicates missing data.   |
-| **Q30 Bases in RNA read**                           | 0.747132    | Fraction of RNA bases with Q ≥ 30, indicating base call accuracy.           |
-| **Reads Mapped to Genome: Unique+Multiple**         | 0.419257    | Fraction of reads mapped (unique + multi-mapped).                           |
-| **Reads Mapped to Genome: Unique**                  | 0.384747    | Fraction of reads that mapped uniquely to the genome.                       |
-| **Reads Mapped to Gene: Unique+Multiple Gene**      | —           | Not reported (header only).                                                 |
-| **Reads Mapped to Gene: Unique Gene**               | 0.285561    | Fraction of reads uniquely mapped to a gene.                                |
-| **Estimated Number of Cells**                       | 2,787       | STARsolo's estimate of the number of real cells detected.                   |
-| **Unique Reads in Cells Mapped to Gene**            | 38,905,923  | Total gene-mapped reads from valid cells, ignoring duplicates.              |
-| **Fraction of Unique Reads in Cells**               | 0.867576    | Proportion of unique gene-mapped reads within valid cells.                  |
-| **Mean Reads per Cell**                             | 13,959      | Average total reads per cell barcode.                                       |
-| **Median Reads per Cell**                           | 9,899       | Median number of reads across all valid cells.                              |
-| **UMIs in Cells**                                   | 10,731,984  | Total unique molecular identifiers (UMIs) in valid cells.                   |
-| **Mean UMI per Cell**                               | 3,850       | Average number of UMIs per cell.                                            |
-| **Median UMI per Cell**                             | 2,856       | Median UMIs per cell.                                                       |
-| **Mean Gene per Cell**                              | 2,215       | Average number of genes detected per cell.                                  |
-| **Median Gene per Cell**                            | 1,967       | Median number of genes detected per cell.                                   |
-| **Total Gene Detected**                             | 20,481      | Total number of genes detected across all cells.                            |
+| Metric                                              | No Whitelist| UMI_tools Filtration | 10x_v2 Whitelist | Description                                                                 |
+|-----------------------------------------------------|-------------|----------------------|------------------|-------------------------------------|
+| **Number of Reads**                                 | 157,039,478 | 116,071,096          |  | Total number of sequenced read pairs.                                       |
+| **Reads With Valid Barcodes**                       | 1           | 1                    |  | Number of reads with valid cell barcodes. (Likely placeholder or parsing error) |
+| **Sequencing Saturation**                           | 0.682587    | 0.30226              |  | Fraction of redundant reads; higher = more deeply sequenced.                |
+| **Q30 Bases in RNA read**                           | 0.747132    | 0.748008             |  | Fraction of RNA bases with Q ≥ 30, indicating base call accuracy.           |
+| **Reads Mapped to Genome: Unique+Multiple**         | 0.419257    | 0.416554             |  | Fraction of reads mapped (unique + multi-mapped).                           |
+| **Reads Mapped to Genome: Unique**                  | 0.384747    | 0.382292             |  | Fraction of reads that mapped uniquely to the genome.                       |
+| **Reads Mapped to Gene: Unique+Multiple Gene**      | —           | -                    |  | Not reported (header only).                                                 |
+| **Reads Mapped to Gene: Unique Gene**               | 0.285561    | 0.282708             |  | Fraction of reads uniquely mapped to a gene.                                |
+| **Estimated Number of Cells**                       | 2,787       | 2,148                |  | STARsolo's estimate of the number of real cells detected.                   |
+| **Unique Reads in Cells Mapped to Gene**            | 38,905,923  | 24,044,479           |  | Total gene-mapped reads from valid cells, ignoring duplicates.              |
+| **Fraction of Unique Reads in Cells**               | 0.867576    | 0.732747             |  | Proportion of unique gene-mapped reads within valid cells.                  |
+| **Mean Reads per Cell**                             | 13,959      | 11,193               |  | Average total reads per cell barcode.                                       |
+| **Median Reads per Cell**                           | 9,899       | 8,544                |  | Median number of reads across all valid cells.                              |
+| **UMIs in Cells**                                   | 10,731,984  | 16,556,235           |  | Total unique molecular identifiers (UMIs) in valid cells.                   |
+| **Mean UMI per Cell**                               | 3,850       | 7,707                |  | Average number of UMIs per cell.                                            |
+| **Median UMI per Cell**                             | 2,856       | 6,079                |  | Median UMIs per cell.                                                       |
+| **Mean Gene per Cell**                              | 2,215       | 1,987                |  | Average number of genes detected per cell.                                  |
+| **Median Gene per Cell**                            | 1,967       | 1,785                |  | Median number of genes detected per cell.                                   |
+| **Total Gene Detected**                             | 20,481      | 19,386               |  | Total number of genes detected across all cells.                            |
+
 
 ### Filter and fix the reads for improved alignment
 
+When we do not have a known whitelist of cell barcodes, we have to make one ourselves. This is where it pays to know the metadata of your sample, as you need to set the expected length of the barcode pattern: C = cell barcode, N = UMI, X = ignore.
 
 ```bash
-umi_tools whitelist  --stdin=ERR14876813_1.fastq --bc-pattern=CCCCCCCCCCCCNNNNNNNN  --log2stderr > whitelist.txt
+umi_tools whitelist  --stdin=ERR14876813_1_extracted.fastq.gz --bc-pattern=CCCCCCCCCCCCCCCCNNNNNNNNNNNN  --log2stderr > whitelist.txt
 2025-07-23 16:26:29,101 INFO Top 79 cell barcodes passed the selected threshold
 2025-07-23 16:26:29,101 INFO Writing out whitelist
 2025-07-23 16:26:29,103 INFO Parsed 90386148 reads
@@ -210,11 +214,10 @@ You see that my number of uniquely aligned reads has decreased, which gives a fa
 
 #  Here there appears to be an issue with assignment that was not present above. 
 ```
-
-                                 Started job on |       Jul 24 15:49:22
-                             Started mapping on |       Jul 24 15:50:01
-                                    Finished on |       Jul 24 15:59:08
-       Mapping speed, Million of reads per hour |       763.90
+                                 Started job on |       Aug 21 11:29:14
+                             Started mapping on |       Aug 21 11:36:40
+                                    Finished on |       Aug 21 11:50:12
+       Mapping speed, Million of reads per hour |       514.60
 
                           Number of input reads |       116071096
                       Average input read length |       151
@@ -250,8 +253,136 @@ You see that my number of uniquely aligned reads has decreased, which gives a fa
                             % of chimeric reads |       0.00%
 ```
 
+### Quality check -- Is it that our R2 reads contain a large proportion of polyA or PolyT in the reads?
+
+**polyA in R1 as control**
+```
+total=$(zcat ERR14876813_1_extracted.fastq.gz | awk 'NR%4==2' | wc -l)
+poly_any=$(zcat ERR14876813_1_extracted.fastq.gz | awk 'NR%4==2' | grep -i -E 'A{20,}' | wc -l)
+poly_trail=$(zcat ERR14876813_1_extracted.fastq.gz | awk 'NR%4==2' | grep -i -E 'A{20,}$' | wc -l)
+awk -v t=$total -v a=$poly_any -v b=$poly_trail 'BEGIN{if(t==0){print "no reads"; exit} printf "any A>=20: %d/%d (%.2f%%)\n", a, t, a/t*100; printf "trailing A>=20: %d/%d (%.2f%%)\n", b, t, b/t*100; }'
+any A>=20: 189717/116071096 (0.16%)
+trailing A>=20: 20820/116071096 (0.02%)
+```
+**polyT in R1 as control**
+```
+poly_any=$(zcat ERR14876813_1_extracted.fastq.gz | awk 'NR%4==2' | grep -i -E 'T{20,}' | wc -l) 
+poly_trail=$(zcat ERR14876813_1_extracted.fastq.gz | awk 'NR%4==2' | grep -i -E 'T{20,}$' | wc -l) 
+awk -v t=$total -v a=$poly_any -v b=$poly_trail 'BEGIN{if(t==0){print "no reads"; exit} printf "any T>=20: %d/%d (%.2f%%)\n", a, t, a/t*100; printf "trailing T>=20: %d/%d (%.2f%%)\n", b, t, b/t*100; }'
+any T>=20: 104280453/116071096 (89.84%)
+trailing T>=20: 2260708/116071096 (1.95%)
+```
+
+**polyA in R2**
+```
+poly_any=$(zcat ERR14876813_2_extracted.fastq.gz | awk 'NR%4==2' | grep -i -E 'A{20,}' | wc -l) 
+poly_trail=$(zcat ERR14876813_2_extracted.fastq.gz | awk 'NR%4==2' | grep -i -E 'A{20,}$' | wc -l) 
+awk -v t=$total -v a=$poly_any -v b=$poly_trail 'BEGIN{if(t==0){print "no reads"; exit} printf "any A>=20: %d/%d (%.2f%%)\n", a, t, a/t*100; printf "trailing A>=20: %d/%d (%.2f%%)\n", b, t, b/t*100; }'
+any A>=20: 74618826/116071096 (64.29%)
+trailing A>=20: 7990572/116071096 (6.88%)
+```
+
+**polyT in R2**
+```
+poly_any=$(zcat ERR14876813_2_extracted.fastq.gz | awk 'NR%4==2' | grep -i -E 'T{20,}' | wc -l) 
+poly_trail=$(zcat ERR14876813_2_extracted.fastq.gz | awk 'NR%4==2' | grep -i -E 'T{20,}$' | wc -l) 
+awk -v t=$total -v a=$poly_any -v b=$poly_trail 'BEGIN{if(t==0){print "no reads"; exit} printf "any T>=20: %d/%d (%.2f%%)\n", a, t, a/t*100; printf "trailing T>=20: %d/%d (%.2f%%)\n", b, t, b/t*100; }'
+any T>=20: 146476/116071096 (0.13%)
+trailing T>=20: 1376/116071096 (0.00%)
+```
+
+We have lots of PolyA sequences in our R2 (cDNA) read, the amount of polyT in R1 is negligable as we are only concerned with the cell barcode and UMI. It is possible that this extra sequence at the end of R1 is CDNA transcript, something to be investigated if mapping rates are low. 
 
 
+### Trim the R2 reads to obtain better mapping. 
+```bash
+ml py-cutadapt;cutadapt -j 36 -A file:adapterSequences.fa -A A{15} -m 25 -o TrimERR14876813_1.fq.gz -p TrimERR14876813_2.fq.gz ERR14876813_1.fastq ERR14876813_2.fastq  --pair-filter=any   > cutadapt_report.txt
+
+vi adapterSequences.fa
+>Illumina universal adapter
+AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+>Template switch oligo TSO ISPCR motif short
+AAGCAGTGGT
+>Template switch oligo TSO ISPCR motif long
+AAGCAGTGGTATCAACGCAGAGTAC
+```
+
+**Results Summary**
+```
+=== Summary ===
+
+Total read pairs processed:        157,039,478
+  Read 2 with adapter:             129,257,289 (82.3%)
+
+== Read fate breakdown ==
+Pairs that were too short:          31,759,468 (20.2%)
+Pairs written (passing filters):   125,280,010 (79.8%)
+
+Total basepairs processed: 47,425,922,356 bp
+  Read 1: 23,712,961,178 bp
+  Read 2: 23,712,961,178 bp
+Total written (filtered):  31,485,806,925 bp (66.4%)
+  Read 1: 18,917,281,510 bp
+  Read 2: 12,568,525,415 bp
+```
+##### Remap these trimmed reads
+
+Theoretically these reads should more accurately map to the reference genome, giving a better representation of cell expression.
+```bash
+STAR --genomeDir refdata-gex-GRCh38-2020-A/STAR_index \
+  --runThreadN 36 \
+  --readFilesIn  TrimERR14876813_2.fq.gz TrimERR14876813_1.fq.gz \
+  --soloType CB_UMI_Simple \
+  --soloFeatures Gene \
+  --soloOutFileNames ERR14876813_10x_v2_Trim_out/ \
+  --soloBarcodeReadLength 0 \
+  --soloCBstart 1 --soloCBlen 16 \
+  --soloUMIstart 17 --soloUMIlen 12 \
+  --readFilesCommand zcat \
+  --soloCBwhitelist  737K-august-2016.txt
+```
+
+**Results of Trimmed Read Alignment**
+```
+                                 Started job on |       Aug 25 15:55:41
+                             Started mapping on |       Aug 25 16:01:48
+                                    Finished on |       Aug 25 16:17:15
+       Mapping speed, Million of reads per hour |       609.86
+
+                          Number of input reads |       157039478
+                      Average input read length |       151
+                                    UNIQUE READS:
+                   Uniquely mapped reads number |       60420433
+                        Uniquely mapped reads % |       38.47%
+                          Average mapped length |       136.48
+                       Number of splices: Total |       18465855
+            Number of splices: Annotated (sjdb) |       17744515
+                       Number of splices: GT/AG |       17921301
+                       Number of splices: GC/AG |       36104
+                       Number of splices: AT/AC |       4937
+               Number of splices: Non-canonical |       503513
+                      Mismatch rate per base, % |       0.96%
+                         Deletion rate per base |       0.01%
+                        Deletion average length |       1.45
+                        Insertion rate per base |       0.02%
+                       Insertion average length |       1.21
+                             MULTI-MAPPING READS:
+        Number of reads mapped to multiple loci |       5419489
+             % of reads mapped to multiple loci |       3.45%
+        Number of reads mapped to too many loci |       39235
+             % of reads mapped to too many loci |       0.02%
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       91110551
+                 % of reads unmapped: too short |       58.02%
+                Number of reads unmapped: other |       49770
+                     % of reads unmapped: other |       0.03%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+
+```
 
 ### Seurat Clustering and assessement of Hedgehog associated genes
 ```bash
@@ -433,7 +564,7 @@ write.csv(top_markers_per_cluster, "/work/gif3/masonbrink/USDA/05_PipseqTutorial
 
 ```
 <brk>
-These were informative, though there were only ~5 genes for cluster 3 and 0 for cluster 2.  Going to rerun the framework with these top 30 genes. 
+These were informative, though there were only ~5 genes for cluster 3 and 12 for cluster 2.  Going to rerun the framework with these top 30 genes. 
 
 
 |Adjusted P value|Cluster | Gene |
