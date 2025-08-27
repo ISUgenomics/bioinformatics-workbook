@@ -22,10 +22,9 @@ This sample is derived from the study:
 | **Organism**            | *Homo sapiens*                                                               |
 | **Cell Type**           | hESC-derived midbrain floorplate progenitors                                 |
 | **Differentiation Day** | Day 25                                                                       |
-| **Technology**          | 10x Genomics Chromium single-cell RNA sequencing                             |
 | **Expected Markers**    | High expression of **SHH**, **FOXA2**, **LMX1A**; moderate **OTX2**, **EN1** |
 | **Sequencing Layout**   | Paired-end (R1: barcodes/UMI; R2: transcript reads)                          |
-| **Chemistry**           | 10x Genomics v2 (CB=16bp, UMI=10bp)                                          |
+| **Chemistry**           | PIPseq T2 kit v3 chemistry                                         |
 
 
 # File Setup 
@@ -62,28 +61,10 @@ STAR --runThreadN 36 --genomeSAindexNbases 14 --runMode genomeGenerate --genomeD
 
 Use the sample metadata to find out which read and the length of UMI and cell barcode sequences. These are typical settings with the transcript-containing paired read listed first (R2 in this case). I set '--soloBarcodeReadLength 0' to avoid the automatic check of read length for R1, as my reads were 151bp for both R1 and R2.The white list is something better described in detail below. 
 
-The whitelist is the set of barcodes attributed to your cells, which can differ based on the technology you used to produce your single cell RNA-seq. With 10x kits there are a set of designated barcodes and STARsolo will automatically recogize these with '--soloType CB_UMI_Simple --soloCBwhitelist 10x_v3', etc. For PiPseq, the cell barcodes are custom and thus so is the whitelist. You can align without using a whitelist '--soloCBwhitelist None', but you will lose a percent of reads that have almost-perfect cell barcodes due to sequencing error. So you should always try to supply a whitelist if possible.
+The whitelist is the set of barcodes attributed to your cells, which can differ based on the technology you used to produce your single cell RNA-seq. With 10x kits there are a set of designated barcodes and STARsolo will automatically recogize these with '--soloType CB_UMI_Simple --soloCBwhitelist 10x_v3', etc. For PiPseq, the cell barcodes are custom and thus so is the whitelist. You can align without using a whitelist '--soloCBwhitelist None', but you will lose a percent of reads that have almost-perfect cell barcodes due to sequencing error. So you should always try to supply a whitelist if possible. The various barcode whitelists for 10x can be downloaded here currently https://github.com/10XGenomics/supernova/blame/master/tenkit/lib/python/tenkit/barcodes 
 
-**10x_v2 settings**
-```bash
 
-#Download this list of barcodes for 10x_v2 
-https://github.com/10XGenomics/supernova/blame/master/tenkit/lib/python/tenkit/barcodes/737K-august-2016.txt
-
-STAR --genomeDir refdata-gex-GRCh38-2020-A/STAR_index 
-  --runThreadN 36 \
-  --readFilesIn ERR14876813_2.fastq ERR14876813_1.fastq \
-  --soloBarcodeReadLength 0 \
-  --soloType CB_UMI_Simple \
-  --soloCBstart 1 --soloCBlen 16 \
-  --soloUMIstart 17 --soloUMIlen 12 \
-  --soloFeatures Gene \
-  --soloOutFileNames ERR14876813_10x_v2_out/ \
-  --soloCBwhitelist 737K-august-2016.txt
-```
-
-**PiPseq settings**
-This will assign read counts to every cell barcode present in the R1 read, as long as its second pair (transcript read) aligns to a gene in the genome. Due to sequencing error you will get many cells with very few counts, and these reads will be lost (Unless we use the umi_tools below). 
+This will assign read counts to every cell barcode present in the R1 read, as long as its second pair (transcript read) aligns to a gene in the genome. Due to sequencing error you will get many cells with very few counts as well.
 ```bash
 #Note that R2 is has the cell barcode + UMI (unique molecular identifier).
 STAR --genomeDir STAR_index_human \
@@ -140,27 +121,27 @@ We a got a decent proportion of the reads to align uniquely, which will likely g
 <brk>
 A key output to assess is the ERR14876813_out/Gene/Summary.csv
 
-| Metric                                              | No Whitelist| UMI_tools Filtration | 10x_v2 Whitelist | Description                                                                 |
-|-----------------------------------------------------|-------------|----------------------|------------------|-------------------------------------|
-| **Number of Reads**                                 | 157,039,478 | 116,071,096          |  | Total number of sequenced read pairs.                                       |
-| **Reads With Valid Barcodes**                       | 1           | 1                    |  | Number of reads with valid cell barcodes. (Likely placeholder or parsing error) |
-| **Sequencing Saturation**                           | 0.682587    | 0.30226              |  | Fraction of redundant reads; higher = more deeply sequenced.                |
-| **Q30 Bases in RNA read**                           | 0.747132    | 0.748008             |  | Fraction of RNA bases with Q ≥ 30, indicating base call accuracy.           |
-| **Reads Mapped to Genome: Unique+Multiple**         | 0.419257    | 0.416554             |  | Fraction of reads mapped (unique + multi-mapped).                           |
-| **Reads Mapped to Genome: Unique**                  | 0.384747    | 0.382292             |  | Fraction of reads that mapped uniquely to the genome.                       |
-| **Reads Mapped to Gene: Unique+Multiple Gene**      | —           | -                    |  | Not reported (header only).                                                 |
-| **Reads Mapped to Gene: Unique Gene**               | 0.285561    | 0.282708             |  | Fraction of reads uniquely mapped to a gene.                                |
-| **Estimated Number of Cells**                       | 2,787       | 2,148                |  | STARsolo's estimate of the number of real cells detected.                   |
-| **Unique Reads in Cells Mapped to Gene**            | 38,905,923  | 24,044,479           |  | Total gene-mapped reads from valid cells, ignoring duplicates.              |
-| **Fraction of Unique Reads in Cells**               | 0.867576    | 0.732747             |  | Proportion of unique gene-mapped reads within valid cells.                  |
-| **Mean Reads per Cell**                             | 13,959      | 11,193               |  | Average total reads per cell barcode.                                       |
-| **Median Reads per Cell**                           | 9,899       | 8,544                |  | Median number of reads across all valid cells.                              |
-| **UMIs in Cells**                                   | 10,731,984  | 16,556,235           |  | Total unique molecular identifiers (UMIs) in valid cells.                   |
-| **Mean UMI per Cell**                               | 3,850       | 7,707                |  | Average number of UMIs per cell.                                            |
-| **Median UMI per Cell**                             | 2,856       | 6,079                |  | Median UMIs per cell.                                                       |
-| **Mean Gene per Cell**                              | 2,215       | 1,987                |  | Average number of genes detected per cell.                                  |
-| **Median Gene per Cell**                            | 1,967       | 1,785                |  | Median number of genes detected per cell.                                   |
-| **Total Gene Detected**                             | 20,481      | 19,386               |  | Total number of genes detected across all cells.                            |
+| STARsolo Metric                                     | No Whitelist| UMI_tools Filtration | Trimmed No Whitelist | Trimmed Mapped, UMItools whitelist, Remap| Description                                                                 |
+|-----------------------------------------------------|-------------|----------------------|-----------------|---------------------------|-------------------------------------|
+| **Number of Reads**                                 | 157,039,478 | 116,071,096          |  |  | Total number of sequenced read pairs.                                       |
+| **Reads With Valid Barcodes**                       | 1           | 1                    |  |  | Number of reads with valid cell barcodes. (Likely placeholder or parsing error) |
+| **Sequencing Saturation**                           | 0.682587    | 0.30226              |  |  | Fraction of redundant reads; higher = more deeply sequenced.                |
+| **Q30 Bases in RNA read**                           | 0.747132    | 0.748008             |  |  | Fraction of RNA bases with Q ≥ 30, indicating base call accuracy.           |
+| **Reads Mapped to Genome: Unique+Multiple**         | 0.419257    | 0.416554             |  |  | Fraction of reads mapped (unique + multi-mapped).                           |
+| **Reads Mapped to Genome: Unique**                  | 0.384747    | 0.382292             |  |  | Fraction of reads that mapped uniquely to the genome.                       |
+| **Reads Mapped to Gene: Unique+Multiple Gene**      | —           | -                    |  |  | Not reported (header only).                                                 |
+| **Reads Mapped to Gene: Unique Gene**               | 0.285561    | 0.282708             |  |  | Fraction of reads uniquely mapped to a gene.                                |
+| **Estimated Number of Cells**                       | 2,787       | 2,148                |  |  | STARsolo's estimate of the number of real cells detected.                   |
+| **Unique Reads in Cells Mapped to Gene**            | 38,905,923  | 24,044,479           |  |  | Total gene-mapped reads from valid cells, ignoring duplicates.              |
+| **Fraction of Unique Reads in Cells**               | 0.867576    | 0.732747             |  |  | Proportion of unique gene-mapped reads within valid cells.                  |
+| **Mean Reads per Cell**                             | 13,959      | 11,193               |  |  | Average total reads per cell barcode.                                       |
+| **Median Reads per Cell**                           | 9,899       | 8,544                |  |  | Median number of reads across all valid cells.                              |
+| **UMIs in Cells**                                   | 10,731,984  | 16,556,235           |  |  | Total unique molecular identifiers (UMIs) in valid cells.                   |
+| **Mean UMI per Cell**                               | 3,850       | 7,707                |  |  | Average number of UMIs per cell.                                            |
+| **Median UMI per Cell**                             | 2,856       | 6,079                |  |  | Median UMIs per cell.                                                       |
+| **Mean Gene per Cell**                              | 2,215       | 1,987                |  |  | Average number of genes detected per cell.                                  |
+| **Median Gene per Cell**                            | 1,967       | 1,785                |  |  | Median number of genes detected per cell.                                   |
+| **Total Gene Detected**                             | 20,481      | 19,386               |  |  | Total number of genes detected across all cells.                            |
 
 
 ### Filter and fix the reads for improved alignment
@@ -334,55 +315,174 @@ STAR --genomeDir refdata-gex-GRCh38-2020-A/STAR_index \
   --readFilesIn  TrimERR14876813_2.fq.gz TrimERR14876813_1.fq.gz \
   --soloType CB_UMI_Simple \
   --soloFeatures Gene \
-  --soloOutFileNames ERR14876813_10x_v2_Trim_out/ \
+  --soloOutFileNames ERR14876813_Trim_out/ \
   --soloBarcodeReadLength 0 \
   --soloCBstart 1 --soloCBlen 16 \
   --soloUMIstart 17 --soloUMIlen 12 \
   --readFilesCommand zcat \
-  --soloCBwhitelist  737K-august-2016.txt
+  --soloCBwhitelist  None
 ```
 
 **Results of Trimmed Read Alignment**
 ```
-                                 Started job on |       Aug 25 15:55:41
-                             Started mapping on |       Aug 25 16:01:48
-                                    Finished on |       Aug 25 16:17:15
-       Mapping speed, Million of reads per hour |       609.86
+                                 Started job on |       Aug 27 13:47:42
+                             Started mapping on |       Aug 27 13:51:59
+                                    Finished on |       Aug 27 14:00:34
+       Mapping speed, Million of reads per hour |       875.74
 
-                          Number of input reads |       157039478
-                      Average input read length |       151
+                          Number of input reads |       125280010
+                      Average input read length |       100
                                     UNIQUE READS:
-                   Uniquely mapped reads number |       60420433
-                        Uniquely mapped reads % |       38.47%
-                          Average mapped length |       136.48
-                       Number of splices: Total |       18465855
-            Number of splices: Annotated (sjdb) |       17744515
-                       Number of splices: GT/AG |       17921301
-                       Number of splices: GC/AG |       36104
-                       Number of splices: AT/AC |       4937
-               Number of splices: Non-canonical |       503513
-                      Mismatch rate per base, % |       0.96%
+                   Uniquely mapped reads number |       98746317
+                        Uniquely mapped reads % |       78.82%
+                          Average mapped length |       102.55
+                       Number of splices: Total |       22621733
+            Number of splices: Annotated (sjdb) |       22283410
+                       Number of splices: GT/AG |       22427419
+                       Number of splices: GC/AG |       38377
+                       Number of splices: AT/AC |       4574
+               Number of splices: Non-canonical |       151363
+                      Mismatch rate per base, % |       0.23%
                          Deletion rate per base |       0.01%
-                        Deletion average length |       1.45
+                        Deletion average length |       1.32
                         Insertion rate per base |       0.02%
-                       Insertion average length |       1.21
+                       Insertion average length |       1.18
                              MULTI-MAPPING READS:
-        Number of reads mapped to multiple loci |       5419489
-             % of reads mapped to multiple loci |       3.45%
-        Number of reads mapped to too many loci |       39235
-             % of reads mapped to too many loci |       0.02%
+        Number of reads mapped to multiple loci |       20154650
+             % of reads mapped to multiple loci |       16.09%
+        Number of reads mapped to too many loci |       448146
+             % of reads mapped to too many loci |       0.36%
                                   UNMAPPED READS:
   Number of reads unmapped: too many mismatches |       0
        % of reads unmapped: too many mismatches |       0.00%
-            Number of reads unmapped: too short |       91110551
-                 % of reads unmapped: too short |       58.02%
-                Number of reads unmapped: other |       49770
-                     % of reads unmapped: other |       0.03%
+            Number of reads unmapped: too short |       5840301
+                 % of reads unmapped: too short |       4.66%
+                Number of reads unmapped: other |       90596
+                     % of reads unmapped: other |       0.07%
                                   CHIMERIC READS:
                        Number of chimeric reads |       0
                             % of chimeric reads |       0.00%
-
 ```
+| STARsolo Metric                                     | No Whitelist| UMI_tools Filtration | Trimmed No Whitelist | Trimmed Mapped, UMItools whitelist, Remap| Description                         |
+|-----------------------------------------------------|-------------|----------------------|----------------------|------------------------------------------|-------------------------------------|
+| **Number of Reads**                                 | 157,039,478 | 116,071,096          | 125,280,010          |  | Total number of sequenced read pairs.                                       |
+| **Sequencing Saturation**                           | 0.682587    | 0.30226              | 0.778451             |  | Fraction of redundant reads; higher = more deeply sequenced.                |
+| **Q30 Bases in RNA read**                           | 0.747132    | 0.748008             | 0.938203             |  | Fraction of RNA bases with Q ≥ 30, indicating base call accuracy.           |
+| **Reads Mapped to Genome: Unique+Multiple**         | 0.419257    | 0.416554             | 0.949082             |  | Fraction of reads mapped (unique + multi-mapped).                           |
+| **Reads Mapped to Genome: Unique**                  | 0.384747    | 0.382292             | 0.788205             |  | Fraction of reads that mapped uniquely to the genome.                       |
+| **Reads Mapped to Gene: Unique Gene**               | 0.285561    | 0.282708             | 0.841158             |  | Fraction of reads uniquely mapped to a gene.                                |
+| **Estimated Number of Cells**                       | 2,787       | 2,148                | 2,874                |  | STARsolo's estimate of the number of real cells detected.                   |
+| **Unique Reads in Cells Mapped to Gene**            | 38,905,923  | 24,044,479           | 92,397,559           |  | Total gene-mapped reads from valid cells, ignoring duplicates.              |
+| **Fraction of Unique Reads in Cells**               | 0.867576    | 0.732747             | 0.876801             |  | Proportion of unique gene-mapped reads within valid cells.                  |
+| **Mean Reads per Cell**                             | 13,959      | 11,193               | 32,149               |  | Average total reads per cell barcode.                                       |
+| **Median Reads per Cell**                           | 9,899       | 8,544                | 22,761               |  | Median number of reads across all valid cells.                              |
+| **UMIs in Cells**                                   | 10,731,984  | 16,556,235           | 17,026,462           |  | Total unique molecular identifiers (UMIs) in valid cells.                   |
+| **Mean UMI per Cell**                               | 3,850       | 7,707                | 5,924                |  | Average number of UMIs per cell.                                            |
+| **Median UMI per Cell**                             | 2,856       | 6,079                | 4,374                |  | Median UMIs per cell.                                                       |
+| **Mean Gene per Cell**                              | 2,215       | 1,987                | 3,032                |  | Average number of genes detected per cell.                                  |
+| **Median Gene per Cell**                            | 1,967       | 1,785                | 2,748                |  | Median number of genes detected per cell.                                   |
+| **Total Gene Detected**                             | 20,481      | 19,386               | 22,882               |  | Total number of genes detected across all cells.                            |
+
+These stats are improving from trimming and it seems apparent that Umitools may be pulling out ambient RNA junk and calling them cells.   
+
+### Create a whitelist from mapped reads
+```
+Extract all reads that mapped without using a whitelist 
+samtools view -F 4 Aligned.out.sam | awk '{print $1}' | sort -u > mapped_readnames.txt
+
+seqtk subseq TrimERR14876813_1.fq.gz mapped_readnames.txt > TrimERR14876813_mapped_R1.fastq &
+seqtk subseq TrimERR14876813_2.fq.gz mapped_readnames.txt > TrimERR14876813_mapped_R2.fastq &
+
+
+
+umi_tools whitelist   --stdin TrimERR14876813_mapped_R1.fastq  --bc-pattern=CCCCCCCCCCCCCCCCNNNNNNNNNNNN   >TrimAlignedExtractedwhitelist.tx
+#Top 1340 cell barcodes passed the selected threshold
+## 2025-08-27 15:30:40,695 INFO 100000001 reads matched the barcode pattern
+## 2025-08-27 15:30:40,695 INFO Found 419287 unique cell barcodes
+## 2025-08-27 15:30:40,695 INFO Found 67343963 total reads matching the selected cell barcodes
+## 2025-08-27 15:30:40,696 INFO Found 8703676 total reads which can be error corrected to the selected cell barcodes
+
+
+#format the white list to just be a list of barcodes
+cut -f 1 TrimAlignedExtractedwhitelist.txt|awk 'substr($1,1,1)!="#"' >clean_whitelist.txt
+```
+
+### Realign all trimmed reads with whitelist above
+```
+STAR --genomeDir refdata-gex-GRCh38-2020-A/STAR_index \
+  --runThreadN 36 \
+  --readFilesIn  TrimERR14876813_2.fq.gz TrimERR14876813_1.fq.gz \
+  --soloType CB_UMI_Simple \
+  --soloFeatures Gene \
+  --soloOutFileNames ERR14876813_Trim_out/ \
+  --soloBarcodeReadLength 0 \
+  --soloCBstart 1 --soloCBlen 16 \
+  --soloUMIstart 17 --soloUMIlen 12 \
+  --readFilesCommand zcat \
+  --soloCBwhitelist  clean_whitelist.txt
+```
+**Results**
+```
+
+                                 Started job on |       Aug 27 16:37:46
+                             Started mapping on |       Aug 27 16:38:53
+                                    Finished on |       Aug 27 16:46:42
+       Mapping speed, Million of reads per hour |       961.64
+
+                          Number of input reads |       125280010
+                      Average input read length |       100
+                                    UNIQUE READS:
+                   Uniquely mapped reads number |       98746317
+                        Uniquely mapped reads % |       78.82%
+                          Average mapped length |       102.55
+                       Number of splices: Total |       22621733
+            Number of splices: Annotated (sjdb) |       22283410
+                       Number of splices: GT/AG |       22427419
+                       Number of splices: GC/AG |       38377
+                       Number of splices: AT/AC |       4574
+               Number of splices: Non-canonical |       151363
+                      Mismatch rate per base, % |       0.23%
+                         Deletion rate per base |       0.01%
+                        Deletion average length |       1.32
+                        Insertion rate per base |       0.02%
+                       Insertion average length |       1.18
+                             MULTI-MAPPING READS:
+        Number of reads mapped to multiple loci |       20154650
+             % of reads mapped to multiple loci |       16.09%
+        Number of reads mapped to too many loci |       448146
+             % of reads mapped to too many loci |       0.36%
+                                  UNMAPPED READS:
+  Number of reads unmapped: too many mismatches |       0
+       % of reads unmapped: too many mismatches |       0.00%
+            Number of reads unmapped: too short |       5840301
+                 % of reads unmapped: too short |       4.66%
+                Number of reads unmapped: other |       90596
+                     % of reads unmapped: other |       0.07%
+                                  CHIMERIC READS:
+                       Number of chimeric reads |       0
+                            % of chimeric reads |       0.00%
+```
+
+| STARsolo Metric                                     | No Whitelist| UMI_tools Filtration | Trimmed No Whitelist | Trimmed Mapped, UMItools whitelist, Remap| Description                         |
+|-----------------------------------------------------|-------------|----------------------|----------------------|------------------------------------------|-------------------------------------|
+| **Number of Reads**                                 | 157,039,478 | 116,071,096          | 125,280,010          | 125,280,010                              | Total number of sequenced read pairs.                                       |
+| **Sequencing Saturation**                           | 0.682587    | 0.30226              | 0.778451             | 0.825583                                 | Fraction of redundant reads; higher = more deeply sequenced.                |
+| **Q30 Bases in RNA read**                           | 0.747132    | 0.748008             | 0.938203             | 0.938203                                 | Fraction of RNA bases with Q ≥ 30, indicating base call accuracy.           |
+| **Reads Mapped to Genome: Unique+Multiple**         | 0.419257    | 0.416554             | 0.949082             | 0.949082                                 | Fraction of reads mapped (unique + multi-mapped).                           |
+| **Reads Mapped to Genome: Unique**                  | 0.384747    | 0.382292             | 0.788205             | 0.788205                                 | Fraction of reads that mapped uniquely to the genome.                       |
+| **Reads Mapped to Gene: Unique Gene**               | 0.285561    | 0.282708             | 0.841158             | 0.642806                                 | Fraction of reads uniquely mapped to a gene.                                |
+| **Estimated Number of Cells**                       | 2,787       | 2,148                | 2,874                | 1,340                                    | STARsolo's estimate of the number of real cells detected.                   |
+| **Unique Reads in Cells Mapped to Gene**            | 38,905,923  | 24,044,479           | 92,397,559           | 80,530,725                               | Total gene-mapped reads from valid cells, ignoring duplicates.              |
+| **Fraction of Unique Reads in Cells**               | 0.867576    | 0.732747             | 0.876801             | 1                                        | Proportion of unique gene-mapped reads within valid cells.                  |
+| **Mean Reads per Cell**                             | 13,959      | 11,193               | 32,149               | 60,097                                    | Average total reads per cell barcode.                                       |
+| **Median Reads per Cell**                           | 9,899       | 8,544                | 22,761               | 50,789                                   | Median number of reads across all valid cells.                              |
+| **UMIs in Cells**                                   | 10,731,984  | 16,556,235           | 17,026,462           | 14,045,959                               | Total unique molecular identifiers (UMIs) in valid cells.                   |
+| **Mean UMI per Cell**                               | 3,850       | 7,707                | 5,924                | 10482                                    | Average number of UMIs per cell.                                            |
+| **Median UMI per Cell**                             | 2,856       | 6,079                | 4,374                | 9,460                                    | Median UMIs per cell.                                                       |
+| **Mean Gene per Cell**                              | 2,215       | 1,987                | 3,032                | 4,472                                    | Average number of genes detected per cell.                                  |
+| **Median Gene per Cell**                            | 1,967       | 1,785                | 2,748                | 4,319                                    | Median number of genes detected per cell.                                   |
+| **Total Gene Detected**                             | 20,481      | 19,386               | 22,882               | 22,546                                   | Total number of genes detected across all cells.                            |
+
 
 ### Seurat Clustering and assessement of Hedgehog associated genes
 ```bash
