@@ -622,7 +622,7 @@ dev.off()
 saveRDS(seu, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/03_Clustered_cleaned.rds")
 ```
 
-![SHH genes Dotplot](PipseqTut_Marker_Expression_by_Cluster.png)
+![SHH genes Dotplot](Assets/PipseqTut_Marker_Expression_by_Cluster.png)
 
 
 <brk>
