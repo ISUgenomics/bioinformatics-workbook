@@ -27,6 +27,18 @@ This sample is derived from the study:
 | **Chemistry**           | PIPseq T2 kit v3 chemistry                                         |
 
 
+
+| Cell Type | Gene Expression |
+|-----------|-----------------|
+|Midbrain (Rgl1, ProgM, ProgFPL, and ProgFPM cells)| LMX1A, FOXA2, and OTX2 | 
+|Hindbrain | FGF8B, GBX2, HOXA2 |
+|Ventral midbrain | FOXA2, OTX2, CORIN |
+|Caudal midbrain | MSX1, WNT5A, WNT1, EN1 |
+|Pluripotent stem cell | NANOG and POU5F1 (high expression) |
+|Progenitor markers (peak day 21, decrease by day 28) | SOX2, NEUROG2, LMX1A, FOXA2 |
+|Postmitotic cells | DCX, TUBB3 |
+|mDA2 neurons (peak day 28)|NR4A2, TH |
+
 # File Setup 
 
 ### Download and extract single cell RNAseq data
@@ -477,7 +489,7 @@ STAR --genomeDir refdata-gex-GRCh38-2020-A/STAR_index \
 | **Mean Reads per Cell**                             | 13,959      | 11,193               | 32,149               | 60,097                                    | Average total reads per cell barcode.                                       |
 | **Median Reads per Cell**                           | 9,899       | 8,544                | 22,761               | 50,789                                   | Median number of reads across all valid cells.                              |
 | **UMIs in Cells**                                   | 10,731,984  | 16,556,235           | 17,026,462           | 14,045,959                               | Total unique molecular identifiers (UMIs) in valid cells.                   |
-| **Mean UMI per Cell**                               | 3,850       | 7,707                | 5,924                | 10482                                    | Average number of UMIs per cell.                                            |
+| **Mean UMI per Cell**                               | 3,850       | 7,707                | 5,924                | 10,482                                    | Average number of UMIs per cell.                                            |
 | **Median UMI per Cell**                             | 2,856       | 6,079                | 4,374                | 9,460                                    | Median UMIs per cell.                                                       |
 | **Mean Gene per Cell**                              | 2,215       | 1,987                | 3,032                | 4,472                                    | Average number of genes detected per cell.                                  |
 | **Median Gene per Cell**                            | 1,967       | 1,785                | 2,748                | 4,319                                    | Median number of genes detected per cell.                                   |
@@ -498,7 +510,7 @@ library(ggplot2)
 library(patchwork)
 
 # Set data directory (change if needed)
-data_dir <- "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/"
+data_dir <- "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_Trim_Whitelist_out/Gene/filtered/"
 
 # Load 10x Genomics matrix
 counts <- Read10X(data.dir = data_dir)
@@ -521,11 +533,11 @@ ElbowPlot(seurat_obj)  # Optional: to determine optimal dims
 # Dimensional reduction and clustering
 seurat_obj <- RunUMAP(seurat_obj, dims = 1:20)
 seurat_obj <- FindNeighbors(seurat_obj, dims = 1:20)
-seurat_obj <- FindClusters(seurat_obj, resolution = 1.5)
+seurat_obj <- FindClusters(seurat_obj, resolution = 0.5)
 
 # Optional: Hedgehog-specific analysis
 # If you have a list of hedgehog signaling genes (e.g., SHH, GLI1, PTCH1)
-hedgehog_genes <- c("SHH", "GLI1", "PTCH1", "SMO", "HHIP")
+hedgehog_genes <- c("FOXA2", "FOXA1", "ARX", "TFF3", "PAX6", "OTX2", "EMX2", "NKX2-1", "RAX", "SIX6")
 seurat_obj <- AddModuleScore(seurat_obj, features = list(hedgehog_genes), name = "HedgehogScore")
 
 # Plot clusters and expression of hedgehog genes
@@ -544,11 +556,13 @@ png("UMAP_HedgehogScore.png", width = 800, height = 600)
 print(p2)
 dev.off()
 
-saveRDS(seurat_obj, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/03_Clustered.rds")
+saveRDS(seurat_obj, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_Trim_Whitelist_out/Gene/filtered/03_Clustered.rds")
 ```
-
+**Raw read alignment with StarSolo**
 ![UMAP_Clusters](Assets/PipseqTut_UMAP_Clusters.png)
 ![UMAP_Clusters_HedghogGeneScore](Assets/PipseqTut_UMAP_HedgehogScore.png)
+
+**Filtered read alignment with trimming, umi_tools, and genome mapping**
 
 
 
@@ -569,7 +583,7 @@ library(patchwork)
 set.seed(123)
 
 # Load new Seurat object
-seu <- readRDS(file = "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/03_Clustered.rds")
+seu <- readRDS(file = "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_Trim_Whitelist_out/Gene/filtered/03_Clustered.rds")
 
 # Check clusters
 cat("Cluster sizes:\n")
@@ -629,7 +643,7 @@ library(dplyr)
 set.seed(123)
 
 # Load data
-seu <- readRDS(file ="/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/03_Clustered.rds")
+seu <- readRDS(file ="/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_Trim_Whitelist_out/Gene/filtered/03_Clustered.rds")
 table(seu$seurat_clusters)
 ## continuing with res 1 
 
@@ -658,9 +672,9 @@ df_wide <- as.data.frame.matrix(mat)
 head(df_wide)
 
 ## Save files
-write.csv(sig_markers, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/Significant_markers.csv", row.names = FALSE)
-write.csv(df_wide, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/Marker_presence_matrix.csv", row.names = TRUE)
-write.csv(top_markers_per_cluster, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/Top30_markers_per_cluster.csv", row.names = FALSE)
+write.csv(sig_markers, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_Trim_Whitelist_out/Gene/filtered/Significant_markers.csv", row.names = FALSE)
+write.csv(df_wide, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_Trim_Whitelist_out/Gene/filtered/Marker_presence_matrix.csv", row.names = TRUE)
+write.csv(top_markers_per_cluster, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_Trim_Whitelist_out/Gene/filtered/Top30_markers_per_cluster.csv", row.names = FALSE)
 
 ```
 <brk>
@@ -722,7 +736,7 @@ library(patchwork)
 set.seed(123)
 
 # Load new Seurat object
-seu <- readRDS(file = "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/03_Clustered.rds")
+seu <- readRDS(file = "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/03_Clustered_cleaned.rds")
 
 # Check clusters
 cat("Cluster sizes:\n")
@@ -744,9 +758,7 @@ DefaultAssay(seu) <- "RNA_clean"
 
 # Marker genes
 markers <- c(
-  'FUNDC1', 'FAM71D', 'PMPCA', 'DCAF7', 'SKP2', 'SFT2D1', 'GPR19', 'RPL26L1', 'ADK', 'GANAB',  # Cluster_0
-  'RPL35A', 'RPS17', 'RPS4X', 'RPL31', 'RPS18', 'RPS6', 'RPL41', 'RPS14', 'RPL23', 'RPL8',   # Cluster_1
-  'NCL', 'MALAT1', 'ANP32E', 'TAF15', 'SMC1A'              # Cluster_3
+'HMGB2','NACA','RPL11','RPS17','RPS20','RPS23','ALPL','ANP32A','ANP32E','APLP2','ASF1B','ATF2','CCNA2','CDC25C','CDC7','CDCA3','CDCA5','CENPU'
 )
 
 # Match against dataset
@@ -921,7 +933,7 @@ dev.off()
 
 ![Cluster 3](Assets/Combine_Cluster3_Expression_Scores.png)
 
-### Use existing human single cell dataset 
+### Using the wrong reference for your existing human single cell dataset can be catastrophic!
 ``` 
 https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-3929
 
@@ -988,13 +1000,12 @@ https://www.ebi.ac.uk/biostudies/ArrayExpress/studies/E-MTAB-15075?query=%20E-MT
 unzip E-MTAB-15075.zip
 ```
 
-
+**Run seurat with the publications reference data to label the cells in our selected sample without filtering reads**
 run seurat with new reference data
 ```R
 library(Seurat)
 library(dplyr)
 
-# Load preprocessed Seurat object as reference
 ref_seurat <- readRDS("2025.01.13_CH_synNotch_seurat_object.RDS")
 
 # Confirm what metadata column holds cell type labels
@@ -1002,13 +1013,10 @@ ref_seurat <- readRDS("2025.01.13_CH_synNotch_seurat_object.RDS")
 # head(ref_seurat@meta.data)
 
 # Replace "cell_type_column" with the correct column name for cell types
-# Common column names might be: "cell_type", "CellType", "labels", or "predicted.id"
-# For now, assuming it's "cell_type"
+# For our sample it's "base_annotation"
 ref_seurat$cell_type <- factor(ref_seurat$base_annotation)
 
 # Optional: normalize/scale again only if not already done
-# If the reference object is already normalized and embedded (check with `ref_seurat@reductions`),
-# you may skip these steps:
 ref_seurat <- NormalizeData(ref_seurat)
 ref_seurat <- FindVariableFeatures(ref_seurat)
 ref_seurat <- ScaleData(ref_seurat)
@@ -1061,3 +1069,125 @@ print(table(query$predicted.id))
 
 
 This worked, but the labels were not of very high confidence for the ventral tuberal hypothalamic progenitors.
+
+
+
+### Run seurat with the publications reference data to label the cells in our selected sample using the filtered reads/alignments
+
+```bash
+/work/gif3/masonbrink/USDA/05_PipseqTutorial/02_AllRDSHesc_SHH
+
+wget https://ftp.ebi.ac.uk/pub/databases/biostudies/E-MTAB-/075/E-MTAB-15075/Files/2025.01.13_CH_synNotch_seurat_object.RDS
+```
+
+Run seurat
+```R
+# Load libraries
+library(Seurat)
+library(dplyr)
+library(ggplot2)
+library(patchwork)
+
+# Load the combined Seurat object
+ref_seurat <- readRDS("/work/gif3/masonbrink/USDA/05_PipseqTutorial/02_AllRDSHesc_SHH/2025.01.13_CH_synNotch_seurat_object.RDS")
+
+
+
+# Confirm what metadata column holds cell type labels
+# Uncomment to explore:
+# head(ref_seurat@meta.data)
+
+# Replace "cell_type_column" with the correct column name for cell types
+# Common column names might be: "cell_type", "CellType", "labels", or "predicted.id"
+# For now, assuming it's "cell_type"
+ref_seurat$cell_type <- factor(ref_seurat@meta.data$base_annotation)
+
+# Optional: normalize/scale again only if not already done
+# If the reference object is already normalized and embedded (check with `ref_seurat@reductions`),
+# you may skip these steps:
+ref_seurat <- NormalizeData(ref_seurat)
+ref_seurat <- FindVariableFeatures(ref_seurat)
+ref_seurat <- ScaleData(ref_seurat)
+ref_seurat <- RunPCA(ref_seurat)
+ref_seurat <- RunUMAP(ref_seurat, dims = 1:20)
+
+# Load query object (your sample)
+query <- readRDS("/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_Trim_Whitelist_out/Gene/filtered/03_Clustered.rds")
+
+# Preprocess the query object
+query <- NormalizeData(query)
+query <- FindVariableFeatures(query)
+query <- ScaleData(query)
+query <- RunPCA(query)
+
+# Find anchors and transfer labels
+anchors <- FindTransferAnchors(reference = ref_seurat, query = query, dims = 1:20)
+predictions <- TransferData(
+  anchorset = anchors,
+  refdata = ref_seurat$cell_type,
+  dims = 1:20
+)
+
+# Add predictions to query object
+query[["predicted.id"]] <- predictions$predicted.id
+query[["prediction.score.max"]] <- predictions$prediction.score.max
+Idents(query) <- as.character(query$predicted.id)
+
+# Plot results
+p1 <- DimPlot(query, label = TRUE, repel = TRUE, group.by = "predicted.id") +
+  ggplot2::ggtitle("Cell Type Predictions")
+p2 <- VlnPlot(query, features = "prediction.score.max") +
+  ggplot2::ggtitle("Prediction Confidence Scores")
+
+# Save plots
+png("AtlasLabelsHescUmap.png", width = 800, height = 600)
+print(p1)
+dev.off()
+
+png("ViolinPredictionScores.png", width = 800, height = 600)
+print(p2)
+dev.off()
+
+# Summary
+print(table(query$predicted.id))
+```
+
+### Run the reference plot for the cells in the experiment's .rds file labeled by cell type
+```R
+library(Seurat)
+library(ggplot2)
+library(patchwork)
+
+
+
+ref_seurat <- readRDS("/work/gif3/masonbrink/USDA/05_PipseqTutorial/02_AllRDSHesc_SHH/2025.01.13_CH_synNotch_seurat_object.RDS")
+
+head(colnames(ref_seurat@meta.data))
+[1] "orig.ident"      "nCount_RNA"      "nFeature_RNA"    "sample_type"
+[5] "plotting_ident"  "RNA_snn_res.1.5"
+
+Idents(ref_seurat) <- "plotting_ident"
+
+# UMAP colored by cluster
+p1 <- DimPlot(ref_seurat, group.by = "plotting_ident", label = TRUE) + 
+      ggtitle("Clusters (plotting_ident)")
+print(p1)
+# UMAP colored by sample type
+p2 <- DimPlot(ref_seurat, group.by = "base_annotation", label = TRUE) + 
+      ggtitle("Sample Type")
+print(p2)
+#Expression of these genes on umap
+p3 <- FeaturePlot(ref_seurat, features = c("SHH", "GLI1", "PTCH1"))  
+print(p3)
+
+png("ExpressionByCluster.png", width = 800, height = 600)
+print(p3)
+dev.off()
+
+png("UMAP_Clusters_only_rds.png", width = 800, height = 600)
+print(p1)
+dev.off()
+
+png("UMAP_SampleType_only_rds.png", width = 800, height = 600)
+print(p2)
+dev.off()
