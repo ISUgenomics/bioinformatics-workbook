@@ -30,14 +30,10 @@ This sample is derived from the study:
 
 | Cell Type | Gene Expression |
 |-----------|-----------------|
-|Midbrain (Rgl1, ProgM, ProgFPL, and ProgFPM cells)| LMX1A, FOXA2, and OTX2 | 
-|Hindbrain | FGF8B, GBX2, HOXA2 |
-|Ventral midbrain | FOXA2, OTX2, CORIN |
-|Caudal midbrain | MSX1, WNT5A, WNT1, EN1 |
-|Pluripotent stem cell | NANOG and POU5F1 (high expression) |
-|Progenitor markers (peak day 21, decrease by day 28) | SOX2, NEUROG2, LMX1A, FOXA2 |
-|Postmitotic cells | DCX, TUBB3 |
-|mDA2 neurons (peak day 28)|NR4A2, TH |
+
+|Floor plate progenitors| FOXA2, FOXA1, ARX, and TFF3 |
+|Dorsal forebrain progenitors | PAX6, OTX2, EMX2 |
+|Ventral tuberal hypothalamic progenitors| NKX2-1, RAX, SIX6 |
 
 # File Setup 
 
@@ -558,11 +554,10 @@ dev.off()
 
 saveRDS(seurat_obj, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_Trim_Whitelist_out/Gene/filtered/03_Clustered.rds")
 ```
-**Raw read alignment with StarSolo**
+**Filtered read alignment with trimming, umi_tools, and genome mapping**
 ![UMAP_Clusters](Assets/PipseqTut_UMAP_Clusters.png)
 ![UMAP_Clusters_HedghogGeneScore](Assets/PipseqTut_UMAP_HedgehogScore.png)
 
-**Filtered read alignment with trimming, umi_tools, and genome mapping**
 
 
 
@@ -604,11 +599,7 @@ seu[["RNA_clean"]] <- assay_clean
 DefaultAssay(seu) <- "RNA_clean"
 
 # Marker genes
-markers <- c(
-  'FOXA2', 'FOXA1', 'ARX', 'TFF3',      # Floor plate cells
-  'PAX6', 'OTX2', 'EMX2',               # B cells (or possibly neural)
-  'NKX2-1-AS1', 'RAX', 'SIX6'               # CD8 T cells (check context)
-)
+markers <- c("FOXA2", "FOXA1", "ARX", "TFF3", "PAX6", "OTX2", "EMX2", "NKX2", "RAX", "SIX6")
 
 # Match against dataset
 seu_genes <- rownames(GetAssayData(seu, assay = "RNA_clean"))
@@ -619,18 +610,21 @@ cat("✅ Found marker genes:\n")
 print(matched)
 cat("❌ Missing marker genes:\n")
 print(missing)
+p1 <-  DotPlot(seu, features = matched) +  ggtitle("Marker Expression by Cluster") & RotatedAxis()
 
 # DotPlot
-DotPlot(seu, features = matched) +
-  ggtitle("Marker Expression by Cluster") & RotatedAxis()
+png("Marker_Expression_by_Cluster.png", width = 800, height = 600)
+print(p1)
+dev.off()
 
-# Optional recluster (commented out unless needed)
-# seu <- FindClusters(seu, resolution = 1)
-# DotPlot(seu, features = matched) + ggtitle("Marker Expression (res=1)") & RotatedAxis()
 
 # Save updated object
 saveRDS(seu, "/work/gif3/masonbrink/USDA/05_PipseqTutorial/ERR14876813_out/Gene/filtered/03_Clustered_cleaned.rds")
 ```
+
+![SHH genes Dotplot](PipseqTut_Marker_Expression_by_Cluster.png)
+
+
 <brk>
 These markers were not distinct among the different clusters, so we needed to make a different approach to identify the different types of cells in the different clusters. <brk>
 
