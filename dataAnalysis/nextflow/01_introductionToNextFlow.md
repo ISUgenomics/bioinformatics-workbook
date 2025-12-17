@@ -293,9 +293,9 @@ Note: It is more reliable to use the unique name given for each run.
 
 ## Further Reading and Resources
 
-* [NextFlow curated list of tutorials](https://nf-co.re/usage/nextflow)
+* [NextFlow curated list of documentation and tutorials](https://nf-co.re/docs/)
 * [NextFlow on YouTube](https://www.youtube.com/channel/UCB-5LCKLdTKVn2F4V4KlPbQ)
-* [NextFlow Patterns](https://github.com/nextflow-io/patterns/blob/master/docs/mock-dependency.adoc) are examples of more complex functionality.
+* [NextFlow Patterns](https://nf-co.re/docs/contributing/components/meta_map#advanced-pattern) are examples of more complex functionality.
 * [Searching for a biocontainer](https://quay.io/search?q=blast)
 * [nf-core](https://github.com/nf-core) github repo of nextflow workflows.
 * [nf-core modules](https://github.com/nf-core/modules)
