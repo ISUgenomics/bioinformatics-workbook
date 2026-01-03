@@ -257,6 +257,8 @@ To exit nano you type this series of keys -- hit `ctr x` press `y` for yes to sa
 |`ctrl+x`	|close file|
 |`alt+\`	|go to beginning of the file|
 |`alt+/`	|go to end of the file|
+|`ctrl+v`	|go forward one page|
+|`ctrl+y`	|go back one page|
 |`ctrl+a`	|go to start of the line|
 |`ctrl+e`	|go to end of the line|
 |`ctrl+c`	|show line number|
