@@ -19,3 +19,4 @@ Recently, SNPs have started to play an increasingly important role in phylogeogr
 * [GATK Best Practices Workflow for DNA-Seq](gatk-dnaseq-best-practices-workflow.md)
 * [SNP calling for GBS data using Stacks pipeline](gbs-data-snp-calling-using-stacks.md)
 * [SNP calling for GBS data using Tassel pipeline (GBS.v2)](gbs-data-snp-calling-using-tassel.md)
+* [Using PLINK to calculate linkage disequilibrium](plink-linkage-disequilibrium-workflow.md)
