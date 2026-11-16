@@ -211,6 +211,7 @@ Run each conversion in the directory containing its GFA file. Use a sequence-con
 Before annotation, evaluate total length, contig count, N50, gene completeness, contamination, and read support. Where possible, assess consensus accuracy and retained or missing sequence with independent k-mer data.
 
 ### seqkit stats -a output definitions
+
 | Column | Meaning |
 |---|---|
 | `file` | Input filename. |
