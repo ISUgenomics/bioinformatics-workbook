@@ -299,7 +299,11 @@ Avoid changing `--hom-cov` or purging parameters simply to force the assembly to
 
 Adding Hi-C data can improve haplotype phasing by providing long-range links between sequences, although the modest reduction in contig count and unchanged N50 in this example do not independently demonstrate improved assembly accuracy.
 
-The Arabidopsis assemblies generated here (184.9 Mb with HiFi alone and 181.0 Mb with HiFi plus Hi-C) are larger than published Col-0 assemblies such as Col-XJTU (133.7 Mb), suggesting that retained redundant sequence or other sources of assembly inflation warrant investigation. pmc.ncbi.nlm.nih.gov The screwworm paternal and maternal assemblies (452.9 and 467.7 Mb) are close in size to the published reference and maternal assemblies (455.6 and 465.0 Mb). However, the published reference includes the maternal X chromosome and mitochondrial genome added to the paternal assembly, so the paternal comparison is approximate; similar total lengths alone do not establish equivalent completeness or accuracy.
+The Arabidopsis assemblies generated here (184.9 Mb with HiFi alone and 181.0 Mb with HiFi plus Hi-C) are larger than published Col-0 assemblies such as Col-XJTU (133.7 Mb), suggesting that retained redundant sequence or other sources of assembly inflation warrant investigation. The screwworm paternal and maternal assemblies (452.9 and 467.7 Mb) are close in size to the published reference and maternal assemblies (455.6 and 465.0 Mb). However, the published reference includes the maternal X chromosome and mitochondrial genome added to the paternal assembly, so the paternal comparison is approximate; similar total lengths alone do not establish equivalent completeness or accuracy.
+
+- **Arabidopsis Col-0, Col-XJTU assembly (133.7 Mb):** [High-quality Arabidopsis thaliana Genome Assembly with Nanopore and HiFi Long Reads](https://doi.org/10.1016/j.gpb.2021.08.003)
+
+- **New World screwworm, reference (455.6 Mb) and maternal assembly (465.0 Mb):** [Haplotype-resolved genome assemblies for the New World screwworm, Cochliomyia hominivorax (Diptera: Calliphoridae), using the trio binning approach](https://doi.org/10.1093/g3journal/jkag053)
 
 ## Further reading
 
