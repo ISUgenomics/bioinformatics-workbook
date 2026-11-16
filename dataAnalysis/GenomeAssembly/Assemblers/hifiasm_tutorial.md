@@ -14,7 +14,6 @@ Main software website links:
 
 - [hifiasm GitHub repository and quick start](https://github.com/chhylp123/hifiasm)
 - [hifiasm manual](https://hifiasm.readthedocs.io/en/latest/)
-- [hifiasm parameter reference](https://hifiasm.readthedocs.io/en/latest/parameter-reference.html)
 - [hifiasm paper: Haplotype-resolved de novo assembly using phased assembly graphs](https://doi.org/10.1038/s41592-020-01056-5)
 
 hifiasm is a de novo genome assembler originally developed for accurate PacBio HiFi long reads. It can use sequence differences between homologous chromosomes to separate haplotypes during assembly. Additional Hi-C reads or parental sequencing data can improve haplotype resolution.
@@ -228,8 +227,8 @@ Before annotation, evaluate total length, contig count, N50, gene completeness, 
 | `Q3` | Third quartile of sequence lengths: approximately 75% of sequences are this length or shorter. |
 | `sum_gap` | Total number of gap characters, such as `-`; this is not a count of ambiguous `N` bases. |
 | `N50` | Sequence length at which sequences of that length or longer account for at least 50% of the total sequence length. |
-| `Q20(%)` | Percentage of bases with Phred quality scores ≥20; only applicable to FASTQ data. |
-| `Q30(%)` | Percentage of bases with Phred quality scores ≥30; only applicable to FASTQ data. |
+| `Q20(%)` | Percentage of bases with Phred quality scores ≥20; **only applicable to FASTQ data**. |
+| `Q30(%)` | Percentage of bases with Phred quality scores ≥30; **only applicable to FASTQ data**. |
 | `GC(%)` | Percentage of bases that are G or C. |
 
 ### Arabidopsis HiFi only dataset
@@ -262,7 +261,7 @@ Example output:
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | sample.hic.asm.hic.p_ctg.fasta | FASTA | DNA | 1,110 | 181,041,676 | 2,478 | 163,100.6 | 26,129,794 | 28,103 | 33,688 | 48,726 | 0 | 12,446,441 | 0 | 0 | 36.75 |
 
-### Screwworm trio: paternal and maternal haplotype
+### Screwworm trio: paternal and maternal haplotypes
 
 Run in `TrioBinning`, where the trio assembly was created.
 
