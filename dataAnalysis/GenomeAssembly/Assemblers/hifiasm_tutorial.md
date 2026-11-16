@@ -212,6 +212,7 @@ Before annotation, evaluate total length, contig count, N50, gene completeness, 
 
 ### seqkit stats -a output definitions
 
+
 | Column | Meaning |
 |---|---|
 | `file` | Input filename. |
