@@ -295,6 +295,12 @@ Evaluate each haplotype separately. Concatenating both haplotypes into one refer
 
 Avoid changing `--hom-cov` or purging parameters simply to force the assembly to an expected size. Base changes on read coverage and independent quality evidence.
 
+## Summarized interpretation 
+
+Adding Hi-C data can improve haplotype phasing by providing long-range links between sequences, although the modest reduction in contig count and unchanged N50 in this example do not independently demonstrate improved assembly accuracy.
+
+The Arabidopsis assemblies generated here (184.9 Mb with HiFi alone and 181.0 Mb with HiFi plus Hi-C) are larger than published Col-0 assemblies such as Col-XJTU (133.7 Mb), suggesting that retained redundant sequence or other sources of assembly inflation warrant investigation. pmc.ncbi.nlm.nih.gov The screwworm paternal and maternal assemblies (452.9 and 467.7 Mb) are close in size to the published reference and maternal assemblies (455.6 and 465.0 Mb). However, the published reference includes the maternal X chromosome and mitochondrial genome added to the paternal assembly, so the paternal comparison is approximate; similar total lengths alone do not establish equivalent completeness or accuracy.
+
 ## Further reading
 
 - [hifiasm quick start and current features](https://github.com/chhylp123/hifiasm)
