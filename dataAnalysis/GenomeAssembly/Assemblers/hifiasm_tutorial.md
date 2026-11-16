@@ -241,11 +241,9 @@ seqkit stats -a sample.asm.bp.p_ctg.fasta
 
 Example output:
 
-```text
-
-file                       format  type  num_seqs      sum_len  min_len    avg_len     max_len      Q1      Q2      Q3  sum_gap         N50  Q20(%)  Q30(%)  GC(%)
-sample.asm.bp.p_ctg.fasta  FASTA   DNA      1,225  184,939,908    2,478  150,971.4  26,129,794  27,398  32,688  47,438        0  12,446,441       0       0  36.74
-```
+| file | format | type | num_seqs | sum_len | min_len | avg_len | max_len | Q1 | Q2 | Q3 | sum_gap | N50 | Q20(%) | Q30(%) | GC(%) |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| sample.asm.bp.p_ctg.fasta | FASTA | DNA | 1,225 | 184,939,908 | 2,478 | 150,971.4 | 26,129,794 | 27,398 | 32,688 | 47,438 | 0 | 12,446,441 | 0 | 0 | 36.74 |
 
 ### Arabidopsis HiFi plus Hi-C datasets
 
@@ -258,14 +256,13 @@ seqkit stats -a sample.hic.asm.hic.p_ctg.fasta
 
 Example output:
 
-```text
-file                            format  type  num_seqs      sum_len  min_len    avg_len     max_len      Q1      Q2      Q3  sum_gap         N50  Q20(%)  Q30(%)  GC(%)
-sample.hic.asm.hic.p_ctg.fasta  FASTA   DNA      1,110  181,041,676    2,478  163,100.6  26,129,794  28,103  33,688  48,726        0  12,446,441       0       0  36.75
-```
+| file | format | type | num_seqs | sum_len | min_len | avg_len | max_len | Q1 | Q2 | Q3 | sum_gap | N50 | Q20(%) | Q30(%) | GC(%) |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| sample.hic.asm.hic.p_ctg.fasta | FASTA | DNA | 1,110 | 181,041,676 | 2,478 | 163,100.6 | 26,129,794 | 28,103 | 33,688 | 48,726 | 0 | 12,446,441 | 0 | 0 | 36.75 |
 
 ### Screwworm trio: paternal and maternal haplotype
 
-Run in `fastq/`, where the trio assembly was created.
+Run in `TrioBinning`, where the trio assembly was created.
 
 ```bash
 awk -F '\t' '$1 == "S" {print ">" $2; print $3}' MaleFemaleScrewworm.asm.dip.hap1.p_ctg.gfa >PaternalScrewworm.asm.dip.hap1.p_ctg.fasta
@@ -276,11 +273,10 @@ seqkit stats -a *fasta
 
 Example output:
 
-```text
-file                                          format  type  num_seqs      sum_len  min_len      avg_len     max_len        Q1      Q2       Q3  sum_gap         N50  Q20(%)  Q30(%)  GC(%)
-PaternalScrewworm.asm.dip.hap1.p_ctg.fasta  FASTA   DNA        171  452,923,884   23,090  2,648,677.7  45,033,906  47,451.5  98,990  610,554        0  17,497,353       0       0  27.83
-MaternalScrewworm.asm.dip.hap2.p_ctg.fasta  FASTA   DNA        181  467,724,117   14,474  2,584,111.1  65,710,413    33,490  72,368  508,348        0  18,032,292       0       0   27.6
-```
+| file | format | type | num_seqs | sum_len | min_len | avg_len | max_len | Q1 | Q2 | Q3 | sum_gap | N50 | Q20(%) | Q30(%) | GC(%) |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PaternalScrewworm.asm.dip.hap1.p_ctg.fasta | FASTA | DNA | 171 | 452,923,884 | 23,090 | 2,648,677.7 | 45,033,906 | 47,451.5 | 98,990 | 610,554 | 0 | 17,497,353 | 0 | 0 | 27.83 |
+| MaternalScrewworm.asm.dip.hap2.p_ctg.fasta | FASTA | DNA | 181 | 467,724,117 | 14,474 | 2,584,111.1 | 65,710,413 | 33,490 | 72,368 | 508,348 | 0 | 18,032,292 | 0 | 0 | 27.6 |
 
 Evaluate each haplotype separately. Concatenating both haplotypes into one reference can create apparent gene duplication and ambiguous mapping.
 
