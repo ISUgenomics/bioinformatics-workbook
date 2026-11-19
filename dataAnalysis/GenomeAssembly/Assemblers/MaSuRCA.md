@@ -16,13 +16,13 @@ Main software website links:
 - [MaSuRCA GitHub repository and manual](https://github.com/alekseyzimin/masurca)
 - [MaSuRCA 4.1.4 release and installation](https://github.com/alekseyzimin/masurca/releases/tag/v4.1.4)
 - [MaSuRCA paper: The MaSuRCA genome assembler](https://doi.org/10.1093/bioinformatics/btt476)
-- [Hybrid assembly with the mega-reads algorithm](https://doi.org/10.1101/gr.213611.116)
+- [Hybrid assembly with the MaSuRCA mega-reads algorithm](https://doi.org/10.1101/gr.213405.116)
 
 MaSuRCA combines accurate Illumina reads with long reads to assemble a genome. It first builds super-reads from the Illumina data, uses these to construct corrected long sequences called mega-reads, and then assembles those sequences. This tutorial uses **Illumina paired-end reads and PacBio long reads**, with an alternative configuration for Oxford Nanopore reads. No mate-pair libraries are needed.
 
-The instructions target **MaSuRCA 4.1.4**, the latest release listed when this page was revised on November 19, 2026. Use the [release archive and installation instructions](https://github.com/alekseyzimin/masurca/releases/tag/v4.1.4) together with the [MaSuRCA manual](https://github.com/alekseyzimin/masurca).
+The instructions target **MaSuRCA 4.1.4**, the latest release listed when this page was revised on November 19, 2026. Use the [release archive](https://github.com/alekseyzimin/masurca/releases/tag/v4.1.4) together with the [MaSuRCA manual and installation instructions](https://github.com/alekseyzimin/masurca).
 
-This workflow is particularly useful for projects with existing Illumina data and older, less accurate long reads. The PacBio reads used here are continuous long reads (CLR), not HiFi reads. For a project with HiFi data, also consider the workbook's [hifiasm tutorial](hifiasm_tutorial.html).
+This workflow is particularly useful for projects with existing Illumina data and older, less accurate long reads. The PacBio reads used here are continuous long reads (CLR), not HiFi reads. For a project with HiFi data, also consider the workbook's [hifiasm tutorial](https://bioinformaticsworkbook.org/dataAnalysis/GenomeAssembly/Assemblers/hifiasm_tutorial.html#gsc.tab=0).
 
 ## Assembly workflow
 
@@ -249,8 +249,7 @@ For multiple paired-end libraries, add a `PE = ` line for each with a unique two
 
 ## Check the assembly statistics
 
-### seqkit stats -a output definitions
-
+### Install seqkit if not available
 ```bash
 #load your HPC's seqkit module 
 ml seqkit/2.4.0 
@@ -260,6 +259,8 @@ ml miniconda
 conda create -n seqkit -c conda-forge -c bioconda seqkit
 conda activate seqkit
 ```
+
+### seqkit stats -a output definitions
 
 | Column | Meaning |
 | --- | --- |
@@ -318,7 +319,7 @@ These statistics indicate substantial assembly continuity but do not establish c
 - [MaSuRCA 4.1.4 release](https://github.com/alekseyzimin/masurca/releases/tag/v4.1.4)
 - [MaSuRCA manual and configuration reference](https://github.com/alekseyzimin/masurca)
 - [Zimin et al. (2013): The MaSuRCA genome assembler](https://doi.org/10.1093/bioinformatics/btt476)
-- [Zimin et al. (2017): Hybrid assembly with the mega-reads algorithm](https://doi.org/10.1101/gr.213611.116)
+- [Zimin et al. (2017): Hybrid assembly with the mega-reads algorithm](https://doi.org/10.1101/gr.213405.116)
 - [Jiao and Schneeberger (2020): Chromosome-level assemblies of multiple Arabidopsis genomes](https://doi.org/10.1038/s41467-020-14779-y)
 - [SeqKit documentation](https://bioinf.shenwei.me/seqkit/usage/)
 
