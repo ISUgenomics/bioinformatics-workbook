@@ -1,272 +1,326 @@
 ---
-title: Introduction to MaSuRCA genome assembler
+title: "Hybrid Genome Assembly with MaSuRCA: Illumina Paired-End and Long Reads"
 layout: single
 author: Andrew Severin
 author_profile: true
+last_modified_at: 2026-11-19
 header:
   overlay_color: "444444"
   overlay_image: /assets/images/dna.jpg
 ---
 
-
-
 ## Background
 
-* Main software website links
-  * [MaSuRCA  home page](http://www.genome.umd.edu/masurca.html)
-  * [MaSuRCA  Paper](https://academic.oup.com/bioinformatics/article/29/21/2669/195975)
-  * [MaSuRCA github and Manual](https://github.com/alekseyzimin/masurca)
+Main software website links:
 
+- [MaSuRCA GitHub repository and manual](https://github.com/alekseyzimin/masurca)
+- [MaSuRCA 4.1.4 release and installation](https://github.com/alekseyzimin/masurca/releases/tag/v4.1.4)
+- [MaSuRCA paper: The MaSuRCA genome assembler](https://doi.org/10.1093/bioinformatics/btt476)
+- [Hybrid assembly with the mega-reads algorithm](https://doi.org/10.1101/gr.213611.116)
 
-* #### Configuration file
+MaSuRCA combines accurate Illumina reads with long reads to assemble a genome. It first builds super-reads from the Illumina data, uses these to construct corrected long sequences called mega-reads, and then assembles those sequences. This tutorial uses **Illumina paired-end reads and PacBio long reads**, with an alternative configuration for Oxford Nanopore reads. No mate-pair libraries are needed.
 
-   MaSuRCA requires a configuration file that states the type of data you have and the parameters you want to use in your run. See the github page for more information on the configuration file specific to your particular input files.  Here is a run down of some of the more common features.
+The instructions target **MaSuRCA 4.1.4**, the latest release listed when this page was revised on November 19, 2026. Use the [release archive and installation instructions](https://github.com/alekseyzimin/masurca/releases/tag/v4.1.4) together with the [MaSuRCA manual](https://github.com/alekseyzimin/masurca).
 
-   [MaSuRCA github and Manual](https://github.com/alekseyzimin/masurca)
+This workflow is particularly useful for projects with existing Illumina data and older, less accurate long reads. The PacBio reads used here are continuous long reads (CLR), not HiFi reads. For a project with HiFi data, also consider the workbook's [hifiasm tutorial](hifiasm_tutorial.html).
 
-   Here is an example of the config file (**sr_config.txt**)
+## Assembly workflow
 
-     ```
-     DATA
-     PE = pa 250 50 SRR3166543_1.fastq  SRR3166543_2.fastq
-     PE = pb 250 50 SRR3157034_1.fastq  SRR3157034_2.fastq
-     JUMP = ja 8000 1600 SRR3156163_1.fastq  SRR3156163_2.fastq
-     JUMP = jb 20000 4000 SRR3156596_1.fastq  SRR3156596_2.fastq
-     PACBIO = SRR3405330.fastq
-     END
+A standard hybrid run performs these operations internally:
 
-     PARAMETERS
-     GRAPH_KMER_SIZE = auto
-     USE_LINKING_MATES = 0
-     LIMIT_JUMP_COVERAGE = 300
-     CA_PARAMETERS =  cgwErrorRate=0.15
-     KMER_COUNT_THRESHOLD = 1
-     NUM_THREADS = 28
-     JF_SIZE = 200000000
-     SOAP_ASSEMBLY=0
-     END
-     ```
+1. Correct Illumina read errors and construct super-reads.
+2. Use the super-reads to build corrected long sequences called mega-reads.
+3. Assemble the mega-reads using the selected backend; this example uses Flye.
 
-  If you have jump libraries or Nanopore you can enter them into the config file with lines that look similar to this.
-
-  ```bash
-  JUMP = jb 15000 1000 Unicorn_R1_001.fastq Unicorn_R2_001.fastq
-  NANOPORE = Unicorn_NP.fastq
-  ```
-
-   As stated in the [MaSuRCA Manual](https://github.com/alekseyzimin/masurca), here are some of the more common points in the manual to be aware of.
-
-  ```
-  # DATA is specified as type {PE,JUMP,OTHER,PACBIO} and 5 fields:
-  1)two_letter_prefix 2)mean 3)stdev 4)fastq(.gz)_fwd_reads
-
-  #whether to attempt to close gaps in scaffolds with Illumina data
-  CLOSE_GAPS=1
-
-  PacBio/MinION data are supported. Note that you have to have 50x + coverage in Illumina Paired End reads to use PacBio of Oxford Nanopore MinION data. Supply PacBio or MinION reads (cannot use both at the same time) in a single fasta file as:
-
-  PACBIO=file.fa or NANOPORE=file.fa
-
-  More than one entry for each data type/set of files is allowed EXCEPT for PacBio/Nanopore data. That is if you have several pairs of PE fastq files, specify each pair on a separate line with a different two-letter prefix.
-  ```
-
+MaSuRCA first generates an `assemble.sh` script from a configuration file. Running that script performs the assembly and saves intermediate files that can support restarting an interrupted run.
 
 ## How to run MaSuRCA
 
-  * #### Using a Singularity container
+### Parameter considerations
 
-  You don't have to run MaSuRCA using a singularity container as it may be already installed on your machine or you can install it locally using conda.  The benefit of a container is that it is fully reproducible by anyone else by providing them the container.  To make containers easier, we have created
+| Parameter or input | Purpose |
+| --- | --- |
+| `PE = pe 350 150 R1 R2` | Names the library `pe`, gives its fragment mean and standard deviation, and specifies the two FASTQ files. |
+| `PACBIO` | Supplies the combined PacBio CLR file. |
+| `GRAPH_KMER_SIZE = auto` | Lets MaSuRCA choose the super-read graph k-mer size. |
+| `USE_LINKING_MATES = 0` | Uses the long-read hybrid configuration; this setting concerns links derived from paired-end reads. |
+| `USE_GRID = 0` | Keeps the pipeline inside the single allocated node. |
+| `LHE_COVERAGE = 25` | Limits long-read input to approximately 25× of the longest reads. |
+| `MEGA_READS_ONE_PASS = 0` | Uses two passes of mega-read construction. |
+| `NUM_THREADS = 64` | Matches the CPU allocation below. |
+| `JF_SIZE = 2400000000` | Uses 20 times the 120 Mb planning estimate for the Jellyfish hash size; this is not a RAM limit. |
+| `FLYE_ASSEMBLY = 1` | Assembles corrected mega-reads with MaSuRCA's bundled Flye backend. |
 
-  Clone the repository
+Start with the hybrid settings below and adjust them using read coverage, read lengths, genome size, and available resources. MaSuRCA's manual specifies at least 50× Illumina coverage for the hybrid workflow and advises against the Flye backend below 15× long-read coverage.
 
-  ```
-  git clone https://github.com/ISUGIFsingularity/masurca.git
-  ```
-  This repo contains the [singularity recipe](https://github.com/ISUGIFsingularity/masurca/blob/master/Singularity.1.0.0) if you want to build it from scratch.  However, You can also directly download the image from [singularity hub](https://www.singularity-hub.org/).
+Fragment mean and standard deviation refer to the DNA fragments, not individual read lengths. The 350 bp mean and 75 bp standard deviation used below are provisional estimates for this exercise.
 
-  ```bash
-  cd masurca/SIMG
-  module load singularity
-  singularity pull shub://ISUGIFsingularity/masurca:1.0.0
-  # create a softlink if the singularity pull results in a file other than ISUGIFsingularity-masurca-master-1.0.0.simg as my wrappers are expecting the later and not the former
-  ln -s masurca_1.0.0.sif ISUGIFsingularity-masurca-master-1.0.0.simg
-  ```
+### Running MaSuRCA
 
-  * #### Set variables ```gitmasurca``` and ```PATH``` so we can find the container and the runscripts
+Check the module name and version on your cluster:
 
-  modify and add the following lines to your .bashrc file.
+```bash
+module avail masurca
+# If your cluster installation is out of date like the one below, proceed with the local installation below. 
+module load masurca/4.1.0
+command -v masurca
+masurca --help
+```
 
-  masurcagit is the path to the repo you just cloned.
+If a suitable module is unavailable or outdated, use the release installation below which does not require root privileges. 
 
-  ```
-  export masurcagit="/home/severin/isugif/masurca/"
-  export PATH=$masurcagit/wrappers/:$PATH
-  ```
+```bash
+mkdir 10_masurca
+cd 10_masurca
 
-  **runMaSuRCA.sh**
+curl -fL --retry 3 \
+  -o MaSuRCA-4.1.4.tar.gz \
+  https://github.com/alekseyzimin/masurca/releases/download/v4.1.4/MaSuRCA-4.1.4.tar.gz
 
-  This script can be found in the repo you just cloned under bin
+tar -xzf MaSuRCA-4.1.4.tar.gz
+cd MaSuRCA-4.1.4
+./install.sh > install.log 2>&1
+cd ../
 
-  ```bash
-  #!/bin/bash
+export PATH="MaSuRCA-4.1.4/bin:$PATH"
+command -v masurca
+masurca --help
 
-  module load singularity
+#make sure you have Flye in your path also, which requires python 2.7.
+ml miniconda
+conda create -n masurca_runtime -c conda-forge python=2.7
+conda activate masurca_runtime
+export PATH=MaSuRCA-4.1.4/Flye/bin/:$PATH
 
-  MASURCA masurca sr_config.txt
-  MASURCA ./assemble.sh
-  ```
+flye --version 
+```
+
+The developers advise against Bioconda installations of MaSuRCA because dependency conflicts can break the pipeline. Run the assembly with its bundled tools, outside environments that override them.
+
+### Acquire sample data
+
+We will retain *Arabidopsis thaliana* Landsberg erecta (Ler) as the example. The runs below belong to **BioSample SAMEA5751963** in **BioProject PRJEB31147**, providing a consistent sample source for both technologies.
+
+| Run | Data type | Archived bases | Approximate coverage using 120 Mb |
+| --- | --- | ---: | ---: |
+| [ERR3624574](https://trace.ncbi.nlm.nih.gov/Traces?run=ERR3624574) | Illumina paired-end | 9.70 Gb | 81× |
+| [ERR3415825](https://www.ebi.ac.uk/ena/browser/view/ERR3415825) | PacBio CLR subreads | 3.72 Gb | 31× |
+| [ERR3415826](https://trace.ncbi.nlm.nih.gov/Traces?run=ERR3415826) | PacBio CLR subreads | 4.56 Gb | 38× |
+
+Together, the two PacBio runs provide approximately 69× coverage. Coverage is calculated as total sequenced bases divided by the assumed genome size. 
+
+#### Download the reads
+
+Download the runs using SRA Toolkit and extract FASTQ files. Run these commands from the project directory. 
+
+```bash
+ml sratoolkit/3.2.1
+mkdir fastq
+cd fastq
+prefetch ERR3624574 ERR3415825 ERR3415826 --max-size u
+mkdir tmp
+fasterq-dump ERR3624574/ERR3624574.sra  --split-files -t tmp -e 8 
+fasterq-dump ERR3415825/ERR3415825.sra  -t tmp -e 8 
+fasterq-dump ERR3415826/ERR3415826.sra  -t tmp -e 8 
+```
+
+Combine the two long-read runs because MaSuRCA expects one long-read input file.
+
+```bash
+cat ERR3415825.fastq ERR3415826.fastq >Ler_pacbio.fastq
+rm ERR3415825.fastq ERR3415826.fastq
+#pigz does gzip with multiple threads
+pigz -p 24 *fastq
+cd ../
+```
+
+Supply the original paired-end FASTQ files. MaSuRCA performs its own Illumina error correction; routine trimming or external error correction can affect its super-read construction. 
+
+### Genome assembly with *A. thaliana* Illumina and PacBio reads
+
+#### Create the configuration file
+
+Move to the assembly directory and generate `sr_config.txt`.
+
+**sr_config.txt**
+```text
+# REQUIRED: Begin the input-data section.
+DATA
+
+# REQUIRED: Illumina library definition.
+# Fields: unique library ID, mean fragment length, standard deviation, R1, R2.
+# The 350 bp mean and 150 bp SD are assumptions; replace with measured estimates.
+# These numbers are not the sum of your Illumina read lengths, it is the fragment size that was sequenced + the intervening unsequenced part of the fragment.
+PE = pe 350 150 fastq/ERR3624574_1.fastq.gz fastq/ERR3624574_2.fastq.gz
+
+# REQUIRED FOR THIS HYBRID WORKFLOW: PacBio reads combined into one file.
+# Long reads are optional for MaSuRCA generally.
+PACBIO = fastq/Ler_pacbio.fastq.gz
+
+# REQUIRED: End the input-data section.
+END
+
+# REQUIRED: Begin the assembly-parameter section.
+PARAMETERS
+
+# OPTIONAL: Automatically select the super-read graph k-mer size.
+GRAPH_KMER_SIZE = auto
+
+# OPTIONAL: Recommended hybrid setting with sufficient long-read coverage.
+# set this to 0 if you have more than 15x coverage by long reads, 1 for illumina-only assemblies.
+USE_LINKING_MATES = 0
+
+# OPTIONAL: Run within the current machine or allocated compute node.
+# Setting 1 enables distributed mega-read construction to multiple nodes and requires GRID_ENGINE and GRID_QUEUE settings.
+# SGE versus SLURM is selected separately with GRID_ENGINE.
+USE_GRID = 0
+
+# OPTIONAL: Retain approximately 25x coverage of the longest long reads.
+LHE_COVERAGE = 25
+
+# OPTIONAL: Use two mega-read passes; 1 selects the faster one-pass approach.
+MEGA_READS_ONE_PASS = 0
+
+# REQUIRED: Number of CPU threads; match your scheduler allocation.
+NUM_THREADS = 64
+
+# REQUIRED: Jellyfish hash size, not a memory limit in bytes.
+# This value is 20 times the assumed 120 Mb genome size.
+JF_SIZE = 2400000000
+
+# Enable Flye assembly of corrected mega-reads since we have more than 15x coverage of long reads.
+FLYE_ASSEMBLY = 1
+
+# REQUIRED: End the assembly-parameter section.
+END
+```
 
 
+MaSuRCA's manual specifies at least 50× Illumina coverage for this hybrid approach and advises against the Flye backend below 15× long-read coverage. 
 
-* #### Example SLURM Job
+### Execute MaSuRCA assembly 
 
-  **masurca_AT.sub**
+```
+#This command is quick and uses your config generated above to create the assemble script below.
+masurca sr_config.txt > masurca.configure.log 2>&1
 
-  ```bash
-  #!/bin/bash
-  #SBATCH -N 1
-  #SBATCH --ntasks-per-node=16
-  #SBATCH -t 96:00:00
-  #SBATCH -J AT_0
-  #SBATCH -o AT_0.o%j
-  #SBATCH -e AT_0.e%j
-  #SBATCH --mail-user=youremail@email.com
-  #SBATCH --mail-type=begin
-  #SBATCH --mail-type=end
-
-  cd $SLURM_SUBMIT_DIR
-  ulimit -s unlimited
-
-  module load singularity
-
-  $masurcagit/bin/runMaSuRCA.sh
-
-  scontrol show job $SLURM_JOB_ID
-
-  ```
+#Run inside an allocated compute node, or include this command in your scheduler job script.
+bash assemble.sh > masurca.assembly.log 2>&1
+```
 
 ## Expected files generated during assembly
 
-|files|in|output |folder | |
-|--|--|--|--|--|
-|AT_0.e4290986|AT_0.o4290986|CA.mr.41.15.17.0.029|CA.mr.41.15.17.0.029.log|CA_dir.txt|
-|--|--|--|--|--|
-|ESTIMATED_GENOME_SIZE.txt|PLOIDY.txt|SRR3405330.fastq|SRR3703081_1.fastq|SRR3703081_2.fastq|
-|assemble.sh|containees.txt|create_mega-reads.err|environment.sh|genome.uid|
-|global_arrival_rate.txt|guillaumeKUnitigsAtLeast32bases_all.fasta|guillaumeKUnitigsAtLeast32bases_all.jump.fasta|guillaumeKUnitigsAtLeast32bases_all.41.fasta|k_u_hash_0|
-|masurca_AT.sub|meanAndStdevByPrefix.pe.txt|mr.41.15.17.0.029.all.txt|mr.41.15.17.0.029.mr.txt|mr.41.15.17.0.029.single.txt|
-|mr.41.15.17.0.029.sr.frg|mr.41.15.17.0.029.txt|mr.41.15.17.0.029.1.allowed|mr.41.15.17.0.029.1.fa|mr.41.15.17.0.029.1.frg|
-|mr.41.15.17.0.029.1.mates.frg|mr.41.15.17.0.029.1.trims.txt|mr.41.15.17.0.029.1.unjoined.fa|mr.41.15.17.0.029.1.to_join.fa.tmp|mr.41.15.17.0.029.all_mr.fa|
-|mr.41.15.17.0.029.all_mr.maximal.fa|mr.41.15.17.0.029.join_consensus.tmp|mr.41.15.17.0.029.maximal_mr.txt|pa.renamed.fastq|pacbio_nonredundant.fa|
-|pe.cor.fa|pe.cor.tmp.log|pe_data.tmp|quorum.err|quorum_mer_db.jf|
-|runCA.spec|sr_config.txt|super1.err|superReadSequences.named.fasta|tigStore.err|
-|unitig_cov.txt|unitig_layout.txt|work1|work1_mr||
+For the PacBio hybrid assembly above, look for the files below. Exact intermediate names can vary with the configuration and software version.
 
-## SLURM standard output
+| File or directory | What it contains |
+| --- | --- |
+| `sr_config.txt` | Input paths and assembly parameters. |
+| `assemble.sh` | Generated script that runs the assembly pipeline. |
+| `masurca.configure.log` | Configuration checks and script-generation messages. |
+| `masurca.assembly.log` | Assembly progress, diagnostic messages, and completion information. |
+| `pe.cor.fa` | Error-corrected Illumina reads, an intermediate product. |
+| `work1/` | Intermediate files used to construct super-reads. |
+| `mr.*` | Mega-read construction outputs and intermediate files. |
+| `flye.mr.*/assembly.scaffolds.fasta` | Final scaffold FASTA for the selected Flye backend. |
 
-  * This file provides time stamps of the steps that were run with MaSuRCA.  When you have more data this may come in handy to determine what step you are on.   This small dataset took about 33 minutes to run.  Your assembly stats may vary slightly if you rerun it multiple times.
+For the Flye backend, MaSuRCA documents the final scaffold FASTA as `assembly.scaffolds.fasta` within a `flye.mr.*` directory. Locate it and check the final messages in the assembly log:
 
-  ```
-  Verifying PATHS...
-  jellyfish OK
-  runCA OK
-  createSuperReadsForDirectory.perl OK
-  nucmer OK
-  mega_reads_assemble_cluster.sh OK
-  creating script file for the actions...done.
-  execute assemble.sh to run assembly
-  [Fri Oct 26 08:29:01 EDT 2018] Processing pe library reads
-  [Fri Oct 26 08:30:02 EDT 2018] Average PE read length 249
-  [Fri Oct 26 08:30:02 EDT 2018] Using kmer size of 127 for the graph
-  [Fri Oct 26 08:30:02 EDT 2018] MIN_Q_CHAR: 33
-  [Fri Oct 26 08:30:02 EDT 2018] Creating mer database for Quorum
-  [Fri Oct 26 08:31:11 EDT 2018] Error correct PE
-  [Fri Oct 26 08:36:18 EDT 2018] Estimating genome size
-  [Fri Oct 26 08:37:06 EDT 2018] Estimated genome size: 147278815
-  [Fri Oct 26 08:37:06 EDT 2018] Creating k-unitigs with k=127
-  [Fri Oct 26 08:41:11 EDT 2018] Computing super reads from PE
-  [Fri Oct 26 08:46:02 EDT 2018] Using CABOG from /opt/spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/masurca-3.2.8-hgdshdatclkrv7kct6kqgfb3fa536iji/bin/../CA8/Linux-amd64/bin
-  [Fri Oct 26 08:46:02 EDT 2018] Running mega-reads correction/assembly
-  [Fri Oct 26 08:46:02 EDT 2018] Using mer size 15 for mapping, B=17, d=0.029
-  [Fri Oct 26 08:46:02 EDT 2018] Estimated Genome Size 147278815
-  [Fri Oct 26 08:46:02 EDT 2018] Estimated Ploidy 1
-  [Fri Oct 26 08:46:02 EDT 2018] Using 28 threads
-  [Fri Oct 26 08:46:02 EDT 2018] Output prefix mr.41.15.17.0.029
-  [Fri Oct 26 08:46:02 EDT 2018] Pacbio coverage <25x, using the longest subreads
-  [Fri Oct 26 08:46:02 EDT 2018] Reducing super-read k-mer size
-  [Fri Oct 26 08:48:51 EDT 2018] Mega-reads pass 1
-  [Fri Oct 26 08:48:51 EDT 2018] Running locally in 1 batch
-  [Fri Oct 26 08:49:38 EDT 2018] Mega-reads pass 2
-  [Fri Oct 26 08:49:38 EDT 2018] Running locally in 1 batch
-  [Fri Oct 26 08:49:42 EDT 2018] Refining alignments
-  [Fri Oct 26 08:49:43 EDT 2018] Joining
-  [Fri Oct 26 08:49:43 EDT 2018] Gap consensus
-  [Fri Oct 26 08:49:43 EDT 2018] Warning! Some or all gap consensus jobs failed, see files in mr.41.15.17.0.029.join_consensus.tmp, proceeding anyway, to rerun gap consensus erase mr.41.15.17.0.029.1.fa and re-run asse
-  mble.sh
-  [Fri Oct 26 08:49:43 EDT 2018] Generating assembly input files
-  [Fri Oct 26 08:49:44 EDT 2018] Coverage of the mega-reads less than 5 -- using the super reads as well
-  [Fri Oct 26 08:49:49 EDT 2018] Coverage threshold for splitting unitigs is 15 minimum ovl 250
-  [Fri Oct 26 08:49:49 EDT 2018] Running assembly
-  [Fri Oct 26 08:58:46 EDT 2018] Recomputing A-stat
-  recomputing A-stat for super-reads
-  [Fri Oct 26 09:01:15 EDT 2018] Mega-reads initial assembly complete
-  [Fri Oct 26 09:01:15 EDT 2018] No gap closing possible
-  [Fri Oct 26 09:01:15 EDT 2018] Removing redundant scaffolds
-  [Fri Oct 26 09:02:07 EDT 2018] Assembly complete, final scaffold sequences are in CA.mr.41.15.17.0.029/final.genome.scf.fasta
-  [Fri Oct 26 09:02:07 EDT 2018] All done
-  [Fri Oct 26 09:02:07 EDT 2018] Final stats for CA.mr.41.15.17.0.029/final.genome.scf.fasta
-  N50 32439
-  Sequence 100640646
-  Average 16714.9
-  E-size 43482.6
-  Count 6021
-  JobId=4290986 JobName=AT_0
-     UserId=severin(50922) GroupId=mc48o5p(15124) MCS_label=N/A
-     Priority=2764 Nice=0 Account=mc48o5p QOS=rm
-     JobState=RUNNING Reason=None Dependency=(null)
-     Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
-     RunTime=00:33:14 TimeLimit=2-00:00:00 TimeMin=N/A
-     SubmitTime=2018-10-26T08:28:28 EligibleTime=2018-10-26T08:28:28
-     StartTime=2018-10-26T08:28:54 EndTime=2018-10-28T08:28:55 Deadline=N/A
-     PreemptTime=None SuspendTime=None SecsPreSuspend=0
-     LastSchedEval=2018-10-26T08:28:54
-     Partition=RM AllocNode:Sid=br005:26364
-     ReqNodeList=(null) ExcNodeList=(null)
-     NodeList=r203
-     BatchHost=r203
-     NumNodes=1 NumCPUs=28 NumTasks=16 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
-     TRES=cpu=28,mem=123200M,node=1,billing/gpu=28
-     Socks/Node=* NtasksPerN:B:S:C=16:0:*:* CoreSpec=*
-     MinCPUsNode=16 MinMemoryNode=123200M MinTmpDiskNode=0
-     Features=(null) DelayBoot=00:00:00
+```bash
+find . -type f -path './flye.mr.*/assembly.scaffolds.fasta' -print
+tail -n 60 masurca.assembly.log
+```
 
-  ```
+## Assembly modes
+
+### Illumina paired-end plus Oxford Nanopore
+
+For a project with matching Nanopore and Illumina reads, replace the `PACBIO` line in sr_config.txt with:
+
+```text
+NANOPORE = /absolute/path/to/nanopore.fastq.gz
+```
+
+Leave the paired-end input in place. 
+
+### Multiple Illumina paired-end libraries
+
+For multiple paired-end libraries, add a `PE = ` line for each with a unique two-character prefix (i.e. pe, pa). Do not concatenate libraries with different fragment distributions into one library entry.
 
 
+## Check the assembly statistics
 
-## Errors
+### seqkit stats -a output definitions
 
-* Consensus
+```bash
+#load your HPC's seqkit module 
+ml seqkit/2.4.0 
 
-    It appears the do_consensus.sh to perform gapfilling is currently having an issue that should be fixed in new releases.  This step can be performed manually.  [See here for more information](https://github.com/alekseyzimin/masurca/issues/53)
+#if your HPC does not have seqkit installed, use miniconda to install your own seqkit
+ml miniconda
+conda create -n seqkit -c conda-forge -c bioconda seqkit
+conda activate seqkit
+```
 
-  The assembly is correct but it hasn't been gap filled.  This can occur on assemblies with lower levels of assembly coverage.
+| Column | Meaning |
+| --- | --- |
+| `file` | Input filename. |
+| `format` | Sequence format, such as FASTA or FASTQ. |
+| `type` | Sequence type, such as DNA. |
+| `num_seqs` | Number of sequences; here, the number of assembly records. |
+| `sum_len` | Total sequence length, including gap characters. |
+| `min_len` | Shortest sequence length. |
+| `avg_len` | Mean sequence length. |
+| `max_len` | Longest sequence length. |
+| `Q1`, `Q2`, `Q3` | First quartile, median, and third quartile of sequence lengths. |
+| `sum_gap` | Gap-character count under SeqKit's gap definition; not the count of ambiguous `N` bases. |
+| `N50` | Sequence length at which sequences of that length or longer account for at least half of the total span. |
+| `Q20(%)`, `Q30(%)` | Base-quality summaries for FASTQ reads; not assembly accuracy measurements for a FASTA file. |
+| `GC(%)` | Percentage of bases that are G or C. |
+
+### Arabidopsis Illumina plus PacBio dataset
+
+Use SeqKit for basic sequence statistics and BUSCO for conserved gene completeness. Install evaluation programs separately from MaSuRCA, and activate that environment only after the assembly finishes:
+
+```bash
+ seqkit stats -a flye.mr.67.17.15.0.02/assembly.scaffolds.fasta 
+ ```
 
 
-## Further Reading
-
-  * Main software website links
-    * [MaSuRCA  home page](http://www.genome.umd.edu/masurca.html)
-    * [MaSuRCA  Paper](https://academic.oup.com/bioinformatics/article/29/21/2669/195975)
-    * [MaSuRCA github and Manual](https://github.com/alekseyzimin/masurca)
+| file | format | type | num_seqs | sum_len | min_len | avg_len | max_len | Q1 | Q2 | Q3 | sum_gap | N50 | Q20(%) | Q30(%) | GC(%) |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| flye.mr.67.17.15.0.02/assembly.scaffolds.fasta | FASTA | DNA | 169 | 119,259,814 | 517 | 705,679.4 | 13,791,725 | 8,095 | 52,500 | 272,857 | 0 | 8,149,967 | 0 | 0 | 36.05 |
 
 
+## Errors and troubleshooting
 
-## Tutorial examples with real datasets
+| Problem | What to check |
+| --- | --- |
+| Configuration fails | Verify absolute paths, unique library prefixes, section-ending `END` lines, and installation dependencies. Read `masurca.configure.log`. |
+| Job runs out of memory | Inspect scheduler records, request more memory, and review the Jellyfish hash allocation. More threads do not resolve insufficient RAM. |
+| Job hits its time limit | Check which stage stopped and retain intermediates so completed work can be reused. |
+| A tool or Perl module cannot be found | Check the MaSuRCA installation log and executable paths; avoid conflicting environments. |
+| Corrected reads or final assembly are unexpectedly sparse | Check usable coverage, read lengths, sample identity, and the first failed stage in the logs. |
+| No final FASTA appears | Inspect the log for a failed upstream step; intermediate files alone do not indicate success. |
 
-* [Example with Arabidopsis](../Arabidopsis/AT_MaSuRCA.md)
+After a timeout or interruption, first make sure the earlier job is no longer running. Preserve its logs, address the cause, and resubmit from the same assembly directory. Regenerating `assemble.sh` allows MaSuRCA to account for existing intermediates. Inspect any failed or partial outputs before restarting and use stage-specific guidance from the developers rather than deleting files indiscriminately. If you change the input reads or assembly strategy, start a separate assembly directory.
+
+## Summarized interpretation
+
+The MaSuRCA hybrid assembly contains 119.3 Mb in 169 scaffolds, with an N50 of 8.15 Mb and a longest scaffold of 13.79 Mb. This total is broadly consistent with the approximately 120 Mb represented in published Arabidopsis thaliana Landsberg erecta (Ler) assemblies. Jiao and Schneeberger (2020) reported 118.5 Mb of chromosome-anchored sequence for Ler, although their assemblies also included unanchored, predominantly repetitive sequences. Consequently, the slightly larger total here does not independently indicate assembly inflation, and neither assembly span should be interpreted as a complete measurement of the physical genome.
+
+These statistics indicate substantial assembly continuity but do not establish completeness or accuracy. BUSCO should be used to evaluate conserved gene completeness, while duplicated BUSCOs may warrant investigation for retained haplotypes or other redundant sequence. Merqury can complement BUSCO by comparing k-mers from Illumina reads with the assembly to estimate consensus accuracy (QV) and sequence completeness, while highlighting potential missing or duplicated sequence without requiring a reference genome. Contamination screening and examination of read coverage, GC content, and taxonomic assignments can help distinguish nuclear sequences from organellar sequences and potential contaminants. Small scaffolds should therefore be evaluated before removal. Read mapping and comparison with the published Ler assembly can further identify unsupported joins, missing regions, and possible structural differences. 
+
+- [Published Ler assembly: Jiao and Schneeberger (2020)](https://doi.org/10.1038/s41467-020-14779-y)
 
 
----
+## Further reading
 
-* [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
+- [MaSuRCA 4.1.4 release](https://github.com/alekseyzimin/masurca/releases/tag/v4.1.4)
+- [MaSuRCA manual and configuration reference](https://github.com/alekseyzimin/masurca)
+- [Zimin et al. (2013): The MaSuRCA genome assembler](https://doi.org/10.1093/bioinformatics/btt476)
+- [Zimin et al. (2017): Hybrid assembly with the mega-reads algorithm](https://doi.org/10.1101/gr.213611.116)
+- [Jiao and Schneeberger (2020): Chromosome-level assemblies of multiple Arabidopsis genomes](https://doi.org/10.1038/s41467-020-14779-y)
+- [SeqKit documentation](https://bioinf.shenwei.me/seqkit/usage/)
+
+
+[Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
