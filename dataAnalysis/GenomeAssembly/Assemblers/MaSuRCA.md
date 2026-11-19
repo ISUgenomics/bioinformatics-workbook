@@ -1,7 +1,7 @@
 ---
 title: "Hybrid Genome Assembly with MaSuRCA: Illumina Paired-End and Long Reads"
 layout: single
-author: Andrew Severin
+author: Rick Masonbrink
 author_profile: true
 last_modified_at: 2026-11-19
 header:
