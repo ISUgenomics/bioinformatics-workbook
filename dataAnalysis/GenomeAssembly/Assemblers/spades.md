@@ -53,7 +53,7 @@ Check to see what modules are already available on your HPC.
 module --default avail spades seqkit fastp fastplong datasets unzip quast sra
 ```
 
-Install the software that is missing from your HPC, but use modules with current software versions when available. Most HPC's have a conda module, but if not see here to install miniconda locally [Miniconda Installation](https://www.anaconda.com/docs/getting-started/installation#linux)
+Install the software that is missing from your HPC, but use modules with current software versions when available. Most HPC's have a conda module, but if not see here to install miniconda locally. [Miniconda Installation](https://www.anaconda.com/docs/getting-started/installation#linux)
 ```bash
 #quast has incompatibilites with the other software, so create another conda environment.
 module load miniconda
@@ -226,6 +226,7 @@ Run from the project directory:
 ```bash
 seqkit stats -a IlluminaOnly/contigs.fasta IlluminaOnly/scaffolds.fasta Hybrid/contigs.fasta Hybrid/scaffolds.fasta
 ```
+
 | file | format | type | num_seqs | sum_len | min_len | avg_len | max_len | Q1 | Q2 | Q3 | sum_gap | N50 | N50_num | Q20(%) | Q30(%) | AvgQual | GC(%) | sum_n |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | IlluminaOnly/contigs.fasta | FASTA | DNA | 4,225 | 6,149,075 | 56 | 1,455.4 | 53,777 | 98 | 125 | 860 | 0 | 8,288 | 192 | 0 | 0 | 0 | 41.65 | 0 |
@@ -263,6 +264,7 @@ done
 #get genome stats on downloaded accessions
 seqkit stats -a reference/*.fna
 ```
+
 | file | format | type | num_seqs | sum_len | min_len | avg_len | max_len | Q1 | Q2 | Q3 | sum_gap | N50 | N50_num | Q20(%) | Q30(%) | AvgQual | GC(%) | sum_n |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | reference/GCA_003814305.1.fna | FASTA | DNA | 2 | 2,232,981 | 22,170 | 1,116,490.5 | 2,210,811 | 22,170 | 1,116,490.5 | 2,210,811 | 0 | 2,210,811 | 1 | 0 | 0 | 0 | 37.51 | 0 |
@@ -417,6 +419,7 @@ Adding Nanopore reads improved assembly contiguity. Among contigs at least 500 b
 - [Nanopore run SRR7585900](https://www.ncbi.nlm.nih.gov/sra/?term=SRR7585900)
 - [NCBI prefetch and fasterq-dump instructions](https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump)
 - [fastp documentation](https://github.com/OpenGene/fastp)
+- [fastplong documentation](https://github.com/OpenGene/fastplong?utm_source=chatgpt.com)
 - [QUAST and MetaQUAST documentation](https://github.com/ablab/quast)
 
 [Back to the Assembly and Annotation Index page](../../GenomeAnnotation/annotation_and_assembly_index.md)
