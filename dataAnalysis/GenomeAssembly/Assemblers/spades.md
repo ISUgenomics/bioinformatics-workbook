@@ -115,7 +115,7 @@ fastp \
   > logs/fastp.log 2>&1
 ```
 
-The 150 bp minimum is a tutorial filtering choice, not a validated optimum. Review the before/after reports and retained bases. Both assemblies use exactly the same retained Illumina pairs; orphaned or discarded reads are not added back.
+Review the before/after reports and retained bases. Both assemblies use exactly the same retained Illumina pairs; orphaned or discarded reads are not added back.
 
 ### Prepare the Nanopore reads 
 
